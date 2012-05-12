@@ -25,7 +25,7 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
+- (void)didReceiveMemoryWarning {	//FXDLog_DEFAULT;
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
@@ -98,9 +98,13 @@
 	// IBOutlets
 }
 
+#pragma mark -
+- (void)awakeFromNib {	//FXDLog_SEPARATE;
+	[super awakeFromNib];
+}
 
 #pragma mark - at loadView
-- (void)loadView {	FXDLog_SEPARATE;
+- (void)loadView {	//FXDLog_SEPARATE;
 	[super loadView];
 	
 }
@@ -110,7 +114,7 @@
 
 
 #pragma mark - at viewDidLoad
-- (void)viewDidLoad {	FXDLog_SEPARATE;
+- (void)viewDidLoad {	//FXDLog_SEPARATE;
     [super viewDidLoad];
 	
 	/*
@@ -136,7 +140,7 @@
 #endif
 }
 
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE;
+- (void)viewWillAppear:(BOOL)animated {	//FXDLog_SEPARATE;
 	[super viewWillAppear:animated];
 	
 }
@@ -151,7 +155,7 @@
 
 }
 
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE;
+- (void)viewDidAppear:(BOOL)animated {	//FXDLog_SEPARATE;
 	[super viewDidAppear:animated];
 	
 }
@@ -174,12 +178,12 @@
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;	
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	//FXDLog_DEFAULT;	
 	[super performSegueWithIdentifier:identifier sender:sender];
 	
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;	
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	//FXDLog_DEFAULT;	
 	[super prepareForSegue:segue sender:sender];
 	
 }

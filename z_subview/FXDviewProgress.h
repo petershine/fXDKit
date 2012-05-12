@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 
 @interface FXDviewProgress : FXDView {
     // Primitives

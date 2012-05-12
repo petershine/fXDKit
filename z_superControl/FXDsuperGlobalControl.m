@@ -41,7 +41,7 @@
 	[_rootInterface release];
 	[_homeInterface release];
 	
-	[super dealloc];
+	FXDLog_SEPARATE;[super dealloc];
 }
 
 
@@ -96,6 +96,14 @@
 }
 
 // Controllers
+- (FXDStoryboard*)mainStoryboard {
+	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _mainStoryboard;
+}
+
 - (id)rootInterface {
 	if (_rootInterface == nil) {
 		if (self.mainStoryboard) {
@@ -107,7 +115,7 @@
 }
 
 - (id)homeInterface {
-	if (_homeInterface == nil) {	FXDLog_DEFAULT;
+	if (_homeInterface == nil) {
 		
 		if ([self.rootInterface respondsToSelector:@selector(viewControllers)]) {
 			NSArray *viewControllers = [self.rootInterface performSelector:@selector(viewControllers)];
@@ -119,8 +127,6 @@
 		else {			
 			_homeInterface = self.rootInterface;
 		}
-		
-		FXDLog(@"_homeInterface: %@", _homeInterface);
 	}
 	
 	return _homeInterface;
@@ -137,8 +143,8 @@
 static FXDsuperGlobalControl *_sharedInstance = nil;
 
 + (FXDsuperGlobalControl*)sharedInstance {	
-	@synchronized(self) {
-		if (_sharedInstance == nil) {	FXDLog_DEFAULT;
+	@synchronized(self) {	FXDLog_SEPARATE;
+		if (_sharedInstance == nil) {
 			_sharedInstance = [[self alloc] init];
 		}
 	}
@@ -148,7 +154,7 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 
 + (void)releaseSharedInstance {
 	@synchronized(self) {
-		if (_sharedInstance) {	FXDLog_SEPARATE;
+		if (_sharedInstance) {
 
 			[_sharedInstance release];
 			_sharedInstance = nil;

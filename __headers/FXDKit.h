@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 
+#import "FXDconfigDeveloper.h"
+
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -55,5 +57,3 @@
 #import "FXDViewController.h"
 #import "FXDTableViewController.h"
 #import "FXDNavigationController.h"
-
-#import "FXDImagePickerController.h"

@@ -59,7 +59,8 @@
     return self;
 }
 
-- (void)configureForAllInitializers {	
+#pragma mark -
+- (void)configureForAllInitializers {	//FXDLog_DEFAULT;
     // Primitives
     
     // Instance variables
@@ -67,6 +68,11 @@
     // Properties
     
     // IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {	//FXDLog_DEFAULT;
+	[super awakeFromNib];
 }
 
 

@@ -31,7 +31,7 @@
 #if USE_FXDLog
 	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", strClassSelector)
 	#define FXDLog_SEPARATE	FXDLog(@"\n\n__  %@  __", strClassSelector)
-	#define FXDLog_OVERRIDE	FXDLog_DEFAULT;FXDLog(@"OVERRIDE")
+	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
 	#define FXDLog_ERROR	FXDLog(@"error code: %d\nlocalizedDescription: %@\nuserInfo: %@",[error code],[error localizedDescription],[error userInfo])
 
@@ -81,7 +81,3 @@
 	#define LOGEVENT_DEFAULT
 
 #endif
-
-
-// FXDKit imports
-#import "FXDKit.h"

@@ -6,8 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDViewController.h"
-#import "FXDTableViewCell.h"
+#import "FXDKit.h"
 
 
 @interface FXDsuperTableInterface : FXDViewController <UITableViewDataSource, UITableViewDelegate> {

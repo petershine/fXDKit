@@ -64,6 +64,7 @@
     return self;
 }
 
+#pragma mark -
 - (void)configureForAllInitializers {	//FXDLog_DEFAULT;	
 	// Primitives
 	
@@ -75,6 +76,11 @@
 	_addedObj = nil;
 	
 	// IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 

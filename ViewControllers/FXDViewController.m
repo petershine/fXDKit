@@ -95,17 +95,13 @@
     return self;
 }
 
-
-#pragma mark - at loadView
-- (void)loadView {	FXDLog_SEPARATE;
-	[super loadView];
-	
+#pragma mark -
+- (void)awakeFromNib {	FXDLog_SEPARATE;
+	[super awakeFromNib];
 }
 
-
 #pragma mark - at autoRotate
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {	FXDLog_DEFAULT;
-	FXDLog(@"interfaceOrientation: %d", interfaceOrientation);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	
 	BOOL shouldAutorotate = NO;
 	
@@ -120,18 +116,31 @@
 	shouldAutorotate = YES;
 #endif
 	
+	if (shouldAutorotate) {	FXDLog_DEFAULT;
+		//
+	}
+	
 	return shouldAutorotate;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f", toInterfaceOrientation, duration);
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f", interfaceOrientation, duration);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	FXDLog(@"didRotate fromInterfaceOrientation: %d", fromInterfaceOrientation);
 }
 
+
+#pragma mark - at loadView
+- (void)loadView {	FXDLog_SEPARATE;
+	[super loadView];
+	
+}
 
 #pragma mark - at viewDidLoad
 - (void)viewDidLoad {	FXDLog_SEPARATE;

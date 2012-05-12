@@ -49,12 +49,14 @@
 
 #pragma mark - Category
 @interface UIView (Added)
+#pragma mark - Initialization
+- (void)configureForAllInitializers;
+
+#pragma mark - Public
 + (id)loadedViewUsingDefaultNIB;
 + (id)loadedViewUsingNIBname:(NSString*)nibName;
 + (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize;
 + (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
-
-- (void)configureForAllInitializers;
 
 - (void)reframeSelfToBeAtTheCenterOfSuperview:(UIView*)superview;
 

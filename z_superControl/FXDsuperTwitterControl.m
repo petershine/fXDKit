@@ -158,7 +158,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 
 + (FXDsuperTwitterControl*)sharedInstance {
 	@synchronized(self) {
-        if (_sharedInstance == nil) {	FXDLog_DEFAULT;
+        if (_sharedInstance == nil) {
             _sharedInstance = [[self alloc] init];
         }
 	}
@@ -168,7 +168,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 
 + (void)releaseSharedInstance {
 	@synchronized(self) {
-		if (_sharedInstance) {	FXDLog_DEFAULT;
+		if (_sharedInstance) {
 			
 			[_sharedInstance release];
 			_sharedInstance = nil;

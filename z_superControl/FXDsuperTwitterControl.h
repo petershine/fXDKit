@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
 

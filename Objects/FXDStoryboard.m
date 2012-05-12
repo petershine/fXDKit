@@ -67,7 +67,9 @@
 - (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_SEPARATE;
 	FXDLog(@"identifier: %@", identifier);
 	
-	return [super instantiateViewControllerWithIdentifier:identifier];
+	id instantiatedInterface = [super instantiateViewControllerWithIdentifier:identifier];
+	
+	return instantiatedInterface;
 }
 
 #pragma mark - Public

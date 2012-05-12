@@ -97,15 +97,9 @@
 	// IBOutlets
 }
 
-
-#pragma mark - Accessor overriding
-
-
-#pragma mark - at loadView
-- (void)loadView {	FXDLog_SEPARATE;
-	[super loadView];
-	
-	// Implement loadView to create a view hierarchy programmatically, without using a nib.
+#pragma mark -
+- (void)awakeFromNib {	FXDLog_SEPARATE;
+	[super awakeFromNib];
 }
 
 
@@ -117,24 +111,42 @@
 	if (interfaceOrientation == UIInterfaceOrientationPortrait) {
 		shouldAutorotate = YES;
 	}
-	else {	FXDLog_DEFAULT;
-		FXDLog(@"interfaceOrientation: %d", interfaceOrientation);
-		
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			shouldAutorotate = YES;
-		}
+	else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		shouldAutorotate = YES;
+	}
+	
+#if ForDEVELOPER
+	shouldAutorotate = YES;
+#endif
+	
+	if (shouldAutorotate) {	FXDLog_DEFAULT;
+		//
 	}
 	
 	return shouldAutorotate;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f", toInterfaceOrientation, duration);
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f", interfaceOrientation, duration);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	FXDLog(@"didRotate fromInterfaceOrientation: %d", fromInterfaceOrientation);
+}
+
+
+#pragma mark - Accessor overriding
+
+
+#pragma mark - at loadView
+- (void)loadView {	FXDLog_SEPARATE;
+	[super loadView];
+	
+	// Implement loadView to create a view hierarchy programmatically, without using a nib.
 }
 
 

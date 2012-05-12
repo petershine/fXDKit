@@ -61,6 +61,7 @@
     return self;
 }
 
+#pragma mark -
 - (void)configureForAllInitializers {	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(observedApplicationDidEnterBackground:)
@@ -75,6 +76,11 @@
 	_addedObj = nil;
 	
     // IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 

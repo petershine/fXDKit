@@ -57,14 +57,20 @@
     return self;
 }
 
-- (void)configureForAllInitializers {    
-    // Primitives
-    
-    // Instance variables
-    
-    // Properties
-    
-    // IBOutlets
+#pragma mark -
+- (void)configureForAllInitializers {
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	// IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 

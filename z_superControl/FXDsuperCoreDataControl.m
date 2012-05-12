@@ -111,7 +111,7 @@
         return __managedObjectModel;
     }
 	
-	FXDLog_SEPARATE;
+	FXDLog_DEFAULT;
 	
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:applicationMOMDURL withExtension:@"momd"];
 	
@@ -126,7 +126,7 @@
         return __persistentStoreCoordinator;
     }
 	
-	FXDLog_SEPARATE;
+	FXDLog_DEFAULT;
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:applicationSqlitePathComponent];
     
@@ -166,18 +166,17 @@
 
 - (NSFetchedResultsController*)defaultFetchedResults {
 	@synchronized(self) {
-		if (_defaultFetchedResults == nil) {	FXDLog_DEFAULT;
+		if (_defaultFetchedResults == nil) {
 			
-			FXDLog(@"defaultEntityName: %@", self.defaultEntityName);
-			FXDLog(@"defaultSortDescriptorKeys: %@", self.defaultSortDescriptorKeys);
-			
-			if (self.defaultEntityName && self.defaultSortDescriptorKeys) {
+			if (self.defaultEntityName && self.defaultSortDescriptorKeys) {				
+
+				NSEntityDescription *entityDescription = [NSEntityDescription entityForName:self.defaultEntityName inManagedObjectContext:self.managedObjectContext];
+				
+				FXDLog_SEPARATE;
+				FXDLog(@"entityDescription propertiesByName:\n%@", [entityDescription propertiesByName]);
+								
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 				[fetchRequest autorelease];
-				
-
-				NSEntityDescription *entityDescription = [NSEntityDescription entityForName:self.defaultEntityName inManagedObjectContext:self.managedObjectContext];				
-				FXDLog(@"entityDescription propertiesByName:\n%@", [entityDescription propertiesByName]);
 				
 				[fetchRequest setEntity:entityDescription];
 				[fetchRequest setSortDescriptors:self.defaultSortDescriptorKeys];
@@ -196,13 +195,17 @@
 				NSError *error = nil;
 				
 				if ([_defaultFetchedResults performFetch:&error]) {
-					FXDLog(@"FETCHED");
+					FXDLog(@"fetchedObjects count: %d", [_defaultFetchedResults.fetchedObjects count]);
 				}
 				else {
 					if (error) {
 						FXDLog_ERROR;
 					}
 				}
+			}
+			else {	FXDLog_SEPARATE;
+				FXDLog(@"defaultEntityName: %@", self.defaultEntityName);
+				FXDLog(@"defaultSortDescriptorKeys: %@", self.defaultSortDescriptorKeys);
 			}
 		}
 	}
@@ -225,7 +228,7 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 
 + (FXDsuperCoreDataControl*)sharedInstance {
 	@synchronized(self) {		
-        if (_sharedInstance == nil) {	FXDLog_DEFAULT;
+        if (_sharedInstance == nil) {
             _sharedInstance = [[self alloc] init];
         }
 	}
@@ -235,7 +238,7 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 
 + (void)releaseSharedInstance {
 	@synchronized(self) {
-		if (_sharedInstance) {	FXDLog_DEFAULT;
+		if (_sharedInstance) {
 			
 			[_sharedInstance release];
 			_sharedInstance = nil;

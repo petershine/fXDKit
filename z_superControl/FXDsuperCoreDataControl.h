@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 #import <CoreData/CoreData.h>
 
 #import "CHCSV.h"

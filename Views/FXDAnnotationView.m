@@ -80,6 +80,11 @@
     // IBOutlets
 }
 
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
+}
+
 
 #pragma mark - Accessor overriding
 

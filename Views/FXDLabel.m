@@ -41,13 +41,7 @@
 	self = [super init];
 	
 	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-		
-		// IBOutlets
+		[self configureForAllInitializers];
 	}
 	
 	return self;
@@ -57,13 +51,7 @@
 	self = [super initWithCoder:aDecoder];
 	
 	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-		
-		// IBOutlets
+		[self configureForAllInitializers];
 	}
 	
 	return self;
@@ -73,17 +61,28 @@
     self = [super initWithFrame:frame];
 	
     if (self) {
-        // Primitives
-		
-		// Instance variables
-		
-		// Properties
-		
-		// IBOutlets
+		[self configureForAllInitializers];
     }
 	
     return self;
 }
+
+#pragma mark -
+- (void)configureForAllInitializers {
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	// IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
+}
+
 
 #pragma mark - Accessor overriding
 

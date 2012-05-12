@@ -57,6 +57,7 @@
     return self;
 }
 
+#pragma mark -
 - (void)configureForAllInitializers {    
     // Primitives
     
@@ -65,6 +66,11 @@
     // Properties
     
     // IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 

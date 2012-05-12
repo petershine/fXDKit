@@ -6,6 +6,8 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 #import <stdarg.h>
 #import <sys/utsname.h>
 
@@ -22,7 +24,7 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
+	// Properties : For subclass to be able to reference
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
 	

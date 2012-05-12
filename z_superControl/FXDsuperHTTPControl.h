@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 
 @interface FXDsuperHTTPControl : FXDObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
     // Primitives

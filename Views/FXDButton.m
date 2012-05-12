@@ -59,6 +59,7 @@
     return self;
 }
 
+#pragma mark -
 - (void)configureForAllInitializers {
 	// Primitives
 	
@@ -68,6 +69,11 @@
 	_addedObj = nil;
 	
 	// IBOutlets
+}
+
+#pragma mark -
+- (void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 

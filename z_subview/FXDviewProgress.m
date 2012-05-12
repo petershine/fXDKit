@@ -43,37 +43,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-        // Primitives
-		
-		// Instance variables
-		
-		// Properties
-		
-		// IBOutlets
-	}
-	
-	return self;
-}
 
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-	
-    if (self) {
-        // Primitives
-		
-		// Instance variables
-		
-		// Properties
-		
-		// IBOutlets
-    }
-	
-    return self;
-}
 
 #pragma mark - Accessor overriding
 

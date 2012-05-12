@@ -57,6 +57,12 @@
     return self;
 }
 
+#pragma mark -
+- (void)awakeFromNib {	FXDLog_DEFAULT;
+	[super awakeFromNib];
+}
+
+
 #pragma mark - Accessor overriding
 
 
@@ -86,6 +92,18 @@
 
 #pragma mark - Category
 @implementation UIView (Added)
+#pragma mark - Initialization
+- (void)configureForAllInitializers {	//FXDLog_DEFAULT;
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	// IBOutlets
+}
+
+#pragma mark - Public
 + (id)loadedViewUsingDefaultNIB {
 	id loadedView = nil;
 	
@@ -139,16 +157,6 @@
 }
 
 #pragma mark -
-- (void)configureForAllInitializers {	//FXDLog_DEFAULT;
-	// Primitives
-	
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
-}
-
 - (void)reframeSelfToBeAtTheCenterOfSuperview:(UIView*)superview {	FXDLog_DEFAULT;
 	if (superview == nil) {
 		superview = self.superview;

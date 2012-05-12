@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 #import <MapKit/MapKit.h>
 
 #import "FXDsuperTableInterface.h"
