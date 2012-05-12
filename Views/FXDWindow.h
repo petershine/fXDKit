@@ -2,7 +2,7 @@
 //  FXDWindow.h
 //
 //
-//  Created by Anonymous on 11/6/11.
+//  Created by petershine on 11/6/11.
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 

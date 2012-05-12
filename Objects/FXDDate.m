@@ -2,7 +2,7 @@
 //  FXDDate.m
 //  PopTooUniversal
 //
-//  Created by Anonymous on 5/5/12.
+//  Created by petershine on 5/5/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 

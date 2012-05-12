@@ -1,7 +1,7 @@
 //
 //  FXDconfigDeveloper.h
 //
-//  Created by Anonymous on 10/4/11.
+//  Created by petershine on 10/4/11.
 //  Copyright 2011 Ensight. All rights reserved.
 //
 

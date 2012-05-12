@@ -2,7 +2,7 @@
 //  FXDviewProgress.m
 //
 //
-//  Created by Anonymous on 1/9/12.
+//  Created by petershine on 1/9/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 

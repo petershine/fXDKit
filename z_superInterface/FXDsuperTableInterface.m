@@ -2,7 +2,7 @@
 //  FXDsuperTableInterface.m
 //
 //
-//  Created by Anonymous on 1/20/12.
+//  Created by petershine on 1/20/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  FXDButton.m
 //
 //
-//  Created by Anonymous on 10/12/11.
+//  Created by petershine on 10/12/11.
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 

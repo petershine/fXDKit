@@ -2,7 +2,7 @@
 //  FXDKit.h
 //
 //
-//  Created by Anonymous on 12/28/11.
+//  Created by petershine on 12/28/11.
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 

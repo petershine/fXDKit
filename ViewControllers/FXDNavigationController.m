@@ -2,7 +2,7 @@
 //  FXDNavigationController.m
 //
 //
-//  Created by Anonymous on 10/4/11.
+//  Created by petershine on 10/4/11.
 //  Copyright 2011 fXceed. All rights reserved.
 //
 

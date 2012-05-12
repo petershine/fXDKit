@@ -2,7 +2,7 @@
 //  FXDImage.h
 //
 //
-//  Created by Anonymous on 11/7/11.
+//  Created by petershine on 11/7/11.
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 

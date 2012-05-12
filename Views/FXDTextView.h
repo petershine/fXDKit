@@ -2,7 +2,7 @@
 //  FXDTextView.h
 //
 //
-//  Created by Anonymous on 10/30/11.
+//  Created by petershine on 10/30/11.
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 

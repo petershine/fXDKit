@@ -2,7 +2,7 @@
 //  FXDObject.h
 //
 //
-//  Created by Anonymous on 10/21/11.
+//  Created by petershine on 10/21/11.
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 

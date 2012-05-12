@@ -2,7 +2,7 @@
 //  FXDColor.m
 //
 //
-//  Created by Anonymous on 2/23/12.
+//  Created by petershine on 2/23/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 

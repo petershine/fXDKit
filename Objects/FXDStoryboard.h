@@ -2,7 +2,7 @@
 //  FXDStoryboard.h
 //
 //
-//  Created by Anonymous on 4/24/12.
+//  Created by petershine on 4/24/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
