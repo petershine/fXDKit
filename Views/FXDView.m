@@ -67,7 +67,7 @@
 
 
 #pragma mark - Drawing
-- (void)layoutSubviews {	FXDLog_DEFAULT;
+- (void)layoutSubviews {	//FXDLog_DEFAULT;
 	[super layoutSubviews];
 	
 }
