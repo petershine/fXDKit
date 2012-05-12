@@ -6,14 +6,13 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 #import <stdarg.h>
 #import <sys/utsname.h>
 
-#import <MessageUI/MessageUI.h>
 #import <TargetConditionals.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+
+#import <MessageUI/MessageUI.h>
 
 #import "Reachability.h"
 

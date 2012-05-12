@@ -6,8 +6,10 @@
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 
+/*
 #import <TargetConditionals.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+ */
 
 #import <QuartzCore/QuartzCore.h>
 
