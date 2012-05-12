@@ -1,0 +1,65 @@
+//
+//  FXDWindow.h
+//
+//
+//  Created by Anonymous on 11/6/11.
+//  Copyright (c) 2011 fXceed. All rights reserved.
+//
+
+#import "FXDviewProgress.h"
+
+
+@interface FXDWindow : UIWindow {
+    // Primitives
+	
+	// Instance variables
+	
+	// Properties : For subclass to be able to reference
+}
+
+// Properties
+
+// IBOutlets
+@property (retain, nonatomic) IBOutlet FXDviewProgress *progressView;
+
+
+#pragma mark - Memory management
+
+#pragma mark - Initialization
+
+#pragma mark - Accessor overriding
+
+
+#pragma mark - Drawing
+
+
+#pragma mark - Private : if declared here, it's for subclass to be able to use these
+
+
+#pragma mark - Overriding
+
+
+#pragma mark - IBActions
+
+
+#pragma mark - Public
+
+
+//MARK: - Observer implementation
+
+//MARK: - Delegate implementation
+
+
+@end
+
+
+#pragma mark - Category
+@interface UIWindow (Added)
++ (id)applicationWindow;
+
++ (void)showProgressView;
++ (void)hideProgressView;
+
+
+@end
+

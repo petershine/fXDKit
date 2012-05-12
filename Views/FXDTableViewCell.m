@@ -1,0 +1,200 @@
+//
+//  FXDTableViewCell.m
+//
+//
+//  Created by Anonymous on 10/19/11.
+//  Copyright (c) 2011 fXceed. All rights reserved.
+//
+
+#import "FXDTableViewCell.h"
+
+
+#pragma mark - Private interface
+@interface FXDTableViewCell (Private)
+@end
+
+
+#pragma mark - Public implementation
+@implementation FXDTableViewCell
+
+
+#pragma mark Synthesizing
+// Properties
+@synthesize sectionPositionType = _sectionPositionType;
+
+@synthesize addedObj = _addedObj;
+
+// IBOutlets
+@synthesize backgroundImageview;
+
+
+#pragma mark - Memory management
+- (void)dealloc {
+	// Instance variables
+	
+	// Properties
+	[_addedObj release];
+		
+	// IBOutlets
+	[backgroundImageview release];
+	
+    //FXDLog_DEFAULT;
+	[super dealloc];
+}
+
+
+#pragma mark - Initialization
+- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		[self configureForAllInitializers];
+	}
+	
+	return self;
+}
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+	
+    if (self) {
+		[self configureForAllInitializers];
+    }
+	
+    return self;
+}
+
+- (void)configureForAllInitializers {	//FXDLog_DEFAULT;	
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	_sectionPositionType = integerNotDefined;
+	
+	_addedObj = nil;
+	
+	// IBOutlets
+}
+
+
+#pragma mark - Accessor overriding
+
+
+#pragma mark - Drawing
+- (void)layoutSubviews {	//FXDLog_DEFAULT;
+	[super layoutSubviews];
+	
+	if (self.imageView) {
+		[self modifySizeOfCellSubview:self.imageView];
+		[self modifyOriginXofCellSubview:self.imageView];
+		[self modifyOriginYofCellSubview:self.imageView];
+	}
+	
+	if (self.textLabel) {
+		[self modifySizeOfCellSubview:self.textLabel];
+		[self modifyOriginXofCellSubview:self.textLabel];
+		[self modifyOriginYofCellSubview:self.textLabel];
+	}
+	
+	if (self.accessoryView) {
+		[self modifySizeOfCellSubview:self.accessoryView];
+		[self modifyOriginXofCellSubview:self.accessoryView];
+		[self modifyOriginYofCellSubview:self.accessoryView];
+	}
+}
+
+
+#pragma mark - Private
+
+
+#pragma mark - Overriding
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_DEFAULT;
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {	//FXDLog_DEFAULT;
+	[super setHighlighted:highlighted animated:animated];
+	
+	[self.backgroundImageview setHighlighted:highlighted];
+	
+	[self.imageView setHighlighted:highlighted];
+	[self.textLabel setHighlighted:highlighted];
+	
+	if ([self.accessoryView isKindOfClass:[UIImageView class]]) {
+		[(UIImageView*)self.accessoryView setHighlighted:highlighted];
+	}
+}
+
+
+#pragma mark - Public
+- (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage {	//FXDLog_DEFAULT;
+	
+	if (image) {
+		if (self.backgroundImageview == nil) {
+			self.backgroundImageview = [[[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage] autorelease];
+			
+			self.backgroundImageview.userInteractionEnabled = NO;
+			
+			CGRect modifiedFrame = self.backgroundImageview.frame;
+			modifiedFrame.origin.x = (self.frame.size.width - self.backgroundImageview.frame.size.width)/2.0;
+			[self.backgroundImageview setFrame:modifiedFrame];
+			
+			//FXDLog(@"modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
+			
+			[self addSubview:self.backgroundImageview];
+			[self sendSubviewToBack:self.backgroundImageview];
+		}
+		
+		self.backgroundImageview.image = image;
+		self.backgroundImageview.highlightedImage = highlightedImage;
+	}
+	else {
+		if (self.backgroundImageview) {
+			[self.backgroundImageview removeFromSuperview];
+			
+			self.backgroundImageview = nil;
+		}
+	}
+}
+
+
+//MARK: - Observer implementation
+
+//MARK: - Delegate implementation
+
+
+@end
+
+
+#pragma mark -  Category
+@implementation UITableViewCell (Added)
+- (void)customizeWithMainImage:(UIImage*)mainImage withHighlightedMainImage:(UIImage*)highlightedMainImage {
+	
+	self.imageView.image = mainImage;
+	
+	if (highlightedMainImage) {
+		self.imageView.highlightedImage = highlightedMainImage;
+	}
+}
+
+#pragma mark -
+- (void)modifySizeOfCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
+	
+}
+
+- (void)modifyOriginXofCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
+	
+}
+
+- (void)modifyOriginYofCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
+	CGRect modifiedFrame = cellSubview.frame;
+	
+	modifiedFrame.origin.y = (self.frame.size.height -modifiedFrame.size.height)/2.0;
+	
+	[cellSubview setFrame:modifiedFrame];
+}
+
+@end
