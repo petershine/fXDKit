@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-
-#define applicationNameDisplayed	NSLocalizedString(@"appname_Displayed", nil)
+#ifndef appname_Displayed
+	#define appname_Displayed	NSLocalizedString(@"appname_Displayed", nil)
+#endif
 
 
 // Text

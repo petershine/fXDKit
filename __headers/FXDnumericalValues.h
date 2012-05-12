@@ -7,9 +7,9 @@
 //
 
 #define integerNotDefined	-1
-#define durationDefaultAnimation	0.3
+#define durationAnimation	0.3
 #define delayOneSecond	1.0
 
-#define delayButtonPressed	0.1
+#define delayPressedButton	0.1
 
-#define radiusDefaultCorner	5.0
+#define radiusCorner	5.0

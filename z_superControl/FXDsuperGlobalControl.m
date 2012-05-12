@@ -310,16 +310,12 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	NSString *currentLanguage = [languages objectAtIndex:0];
 	FXDLog(@"currentLanguage: %@", currentLanguage);
 
-#ifdef applicationNameDisplayed
 	NSString *mailAddr = nil;
-#else
-	NSString *mailAddr = nil;
-#endif
 		
 	NSArray *toRecipients = [NSArray arrayWithObjects:mailAddr, nil];
 
-#ifdef applicationNameDisplayed
-	NSString *bundleName = applicationNameDisplayed;
+#ifdef appname_Displayed
+	NSString *bundleName = appname_Displayed;
 #else
 	NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];	
 #endif
@@ -377,11 +373,9 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
 	[emailInterface autorelease];
 	
-	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", applicationNameDisplayed]];
+	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", appname_Displayed]];
 	
-	if (image) {
-		//NSString *imageFileName = [NSString stringWithFormat:@"sharedImage", applicationNameDisplayed];
-		
+	if (image) {		
 		[emailInterface addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];
 	}
 	
