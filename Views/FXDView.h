@@ -49,11 +49,11 @@
 
 #pragma mark - Category
 @interface UIView (Added)
-+ (id)loadedViewUsingDefaultNIB;
-+ (id)loadedViewUsingNIBname:(NSString*)nibName;
-+ (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize;
-+ (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
++ (id)viewFromDefaultNib;
++ (id)viewFromNibName:(NSString*)nibName;
++ (id)viewFromNibName:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize;
++ (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
 
-- (void)reframeSelfToBeAtTheCenterOfSuperview:(UIView*)superview;
+- (void)reframeToBeAtTheCenterOfSuperview;
 
 @end

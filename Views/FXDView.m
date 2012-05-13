@@ -96,69 +96,66 @@
 
 #pragma mark - Category
 @implementation UIView (Added)
-+ (id)loadedViewUsingDefaultNIB {
-	id loadedView = nil;
-	
++ (id)viewFromDefaultNib {	
 	NSString *nibName = NSStringFromClass([self class]);
 	
-	loadedView = [self loadedViewUsingNIBname:nibName];
+	id view = [self viewFromNibName:nibName];
 	
-	return loadedView;
+	return view;
 }
 
-+ (id)loadedViewUsingNIBname:(NSString*)nibName {
++ (id)viewFromNibName:(NSString*)nibName {
 	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
 	}
 	
-	id loadedView = nil;
+	id view = nil;
 	
-	NSArray *loadedViewArray = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
+	NSArray *viewArray = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
 	
-	if (loadedViewArray) {	
-		for (id subview in loadedViewArray) {	//Assumes there is only one root object
+	if (viewArray) {	
+		for (id subview in viewArray) {	//Assumes there is only one root object
 			
 			if ([NSStringFromClass([subview class]) isEqualToString:nibName]) {
-				loadedView = subview;
+				view = subview;
 			}
-			else {
+			else {	FXDLog_DEFAULT;
 				FXDLog(@"subview class: %@", [subview class]);
 			}
 		}
 	}
 	
-	return loadedView;
+	return view;
 }
 
-+ (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize {
-	id loadedView = [self loadedViewUsingNIBname:nibName];
++ (id)viewFromNibName:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize {
+	id view = [self viewFromNibName:nibName];
 	
-	CGRect modifiedFrame = [(UIView*)loadedView frame];
+	CGRect modifiedFrame = [(UIView*)view frame];
 	modifiedFrame.size = modifiedSize;
-	[(UIView*)loadedView setFrame:modifiedFrame];
+	[(UIView*)view setFrame:modifiedFrame];
 	
-	return loadedView;
+	return view;
 }
 
-+ (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame {
-	id loadedView = [self loadedViewUsingNIBname:nibName];
++ (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame {
+	id view = [self viewFromNibName:nibName];
 	
-	[(UIView*)loadedView setFrame:modifiedFrame];
+	[(UIView*)view setFrame:modifiedFrame];
 	
-	return loadedView;
+	return view;
 }
 
 #pragma mark -
-- (void)reframeSelfToBeAtTheCenterOfSuperview:(UIView*)superview {	FXDLog_DEFAULT;
-	if (superview == nil) {
-		superview = self.superview;
+- (void)reframeToBeAtTheCenterOfSuperview {	FXDLog_DEFAULT;
+	
+	if (self.superview) {
+		CGRect modifiedFrame = self.frame;
+		modifiedFrame.origin.x = (self.superview.frame.size.width -modifiedFrame.size.width)/2.0;
+		modifiedFrame.origin.y = (self.superview.frame.size.height -modifiedFrame.size.height)/2.0;
+		
+		[self setFrame:modifiedFrame];
 	}
-	
-	CGRect modifiedFrame = self.frame;
-	modifiedFrame.origin.x = (superview.frame.size.width -modifiedFrame.size.width)/2.0;
-	modifiedFrame.origin.y = (superview.frame.size.height -modifiedFrame.size.height)/2.0;
-	
-	[self setFrame:modifiedFrame];
 }
 
 

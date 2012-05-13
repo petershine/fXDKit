@@ -65,7 +65,7 @@
 #pragma mark - Accessor overriding
 - (FXDviewProgress*)progressView {
 	if (_progressView == nil) {
-		_progressView = [FXDviewProgress loadedViewUsingDefaultNIB];
+		_progressView = [FXDviewProgress viewFromDefaultNib];
 		
 		[self addSubview:_progressView];
 		[self bringSubviewToFront:_progressView];

@@ -173,7 +173,7 @@
 				NSEntityDescription *entityDescription = [NSEntityDescription entityForName:self.defaultEntityName inManagedObjectContext:self.managedObjectContext];
 				
 				FXDLog_SEPARATE;
-				FXDLog(@"entityDescription propertiesByName:\n%@", [entityDescription propertiesByName]);
+				//FXDLog(@"entityDescription propertiesByName:\n%@", [entityDescription propertiesByName]);
 								
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 				[fetchRequest autorelease];
