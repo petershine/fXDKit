@@ -66,29 +66,20 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_SEPARATE;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		[self configureForAllInitializers];
-	}
-	
-	return self;
-}
-
 - (id)initWithStyle:(UITableViewStyle)style {	FXDLog_SEPARATE;
     self = [super initWithStyle:style];
 	
     if (self) {
-        [self configureForAllInitializers];
+        [self awakeFromNib];
     }
 	
     return self;
 }
 
-#pragma mark -
-- (void)configureForAllInitializers {	FXDLog_DEFAULT;
-    // Primitives
+- (void)awakeFromNib {	FXDLog_SEPARATE;
+	[super awakeFromNib];
+	
+	// Primitives
 	
 	// Instance variables
 	
@@ -97,10 +88,8 @@
 	// IBOutlets
 }
 
-#pragma mark -
-- (void)awakeFromNib {	FXDLog_SEPARATE;
-	[super awakeFromNib];
-}
+
+#pragma mark - Accessor overriding
 
 
 #pragma mark - at autoRotate
@@ -137,9 +126,6 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	FXDLog(@"didRotate fromInterfaceOrientation: %d", fromInterfaceOrientation);
 }
-
-
-#pragma mark - Accessor overriding
 
 
 #pragma mark - at loadView

@@ -65,7 +65,7 @@
 	self = [super initWithCoder:aDecoder];
 	
 	if (self) {
-		[self configureForAllInitializers];
+		//awakeFromNib
 	}
 	
 	return self;
@@ -89,16 +89,26 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	
     if (self) {
-		[self configureForAllInitializers];
+		if (nibNameOrNil == nil) {
+			[self awakeFromNib];
+		}
     }
 	
     return self;
 }
 
-#pragma mark -
 - (void)awakeFromNib {	FXDLog_SEPARATE;
 	[super awakeFromNib];
+	
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	// IBOutlets
 }
+
 
 #pragma mark - at autoRotate
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -141,6 +151,7 @@
 	[super loadView];
 	
 }
+
 
 #pragma mark - at viewDidLoad
 - (void)viewDidLoad {	FXDLog_SEPARATE;
@@ -234,17 +245,6 @@
 #pragma mark - Memory management
 - (void)nilifyIBOutlets {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// IBOutlets
-}
-
-#pragma mark - Initialization
-- (void)configureForAllInitializers {	FXDLog_DEFAULT;
-	// Primitives
-	
-	// Instance variables
-	
-	// Properties
 	
 	// IBOutlets
 }

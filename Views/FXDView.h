@@ -27,13 +27,13 @@
 #pragma mark - Accessor overriding
 
 
-#pragma mark - Drawing
-
-
 #pragma mark - Private : if declared here, it's for subclass to be able to use these
 
 
 #pragma mark - Overriding
+
+
+#pragma mark - IBActions
 
 
 #pragma mark - Public
@@ -49,10 +49,6 @@
 
 #pragma mark - Category
 @interface UIView (Added)
-#pragma mark - Initialization
-- (void)configureForAllInitializers;
-
-#pragma mark - Public
 + (id)loadedViewUsingDefaultNIB;
 + (id)loadedViewUsingNIBname:(NSString*)nibName;
 + (id)loadedViewUsingNIBname:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize;

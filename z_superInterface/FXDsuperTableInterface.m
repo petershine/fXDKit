@@ -67,8 +67,8 @@
 
 
 #pragma mark - Initialization
-- (void)configureForAllInitializers {
-    [super configureForAllInitializers];
+- (void)awakeFromNib {
+    [super awakeFromNib];
 	
     // Primitives
 	
@@ -88,11 +88,6 @@
 
 
 #pragma mark - at loadView
-- (void)loadView {
-	[super loadView];
-	
-	// Implement loadView to create a view hierarchy programmatically, without using a nib.
-}
 
 
 #pragma mark - at autoRotate

@@ -44,28 +44,19 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		[self configureForAllInitializers];
-	}
-	
-	return self;
-}
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	
     if (self) {
-		[self configureForAllInitializers];
+		[self awakeFromNib];
     }
 	
     return self;
 }
 
-#pragma mark -
-- (void)configureForAllInitializers {	//FXDLog_DEFAULT;	
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
 	// Primitives
 	
 	// Instance variables
@@ -76,21 +67,6 @@
 	_addedObj = nil;
 	
 	// IBOutlets
-}
-
-#pragma mark -
-- (void)awakeFromNib {
-	[super awakeFromNib];
-}
-
-
-#pragma mark - Accessor overriding
-
-
-#pragma mark - Drawing
-- (void)layoutSubviews {	//FXDLog_DEFAULT;
-	[super layoutSubviews];
-	
 	if (self.imageView) {
 		[self modifySizeOfCellSubview:self.imageView];
 		[self modifyOriginXofCellSubview:self.imageView];
@@ -109,6 +85,9 @@
 		[self modifyOriginYofCellSubview:self.accessoryView];
 	}
 }
+
+
+#pragma mark - Accessor overriding
 
 
 #pragma mark - Private

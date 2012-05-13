@@ -48,13 +48,6 @@
 #pragma mark - Accessor overriding
 
 
-#pragma mark - Drawing
-- (void)layoutSubviews {
-	[super layoutSubviews];
-	
-}
-
-
 #pragma mark - Private
 
 

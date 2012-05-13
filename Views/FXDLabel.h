@@ -27,9 +27,6 @@
 #pragma mark - Accessor overriding
 
 
-#pragma mark - Drawing
-
-
 #pragma mark - Private : if declared here, it's for subclass to be able to use these
 
 

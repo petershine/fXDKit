@@ -39,40 +39,26 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		[self configureForAllInitializers];
-	}
-	
-	return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 	
     if (self) {
-		[self configureForAllInitializers];
+		[self awakeFromNib];
     }
 	
     return self;
 }
 
-#pragma mark -
-- (void)configureForAllInitializers {	//FXDLog_DEFAULT;
-    // Primitives
+- (void)awakeFromNib {	//FXDLog_DEFAULT;
+	[super awakeFromNib];
+	
+	// Primitives
     
     // Instance variables
     
     // Properties
     
     // IBOutlets
-}
-
-#pragma mark -
-- (void)awakeFromNib {	//FXDLog_DEFAULT;
-	[super awakeFromNib];
 }
 
 
@@ -89,13 +75,6 @@
 	}
 	
 	return _progressView;
-}
-
-
-#pragma mark - Drawing
-- (void)layoutSubviews {	//FXDLog_SEPARATE;
-	[super layoutSubviews];
-	
 }
 
 

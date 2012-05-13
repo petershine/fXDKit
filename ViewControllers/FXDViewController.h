@@ -69,9 +69,6 @@
 #pragma mark - Memory management
 - (void)nilifyIBOutlets;
 
-#pragma mark - Initialization
-- (void)configureForAllInitializers;
-
 #pragma mark - Public
 + (FXDNavigationController*)navigationControllerUsingInitializedInterface;	// Using self instance as a root of navigationController
 

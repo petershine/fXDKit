@@ -71,7 +71,7 @@
 	self = [super initWithCoder:aDecoder];
 	
 	if (self) {
-		[self configureForAllInitializers];
+		//awakeFromNib
 	}
 	
 	return self;
@@ -81,14 +81,15 @@
 	self  = [super initWithRootViewController:rootViewController];
 	
 	if (self) {
-		[self configureForAllInitializers];
+		[self awakeFromNib];
 	}
 	
 	return self;
 }
 
-#pragma mark -
-- (void)configureForAllInitializers {	
+- (void)awakeFromNib {	//FXDLog_SEPARATE;
+	[super awakeFromNib];
+	
 	// Primitives
 	
 	// Instance variables
@@ -98,10 +99,6 @@
 	// IBOutlets
 }
 
-#pragma mark -
-- (void)awakeFromNib {	//FXDLog_SEPARATE;
-	[super awakeFromNib];
-}
 
 #pragma mark - at loadView
 - (void)loadView {	//FXDLog_SEPARATE;

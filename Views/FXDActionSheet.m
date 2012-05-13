@@ -41,28 +41,19 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		[self configureForAllInitializers];
-    }
-	
-	return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 	
     if (self) {
-		[self configureForAllInitializers];
+		[self awakeFromNib];
     }
 	
     return self;
 }
 
-#pragma mark -
-- (void)configureForAllInitializers {	
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(observedApplicationDidEnterBackground:)
 												 name:UIApplicationDidEnterBackgroundNotification
@@ -78,20 +69,8 @@
     // IBOutlets
 }
 
-#pragma mark -
-- (void)awakeFromNib {
-	[super awakeFromNib];
-}
-
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Drawing
-- (void)layoutSubviews {
-	[super layoutSubviews];
-	
-}
 
 
 #pragma mark - Private
@@ -109,6 +88,7 @@
 //MARK: - Observer implementation
 - (void)observedApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
 	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
+	
 }
 	 
 //MARK: - Delegate implementation

@@ -41,7 +41,7 @@
 	self = [super initWithCoder:aDecoder];
 	
 	if (self) {
-		[self configureForAllInitializers];
+		//awakeFromNib
 	}
 	
 	return self;
@@ -51,32 +51,36 @@
     self = [super initWithFrame:frame];
 	
     if (self) {
-		[self configureForAllInitializers];
+		[self awakeFromNib];
 	}
 	
     return self;
 }
 
-#pragma mark -
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
+	
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	// IBOutlets
 }
 
 
 #pragma mark - Accessor overriding
 
 
-#pragma mark - Drawing
-- (void)layoutSubviews {	//FXDLog_DEFAULT;
-	[super layoutSubviews];
-	
-}
-
-
 #pragma mark - Private
 
 
 #pragma mark - Overriding
+- (void)layoutSubviews {	FXDLog_DEFAULT;
+	[super layoutSubviews];
+	
+}
 
 
 #pragma mark - Public
@@ -92,18 +96,6 @@
 
 #pragma mark - Category
 @implementation UIView (Added)
-#pragma mark - Initialization
-- (void)configureForAllInitializers {	//FXDLog_DEFAULT;
-	// Primitives
-	
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
-}
-
-#pragma mark - Public
 + (id)loadedViewUsingDefaultNIB {
 	id loadedView = nil;
 	

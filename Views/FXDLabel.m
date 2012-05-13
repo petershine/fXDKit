@@ -37,38 +37,19 @@
 
 
 #pragma mark - Initialization
-- (id)init {
-	self = [super init];
-	
-	if (self) {
-		[self configureForAllInitializers];
-	}
-	
-	return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		[self configureForAllInitializers];
-	}
-	
-	return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 	
     if (self) {
-		[self configureForAllInitializers];
+		[self awakeFromNib];
     }
 	
     return self;
 }
 
-#pragma mark -
-- (void)configureForAllInitializers {
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
 	// Primitives
 	
 	// Instance variables
@@ -78,20 +59,8 @@
 	// IBOutlets
 }
 
-#pragma mark -
-- (void)awakeFromNib {
-	[super awakeFromNib];
-}
-
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Drawing
-- (void)layoutSubviews {
-	[super layoutSubviews];
-
-}
 
 
 #pragma mark - Private
