@@ -111,5 +111,36 @@
 	return UTCdate;
 }
 
+#pragma mark -
+- (NSInteger)yearValue {
+	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+	
+	return [dateComponents year];
+}
+
+- (NSInteger)monthValue {
+	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+	
+	return [dateComponents month];
+}
+
+- (NSInteger)dayValue {
+	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
+	
+	return [dateComponents day];
+}
+
+#pragma mark -
+- (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate {
+	BOOL isSame = NO;
+	
+	if ([self yearValue] == [anotherDate yearValue]
+		&& [self monthValue] == [anotherDate monthValue]
+		&& [self dayValue] == [anotherDate dayValue]) {
+		isSame = YES;
+	}
+	
+	return isSame;
+}
 
 @end

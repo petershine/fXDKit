@@ -82,6 +82,11 @@
 	
 }
 
+- (void)drawRect:(CGRect)rect {	FXDLog_DEFAULT;
+	[super drawRect:rect];
+	
+}
+
 
 #pragma mark - Public
 

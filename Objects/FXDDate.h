@@ -48,5 +48,10 @@
 + (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
 
+- (NSInteger)yearValue;
+- (NSInteger)monthValue;
+- (NSInteger)dayValue;
+
+- (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
 
 @end

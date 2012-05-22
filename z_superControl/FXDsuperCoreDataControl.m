@@ -181,7 +181,9 @@
 				[fetchRequest setEntity:entityDescription];
 				[fetchRequest setSortDescriptors:self.defaultSortDescriptorKeys];
 				
+#ifdef limitDefaultFetch
 				fetchRequest.fetchLimit = limitDefaultFetch;
+#endif
 				fetchRequest.fetchBatchSize = sizeDefaultBatch;
 				
 				FXDLog(@"fetchRequest:\n%@", fetchRequest);
@@ -278,9 +280,12 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 
 
 #pragma mark -
-- (void)startByPerformingDefaultFetchedResults {	FXDLog_OVERRIDE;
-	FXDLog(@"defaultFetchedResults.fetchedObjects: %@", self.defaultFetchedResults.fetchedObjects);
+- (void)startByFetchingDefaultResults {
+	NSFetchedResultsController *defaultFetchedResults = self.defaultFetchedResults;
 	
+	FXDLog_OVERRIDE;
+	//FXDLog(@"defaultFetchedResults.fetchedObjects: %@", defaultFetchedResults.fetchedObjects);
+	FXDLog(@"defaultFetchedResults.fetchedObjects: %d", [defaultFetchedResults.fetchedObjects count]);
 }
 
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;

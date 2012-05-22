@@ -95,7 +95,7 @@
 
 #pragma mark - Category
 @implementation MKAnnotationView (Added)
-- (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage {
+- (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage {
 	self = [self initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
@@ -112,5 +112,40 @@
 	return self;
 }
 
+#pragma mark -
+- (void)animateCustomDropAfterDelay:(NSTimeInterval)delay {
+	CGRect destinationRect = self.frame;
+	
+	// Move annotation out of view
+	//FXDLog(@"superview.superview: %@", NSStringFromCGRect(self.superview.superview.frame));
+	
+	CGRect modifiedFrame = self.frame;
+	modifiedFrame.origin.y -= self.superview.superview.frame.size.height *2.0;
+	[self setFrame:modifiedFrame];
+	
+	// Animate drop
+	[UIView animateWithDuration:durationAnimation
+						  delay:delay
+						options:UIViewAnimationCurveEaseOut
+					 animations:^{
+						 self.frame = destinationRect;
+					 }
+					 completion:^(BOOL finished){
+						 if (finished) {
+							 [UIView animateWithDuration:0.05
+											  animations:^{
+												  self.transform = CGAffineTransformMakeScale(1.0, 0.8);
+											  }
+											  completion:^(BOOL finished){
+												  if (finished) {
+													  [UIView animateWithDuration:0.1
+																	   animations:^{
+																		   self.transform = CGAffineTransformIdentity;
+																	   }];
+												  }
+											  }];
+						 }
+					 }];
+}
 
 @end

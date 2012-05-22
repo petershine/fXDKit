@@ -123,12 +123,8 @@
 	}
 	
 #if ForDEVELOPER
-	shouldAutorotate = YES;
+	shouldAutorotate = YES;FXDLog_DEFAULT;
 #endif
-	
-	if (shouldAutorotate) {	FXDLog_DEFAULT;
-		//
-	}
 	
 	return shouldAutorotate;
 }
@@ -243,7 +239,7 @@
 #pragma mark - Category
 @implementation UIViewController (Added)
 #pragma mark - Memory management
-- (void)nilifyIBOutlets {	FXDLog_DEFAULT;
+- (void)nilifyIBOutlets {	FXDLog_DEFAULT;	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	// IBOutlets

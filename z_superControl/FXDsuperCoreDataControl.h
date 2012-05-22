@@ -22,7 +22,7 @@
 #endif
 
 
-#define limitDefaultFetch	100
+//#define limitDefaultFetch	100
 #define sizeDefaultBatch	10
 
 
@@ -82,7 +82,7 @@
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;
 
-- (void)startByPerformingDefaultFetchedResults;
+- (void)startByFetchingDefaultResults;
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
 
 - (void)parseFromCSVfileName:(NSString*)csvFileName;
