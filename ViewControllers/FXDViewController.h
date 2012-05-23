@@ -66,10 +66,6 @@
 
 #pragma mark - Category
 @interface UIViewController (Added)
-#pragma mark - Memory management
-- (void)nilifyIBOutlets;
-
-#pragma mark - Public
 + (FXDNavigationController*)navigationControllerUsingInitializedInterface;	// Using self instance as a root of navigationController
 
 - (void)customizeBackBarbuttonWithDefaultImagesForTarget:(id)target shouldHideForRoot:(BOOL)shouldHideForRoot;

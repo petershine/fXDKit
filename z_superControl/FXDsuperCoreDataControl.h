@@ -49,14 +49,12 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (retain, nonatomic) NSString *defaultEntityName;
-@property (retain, nonatomic) NSArray *defaultSortDescriptorKeys;
-@property (retain, nonatomic) NSFetchedResultsController *defaultFetchedResults;
+@property (strong, nonatomic) NSString *defaultEntityName;
+@property (strong, nonatomic) NSArray *defaultSortDescriptorKeys;
+@property (strong, nonatomic) NSFetchedResultsController *defaultFetchedResults;
 
-@property (retain, nonatomic) NSMutableArray *fieldKeys;
-@property (retain, nonatomic) NSMutableArray *fieldValues;
-
-// Controllers
+@property (strong, nonatomic) NSMutableArray *fieldKeys;
+@property (strong, nonatomic) NSMutableArray *fieldValues;
 
 
 #pragma mark - Memory management

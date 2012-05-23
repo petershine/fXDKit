@@ -116,7 +116,9 @@
 	
 	id view = nil;
 	
-	NSArray *viewArray = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
+	UINib *defaultNib = [UINib nibWithNibName:nibName bundle:nil];
+	
+	NSArray *viewArray = [defaultNib instantiateWithOwner:nil options:nil];
 	
 	if (viewArray) {	
 		for (id subview in viewArray) {	//Assumes there is only one root object
@@ -152,6 +154,17 @@
 }
 
 #pragma mark -
+- (void)applyDefaultBorderLine {
+	[self applyDefaultBorderLineWithCornerRadius:radiusCorner];
+}
+
+- (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius {
+	self.layer.borderColor = [UIColor darkGrayColor].CGColor;
+	self.layer.borderWidth = 1.0;
+	self.layer.cornerRadius = radius;
+	self.clipsToBounds = YES;
+}
+
 - (void)reframeToBeAtTheCenterOfSuperview {	FXDLog_DEFAULT;
 	
 	if (self.superview) {

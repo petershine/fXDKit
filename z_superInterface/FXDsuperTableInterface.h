@@ -22,13 +22,13 @@
 }
 
 // Properties
-@property (retain, nonatomic) NSArray *rowCounts;
-@property (retain, nonatomic) NSDictionary *rowTexts;
+@property (strong, nonatomic) NSArray *rowCounts;
+@property (strong, nonatomic) NSDictionary *rowTexts;
 
-@property (retain, nonatomic) NSArray *defaultDatasource;
+@property (strong, nonatomic) NSArray *defaultDatasource;
 
 // IBOutlets
-@property (retain, nonatomic) IBOutlet UITableView *defaultTableview;
+@property (strong, nonatomic) IBOutlet UITableView *defaultTableview;
 
 
 #pragma mark - Memory management

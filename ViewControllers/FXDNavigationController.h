@@ -18,7 +18,7 @@
 // Properties
 
 // IBOutlets
-@property (retain, nonatomic) IBOutlet UIImageView *addedShadowImageview;
+@property (strong, nonatomic) IBOutlet UIImageView *addedShadowImageview;
 
 
 #pragma mark - Memory management

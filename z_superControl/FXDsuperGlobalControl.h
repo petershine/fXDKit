@@ -28,7 +28,6 @@
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
 	
-	// Controllers
 	FXDStoryboard *_mainStoryboard;
 	id _rootInterface;
 	id _homeInterface;
@@ -38,10 +37,9 @@
 @property (nonatomic, assign) BOOL didMakePurchase;
 @property (nonatomic, assign) BOOL didShareToSocialNet;
 
-// Controllers
-@property (retain, nonatomic) FXDStoryboard *mainStoryboard;
-@property (retain, nonatomic) id rootInterface;
-@property (retain, nonatomic) id homeInterface;
+@property (strong, nonatomic) FXDStoryboard *mainStoryboard;
+@property (strong, nonatomic) id rootInterface;
+@property (strong, nonatomic) id homeInterface;
 
 
 #pragma mark - Memory management

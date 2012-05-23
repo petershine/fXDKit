@@ -24,7 +24,6 @@
 @synthesize didMakePurchase = _didMakePurchase;
 @synthesize didShareToSocialNet = _didShareToSocialNet;
 
-// Controllers
 @synthesize mainStoryboard = _mainStoryboard;
 @synthesize rootInterface = _rootInterface;
 @synthesize homeInterface = _homeInterface;
@@ -36,7 +35,6 @@
 	
 	// Properties
 	
-	// Controllers
 	[_mainStoryboard release];
 	[_rootInterface release];
 	[_homeInterface release];
@@ -58,7 +56,6 @@
 		_didMakePurchase = NO;
 		_didShareToSocialNet = NO;
 		
-		// Controllers
 		_mainStoryboard = nil;
 		_rootInterface = nil;
 		_homeInterface = nil;
@@ -95,7 +92,7 @@
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-// Controllers
+#pragma mark -
 - (FXDStoryboard*)mainStoryboard {
 	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
 		//

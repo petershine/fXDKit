@@ -28,8 +28,6 @@
 @synthesize twitterAccountArray = _twitterAccountArray;
 @synthesize mainTwitterAccount = _mainTwitterAccount;
 
-// Controllers
-
 
 #pragma mark - Memory management
 - (void)dealloc {
@@ -41,9 +39,7 @@
 	
 	[_twitterAccountArray release];
 	[_mainTwitterAccount release];
-	
-    // Controllers
-	
+
     [super dealloc];
 }
 
@@ -63,8 +59,6 @@
 		
 		_twitterAccountArray = nil;
 		_mainTwitterAccount = nil;
-		
-        // Controllers
 	}
 	
 	return self;
@@ -125,8 +119,6 @@
 	
 	return _mainTwitterAccount;
 }
-
-// Controllers
 
 
 #pragma mark - Private
@@ -231,6 +223,8 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 		alertView.cancelButtonIndex = [self.twitterAccountArray count];
 		
 		[alertView show];
+		
+		[alertView release];
 	}
 	else {
 		//If no Twitter account is signed up... alert user
@@ -258,6 +252,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 		 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif		 
 	 }];
+	[defaultRequest release];
 }
 
 - (void)statusUpdateWithStatus:(NSString*)status {
@@ -281,6 +276,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 			 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif		 
 		 }];
+		[defaultRequest release];
 	}
 	else {	FXDLog_DEFAULT;
 		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
@@ -353,8 +349,6 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
 	self.twitterAccountArray = nil;
-
-	[alertView release];
 }
 
 

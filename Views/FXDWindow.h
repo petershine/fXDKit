@@ -20,7 +20,7 @@
 // Properties
 
 // IBOutlets
-@property (retain, nonatomic) IBOutlet FXDviewProgress *progressView;
+@property (strong, nonatomic) IBOutlet FXDviewProgress *progressView;
 
 
 #pragma mark - Memory management

@@ -41,7 +41,7 @@
 
 - (void)viewDidUnload {	
 	// IBOutlets
-	[self nilifyIBOutlets];
+	self.addedShadowImageview = nil;
 		
 	[super viewDidUnload];
 	
@@ -54,15 +54,8 @@
 	// Properties
 	
 	// IBOutlets
-	[self nilifyIBOutlets];
 	
 	FXDLog_SEPARATE;[super dealloc];
-}
-
-#pragma mark -
-- (void)nilifyIBOutlets {
-	// IBOutlets
-	self.addedShadowImageview = nil;
 }
 
 
@@ -175,14 +168,12 @@
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	//FXDLog_DEFAULT;	
-	[super performSegueWithIdentifier:identifier sender:sender];
-	
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	//FXDLog_DEFAULT;
+	FXDLog(@"identifier: %@", identifier);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	//FXDLog_DEFAULT;	
-	[super prepareForSegue:segue sender:sender];
-	
+	FXDLog(@"segue identifier: %@ sourceViewController: %@ destinationViewController: %@", segue.identifier, segue.sourceViewController, segue.destinationViewController);
 }
 
 

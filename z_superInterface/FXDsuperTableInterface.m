@@ -39,6 +39,7 @@
 
 - (void)viewDidUnload {	// Release any retained subviews of the main view.	
 	// IBOutlets
+	self.defaultTableview = nil;
 	
 	[super viewDidUnload];
 }
@@ -55,14 +56,6 @@
 	// IBOutlets
 	
 	[super dealloc];
-}
-
-#pragma mark -
-- (void)nilifyIBOutlets {	
-	// IBOutlets
-	self.defaultTableview = nil;
-	
-	[super nilifyIBOutlets];
 }
 
 
@@ -85,7 +78,33 @@
 
 
 #pragma mark - Accessor overriding
+- (NSArray*)rowCounts {
+	
+	if (_rowCounts == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _rowCounts;
+}
 
+- (NSDictionary*)rowTexts {
+	
+	if (_rowTexts == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _rowTexts;
+}
+
+#pragma mark -
+- (NSArray*)defaultDatasource {
+	
+	if (_defaultDatasource == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _defaultDatasource;
+}
 
 #pragma mark - at loadView
 

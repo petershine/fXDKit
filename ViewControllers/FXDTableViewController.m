@@ -40,7 +40,6 @@
 
 - (void)viewDidUnload {	// Release any retained subviews of the main view.
 	// IBOutlets
-	[self nilifyIBOutlets];
 	
 	[super viewDidUnload];
 	
@@ -53,15 +52,8 @@
 	// Properties
 	
 	// IBOutlets
-	[self nilifyIBOutlets];
 	
 	FXDLog_SEPARATE;[super dealloc];
-}
-
-#pragma mark -
-- (void)nilifyIBOutlets {	FXDLog_DEFAULT;
-	// IBOutlets
-    // self.myOutlet = nil;
 }
 
 

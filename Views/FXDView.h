@@ -54,6 +54,8 @@
 + (id)viewFromNibName:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize;
 + (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
 
+- (void)applyDefaultBorderLine;
+- (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius;
 - (void)reframeToBeAtTheCenterOfSuperview;
 
 @end

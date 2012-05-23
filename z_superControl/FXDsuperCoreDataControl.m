@@ -32,8 +32,6 @@
 @synthesize fieldKeys = _fieldKeys;
 @synthesize fieldValues = _fieldValues;
 
-// Controllers
-
 
 #pragma mark - Memory management
 - (void)dealloc {
@@ -50,9 +48,7 @@
 	
 	[_fieldKeys release];
 	[_fieldValues release];
-	
-    // Controllers
-	
+		
     [super dealloc];
 }
 
@@ -77,8 +73,6 @@
 		
 		_fieldKeys = nil;
 		_fieldValues = nil;
-		
-        // Controllers
 	}
 	
 	return self;
@@ -214,9 +208,6 @@
 	
 	return _defaultFetchedResults;
 }
-
-
-// Controllers
 
 
 #pragma mark - Private

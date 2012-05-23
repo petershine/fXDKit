@@ -17,7 +17,7 @@
 }
 
 // Properties
-@property (retain, nonatomic) id addedObj;
+@property (strong, nonatomic) id addedObj;
 
 // IBOutlets
 

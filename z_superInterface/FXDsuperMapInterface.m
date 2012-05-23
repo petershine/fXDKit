@@ -35,6 +35,7 @@
 
 - (void)viewDidUnload {	// Release any retained subviews of the main view.	
 	// IBOutlets
+	self.defaultMapview = nil;
 	
 	[super viewDidUnload];
 }
@@ -47,14 +48,6 @@
 	// IBOutlets
 	
 	[super dealloc];
-}
-
-#pragma mark -
-- (void)nilifyIBOutlets {	
-	// IBOutlets
-	self.defaultMapview = nil;
-	
-	[super nilifyIBOutlets];
 }
 
 

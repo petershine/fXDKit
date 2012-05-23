@@ -41,7 +41,6 @@
 - (void)viewDidUnload {
 	
 	// IBOutlets
-	[self nilifyIBOutlets];
 		
 	[super viewDidUnload];
 	
@@ -54,7 +53,6 @@
 	// Properties
 	
 	// IBOutlets
-	[self nilifyIBOutlets];
 	
 	FXDLog_SEPARATE;[super dealloc];
 }
@@ -72,19 +70,20 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
-	NSString *filename = nil;
-	NSString *resourcePath = nil;
 	
 	if (nibNameOrNil == nil) {
+		NSString *filename = nil;
+		NSString *resourcePath = nil;
+		
 		filename = NSStringFromClass([self class]);
 		resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
 		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
 			nibNameOrNil = filename;
 		}
+		
+		FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
 	}
-	
-	FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
 	
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	
@@ -205,13 +204,11 @@
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	FXDLog(@"identifier: %@", identifier);
 	
-	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
 	FXDLog(@"segue identifier: %@ sourceViewController: %@ destinationViewController: %@", segue.identifier, segue.sourceViewController, segue.destinationViewController);
 	
-	[super prepareForSegue:segue sender:sender];
 }
 
 	 
@@ -238,14 +235,6 @@
 
 #pragma mark - Category
 @implementation UIViewController (Added)
-#pragma mark - Memory management
-- (void)nilifyIBOutlets {	FXDLog_DEFAULT;	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// IBOutlets
-}
-
-#pragma mark - Public
 + (FXDNavigationController*)navigationControllerUsingInitializedInterface {
 	FXDViewController *initializedInterface = [[self alloc] initWithNibName:nil bundle:nil];
 	

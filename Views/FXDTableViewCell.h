@@ -30,10 +30,10 @@ typedef enum {
 // Properties
 @property (nonatomic, assign) SECTION_POSITION_TYPE sectionPositionType;
 
-@property (retain, nonatomic) id addedObj;
+@property (strong, nonatomic) id addedObj;
 
 // IBOutlets
-@property (retain, nonatomic) IBOutlet UIImageView *backgroundImageview;
+@property (strong, nonatomic) IBOutlet UIImageView *backgroundImageview;
 
 
 #pragma mark - Memory management

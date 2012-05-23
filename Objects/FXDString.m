@@ -22,8 +22,6 @@
 #pragma mark Synthesizing
 // Properties
 
-// Controllers
-
 
 #pragma mark - Memory management
 - (void)dealloc {	
@@ -31,7 +29,6 @@
 	
 	// Properties
 	
-    // Controllers
 	
 	[super dealloc];
 }
@@ -47,8 +44,6 @@
 		// Instance variables
 		
 		// Properties
-		
-        // Controllers
 	}
 	
 	return self;
@@ -56,8 +51,6 @@
 
 #pragma mark - Accessor overriding
 // Properties
-
-// Controllers
 
 
 #pragma mark - Private

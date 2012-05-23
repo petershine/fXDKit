@@ -45,8 +45,6 @@
 @property (retain, nonatomic) NSArray *twitterAccountArray;
 @property (retain, nonatomic) ACAccount *mainTwitterAccount;
 
-// Controllers
-
 
 #pragma mark - Memory management
 

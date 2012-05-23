@@ -31,13 +31,13 @@
 @property (nonatomic, assign) NSInteger httpContentLength;
 @property (nonatomic, assign) NSInteger receivedDataLength;
 
-@property (retain, nonatomic) NSURL *httpURL;
-@property (retain, nonatomic) NSMutableURLRequest *httpRequest;
-@property (retain, nonatomic) NSURLConnection *httpConnection;
+@property (strong, nonatomic) NSURL *httpURL;
+@property (strong, nonatomic) NSMutableURLRequest *httpRequest;
+@property (strong, nonatomic) NSURLConnection *httpConnection;
 
-@property (retain, nonatomic) NSMutableData *receivedData;
+@property (strong, nonatomic) NSMutableData *receivedData;
 
-@property (retain, nonatomic) FXDsuperHTTPControl *nextHttpControl;
+@property (strong, nonatomic) FXDsuperHTTPControl *nextHttpControl;
 
 
 #pragma mark - Memory managment
