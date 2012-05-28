@@ -30,14 +30,24 @@
 
 #if USE_FXDLog
 	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", strClassSelector)
-	#define FXDLog_SEPARATE	FXDLog(@"\n\n__  %@  __", strClassSelector)
+
+	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", strClassSelector)
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@ : %@ __", strClassSelector, NSStringFromCGRect(self.view.frame))
+
+	#define FXDLog_VIEW_FRAME	FXDLog(@" ");FXDLog(@"%@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
+
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
 	#define FXDLog_ERROR	FXDLog(@"error code: %d\nlocalizedDescription: %@\nuserInfo: %@",[error code],[error localizedDescription],[error userInfo])
 
 #else
 	#define FXDLog_DEFAULT
+
 	#define FXDLog_SEPARATE
+	#define FXDLog_SEPARATE_FRAME
+
+	#define FXDLog_VIEW_FRAME
+
 	#define FXDLog_OVERRIDE
 
 	#define FXDLog_ERROR
@@ -45,8 +55,8 @@
 #endif
 
 
-#ifndef registeredApplicationId
-	#define registeredApplicationId	512128030
+#ifndef application_AppStoreID
+	#define application_AppStoreID	512128030
 #endif
 
 #define versionMaximumSupported	5.0

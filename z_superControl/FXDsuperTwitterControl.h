@@ -39,11 +39,11 @@
 }
 
 // Properties
-@property (retain, nonatomic) ACAccountStore *accountStore;
-@property (retain, nonatomic) ACAccountType *accountType;
+@property (strong, nonatomic) ACAccountStore *accountStore;
+@property (strong, nonatomic) ACAccountType *accountType;
 
-@property (retain, nonatomic) NSArray *twitterAccountArray;
-@property (retain, nonatomic) ACAccount *mainTwitterAccount;
+@property (strong, nonatomic) NSArray *twitterAccountArray;
+@property (strong, nonatomic) ACAccount *mainTwitterAccount;
 
 
 #pragma mark - Memory management

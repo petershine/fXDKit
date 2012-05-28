@@ -19,6 +19,7 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize segueIdentifiers = _segueIdentifiers;
 
 // IBOutlets
 
@@ -38,7 +39,7 @@
 	FXDLog_SEPARATE;
 }
 
-- (void)viewDidUnload {	// Release any retained subviews of the main view.
+- (void)viewDidUnload {
 	// IBOutlets
 	
 	[super viewDidUnload];
@@ -50,6 +51,7 @@
 	// Instance variables
 	
 	// Properties
+	[_segueIdentifiers release];
 	
 	// IBOutlets
 	
@@ -76,12 +78,21 @@
 	// Instance variables
 	
 	// Properties
+	_segueIdentifiers = nil;
 	
 	// IBOutlets
 }
 
 
 #pragma mark - Accessor overriding
+- (NSDictionary*)segueIdentifiers {
+	
+	if (_segueIdentifiers == nil) {	FXDLog_OVERRIDE;
+		
+	}
+	
+	return _segueIdentifiers;
+}
 
 
 #pragma mark - at autoRotate
@@ -97,68 +108,50 @@
 	}
 	
 #if ForDEVELOPER
+	FXDLog_DEFAULT;
+	FXDLog(@"shouldAutorotateToInterfaceOrientation: %d %@ %@", interfaceOrientation, shouldAutorotate ? @"YES":@"NO", NSStringFromCGRect(self.view.frame));
+	
 	shouldAutorotate = YES;
 #endif
-	
-	if (shouldAutorotate) {	FXDLog_DEFAULT;
-		//
-	}
 	
 	return shouldAutorotate;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f", toInterfaceOrientation, duration);
+	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f %@", toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f", interfaceOrientation, duration);
+	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f %@", interfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"didRotate fromInterfaceOrientation: %d", fromInterfaceOrientation);
+	FXDLog(@"didRotate fromInterfaceOrientation: %d %@", fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
 }
 
 
 #pragma mark - at loadView
-- (void)loadView {	FXDLog_SEPARATE;
-	[super loadView];
+#if ForDEVELOPER
+- (void)loadView {
+	[super loadView];	FXDLog_SEPARATE_FRAME;
 	
-	// Implement loadView to create a view hierarchy programmatically, without using a nib.
 }
+#endif
 
 
 #pragma mark - at viewDidLoad
-- (void)viewDidLoad {	FXDLog_SEPARATE;
-    [super viewDidLoad];
-	
-	FXDLog(@"self.view.frame: %@", NSStringFromCGRect(self.view.frame));
-	
-	
-	[self startObservingNotifications];
-	
-	[self customizeNavigationBar];
-	
-	[self refreshInterface];
-}
-
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE;
-	[super viewWillAppear:animated];
+- (void)viewDidLoad {
+    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
 	
 }
 
-- (void)viewWillLayoutSubviews {	//FXDLog_SEPARATE;
-	[super viewWillLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];	FXDLog_SEPARATE_FRAME;
 	
 }
 
-- (void)viewDidLayoutSubviews {	//FXDLog_SEPARATE;
-	[super viewDidLayoutSubviews];
-	
-}
-
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE;
-	[super viewDidAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];	FXDLog_SEPARATE_FRAME;
 	
 }
 
@@ -177,27 +170,15 @@
 
 
 #pragma mark - Overriding
-- (void)startObservingNotifications {
-	[super startObservingNotifications];
-}
-
-- (void)customizeNavigationBar {
-	[super customizeNavigationBar];
-}
-
-- (void)refreshInterface {
-	[super refreshInterface];
-}
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;	
-	[super performSegueWithIdentifier:identifier sender:sender];
-	
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;	
-	[super prepareForSegue:segue sender:sender];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"segue: %@", segue);
+	FXDLog(@"identifier: %@", segue.identifier);
+	FXDLog(@"source: %@", segue.sourceViewController);
+	FXDLog(@"destination: %@", segue.destinationViewController);
+	FXDLog(@"sender: %@", sender);
 	
 }
 
@@ -212,25 +193,6 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	NSInteger numberOfSections = [super numberOfSectionsInTableView:tableView];
-	
-	return numberOfSections;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSInteger numberOfRows = [super tableView:tableView numberOfRowsInSection:section];
-	
-	return numberOfRows;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	FXDTableViewCell *cell = (FXDTableViewCell*)[super tableView:tableView cellForRowAtIndexPath:indexPath];
-	
-	return cell;
-}
-
-
 #pragma mark - UITableViewDelegate
 
 

@@ -28,6 +28,8 @@
 
 #import "FXDColor.h"
 #import "FXDImage.h"
+
+#import "FXDStoryboardSegue.h"
 #import "FXDStoryboard.h"
 
 #import "FXDManagedObject.h"
@@ -51,6 +53,8 @@
 #import "FXDWindow.h"
 
 #import "FXDAnnotationView.h"
+
+#import "FXDMapView.h"
 
 
 // ViewControllers

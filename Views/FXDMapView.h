@@ -1,26 +1,27 @@
 //
-//  FXDTableViewController.h
+//  FXDMapView.h
 //  PopTooUniversal
 //
-//  Created by Peter SHINe on 4/26/12.
+//  Created by Peter SHINe on 5/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 
-@interface FXDTableViewController : UITableViewController {
+@interface FXDMapView : MKMapView {
     // Primitives
 	
 	// Instance variables
 	
     // Properties : For subclass to be able to reference
-	NSDictionary *_segueIdentifiers;
+	CGRect _logoInitialFrame;
+	CGPoint _logoOffset;
 }
 
 // Properties
-@property (strong, nonatomic) NSDictionary *segueIdentifiers;
+@property (assign, nonatomic) CGRect logoInitialFrame;
+@property (assign, nonatomic) CGPoint logoOffset;
 
 // IBOutlets
 
@@ -32,20 +33,10 @@
 #pragma mark - Accessor overriding
 
 
-#pragma mark - at loadView
-
-#pragma mark - at autoRotate
-
-#pragma mark - at viewDidLoad
-
-
 #pragma mark - Private : if declared here, it's for subclass to be able to use these
 
 
 #pragma mark - Overriding
-
-
-#pragma mark - Segues
 
 
 #pragma mark - IBActions
@@ -57,12 +48,12 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UITableViewDataSource
-#pragma mark - UITableViewDelegate
 
 
 @end
 
 #pragma mark - Category
-@interface UITableViewController (Added)
+@interface MKMapView (Added)
+- (UIImageView*)logoImageView;
+
 @end

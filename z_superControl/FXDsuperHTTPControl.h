@@ -28,8 +28,8 @@
 }
 
 // Properties
-@property (nonatomic, assign) NSInteger httpContentLength;
-@property (nonatomic, assign) NSInteger receivedDataLength;
+@property (assign, nonatomic) NSInteger httpContentLength;
+@property (assign, nonatomic) NSInteger receivedDataLength;
 
 @property (strong, nonatomic) NSURL *httpURL;
 @property (strong, nonatomic) NSMutableURLRequest *httpRequest;

@@ -1,20 +1,18 @@
 //
-//  FXDObject.h
+//  FXDStoryboardSegue.h
+//  PopTooUniversal
 //
-//
-//  Created by petershine on 10/21/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
+//  Created by Peter SHINe on 5/27/12.
+//  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
-
-@interface FXDObject : NSObject {
+@interface FXDStoryboardSegue : UIStoryboardSegue {
     // Primitives
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
+    // Properties : For subclass to be able to reference
 }
 
 // Properties
@@ -23,6 +21,8 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
+
+#pragma mark - Accessor overriding
 
 
 #pragma mark - Private : if declared here, it's for subclass to be able to use these

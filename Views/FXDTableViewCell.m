@@ -38,7 +38,6 @@
 	// IBOutlets
 	[backgroundImageview release];
 	
-    //FXDLog_DEFAULT;
 	[super dealloc];
 }
 
@@ -118,6 +117,8 @@
 - (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage {	//FXDLog_DEFAULT;
 	
 	if (image) {
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		
 		if (self.backgroundImageview == nil) {
 			self.backgroundImageview = [[[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage] autorelease];
 			
@@ -141,6 +142,8 @@
 			[self.backgroundImageview removeFromSuperview];
 			
 			self.backgroundImageview = nil;
+			
+			self.selectionStyle = UITableViewCellSelectionStyleBlue;
 		}
 	}
 }

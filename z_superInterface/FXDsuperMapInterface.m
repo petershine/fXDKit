@@ -25,7 +25,7 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	// Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 	
     // Release any cached data, images, etc that aren't in use.
@@ -33,7 +33,7 @@
 	// Properties
 }
 
-- (void)viewDidUnload {	// Release any retained subviews of the main view.	
+- (void)viewDidUnload {
 	// IBOutlets
 	self.defaultMapview = nil;
 	

@@ -82,6 +82,14 @@
 		bundledImage = [UIImage imageNamed:imageName];
 	}
 	
+	/*
+#if ForDEVELOPER
+	if (bundledImage == nil) {
+		FXDLog(@"imageName: %@ bundledImage: %@", imageName, bundledImage);
+	}
+#endif
+	 */
+	
 	return bundledImage;
 }
 

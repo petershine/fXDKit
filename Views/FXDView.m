@@ -77,15 +77,20 @@
 
 
 #pragma mark - Overriding
-- (void)layoutSubviews {	FXDLog_DEFAULT;
-	[super layoutSubviews];
+#if ForDEVELOPER
+- (void)layoutSubviews {
+	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
+	
+	// Implement or Erase
 	
 }
 
-- (void)drawRect:(CGRect)rect {	FXDLog_DEFAULT;
-	[super drawRect:rect];
+- (void)drawRect:(CGRect)rect {
+	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
 	
+	// Implement or Erase
 }
+#endif
 
 
 #pragma mark - Public
@@ -101,14 +106,6 @@
 
 #pragma mark - Category
 @implementation UIView (Added)
-+ (id)viewFromDefaultNib {	
-	NSString *nibName = NSStringFromClass([self class]);
-	
-	id view = [self viewFromNibName:nibName];
-	
-	return view;
-}
-
 + (id)viewFromNibName:(NSString*)nibName {
 	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
@@ -131,16 +128,6 @@
 			}
 		}
 	}
-	
-	return view;
-}
-
-+ (id)viewFromNibName:(NSString*)nibName forModifiedSize:(CGSize)modifiedSize {
-	id view = [self viewFromNibName:nibName];
-	
-	CGRect modifiedFrame = [(UIView*)view frame];
-	modifiedFrame.size = modifiedSize;
-	[(UIView*)view setFrame:modifiedFrame];
 	
 	return view;
 }

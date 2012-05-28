@@ -24,9 +24,11 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
+	// Properties : For subclass to be able to reference	
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
+	
+	NSString *_deviceLanguageCode;
 	
 	FXDStoryboard *_mainStoryboard;
 	id _rootInterface;
@@ -34,8 +36,10 @@
 }
 
 // Properties
-@property (nonatomic, assign) BOOL didMakePurchase;
-@property (nonatomic, assign) BOOL didShareToSocialNet;
+@property (assign, nonatomic) BOOL didMakePurchase;
+@property (assign, nonatomic) BOOL didShareToSocialNet;
+
+@property (strong, nonatomic) NSString *deviceLanguageCode;
 
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) id rootInterface;
@@ -58,13 +62,14 @@
 + (void)releaseSharedInstance;
 
 
-+ (NSString*)deviceModelName;
-
 + (BOOL)isOSversionNew;
+
++ (NSString*)deviceModelName;
 
 + (NSString*)deviceCountryCode;
 
-+ (NSString*)firstLanguageIdentifier;
++ (NSString*)deviceLanguageCode;
+
 
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title;
 
@@ -80,7 +85,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedApplicationDidEnterBackground:(id)notification;
+
 
 //MARK: - Delegate implementation
 #pragma mark - UIAlertViewDelegate

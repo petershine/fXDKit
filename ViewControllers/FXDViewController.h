@@ -6,22 +6,23 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDColor.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-#import "FXDNavigationController.h"
-#import "FXDAlertView.h"
-#import "FXDActionSheet.h"
+@class FXDNavigationController;
 
 
-@interface FXDViewController : UIViewController <UIAlertViewDelegate, UIActionSheetDelegate> {
+@interface FXDViewController : UIViewController {
     // Primitives
 	
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
+	NSDictionary *_segueIdentifiers;
 }
 
 // Properties
+@property (strong, nonatomic) NSDictionary *segueIdentifiers;
 
 // IBOutlets
 
@@ -58,8 +59,7 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UIAlertViewDelegate
-#pragma mark - UIActionSheetDelegate
+
 
 @end
 
@@ -80,11 +80,6 @@
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;
 - (IBAction)popInterfaceWithAnimation:(id)sender;
 - (IBAction)dismissInterfaceWithAnimation:(id)sender;
-
-
-- (void)startObservingNotifications;
-- (void)customizeNavigationBar;
-- (void)refreshInterface;
 
 
 @end

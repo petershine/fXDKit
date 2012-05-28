@@ -80,7 +80,7 @@
 	return self;
 }
 
-- (void)awakeFromNib {	//FXDLog_SEPARATE;
+- (void)awakeFromNib {	FXDLog_SEPARATE;
 	[super awakeFromNib];
 	
 	// Primitives
@@ -93,19 +93,24 @@
 }
 
 
+#pragma mark - Accessor overriding
+
+
 #pragma mark - at loadView
-- (void)loadView {	//FXDLog_SEPARATE;
-	[super loadView];
+#if ForDEVELOPER
+- (void)loadView {
+	[super loadView];	FXDLog_SEPARATE_FRAME;
 	
 }
+#endif
 
 
 #pragma mark - at autoRotate
 
 
 #pragma mark - at viewDidLoad
-- (void)viewDidLoad {	//FXDLog_SEPARATE;
-    [super viewDidLoad];
+- (void)viewDidLoad {
+    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
 	
 	/*
 	 NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -130,36 +135,6 @@
 #endif
 }
 
-- (void)viewWillAppear:(BOOL)animated {	//FXDLog_SEPARATE;
-	[super viewWillAppear:animated];
-	
-}
-
-- (void)viewWillLayoutSubviews {	//FXDLog_SEPARATE;
-	[super viewWillLayoutSubviews];
-	
-}
-
-- (void)viewDidLayoutSubviews {	//FXDLog_SEPARATE;
-	[super viewDidLayoutSubviews];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated {	//FXDLog_SEPARATE;
-	[super viewDidAppear:animated];
-	
-}
-
-- (void)viewWillDisappear:(BOOL)animated {	//FXDLog_DEFAULT;
-	[super viewWillDisappear:animated];
-	
-}
-
-- (void)viewDidDisappear:(BOOL)animated {	//FXDLog_DEFAULT;
-	[super viewDidDisappear:animated];
-	
-}
-
 
 #pragma mark - Private
 
@@ -168,13 +143,6 @@
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	//FXDLog_DEFAULT;
-	FXDLog(@"identifier: %@", identifier);
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	//FXDLog_DEFAULT;	
-	FXDLog(@"segue identifier: %@ sourceViewController: %@ destinationViewController: %@", segue.identifier, segue.sourceViewController, segue.destinationViewController);
-}
 
 
 #pragma mark - IBActions

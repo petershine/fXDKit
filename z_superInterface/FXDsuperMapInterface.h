@@ -24,7 +24,7 @@
 // Properties
 
 // IBOutlets
-@property (retain, nonatomic) IBOutlet MKMapView *defaultMapview;
+@property (strong, nonatomic) IBOutlet FXDMapView *defaultMapview;
 
 
 #pragma mark - Memory management

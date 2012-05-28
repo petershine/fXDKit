@@ -28,7 +28,7 @@ typedef enum {
 }
 
 // Properties
-@property (nonatomic, assign) SECTION_POSITION_TYPE sectionPositionType;
+@property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
 @property (strong, nonatomic) id addedObj;
 

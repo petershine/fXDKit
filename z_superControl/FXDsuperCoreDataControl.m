@@ -35,6 +35,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	// Instance variables
 	
 	// Properties
@@ -58,6 +60,11 @@
 	self = [super init];
 	
 	if (self) {
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(observedApplicationDidEnterBackground:)
+													 name:UIApplicationDidEnterBackgroundNotification
+												   object:nil];
+
 		// Primitives
 		
 		// Instance variables
@@ -240,15 +247,6 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 }
 
 #pragma mark -
-+ (NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
-	return [[self sharedInstance] managedObjectContext];
-}
-
-+ (void)saveManagedObjectContext {	FXDLog_SEPARATE;
-	[[self sharedInstance] saveContext];
-}
-
-#pragma mark -
 - (void)saveContext {	FXDLog_SEPARATE;
     NSError *error = nil;
 	
@@ -342,6 +340,10 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 }
 
 //MARK: - Observer implementation
+- (void)observedApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
+	[self saveContext];
+	
+}
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -367,11 +369,11 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	FXDLog(@"csvFile: %@", csvFile);
 }
 
-- (void) parser:(CHCSVParser *)parser didStartLine:(NSUInteger)lineNumber {
+- (void) parser:(CHCSVParser *)parser didStartLine:(NSUInteger)lineNumber {	FXDLog_OVERRIDE;
 	
 }
 
-- (void) parser:(CHCSVParser *)parser didReadField:(NSString *)field {
+- (void) parser:(CHCSVParser *)parser didReadField:(NSString *)field {	//FXDLog_DEFAULT;
 	//FXDLog(@"field: %@", field);
 	
 	if (self.fieldValues == nil) {
@@ -381,7 +383,7 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	[self.fieldValues addObject:field];
 }
 
-- (void) parser:(CHCSVParser *)parser didEndLine:(NSUInteger)lineNumber {
+- (void) parser:(CHCSVParser *)parser didEndLine:(NSUInteger)lineNumber {	//FXDLog_DEFAULT;
 	//FXDLog(@"lineNumber: %u\n%@", lineNumber, self.fieldValues);
 	
 	if (lineNumber == 1) {	// Assume this is key line

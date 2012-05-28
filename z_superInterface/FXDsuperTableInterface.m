@@ -20,7 +20,7 @@
 #pragma mark Synthesizing
 // Properties
 @synthesize rowCounts = _rowCounts;
-@synthesize rowTexts = _rowTexts;
+@synthesize cellTexts = _cellTexts;
 
 @synthesize defaultDatasource = _defaultDatasource;
 
@@ -29,7 +29,7 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	// Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 	
     // Release any cached data, images, etc that aren't in use.
@@ -37,7 +37,7 @@
 	// Properties
 }
 
-- (void)viewDidUnload {	// Release any retained subviews of the main view.	
+- (void)viewDidUnload {
 	// IBOutlets
 	self.defaultTableview = nil;
 	
@@ -49,7 +49,7 @@
 	
 	// Properties
 	[_rowCounts release];
-	[_rowTexts  release];
+	[_cellTexts  release];
 	
 	[_defaultDatasource release];
 	
@@ -69,7 +69,7 @@
 	
 	// Properties
 	_rowCounts = nil;
-	_rowTexts = nil;
+	_cellTexts = nil;
 	
 	_defaultDatasource = nil;
 	
@@ -89,11 +89,11 @@
 
 - (NSDictionary*)rowTexts {
 	
-	if (_rowTexts == nil) {	FXDLog_OVERRIDE;
+	if (_cellTexts == nil) {	FXDLog_OVERRIDE;
 		//
 	}
 	
-	return _rowTexts;
+	return _cellTexts;
 }
 
 #pragma mark -
@@ -105,6 +105,7 @@
 	
 	return _defaultDatasource;
 }
+
 
 #pragma mark - at loadView
 
@@ -152,7 +153,6 @@
 
 #pragma mark - Public
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
-	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	
 	NSInteger rowCount = [[self.rowCounts objectAtIndex:indexPath.section] integerValue];
 	
@@ -175,7 +175,7 @@
 	UIImage *highlightedImage = [self selectedBackgroundImageForCellAtIndexPath:indexPath];
 	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
 	
-	cell.textLabel.text = [self textForCellAtIndexPath:indexPath];
+	cell.textLabel.text = [self cellTextAtIndexPath:indexPath];
 	
 	UIImage *mainImage = [self mainImageForCellAtIndexPath:indexPath];
 	UIImage *highlightedMainImage = [self highlightedMainImageForCellAtIndexPath:indexPath];
@@ -185,7 +185,7 @@
 }
 
 #pragma mark -
-- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
+- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
@@ -197,16 +197,16 @@
 	return backgroundImage;
 }
 
-- (NSString*)textForCellAtIndexPath:(NSIndexPath*)indexPath {
-	NSString *textForCell = nil;
+- (NSString*)cellTextAtIndexPath:(NSIndexPath*)indexPath {
+	NSString *cellText = nil;
 	
-	if (self.rowTexts) {				
+	if (self.cellTexts) {				
 		NSString *keyForObj = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
 		
-		textForCell = [self.rowTexts objectForKey:keyForObj];
+		cellText = [self.cellTexts objectForKey:keyForObj];
 	}
 	
-	return textForCell;
+	return cellText;
 }
 
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -233,7 +233,7 @@
 	return highlightedMainImage;
 }
 
-- (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath {
 	id accessoryView = nil;
 	
 #ifdef imagenameCellArrow
@@ -287,7 +287,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	static NSString *identifier = @"TableViewCellIdentifier";
+	static NSString *identifier = @"cellIdentifier";
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	
@@ -295,6 +295,8 @@
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
 		[cell autorelease];
 	}
+	
+	[self configureCell:cell forIndexPath:indexPath];
 	
 	return cell;
 }

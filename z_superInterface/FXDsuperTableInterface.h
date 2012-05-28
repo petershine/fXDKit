@@ -16,14 +16,14 @@
 	
 	// Properties : For subclass to be able to reference
 	NSArray *_rowCounts;
-	NSDictionary *_rowTexts;
+	NSDictionary *_cellTexts;
 	
 	NSArray *_defaultDatasource;
 }
 
 // Properties
 @property (strong, nonatomic) NSArray *rowCounts;
-@property (strong, nonatomic) NSDictionary *rowTexts;
+@property (strong, nonatomic) NSDictionary *cellTexts;
 
 @property (strong, nonatomic) NSArray *defaultDatasource;
 
@@ -59,7 +59,7 @@
 
 - (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
-- (NSString*)textForCellAtIndexPath:(NSIndexPath*)indexPathgi;
+- (NSString*)cellTextAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath;

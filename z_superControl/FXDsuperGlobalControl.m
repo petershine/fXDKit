@@ -24,6 +24,8 @@
 @synthesize didMakePurchase = _didMakePurchase;
 @synthesize didShareToSocialNet = _didShareToSocialNet;
 
+@synthesize deviceLanguageCode = _deviceLanguageCode;
+
 @synthesize mainStoryboard = _mainStoryboard;
 @synthesize rootInterface = _rootInterface;
 @synthesize homeInterface = _homeInterface;
@@ -34,6 +36,7 @@
 	// Instance variables
 	
 	// Properties
+	[_deviceLanguageCode release];
 	
 	[_mainStoryboard release];
 	[_rootInterface release];
@@ -53,6 +56,8 @@
 		// Instance variables
 		
 		// Properties
+		_deviceLanguageCode = nil;
+		
 		_didMakePurchase = NO;
 		_didShareToSocialNet = NO;
 		
@@ -90,6 +95,27 @@
 	
 	[[NSUserDefaults standardUserDefaults] setBool:_didShareToSocialNet forKey:userdefaultBoolKeyDidShareToSocialNet];
 	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark -
+- (NSString*)deviceLanguageCode {
+	
+	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
+		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
+		
+		_deviceLanguageCode = [languages objectAtIndex:0];
+		
+		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
+			_deviceLanguageCode = @"ch";
+		}
+		else if ([_deviceLanguageCode isEqualToString:@"zh-Hant"]) {
+			_deviceLanguageCode = @"tw";
+		}
+		
+		FXDLog(@"_deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
+	}
+	
+	return _deviceLanguageCode;
 }
 
 #pragma mark -
@@ -160,6 +186,19 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 }
 
 #pragma mark -
++ (BOOL)isOSversionNew {	
+	BOOL isNewVersion = NO;
+	
+	NSString *systemVersionString = [[UIDevice currentDevice] systemVersion];
+	
+	if ([systemVersionString floatValue] >= versionMaximumSupported) {
+		isNewVersion = YES;
+	}
+	
+	return isNewVersion;
+}
+
+#pragma mark -
 + (NSString*)deviceModelName {
 	/*
 	 @"i386"      on the simulator
@@ -226,19 +265,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 }
 
 #pragma mark -
-+ (BOOL)isOSversionNew {	
-	BOOL isNewVersion = NO;
-	
-	NSString *systemVersionString = [[UIDevice currentDevice] systemVersion];
-	
-	if ([systemVersionString floatValue] >= versionMaximumSupported) {
-		isNewVersion = YES;
-	}
-		
-	return isNewVersion;
-}
-
-#pragma mark -
 + (NSString*)deviceCountryCode {
 	NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
 	
@@ -250,10 +276,8 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 }
 
 #pragma mark -
-+ (NSString*)firstLanguageIdentifier {
-	NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-	
-	NSString *firstLanguage = [languages objectAtIndex:0];
++ (NSString*)deviceLanguageCode {	
+	NSString *firstLanguage = [self sharedInstance].deviceLanguageCode;
 	
 	return firstLanguage;
 }
@@ -296,9 +320,8 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 
 #pragma mark -
 + (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
-	FXDsuperGlobalControl *globalControl = [self sharedInstance];
 	
-	[globalControl presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
+	[[self sharedInstance] presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
 }
 
 #pragma mark -
@@ -317,8 +340,8 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 		
 	NSArray *toRecipients = [NSArray arrayWithObjects:mailAddr, nil];
 
-#ifdef appname_Displayed
-	NSString *bundleName = appname_Displayed;
+#ifdef application_DisplayedName
+	NSString *bundleName = application_DisplayedName;
 #else
 	NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];	
 #endif
@@ -376,7 +399,7 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
 	[emailInterface autorelease];
 	
-	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", appname_Displayed]];
+	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayedName]];
 	
 	if (image) {		
 		[emailInterface addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];
@@ -413,15 +436,17 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 		
 		[emailInterface setMailComposeDelegate:self];
 		
-		[presentingInterface presentModalViewController:emailInterface animated:YES];
+		[presentingInterface presentViewController:emailInterface
+										  animated:YES
+										completion:^{
+											//OK
+										}];
 	}
 }
 
 
 //MARK: - Observer implementation
-- (void)observedApplicationDidEnterBackground:(id)notification {	FXDLog_OVERRIDE;
-	
-}
+
 
 //MARK: - Delegate implementation
 #pragma mark - UIAlertViewDelegate

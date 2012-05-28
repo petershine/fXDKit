@@ -74,9 +74,6 @@
 + (FXDsuperCoreDataControl*)sharedInstance;
 + (void)releaseSharedInstance;
 
-+ (NSManagedObjectContext*)managedObjectContext;
-+ (void)saveManagedObjectContext;
-
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;
 
@@ -89,6 +86,7 @@
 
 
 //MARK: - Observer implementation
+- (void)observedApplicationDidEnterBackground:(id)notification;
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate

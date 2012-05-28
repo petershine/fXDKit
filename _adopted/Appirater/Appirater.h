@@ -46,7 +46,7 @@ extern NSString *const kAppiraterDeclinedToRate;
 /*
  Place your Apple generated software id here.
  */
-#define APPIRATER_APP_ID				registeredApplicationId
+#define APPIRATER_APP_ID				application_AppStoreID
 
 /*
  Your app's name.
@@ -62,7 +62,7 @@ extern NSString *const kAppiraterDeclinedToRate;
 /*
  This is the title of the message alert that users will see.
  */
-#define APPIRATER_MESSAGE_TITLE			text_PleaseReviewThisApp	//[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
+#define APPIRATER_MESSAGE_TITLE			alert_PleaseReviewThisApp	//[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
 
 /*
  The text of the button that rejects reviewing the app.

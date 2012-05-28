@@ -6,6 +6,9 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 
 @interface FXDNavigationController : UINavigationController {
     // Primitives

@@ -19,6 +19,7 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize segueIdentifiers = _segueIdentifiers;
 
 // IBOutlets
 
@@ -51,6 +52,7 @@
 	// Instance variables
 	
 	// Properties
+	[_segueIdentifiers release];
 	
 	// IBOutlets
 	
@@ -104,8 +106,20 @@
 	// Instance variables
 	
 	// Properties
+	_segueIdentifiers = nil;
 	
 	// IBOutlets
+}
+
+
+#pragma mark - Accessor overriding
+- (NSDictionary*)segueIdentifiers {
+	
+	if (_segueIdentifiers == nil) {	FXDLog_OVERRIDE;
+		
+	}
+	
+	return _segueIdentifiers;
 }
 
 
@@ -122,64 +136,50 @@
 	}
 	
 #if ForDEVELOPER
-	shouldAutorotate = YES;FXDLog_DEFAULT;
+	FXDLog_DEFAULT;
+	FXDLog(@"shouldAutorotateToInterfaceOrientation: %d %@ %@", interfaceOrientation, shouldAutorotate ? @"YES":@"NO", NSStringFromCGRect(self.view.frame));
+	
+	shouldAutorotate = YES;
 #endif
 	
 	return shouldAutorotate;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f", toInterfaceOrientation, duration);
+	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f %@", toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f", interfaceOrientation, duration);
+	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f %@", interfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"didRotate fromInterfaceOrientation: %d", fromInterfaceOrientation);
+	FXDLog(@"didRotate fromInterfaceOrientation: %d %@", fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
 }
 
 
 #pragma mark - at loadView
-- (void)loadView {	FXDLog_SEPARATE;
-	[super loadView];
+#if ForDEVELOPER
+- (void)loadView {
+	[super loadView];	FXDLog_SEPARATE_FRAME;
 	
 }
+#endif
 
 
 #pragma mark - at viewDidLoad
-- (void)viewDidLoad {	FXDLog_SEPARATE;
-    [super viewDidLoad];
-	
-	FXDLog(@"self.view.frame: %@", NSStringFromCGRect(self.view.frame));
-
-	
-	[self startObservingNotifications];
-	
-	[self customizeNavigationBar];
-	
-	[self refreshInterface];
-}
-
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE;
-	[super viewWillAppear:animated];
-	
-	FXDLog(@"self.view.frame: %@", NSStringFromCGRect(self.view.frame));
-}
-
-- (void)viewWillLayoutSubviews {	//FXDLog_DEFAULT;
-	[super viewWillLayoutSubviews];
+- (void)viewDidLoad {
+    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
 	
 }
 
-- (void)viewDidLayoutSubviews {	//FXDLog_DEFAULT;
-	[super viewDidLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];	FXDLog_SEPARATE_FRAME;
 	
 }
 
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE;
-	[super viewDidAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];	FXDLog_SEPARATE_FRAME;
 	
 }
 
@@ -201,13 +201,12 @@
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"identifier: %@", identifier);
-	
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"segue identifier: %@ sourceViewController: %@ destinationViewController: %@", segue.identifier, segue.sourceViewController, segue.destinationViewController);
+	FXDLog(@"segue: %@", segue);
+	FXDLog(@"identifier: %@", segue.identifier);
+	FXDLog(@"source: %@", segue.sourceViewController);
+	FXDLog(@"destination: %@", segue.destinationViewController);
+	FXDLog(@"sender: %@", sender);
 	
 }
 
@@ -221,14 +220,7 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_OVERRIDE;
-}
 
-
-#pragma mark - UIActionSheetDelegate
-- (void)actionSheet:(FXDActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_OVERRIDE;
-}
 
 @end
 
@@ -432,19 +424,6 @@
 	else {
 		[self dismissModalViewControllerAnimated:YES];
 	}
-}
-
-#pragma mark -
-- (void)startObservingNotifications {	FXDLog_DEFAULT;
-	
-}
-
-- (void)customizeNavigationBar {	FXDLog_DEFAULT;
-	
-}
-
-- (void)refreshInterface {	FXDLog_DEFAULT;
-	
 }
 
 
