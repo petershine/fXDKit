@@ -57,6 +57,9 @@
 + (void)showProgressView;
 + (void)hideProgressView;
 
+- (void)fadeInSubview:(UIView*)subview;
+- (void)fadeOutSubview:(UIView*)subview;
+
 
 @end
 

@@ -152,7 +152,7 @@
 
 
 #pragma mark - Public
-- (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
+- (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 	
 	NSInteger rowCount = [[self.rowCounts objectAtIndex:indexPath.section] integerValue];
 	
@@ -238,12 +238,21 @@
 	
 #ifdef imagenameCellArrow
 	accessoryView = [[UIImageView alloc] initWithImage:imagenameCellArrow];
-	[accessoryView autorelease];
 	
-#ifdef imagenameCellArrowOn
+	#ifdef imagenameCellArrowOn
 	[(UIImageView*)accessoryView setHighlightedImage:imagenameCellArrowOn];
+	#endif
 #endif
-#endif
+	
+	if (accessoryView) {
+		if ([(UIImageView*)accessoryView image] == nil || [(UIImageView*)accessoryView highlightedImage] == nil) {
+			[accessoryView release];
+			accessoryView = nil;
+		}
+		else {
+			[accessoryView autorelease];
+		}
+	}
 	
 	return (UIView*)accessoryView;
 }

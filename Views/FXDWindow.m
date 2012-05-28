@@ -108,19 +108,44 @@
 
 #pragma mark -
 + (void)showProgressView {	FXDLog_DEFAULT;
-	FXDWindow *appWindow = [self applicationWindow];
-
-	@synchronized(appWindow) {
-		appWindow.progressView.hidden = NO;
+	FXDWindow *applicationWindow = [self applicationWindow];
+	
+	@synchronized(applicationWindow) {
+		applicationWindow.progressView.hidden = NO;
 	}
 }
 
 + (void)hideProgressView {	FXDLog_DEFAULT;
-	FXDWindow *appWindow = [self applicationWindow];
-
-	@synchronized(appWindow) {
-		appWindow.progressView.hidden = YES;
+	FXDWindow *applicationWindow = [self applicationWindow];
+	
+	@synchronized(applicationWindow) {
+		applicationWindow.progressView.hidden = YES;
 	}
+}
+
+#pragma mark -
+- (void)fadeInSubview:(UIView*)subview {	FXDLog_DEFAULT;
+	subview.alpha = 0.0;
+	
+	[self addSubview:subview];
+	[self bringSubviewToFront:subview];
+	
+	[UIView animateWithDuration:0.3
+					 animations:^{
+						 subview.alpha = 1.0;
+					 }];
+}
+
+- (void)fadeOutSubview:(UIView*)subview {	FXDLog_DEFAULT;
+	[UIView animateWithDuration:0.3
+					 animations:^{
+						 subview.alpha = 0.0;
+					 }
+					 completion:^(BOOL finished) {
+						 if (finished) {
+							 [subview removeFromSuperview];
+						 }
+					 }];
 }
 
 
