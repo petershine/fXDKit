@@ -100,33 +100,36 @@
 	
 	BOOL shouldAutorotate = NO;
 	
-	if (interfaceOrientation == UIInterfaceOrientationPortrait) {
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		shouldAutorotate = YES;
 	}
-	else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		shouldAutorotate = YES;
+	else {
+		if (interfaceOrientation == UIInterfaceOrientationPortrait) {
+			shouldAutorotate = YES;
+		}
 	}
 	
 #if ForDEVELOPER
-	FXDLog_DEFAULT;
-	FXDLog(@"shouldAutorotateToInterfaceOrientation: %d %@ %@", interfaceOrientation, shouldAutorotate ? @"YES":@"NO", NSStringFromCGRect(self.view.frame));
-	
 	shouldAutorotate = YES;
 #endif
+	
+	if (shouldAutorotate) {
+		FXDLog(@"%@: %d %@", NSStringFromSelector(_cmd), interfaceOrientation, NSStringFromCGRect(self.view.frame));
+	}
 	
 	return shouldAutorotate;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"willRotate toInterfaceOrientation: %d, duration: %f %@", toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
+	FXDLog(@"%@: %d, duration: %f %@", NSStringFromSelector(_cmd), toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"willAnimateRotationTo interfaceOrientation: %d, duration: %f %@", interfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
+	FXDLog(@"%@: %d, duration: %f %@", NSStringFromSelector(_cmd), interfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"didRotate fromInterfaceOrientation: %d %@", fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
+	FXDLog(@"%@: %d %@", NSStringFromSelector(_cmd), fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
 }
 
 

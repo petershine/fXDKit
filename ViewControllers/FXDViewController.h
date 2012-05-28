@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@class FXDNavigationController;
-
 
 @interface FXDViewController : UIViewController {
     // Primitives
@@ -18,11 +16,13 @@
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
-	NSDictionary *_segueIdentifiers;
+	NSDictionary *_segueDictionary;
+	NSString *_segueName;
 }
 
 // Properties
-@property (strong, nonatomic) NSDictionary *segueIdentifiers;
+@property (strong, nonatomic) NSDictionary *segueDictionary;
+@property (strong, nonatomic) NSString *segueName;
 
 // IBOutlets
 
@@ -66,8 +66,6 @@
 
 #pragma mark - Category
 @interface UIViewController (Added)
-+ (FXDNavigationController*)navigationControllerUsingInitializedInterface;	// Using self instance as a root of navigationController
-
 - (void)customizeBackBarbuttonWithDefaultImagesForTarget:(id)target shouldHideForRoot:(BOOL)shouldHideForRoot;
 - (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action;
 - (void)customizeLeftBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action;
