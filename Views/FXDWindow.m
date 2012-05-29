@@ -130,14 +130,14 @@
 	[self addSubview:subview];
 	[self bringSubviewToFront:subview];
 	
-	[UIView animateWithDuration:0.3
+	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 1.0;
 					 }];
 }
 
 - (void)fadeOutSubview:(UIView*)subview {	FXDLog_DEFAULT;
-	[UIView animateWithDuration:0.3
+	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 0.0;
 					 }

@@ -285,6 +285,7 @@
 	}
 	else {
 		self.navigationItem.hidesBackButton = YES;
+		self.navigationItem.leftItemsSupplementBackButton = YES;
 	}
 }
 
