@@ -133,6 +133,10 @@
 	
 	[self.navigationBar addSubview:self.addedShadowImageview];
 #endif
+	
+#ifdef imageToolbarBackground
+	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];	
+#endif
 }
 
 

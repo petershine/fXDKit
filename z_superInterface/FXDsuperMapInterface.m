@@ -130,6 +130,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - MKMapViewDelegate
+#if ForDEVELOPER
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {	//FXDLog_DEFAULT;
 	
 }
@@ -207,6 +208,7 @@
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {	FXDLog_OVERRIDE;
 	
 }
+#endif
 
 
 @end

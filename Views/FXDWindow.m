@@ -123,30 +123,5 @@
 	}
 }
 
-#pragma mark -
-- (void)fadeInSubview:(UIView*)subview {	FXDLog_DEFAULT;
-	subview.alpha = 0.0;
-	
-	[self addSubview:subview];
-	[self bringSubviewToFront:subview];
-	
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 subview.alpha = 1.0;
-					 }];
-}
-
-- (void)fadeOutSubview:(UIView*)subview {	FXDLog_DEFAULT;
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 subview.alpha = 0.0;
-					 }
-					 completion:^(BOOL finished) {
-						 if (finished) {
-							 [subview removeFromSuperview];
-						 }
-					 }];
-}
-
 
 @end

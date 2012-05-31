@@ -185,13 +185,13 @@
 }
 
 #pragma mark -
-- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {
+- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
 }
 
-- (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {
+- (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
@@ -212,40 +212,40 @@
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *mainImage = nil;
 	
-#ifdef imagenameformatCellMain	
-	NSString *imageName = [NSString stringWithFormat:imagenameformatCellMain, indexPath.section, indexPath.row];
+#ifdef imagenameformatSettingsCellMainOff
+	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOff, indexPath.section, indexPath.row];
 	
 	mainImage = [FXDImage bundledImageForName:imageName];
 #endif
-	
+		
 	return mainImage;
 }
 
 - (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *highlightedMainImage = nil;
 	
-#ifdef imagenameformatCellMainOn	
-	NSString *imageName = [NSString stringWithFormat:imagenameformatCellMainOn, indexPath.section, indexPath.row];
+#ifdef imagenameformatSettingsCellMainOn	
+	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOn, indexPath.section, indexPath.row];
 	
 	highlightedMainImage = [FXDImage bundledImageForName:imageName];
 #endif
-	
+		
 	return highlightedMainImage;
 }
 
 - (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath {
 	id accessoryView = nil;
 	
-#ifdef imagenameCellArrow
-	accessoryView = [[UIImageView alloc] initWithImage:imagenameCellArrow];
+#ifdef imagenameSettingsCellArrowOff
+	accessoryView = [[UIImageView alloc] initWithImage:imagenameSettingsCellArrowOff];
 	
-	#ifdef imagenameCellArrowOn
-	[(UIImageView*)accessoryView setHighlightedImage:imagenameCellArrowOn];
+	#ifdef imagenameSettingsCellArrowOn
+	[(UIImageView*)accessoryView setHighlightedImage:imagenameSettingsCellArrowOn];
 	#endif
 #endif
 	
 	if (accessoryView) {
-		if ([(UIImageView*)accessoryView image] == nil || [(UIImageView*)accessoryView highlightedImage] == nil) {
+		if ([(UIImageView*)accessoryView image] == nil) {
 			[accessoryView release];
 			accessoryView = nil;
 		}
@@ -321,6 +321,10 @@
 		height = backgroundImage.size.height;
 
 		FXDLog(@"section: %d, row: %d height: %f", indexPath.section, indexPath.row, height);
+	}
+	
+	if (indexPath.row == 0) {
+		height--;
 	}
 
 	return height;

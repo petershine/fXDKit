@@ -120,11 +120,12 @@
 	if (viewArray) {	
 		for (id subview in viewArray) {	//Assumes there is only one root object
 			
-			if ([NSStringFromClass([subview class]) isEqualToString:nibName]) {
+			if ([[self class] isSubclassOfClass:[subview class]]) {
 				view = subview;
+				break;
 			}
 			else {	FXDLog_DEFAULT;
-				FXDLog(@"subview class: %@", [subview class]);
+				FXDLog(@"self class: %@ subview class: %@", [self class], [subview class]);
 			}
 		}
 	}
@@ -161,6 +162,31 @@
 		
 		[self setFrame:modifiedFrame];
 	}
+}
+
+#pragma mark -
+- (void)fadeInSubview:(UIView*)subview {	FXDLog_DEFAULT;
+	subview.alpha = 0.0;
+	
+	[self addSubview:subview];
+	[self bringSubviewToFront:subview];
+	
+	[UIView animateWithDuration:durationAnimation
+					 animations:^{
+						 subview.alpha = 1.0;
+					 }];
+}
+
+- (void)fadeOutSubview:(UIView*)subview {	FXDLog_DEFAULT;
+	[UIView animateWithDuration:durationAnimation
+					 animations:^{
+						 subview.alpha = 0.0;
+					 }
+					 completion:^(BOOL finished) {
+						 if (finished) {
+							 [subview removeFromSuperview];
+						 }
+					 }];
 }
 
 
