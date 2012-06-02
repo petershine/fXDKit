@@ -312,23 +312,6 @@
 
 
 #pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	CGFloat height = tableView.rowHeight;
-	
-	UIImage *backgroundImage = [self backgroundImageForCellAtIndexPath:indexPath];
-	
-	if (backgroundImage) {
-		height = backgroundImage.size.height;
-
-		FXDLog(@"section: %d, row: %d height: %f", indexPath.section, indexPath.row, height);
-	}
-	
-	if (indexPath.row == 0) {
-		height--;
-	}
-
-	return height;
-}
 
 
 @end

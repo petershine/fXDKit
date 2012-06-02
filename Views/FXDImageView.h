@@ -50,4 +50,6 @@
 @interface UIImageView (Added)
 - (void)modifyHeightForContainedImage;
 
+- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
+
 @end

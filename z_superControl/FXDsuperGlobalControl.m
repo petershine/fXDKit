@@ -113,6 +113,15 @@
 		}
 		
 		FXDLog(@"_deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
+		
+		//MARK: limit supported languages
+		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
+			&& [_deviceLanguageCode isEqualToString:@"ko"] == NO
+			&& [_deviceLanguageCode isEqualToString:@"ja"] == NO
+			&& [_deviceLanguageCode isEqualToString:@"ch"] == NO
+			&& [_deviceLanguageCode isEqualToString:@"tw"] == NO) {
+			_deviceLanguageCode = @"en";
+		}
 	}
 	
 	return _deviceLanguageCode;
