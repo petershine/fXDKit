@@ -10,8 +10,6 @@
 
 #import <CoreData/CoreData.h>
 
-#import "CHCSV.h"
-
 
 #ifndef applicationMOMDURL
 	#define applicationMOMDURL	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
@@ -26,7 +24,7 @@
 #define sizeDefaultBatch	10
 
 
-@interface FXDsuperCoreDataControl : FXDObject <NSFetchedResultsControllerDelegate, CHCSVParserDelegate> {
+@interface FXDsuperCoreDataControl : FXDObject <NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -80,8 +78,6 @@
 - (void)startByFetchingDefaultResults;
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
 
-- (void)parseFromCSVfileName:(NSString*)csvFileName;
-- (void)insertParsedObjForEntityName:(NSString*)entityName usingKeys:(NSArray*)keys usingValues:(NSArray*)values;
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
 
 
@@ -90,7 +86,6 @@
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
-#pragma mark - CHCSVParserDelegate
 
 
 @end
