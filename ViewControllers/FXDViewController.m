@@ -19,8 +19,8 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize segueDictionary = _segueDictionary;
-@synthesize segueName = _segueName;
+@synthesize presentedSegueDictionary = _presentedSegueDictionary;
+@synthesize presentingSegueName = _presentingSegueName;
 
 // IBOutlets
 
@@ -53,8 +53,8 @@
 	// Instance variables
 	
 	// Properties
-	[_segueDictionary release];
-	[_segueName release];
+	[_presentedSegueDictionary release];
+	[_presentingSegueName release];
 	
 	// IBOutlets
 	
@@ -110,8 +110,8 @@
 	// Instance variables
 	
 	// Properties
-	_segueDictionary = nil;
-	_segueName = nil;
+	_presentedSegueDictionary = nil;
+	_presentingSegueName = nil;
 	
 	// IBOutlets
 }
@@ -120,11 +120,11 @@
 #pragma mark - Accessor overriding
 - (NSDictionary*)segueIdentifiers {
 	
-	if (_segueDictionary == nil) {	FXDLog_OVERRIDE;
+	if (_presentedSegueDictionary == nil) {	FXDLog_OVERRIDE;
 		
 	}
 	
-	return _segueDictionary;
+	return _presentedSegueDictionary;
 }
 
 
@@ -422,6 +422,11 @@
 	else {
 		[self dismissModalViewControllerAnimated:YES];
 	}
+}
+
+#pragma mark -
+- (void)delayedActionForSender:(id)sender {	FXDLog_OVERRIDE;
+	
 }
 
 

@@ -72,7 +72,7 @@
 #pragma mark - Accessor overriding
 // Properties
 - (BOOL)didMakePurchase {	//FXDLog_DEFAULT;
-	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolKeyDidMakePurchase];
+	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidMakePurchase];
 	
 	return _didMakePurchase;
 }
@@ -80,12 +80,12 @@
 - (void)setDidMakePurchase:(BOOL)didMake {	FXDLog_DEFAULT;
 	_didMakePurchase = didMake;
 	
-	[[NSUserDefaults standardUserDefaults] setBool:_didMakePurchase forKey:userdefaultBoolKeyDidMakePurchase];
+	[[NSUserDefaults standardUserDefaults] setBool:_didMakePurchase forKey:userdefaultBoolDidMakePurchase];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)didShareToSocialNet {	//FXDLog_DEFAULT;
-	_didShareToSocialNet = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolKeyDidShareToSocialNet];
+	_didShareToSocialNet = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidShareToSocialNet];
 	
 	return _didShareToSocialNet;
 }
@@ -93,7 +93,7 @@
 - (void)setDidShareToSocialNet:(BOOL)didShare {	FXDLog_DEFAULT;
 	_didShareToSocialNet = didShare;
 	
-	[[NSUserDefaults standardUserDefaults] setBool:_didShareToSocialNet forKey:userdefaultBoolKeyDidShareToSocialNet];
+	[[NSUserDefaults standardUserDefaults] setBool:_didShareToSocialNet forKey:userdefaultBoolDidShareToSocialNet];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 

@@ -16,13 +16,13 @@
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
-	NSDictionary *_segueDictionary;
-	NSString *_segueName;
+	NSDictionary *_presentedSegueDictionary;
+	NSString *_presentingSegueName;
 }
 
 // Properties
-@property (strong, nonatomic) NSDictionary *segueDictionary;
-@property (strong, nonatomic) NSString *segueName;
+@property (strong, nonatomic) NSDictionary *presentedSegueDictionary;
+@property (strong, nonatomic) NSString *presentingSegueName;
 
 // IBOutlets
 
@@ -78,6 +78,8 @@
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;
 - (IBAction)popInterfaceWithAnimation:(id)sender;
 - (IBAction)dismissInterfaceWithAnimation:(id)sender;
+
+- (void)delayedActionForSender:(id)sender;
 
 
 @end

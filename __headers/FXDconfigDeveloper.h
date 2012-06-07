@@ -14,7 +14,8 @@
 	#endif
 
 	#define USE_TestFlight	1
-	#define USE_Flurry	0
+	//#define USE_Flurry	0
+	#define USE_Flurry	1
 
 #else
 	#define USE_FXDLog		0
@@ -56,7 +57,7 @@
 
 
 #ifndef application_AppStoreID
-	#define application_AppStoreID	512128030
+	#define application_AppStoreID	524312409
 #endif
 
 #define versionMaximumSupported	5.0
@@ -80,7 +81,7 @@
 	#import "FlurryAnalytics.h"
 
 	#ifndef flurryApplicationKey
-		#define flurryApplicationKey	@"B6YBM63BCV3XM8YQCL6Y"
+		#define flurryApplicationKey	@"MG21RAFW4CXACSJL2JF9"
 	#endif
 
 	#define	LOGEVENT(v)			[FlurryAnalytics logEvent:v]

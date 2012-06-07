@@ -78,14 +78,14 @@
 
 #pragma mark - Overriding
 #if ForDEVELOPER
-- (void)layoutSubviews {
+- (void)layoutSubviews {	
 	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
 	
 	// Implement or Erase
 	
 }
 
-- (void)drawRect:(CGRect)rect {
+- (void)drawRect:(CGRect)rect {	
 	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
 	
 	// Implement or Erase
@@ -165,19 +165,33 @@
 }
 
 #pragma mark -
-- (void)fadeInSubview:(UIView*)subview {	FXDLog_DEFAULT;
+- (void)fadeIn {
+	self.alpha = 0.0;
+	
+	[UIView animateWithDuration:durationAnimation
+					 animations:^{
+						 self.alpha = 1.0;
+					 }];
+}
+
+- (void)fadeOut {
+	[UIView animateWithDuration:durationAnimation
+					 animations:^{
+						 self.alpha = 0.0;
+					 }];
+}
+
+#pragma mark -
+- (void)fadeInAsAddSubview:(UIView*)subview {	FXDLog_DEFAULT;
 	subview.alpha = 0.0;
 	
 	[self addSubview:subview];
 	[self bringSubviewToFront:subview];
 	
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 subview.alpha = 1.0;
-					 }];
+	[subview fadeIn];
 }
 
-- (void)fadeOutSubview:(UIView*)subview {	FXDLog_DEFAULT;
+- (void)fadeOutAsRemoveSubview:(UIView*)subview {	FXDLog_DEFAULT;
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 0.0;

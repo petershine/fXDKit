@@ -20,5 +20,7 @@
 #define imageNavibarBtnCloseOff	[FXDImage bundledImageForName:@"btn_close"]
 #define imageNavibarBtnCloseOn	[FXDImage bundledImageForName:@"btn_close_on"]
 
+#ifndef imageDefaultBackground
 #define imageDefaultBackground	[FXDImage bundledImageForName:@"bg_default"]
+#endif
 

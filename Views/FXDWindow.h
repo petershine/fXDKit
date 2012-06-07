@@ -54,8 +54,11 @@
 @interface UIWindow (Added)
 + (id)applicationWindow;
 
-+ (void)showProgressView;
-+ (void)hideProgressView;
+- (void)showProgressView;
+- (void)hideProgressView;
+
++ (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
++ (void)hideProgressViewAfterDelay:(NSTimeInterval)delay;
 
 
 @end

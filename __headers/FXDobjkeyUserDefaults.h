@@ -6,5 +6,5 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#define userdefaultBoolKeyDidMakePurchase		@"DidMakePurchaseBoolKey"
-#define userdefaultBoolKeyDidShareToSocialNet	@"DidShareToSocialNetBoolKey"
+#define userdefaultBoolDidMakePurchase		@"DidMakePurchaseBoolKey"
+#define userdefaultBoolDidShareToSocialNet	@"DidShareToSocialNetBoolKey"

@@ -107,20 +107,33 @@
 }
 
 #pragma mark -
-+ (void)showProgressView {	FXDLog_DEFAULT;
-	FXDWindow *applicationWindow = [self applicationWindow];
+- (void)showProgressView {	FXDLog_DEFAULT;
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	@synchronized(applicationWindow) {
 		applicationWindow.progressView.hidden = NO;
 	}
 }
 
-+ (void)hideProgressView {	FXDLog_DEFAULT;
-	FXDWindow *applicationWindow = [self applicationWindow];
+- (void)hideProgressView {	FXDLog_DEFAULT;
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	@synchronized(applicationWindow) {
 		applicationWindow.progressView.hidden = YES;
 	}
+}
+
+#pragma mark -
++ (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
+	FXDWindow *applicationWindow = [self applicationWindow];
+	
+	[applicationWindow performSelector:@selector(showProgressView) withObject:nil afterDelay:delay];
+}
+
++ (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
+	FXDWindow *applicationWindow = [self applicationWindow];
+	
+	[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay];
 }
 
 

@@ -56,8 +56,11 @@
 - (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius;
 - (void)reframeToBeAtTheCenterOfSuperview;
 
-- (void)fadeInSubview:(UIView*)subview;
-- (void)fadeOutSubview:(UIView*)subview;
+- (void)fadeIn;
+- (void)fadeOut;
+
+- (void)fadeInAsAddSubview:(UIView*)subview;
+- (void)fadeOutAsRemoveSubview:(UIView*)subview;
 
 
 @end
