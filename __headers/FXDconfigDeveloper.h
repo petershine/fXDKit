@@ -14,8 +14,7 @@
 	#endif
 
 	#define USE_TestFlight	1
-	//#define USE_Flurry	0
-	#define USE_Flurry	1
+	#define USE_Flurry	0
 
 #else
 	#define USE_FXDLog		0

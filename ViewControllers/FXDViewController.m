@@ -209,7 +209,8 @@
 
 
 #pragma mark - Segues
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
+#if ForDEVELOPER
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;
 	FXDLog(@"segue: %@", segue);
 	FXDLog(@"identifier: %@", segue.identifier);
 	FXDLog(@"source: %@", segue.sourceViewController);
@@ -217,6 +218,7 @@
 	FXDLog(@"sender: %@", sender);
 	
 }
+#endif
 
 	 
 #pragma mark - IBActions
