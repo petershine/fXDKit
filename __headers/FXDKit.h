@@ -59,5 +59,4 @@
 
 // ViewControllers
 #import "FXDViewController.h"
-#import "FXDTableViewController.h"
 #import "FXDNavigationController.h"
