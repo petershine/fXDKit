@@ -161,22 +161,22 @@
 
 + (NSString*) elementName:(TBXMLElement*)aXMLElement {
 	if (nil == aXMLElement->name) return @"";
-	return [NSString stringWithCString:&aXMLElement->name[0] encoding:NSUTF8StringEncoding];
+	return @(&aXMLElement->name[0]);
 }
 
 + (NSString*) attributeName:(TBXMLAttribute*)aXMLAttribute {
 	if (nil == aXMLAttribute->name) return @"";
-	return [NSString stringWithCString:&aXMLAttribute->name[0] encoding:NSUTF8StringEncoding];
+	return @(&aXMLAttribute->name[0]);
 }
 
 + (NSString*) attributeValue:(TBXMLAttribute*)aXMLAttribute {
 	if (nil == aXMLAttribute->value) return @"";
-	return [NSString stringWithCString:&aXMLAttribute->value[0] encoding:NSUTF8StringEncoding];
+	return @(&aXMLAttribute->value[0]);
 }
 
 + (NSString*) textForElement:(TBXMLElement*)aXMLElement {
 	if (nil == aXMLElement->text) return @"";
-	return [NSString stringWithCString:&aXMLElement->text[0] encoding:NSUTF8StringEncoding];
+	return @(&aXMLElement->text[0]);
 }
 
 + (NSString*) valueOfAttributeNamed:(NSString *)aName forElement:(TBXMLElement*)aXMLElement {
@@ -185,7 +185,7 @@
 	TBXMLAttribute * attribute = aXMLElement->firstAttribute;
 	while (attribute) {
 		if (strlen(attribute->name) == strlen(name) && memcmp(attribute->name,name,strlen(name)) == 0) {
-			value = [NSString stringWithCString:&attribute->value[0] encoding:NSUTF8StringEncoding];
+			value = @(&attribute->value[0]);
 			break;
 		}
 		attribute = attribute->next;

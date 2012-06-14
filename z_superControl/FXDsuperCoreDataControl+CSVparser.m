@@ -29,7 +29,6 @@
 - (void)insertParsedObjForEntityName:(NSString*)entityName usingKeys:(NSArray*)keys usingValues:(NSArray*)values {	FXDLog_DEFAULT;
 	
 	NSMutableDictionary *keysWithValues = [[NSMutableDictionary alloc] initWithCapacity:0];
-	[keysWithValues autorelease];
 	
 	for (NSInteger i = 0; i < [keys count]; i++) {
 		NSString *key = [keys objectAtIndex:i];
@@ -65,7 +64,7 @@
 	//FXDLog(@"field: %@", field);
 	
 	if (self.fieldValues == nil) {
-		self.fieldValues = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
+		self.fieldValues = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	
 	[self.fieldValues addObject:field];
@@ -76,7 +75,7 @@
 	
 	if (lineNumber == 1) {	// Assume this is key line
 		self.fieldKeys = nil;
-		self.fieldKeys = [[[NSMutableArray alloc] initWithArray:self.fieldValues] autorelease];
+		self.fieldKeys = [[NSMutableArray alloc] initWithArray:self.fieldValues];
 	}
 	else {
 		if (self.fieldKeys) {
@@ -88,7 +87,6 @@
 }
 
 - (void) parser:(CHCSVParser *)parser didEndDocument:(NSString *)csvFile {	FXDLog_DEFAULT;
-	[parser release];
 	
 	self.fieldKeys = nil;
 	
@@ -100,7 +98,6 @@
 		FXDLog_ERROR;
 	}
 	
-	[parser release];
 	
 	self.fieldKeys = nil;
 	self.fieldValues = nil;

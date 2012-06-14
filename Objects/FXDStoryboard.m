@@ -29,7 +29,7 @@
 	
 	// Properties
 		
-	FXDLog_SEPARATE;[super dealloc];
+	FXDLog_SEPARATE;
 }
 
 

@@ -36,13 +36,9 @@
 	// Instance variables
 	
 	// Properties
-	[_deviceLanguageCode release];
 	
-	[_mainStoryboard release];
-	[_rootInterface release];
-	[_homeInterface release];
 	
-	FXDLog_SEPARATE;[super dealloc];
+	FXDLog_SEPARATE;
 }
 
 
@@ -103,7 +99,7 @@
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
-		_deviceLanguageCode = [languages objectAtIndex:0];
+		_deviceLanguageCode = languages[0];
 		
 		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
 			_deviceLanguageCode = @"ch";
@@ -153,7 +149,7 @@
 			NSArray *viewControllers = [self.rootInterface performSelector:@selector(viewControllers)];
 			
 			if ([viewControllers count] > 0) {
-				_homeInterface = [viewControllers objectAtIndex:0];
+				_homeInterface = viewControllers[0];
 			}
 		}
 		else {			
@@ -188,7 +184,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	@synchronized(self) {
 		if (_sharedInstance) {
 
-			[_sharedInstance release];
 			_sharedInstance = nil;
 		}
 	}
@@ -228,7 +223,7 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	
 	uname(&systemInfo);
 	
-	NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+	NSString *modelName = @(systemInfo.machine);
 	
 	if([modelName isEqualToString:@"i386"]) {
 		modelName = @"iPhone Simulator";
@@ -279,7 +274,7 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	
 	NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
 	
-	NSString *countryCode = [components objectAtIndex:1];
+	NSString *countryCode = components[1];
 	
 	return countryCode;
 }
@@ -300,7 +295,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 											  otherButtonTitles:nil];
 	
 	[alertview show];
-	[alertview release];
 }
 
 #pragma mark -
@@ -311,8 +305,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 		}
 		
 		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
-		[localNotifcation autorelease];
-		
 		localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
 		localNotifcation.repeatInterval = 0;
 		localNotifcation.soundName = UILocalNotificationDefaultSoundName;
@@ -337,17 +329,17 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;	
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
 	
-	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 	FXDLog(@"version: %@", version);
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
-	NSString *currentLanguage = [languages objectAtIndex:0];
+	NSString *currentLanguage = languages[0];
 	FXDLog(@"currentLanguage: %@", currentLanguage);
 
 	NSString *mailAddr = nil;
 		
-	NSArray *toRecipients = [NSArray arrayWithObjects:mailAddr, nil];
+	NSArray *toRecipients = @[mailAddr];
 
 #ifdef application_DisplayedName
 	NSString *bundleName = application_DisplayedName;
@@ -371,13 +363,11 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	
 	for(NSString *countryCode in arrayCountryCode) {
 		NSString *currentCountryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-		[dicCountryCode setObject:currentCountryName forKey:countryCode];
+		dicCountryCode[countryCode] = currentCountryName;
 	}
 	
 	NSString *stringKey = [[[NSLocale currentLocale] localeIdentifier] substringWithRange:NSMakeRange(3, 2)];
-	NSString *returnString = [NSString stringWithFormat:@"%@", [dicCountryCode objectForKey:stringKey]];
-	[dicCountryCode release];
-	[locale release];
+	NSString *returnString = [NSString stringWithFormat:@"%@", dicCountryCode[stringKey]];
 	
 	NSString *stringCountry = [NSString stringWithFormat:@"%@", returnString];
 	
@@ -394,8 +384,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	FXDLog(@"mailBodyString: %@", mailBodyString);
 	
 	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailInterface autorelease];
-		
 	[emailInterface setSubject:subjectString];
 	[emailInterface setToRecipients:toRecipients];
 	[emailInterface setMessageBody:mailBodyString isHTML:NO];
@@ -406,8 +394,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 	
 	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailInterface autorelease];
-	
 	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayedName]];
 	
 	if (image) {		
@@ -468,8 +454,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 			//
 		}
 	}
-	
-	[alertView autorelease];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -481,7 +465,7 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 		FXDLog_ERROR;
 	}
 	
-	[controller dismissModalViewControllerAnimated:YES];
+	[controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 

@@ -22,13 +22,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-	
-	// Properties
-    	
-    [super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -180,7 +173,6 @@
 		UIImage *modifiedImage = UIGraphicsGetImageFromCurrentImageContext();
 		
 		scaledImage = [[UIImage alloc] initWithCGImage:modifiedImage.CGImage];
-		[scaledImage autorelease];
 	}
 	UIGraphicsEndImageContext();
 	

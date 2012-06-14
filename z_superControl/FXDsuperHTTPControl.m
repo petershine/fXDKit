@@ -41,20 +41,6 @@ static NSMutableSet *_staticHttpControlSet = nil;
 
 
 #pragma mark - Memory managment
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-	[_httpURL release];
-	[_httpRequest release];
-	[_httpConnection release];
-	
-	[_receivedData release];
-	
-	[_nextHttpControl release];
-	
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -94,25 +80,20 @@ static NSMutableSet *_staticHttpControlSet = nil;
 #pragma mark - Public
 + (void)prepareConnectionReachabilities {	FXDLog_DEFAULT;	
 	if (reachabilityForWifi) {
-		[reachabilityForWifi release];
 		reachabilityForWifi = nil;
 	}
 	
 	if (reachabilityForInternet) {
-		[reachabilityForInternet release];
 		reachabilityForInternet = nil;
 	}
 	
 	if (observerForReachability) {
-		[observerForReachability release];
 		observerForReachability = nil;
 	}
 	
 	reachabilityForWifi = [Reachability reachabilityForLocalWiFi];
-	[reachabilityForWifi retain];
 	
 	reachabilityForInternet = [Reachability reachabilityForInternetConnection];
-	[reachabilityForInternet retain];
 	
 	observerForReachability = [[FXDsuperHTTPControl alloc] init];
 	
@@ -126,16 +107,13 @@ static NSMutableSet *_staticHttpControlSet = nil;
 + (void)deallocateConnectionReachabilities {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:observerForReachability];
 	
-	[observerForReachability release];
 	observerForReachability = nil;
 	
 	[reachabilityForWifi stopNotifier];
 	[reachabilityForInternet stopNotifier];
 	
-	[reachabilityForWifi release];
 	reachabilityForWifi = nil;
 	
-	[reachabilityForInternet release];
 	reachabilityForInternet = nil;
 }
 
@@ -167,7 +145,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 		
 		if (anyHttpControl) {
 			httpControl = anyHttpControl;
-			[httpControl retain];	// To avoid early deallocation
+				// To avoid early deallocation
 			
 			[_staticHttpControlSet removeObject:anyHttpControl];			
 		}
@@ -243,14 +221,14 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	
 	//FXDLog(@"\nallHeaderFields:\n%@", [(NSHTTPURLResponse*)response allHeaderFields]);
 	
-	self.httpContentLength = [[[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Content-Length"] integerValue];
+	self.httpContentLength = [[(NSHTTPURLResponse*)response allHeaderFields][@"Content-Length"] integerValue];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
 	if (self.receivedData == nil) {
-		self.receivedData = [[[NSMutableData alloc] initWithLength:0] autorelease];
+		self.receivedData = [[NSMutableData alloc] initWithLength:0];
 	}
 	
 	if (self.receivedData) {

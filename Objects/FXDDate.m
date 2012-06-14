@@ -24,13 +24,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-	
-	// Properties
-		
-    [super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -82,7 +75,6 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 	
     NSString *UTCdateString = [dateFormatter stringFromDate:localDate];
-    [dateFormatter release];
 	
     return UTCdateString;
 }
@@ -98,7 +90,6 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 	
 	NSDate *UTCdate = [dateFormatter dateFromString:UTCdateString];
-	[dateFormatter release];
 	
 	return UTCdate;
 }

@@ -30,18 +30,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-	
-	// Properties	
-	[_accountStore release];
-	[_accountType release];
-	
-	[_twitterAccountArray release];
-	[_mainTwitterAccount release];
-
-    [super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -77,7 +65,6 @@
 - (ACAccountType*)accountType {
 	if (_accountType == nil) {
 		_accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-		[_accountType retain];
 	}
 	
 	return _accountType;
@@ -87,7 +74,6 @@
 - (NSArray*)twitterAccountArray {
 	if (_twitterAccountArray == nil) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
-		[_twitterAccountArray retain];
 	}
 	
 	return _twitterAccountArray;
@@ -104,7 +90,6 @@
 			
 			if (self.accountType.accessGranted) {	
 				_mainTwitterAccount = [self.accountStore accountWithIdentifier:identifier];
-				[_mainTwitterAccount retain];
 			}
 			else {
 				identifier = nil;
@@ -162,7 +147,6 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	@synchronized(self) {
 		if (_sharedInstance) {
 			
-			[_sharedInstance release];
 			_sharedInstance = nil;
 		}
 	}
@@ -224,7 +208,6 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 		
 		[alertView show];
 		
-		[alertView release];
 	}
 	else {
 		//If no Twitter account is signed up... alert user
@@ -238,9 +221,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	
 	NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
 	
-	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-								screenName, objkeyTwitterScreenName,
-								nil];
+	NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
 	
 	TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 												parameters:parameters
@@ -252,7 +233,6 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 		 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif		 
 	 }];
-	[defaultRequest release];
 }
 
 - (void)statusUpdateWithStatus:(NSString*)status {
@@ -260,9 +240,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	if (self.mainTwitterAccount) {
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 		
-		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-									status, objkeyTwitterStatus,
-									nil];
+		NSDictionary *parameters = @{objkeyTwitterStatus: status};
 		
 		TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 													parameters:parameters
@@ -276,7 +254,6 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 			 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif		 
 		 }];
-		[defaultRequest release];
 	}
 	else {	FXDLog_DEFAULT;
 		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
@@ -289,7 +266,7 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	TWTweetComposeViewController *tweetComposeInterface = nil;
 	
 	if ([TWTweetComposeViewController canSendTweet]) {
-		tweetComposeInterface = [[[TWTweetComposeViewController alloc] init] autorelease];
+		tweetComposeInterface = [[TWTweetComposeViewController alloc] init];
 		
 		if (initialText) {
 			if ([tweetComposeInterface setInitialText:initialText] == NO) {
@@ -328,15 +305,13 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_DEFAULT;
 	FXDLog(@"buttonIndex: %d", buttonIndex);
 	
-	[_mainTwitterAccount release];
 	_mainTwitterAccount = nil;
 	
 	NSString *identifier = nil;
 	
 	if (buttonIndex != alertView.cancelButtonIndex) {
 
-		_mainTwitterAccount = [self.twitterAccountArray objectAtIndex:buttonIndex];
-		[_mainTwitterAccount retain];
+		_mainTwitterAccount = (self.twitterAccountArray)[buttonIndex];
 		
 		identifier = _mainTwitterAccount.identifier;
 		

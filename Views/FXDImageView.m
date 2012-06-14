@@ -25,15 +25,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
-	
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization

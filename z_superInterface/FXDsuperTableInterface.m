@@ -44,19 +44,6 @@
 	[super viewDidUnload];
 }
 
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-	[_rowCounts release];
-	[_cellTexts  release];
-	
-	[_defaultDatasource release];
-	
-	// IBOutlets
-	
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -154,7 +141,7 @@
 #pragma mark - Public
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 	
-	NSInteger rowCount = [[self.rowCounts objectAtIndex:indexPath.section] integerValue];
+	NSInteger rowCount = [(self.rowCounts)[indexPath.section] integerValue];
 	
 	if (rowCount == 1) {
 		cell.sectionPositionType = sectionPositionOne;
@@ -203,7 +190,7 @@
 	if (self.cellTexts) {				
 		NSString *keyForObj = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
 		
-		cellText = [self.cellTexts objectForKey:keyForObj];
+		cellText = (self.cellTexts)[keyForObj];
 	}
 	
 	return cellText;
@@ -246,11 +233,7 @@
 	
 	if (accessoryView) {
 		if ([(UIImageView*)accessoryView image] == nil) {
-			[accessoryView release];
 			accessoryView = nil;
-		}
-		else {
-			[accessoryView autorelease];
 		}
 	}
 	
@@ -262,8 +245,6 @@
 	CGRect dividerFrame = CGRectMake(0.0, 0.0, width, height);
 	
 	UIView *sectionDividingView = [[UIView alloc] initWithFrame:dividerFrame];
-	[sectionDividingView autorelease];
-	
 	sectionDividingView.backgroundColor = [UIColor clearColor];
 	
 	return sectionDividingView;
@@ -288,7 +269,7 @@
 	NSInteger numberOfRows = 0;
 
 	if (self.rowCounts) {
-		numberOfRows = [[self.rowCounts objectAtIndex:section] integerValue];
+		numberOfRows = [(self.rowCounts)[section] integerValue];
 	}
 	
 	return numberOfRows;
@@ -302,7 +283,6 @@
 	
 	if (cell == nil) {
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-		[cell autorelease];
 	}
 	
 	[self configureCell:cell forIndexPath:indexPath];

@@ -40,15 +40,6 @@
 	[super viewDidUnload];
 }
 
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
-	
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization

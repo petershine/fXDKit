@@ -32,7 +32,7 @@
 	
 	// IBOutlets
 	
-    FXDLog_DEFAULT;[super dealloc];
+    FXDLog_DEFAULT;
 }
 
 

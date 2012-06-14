@@ -53,12 +53,10 @@
 	// Instance variables
 	
 	// Properties
-	[_presentedSegueDictionary release];
-	[_presentingSegueName release];
 	
 	// IBOutlets
 	
-	FXDLog_SEPARATE;[super dealloc];
+	FXDLog_SEPARATE;
 }
 
 
@@ -299,7 +297,6 @@
 	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 	
 	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-	[barButtonItem autorelease];
 	
 	[(UIViewController*)target navigationItem].leftBarButtonItem = barButtonItem;
 }
@@ -319,7 +316,6 @@
 	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 	
 	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-	[barButtonItem autorelease];
 	
 	[(UIViewController*)target navigationItem].rightBarButtonItem = barButtonItem;
 }
@@ -351,10 +347,6 @@
 		}
 	}
 	
-	if (barButtonItem) {
-		[barButtonItem autorelease];
-	}
-	
 	return barButtonItem;
 }
 
@@ -362,7 +354,6 @@
 	CGRect buttonFrame = CGRectMake(0.0, 0.0, onImage.size.width, onImage.size.height);
 	
 	UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
-	[button autorelease];
 	
 	[button setBackgroundImage:offImage forState:UIControlStateNormal];
 	
@@ -391,17 +382,15 @@
 			backLabel.font = [UIFont systemFontOfSize:13.0];
 		}
 		
-		backLabel.textAlignment = UITextAlignmentCenter;
+		backLabel.textAlignment = NSTextAlignmentCenter;
 		
 		backLabel.backgroundColor = [UIColor clearColor];
 		
 		backLabel.adjustsFontSizeToFitWidth = YES;
-		backLabel.minimumFontSize = 10.0;
 		
 		backLabel.userInteractionEnabled = NO;
 		
 		[button addSubview:backLabel];
-		[backLabel release];
 	}
 	
 	return button;
@@ -419,10 +408,10 @@
 - (IBAction)dismissInterfaceWithAnimation:(id)sender {
 	
 	if (self.navigationController) {
-		[self.navigationController dismissModalViewControllerAnimated:YES];
+		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	}
 	else {
-		[self dismissModalViewControllerAnimated:YES];
+		[self dismissViewControllerAnimated:YES completion:nil];
 	}
 }
 

@@ -24,13 +24,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-		
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -74,30 +67,30 @@
     NSDictionary *attributes = [[self entity] attributesByName];
 	
     for (NSString *attribute in attributes) {
-		id value = [keyedValues objectForKey:attribute];
+		id value = keyedValues[attribute];
 		
 		//MARK: 대문자와 소문자도 확인
 		if (value == nil) {
-			value = [keyedValues objectForKey:[attribute uppercaseString]];
+			value = keyedValues[[attribute uppercaseString]];
 		}
 		if (value == nil) {
-			value = [keyedValues objectForKey:[attribute lowercaseString]];
+			value = keyedValues[[attribute lowercaseString]];
 		}
 		
         if (value == nil) {
             continue;	// EMPTY
         }
 		
-        NSAttributeType attributeType = [[attributes objectForKey:attribute] attributeType];
+        NSAttributeType attributeType = [attributes[attribute] attributeType];
 		
         if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
             value = [[value stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         }
 		else if (((attributeType == NSInteger16AttributeType) || (attributeType == NSInteger32AttributeType) || (attributeType == NSInteger64AttributeType) || (attributeType == NSBooleanAttributeType)) && ([value isKindOfClass:[NSString class]])) {
-            value = [NSNumber numberWithInteger:[value integerValue]];
+            value = @([value integerValue]);
         }
 		else if ((attributeType == NSFloatAttributeType || attributeType == NSDoubleAttributeType) &&  ([value isKindOfClass:[NSString class]])) {
-            value = [NSNumber numberWithDouble:[value doubleValue]];
+            value = @([value doubleValue]);
         }
 		else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]]) && (dateFormatter != nil)) {
             value = [dateFormatter dateFromString:value];

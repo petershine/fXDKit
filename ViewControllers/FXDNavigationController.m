@@ -55,7 +55,7 @@
 	
 	// IBOutlets
 	
-	FXDLog_SEPARATE;[super dealloc];
+	FXDLog_SEPARATE;
 }
 
 
@@ -127,7 +127,7 @@
 	
 #ifdef imageNavibarShadow
 	if (self.addedShadowImageview == nil) {
-		self.addedShadowImageview = [[[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)] autorelease];
+		self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
 		self.addedShadowImageview.image = imageNavibarShadow;
 	}
 	

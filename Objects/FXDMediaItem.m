@@ -24,13 +24,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-		
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -73,8 +66,7 @@
 - (NSDictionary*)propertiesDictionary {
 	NSMutableDictionary *propertiesDictionary = nil;
 	
-	NSArray *mediaProperties = [NSArray arrayWithObjects:
-								MPMediaItemPropertyPersistentID,
+	NSArray *mediaProperties = @[MPMediaItemPropertyPersistentID,
 								MPMediaItemPropertyMediaType,
 								MPMediaItemPropertyTitle,
 								MPMediaItemPropertyAlbumTitle,
@@ -113,9 +105,7 @@
 								MPMediaItemPropertySkipCount,
 								MPMediaItemPropertyRating,
 								MPMediaItemPropertyLastPlayedDate,
-								MPMediaItemPropertyUserGrouping,
-								
-								nil];
+								MPMediaItemPropertyUserGrouping];
 	
 	for (NSString *property in mediaProperties) {
 		id value = [self valueForProperty:property];
@@ -123,10 +113,9 @@
 		if (value) {
 			if (propertiesDictionary == nil) {
 				propertiesDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-				[propertiesDictionary autorelease];
 			}
 			
-			[propertiesDictionary setObject:value forKey:property];
+			propertiesDictionary[property] = value;
 		}
 	}
 	

@@ -27,19 +27,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-	
-	// Properties
-	[activitywheelProgress release];
-	
-	[labelAboveActivityWheel release];
-	[labelBelowActivityWheel release];
-	
-	// IBOutlets
-	
-    [super dealloc];
-}
 
 
 #pragma mark - Initialization

@@ -134,7 +134,7 @@ extern NSString *const kAppiraterDeclinedToRate;
 	UIAlertView		*ratingAlert;
 }
 
-@property(nonatomic, retain) UIAlertView *ratingAlert;
+@property(strong, nonatomic) UIAlertView *ratingAlert;
 
 /*
  DEPRECATED: While still functional, it's better to use

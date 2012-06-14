@@ -29,17 +29,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-	
-	// Properties
-	[_addedObj release];
-		
-	// IBOutlets
-	[backgroundImageview release];
-	
-	[super dealloc];
-}
 
 
 #pragma mark - Initialization
@@ -120,7 +109,7 @@
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		if (self.backgroundImageview == nil) {
-			self.backgroundImageview = [[[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage] autorelease];
+			self.backgroundImageview = [[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage];
 			
 			self.backgroundImageview.userInteractionEnabled = NO;
 			

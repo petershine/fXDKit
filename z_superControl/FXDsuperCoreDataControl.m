@@ -41,18 +41,9 @@
 	// Instance variables
 	
 	// Properties
-	[__managedObjectContext release];
-	[__managedObjectModel release];
-	[__persistentStoreCoordinator release];
 	
-	[_defaultEntityName release];
-	[_defaultSortDescriptorKeys release];
-	[_defaultFetchedResults release];
 	
-	[_fieldKeys release];
-	[_fieldValues release];
 		
-    [super dealloc];
 }
 
 
@@ -136,7 +127,7 @@
 	
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 	
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+	NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @YES, NSInferMappingModelAutomaticallyOption: @YES};
 	
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
 
@@ -178,7 +169,6 @@
 				//FXDLog(@"entityDescription propertiesByName:\n%@", [entityDescription propertiesByName]);
 								
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-				[fetchRequest autorelease];
 				
 				[fetchRequest setEntity:entityDescription];
 				[fetchRequest setSortDescriptors:self.defaultSortDescriptorKeys];
@@ -241,7 +231,6 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	@synchronized(self) {
 		if (_sharedInstance) {
 			
-			[_sharedInstance release];
 			_sharedInstance = nil;
 		}
 	}
@@ -294,7 +283,7 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	NSArray *filteredArray = [self.defaultFetchedResults.fetchedObjects filteredArrayUsingPredicate:predicate];
 	
 	if ([filteredArray count] > 0) {
-		resultObj = [filteredArray objectAtIndex:0];
+		resultObj = filteredArray[0];
 		
 		if ([filteredArray count] > 1) {
 			FXDLog(@"filteredArray:\n%@", filteredArray);
