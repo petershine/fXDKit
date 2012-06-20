@@ -125,28 +125,14 @@
 
 
 #pragma mark - at autoRotate
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	
-	BOOL shouldAutorotate = NO;
-	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		shouldAutorotate = YES;
-	}
-	else {
-		if (interfaceOrientation == UIInterfaceOrientationPortrait) {
-			shouldAutorotate = YES;
-		}
-	}
-	
 #if ForDEVELOPER
-	shouldAutorotate = YES;
-#endif
+- (NSUInteger)supportedInterfaceOrientations NS_AVAILABLE_IOS(6_0) {	FXDLog_SEPARATE_FRAME;
+	return [super supportedInterfaceOrientations];
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation NS_AVAILABLE_IOS(6_0) {	FXDLog_SEPARATE_FRAME;
+	return [super preferredInterfaceOrientationForPresentation];
 	
-	if (shouldAutorotate) {
-		FXDLog(@"%@: %d %@", NSStringFromSelector(_cmd), interfaceOrientation, NSStringFromCGRect(self.view.frame));
-	}
-	
-	return shouldAutorotate;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -160,6 +146,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	FXDLog(@"%@: %d %@", NSStringFromSelector(_cmd), fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
 }
+#endif
 
 
 #pragma mark - at loadView
@@ -181,6 +168,20 @@
 	[super viewWillAppear:animated];	FXDLog_SEPARATE_FRAME;
 	
 }
+
+#if ForDEVELOPER
+- (void)viewWillLayoutSubviews NS_AVAILABLE_IOS(5_0) {	FXDLog_SEPARATE_FRAME;
+	[super viewWillLayoutSubviews];
+	
+	// Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
+}
+
+- (void)viewDidLayoutSubviews NS_AVAILABLE_IOS(5_0) {	FXDLog_SEPARATE_FRAME;
+	[super viewDidLayoutSubviews];
+	
+	// Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
+}
+#endif
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];	FXDLog_SEPARATE_FRAME;
@@ -206,6 +207,12 @@
 
 #pragma mark - Segues
 #if ForDEVELOPER
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender NS_AVAILABLE_IOS(6_0) {	FXDLog_DEFAULT;
+	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
+	
+	return [super shouldPerformSegueWithIdentifier:identifier sender:sender];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;
 	FXDLog(@"segue: %@", segue);
 	FXDLog(@"identifier: %@", segue.identifier);
@@ -214,6 +221,14 @@
 	FXDLog(@"sender: %@", sender);
 	
 }
+
+- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender NS_AVAILABLE_IOS(6_0) {	FXDLog_DEFAULT;
+	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
+	
+	return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+}
+
+
 #endif
 
 	 
