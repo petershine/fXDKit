@@ -19,13 +19,8 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize rowCounts = _rowCounts;
-@synthesize cellTexts = _cellTexts;
-
-@synthesize defaultDatasource = _defaultDatasource;
 
 // IBOutlets
-@synthesize defaultTableview;
 
 
 #pragma mark - Memory management

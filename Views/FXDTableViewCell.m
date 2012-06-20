@@ -20,12 +20,8 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize sectionPositionType = _sectionPositionType;
-
-@synthesize addedObj = _addedObj;
 
 // IBOutlets
-@synthesize backgroundImageview;
 
 
 #pragma mark - Memory management

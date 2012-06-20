@@ -8,8 +8,13 @@
 
 #import "FXDconfigDeveloper.h"
 
+#import <stdarg.h>
+#import <sys/utsname.h>
+
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
+#import <TargetConditionals.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 
 // Headers

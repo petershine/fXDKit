@@ -20,8 +20,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize logoInitialFrame = _logoInitialFrame;
-@synthesize logoOffset = _logoOffset;
 
 // IBOutlets
 

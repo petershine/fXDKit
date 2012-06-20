@@ -21,31 +21,20 @@
 // Properties
 
 // IBOutlets
-@synthesize addedShadowImageview;
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	//FXDLog_DEFAULT;
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
+	FXDLog_SEPARATE;
+	
     // Release any cached data, images, etc that aren't in use.
 	
 	// Properties
-}
-
-- (void)viewWillUnload {
-	[super viewWillUnload];
 	
-	FXDLog_SEPARATE;
-}
-
-- (void)viewDidUnload {	
 	// IBOutlets
 	self.addedShadowImageview = nil;
-		
-	[super viewDidUnload];
-	
-	FXDLog_SEPARATE;
 }
 
 - (void)dealloc {	

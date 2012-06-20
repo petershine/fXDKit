@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+#import "FXDKit.h"
+
 
 @interface FXDViewController : UIViewController {
     // Primitives

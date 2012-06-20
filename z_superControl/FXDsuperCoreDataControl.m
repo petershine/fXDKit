@@ -22,16 +22,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize managedObjectContext = __managedObjectContext;
-@synthesize managedObjectModel = __managedObjectModel;
-@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
-
-@synthesize defaultEntityName = _defaultEntityName;
-@synthesize defaultSortDescriptorKeys = _defaultSortDescriptorKeys;
-@synthesize defaultFetchedResults = _defaultFetchedResults;
-
-@synthesize fieldKeys = _fieldKeys;
-@synthesize fieldValues = _fieldValues;
 
 
 #pragma mark - Memory management
@@ -62,9 +52,9 @@
 		// Instance variables
 		
 		// Properties
-		__managedObjectContext = nil;
-		__managedObjectModel = nil;
-		__persistentStoreCoordinator = nil;
+		_managedObjectContext = nil;
+		_managedObjectModel = nil;
+		_persistentStoreCoordinator = nil;
 		
 		_defaultEntityName = nil;
 		_defaultSortDescriptorKeys = nil;
@@ -82,8 +72,8 @@
 #pragma mark - Core Data stack
 - (NSManagedObjectContext *)managedObjectContext {
 
-    if (__managedObjectContext != nil) {
-        return __managedObjectContext;
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
     }
 	
 	FXDLog_SEPARATE;
@@ -91,32 +81,32 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
 	
     if (coordinator != nil) {
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
 	
-    return __managedObjectContext;
+    return _managedObjectContext;
 }
 
 - (NSManagedObjectModel *)managedObjectModel {
 
-    if (__managedObjectModel != nil) {
-        return __managedObjectModel;
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
     }
 	
 	FXDLog_DEFAULT;
 	
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:applicationMOMDURL withExtension:@"momd"];
 	
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 	
-    return __managedObjectModel;
+    return _managedObjectModel;
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
 	
-    if (__persistentStoreCoordinator != nil) {
-        return __persistentStoreCoordinator;
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
     }
 	
 	FXDLog_DEFAULT;
@@ -125,11 +115,11 @@
     
     NSError *error = nil;
 	
-    __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 	
 	NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @YES, NSInferMappingModelAutomaticallyOption: @YES};
 	
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
 
 #if DEBUG
 		FXDLog_ERROR;
@@ -137,7 +127,7 @@
 #endif
     }    
     
-    return __persistentStoreCoordinator;
+    return _persistentStoreCoordinator;
 }
 
 #pragma mark -
