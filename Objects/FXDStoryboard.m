@@ -56,7 +56,7 @@
 
 
 #pragma mark - Overriding
-- (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
+- (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_SEPARATE;
 	id instantiatedInterface = [super instantiateViewControllerWithIdentifier:identifier];
 	
 	return instantiatedInterface;
