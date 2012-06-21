@@ -47,7 +47,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedApplicationDidEnterBackground:(id)notification;
+- (void)observedUIApplicationDidEnterBackground:(id)notification;
 
 //MARK: - Delegate implementation
 

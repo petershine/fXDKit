@@ -53,9 +53,12 @@
 - (NSDictionary*)propertiesDictionary;
 
 - (UIImage*)artworkImageWithSize:(CGSize)size;
+
+- (NSNumber*)propertyPersistentID;
 - (NSString*)propertyTitle;
 - (NSString*)propertyArtist;
-- (NSString*)propertyAlbum;
+- (NSString*)propertyAlbumTitle;
 - (NSString*)propertyGenre;
+- (NSNumber*)propertyPlaybackDuration;
 
 @end

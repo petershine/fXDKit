@@ -125,7 +125,7 @@
 
 
 #pragma mark - at autoRotate
-#if ForDEVELOPER
+#if TEST_rotatingInterface
 - (NSUInteger)supportedInterfaceOrientations NS_AVAILABLE_IOS(6_0) {	FXDLog_SEPARATE_FRAME;
 	return [super supportedInterfaceOrientations];
 }

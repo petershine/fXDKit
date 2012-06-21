@@ -135,28 +135,29 @@
 	return artworkImage;
 }
 
+#pragma mark -
+- (NSNumber*)propertyPersistentID {
+	return [self valueForProperty:MPMediaItemPropertyPersistentID];
+}
+
 - (NSString*)propertyTitle {
-	NSString *text = [self valueForProperty:MPMediaItemPropertyTitle];
-	
-	return text;
+	return [self valueForProperty:MPMediaItemPropertyTitle];
 }
 
 - (NSString*)propertyArtist {
-	NSString *text = [self valueForProperty:MPMediaItemPropertyArtist];
-	
-	return text;
+	return [self valueForProperty:MPMediaItemPropertyArtist];
 }
 
-- (NSString*)propertyAlbum {
-	NSString *text = [self valueForProperty:MPMediaItemPropertyAlbumTitle];
-	
-	return text;
+- (NSString*)propertyAlbumTitle {
+	return [self valueForProperty:MPMediaItemPropertyAlbumTitle];
 }
 
 - (NSString*)propertyGenre {
-	NSString *text = [self valueForProperty:MPMediaItemPropertyGenre];
-	
-	return text;
+	return [self valueForProperty:MPMediaItemPropertyGenre];
+}
+
+- (NSNumber*)propertyPlaybackDuration {
+	return [self valueForProperty:MPMediaItemPropertyPlaybackDuration];
 }
 
 @end

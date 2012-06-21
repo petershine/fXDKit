@@ -43,7 +43,7 @@
 	
 	if (self) {
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(observedApplicationDidEnterBackground:)
+												 selector:@selector(observedUIApplicationDidEnterBackground:)
 													 name:UIApplicationDidEnterBackgroundNotification
 												   object:nil];
 
@@ -284,7 +284,7 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 }
 
 //MARK: - Observer implementation
-- (void)observedApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
+- (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
 	[self saveContext];
 	
 }

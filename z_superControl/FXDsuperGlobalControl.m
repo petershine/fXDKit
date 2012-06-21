@@ -138,13 +138,30 @@
 	if (_homeInterface == nil) {
 		
 		if ([self.rootInterface respondsToSelector:@selector(viewControllers)]) {
+			
 			NSArray *viewControllers = [self.rootInterface performSelector:@selector(viewControllers)];
 			
 			if ([viewControllers count] > 0) {
-				_homeInterface = viewControllers[0];
-			}
+				if ([self.rootInterface isKindOfClass:[UITabBarController class]]) {
+					id tabbedViewController = viewControllers[0];
+					
+					if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
+						UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
+						
+						if ([tabbedNavigationController.viewControllers count] > 0) {
+							_homeInterface = (tabbedNavigationController.viewControllers)[0];
+						}
+					}
+					else {
+						_homeInterface = tabbedViewController;
+					}
+				}
+				else {
+					_homeInterface = viewControllers[0];
+				}
+			}			
 		}
-		else {			
+		else {
 			_homeInterface = self.rootInterface;
 		}
 	}

@@ -53,7 +53,7 @@
 	[super awakeFromNib];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(observedApplicationDidEnterBackground:)
+											 selector:@selector(observedUIApplicationDidEnterBackground:)
 												 name:UIApplicationDidEnterBackgroundNotification
 											   object:nil];
 	
@@ -84,7 +84,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
+- (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
 	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
 	
 }

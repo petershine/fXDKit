@@ -9,8 +9,12 @@
 #if DEBUG
 	#if ForDEVELOPER
 		#define USE_FXDLog	1
+
+		#define TEST_rotatingInterface	1
+
 	#else
 		#define USE_FXDLog	0
+
 	#endif
 
 	#define USE_TestFlight	1
