@@ -20,13 +20,13 @@
 	// Instance variables
 	
     // Properties : For subclass to be able to reference
-	CGRect _logoInitialFrame;
-	CGPoint _logoOffset;
+	CGRect _initialDisclaimerLabelFrame;
+	CGPoint _disclaimerLabelOffset;
 }
 
 // Properties
-@property (assign, nonatomic) CGRect logoInitialFrame;
-@property (assign, nonatomic) CGPoint logoOffset;
+@property (assign, nonatomic) CGRect initialDisclaimerLabelFrame;
+@property (assign, nonatomic) CGPoint disclaimerLabelOffset;
 
 // IBOutlets
 
@@ -57,8 +57,9 @@
 
 @end
 
+
 #pragma mark - Category
 @interface MKMapView (Added)
-- (UIImageView*)logoImageView;
+- (id)disclaimerLabel;
 
 @end

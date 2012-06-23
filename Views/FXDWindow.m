@@ -98,18 +98,14 @@
 #pragma mark -
 - (void)showProgressView {	FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
-	
-	@synchronized(applicationWindow) {
-		applicationWindow.progressView.hidden = NO;
-	}
+
+	applicationWindow.progressView.hidden = NO;
 }
 
 - (void)hideProgressView {	FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
-	@synchronized(applicationWindow) {
-		applicationWindow.progressView.hidden = YES;
-	}
+	applicationWindow.progressView.hidden = YES;
 }
 
 #pragma mark -

@@ -46,8 +46,8 @@
     // Instance variables
 	
     // Properties
-	_logoInitialFrame = [self logoImageView].frame;
-	_logoOffset = CGPointZero;
+	_initialDisclaimerLabelFrame = [[self disclaimerLabel] frame];
+	_disclaimerLabelOffset = CGPointZero;
 	
     // IBOutlets
 }
@@ -61,20 +61,18 @@
 
 #pragma mark - Overriding
 - (void)layoutSubviews {	FXDLog_VIEW_FRAME;
+	id disclaimerLabel = [self disclaimerLabel];
 	
-	UIImageView *logoImageview = [self logoImageView];
-	
-	if (logoImageview) {
-		CGRect modifiedFrame = logoImageview.frame;
-		modifiedFrame.origin.x = self.logoInitialFrame.origin.x +self.logoOffset.x;
-		modifiedFrame.origin.y = (self.frame.size.height -self.logoInitialFrame.size.height) +self.logoOffset.y;
+	if (disclaimerLabel) {
+		CGRect modifiedFrame = [disclaimerLabel frame];
+		modifiedFrame.origin.x = self.initialDisclaimerLabelFrame.origin.x +self.disclaimerLabelOffset.x;
+		modifiedFrame.origin.y = (self.frame.size.height -self.initialDisclaimerLabelFrame.size.height) +self.disclaimerLabelOffset.y;
 		
-		[logoImageview setFrame:modifiedFrame];
+		[disclaimerLabel setFrame:modifiedFrame];
 	}
 	
-	FXDLog(@"logoOffset: %@", NSStringFromCGPoint(self.logoOffset));
-	
-	FXDLog(@"logoImageView: %@", logoImageview);
+	FXDLog(@"disclaimerLabelOffset: %@", NSStringFromCGPoint(self.disclaimerLabelOffset));
+	FXDLog(@"disclaimerLabel: %@", disclaimerLabel);
 }
 
 
@@ -91,20 +89,23 @@
 
 @end
 
+
 #pragma mark - Category
 @implementation MKMapView (Added)
-- (UIImageView*)logoImageView {
-    UIImageView *logoImageview = nil;
+
+- (id)disclaimerLabel {
+    id disclaimerLabel = nil;
 	
-    for (UIView *subview in self.subviews) {
-		if ([subview isMemberOfClass:[UIImageView class]]) {
-			logoImageview = (UIImageView*)subview;			
+    for (id subview in self.subviews) {
+		//FXDLog(@"subview: %@", subview);
+		
+		if ([subview isKindOfClass:[UILabel class]]) {
+			disclaimerLabel = subview;		
 			break;
         }
     }
-	
-    return logoImageview;
+		
+    return disclaimerLabel;
 }
-
 
 @end

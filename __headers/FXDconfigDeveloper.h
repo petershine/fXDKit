@@ -10,7 +10,7 @@
 	#if ForDEVELOPER
 		#define USE_FXDLog	1
 
-		#define TEST_rotatingInterface	1
+		#define TEST_rotatingInterface	0
 
 	#else
 		#define USE_FXDLog	0
@@ -63,7 +63,7 @@
 	#define application_AppStoreID	524312409
 #endif
 
-#define versionMaximumSupported	5.0
+#define versionMaximumSupported	6.0
 
 
 #if	USE_TestFlight

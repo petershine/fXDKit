@@ -24,7 +24,7 @@
 
 
 //#define limitDefaultFetch	100
-#define sizeDefaultBatch	10
+#define sizeDefaultBatch	100
 
 
 @interface FXDsuperCoreDataControl : FXDObject <NSFetchedResultsControllerDelegate> {
