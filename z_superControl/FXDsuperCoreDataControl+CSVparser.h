@@ -6,9 +6,6 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-
 #import "FXDKit.h"
 
 #import "FXDsuperCoreDataControl.h"

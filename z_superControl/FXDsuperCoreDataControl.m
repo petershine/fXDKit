@@ -163,10 +163,8 @@
 				[fetchRequest setEntity:entityDescription];
 				[fetchRequest setSortDescriptors:self.defaultSortDescriptorKeys];
 				
-#ifdef limitDefaultFetch
-				fetchRequest.fetchLimit = limitDefaultFetch;
-#endif
-				fetchRequest.fetchBatchSize = sizeDefaultBatch;
+				[fetchRequest setFetchLimit:limitDefaultFetch];
+				[fetchRequest setFetchBatchSize:sizeDefaultBatch];
 				
 				FXDLog(@"fetchRequest:\n%@", fetchRequest);
 				

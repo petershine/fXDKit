@@ -6,9 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-
 #import "FXDKit.h"
 
 #import <CoreData/CoreData.h>
@@ -23,7 +20,7 @@
 #endif
 
 
-//#define limitDefaultFetch	100
+#define limitDefaultFetch	1000
 #define sizeDefaultBatch	100
 
 

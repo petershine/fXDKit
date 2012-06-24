@@ -6,9 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-
 #import "FXDKit.h"
 
 #import <CoreData/CoreData.h>

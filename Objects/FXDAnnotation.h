@@ -1,8 +1,8 @@
 //
-//  FXDAnnotationView.h
+//  FXDAnnotation.h
 //  PopTooUniversal
 //
-//  Created by Peter SHINe on 5/11/12.
+//  Created by petershine on 6/24/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
@@ -11,17 +11,17 @@
 #import <MapKit/MapKit.h>
 
 
-@interface FXDAnnotationView : MKAnnotationView {
+@interface FXDAnnotation : MKPointAnnotation {
     // Primitives
 	
 	// Instance variables
 	
-    // Properties : For subclass to be able to reference
+	// Properties : For subclass to be able to reference
+	id _addedObj;
 }
 
 // Properties
-
-// IBOutlets
+@property (strong, nonatomic) id addedObj;
 
 
 #pragma mark - Memory management
@@ -37,9 +37,6 @@
 #pragma mark - Overriding
 
 
-#pragma mark - IBActions
-
-
 #pragma mark - Public
 
 
@@ -47,14 +44,5 @@
 
 //MARK: - Delegate implementation
 
-
-@end
-
-
-#pragma mark - Category
-@interface MKAnnotationView (Added)
-- (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage;
-
-- (void)animateCustomDropAfterDelay:(NSTimeInterval)delay;
 
 @end

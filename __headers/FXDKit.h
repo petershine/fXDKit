@@ -8,6 +8,9 @@
 
 #import "FXDconfigDeveloper.h"
 
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 #import <stdarg.h>
 #import <sys/utsname.h>
 
@@ -39,6 +42,8 @@
 
 #import "FXDManagedObject.h"
 #import "FXDMediaItem.h"
+
+#import "FXDAnnotation.h"
 
 
 // Views

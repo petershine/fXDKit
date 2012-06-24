@@ -1,13 +1,10 @@
-//
+	//
 //  FXDMapView.h
 //  PopTooUniversal
 //
 //  Created by Peter SHINe on 5/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
-
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
 
 #import "FXDKit.h"
 
