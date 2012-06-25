@@ -76,6 +76,7 @@
 	_managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
 	
 	FXDLog_DEFAULT;
+	FXDLog(@"_managedObjectModel: %@", _managedObjectModel);
 	
     return _managedObjectModel;
 }
@@ -90,23 +91,32 @@
 	
 	NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:applicationSqlitePathComponent];
 	
+	FXDLog_DEFAULT;
+	FXDLog(@"_persistentStoreCoordinator: %@", _persistentStoreCoordinator);
+	FXDLog(@"storeURL: %@", storeURL);
+	
 	NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @YES, NSInferMappingModelAutomaticallyOption: @YES};
 	
 	NSError *error = nil;
 	
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-												   configuration:nil
-															 URL:storeURL
-														 options:options
-														   error:&error]) {
-
+	NSPersistentStore *persistentStore = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+																				   configuration:nil
+																							 URL:storeURL
+																						 options:options
+																						   error:&error];
+	
+	if (!persistentStore) {
 #if DEBUG
 		FXDLog_ERROR;
 		abort();
 #endif
     }
-    
-	FXDLog_DEFAULT;
+#if DEBUG
+	for (NSPersistentStore *persistentStore in [_persistentStoreCoordinator persistentStores]) {
+		FXDLog(@"persistentStore: %@", persistentStore);
+		FXDLog(@"metadataForPersistentStore: %@", [_persistentStoreCoordinator metadataForPersistentStore:persistentStore]);
+	}
+#endif
     
     return _persistentStoreCoordinator;
 }
@@ -119,12 +129,31 @@
     
     NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
 	
+	FXDLog_DEFAULT;
+	
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+		
+		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+							  name:NSManagedObjectContextObjectsDidChangeNotification
+							object:_managedObjectContext];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSManagedObjectContextWillSave:)
+							  name:NSManagedObjectContextWillSaveNotification
+							object:_managedObjectContext];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSManagedObjectContextDidSave:)
+							  name:NSManagedObjectContextDidSaveNotification
+							object:_managedObjectContext];
     }
 	
-	FXDLog_DEFAULT;
+	FXDLog(@"_managedObjectContext: %@", _managedObjectContext);
 	
     return _managedObjectContext;
 }
@@ -169,9 +198,7 @@
 				
 				
 				_defaultFetchedResults = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:self.defaultEntityName];
-				
-				[_defaultFetchedResults setDelegate:self];
-				
+
 				
 				NSError *error = nil;
 				
@@ -231,7 +258,7 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 }
 
 #pragma mark - Application's Documents directory
-- (NSURL*)applicationDocumentsDirectory {	FXDLog_DEFAULT;	
+- (NSURL*)applicationDocumentsDirectory {	//FXDLog_DEFAULT;
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
@@ -270,29 +297,29 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	return resultObj;
 }
 
+
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
 	[self saveContext];
 	
 }
 
+#pragma mark -
+- (void)observedNSManagedObjectContextObjectsDidChange:(id)notification {	FXDLog_OVERRIDE;
+	
+}
+
+- (void)observedNSManagedObjectContextWillSave:(id)notification {	FXDLog_OVERRIDE;
+	
+}
+
+- (void)observedNSManagedObjectContextDidSave:(id)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
+	
+}
+
+
 //MARK: - Delegate implementation
-#pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {	FXDLog_OVERRIDE;
-	
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	//FXDLog_OVERRIDE;
-	
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
-	
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {	FXDLog_OVERRIDE;
-	
-}
 
 
 @end

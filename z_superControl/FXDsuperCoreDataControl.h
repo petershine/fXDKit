@@ -20,7 +20,7 @@
 #define sizeDefaultBatch	100
 
 
-@interface FXDsuperCoreDataControl : FXDObject <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperCoreDataControl : FXDObject {
     // Primitives
 	
 	// Instance variables
@@ -79,8 +79,11 @@
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(id)notification;
 
+- (void)observedNSManagedObjectContextObjectsDidChange:(id)notification;
+- (void)observedNSManagedObjectContextWillSave:(id)notification;
+- (void)observedNSManagedObjectContextDidSave:(id)notification;
+
 //MARK: - Delegate implementation
-#pragma mark - NSFetchedResultsControllerDelegate
 
 
 @end

@@ -69,7 +69,7 @@
     for (NSString *attribute in attributes) {
 		id value = keyedValues[attribute];
 		
-		//MARK: 대문자와 소문자도 확인
+		//MARK: Check cases
 		if (value == nil) {
 			value = keyedValues[[attribute uppercaseString]];
 		}

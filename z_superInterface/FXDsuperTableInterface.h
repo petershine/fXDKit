@@ -9,7 +9,7 @@
 #import "FXDKit.h"
 
 
-@interface FXDsuperTableInterface : FXDViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface FXDsuperTableInterface : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -72,6 +72,7 @@
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
 #pragma mark - UITableViewDelegate
+#pragma mark - NSFetchedResultsControllerDelegate
 
 
 @end
