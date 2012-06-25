@@ -70,7 +70,6 @@
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;
 
-- (void)startByFetchingDefaultResults;
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
 
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;

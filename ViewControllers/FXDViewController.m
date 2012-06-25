@@ -30,21 +30,8 @@
     // Release any cached data, images, etc that aren't in use.
 	
 	// Properties
-}
-
-- (void)viewWillUnload {
-	[super viewWillUnload];
-	
-	FXDLog_SEPARATE;
-}
-
-- (void)viewDidUnload {
 	
 	// IBOutlets
-		
-	[super viewDidUnload];
-	
-	FXDLog_SEPARATE;
 }
 
 - (void)dealloc {	

@@ -30,15 +30,10 @@
     // Release any cached data, images, etc that aren't in use.
 	
 	// Properties
-}
-
-- (void)viewDidUnload {
+	
 	// IBOutlets
 	self.defaultTableview = nil;
-	
-	[super viewDidUnload];
 }
-
 
 
 #pragma mark - Initialization

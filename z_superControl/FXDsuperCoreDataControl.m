@@ -264,13 +264,6 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 
 
 #pragma mark -
-- (void)startByFetchingDefaultResults {
-	NSFetchedResultsController *defaultFetchedResults = self.defaultFetchedResults;
-	
-	FXDLog_OVERRIDE;
-	FXDLog(@"defaultFetchedResults.fetchedObjects: %d", [defaultFetchedResults.fetchedObjects count]);
-}
-
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;
 	FXDLog(@"collectionObj:%@", collectionObj);
 	
