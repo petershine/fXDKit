@@ -11,10 +11,6 @@
 #import <CoreData/CoreData.h>
 
 
-#ifndef applicationMOMDURL
-	#define applicationMOMDURL	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
-#endif
-
 #ifndef applicationSqlitePathComponent
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
@@ -30,9 +26,9 @@
 	// Instance variables
 	
     // Properties : For subclass to be able to reference
-	NSManagedObjectContext *_managedObjectContext;
 	NSManagedObjectModel *_managedObjectModel;
 	NSPersistentStoreCoordinator *_persistentStoreCoordinator;
+	NSManagedObjectContext *_managedObjectContext;
 	
 	NSString *_defaultEntityName;
 	NSArray *_defaultSortDescriptorKeys;
@@ -43,9 +39,9 @@
 }
 
 // Properties
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (strong, nonatomic) NSString *defaultEntityName;
 @property (strong, nonatomic) NSArray *defaultSortDescriptorKeys;
