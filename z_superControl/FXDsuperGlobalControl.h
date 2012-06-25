@@ -53,8 +53,6 @@
 
 #pragma mark - Public
 + (FXDsuperGlobalControl*)sharedInstance;
-+ (void)releaseSharedInstance;
-
 
 + (BOOL)isOSversionNew;
 

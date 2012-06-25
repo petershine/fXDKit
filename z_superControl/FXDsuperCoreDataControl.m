@@ -215,15 +215,6 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	return _sharedInstance;
 }
 
-+ (void)releaseSharedInstance {
-	@synchronized(self) {
-		if (_sharedInstance) {
-			
-			_sharedInstance = nil;
-		}
-	}
-}
-
 #pragma mark -
 - (void)saveContext {	FXDLog_SEPARATE;
     NSError *error = nil;

@@ -61,7 +61,6 @@
 
 #pragma mark - Public
 + (FXDsuperTwitterControl*)sharedInstance;
-+ (void)releaseSharedInstance;
 
 - (void)signInBySelectingTwitterAccount;
 - (void)showAlertViewForSelectingTwitterAccount;

@@ -189,15 +189,6 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	return _sharedInstance;
 }
 
-+ (void)releaseSharedInstance {
-	@synchronized(self) {
-		if (_sharedInstance) {
-
-			_sharedInstance = nil;
-		}
-	}
-}
-
 #pragma mark -
 + (BOOL)isOSversionNew {	
 	BOOL isNewVersion = NO;

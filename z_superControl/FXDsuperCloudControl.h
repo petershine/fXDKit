@@ -1,0 +1,54 @@
+//
+//  FXDsuperCloudControl.h
+//  PopTooUniversal
+//
+//  Created by petershine on 6/25/12.
+//  Copyright (c) 2012 fXceed. All rights reserved.
+//
+
+#import "FXDKit.h"
+
+
+@interface FXDsuperCloudControl : FXDObject {
+    // Primitives
+	
+	// Instance variables
+	
+	// Properties : For subclass to be able to reference
+	NSURL *_ubiquityURL;
+}
+
+// Properties
+@property (strong, nonatomic) NSURL *ubiquityURL;
+
+
+#pragma mark - Memory management
+
+#pragma mark - Initialization
+
+#pragma mark - Accessor overriding
+
+
+#pragma mark - Private : if declared here, it's for subclass to be able to use these
+
+
+#pragma mark - Overriding
+
+
+#pragma mark - Public
++ (FXDsuperCloudControl*)sharedInstance;
+
+- (void)startCloudSynchronization;
+
+
+//MARK: - Observer implementation
+- (void)observedNSUbiquityIdentityDidChange:(id)notification;
+
+//MARK: - Delegate implementation
+
+
+@end
+
+#pragma mark - Category
+@interface FXDsuperCloudControl (Added)
+@end

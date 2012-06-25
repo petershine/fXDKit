@@ -70,7 +70,6 @@
 
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance;
-+ (void)releaseSharedInstance;
 
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;

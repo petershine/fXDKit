@@ -70,3 +70,8 @@
 // ViewControllers
 #import "FXDViewController.h"
 #import "FXDNavigationController.h"
+
+
+// Global control
+#import "FXDsuperGlobalControl.h"
+

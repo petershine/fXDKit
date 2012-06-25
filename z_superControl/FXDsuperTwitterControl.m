@@ -138,15 +138,6 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	return _sharedInstance;
 }
 
-+ (void)releaseSharedInstance {
-	@synchronized(self) {
-		if (_sharedInstance) {
-			
-			_sharedInstance = nil;
-		}
-	}
-}
-
 #pragma mark -
 - (void)signInBySelectingTwitterAccount {	FXDLog_DEFAULT;	
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
