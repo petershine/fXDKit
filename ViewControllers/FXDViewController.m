@@ -137,12 +137,6 @@
 
 
 #pragma mark - at loadView
-#if ForDEVELOPER
-- (void)loadView {
-	[super loadView];	FXDLog_SEPARATE_FRAME;
-	
-}
-#endif
 
 
 #pragma mark - at viewDidLoad
@@ -214,8 +208,6 @@
 	
 	return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 }
-
-
 #endif
 
 	 

@@ -1,21 +1,21 @@
 //
-//  FXDsuperTableInterface.m
+//  FXDsuperTableUI.m
 //
 //
 //  Created by petershine on 1/20/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperTableInterface.h"
+#import "FXDsuperTableUI.h"
 
 
 #pragma mark - Private interface
-@interface FXDsuperTableInterface (Private)
+@interface FXDsuperTableUI (Private)
 @end
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperTableInterface	
+@implementation FXDsuperTableUI	
 
 #pragma mark Synthesizing
 // Properties

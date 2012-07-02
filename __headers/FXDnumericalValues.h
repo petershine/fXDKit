@@ -10,6 +10,6 @@
 #define durationAnimation	0.3
 #define delayOneSecond	1.0
 
-#define delayPressedButton	0.1
+#define delayPressedButton	0.05
 
 #define radiusCorner	5.0

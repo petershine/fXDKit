@@ -10,7 +10,7 @@
 	#if ForDEVELOPER
 		#define USE_FXDLog	1
 
-		#define TEST_rotatingInterface	0
+		#define TEST_rotatingInterface	1
 
 	#else
 		#define USE_FXDLog	0

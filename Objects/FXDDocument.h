@@ -1,31 +1,23 @@
-	//
-//  FXDMapView.h
+//
+//  FXDDocument.h
 //  PopTooUniversal
 //
-//  Created by Peter SHINe on 5/25/12.
+//  Created by petershine on 7/2/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
 #import "FXDKit.h"
 
-#import <MapKit/MapKit.h>
 
-
-@interface FXDMapView : MKMapView {
+@interface FXDDocument : UIDocument {
     // Primitives
 	
 	// Instance variables
 	
-    // Properties : For subclass to be able to reference
-	CGRect _initialDisclaimerViewFrame;
-	CGPoint _disclaimerViewOffset;
+	// Properties : For subclass to be able to reference
 }
 
 // Properties
-@property (assign, nonatomic) CGRect initialDisclaimerViewFrame;
-@property (assign, nonatomic) CGPoint disclaimerViewOffset;
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -41,9 +33,6 @@
 #pragma mark - Overriding
 
 
-#pragma mark - IBActions
-
-
 #pragma mark - Public
 
 
@@ -54,9 +43,6 @@
 
 @end
 
-
 #pragma mark - Category
-@interface MKMapView (Added)
-- (id)disclaimerView;
-
+@interface UIDocument (Added)
 @end

@@ -177,16 +177,16 @@
 
 
 #pragma mark - Public
-static FXDsuperGlobalControl *_sharedInstance = nil;
-
-+ (FXDsuperGlobalControl*)sharedInstance {	
-	@synchronized(self) {	FXDLog_SEPARATE;
-		if (_sharedInstance == nil) {
-			_sharedInstance = [[self alloc] init];
-		}
-	}
++ (FXDsuperGlobalControl*)sharedInstance {
+	static dispatch_once_t once;
 	
-	return _sharedInstance;
+    static id _sharedInstance = nil;
+	
+    dispatch_once(&once, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+	
+    return _sharedInstance;
 }
 
 #pragma mark -
@@ -198,6 +198,10 @@ static FXDsuperGlobalControl *_sharedInstance = nil;
 	if ([systemVersionString floatValue] >= versionMaximumSupported) {
 		isNewVersion = YES;
 	}
+	
+#if ForDEVELOPER
+	FXDLog(@"isNewVersion: %@", isNewVersion ? @"YES":@"NO");
+#endif
 	
 	return isNewVersion;
 }

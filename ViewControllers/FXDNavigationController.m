@@ -49,17 +49,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_SEPARATE;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		//awakeFromNib
-	}
-	
-	return self;
-}
-
-- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_SEPARATE;
+- (id)initWithRootViewController:(UIViewController *)rootViewController {	//FXDLog_SEPARATE;
 	self  = [super initWithRootViewController:rootViewController];
 	
 	if (self) {
@@ -69,7 +59,7 @@
 	return self;
 }
 
-- (void)awakeFromNib {	FXDLog_SEPARATE;
+- (void)awakeFromNib {	//FXDLog_SEPARATE;
 	[super awakeFromNib];
 	
 	// Primitives
@@ -86,12 +76,6 @@
 
 
 #pragma mark - at loadView
-#if ForDEVELOPER
-- (void)loadView {
-	[super loadView];	FXDLog_SEPARATE_FRAME;
-	
-}
-#endif
 
 
 #pragma mark - at autoRotate
@@ -99,7 +83,7 @@
 
 #pragma mark - at viewDidLoad
 - (void)viewDidLoad {
-    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+    [super viewDidLoad];	//FXDLog_SEPARATE_FRAME;
 	
 	/*
 	 NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:

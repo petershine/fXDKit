@@ -55,7 +55,6 @@
 		
 		_defaultEntityName = nil;
 		_defaultSortDescriptorKeys = nil;
-		_defaultFetchedResults = nil;
 		
 		_fieldKeys = nil;
 		_fieldValues = nil;
@@ -66,7 +65,6 @@
 
 #pragma mark - Accessor overriding
 // Properties
-#pragma mark - Core Data stack
 - (NSManagedObjectModel *)managedObjectModel {
 
     if (_managedObjectModel != nil) {
@@ -76,7 +74,6 @@
 	_managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
 	
 	FXDLog_DEFAULT;
-	FXDLog(@"_managedObjectModel: %@", _managedObjectModel);
 	
     return _managedObjectModel;
 }
@@ -89,7 +86,9 @@
 	
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
 	
-	NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:applicationSqlitePathComponent];
+	NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	
+	NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:applicationSqlitePathComponent];
 	
 	FXDLog_DEFAULT;
 	FXDLog(@"_persistentStoreCoordinator: %@", _persistentStoreCoordinator);
@@ -175,52 +174,6 @@
 	return _defaultSortDescriptorKeys;
 }
 
-- (NSFetchedResultsController*)defaultFetchedResults {
-	@synchronized(self) {
-		if (_defaultFetchedResults == nil) {	FXDLog_DEFAULT;
-			
-			if (self.defaultEntityName && self.defaultSortDescriptorKeys) {
-
-				NSEntityDescription *entityDescription = [NSEntityDescription entityForName:self.defaultEntityName inManagedObjectContext:self.managedObjectContext];
-				
-				FXDLog_SEPARATE;
-				//FXDLog(@"entityDescription propertiesByName:\n%@", [entityDescription propertiesByName]);
-								
-				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-				
-				[fetchRequest setEntity:entityDescription];
-				[fetchRequest setSortDescriptors:self.defaultSortDescriptorKeys];
-				
-				[fetchRequest setFetchLimit:limitDefaultFetch];
-				[fetchRequest setFetchBatchSize:sizeDefaultBatch];
-				
-				FXDLog(@"fetchRequest:\n%@", fetchRequest);
-				
-				
-				_defaultFetchedResults = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:self.defaultEntityName];
-
-				
-				NSError *error = nil;
-				
-				if ([_defaultFetchedResults performFetch:&error]) {
-					FXDLog(@"fetchedObjects count: %d", [_defaultFetchedResults.fetchedObjects count]);
-				}
-				else {
-					if (error) {
-						FXDLog_ERROR;
-					}
-				}
-			}
-			else {	FXDLog_SEPARATE;
-				FXDLog(@"defaultEntityName: %@", self.defaultEntityName);
-				FXDLog(@"defaultSortDescriptorKeys: %@", self.defaultSortDescriptorKeys);
-			}
-		}
-	}
-	
-	return _defaultFetchedResults;
-}
-
 
 #pragma mark - Private
 
@@ -229,16 +182,16 @@
 
 
 #pragma mark - Public
-static FXDsuperCoreDataControl *_sharedInstance = nil;
-
 + (FXDsuperCoreDataControl*)sharedInstance {
-	@synchronized(self) {		
-        if (_sharedInstance == nil) {
-            _sharedInstance = [[self alloc] init];
-        }
-	}
+	static dispatch_once_t once;
 	
-	return _sharedInstance;
+    static id _sharedInstance = nil;
+	
+    dispatch_once(&once, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+	
+    return _sharedInstance;
 }
 
 #pragma mark -
@@ -257,27 +210,69 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
     }
 }
 
-#pragma mark - Application's Documents directory
-- (NSURL*)applicationDocumentsDirectory {	//FXDLog_DEFAULT;
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
-
 #pragma mark -
-- (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;
-	FXDLog(@"collectionObj:%@", collectionObj);
+- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors {
+	if (entityName == nil) {
+		entityName = self.defaultEntityName;
+	}
 	
+	if (sortDescriptors == nil) {
+		sortDescriptors = self.defaultSortDescriptorKeys;
+	}
+	
+	NSFetchedResultsController *resultsController = nil;
+	
+	if (entityName && sortDescriptors) {
+		NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
+		
+		FXDLog_DEFAULT;
+
+		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+		
+		[fetchRequest setEntity:entityDescription];
+		[fetchRequest setSortDescriptors:sortDescriptors];
+		
+		[fetchRequest setFetchLimit:limitDefaultFetch];
+		[fetchRequest setFetchBatchSize:sizeDefaultBatch];
+		
+		//FXDLog(@"fetchRequest:\n%@", fetchRequest);
+		
+		resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:entityName];
+		
+		NSError *error = nil;
+		
+		if ([resultsController performFetch:&error]) {
+			FXDLog(@"resultsController count: %d", [resultsController.fetchedObjects count]);
+		}
+		else {
+			if (error) {
+				FXDLog_ERROR;
+			}
+		}
+	}
+	else {
+		FXDLog(@"entityName: %@", entityName);
+		FXDLog(@"sortDescriptors: %@", sortDescriptors);
+	}
+	
+	return resultsController;
 }
 
+- (NSArray*)fetchedObjectsForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors {
+	NSFetchedResultsController *resultsController = [self resultsControllerForEntityName:entityName andForSortDescriptors:sortDescriptors];
+	
+	return resultsController.fetchedObjects;
+}
 
-#pragma mark -
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {	FXDLog_DEFAULT;
 	NSManagedObject *resultObj = nil;
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
 	FXDLog(@"predicate: %@", predicate);
 	
-	NSArray *filteredArray = [self.defaultFetchedResults.fetchedObjects filteredArrayUsingPredicate:predicate];
+	NSFetchedResultsController *resultsController = [self resultsControllerForEntityName:self.defaultEntityName andForSortDescriptors:self.defaultSortDescriptorKeys];
+	
+	NSArray *filteredArray = [resultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 	
 	if ([filteredArray count] > 0) {
 		resultObj = filteredArray[0];
@@ -288,6 +283,11 @@ static FXDsuperCoreDataControl *_sharedInstance = nil;
 	}	
 	
 	return resultObj;
+}
+
+- (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;
+	FXDLog(@"collectionObj:%@", collectionObj);
+	
 }
 
 

@@ -1,15 +1,15 @@
 //
-//  FXDsuperTableInterface.h
+//  FXDsuperTableUI.h
 //
 //
 //  Created by petershine on 1/20/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
+#import "FXDViewController.h"
 
 
-@interface FXDsuperTableInterface : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
+@interface FXDsuperTableUI : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables

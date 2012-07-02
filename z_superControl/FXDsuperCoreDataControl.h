@@ -16,7 +16,7 @@
 #endif
 
 
-#define limitDefaultFetch	1000
+#define limitDefaultFetch	500
 #define sizeDefaultBatch	100
 
 
@@ -32,7 +32,6 @@
 	
 	NSString *_defaultEntityName;
 	NSArray *_defaultSortDescriptorKeys;
-	NSFetchedResultsController *_defaultFetchedResults;
 	
 	NSMutableArray *_fieldKeys;
 	NSMutableArray *_fieldValues;
@@ -45,7 +44,6 @@
 
 @property (strong, nonatomic) NSString *defaultEntityName;
 @property (strong, nonatomic) NSArray *defaultSortDescriptorKeys;
-@property (strong, nonatomic) NSFetchedResultsController *defaultFetchedResults;
 
 @property (strong, nonatomic) NSMutableArray *fieldKeys;
 @property (strong, nonatomic) NSMutableArray *fieldValues;
@@ -68,11 +66,11 @@
 + (FXDsuperCoreDataControl*)sharedInstance;
 
 - (void)saveContext;
-- (NSURL*)applicationDocumentsDirectory;
 
-- (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
-
+- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors;
+- (NSArray*)fetchedObjectsForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors;
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
+- (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
 
 
 //MARK: - Observer implementation

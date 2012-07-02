@@ -1,19 +1,17 @@
 //
-//  FXDsuperMapInterface.h
+//  FXDsuperMapUI.h
 //  PopTooUniversal
 //
 //  Created by Peter SHINe on 4/24/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-#import "FXDsuperTableInterface.h"
+#import "FXDsuperTableUI.h"
 
 #import <MapKit/MapKit.h>
 
 
-@interface FXDsuperMapInterface : FXDsuperTableInterface <MKMapViewDelegate> {
+@interface FXDsuperMapUI : FXDsuperTableUI <MKMapViewDelegate> {
     // Primitives
 	
 	// Instance variables

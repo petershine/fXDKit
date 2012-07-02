@@ -60,16 +60,16 @@
 
 
 #pragma mark - Public
-static FXDsuperCloudControl *_sharedInstance = nil;
-
 + (FXDsuperCloudControl*)sharedInstance {
-	@synchronized(self) {
-        if (_sharedInstance == nil) {
-            _sharedInstance = [[self alloc] init];
-        }
-	}
+	static dispatch_once_t once;
 	
-	return _sharedInstance;
+    static id _sharedInstance = nil;
+	
+    dispatch_once(&once, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+	
+    return _sharedInstance;
 }
 
 #pragma mark -
@@ -88,9 +88,6 @@ static FXDsuperCloudControl *_sharedInstance = nil;
 		if (cloudToken) {
 			shouldRequestURLforUbiquityContatiner = YES;
 		}
-		else {
-			//TODO:
-		}
 	}
 	else {	// For iOS 5
 		shouldRequestURLforUbiquityContatiner = YES;
@@ -100,11 +97,9 @@ static FXDsuperCloudControl *_sharedInstance = nil;
 	
 	if (shouldRequestURLforUbiquityContatiner) {
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			FXDLog(@"%@", @"[[NSFileManager defaultManager] URLForUbiquityContainerIdentifier]");
-			
 			NSURL *ubiquityURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			
-			dispatch_async(dispatch_get_main_queue(), ^{
+			dispatch_async(dispatch_get_main_queue(), ^{	FXDLog_DEFAULT;
 				self.ubiquityURL = ubiquityURL;
 				
 				FXDLog(@"ubiquityURL: %@", self.ubiquityURL);

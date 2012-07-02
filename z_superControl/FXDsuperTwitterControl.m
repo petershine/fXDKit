@@ -126,16 +126,16 @@
 
 
 #pragma mark - Public
-static FXDsuperTwitterControl *_sharedInstance = nil;
-
 + (FXDsuperTwitterControl*)sharedInstance {
-	@synchronized(self) {
-        if (_sharedInstance == nil) {
-            _sharedInstance = [[self alloc] init];
-        }
-	}
+	static dispatch_once_t once;
 	
-	return _sharedInstance;
+    static id _sharedInstance = nil;
+	
+    dispatch_once(&once, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+	
+    return _sharedInstance;
 }
 
 #pragma mark -
@@ -148,18 +148,19 @@ static FXDsuperTwitterControl *_sharedInstance = nil;
 	}
 	else {
 		[self.accountStore
-		 requestAccessToAccountsWithType:self.accountType
-		 withCompletionHandler:^(BOOL granted, NSError *error) {
-			 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
+         requestAccessToAccountsWithType:self.accountType
+         options:nil
+         completion:^(BOOL granted, NSError *error) {
+             FXDLog(@"granted: %@", granted ? @"YES":@"NO");
 			 
 			 if (error) {
 				 FXDLog_ERROR;
 			 }
 			 
 			 if (granted) {
-				 [self showAlertViewForSelectingTwitterAccount]; 
+				 [self showAlertViewForSelectingTwitterAccount];
 			 }
-		 }];
+         }];
 	}
 }
 
