@@ -18,14 +18,22 @@
 	NSArray *_rowCounts;
 	NSDictionary *_cellTexts;
 	
+	NSFetchedResultsController *_defaultResultsController;
 	NSArray *_defaultDatasource;
+	
+	NSOperationQueue *_defaultOperationQueue;
+	NSMutableDictionary *_addedOperations;
 }
 
 // Properties
 @property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;
 
+@property (strong, nonatomic) NSFetchedResultsController *defaultResultsController;
 @property (strong, nonatomic) NSArray *defaultDatasource;
+
+@property (strong, nonatomic) NSOperationQueue *defaultOperationQueue;
+@property (strong, nonatomic) NSMutableDictionary *addedOperations;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITableView *defaultTableview;

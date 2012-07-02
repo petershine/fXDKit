@@ -47,8 +47,12 @@
 	// Properties
 	_rowCounts = nil;
 	_cellTexts = nil;
-	
+
+	_defaultResultsController = nil;
 	_defaultDatasource = nil;
+	
+	_defaultOperationQueue = nil;
+	_addedOperations = nil;
 	
 	// IBOutlets
 }
@@ -74,6 +78,15 @@
 }
 
 #pragma mark -
+- (NSFetchedResultsController*)defaultResultsController {
+	
+	if (_defaultResultsController == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _defaultResultsController;
+}
+
 - (NSArray*)defaultDatasource {
 	
 	if (_defaultDatasource == nil) {	FXDLog_OVERRIDE;
@@ -81,6 +94,25 @@
 	}
 	
 	return _defaultDatasource;
+}
+
+#pragma mark -
+- (NSOperationQueue*)defaultOperationQueue {
+	
+	if (_defaultOperationQueue == nil) {
+		_defaultOperationQueue = [[NSOperationQueue alloc] init];
+	}
+	
+	return _defaultOperationQueue;
+}
+
+- (NSMutableDictionary*)addedOperations {
+	
+	if (_addedOperations == nil) {
+		_addedOperations = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+	
+	return _addedOperations;
 }
 
 
@@ -94,8 +126,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[self.defaultTableview setDataSource:self];
-	[self.defaultTableview setDelegate:self];
+	if (self.defaultTableview) {
+		[self.defaultTableview setDataSource:self];
+		[self.defaultTableview setDelegate:self];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -246,7 +280,7 @@
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	NSInteger numberOfSections = 0;
+	NSInteger numberOfSections = 1;
 	
 	if (self.rowCounts) {
 		numberOfSections = [self.rowCounts count];
@@ -255,7 +289,7 @@
 	return numberOfSections;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	FXDLog_OVERRIDE;
 	NSInteger numberOfRows = 0;
 
 	if (self.rowCounts) {
@@ -265,7 +299,7 @@
 	return numberOfRows;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	FXDLog_OVERRIDE;
 	
 	static NSString *identifier = @"cellIdentifier";
 	
@@ -282,6 +316,26 @@
 
 
 #pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
+	
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0) {	//FXDLog_OVERRIDE;
+	
+}
+
+#pragma mark -
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(6_0) {
+	return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(6_0) {
+	
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(6_0) {
+	
+}
 
 
 #pragma mark - NSFetchedResultsControllerDelegate
