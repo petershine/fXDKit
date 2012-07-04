@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDViewController.h"
+#import "FXDKit.h"
 
 
 @interface FXDsuperTableUI : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
@@ -21,6 +21,8 @@
 	
 	NSOperationQueue *_defaultOperationQueue;
 	NSMutableDictionary *_addedOperations;
+	
+	FXDFetchedResultsController *_defaultResultsController;
 }
 
 // Properties
@@ -30,6 +32,8 @@
 
 @property (strong, nonatomic) NSOperationQueue *defaultOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *addedOperations;
+
+@property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITableView *defaultTableview;

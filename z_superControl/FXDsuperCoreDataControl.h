@@ -15,12 +15,16 @@
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
 
+#ifndef documentnameManagedCoreData
+	#define documentnameManagedCoreData	@"managed.coredata.document"
+#endif
+
 
 #define limitDefaultFetch	500
-#define sizeDefaultBatch	100
+#define sizeDefaultBatch	10
 
 
-@interface FXDsuperCoreDataControl : UIManagedDocument {
+@interface FXDsuperCoreDataControl : UIManagedDocument <NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -29,7 +33,7 @@
 	NSString *_defaultEntityName;
 	NSArray *_defaultSortDescriptors;
 	
-	NSFetchedResultsController *_defaultFetchedResults;
+	FXDFetchedResultsController *_defaultResultsController;
 
 	NSMutableArray *_fieldKeys;
 	NSMutableArray *_fieldValues;
@@ -39,7 +43,7 @@
 @property (strong, nonatomic) NSString *defaultEntityName;
 @property (strong, nonatomic) NSArray *defaultSortDescriptors;
 
-@property (strong, nonatomic) NSFetchedResultsController *defaultFetchedResults;
+@property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
 
 @property (strong, nonatomic) NSMutableArray *fieldKeys;
 @property (strong, nonatomic) NSMutableArray *fieldValues;
@@ -61,7 +65,8 @@
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance;
 
-- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
 
@@ -76,6 +81,7 @@
 - (void)observedNSManagedObjectContextDidSave:(id)notification;
 
 //MARK: - Delegate implementation
+#pragma mark - NSFetchedResultsControllerDelegate
 
 
 @end

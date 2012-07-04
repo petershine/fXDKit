@@ -35,18 +35,18 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFileURL:(NSURL *)url {	FXDLog_DEFAULT;
+- (id)initWithFileURL:(NSURL *)documentURL {	FXDLog_DEFAULT;
 	NSURL *applicationDocumentsDirectory = nil;
 	
-	if (url == nil) {
+	if (documentURL == nil) {
 		applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 		
-		url = [applicationDocumentsDirectory URLByAppendingPathComponent:@"managed.coredata.document"];
+		documentURL = [applicationDocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
 	}
 	
-	FXDLog(@"url: %@", url);
+	FXDLog(@"documentURL: %@", documentURL);
 	
-	self = [super initWithFileURL:url];
+	self = [super initWithFileURL:documentURL];
 	
 	if (self) {
 		if (applicationDocumentsDirectory) {
@@ -132,14 +132,17 @@
 }
 
 #pragma mark -
-- (NSFetchedResultsController*)defaultFetchedResults {
-	if (_defaultFetchedResults == nil) {	FXDLog_DEFAULT;
-		_defaultFetchedResults = [self resultsControllerForEntityName:self.defaultEntityName
-												andForSortDescriptors:self.defaultSortDescriptors
-											 fromManagedObjectContext:self.managedObjectContext];
+- (NSFetchedResultsController*)defaultResultsController {
+	if (_defaultResultsController == nil) {	FXDLog_DEFAULT;
+		_defaultResultsController = [self resultsControllerForEntityName:self.defaultEntityName
+													 withSortDescriptors:self.defaultSortDescriptors
+															   withLimit:0
+												fromManagedObjectContext:self.managedObjectContext];
+		
+		[_defaultResultsController setDelegate:self];
 	}
 	
-	return _defaultFetchedResults;
+	return _defaultResultsController;
 }
 
 
@@ -163,7 +166,7 @@
 }
 
 #pragma mark -
-- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
+- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
 	if (entityName == nil) {
 		entityName = self.defaultEntityName;
 	}
@@ -172,11 +175,15 @@
 		sortDescriptors = self.defaultSortDescriptors;
 	}
 	
+	if (limit == integerNotDefined) {
+		limit = limitDefaultFetch;
+	}
+	
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
 	}
 	
-	NSFetchedResultsController *resultsController = nil;
+	FXDFetchedResultsController *resultsController = nil;
 	
 	if (entityName && sortDescriptors) {
 		NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:managedObjectContext];
@@ -186,16 +193,16 @@
 		[fetchRequest setEntity:entityDescription];
 		[fetchRequest setSortDescriptors:sortDescriptors];
 		
-		[fetchRequest setFetchLimit:limitDefaultFetch];
+		[fetchRequest setFetchLimit:limit];
 		[fetchRequest setFetchBatchSize:sizeDefaultBatch];
 
 		
-		resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:entityName];
+		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:entityName];
 		
 		NSError *error = nil;
 		
 		if ([resultsController performFetch:&error]) {
-			FXDLog(@"resultsController count: %d", [resultsController.fetchedObjects count]);
+			FXDLog(@"performFetch: %@", @"DONE");
 		}
 		
 		if (error) {
@@ -206,13 +213,14 @@
 	return resultsController;
 }
 
+#pragma mark -
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {	FXDLog_DEFAULT;
 	NSManagedObject *resultObj = nil;
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
 	FXDLog(@"predicate: %@", predicate);
 		
-	NSArray *filteredArray = [self.defaultFetchedResults.fetchedObjects filteredArrayUsingPredicate:predicate];
+	NSArray *filteredArray = [self.defaultResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 	
 	if ([filteredArray count] > 0) {
 		resultObj = filteredArray[0];
@@ -232,17 +240,16 @@
 
 #pragma mark -
 - (void)saveContext {	FXDLog_SEPARATE;
-    NSError *error = nil;
+    __block NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
 	
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-	
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-#if DEBUG
-            FXDLog_ERROR;
-            abort();
-#endif
-        }
+    if (managedObjectContext && managedObjectContext.hasChanges) {
+		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
+			NSError *error = nil;
+			
+			if (![managedObjectContext save:&error]) {
+				FXDLog_ERROR;
+			}
+		}];
     }
 }
 
@@ -268,6 +275,46 @@
 
 
 //MARK: - Delegate implementation
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
+	
+	if (controller.dynamicDelegate) {
+		[controller.dynamicDelegate controllerWillChangeContent:controller];
+	}
+	else {
+		FXDLog_OVERRIDE;
+	}
+}
+
+- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+	
+	if (controller.dynamicDelegate) {
+		[controller.dynamicDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
+	}
+	else {
+		FXDLog_OVERRIDE;
+	}
+}
+
+- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+	
+	if (controller.dynamicDelegate) {
+		[controller.dynamicDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+	}
+	else {
+		FXDLog_OVERRIDE;
+	}
+}
+
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
+	
+	if (controller.dynamicDelegate) {
+		[controller.dynamicDelegate controllerDidChangeContent:controller];
+	}
+	else {
+		FXDLog_OVERRIDE;
+	}
+}
 
 
 @end

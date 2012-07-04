@@ -45,6 +45,8 @@
 
 #import "FXDAnnotation.h"
 
+#import "FXDFetchedResultsController.h"
+
 
 // Views
 #import "FXDView.h"
