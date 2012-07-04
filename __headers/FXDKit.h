@@ -44,7 +44,6 @@
 #import "FXDMediaItem.h"
 
 #import "FXDAnnotation.h"
-#import "FXDDocument.h"
 
 
 // Views

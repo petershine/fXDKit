@@ -20,30 +20,26 @@
 #define sizeDefaultBatch	100
 
 
-@interface FXDsuperCoreDataControl : FXDObject {
+@interface FXDsuperCoreDataControl : UIManagedDocument {
     // Primitives
 	
 	// Instance variables
 	
     // Properties : For subclass to be able to reference
-	NSManagedObjectModel *_managedObjectModel;
-	NSPersistentStoreCoordinator *_persistentStoreCoordinator;
-	NSManagedObjectContext *_managedObjectContext;
-	
 	NSString *_defaultEntityName;
-	NSArray *_defaultSortDescriptorKeys;
+	NSArray *_defaultSortDescriptors;
 	
+	NSFetchedResultsController *_defaultFetchedResults;
+
 	NSMutableArray *_fieldKeys;
 	NSMutableArray *_fieldValues;
 }
 
 // Properties
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
 @property (strong, nonatomic) NSString *defaultEntityName;
-@property (strong, nonatomic) NSArray *defaultSortDescriptorKeys;
+@property (strong, nonatomic) NSArray *defaultSortDescriptors;
+
+@property (strong, nonatomic) NSFetchedResultsController *defaultFetchedResults;
 
 @property (strong, nonatomic) NSMutableArray *fieldKeys;
 @property (strong, nonatomic) NSMutableArray *fieldValues;
@@ -65,12 +61,11 @@
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance;
 
-- (void)saveContext;
-
-- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors;
-- (NSArray*)fetchedObjectsForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors;
+- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName andForSortDescriptors:(NSArray*)sortDescriptors fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
 - (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
+
+- (void)saveContext;
 
 
 //MARK: - Observer implementation

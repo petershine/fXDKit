@@ -47,8 +47,6 @@
 	// Properties
 	_rowCounts = nil;
 	_cellTexts = nil;
-
-	_defaultResultsController = nil;
 	_defaultDatasource = nil;
 	
 	_defaultOperationQueue = nil;
@@ -75,16 +73,6 @@
 	}
 	
 	return _cellTexts;
-}
-
-#pragma mark -
-- (NSFetchedResultsController*)defaultResultsController {
-	
-	if (_defaultResultsController == nil) {	FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _defaultResultsController;
 }
 
 - (NSArray*)defaultDatasource {
@@ -279,7 +267,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {	FXDLog_OVERRIDE;
 	NSInteger numberOfSections = 1;
 	
 	if (self.rowCounts) {
@@ -343,11 +331,11 @@
 	
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	//FXDLog_DEFAULT;
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
 	
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	//FXDLog_DEFAULT;
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	FXDLog_OVERRIDE;
 	
 }
 

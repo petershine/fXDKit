@@ -17,8 +17,6 @@
 	// Properties : For subclass to be able to reference
 	NSArray *_rowCounts;
 	NSDictionary *_cellTexts;
-	
-	NSFetchedResultsController *_defaultResultsController;
 	NSArray *_defaultDatasource;
 	
 	NSOperationQueue *_defaultOperationQueue;
@@ -28,8 +26,6 @@
 // Properties
 @property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;
-
-@property (strong, nonatomic) NSFetchedResultsController *defaultResultsController;
 @property (strong, nonatomic) NSArray *defaultDatasource;
 
 @property (strong, nonatomic) NSOperationQueue *defaultOperationQueue;
