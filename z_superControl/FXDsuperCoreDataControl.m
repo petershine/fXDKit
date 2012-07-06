@@ -22,6 +22,10 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize defaultEntityName = _defaultEntityName;
+@synthesize defaultSortDescriptors = _defaultSortDescriptors;
+
+@synthesize defaultResultsController = _defaultResultsController;
 
 
 #pragma mark - Memory management
@@ -132,10 +136,14 @@
 	if (ubiquityURL) {
 		NSURL *ubiquitousContentURL = [ubiquityURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
 		//TODO: get UUID unique URL
-		options = @{	NSPersistentStoreUbiquitousContentNameKey:ubiquitousCoreDataContentName, NSPersistentStoreUbiquitousContentURLKey:ubiquitousContentURL	};
+		options = [NSDictionary dictionaryWithObjectsAndKeys:
+				   ubiquitousCoreDataContentName, NSPersistentStoreUbiquitousContentNameKey,
+				   ubiquitousContentURL, NSPersistentStoreUbiquitousContentURLKey, nil];
 	}
 	else {
-		options = @{	NSMigratePersistentStoresAutomaticallyOption:@YES,	NSInferMappingModelAutomaticallyOption:@YES	};
+		options = [NSDictionary dictionaryWithObjectsAndKeys:
+				   [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+				   [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
 	}
 	
 	FXDLog(@"rootURL: %@", rootURL);
@@ -259,7 +267,7 @@
 	NSArray *filteredArray = [self.defaultResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 	
 	if ([filteredArray count] > 0) {
-		resultObj = filteredArray[0];
+		resultObj = [filteredArray objectAtIndex:0];
 		
 		if ([filteredArray count] > 1) {
 			FXDLog(@"filteredArray:\n%@", filteredArray);

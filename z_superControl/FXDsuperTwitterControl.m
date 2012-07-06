@@ -22,6 +22,11 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize accountStore = _accountStore;
+@synthesize accountType = _accountType;
+
+@synthesize twitterAccountArray = _twitterAccountArray;
+@synthesize mainTwitterAccount = _mainTwitterAccount;
 
 
 #pragma mark - Memory management
@@ -147,6 +152,7 @@
 		[self showAlertViewForSelectingTwitterAccount];
 	}
 	else {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
 		[self.accountStore
          requestAccessToAccountsWithType:self.accountType
          options:nil
@@ -161,6 +167,20 @@
 				 [self showAlertViewForSelectingTwitterAccount];
 			 }
          }];
+#else
+		[self.accountStore requestAccessToAccountsWithType:self.accountType
+									 withCompletionHandler:^(BOOL granted, NSError *error) {
+										 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
+										 
+										 if (error) {
+											 FXDLog_ERROR;
+										 }
+										 
+										 if (granted) {
+											 [self showAlertViewForSelectingTwitterAccount];
+										 }
+									 }];
+#endif
 	}
 }
 
@@ -208,7 +228,7 @@
 	
 	NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
 	
-	NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
+	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:screenName, objkeyTwitterScreenName, nil];
 	
 	TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 												parameters:parameters
@@ -227,7 +247,7 @@
 	if (self.mainTwitterAccount) {
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 		
-		NSDictionary *parameters = @{objkeyTwitterStatus: status};
+		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:status, objkeyTwitterStatus, nil];
 		
 		TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 													parameters:parameters
@@ -298,7 +318,7 @@
 	
 	if (buttonIndex != alertView.cancelButtonIndex) {
 
-		_mainTwitterAccount = (self.twitterAccountArray)[buttonIndex];
+		_mainTwitterAccount = [self.twitterAccountArray objectAtIndex:buttonIndex];
 		
 		identifier = _mainTwitterAccount.identifier;
 		

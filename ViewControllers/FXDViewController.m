@@ -19,6 +19,9 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize presentingSegueName = _presentingSegueName;
+
+@synthesize presentedSegueDictionary = _presentedSegueDictionary;
 
 // IBOutlets
 
@@ -374,7 +377,7 @@
 			backLabel.font = [UIFont systemFontOfSize:13.0];
 		}
 		
-		backLabel.textAlignment = NSTextAlignmentCenter;
+		backLabel.textAlignment = UITextAlignmentCenter;
 		
 		backLabel.backgroundColor = [UIColor clearColor];
 		

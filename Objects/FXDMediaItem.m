@@ -66,7 +66,8 @@
 - (NSDictionary*)propertiesDictionary {
 	NSMutableDictionary *propertiesDictionary = nil;
 	
-	NSArray *mediaProperties = @[MPMediaItemPropertyPersistentID,
+	NSArray *mediaProperties = [NSArray arrayWithObjects:
+								MPMediaItemPropertyPersistentID,
 								MPMediaItemPropertyMediaType,
 								MPMediaItemPropertyTitle,
 								MPMediaItemPropertyAlbumTitle,
@@ -105,7 +106,7 @@
 								MPMediaItemPropertySkipCount,
 								MPMediaItemPropertyRating,
 								MPMediaItemPropertyLastPlayedDate,
-								MPMediaItemPropertyUserGrouping];
+								MPMediaItemPropertyUserGrouping, nil];
 	
 	for (NSString *property in mediaProperties) {
 		id value = [self valueForProperty:property];
@@ -115,7 +116,7 @@
 				propertiesDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 			}
 			
-			propertiesDictionary[property] = value;
+			[propertiesDictionary setObject:value forKey:property];
 		}
 	}
 	

@@ -20,6 +20,7 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize addedObj = _addedObj;
 
 // IBOutlets
 

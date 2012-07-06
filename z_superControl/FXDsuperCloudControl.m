@@ -21,6 +21,10 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize ubiquityToken = _ubiquityToken;
+@synthesize ubiquityURL = _ubiquityURL;
+
+@synthesize metadataQuery = _metadataQuery;
 
 
 #pragma mark - Memory management
@@ -88,14 +92,19 @@
 	BOOL shouldRequestURLforUbiquityContatiner = NO;
 	
 	if ([FXDsuperGlobalControl isOSversionNew]) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observedNSUbiquityIdentityDidChange:) name:NSUbiquityIdentityDidChangeNotification object:nil];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(observedNSUbiquityIdentityDidChange:)
+													 name:NSUbiquityIdentityDidChangeNotification
+												   object:nil];
 		
-		self.ubiquityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
+		self.ubiquityToken = [[NSFileManager defaultManager] performSelector:@selector(ubiquityIdentityToken)];
 		FXDLog(@"ubiquityToken: %@", self.ubiquityToken);
 		
 		if (self.ubiquityToken) {
 			shouldRequestURLforUbiquityContatiner = YES;
 		}
+#endif
 	}
 	else {
 		shouldRequestURLforUbiquityContatiner = YES;

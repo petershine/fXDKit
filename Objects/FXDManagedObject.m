@@ -67,30 +67,30 @@
     NSDictionary *attributes = [[self entity] attributesByName];
 	
     for (NSString *attribute in attributes) {
-		id value = keyedValues[attribute];
+		id value = [keyedValues objectForKey:attribute];
 		
 		//MARK: Check cases
 		if (value == nil) {
-			value = keyedValues[[attribute uppercaseString]];
+			value = [keyedValues objectForKey:[attribute uppercaseString]];
 		}
 		if (value == nil) {
-			value = keyedValues[[attribute lowercaseString]];
+			value = [keyedValues objectForKey:[attribute lowercaseString]];
 		}
 		
         if (value == nil) {
             continue;	// EMPTY
         }
 		
-        NSAttributeType attributeType = [attributes[attribute] attributeType];
+        NSAttributeType attributeType = [[attributes objectForKey:attribute] attributeType];
 		
         if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
             value = [[value stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         }
 		else if (((attributeType == NSInteger16AttributeType) || (attributeType == NSInteger32AttributeType) || (attributeType == NSInteger64AttributeType) || (attributeType == NSBooleanAttributeType)) && ([value isKindOfClass:[NSString class]])) {
-            value = @([value integerValue]);
+            value = [NSNumber numberWithInteger:[value integerValue]];
         }
 		else if ((attributeType == NSFloatAttributeType || attributeType == NSDoubleAttributeType) &&  ([value isKindOfClass:[NSString class]])) {
-            value = @([value doubleValue]);
+            value = [NSNumber numberWithDouble:[value doubleValue]];
         }
 		else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]]) && (dateFormatter != nil)) {
             value = [dateFormatter dateFromString:value];

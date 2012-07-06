@@ -161,22 +161,22 @@
 
 + (NSString*) elementName:(TBXMLElement*)aXMLElement {
 	if (nil == aXMLElement->name) return @"";
-	return @(&aXMLElement->name[0]);
+	return (NSString*)(&aXMLElement->name[0]);
 }
 
 + (NSString*) attributeName:(TBXMLAttribute*)aXMLAttribute {
 	if (nil == aXMLAttribute->name) return @"";
-	return @(&aXMLAttribute->name[0]);
+	return (NSString*)(&aXMLAttribute->name[0]);
 }
 
 + (NSString*) attributeValue:(TBXMLAttribute*)aXMLAttribute {
 	if (nil == aXMLAttribute->value) return @"";
-	return @(&aXMLAttribute->value[0]);
+	return (NSString*)(&aXMLAttribute->value[0]);
 }
 
 + (NSString*) textForElement:(TBXMLElement*)aXMLElement {
 	if (nil == aXMLElement->text) return @"";
-	return @(&aXMLElement->text[0]);
+	return (NSString*)(&aXMLElement->text[0]);
 }
 
 + (NSString*) valueOfAttributeNamed:(NSString *)aName forElement:(TBXMLElement*)aXMLElement {
@@ -185,7 +185,7 @@
 	TBXMLAttribute * attribute = aXMLElement->firstAttribute;
 	while (attribute) {
 		if (strlen(attribute->name) == strlen(name) && memcmp(attribute->name,name,strlen(name)) == 0) {
-			value = @(&attribute->value[0]);
+			value = (NSString*)(&attribute->value[0]);
 			break;
 		}
 		attribute = attribute->next;

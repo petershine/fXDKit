@@ -172,7 +172,9 @@
 	for (id object in self) {
 		if ([object isKindOfClass:[NSArray class]] == NO) {
             if (error != NULL) {
-                *error = [NSError errorWithDomain:CHCSVErrorDomain code:CHCSVErrorCodeInvalidFormat userInfo:@{NSLocalizedDescriptionKey: @"Invalid array structure"}];
+                *error = [NSError errorWithDomain:CHCSVErrorDomain
+											 code:CHCSVErrorCodeInvalidFormat
+										 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Invalid array structure", NSLocalizedDescriptionKey, nil]];
             }
             return NO;
         }

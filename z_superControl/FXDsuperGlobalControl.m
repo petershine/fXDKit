@@ -21,6 +21,14 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize didMakePurchase = _didMakePurchase;
+@synthesize didShareToSocialNet = _didShareToSocialNet;
+
+@synthesize deviceLanguageCode = _deviceLanguageCode;
+
+@synthesize mainStoryboard = _mainStoryboard;
+@synthesize rootInterface = _rootInterface;
+@synthesize homeInterface = _homeInterface;
 
 
 #pragma mark - Memory management
@@ -91,7 +99,7 @@
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
-		_deviceLanguageCode = languages[0];
+		_deviceLanguageCode = [languages objectAtIndex:0];
 		
 		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
 			_deviceLanguageCode = @"ch";
@@ -143,13 +151,13 @@
 			
 			if ([viewControllers count] > 0) {
 				if ([self.rootInterface isKindOfClass:[UITabBarController class]]) {
-					id tabbedViewController = viewControllers[0];
+					id tabbedViewController = [viewControllers objectAtIndex:0];
 					
 					if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
 						UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
 						
 						if ([tabbedNavigationController.viewControllers count] > 0) {
-							_homeInterface = (tabbedNavigationController.viewControllers)[0];
+							_homeInterface = [tabbedNavigationController.viewControllers objectAtIndex:0];
 						}
 					}
 					else {
@@ -157,7 +165,7 @@
 					}
 				}
 				else {
-					_homeInterface = viewControllers[0];
+					_homeInterface = [viewControllers objectAtIndex:0];
 				}
 			}			
 		}
@@ -227,7 +235,7 @@
 	
 	uname(&systemInfo);
 	
-	NSString *modelName = @(systemInfo.machine);
+	NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 	
 	if([modelName isEqualToString:@"i386"]) {
 		modelName = @"iPhone Simulator";
@@ -278,7 +286,7 @@
 	
 	NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
 	
-	NSString *countryCode = components[1];
+	NSString *countryCode = [components objectAtIndex:1];
 	
 	return countryCode;
 }
@@ -333,17 +341,17 @@
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;	
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
 	
-	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 	FXDLog(@"version: %@", version);
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
-	NSString *currentLanguage = languages[0];
+	NSString *currentLanguage = [languages objectAtIndex:0];
 	FXDLog(@"currentLanguage: %@", currentLanguage);
 
 	NSString *mailAddr = nil;
 		
-	NSArray *toRecipients = @[mailAddr];
+	NSArray *toRecipients = [NSArray arrayWithObject:mailAddr];
 
 #ifdef application_DisplayedName
 	NSString *bundleName = application_DisplayedName;
@@ -367,11 +375,11 @@
 	
 	for(NSString *countryCode in arrayCountryCode) {
 		NSString *currentCountryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-		dicCountryCode[countryCode] = currentCountryName;
+		[dicCountryCode setObject:currentCountryName forKey:countryCode];
 	}
 	
 	NSString *stringKey = [[[NSLocale currentLocale] localeIdentifier] substringWithRange:NSMakeRange(3, 2)];
-	NSString *returnString = [NSString stringWithFormat:@"%@", dicCountryCode[stringKey]];
+	NSString *returnString = [NSString stringWithFormat:@"%@", [dicCountryCode objectForKey:stringKey]];
 	
 	NSString *stringCountry = [NSString stringWithFormat:@"%@", returnString];
 	

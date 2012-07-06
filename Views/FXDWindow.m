@@ -22,6 +22,7 @@
 // Properties
 
 // IBOutlets
+@synthesize progressView = _progressView;
 
 
 #pragma mark - Memory management

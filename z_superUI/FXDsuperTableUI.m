@@ -19,8 +19,17 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize rowCounts = _rowCounts;
+@synthesize cellTexts = _cellTexts;
+@synthesize defaultDatasource = _defaultDatasource;
+
+@synthesize defaultOperationQueue = _defaultOperationQueue;
+@synthesize addedOperations = _addedOperations;
+
+@synthesize defaultResultsController = _defaultResultsController;
 
 // IBOutlets
+@synthesize defaultTableview;
 
 
 #pragma mark - Memory management
@@ -160,7 +169,7 @@
 #pragma mark - Public
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 	
-	NSInteger rowCount = [(self.rowCounts)[indexPath.section] integerValue];
+	NSInteger rowCount = [[self.rowCounts objectAtIndex:indexPath.section] integerValue];
 	
 	if (rowCount == 1) {
 		cell.sectionPositionType = sectionPositionOne;
@@ -209,7 +218,7 @@
 	if (self.cellTexts) {				
 		NSString *keyForObj = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
 		
-		cellText = (self.cellTexts)[keyForObj];
+		cellText = [self.cellTexts objectForKey:keyForObj];
 	}
 	
 	return cellText;
@@ -288,7 +297,7 @@
 	NSInteger numberOfRows = 0;
 
 	if (self.rowCounts) {
-		numberOfRows = [(self.rowCounts)[section] integerValue];
+		numberOfRows = [[self.rowCounts objectAtIndex:section] integerValue];
 	}
 	
 	return numberOfRows;

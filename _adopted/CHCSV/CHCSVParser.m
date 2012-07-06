@@ -102,7 +102,9 @@ enum {
             status != NSStreamStatusOpen &&
             status != NSStreamStatusReading) {
             if (anError) {
-                *anError = [NSError errorWithDomain:CHCSVErrorDomain code:CHCSVErrorCodeInvalidStream userInfo:@{NSLocalizedDescriptionKey: @"Unable to open file for reading"}];
+                *anError = [NSError errorWithDomain:CHCSVErrorDomain
+											   code:CHCSVErrorCodeInvalidStream
+										   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to open file for reading", NSLocalizedDescriptionKey, nil]];
             }
             [self release];
             return nil;
@@ -286,7 +288,9 @@ enum {
         if (readString == nil) {
             readLength--;
             if (readLength == 0) {
-                error = [[NSError alloc] initWithDomain:CHCSVErrorDomain code:CHCSVErrorCodeInvalidStream userInfo:@{NSLocalizedDescriptionKey: @"unable to interpret current chunk as a string"}];
+                error = [[NSError alloc] initWithDomain:CHCSVErrorDomain
+												   code:CHCSVErrorCodeInvalidStream
+											   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"unable to interpret current chunk as a string", NSLocalizedDescriptionKey, nil]];
                 break;
             }
         } else {
@@ -311,13 +315,17 @@ enum {
             //bytesRead < 0
             error = [[NSError alloc] initWithDomain:CHCSVErrorDomain 
                                                code:CHCSVErrorCodeInvalidStream 
-                                           userInfo:@{NSLocalizedDescriptionKey: @"Unable to read from input stream",
-                                                     NSUnderlyingErrorKey: [csvReadStream streamError]}];
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+													 @"Unable to read from input stream", NSLocalizedDescriptionKey,
+                                                     [csvReadStream streamError], NSUnderlyingErrorKey, nil]];
         }
     }
     @catch (NSException *e) {
-        error = [[NSError alloc] initWithDomain:CHCSVErrorDomain code:CHCSVErrorCodeInvalidStream userInfo:@{NSUnderlyingErrorKey: e,
-                                                                                       NSLocalizedDescriptionKey: [e reason]}];
+        error = [[NSError alloc] initWithDomain:CHCSVErrorDomain
+										   code:CHCSVErrorCodeInvalidStream
+									   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+												 e, NSUnderlyingErrorKey,
+												 [e reason], NSLocalizedDescriptionKey, nil]];
         nextChunk = nil;
     }
     free(bytes);
@@ -461,7 +469,9 @@ enum {
 	} else {
 		if (previousUnichar == UNICHAR_QUOTE && previousPreviousUnichar != UNICHAR_BACKSLASH && balancedQuotes == YES && balancedEscapes == YES) {
 			NSString *reason = [NSString stringWithFormat:@"Invalid CSV format on line #%u immediately after \"%@\"", currentLine, currentField];
-			error = [[NSError alloc] initWithDomain:CHCSVErrorDomain code:CHCSVErrorCodeInvalidFormat userInfo:@{NSLocalizedDescriptionKey: reason}];
+			error = [[NSError alloc] initWithDomain:CHCSVErrorDomain
+											   code:CHCSVErrorCodeInvalidFormat
+										   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:reason, NSLocalizedDescriptionKey, nil]];
 			return;
 		}
 		if (state != CHCSVParserStateInsideComment) {

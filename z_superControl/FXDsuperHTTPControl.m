@@ -28,6 +28,16 @@ static NSMutableSet *_staticHttpControlSet = nil;
 
 #pragma mark Synthesizing
 // Properties
+@synthesize httpContentLength = _httpContentLength;
+@synthesize receivedDataLength = _receivedDataLength;
+
+@synthesize httpURL = _httpURL;
+@synthesize httpRequest = _httpRequest;
+@synthesize httpConnection = _httpConnection;
+
+@synthesize receivedData = _receivedData;
+
+@synthesize nextHttpControl = _nextHttpControl;
 
 
 #pragma mark - Memory managment
@@ -211,7 +221,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	
 	//FXDLog(@"\nallHeaderFields:\n%@", [(NSHTTPURLResponse*)response allHeaderFields]);
 	
-	self.httpContentLength = [[(NSHTTPURLResponse*)response allHeaderFields][@"Content-Length"] integerValue];
+	self.httpContentLength = [[[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Content-Length"] integerValue];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

@@ -21,6 +21,7 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize addedObj = _addedObj;
 
 
 #pragma mark - Memory management
