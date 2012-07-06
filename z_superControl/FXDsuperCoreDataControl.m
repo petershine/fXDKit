@@ -175,6 +175,13 @@
 						  name:UIApplicationWillTerminateNotification
 						object:nil];
 	
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+						object:nil];
+	
+	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
 						  name:NSManagedObjectContextObjectsDidChangeNotification
@@ -189,11 +196,7 @@
 					  selector:@selector(observedNSManagedObjectContextDidSave:)
 						  name:NSManagedObjectContextDidSaveNotification
 						object:self.managedObjectContext];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-						object:nil];
+
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
 }
@@ -301,10 +304,16 @@
 	[self saveContext];
 }
 
+#pragma mark -
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	[self.managedObjectContext performBlock:^{
+		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+	}];
+}
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification: %@", notification);
+	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
 
 }
 
@@ -314,13 +323,6 @@
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
-}
-
-#pragma mark -
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
-	
-	[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 }
 
 

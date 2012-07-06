@@ -27,20 +27,6 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFetchRequest:(NSFetchRequest *)fetchRequest managedObjectContext: (NSManagedObjectContext *)context sectionNameKeyPath:(NSString *)sectionNameKeyPath cacheName:(NSString *)name {
-	self = [super initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:sectionNameKeyPath cacheName:name];
-	
-	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-		_dynamicDelegate = nil;
-	}
-	
-	return self;
-}
 
 
 #pragma mark - Accessor overriding

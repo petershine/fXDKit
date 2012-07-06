@@ -88,11 +88,11 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
+
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
-
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 
 
 //MARK: - Delegate implementation
