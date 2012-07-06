@@ -15,13 +15,25 @@
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
 
+#ifndef ubiquitynameCoreDataStore
+	#define ubiquitynameCoreDataStore [NSString stringWithFormat:@"%@.ubiquity", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+#endif
+
 #ifndef documentnameManagedCoreData
 	#define documentnameManagedCoreData	@"managed.coredata.document"
 #endif
 
 
-#define limitDefaultFetch	500
-#define sizeDefaultBatch	10
+#ifndef limitDefaultFetch
+	#define limitDefaultFetch	1000
+#endif
+
+#ifndef sizeDefaultBatch
+	#define sizeDefaultBatch	10
+#endif
+
+
+#define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
 
 
 @interface FXDsuperCoreDataControl : UIManagedDocument <NSFetchedResultsControllerDelegate> {
@@ -34,9 +46,6 @@
 	NSArray *_defaultSortDescriptors;
 	
 	FXDFetchedResultsController *_defaultResultsController;
-
-	NSMutableArray *_fieldKeys;
-	NSMutableArray *_fieldValues;
 }
 
 // Properties
@@ -44,9 +53,6 @@
 @property (strong, nonatomic) NSArray *defaultSortDescriptors;
 
 @property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
-
-@property (strong, nonatomic) NSMutableArray *fieldKeys;
-@property (strong, nonatomic) NSMutableArray *fieldValues;
 
 
 #pragma mark - Memory management
@@ -65,6 +71,9 @@
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance;
 
+- (void)startObservingCloudControlNotifications;
+- (void)prepareCoreDataControlUsingUbiquityURL:(NSURL*)ubiquityURL;
+
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
@@ -74,7 +83,10 @@
 
 
 //MARK: - Observer implementation
+- (void)observedCloudControlDidUpdateUbiquityURL:(id)notification;
+
 - (void)observedUIApplicationDidEnterBackground:(id)notification;
+- (void)observedUIApplicationWillTerminate:(id)notification;
 
 - (void)observedNSManagedObjectContextObjectsDidChange:(id)notification;
 - (void)observedNSManagedObjectContextWillSave:(id)notification;

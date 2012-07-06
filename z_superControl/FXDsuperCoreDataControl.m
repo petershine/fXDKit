@@ -35,69 +35,19 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFileURL:(NSURL *)documentURL {	FXDLog_DEFAULT;
-	NSURL *applicationDocumentsDirectory = nil;
+- (id)initWithFileURL:(NSURL *)fileURL {	FXDLog_DEFAULT;
 	
-	if (documentURL == nil) {
-		applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	if (fileURL == nil) {
+		NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 		
-		documentURL = [applicationDocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
+		fileURL = [applicationDocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
 	}
 	
-	FXDLog(@"documentURL: %@", documentURL);
+	FXDLog(@"fileURL: %@", fileURL);
 	
-	self = [super initWithFileURL:documentURL];
+	self = [super initWithFileURL:fileURL];
 	
-	if (self) {
-		if (applicationDocumentsDirectory) {
-			NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:applicationSqlitePathComponent];
-			
-			NSDictionary *options = @{	NSMigratePersistentStoresAutomaticallyOption: @YES,
-										NSInferMappingModelAutomaticallyOption: @YES};
-			
-			NSError *error = nil;
-			
-			BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
-																		 ofType:NSSQLiteStoreType
-															 modelConfiguration:nil
-																   storeOptions:options
-																		  error:&error];
-			if (error || didConfigure == NO) {
-				FXDLog_ERROR;
-			}
-			
-#if ForDEVELOPER
-			NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;
-			
-			for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
-				FXDLog(@"persistentStore: %@", persistentStore);
-				FXDLog(@"metadataForPersistentStore: %@", [storeCoordinator metadataForPersistentStore:persistentStore]);
-			}
-#endif
-			
-			NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedUIApplicationDidEnterBackground:)
-								  name:UIApplicationDidEnterBackgroundNotification
-								object:nil];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-								  name:NSManagedObjectContextObjectsDidChangeNotification
-								object:self.managedObjectContext];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSManagedObjectContextWillSave:)
-								  name:NSManagedObjectContextWillSaveNotification
-								object:self.managedObjectContext];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSManagedObjectContextDidSave:)
-								  name:NSManagedObjectContextDidSaveNotification
-								object:self.managedObjectContext];
-		}
-		
+	if (self) {		
 		// Primitives
 		
 		// Instance variables
@@ -105,9 +55,6 @@
 		// Properties
 		_defaultEntityName = nil;
 		_defaultSortDescriptors = nil;
-				
-		_fieldKeys = nil;
-		_fieldValues = nil;
 	}
 	
 	return self;
@@ -136,7 +83,7 @@
 	if (_defaultResultsController == nil) {	FXDLog_DEFAULT;
 		_defaultResultsController = [self resultsControllerForEntityName:self.defaultEntityName
 													 withSortDescriptors:self.defaultSortDescriptors
-															   withLimit:0
+															   withLimit:integerNotDefined
 												fromManagedObjectContext:self.managedObjectContext];
 		
 		[_defaultResultsController setDelegate:self];
@@ -163,6 +110,104 @@
 	});
 	
     return _sharedInstance;
+}
+
+#pragma mark -
+- (void)startObservingCloudControlNotifications {	FXDLog_DEFAULT;
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(observedCloudControlDidUpdateUbiquityURL:)
+												 name:notificationCloudControlDidUpdateUbiquityURL
+											   object:nil];
+	
+}
+
+- (void)prepareCoreDataControlUsingUbiquityURL:(NSURL*)ubiquityURL {	FXDLog_DEFAULT;
+	FXDLog(@"ubiquityURL: %@", ubiquityURL);
+	
+	NSURL *rootURL = nil;
+	
+	NSURL *storeURL = nil;
+	NSDictionary *options = nil;
+	
+	if (ubiquityURL) {
+		/*
+		 option indicating that a persistent store has a given name in ubiquity, this option is required for ubiquity to function
+		 COREDATA_EXTERN NSString * const NSPersistentStoreUbiquitousContentNameKey NS_AVAILABLE(NA, 5_0);
+		 
+		 option indicating the log path to use for ubiquity logs, this option is optional for ubiquity, a default path will be generated for the store if none is provided
+		 COREDATA_EXTERN NSString * const NSPersistentStoreUbiquitousContentURLKey NS_AVAILABLE(NA, 5_0);
+		 
+		 Notification sent after records are imported from the ubiquity store. The notification is sent with the object set to the NSPersistentStoreCoordinator instance which registered the store.
+		 COREDATA_EXTERN NSString * const NSPersistentStoreDidImportUbiquitousContentChangesNotification NS_AVAILABLE(NA, 5_0);
+		 */
+		
+		rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+		
+		storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
+		
+		options = @{	NSMigratePersistentStoresAutomaticallyOption:@YES,	NSInferMappingModelAutomaticallyOption:@YES	};
+	}
+	else {
+		rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+		
+		storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
+		
+		options = @{	NSMigratePersistentStoresAutomaticallyOption:@YES,	NSInferMappingModelAutomaticallyOption:@YES	};
+	}
+	
+	FXDLog(@"rootURL: %@", rootURL);
+	FXDLog(@"storeURL: %@", storeURL);
+	FXDLog(@"options:\n%@", options);
+	
+	
+	NSError *error = nil;
+	
+	BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
+																 ofType:NSSQLiteStoreType
+													 modelConfiguration:nil
+														   storeOptions:options
+																  error:&error];
+	if (error || didConfigure == NO) {
+		FXDLog_ERROR;
+	}
+	
+#if ForDEVELOPER
+	NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;
+	
+	for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
+		FXDLog(@"persistentStore: %@", persistentStore.URL);
+		FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
+	}
+#endif
+	
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedUIApplicationDidEnterBackground:)
+						  name:UIApplicationDidEnterBackgroundNotification
+						object:nil];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedUIApplicationWillTerminate:)
+						  name:UIApplicationWillTerminateNotification
+						object:nil];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+						  name:NSManagedObjectContextObjectsDidChangeNotification
+						object:self.managedObjectContext];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSManagedObjectContextWillSave:)
+						  name:NSManagedObjectContextWillSaveNotification
+						object:self.managedObjectContext];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSManagedObjectContextDidSave:)
+						  name:NSManagedObjectContextDidSaveNotification
+						object:self.managedObjectContext];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
 }
 
 #pragma mark -
@@ -255,13 +300,23 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_OVERRIDE;	
-	// Usually [self saveContext] has been used
+- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification {	FXDLog_DEFAULT;
+	[self prepareCoreDataControlUsingUbiquityURL:notification.object];
 }
 
 #pragma mark -
+- (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_OVERRIDE;
+	
+}
+
+- (void)observedUIApplicationWillTerminate:(id)notification {	FXDLog_OVERRIDE;
+	[self saveContext];
+}
+
+
+#pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(id)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
+	//FXDLog(@"notification: %@", notification);
 
 }
 
@@ -270,7 +325,7 @@
 }
 
 - (void)observedNSManagedObjectContextDidSave:(id)notification {	FXDLog_OVERRIDE;
-	
+	FXDLog(@"notification: %@", notification);
 }
 
 

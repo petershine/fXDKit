@@ -112,12 +112,12 @@
 
 
 #pragma mark - at autoRotate
-#if TEST_rotatingInterface
-- (NSUInteger)supportedInterfaceOrientations NS_AVAILABLE_IOS(6_0) {	FXDLog_SEPARATE_FRAME;
+#if USE_loggingRotatingInterface
+- (NSUInteger)supportedInterfaceOrientations {	FXDLog_SEPARATE_FRAME;
 	return [super supportedInterfaceOrientations];
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation NS_AVAILABLE_IOS(6_0) {	FXDLog_SEPARATE_FRAME;
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_SEPARATE_FRAME;
 	return [super preferredInterfaceOrientationForPresentation];
 	
 }
@@ -150,14 +150,14 @@
 	
 }
 
-#if ForDEVELOPER
-- (void)viewWillLayoutSubviews NS_AVAILABLE_IOS(5_0) {	FXDLog_SEPARATE_FRAME;
+#if USE_loggingViewDrawing
+- (void)viewWillLayoutSubviews {	FXDLog_SEPARATE_FRAME;
 	[super viewWillLayoutSubviews];
 	
 	// Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
 
-- (void)viewDidLayoutSubviews NS_AVAILABLE_IOS(5_0) {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLayoutSubviews {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLayoutSubviews];
 	
 	// Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
@@ -187,8 +187,8 @@
 
 
 #pragma mark - Segues
-#if ForDEVELOPER
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender NS_AVAILABLE_IOS(6_0) {	FXDLog_DEFAULT;
+#if USE_loggingSequeActions
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
 	
 	return [super shouldPerformSegueWithIdentifier:identifier sender:sender];
@@ -203,7 +203,7 @@
 	
 }
 
-- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender NS_AVAILABLE_IOS(6_0) {	FXDLog_DEFAULT;
+- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_DEFAULT;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 	
 	return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];

@@ -43,6 +43,7 @@
 		// Instance variables
 		
 		// Properties
+		_ubiquityToken = nil;
 		_ubiquityURL = nil;
 	}
 	
@@ -82,10 +83,10 @@
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 		[defaultCenter addObserver:self selector:@selector(observedNSUbiquityIdentityDidChange:) name:NSUbiquityIdentityDidChangeNotification object:nil];
 		
-		id cloudToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
-		FXDLog(@"cloudToken: %@", cloudToken);
+		self.ubiquityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
+		FXDLog(@"ubiquityToken: %@", self.ubiquityToken);
 		
-		if (cloudToken) {
+		if (self.ubiquityToken) {
 			shouldRequestURLforUbiquityContatiner = YES;
 		}
 	}
@@ -103,8 +104,13 @@
 				self.ubiquityURL = ubiquityURL;
 				
 				FXDLog(@"ubiquityURL: %@", self.ubiquityURL);
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityURL object:self.ubiquityURL];
 			});
 		});
+	}
+	else {
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityURL object:nil];
 	}
 }
 

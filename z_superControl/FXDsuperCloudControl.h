@@ -9,16 +9,21 @@
 #import "FXDKit.h"
 
 
+#define notificationCloudControlDidUpdateUbiquityURL	@"notificationCloudControlDidUpdateUbiquityURL"
+
+
 @interface FXDsuperCloudControl : FXDObject {
     // Primitives
 	
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
+	id _ubiquityToken;
 	NSURL *_ubiquityURL;
 }
 
 // Properties
+@property (strong, nonatomic) id ubiquityToken;
 @property (strong, nonatomic) NSURL *ubiquityURL;
 
 

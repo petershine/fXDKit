@@ -77,7 +77,7 @@
 
 
 #pragma mark - Overriding
-#if ForDEVELOPER
+#if USE_loggingViewDrawing
 - (void)layoutSubviews {	
 	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
 	
