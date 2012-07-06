@@ -10,6 +10,8 @@
 
 #import <CoreData/CoreData.h>
 
+#import "FXDsuperCloudControl.h"
+
 
 #ifndef applicationSqlitePathComponent
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]

@@ -117,8 +117,13 @@
     [super viewDidLoad];
 	
 	if (self.defaultTableview) {
-		[self.defaultTableview setDataSource:self];
-		[self.defaultTableview setDelegate:self];
+		if (self.defaultTableview.dataSource == nil) {
+			[self.defaultTableview setDataSource:self];
+		}
+		
+		if (self.defaultTableview.delegate == nil) {
+			[self.defaultTableview setDelegate:self];
+		}
 	}
 }
 

@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 
-#import "FXDconfigDeveloper.h"
-
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
@@ -21,6 +19,8 @@
 
 
 // Headers
+#import "FXDconfigDeveloper.h"
+
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDlocalizedStrings.h"
