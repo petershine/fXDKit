@@ -97,16 +97,12 @@
 
 
 #pragma mark - Public
-- (void)refreshMapInterfaceWithLocation:(CLLocation*)location {	FXDLog_OVERRIDE;
-	
-}
-
-- (void)refreshMapInterfaceWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
+- (void)refreshDefaultMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
 	
 }
 
 #pragma mark -
-- (void)refreshMapInterfaceWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
+- (void)refreshDefaultMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
 	
 }
 

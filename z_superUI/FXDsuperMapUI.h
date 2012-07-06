@@ -49,10 +49,9 @@
 
 
 #pragma mark - Public
-- (void)refreshMapInterfaceWithLocation:(CLLocation*)location;
-- (void)refreshMapInterfaceWithCoordinate:(CLLocationCoordinate2D)coordinate;
+- (void)refreshDefaultMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate;
 
-- (void)refreshMapInterfaceWithAnnotationArray:(NSArray*)annotationArray;
+- (void)refreshDefaultMapviewWithAnnotationArray:(NSArray*)annotationArray;
 
 
 //MARK: - Observer implementation
