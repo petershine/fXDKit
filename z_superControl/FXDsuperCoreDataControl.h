@@ -85,10 +85,10 @@
 
 
 //MARK: - Observer implementation
-- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification;
-
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
+
+- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification;
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 

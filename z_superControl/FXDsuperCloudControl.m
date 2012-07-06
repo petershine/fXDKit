@@ -187,7 +187,3 @@
 
 
 @end
-
-#pragma mark - Category
-@implementation FXDsuperCloudControl (Added)
-@end

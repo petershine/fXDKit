@@ -64,7 +64,3 @@
 
 
 @end
-
-#pragma mark - Category
-@interface FXDsuperCloudControl (Added)
-@end

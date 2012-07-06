@@ -299,17 +299,17 @@
 
 
 //MARK: - Observer implementation
-- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self prepareCoreDataControlUsingUbiquityURL:notification.object];
-}
-
-#pragma mark -
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	
 }
 
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;;
 	[self saveContext];
+}
+
+#pragma mark -
+- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification {	FXDLog_DEFAULT;
+	[self prepareCoreDataControlUsingUbiquityURL:notification.object];
 }
 
 #pragma mark -
