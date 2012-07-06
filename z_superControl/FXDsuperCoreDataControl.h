@@ -15,8 +15,8 @@
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
 
-#ifndef ubiquitynameCoreDataStore
-	#define ubiquitynameCoreDataStore [NSString stringWithFormat:@"%@.ubiquity", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+#ifndef ubiquitousCoreDataContentName
+	#define ubiquitousCoreDataContentName @"coredata.store"
 #endif
 
 #ifndef documentnameManagedCoreData
@@ -83,14 +83,17 @@
 
 
 //MARK: - Observer implementation
-- (void)observedCloudControlDidUpdateUbiquityURL:(id)notification;
+- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification;
 
-- (void)observedUIApplicationDidEnterBackground:(id)notification;
-- (void)observedUIApplicationWillTerminate:(id)notification;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
-- (void)observedNSManagedObjectContextObjectsDidChange:(id)notification;
-- (void)observedNSManagedObjectContextWillSave:(id)notification;
-- (void)observedNSManagedObjectContextDidSave:(id)notification;
+- (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
+- (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
+- (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
+
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
+
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate

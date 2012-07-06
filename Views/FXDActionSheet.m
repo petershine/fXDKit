@@ -84,7 +84,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_DEFAULT;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
 	
 }

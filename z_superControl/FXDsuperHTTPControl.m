@@ -157,7 +157,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 }
 
 #pragma mark -
-- (void)observedReachabilityChanged:(id)notification {
+- (void)observedReachabilityChanged:(NSNotification*)notification {
 	Reachability *changedReachability = [notification object];
 	
 	if ([changedReachability isEqual:reachabilityForInternet]) {	FXDLog_DEFAULT;

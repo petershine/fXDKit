@@ -124,34 +124,17 @@
 - (void)prepareCoreDataControlUsingUbiquityURL:(NSURL*)ubiquityURL {	FXDLog_DEFAULT;
 	FXDLog(@"ubiquityURL: %@", ubiquityURL);
 	
-	NSURL *rootURL = nil;
+	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	NSURL *storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
 	
-	NSURL *storeURL = nil;
 	NSDictionary *options = nil;
 	
 	if (ubiquityURL) {
-		/*
-		 option indicating that a persistent store has a given name in ubiquity, this option is required for ubiquity to function
-		 COREDATA_EXTERN NSString * const NSPersistentStoreUbiquitousContentNameKey NS_AVAILABLE(NA, 5_0);
-		 
-		 option indicating the log path to use for ubiquity logs, this option is optional for ubiquity, a default path will be generated for the store if none is provided
-		 COREDATA_EXTERN NSString * const NSPersistentStoreUbiquitousContentURLKey NS_AVAILABLE(NA, 5_0);
-		 
-		 Notification sent after records are imported from the ubiquity store. The notification is sent with the object set to the NSPersistentStoreCoordinator instance which registered the store.
-		 COREDATA_EXTERN NSString * const NSPersistentStoreDidImportUbiquitousContentChangesNotification NS_AVAILABLE(NA, 5_0);
-		 */
-		
-		rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-		
-		storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
-		
-		options = @{	NSMigratePersistentStoresAutomaticallyOption:@YES,	NSInferMappingModelAutomaticallyOption:@YES	};
+		NSURL *ubiquitousContentURL = [ubiquityURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+		//TODO: get UUID unique URL
+		options = @{	NSPersistentStoreUbiquitousContentNameKey:ubiquitousCoreDataContentName, NSPersistentStoreUbiquitousContentURLKey:ubiquitousContentURL	};
 	}
 	else {
-		rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-		
-		storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
-		
 		options = @{	NSMigratePersistentStoresAutomaticallyOption:@YES,	NSInferMappingModelAutomaticallyOption:@YES	};
 	}
 	
@@ -206,6 +189,11 @@
 					  selector:@selector(observedNSManagedObjectContextDidSave:)
 						  name:NSManagedObjectContextDidSaveNotification
 						object:self.managedObjectContext];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+						object:nil];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
 }
@@ -305,27 +293,34 @@
 }
 
 #pragma mark -
-- (void)observedUIApplicationDidEnterBackground:(id)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	
 }
 
-- (void)observedUIApplicationWillTerminate:(id)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	[self saveContext];
 }
 
 
 #pragma mark -
-- (void)observedNSManagedObjectContextObjectsDidChange:(id)notification {	FXDLog_OVERRIDE;
+- (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	//FXDLog(@"notification: %@", notification);
 
 }
 
-- (void)observedNSManagedObjectContextWillSave:(id)notification {	FXDLog_OVERRIDE;
+- (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	
 }
 
-- (void)observedNSManagedObjectContextDidSave:(id)notification {	FXDLog_OVERRIDE;
+- (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+}
+
+#pragma mark -
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification: %@", notification);
+	
+	[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 }
 
 

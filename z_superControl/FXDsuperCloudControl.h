@@ -12,7 +12,7 @@
 #define notificationCloudControlDidUpdateUbiquityURL	@"notificationCloudControlDidUpdateUbiquityURL"
 
 
-@interface FXDsuperCloudControl : FXDObject {
+@interface FXDsuperCloudControl : FXDObject <NSMetadataQueryDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -20,11 +20,15 @@
 	// Properties : For subclass to be able to reference
 	id _ubiquityToken;
 	NSURL *_ubiquityURL;
+	
+	NSMetadataQuery *_metadataQuery;
 }
 
 // Properties
 @property (strong, nonatomic) id ubiquityToken;
 @property (strong, nonatomic) NSURL *ubiquityURL;
+
+@property (strong, nonatomic) NSMetadataQuery *metadataQuery;
 
 
 #pragma mark - Memory management
@@ -45,9 +49,16 @@
 
 - (void)startCloudSynchronization;
 
+- (void)startObservingMetadataQueryNotifications;
+
 
 //MARK: - Observer implementation
-- (void)observedNSUbiquityIdentityDidChange:(id)notification;
+- (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification;
+
+- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification;
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification;
+- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification;
+- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

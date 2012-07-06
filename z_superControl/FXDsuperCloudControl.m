@@ -45,6 +45,8 @@
 		// Properties
 		_ubiquityToken = nil;
 		_ubiquityURL = nil;
+		
+		_metadataQuery = nil;
 	}
 	
 	return self;
@@ -52,6 +54,13 @@
 
 #pragma mark - Accessor overriding
 // Properties
+- (NSMetadataQuery*)metadataQuery {
+	if (_metadataQuery == nil) {
+		_metadataQuery = [[NSMetadataQuery alloc] init];
+	}
+	
+	return _metadataQuery;
+}
 
 
 #pragma mark - Private
@@ -79,9 +88,7 @@
 	BOOL shouldRequestURLforUbiquityContatiner = NO;
 	
 	if ([FXDsuperGlobalControl isOSversionNew]) {
-		
-		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-		[defaultCenter addObserver:self selector:@selector(observedNSUbiquityIdentityDidChange:) name:NSUbiquityIdentityDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(observedNSUbiquityIdentityDidChange:) name:NSUbiquityIdentityDidChangeNotification object:nil];
 		
 		self.ubiquityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
 		FXDLog(@"ubiquityToken: %@", self.ubiquityToken);
@@ -90,7 +97,7 @@
 			shouldRequestURLforUbiquityContatiner = YES;
 		}
 	}
-	else {	// For iOS 5
+	else {
 		shouldRequestURLforUbiquityContatiner = YES;
 	}
 	
@@ -105,6 +112,8 @@
 				
 				FXDLog(@"ubiquityURL: %@", self.ubiquityURL);
 				
+				[self startObservingMetadataQueryNotifications];
+				
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityURL object:self.ubiquityURL];
 			});
 		});
@@ -114,11 +123,55 @@
 	}
 }
 
+#pragma mark -
+- (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
+	
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSMetadataQueryDidStartGathering:)
+						  name:NSMetadataQueryDidStartGatheringNotification
+						object:self.metadataQuery];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSMetadataQueryGatheringProgress:)
+						  name:NSMetadataQueryGatheringProgressNotification
+						object:self.metadataQuery];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
+						  name:NSMetadataQueryDidFinishGatheringNotification
+						object:self.metadataQuery];
+	
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSMetadataQueryDidUpdate:)
+						  name:NSMetadataQueryDidUpdateNotification
+						object:self.metadataQuery];
+	
+	//TODO: work with metadataQuery
+}
 
 //MARK: - Observer implementation
-- (void)observedNSUbiquityIdentityDidChange:(id)notification {	FXDLog_DEFAULT;
+- (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog(@"notification: %@", notification);
 	
+}
+
+#pragma mark -
+- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
+}
+
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
+}
+
+- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
+}
+
+- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
 }
 
 //MARK: - Delegate implementation

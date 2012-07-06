@@ -63,7 +63,7 @@
 + (FXDsuperHTTPControl*)popAndRemoveAnyHttpControlFromSet;
 + (void)addHttpControl:(FXDsuperHTTPControl*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet;
 
-- (void)observedReachabilityChanged:(id)notification;
+- (void)observedReachabilityChanged:(NSNotification*)notification;
 
 - (void)startHttpConnectionWithURLstring:(NSString*)urlString;
 - (void)startHttpConnectionWithURLstring:(NSString*)urlString withPostBody:(id)postBody withHttpHeaders:(NSDictionary*)httpHeaders;
