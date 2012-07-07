@@ -6,10 +6,6 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#ifndef localized//(keyString)
-	#define localized(keyString)	NSLocalizedString(keyString, nil)
-#endif
-
 
 // Application
 #define application_DisplayedName	NSLocalizedString(@"application_DisplayedName", nil)

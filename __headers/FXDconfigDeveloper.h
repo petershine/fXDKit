@@ -16,7 +16,9 @@
 
 		#define USE_loggingRotatingInterface	0
 		#define USE_loggingViewDrawing	0
-		#define USE_loggingSequeActions	0
+		#define USE_loggingSequeActions	1
+
+		#define TEST_removeItemWhenTheErrorOccurs	0
 
 	#else
 		#define USE_TestFlight	1
@@ -45,7 +47,7 @@
 
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
-	#define FXDLog_ERROR	FXDLog(@"error code: %d\nlocalizedDescription: %@\nuserInfo: %@",[error code],[error localizedDescription],[error userInfo])
+	#define FXDLog_ERROR	FXDLog(@"\ndomain: %@\ncode: %d\nlocalizedDescription: %@\nuserInfo: %@",[error domain],[error code],[error localizedDescription],[error userInfo])
 
 #else
 	#define FXDLog_DEFAULT
@@ -66,7 +68,9 @@
 	#define application_AppStoreID	524312409
 #endif
 
-#define versionMaximumSupported	6.0
+#ifndef versionMaximumSupported
+	#define versionMaximumSupported	6.0
+#endif
 
 
 #if	USE_TestFlight

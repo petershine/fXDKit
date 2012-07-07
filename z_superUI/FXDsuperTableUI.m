@@ -77,7 +77,7 @@
 	return _rowCounts;
 }
 
-- (NSDictionary*)rowTexts {
+- (NSDictionary*)cellTexts {
 	
 	if (_cellTexts == nil) {	FXDLog_OVERRIDE;
 		//

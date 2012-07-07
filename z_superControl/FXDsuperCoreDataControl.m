@@ -131,26 +131,28 @@
 	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 	NSURL *storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
 	
-	NSDictionary *options = nil;
+	NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
+	[options setObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
+	[options setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
+	
+	
+	NSURL *ubiquitousContentURL = nil;
 	
 	if (ubiquityURL) {
-		NSURL *ubiquitousContentURL = [ubiquityURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+		ubiquitousContentURL = [ubiquityURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+		
 		//TODO: get UUID unique URL
-		options = [NSDictionary dictionaryWithObjectsAndKeys:
-				   ubiquitousCoreDataContentName, NSPersistentStoreUbiquitousContentNameKey,
-				   ubiquitousContentURL, NSPersistentStoreUbiquitousContentURLKey, nil];
-	}
-	else {
-		options = [NSDictionary dictionaryWithObjectsAndKeys:
-				   [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-				   [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+		
+		[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
+		[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
 	}
 	
-	FXDLog(@"rootURL: %@", rootURL);
 	FXDLog(@"storeURL: %@", storeURL);
+	FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 	FXDLog(@"options:\n%@", options);
 	
 	
+	// First try
 	NSError *error = nil;
 	
 	BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
@@ -158,9 +160,43 @@
 													 modelConfiguration:nil
 														   storeOptions:options
 																  error:&error];
+	
 	if (error || didConfigure == NO) {
 		FXDLog_ERROR;
+
+#if TEST_removeItemWhenTheErrorOccurs
+		if (ubiquitousContentURL) {
+			if ([[error domain] isEqualToString:@"LibrarianErrorDomain"] && [error code] == 1) {
+				//MARK: when the error occurs, simply delete it at this point.
+				//TODO: find better solution
+				
+				error = nil;
+				
+				[[NSFileManager defaultManager] removeItemAtURL:ubiquitousContentURL error:&error];
+				
+				if (error) {
+					FXDLog_ERROR;
+				}
+				
+				
+				// Second try
+				error = nil;
+				
+				didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
+																		ofType:NSSQLiteStoreType
+															modelConfiguration:nil
+																  storeOptions:options
+																		 error:&error];
+				
+				if (error || didConfigure == NO) {
+					FXDLog_ERROR;
+				}
+			}
+		}
+#endif
 	}
+	
+	FXDLog(@"didConfigure: %@", didConfigure ? @"YES":@"NO");
 	
 #if ForDEVELOPER
 	NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;

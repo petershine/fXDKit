@@ -92,6 +92,8 @@
 	BOOL shouldRequestURLforUbiquityContatiner = NO;
 	
 	if ([FXDsuperGlobalControl isOSversionNew]) {
+		FXDLog(@"__IPHONE_OS_VERSION_MAX_ALLOWED: %d", __IPHONE_OS_VERSION_MAX_ALLOWED);
+		
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
@@ -134,6 +136,56 @@
 
 #pragma mark -
 - (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
+	NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.ubiquityURL
+																	  includingPropertiesForKeys:nil
+																						 options:NSDirectoryEnumerationSkipsPackageDescendants
+																					errorHandler:^(NSURL *url, NSError *error) {
+																						if (error) {
+																							FXDLog_ERROR;
+																						}
+																						
+																						return YES;
+																					}];
+	
+	FXDLog(@"directoryEnumerator: %@", directoryEnumerator);
+	
+	/*
+	NSURL *nextObject = [directoryEnumerator nextObject];
+
+	while (nextObject) {
+		FXDLog(@"nextObject: %@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:self.ubiquityURL.absoluteString withString:@""]);
+		
+		nextObject = [directoryEnumerator nextObject];
+	}
+	 */
+	
+	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	
+	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:rootURL
+											   includingPropertiesForKeys:nil
+																options:NSDirectoryEnumerationSkipsPackageDescendants
+														   errorHandler:^(NSURL *url, NSError *error) {
+															   if (error) {
+																   FXDLog_ERROR;
+															   }
+															   
+															   return YES;
+														   }];
+	
+	FXDLog(@"directoryEnumerator: %@", directoryEnumerator);
+	
+	/*
+	nextObject = [directoryEnumerator nextObject];
+	
+	while (nextObject) {		
+		FXDLog(@"nextObject: %@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:rootURL.absoluteString withString:@""]);
+		
+		nextObject = [directoryEnumerator nextObject];
+	}
+	 */
+	
+	
+	//TODO: work with metadataQuery
 	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	
@@ -156,8 +208,6 @@
 					  selector:@selector(observedNSMetadataQueryDidUpdate:)
 						  name:NSMetadataQueryDidUpdateNotification
 						object:self.metadataQuery];
-	
-	//TODO: work with metadataQuery
 }
 
 //MARK: - Observer implementation
