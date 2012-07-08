@@ -119,17 +119,19 @@
 #pragma mark -
 - (void)startObservingCloudControlNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(observedCloudControlDidUpdateUbiquityURL:)
-												 name:notificationCloudControlDidUpdateUbiquityURL
+											 selector:@selector(observedCloudControlDidUpdateUbiquityContainerURL:)
+												 name:notificationCloudControlDidUpdateUbiquityContainerURL
 											   object:nil];
 	
 }
 
-- (void)prepareCoreDataControlUsingUbiquityURL:(NSURL*)ubiquityURL {	FXDLog_DEFAULT;
-	FXDLog(@"ubiquityURL: %@", ubiquityURL);
+- (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL {	FXDLog_DEFAULT;
+	FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
 	
 	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 	NSURL *storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
+	FXDLog(@"storeURL: %@", storeURL);
+	
 	
 	NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
 	[options setObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
@@ -138,14 +140,15 @@
 	
 	NSURL *ubiquitousContentURL = nil;
 	
-	if (ubiquityURL) {	//TODO: get UUID unique URL
-		ubiquitousContentURL = [ubiquityURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+	if (ubiquityContainerURL) {	//TODO: get UUID unique URL
+		//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+		//TEST: using ubiquityContainerURL instead
+		ubiquitousContentURL = ubiquityContainerURL;
 		
 		[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
 		[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
 	}
 	
-	FXDLog(@"storeURL: %@", storeURL);
 	FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 	FXDLog(@"options:\n%@", options);
 	
@@ -342,8 +345,8 @@
 }
 
 #pragma mark -
-- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self prepareCoreDataControlUsingUbiquityURL:notification.object];
+- (void)observedCloudControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
+	[self prepareCoreDataControlUsingUbiquityContainerURL:notification.object];
 }
 
 #pragma mark -

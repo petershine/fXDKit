@@ -9,7 +9,7 @@
 #import "FXDKit.h"
 
 
-#define notificationCloudControlDidUpdateUbiquityURL	@"notificationCloudControlDidUpdateUbiquityURL"
+#define notificationCloudControlDidUpdateUbiquityContainerURL	@"notificationCloudControlDidUpdateUbiquityContainerURL"
 
 
 @interface FXDsuperCloudControl : FXDObject <NSMetadataQueryDelegate> {
@@ -18,15 +18,15 @@
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
-	id _ubiquityToken;
-	NSURL *_ubiquityURL;
+	id _ubiquityIdentityToken;
+	NSURL *_ubiquityContainerURL;
 	
 	NSMetadataQuery *_metadataQuery;
 }
 
 // Properties
-@property (strong, nonatomic) id ubiquityToken;
-@property (strong, nonatomic) NSURL *ubiquityURL;
+@property (strong, nonatomic) id ubiquityIdentityToken;
+@property (strong, nonatomic) NSURL *ubiquityContainerURL;
 
 @property (strong, nonatomic) NSMetadataQuery *metadataQuery;
 

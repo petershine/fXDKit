@@ -21,8 +21,8 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize ubiquityToken = _ubiquityToken;
-@synthesize ubiquityURL = _ubiquityURL;
+@synthesize ubiquityIdentityToken = _ubiquityIdentityToken;
+@synthesize ubiquityContainerURL = _ubiquityContainerURL;
 
 @synthesize metadataQuery = _metadataQuery;
 
@@ -47,8 +47,8 @@
 		// Instance variables
 		
 		// Properties
-		_ubiquityToken = nil;
-		_ubiquityURL = nil;
+		_ubiquityIdentityToken = nil;
+		_ubiquityContainerURL = nil;
 		
 		_metadataQuery = nil;
 	}
@@ -100,10 +100,10 @@
 													 name:NSUbiquityIdentityDidChangeNotification
 												   object:nil];
 		
-		self.ubiquityToken = [[NSFileManager defaultManager] performSelector:@selector(ubiquityIdentityToken)];
-		FXDLog(@"ubiquityToken: %@", self.ubiquityToken);
+		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
+		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);
 		
-		if (self.ubiquityToken) {
+		if (self.ubiquityIdentityToken) {
 			shouldRequestURLforUbiquityContatiner = YES;
 		}
 #endif
@@ -116,21 +116,21 @@
 	
 	if (shouldRequestURLforUbiquityContatiner) {
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSURL *ubiquityURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+			NSURL *ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			
 			dispatch_async(dispatch_get_main_queue(), ^{	FXDLog_DEFAULT;
-				self.ubiquityURL = ubiquityURL;
+				self.ubiquityContainerURL = ubiquityContainerURL;
 				
-				FXDLog(@"ubiquityURL: %@", self.ubiquityURL);
+				FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
 				
 				[self startObservingMetadataQueryNotifications];
 				
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityURL object:self.ubiquityURL];
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 			});
 		});
 	}
 	else {
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityURL object:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityContainerURL object:nil];
 	}
 }
 
@@ -138,7 +138,7 @@
 - (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
 	
 	//NSDirectoryEnumerationSkipsPackageDescendants
-	NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.ubiquityURL
+	NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.ubiquityContainerURL
 																	  includingPropertiesForKeys:nil
 																						 options:0
 																					errorHandler:^(NSURL *url, NSError *error) {
@@ -154,7 +154,7 @@
 	NSURL *nextObject = [directoryEnumerator nextObject];
 
 	while (nextObject) {
-		FXDLog(@"nextObject: %@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:self.ubiquityURL.absoluteString withString:@""]);
+		FXDLog(@"%@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:self.ubiquityContainerURL.absoluteString withString:@""]);
 		
 		nextObject = [directoryEnumerator nextObject];
 	}
@@ -178,7 +178,7 @@
 	nextObject = [directoryEnumerator nextObject];
 	
 	while (nextObject) {		
-		FXDLog(@"nextObject: %@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:rootURL.absoluteString withString:@""]);
+		FXDLog(@"%@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:rootURL.absoluteString withString:@""]);
 		
 		nextObject = [directoryEnumerator nextObject];
 	}

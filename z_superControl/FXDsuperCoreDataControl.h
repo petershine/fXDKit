@@ -74,7 +74,7 @@
 + (FXDsuperCoreDataControl*)sharedInstance;
 
 - (void)startObservingCloudControlNotifications;
-- (void)prepareCoreDataControlUsingUbiquityURL:(NSURL*)ubiquityURL;
+- (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL;
 
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
@@ -88,7 +88,7 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
-- (void)observedCloudControlDidUpdateUbiquityURL:(NSNotification*)notification;
+- (void)observedCloudControlDidUpdateUbiquityContainerURL:(NSNotification*)notification;
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 
