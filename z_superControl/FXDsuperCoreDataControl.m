@@ -138,10 +138,8 @@
 	
 	NSURL *ubiquitousContentURL = nil;
 	
-	if (ubiquityURL) {
+	if (ubiquityURL) {	//TODO: get UUID unique URL
 		ubiquitousContentURL = [ubiquityURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
-		
-		//TODO: get UUID unique URL
 		
 		[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
 		[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];

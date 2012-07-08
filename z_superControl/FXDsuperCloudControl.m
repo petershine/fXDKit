@@ -136,9 +136,11 @@
 
 #pragma mark -
 - (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
+	
+	//NSDirectoryEnumerationSkipsPackageDescendants
 	NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.ubiquityURL
 																	  includingPropertiesForKeys:nil
-																						 options:NSDirectoryEnumerationSkipsPackageDescendants
+																						 options:0
 																					errorHandler:^(NSURL *url, NSError *error) {
 																						if (error) {
 																							FXDLog_ERROR;
@@ -149,7 +151,6 @@
 	
 	FXDLog(@"directoryEnumerator: %@", directoryEnumerator);
 	
-	/*
 	NSURL *nextObject = [directoryEnumerator nextObject];
 
 	while (nextObject) {
@@ -157,8 +158,8 @@
 		
 		nextObject = [directoryEnumerator nextObject];
 	}
-	 */
 	
+	/*	
 	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 	
 	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:rootURL
@@ -174,7 +175,6 @@
 	
 	FXDLog(@"directoryEnumerator: %@", directoryEnumerator);
 	
-	/*
 	nextObject = [directoryEnumerator nextObject];
 	
 	while (nextObject) {		

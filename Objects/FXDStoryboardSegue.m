@@ -53,15 +53,37 @@
 #pragma mark - Overriding
 - (void)perform {	FXDLog_OVERRIDE;
 	
-	if ([self.sourceViewController navigationController]) {
-		[[self.sourceViewController navigationController] pushViewController:self.destinationViewController animated:YES];
+	BOOL shouldUseNavigationPush = NO;
+	
+	id presentingViewController = self.sourceViewController;
+	
+	id parentViewController = [(UIViewController*)self.sourceViewController performSelector:@selector(parentViewController)];
+	
+	if (parentViewController && [parentViewController isKindOfClass:[UINavigationController class]]) {
+		
+		if ([self.destinationViewController isKindOfClass:[UINavigationController class]] == NO
+			&& [self.destinationViewController isKindOfClass:[UITabBarController class]] == NO
+			&& [self.destinationViewController isKindOfClass:[UISplitViewController class]] == NO
+			&& [self.destinationViewController isKindOfClass:[UIPopoverController class]] == NO) {
+			
+			shouldUseNavigationPush = YES;
+		}
+	}
+	else if (parentViewController) {
+		presentingViewController = parentViewController;
+	}
+	
+	FXDLog(@"shouldUseNavigationPush: %@", shouldUseNavigationPush ? @"YES":@"NO");
+	FXDLog(@"parentViewController: %@", parentViewController);
+	FXDLog(@"presentingViewController: %@", presentingViewController);
+	FXDLog(@"sourceViewController: %@", self.sourceViewController);
+	FXDLog(@"destinationViewController: %@", self.destinationViewController);
+	
+	if (shouldUseNavigationPush) {
+		[(UINavigationController*)parentViewController pushViewController:self.destinationViewController animated:YES];
 	}
 	else {
-		[self.sourceViewController presentViewController:self.destinationViewController
-												animated:YES
-											  completion:^{
-												  //
-											  }];
+		[presentingViewController presentViewController:self.destinationViewController animated:YES completion:nil];
 	}
 }
 

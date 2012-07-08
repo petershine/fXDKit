@@ -49,6 +49,7 @@
     // Properties
     
     // IBOutlets
+	self.backgroundColor = [UIColor clearColor];
 }
 
 

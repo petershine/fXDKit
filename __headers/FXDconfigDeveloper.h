@@ -18,7 +18,7 @@
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingSequeActions	1
 
-		#define TEST_removeItemWhenTheErrorOccurs	0
+		#define TEST_removeItemWhenTheErrorOccurs	1
 
 	#else
 		#define USE_TestFlight	1
