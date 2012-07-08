@@ -83,8 +83,8 @@
 
 
 #pragma mark - at viewDidLoad
-- (void)viewDidLoad {
-    [super viewDidLoad];	//FXDLog_SEPARATE_FRAME;
+- (void)viewDidLoad {	//FXDLog_SEPARATE_FRAME;
+    [super viewDidLoad];
 	
 	/*
 	 NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -100,12 +100,18 @@
 #endif
 	
 #ifdef imageNavibarShadow
-	if (self.addedShadowImageview == nil) {
-		self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
-		self.addedShadowImageview.image = imageNavibarShadow;
-	}
+	#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+		[self.navigationBar setShadowImage:imageNavibarShadow];
 	
-	[self.navigationBar addSubview:self.addedShadowImageview];
+	#else
+		if (self.addedShadowImageview == nil) {
+			self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
+			self.addedShadowImageview.image = imageNavibarShadow;
+		}
+		
+		[self.navigationBar addSubview:self.addedShadowImageview];
+	
+	#endif
 #endif
 	
 #ifdef imageToolbarBackground
