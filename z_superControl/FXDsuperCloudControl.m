@@ -89,11 +89,9 @@
 #pragma mark -
 - (void)startCloudSynchronization {	FXDLog_DEFAULT;
 	
-	BOOL shouldRequestURLforUbiquityContatiner = NO;
+	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
-	if ([FXDsuperGlobalControl isOSversionNew]) {
-		FXDLog(@"__IPHONE_OS_VERSION_MAX_ALLOWED: %d", __IPHONE_OS_VERSION_MAX_ALLOWED);
-		
+	if ([FXDsuperGlobalControl isOSversionNew]) {		
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
@@ -104,17 +102,17 @@
 		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);
 		
 		if (self.ubiquityIdentityToken) {
-			shouldRequestURLforUbiquityContatiner = YES;
+			shouldRequestUbiquityContatinerURL = YES;
 		}
 #endif
 	}
 	else {
-		shouldRequestURLforUbiquityContatiner = YES;
+		shouldRequestUbiquityContatinerURL = YES;
 	}
 	
-	FXDLog(@"shouldRequestURLforUbiquityContatiner: %@", shouldRequestURLforUbiquityContatiner ? @"YES":@"NO");
+	FXDLog(@"shouldRequestUbiquityContatinerURL: %@", shouldRequestUbiquityContatinerURL ? @"YES":@"NO");
 	
-	if (shouldRequestURLforUbiquityContatiner) {
+	if (shouldRequestUbiquityContatinerURL) {
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			NSURL *ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			
@@ -136,54 +134,8 @@
 
 #pragma mark -
 - (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
-	
-	//NSDirectoryEnumerationSkipsPackageDescendants
-	NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.ubiquityContainerURL
-																	  includingPropertiesForKeys:nil
-																						 options:0
-																					errorHandler:^(NSURL *url, NSError *error) {
-																						if (error) {
-																							FXDLog_ERROR;
-																						}
-																						
-																						return YES;
-																					}];
-	
-	FXDLog(@"directoryEnumerator: %@", directoryEnumerator);
-	
-	NSURL *nextObject = [directoryEnumerator nextObject];
-
-	while (nextObject) {
-		FXDLog(@"%@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:self.ubiquityContainerURL.absoluteString withString:@""]);
-		
-		nextObject = [directoryEnumerator nextObject];
-	}
-	
-	/*	
-	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-	
-	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:rootURL
-											   includingPropertiesForKeys:nil
-																options:NSDirectoryEnumerationSkipsPackageDescendants
-														   errorHandler:^(NSURL *url, NSError *error) {
-															   if (error) {
-																   FXDLog_ERROR;
-															   }
-															   
-															   return YES;
-														   }];
-	
-	FXDLog(@"directoryEnumerator: %@", directoryEnumerator);
-	
-	nextObject = [directoryEnumerator nextObject];
-	
-	while (nextObject) {		
-		FXDLog(@"%@", [nextObject.absoluteString stringByReplacingOccurrencesOfString:rootURL.absoluteString withString:@""]);
-		
-		nextObject = [directoryEnumerator nextObject];
-	}
-	 */
-	
+	NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:self.ubiquityContainerURL];
+	FXDLog(@"directoryTree: %d", [directoryTree count]);
 	
 	//TODO: work with metadataQuery
 	

@@ -165,7 +165,8 @@
 	if (error || didConfigure == NO) {
 		FXDLog_ERROR;
 
-#if TEST_removeItemWhenTheErrorOccurs
+		/*
+#warning @"Remove the iCloud item when the error occurs"
 		if (ubiquitousContentURL) {
 			if ([[error domain] isEqualToString:@"LibrarianErrorDomain"] && [error code] == 1) {
 				//MARK: when the error occurs, simply delete it at this point.
@@ -194,7 +195,7 @@
 				}
 			}
 		}
-#endif
+		*/
 	}
 	
 	FXDLog(@"didConfigure: %@", didConfigure ? @"YES":@"NO");

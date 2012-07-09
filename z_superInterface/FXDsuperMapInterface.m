@@ -1,21 +1,21 @@
 //
-//  FXDsuperMapUI.m
+//  FXDsuperMapInterface.m
 //  PopTooUniversal
 //
 //  Created by Peter SHINe on 4/24/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperMapUI.h"
+#import "FXDsuperMapInterface.h"
 
 
 #pragma mark - Private interface
-@interface FXDsuperMapUI (Private)
+@interface FXDsuperMapInterface (Private)
 @end
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperMapUI
+@implementation FXDsuperMapInterface
 
 #pragma mark Synthesizing
 // Properties
