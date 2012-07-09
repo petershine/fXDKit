@@ -73,7 +73,7 @@
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance;
 
-- (void)startObservingCloudControlNotifications;
+- (void)startObservingFileControlNotifications;
 - (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL;
 
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
@@ -88,7 +88,7 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
-- (void)observedCloudControlDidUpdateUbiquityContainerURL:(NSNotification*)notification;
+- (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification;
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 

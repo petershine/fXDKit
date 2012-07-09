@@ -117,10 +117,10 @@
 }
 
 #pragma mark -
-- (void)startObservingCloudControlNotifications {	FXDLog_DEFAULT;
+- (void)startObservingFileControlNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(observedCloudControlDidUpdateUbiquityContainerURL:)
-												 name:notificationCloudControlDidUpdateUbiquityContainerURL
+											 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
+												 name:notificationFileControlDidUpdateUbiquityContainerURL
 											   object:nil];
 	
 }
@@ -153,7 +153,6 @@
 	FXDLog(@"options:\n%@", options);
 	
 	
-	// First try
 	NSError *error = nil;
 	
 	BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
@@ -164,38 +163,6 @@
 	
 	if (error || didConfigure == NO) {
 		FXDLog_ERROR;
-
-		/*
-#warning @"Remove the iCloud item when the error occurs"
-		if (ubiquitousContentURL) {
-			if ([[error domain] isEqualToString:@"LibrarianErrorDomain"] && [error code] == 1) {
-				//MARK: when the error occurs, simply delete it at this point.
-				//TODO: find better solution
-				
-				error = nil;
-				
-				[[NSFileManager defaultManager] removeItemAtURL:ubiquitousContentURL error:&error];
-				
-				if (error) {
-					FXDLog_ERROR;
-				}
-				
-				
-				// Second try
-				error = nil;
-				
-				didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
-																		ofType:NSSQLiteStoreType
-															modelConfiguration:nil
-																  storeOptions:options
-																		 error:&error];
-				
-				if (error || didConfigure == NO) {
-					FXDLog_ERROR;
-				}
-			}
-		}
-		*/
 	}
 	
 	FXDLog(@"didConfigure: %@", didConfigure ? @"YES":@"NO");
@@ -346,7 +313,7 @@
 }
 
 #pragma mark -
-- (void)observedCloudControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self prepareCoreDataControlUsingUbiquityContainerURL:notification.object];
 }
 

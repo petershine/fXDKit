@@ -8,11 +8,13 @@
 
 #import "FXDKit.h"
 
+#import "DirectoryWatcher.h"
 
-#define notificationCloudControlDidUpdateUbiquityContainerURL	@"notificationCloudControlDidUpdateUbiquityContainerURL"
+
+#define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
 
 
-@interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate> {
+@interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -21,14 +23,18 @@
 	id _ubiquityIdentityToken;
 	NSURL *_ubiquityContainerURL;
 	
-	NSMetadataQuery *_metadataQuery;
+	NSMetadataQuery *_ubiquityMetadataQuery;
+	
+	DirectoryWatcher *_directoryWatcher;
 }
 
 // Properties
 @property (strong, nonatomic) id ubiquityIdentityToken;
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;
 
-@property (strong, nonatomic) NSMetadataQuery *metadataQuery;
+@property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
+
+@property (strong, nonatomic) DirectoryWatcher *directoryWatcher;
 
 
 #pragma mark - Memory management
@@ -49,7 +55,10 @@
 
 - (void)startCloudSynchronization;
 
-- (void)startObservingMetadataQueryNotifications;
+- (void)startObservingUbiquityMetadataQueryNotifications;
+- (void)startObservingLocalDocumentDirectoryChange;
+
+- (void)configureMetadataQuery:(NSMetadataQuery*)metadataQuery;
 
 
 //MARK: - Observer implementation
@@ -61,6 +70,8 @@
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
+#pragma mark - NSMetadataQueryDelegate
+#pragma mark - DirectoryWatcherDelegate
 
 
 @end

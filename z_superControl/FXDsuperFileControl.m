@@ -24,7 +24,9 @@
 @synthesize ubiquityIdentityToken = _ubiquityIdentityToken;
 @synthesize ubiquityContainerURL = _ubiquityContainerURL;
 
-@synthesize metadataQuery = _metadataQuery;
+@synthesize ubiquityMetadataQuery = _ubiquityMetadataQuery;
+
+@synthesize directoryWatcher = _directoryWatcher;
 
 
 #pragma mark - Memory management
@@ -50,7 +52,9 @@
 		_ubiquityIdentityToken = nil;
 		_ubiquityContainerURL = nil;
 		
-		_metadataQuery = nil;
+		_ubiquityMetadataQuery = nil;
+		
+		_directoryWatcher = nil;
 	}
 	
 	return self;
@@ -58,12 +62,12 @@
 
 #pragma mark - Accessor overriding
 // Properties
-- (NSMetadataQuery*)metadataQuery {
-	if (_metadataQuery == nil) {
-		_metadataQuery = [[NSMetadataQuery alloc] init];
+- (NSMetadataQuery*)ubiquityMetadataQuery {
+	if (_ubiquityMetadataQuery == nil) {
+		_ubiquityMetadataQuery = [[NSMetadataQuery alloc] init];
 	}
 	
-	return _metadataQuery;
+	return _ubiquityMetadataQuery;
 }
 
 
@@ -121,46 +125,60 @@
 				
 				FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
 				
-				[self startObservingMetadataQueryNotifications];
+				[self startObservingUbiquityMetadataQueryNotifications];
 				
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 			});
 		});
 	}
 	else {
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudControlDidUpdateUbiquityContainerURL object:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
 	}
 }
 
 #pragma mark -
-- (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
-	NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:self.ubiquityContainerURL];
-	FXDLog(@"directoryTree: %d", [directoryTree count]);
-	
-	//TODO: work with metadataQuery
-	
+- (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryDidStartGathering:)
 						  name:NSMetadataQueryDidStartGatheringNotification
-						object:self.metadataQuery];
+						object:nil];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryGatheringProgress:)
 						  name:NSMetadataQueryGatheringProgressNotification
-						object:self.metadataQuery];
+						object:nil];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
 						  name:NSMetadataQueryDidFinishGatheringNotification
-						object:self.metadataQuery];
+						object:nil];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryDidUpdate:)
 						  name:NSMetadataQueryDidUpdateNotification
-						object:self.metadataQuery];
+						object:nil];
 }
+
+- (void)startObservingLocalDocumentDirectoryChange {	FXDLog_DEFAULT;
+	NSString *searchPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	
+	self.directoryWatcher = [DirectoryWatcher watchFolderWithPath:searchPath delegate:self];
+}
+
+#pragma mark -
+- (void)configureMetadataQuery:(NSMetadataQuery*)metadataQuery {	FXDLog_DEFAULT;
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K <= %@", NSMetadataItemFSContentChangeDateKey, [NSDate date]];
+	[metadataQuery setPredicate:predicate];
+	
+	NSMutableArray *sortDescriptors = [[NSMutableArray alloc] initWithCapacity:0];
+	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
+	[sortDescriptors addObject:descriptor];
+	[metadataQuery setSortDescriptors:sortDescriptors];
+}
+
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
@@ -170,22 +188,47 @@
 
 #pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
+	//FXDLog(@"notification: %@", notification);
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
+	//FXDLog(@"notification: %@", notification);
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
+	//FXDLog(@"notification: %@", notification);
+	
+	NSMetadataQuery *metadataQuery = notification.object;
+	
+	FXDLog(@"searchScopes: %@", [metadataQuery searchScopes]);
+	FXDLog(@"valueListAttributes: %@", [metadataQuery valueListAttributes]);
+	FXDLog(@"groupingAttributes: %@", [metadataQuery groupingAttributes]);
+	
+	FXDLog(@"resultCount: %u", [metadataQuery resultCount]);
+	FXDLog(@"results:\n%@", [metadataQuery results]);
+	
+	FXDLog(@"valueLists:\n%@", [metadataQuery valueLists]);
+	FXDLog(@"groupedResults:\n%@", [metadataQuery groupedResults]);
 }
 
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
+	//FXDLog(@"notification: %@", notification);
+
 }
 
+
 //MARK: - Delegate implementation
+#pragma mark - NSMetadataQueryDelegate
+
+#pragma mark - DirectoryWatcherDelegate
+- (void)directoryDidChange:(DirectoryWatcher *)folderWatcher {	FXDLog_DEFAULT;
+	NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	
+	FXDLog(@"applicationDocumentsDirectory: %@", applicationDocumentsDirectory);
+	
+	NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:applicationDocumentsDirectory];
+	FXDLog(@"directoryTree count: %d", [directoryTree count]);
+}
 
 
 @end

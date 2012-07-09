@@ -89,15 +89,14 @@
 }
 
 + (DirectoryWatcher *)watchFolderWithPath:(NSString *)watchPath delegate:(id)watchDelegate {	FXDLog_DEFAULT;
-	FXDLog(@"watchPath: %@", watchPath);
-#warning @"MUST USE searchPath instead of directory"
+	FXDLog(@"watchPath: %@", watchPath);	//MARK: MUST USE searchPath instead of directory
 	
 	DirectoryWatcher *retVal = NULL;
 	if ((watchDelegate != NULL) && (watchPath != NULL))
 	{
 		DirectoryWatcher *tempManager = [[[DirectoryWatcher alloc] init] autorelease];
 		tempManager.delegate = watchDelegate;
-		FXDLog(@"tempManager: %@", tempManager);
+		//FXDLog(@"tempManager: %@", tempManager);
 		
 		if ([tempManager startMonitoringDirectory: watchPath])
 		{
@@ -169,21 +168,23 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
 
 - (BOOL)startMonitoringDirectory:(NSString *)dirPath {	FXDLog_DEFAULT;
 	// Double initializing is not going to work...
+	/*
 	FXDLog(@"dirKQRef: %@", dirKQRef);
 	FXDLog(@"dirFD: %d", dirFD);
 	FXDLog(@"kq: %d", kq);
+	 */
 	
 	if ((dirKQRef == NULL) && (dirFD == -1) && (kq == -1))
 	{
 		// Open the directory we're going to watch
 		dirFD = open([dirPath fileSystemRepresentation], O_EVTONLY);
-		FXDLog(@"dirFD: %d", dirFD);
+		//FXDLog(@"dirFD: %d", dirFD);
 		
 		if (dirFD >= 0)
 		{
 			// Create a kqueue for our event messages...
 			kq = kqueue();
-			FXDLog(@"kq: %d", kq);
+			//FXDLog(@"kq: %d", kq);
 			
 			if (kq >= 0)
 			{
@@ -196,7 +197,7 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
 				eventToAdd.udata  = NULL;
 				
 				int errNum = kevent(kq, &eventToAdd, 1, NULL, 0, NULL);
-				FXDLog(@"errNum: %d", errNum);
+				//FXDLog(@"errNum: %d", errNum);
 				
 				if (errNum == 0)
 				{
@@ -205,12 +206,12 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
 
 					// Passing true in the third argument so CFFileDescriptorInvalidate will close kq.
 					dirKQRef = CFFileDescriptorCreate(NULL, kq, true, KQCallback, &context);
-					FXDLog(@"dirKQRef: %@", dirKQRef);
+					//FXDLog(@"dirKQRef: %@", dirKQRef);
 					
 					if (dirKQRef != NULL)
 					{
 						rls = CFFileDescriptorCreateRunLoopSource(NULL, dirKQRef, 0);
-						FXDLog(@"rls: %@", rls);
+						//FXDLog(@"rls: %@", rls);
 						
 						if (rls != NULL)
 						{
