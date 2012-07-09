@@ -1,5 +1,5 @@
 //
-//  FXDsuperCloudControl.h
+//  FXDsuperFileControl.h
 //  PopTooUniversal
 //
 //  Created by petershine on 6/25/12.
@@ -12,7 +12,7 @@
 #define notificationCloudControlDidUpdateUbiquityContainerURL	@"notificationCloudControlDidUpdateUbiquityContainerURL"
 
 
-@interface FXDsuperCloudControl : FXDObject <NSMetadataQueryDelegate> {
+@interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -45,7 +45,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCloudControl*)sharedInstance;
++ (FXDsuperFileControl*)sharedInstance;
 
 - (void)startCloudSynchronization;
 

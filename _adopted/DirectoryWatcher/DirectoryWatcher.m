@@ -82,9 +82,9 @@
 	return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 	[self invalidate];
+	
 	[super dealloc];
 }
 

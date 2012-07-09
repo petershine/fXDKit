@@ -1,21 +1,21 @@
 //
-//  FXDsuperCloudControl.m
+//  FXDsuperFileControl.m
 //  PopTooUniversal
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCloudControl.h"
+#import "FXDsuperFileControl.h"
 
 
 #pragma mark - Private interface
-@interface FXDsuperCloudControl (Private)
+@interface FXDsuperFileControl (Private)
 @end
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCloudControl
+@implementation FXDsuperFileControl
 
 #pragma mark Static objects
 
@@ -74,7 +74,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCloudControl*)sharedInstance {
++ (FXDsuperFileControl*)sharedInstance {
 	static dispatch_once_t once;
 	
     static id _sharedInstance = nil;

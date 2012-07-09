@@ -10,7 +10,7 @@
 
 #import <CoreData/CoreData.h>
 
-#import "FXDsuperCloudControl.h"
+#import "FXDsuperFileControl.h"
 
 
 #ifndef applicationSqlitePathComponent
