@@ -129,7 +129,6 @@
 		else {
 			
 			if (files == nil && folder == nil) {
-				FXDLog(@"pathComponent(file): %@", pathComponent);
 				[directoryTree addObject:pathComponent];
 			}
 			else if	(folder){
