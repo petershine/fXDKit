@@ -208,7 +208,7 @@
 	}
 	
 #if ForDEVELOPER
-	FXDLog(@"isNewVersion: %@", isNewVersion ? @"YES":@"NO");
+	FXDLog(@"isNewVersion: %@ %f >= %f", isNewVersion ? @"YES":@"NO", [systemVersionString floatValue], versionMaximumSupported);
 #endif
 	
 	return isNewVersion;

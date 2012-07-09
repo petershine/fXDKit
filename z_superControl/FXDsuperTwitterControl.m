@@ -152,35 +152,38 @@
 		[self showAlertViewForSelectingTwitterAccount];
 	}
 	else {
+		if ([FXDsuperGlobalControl isOSversionNew]) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
-		[self.accountStore
-         requestAccessToAccountsWithType:self.accountType
-         options:nil
-         completion:^(BOOL granted, NSError *error) {
-             FXDLog(@"granted: %@", granted ? @"YES":@"NO");
-			 
-			 if (error) {
-				 FXDLog_ERROR;
-			 }
-			 
-			 if (granted) {
-				 [self showAlertViewForSelectingTwitterAccount];
-			 }
-         }];
-#else
-		[self.accountStore requestAccessToAccountsWithType:self.accountType
-									 withCompletionHandler:^(BOOL granted, NSError *error) {
-										 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
-										 
-										 if (error) {
-											 FXDLog_ERROR;
-										 }
-										 
-										 if (granted) {
-											 [self showAlertViewForSelectingTwitterAccount];
-										 }
-									 }];
+			[self.accountStore
+			 requestAccessToAccountsWithType:self.accountType
+			 options:nil
+			 completion:^(BOOL granted, NSError *error) {
+				 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
+				 
+				 if (error) {
+					 FXDLog_ERROR;
+				 }
+				 
+				 if (granted) {
+					 [self showAlertViewForSelectingTwitterAccount];
+				 }
+			 }];
 #endif
+		}
+		else {
+			[self.accountStore requestAccessToAccountsWithType:self.accountType
+										 withCompletionHandler:^(BOOL granted, NSError *error) {
+											 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
+											 
+											 if (error) {
+												 FXDLog_ERROR;
+											 }
+											 
+											 if (granted) {
+												 [self showAlertViewForSelectingTwitterAccount];
+											 }
+										 }];
+		}
 	}
 }
 
