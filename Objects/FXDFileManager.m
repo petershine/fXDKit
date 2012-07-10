@@ -82,18 +82,18 @@
 - (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL {	FXDLog_DEFAULT;
 	NSMutableArray *directoryTree = [[NSMutableArray alloc] initWithCapacity:0];
 	
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:rootURL
-															 includingPropertiesForKeys:nil
-																				options:0
-																		   errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
-																			   FXDLog_ERROR;
-																			   FXDLog(@"url: %@", url);
+	NSDirectoryEnumerator *enumerator = [self enumeratorAtURL:rootURL
+								   includingPropertiesForKeys:nil
+													  options:0
+												 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+													 FXDLog_ERROR;
+													 FXDLog(@"url: %@", url);
 																			   
-																			   return YES;
-																		   }];
+													 return YES;
+												 }];
 												  
 	
-	FXDLog(@"enumerator: %@", enumerator);
+	FXDLog(@"rootURL: %@", rootURL);
 	
 	NSString *keyFolderName = @"_name";
 	NSString *keyFolderFiles = @"files";
@@ -104,6 +104,11 @@
 	NSURL *nextObject = [enumerator nextObject];
 	
 	while (nextObject) {
+		/*
+		NSDictionary *resourceValues = [nextObject fullResourceValuesWithError:nil];
+		FXDLog(@"\nresourceValues:\n%@", resourceValues);
+		 */
+		
 		NSString *absoluteString = nextObject.absoluteString;
 		NSArray *components = [absoluteString componentsSeparatedByString:@"/"];
 		NSString *pathComponent = [components objectAtIndex:[components count] -1];
@@ -156,7 +161,7 @@
 	}
 #if ForDEVELOPER
 	else {
-		FXDLog(@"\ndirectoryTree:\n%@", directoryTree);
+		FXDLog(@"directoryTree:\n%@", directoryTree);
 	}
 #endif
 	

@@ -6,13 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-#import <CoreData/CoreData.h>
-
-#import "FXDsuperFileControl.h"
-
-
 #ifndef applicationSqlitePathComponent
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
@@ -36,6 +29,13 @@
 
 
 #define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
+
+
+#import "FXDKit.h"
+
+#import <CoreData/CoreData.h>
+
+#import "FXDsuperFileControl.h"
 
 
 @interface FXDsuperCoreDataControl : UIManagedDocument <NSFetchedResultsControllerDelegate> {

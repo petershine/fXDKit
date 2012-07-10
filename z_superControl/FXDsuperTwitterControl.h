@@ -6,12 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-#import <Accounts/Accounts.h>
-#import <Twitter/Twitter.h>
-
-
 #define userdefaultObjKeyMainAccountIdentifier	@"MainAccountIdentifierObjKey"
 
 
@@ -23,6 +17,12 @@
 
 #define objkeyTwitterScreenName	@"screen_name"
 #define objkeyTwitterStatus		@"status"
+
+
+#import "FXDKit.h"
+
+#import <Accounts/Accounts.h>
+#import <Twitter/Twitter.h>
 
 
 @interface FXDsuperTwitterControl : FXDObject <UIAlertViewDelegate> {

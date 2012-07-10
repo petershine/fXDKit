@@ -112,12 +112,11 @@
 
 //MARK: - Delegate implementation
 #pragma mark - MKMapViewDelegate
-#if ForDEVELOPER
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {	//FXDLog_DEFAULT;
 	
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {	//FXDLog_DEFAULT;
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {	FXDLog_DEFAULT;
 	
 }
 
@@ -125,7 +124,7 @@
 	
 }
 
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {	//FXDLog_DEFAULT;
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {	FXDLog_DEFAULT;
 	
 }
 
@@ -188,9 +187,10 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {	FXDLog_OVERRIDE;
+	FXDLog(@"mode: %d animated: %@", mode, animated ? @"YES":@"NO");
+	
 	
 }
-#endif
 
 
 @end

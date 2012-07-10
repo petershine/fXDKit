@@ -42,8 +42,6 @@
 - (id)initWithFileURL:(NSURL *)fileURL {	FXDLog_DEFAULT;
 	
 	if (fileURL == nil) {
-		NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-		
 		fileURL = [applicationDocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
 	}
 	

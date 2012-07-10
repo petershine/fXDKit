@@ -33,6 +33,7 @@
 #import "FXDObject.h"
 #import "FXDString.h"
 #import "FXDDate.h"
+#import "FXDURL.h"
 
 #import "FXDColor.h"
 #import "FXDImage.h"
@@ -48,6 +49,8 @@
 #import "FXDFetchedResultsController.h"
 
 #import "FXDFileManager.h"
+
+#import "FXDMetadataQuery.h"
 
 
 // Views

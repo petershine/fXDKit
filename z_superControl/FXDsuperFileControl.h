@@ -6,12 +6,23 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-#import "DirectoryWatcher.h"
+#define applicationDocumentsDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
 
 
 #define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
+
+#define notificationFileControlDidUpdateUbiquityDocuments	@"notificationFileControlDidUpdateUbiquityDocuments"
+#define notificationFileControlDidUpdateLocalDirectory		@"notificationFileControlDidUpdateLocalDirectory"
+
+
+#ifndef limitPathLevel
+	#define limitPathLevel	5
+#endif
+
+
+#import "FXDKit.h"
+
+#import "DirectoryWatcher.h"
 
 
 @interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
@@ -19,9 +30,11 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
+	// Properties : For subclass to be able to reference	
 	id _ubiquityIdentityToken;
+	
 	NSURL *_ubiquityContainerURL;
+	NSURL *_ubiquityDocumentsURL;
 	
 	NSMetadataQuery *_ubiquityMetadataQuery;
 	
@@ -30,7 +43,9 @@
 
 // Properties
 @property (strong, nonatomic) id ubiquityIdentityToken;
+
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;
+@property (strong, nonatomic) NSURL *ubiquityDocumentsURL;
 
 @property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
 
@@ -58,7 +73,10 @@
 - (void)startObservingUbiquityMetadataQueryNotifications;
 - (void)startObservingLocalDocumentDirectoryChange;
 
-- (void)configureMetadataQuery:(NSMetadataQuery*)metadataQuery;
+- (void)delayedUpdateUbiquityDocuments;
+- (void)delayedUpdateLocalDirectory;
+
+- (void)setUbiquitousForLocalFiles:(NSArray*)files;
 
 
 //MARK: - Observer implementation
