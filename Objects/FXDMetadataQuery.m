@@ -69,7 +69,7 @@
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
 - (void)applyDefaultConfiguration {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K >= %@", NSMetadataItemFSContentChangeDateKey, [NSDate date]];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemFSNameKey, @""];	// For all files
 	
 	NSMutableArray *sortDescriptors = [[NSMutableArray alloc] initWithCapacity:0];
 	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
@@ -79,19 +79,46 @@
 	[self setSortDescriptors:sortDescriptors];
 	
 	[self setSearchScopes:[NSArray arrayWithObject:NSMetadataQueryUbiquitousDocumentsScope]];
+	[self setNotificationBatchingInterval:0.5];
 }
 
-- (NSDictionary*)descriptionDictionary {
-	NSMutableDictionary *descriptionDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+- (void)logQueryResultsWithTransferringPercentage {
 	
-	[descriptionDictionary setObject:[self searchScopes] forKey:@"searchScopes"];
-	//[descriptionDictionary setObject:[self valueListAttributes] forKey:@"valueListAttributes"];
-	//[descriptionDictionary setObject:[self groupingAttributes] forKey:@"groupingAttributes"];
-	[descriptionDictionary setObject:[self results] forKey:@"results"];
-	//[descriptionDictionary setObject:[self valueLists] forKey:@"valueLists"];
-	//[descriptionDictionary setObject:[self groupedResults] forKey:@"groupedResults"];
-	
-	return descriptionDictionary;
+	for (NSMetadataItem *metadataItem in [self results]) {
+		NSString *logString = @"";
+		
+		NSNumber *isDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadedKey];
+		NSNumber *isUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadedKey];
+		
+		if ([isUploaded boolValue] == NO) {
+			logString = [logString stringByAppendingFormat:@"isUploaded: %@ ", [isUploaded boolValue] ? @"YES":@"NO"];
+			
+			
+			NSNumber *isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
+			
+			if ([isUploading boolValue]) {
+				NSNumber *percentUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentUploadedKey];
+				logString = [logString stringByAppendingFormat:@"uploading: %@", percentUploaded];
+			}
+		}
+		else if ([isDownloaded boolValue] == NO) {
+			logString = [logString stringByAppendingFormat:@"isDownloaded: %@ ", [isDownloaded boolValue] ? @"YES":@"NO"];
+			
+			NSNumber *isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
+			
+			if ([isDownloading boolValue]) {
+				NSNumber *percentDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentDownloadedKey];
+				logString = [logString stringByAppendingFormat:@"downloading %@", percentDownloaded];
+			}
+		}
+		
+		if ([logString isEqualToString:@""] == NO) {
+			NSString *displayName = [metadataItem valueForKey:NSMetadataItemDisplayNameKey];
+			logString = [logString stringByAppendingFormat:@"    %@", displayName];
+			
+			FXDLog(@"%@", logString);
+		}
+	}
 }
 
 

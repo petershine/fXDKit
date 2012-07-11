@@ -37,16 +37,6 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_DEFAULT;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		//awakeFromNib
-	}
-	
-	return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 	

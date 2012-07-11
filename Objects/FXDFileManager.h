@@ -46,6 +46,7 @@
 
 #pragma mark - Category
 @interface NSFileManager (Added)
+- (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL;
 - (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL;
 
 @end

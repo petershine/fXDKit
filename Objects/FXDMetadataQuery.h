@@ -47,6 +47,6 @@
 @interface NSMetadataQuery (Added)
 - (void)applyDefaultConfiguration;
 
-- (NSDictionary*)descriptionDictionary;
+- (void)logQueryResultsWithTransferringPercentage;
 
 @end

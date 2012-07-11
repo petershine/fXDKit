@@ -79,21 +79,27 @@
 
 #pragma mark - Category
 @implementation NSFileManager (Added)
+- (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL {
+	
+	NSDirectoryEnumerator *fullEnumerator = [self enumeratorAtURL:rootURL
+									   includingPropertiesForKeys:nil
+														  options:0
+													 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+														 FXDLog_ERROR;
+														 FXDLog(@"url: %@", url);
+														 
+														 return YES;
+													 }];
+	
+	return fullEnumerator;
+}
+
 - (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL {	FXDLog_DEFAULT;
+	FXDLog(@"rootURL: %@", rootURL);
+	
 	NSMutableArray *directoryTree = [[NSMutableArray alloc] initWithCapacity:0];
 	
-	NSDirectoryEnumerator *enumerator = [self enumeratorAtURL:rootURL
-								   includingPropertiesForKeys:nil
-													  options:0
-												 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
-													 FXDLog_ERROR;
-													 FXDLog(@"url: %@", url);
-																			   
-													 return YES;
-												 }];
-												  
-	
-	FXDLog(@"rootURL: %@", rootURL);
+	NSDirectoryEnumerator *enumerator = [self fullEnumeratorForRootURL:rootURL];
 	
 	NSString *keyFolderName = @"_name";
 	NSString *keyFolderFiles = @"files";
@@ -155,15 +161,13 @@
 		folder = nil;
 	}
 	
-	
+#if ForDEVELOPER
+	FXDLog(@"directoryTree:\n%@", directoryTree);
+#endif
+
 	if ([directoryTree count] == 0) {
 		directoryTree = nil;
 	}
-#if ForDEVELOPER
-	else {
-		FXDLog(@"directoryTree:\n%@", directoryTree);
-	}
-#endif
 	
 	return directoryTree;
 }

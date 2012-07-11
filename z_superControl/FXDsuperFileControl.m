@@ -24,11 +24,14 @@
 @synthesize ubiquityIdentityToken = _ubiquityIdentityToken;
 
 @synthesize ubiquityContainerURL = _ubiquityContainerURL;
-@synthesize ubiquityDocumentsURL = _ubiquityDocumentsURL;
+@synthesize ubiquitousDocumentsURL = _ubiquitousDocumentsURL;
 
 @synthesize ubiquityMetadataQuery = _ubiquityMetadataQuery;
 
-@synthesize directoryWatcher = _directoryWatcher;
+@synthesize localDirectoryWatcher = _localDirectoryWatcher;
+
+@synthesize queuedURLSet = _queuedURLSet;
+@synthesize operationQueue = _operationQueue;
 
 
 #pragma mark - Memory management
@@ -54,11 +57,14 @@
 		_ubiquityIdentityToken = nil;
 		
 		_ubiquityContainerURL = nil;
-		_ubiquityDocumentsURL = nil;
+		_ubiquitousDocumentsURL = nil;
 		
 		_ubiquityMetadataQuery = nil;
 		
-		_directoryWatcher = nil;
+		_localDirectoryWatcher = nil;
+		
+		_queuedURLSet = nil;
+		_operationQueue = nil;
 	}
 	
 	return self;
@@ -66,14 +72,14 @@
 
 #pragma mark - Accessor overriding
 // Properties
-- (NSURL*)ubiquityDocumentsURL {
-	if (_ubiquityDocumentsURL == nil) {
+- (NSURL*)ubiquitousDocumentsURL {
+	if (_ubiquitousDocumentsURL == nil) {
 		if (self.ubiquityContainerURL) {
-			_ubiquityDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:@"Documents"];			
+			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];			
 		}
 	}
 	
-	return _ubiquityDocumentsURL;
+	return _ubiquitousDocumentsURL;
 }
 
 #pragma mark -
@@ -83,6 +89,23 @@
 	}
 	
 	return _ubiquityMetadataQuery;
+}
+
+#pragma mark -
+- (NSMutableSet*)queuedURLSet {
+	if (_queuedURLSet == nil) {
+		_queuedURLSet =[[NSMutableSet alloc] initWithCapacity:0];
+	}
+	
+	return _queuedURLSet;
+}
+
+- (NSOperationQueue*)operationQueue {
+	if (_operationQueue == nil) {
+		_operationQueue = [[NSOperationQueue alloc] init];
+	}
+	
+	return _operationQueue;
 }
 
 
@@ -141,12 +164,17 @@
 				FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
 				
 #if DEBUG
-				NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:self.ubiquityDocumentsURL];
+				NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:self.ubiquitousDocumentsURL];
 				FXDLog(@"directoryTree count: %d", [directoryTree count]);
 #endif
 				
+#if shouldUseUbiquitousDocuments
 				[self startObservingUbiquityMetadataQueryNotifications];
-				[self startObservingLocalDocumentDirectoryChange];
+#endif
+				
+#if shouldUseLocalDirectoryWatcher
+				[self startWatchingLocalDirectoryChange];
+#endif
 				
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 			});
@@ -155,7 +183,9 @@
 	else {
 		//TODO: alert user about using iCloud;
 		
-		[self startObservingLocalDocumentDirectoryChange];
+#if shouldUseLocalDirectoryWatcher
+		[self startWatchingLocalDirectoryChange];
+#endif
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
 	}
@@ -196,23 +226,14 @@
 	}
 }
 
-- (void)startObservingLocalDocumentDirectoryChange {	FXDLog_DEFAULT;
-	NSString *searchPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-	
-	self.directoryWatcher = [DirectoryWatcher watchFolderWithPath:searchPath delegate:self];
+- (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;	
+	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:applicationDocumentsSearchPath delegate:self];
 }
 
 #pragma mark -
-- (void)delayedUpdateUbiquityDocuments {	FXDLog_DEFAULT;
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.ubiquityDocumentsURL
-															 includingPropertiesForKeys:nil
-																				options:0
-																		   errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
-																			   FXDLog_ERROR;
-																			   FXDLog(@"url: %@", url);
-																			   
-																			   return YES;
-																		   }];
+- (void)delayedUpdateUbiquitousDocuments {	FXDLog_DEFAULT;
+	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:self.ubiquitousDocumentsURL];
+	
 	NSURL *nextObject = [enumerator nextObject];
 	
 	NSUInteger currentLevel = 1;	//TODO: change level appropriately
@@ -235,66 +256,63 @@
 		[userInfo setObject:files forKey:@"ubiquitousFiles"];
 	}
 	
-	if (userInfo && [userInfo count] > 0) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityDocuments object:self userInfo:userInfo];
-	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquitousDocuments object:self userInfo:userInfo];
 }
 
-- (void)delayedUpdateLocalDirectory {	FXDLog_DEFAULT;
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:applicationDocumentsDirectory
-															 includingPropertiesForKeys:nil
-																				options:0
-																		   errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
-																			   FXDLog_ERROR;
-																			   FXDLog(@"url: %@", url);
-																			   
-																			   return YES;
-																		   }];
+- (void)delayedUpdateLocalDirectory {	//FXDLog_DEFAULT;
+	
+	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:applicationDocumentsDirectory];
 	
 	NSURL *nextObject = [enumerator nextObject];
 	
-	NSMutableArray *files = [[NSMutableArray alloc] initWithCapacity:0];
-	
 	while (nextObject) {
+		__block NSURL *localFileURL = [[NSURL alloc] initWithString:[nextObject absoluteString]];
+		
 		id isUbiquitousItem = nil;
 		
-		[nextObject getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:nil];
+		[localFileURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:nil];
 		
-		if ([isUbiquitousItem boolValue] == NO) {
-			[files addObject:nextObject];
+		if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO) {
+			if ([self.queuedURLSet containsObject:localFileURL] == NO) {
+				[self.queuedURLSet addObject:localFileURL];
+												
+				[self.operationQueue addOperationWithBlock:^{
+					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
+					
+					[self setUbiquitousForLocalFiles:localFiles];
+					
+					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+						if ([self.queuedURLSet containsObject:localFileURL]) {
+							[self.queuedURLSet removeObject:localFileURL];
+						}
+												
+						if ([self.queuedURLSet count] == 0) {
+							[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateLocalDirectory object:nil];
+						}
+					}];
+				}];
+			}
 		}
-		
+
 		nextObject = [enumerator nextObject];
-	}
-	
-	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-	
-	if (files && [files count] > 0) {
-		[self setUbiquitousForLocalFiles:files];
-		
-		[userInfo setObject:files forKey:@"localFiles"];
-	}
-	
-	if (userInfo && [userInfo count] > 0) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateLocalDirectory object:self userInfo:userInfo];
 	}
 }
 
 #pragma mark -
-- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles {	FXDLog_DEFAULT;
+- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	FXDLog(@"ubiquityDocumentsURL: %@", self.ubiquityDocumentsURL);
 	
 	for (NSURL *localfileURL in localFiles) {
-		//Use default /Documents path in iCloud
+
+		NSString *localfilePath = [[[localfileURL absoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
 		
-		NSString *localfilePath = [[[localfileURL absoluteString] componentsSeparatedByString:@"Documents/"] lastObject];
-		
-		NSURL *destinationURL = [self.ubiquityDocumentsURL URLByAppendingPathComponent:localfilePath];
+		NSURL *destinationURL = [self.ubiquitousDocumentsURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents
 				
 		NSError *error = nil;
 		
 		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:localfileURL destinationURL:destinationURL error:&error];
+		
+		FXDLog(@"didSetUbiquitous: %@ %@", didSetUbiquitous ? @"YES":@"NO", localfilePath);
 		
 		if (error) {
 			FXDLog_ERROR;
@@ -318,24 +336,26 @@
 
 			 */
 			
+			NSString *title = nil;
 			
-			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription]
-																message:nil
-															   delegate:nil
-													  cancelButtonTitle:text_OK
-													  otherButtonTitles:nil];
-			[alertView show];
-		}
-		
-		if (didSetUbiquitous) {
-			id isUploaded = nil;
+			switch ([error code]) {
+				case 516:
+					//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
+					break;
+					
+				default:
+					title = [NSString stringWithFormat:@"%@\n%@", [error localizedDescription], localfilePath];
+					break;
+			}
 			
-			[localfileURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsDownloadedKey error:nil];
-			
-			FXDLog(@"didSetUbiquitous: %@ isUploaded: %@", didSetUbiquitous ? @"YES":@"NO", [isUploaded boolValue] ? @"YES":@"NO");
-		}
-		else {
-			FXDLog(@"didSetUbiquitous: %@", didSetUbiquitous ? @"YES":@"NO");
+			if (title) {
+				UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+																	message:nil
+																   delegate:nil
+														  cancelButtonTitle:text_OK
+														  otherButtonTitles:nil];
+				[alertView show];
+			}
 		}
 	}
 }
@@ -348,28 +368,28 @@
 
 #pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
-
-}
-
-- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	
 }
 
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	NSMetadataQuery *metadataQuery = notification.object;
+	FXDLog(@"resultCount: %u", [metadataQuery resultCount]);
+}
+
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//TEST:
+	[self observedNSMetadataQueryDidUpdate:notification];
 	
 }
 
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	NSMetadataQuery *metadataQuery = notification.object;
+	FXDLog(@"resultCount: %u", [metadataQuery resultCount]);
 	
-	for (NSMetadataItem *metadataItem in [metadataQuery results]) {
-		FXDLog(@"\nvalues:\n%@", [metadataItem valuesForAttributes:[metadataItem attributes]]);
-	}
+	[metadataQuery logQueryResultsWithTransferringPercentage];
 	
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayedUpdateUbiquityDocuments) object:nil];
-	
-	NSTimeInterval delay = [metadataQuery notificationBatchingInterval] *3;
-	[self performSelector:@selector(delayedUpdateUbiquityDocuments) withObject:nil afterDelay:delay];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayedUpdateUbiquitousDocuments) object:nil];
+	[self performSelector:@selector(delayedUpdateUbiquitousDocuments) withObject:nil afterDelay:0];
 }
 
 
@@ -377,9 +397,9 @@
 #pragma mark - NSMetadataQueryDelegate
 
 #pragma mark - DirectoryWatcherDelegate
-- (void)directoryDidChange:(DirectoryWatcher*)folderWatcher {	FXDLog_DEFAULT;
+- (void)directoryDidChange:(DirectoryWatcher*)folderWatcher {	//FXDLog_DEFAULT;
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayedUpdateLocalDirectory) object:nil];
-	[self performSelector:@selector(delayedUpdateLocalDirectory) withObject:nil afterDelay:2];
+	[self performSelector:@selector(delayedUpdateLocalDirectory) withObject:nil afterDelay:0];
 }
 
 

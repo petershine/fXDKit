@@ -49,18 +49,6 @@
 
 
 #pragma mark - Initialization
-#if ForDEVELOPER
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_SEPARATE;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		//awakeFromNib
-	}
-	
-	return self;
-}
-#endif
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 	
 	if (nibNameOrNil == nil) {

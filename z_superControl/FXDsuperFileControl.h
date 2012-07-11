@@ -6,17 +6,32 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#define applicationDocumentsSearchPath	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
+
 #define applicationDocumentsDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
 
 
 #define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
 
-#define notificationFileControlDidUpdateUbiquityDocuments	@"notificationFileControlDidUpdateUbiquityDocuments"
+#define notificationFileControlDidUpdateUbiquitousDocuments	@"notificationFileControlDidUpdateUbiquitousDocuments"
 #define notificationFileControlDidUpdateLocalDirectory		@"notificationFileControlDidUpdateLocalDirectory"
 
 
+#ifndef shouldUseUbiquitousDocuments
+	#define shouldUseUbiquitousDocuments	1
+#endif
+
+#ifndef shouldUseLocalDirectoryWatcher
+	#define shouldUseLocalDirectoryWatcher	1
+#endif
+
 #ifndef limitPathLevel
 	#define limitPathLevel	5
+#endif
+
+
+#ifndef pathcomponentDocuments
+	#define pathcomponentDocuments @"Documents"
 #endif
 
 
@@ -34,22 +49,28 @@
 	id _ubiquityIdentityToken;
 	
 	NSURL *_ubiquityContainerURL;
-	NSURL *_ubiquityDocumentsURL;
+	NSURL *_ubiquitousDocumentsURL;
 	
 	NSMetadataQuery *_ubiquityMetadataQuery;
 	
-	DirectoryWatcher *_directoryWatcher;
+	DirectoryWatcher *_localDirectoryWatcher;
+	
+	NSMutableSet *_queuedURLSet;
+	NSOperationQueue *_operationQueue;
 }
 
 // Properties
 @property (strong, nonatomic) id ubiquityIdentityToken;
 
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;
-@property (strong, nonatomic) NSURL *ubiquityDocumentsURL;
+@property (strong, nonatomic) NSURL *ubiquitousDocumentsURL;
 
 @property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
 
-@property (strong, nonatomic) DirectoryWatcher *directoryWatcher;
+@property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
+
+@property (strong, nonatomic) NSMutableSet *queuedURLSet;
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
 
 
 #pragma mark - Memory management
@@ -71,12 +92,12 @@
 - (void)startCloudSynchronization;
 
 - (void)startObservingUbiquityMetadataQueryNotifications;
-- (void)startObservingLocalDocumentDirectoryChange;
+- (void)startWatchingLocalDirectoryChange;
 
-- (void)delayedUpdateUbiquityDocuments;
+- (void)delayedUpdateUbiquitousDocuments;
 - (void)delayedUpdateLocalDirectory;
 
-- (void)setUbiquitousForLocalFiles:(NSArray*)files;
+- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles;
 
 
 //MARK: - Observer implementation

@@ -70,8 +70,7 @@
 
 @synthesize delegate;
 
-- (id)init
-{
+- (id)init {
 	self= [super init];
 	delegate = NULL;
 
@@ -105,7 +104,7 @@
 			retVal = tempManager;
 		}
 	}
-	FXDLog(@"retVal: %@", retVal);
+	//FXDLog(@"retVal: %@", retVal);
 	
 	return retVal;
 }
@@ -147,8 +146,7 @@
     eventCount = kevent(kq, NULL, 0, &event, 1, &timeout);
     assert((eventCount >= 0) && (eventCount < 2));
     
-	// call our delegate of the directory change
-	FXDLog_DEFAULT;
+	// call our delegate of the directory change	
     [delegate directoryDidChange:self];
 
     CFFileDescriptorEnableCallBacks(dirKQRef, kCFFileDescriptorReadCallBack);
@@ -166,7 +164,7 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
     [obj kqueueFired];
 }
 
-- (BOOL)startMonitoringDirectory:(NSString *)dirPath {	FXDLog_DEFAULT;
+- (BOOL)startMonitoringDirectory:(NSString *)dirPath {	//FXDLog_DEFAULT;
 	// Double initializing is not going to work...
 	/*
 	FXDLog(@"dirKQRef: %@", dirKQRef);
