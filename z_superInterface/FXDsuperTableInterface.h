@@ -15,9 +15,11 @@
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
+	NSString *_registeredNibIdentifier;
+	
 	NSArray *_rowCounts;
 	NSDictionary *_cellTexts;
-	NSArray *_defaultDatasource;
+	NSMutableArray *_defaultDatasource;
 	
 	NSOperationQueue *_defaultOperationQueue;
 	NSMutableDictionary *_addedOperations;
@@ -26,9 +28,11 @@
 }
 
 // Properties
+@property (strong, nonatomic) NSString *registeredNibIdentifier;
+
 @property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;
-@property (strong, nonatomic) NSArray *defaultDatasource;
+@property (strong, nonatomic) NSMutableArray *defaultDatasource;
 
 @property (strong, nonatomic) NSOperationQueue *defaultOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *addedOperations;

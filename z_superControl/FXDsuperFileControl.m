@@ -133,8 +133,8 @@
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
-	if ([FXDsuperGlobalControl isOSversionNew]) {		
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+	if ([FXDsuperGlobalControl isSystemVersionLatest]) {		
+#if isNewestSDK
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
 													 name:NSUbiquityIdentityDidChangeNotification
@@ -275,18 +275,20 @@
 		if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO) {
 			if ([self.queuedURLSet containsObject:localFileURL] == NO) {
 				[self.queuedURLSet addObject:localFileURL];
+				
+				__block FXDsuperFileControl *fileControl = self;
 												
 				[self.operationQueue addOperationWithBlock:^{
 					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
 					
-					[self setUbiquitousForLocalFiles:localFiles];
+					[fileControl setUbiquitousForLocalFiles:localFiles];
 					
 					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-						if ([self.queuedURLSet containsObject:localFileURL]) {
-							[self.queuedURLSet removeObject:localFileURL];
+						if ([fileControl.queuedURLSet containsObject:localFileURL]) {
+							[fileControl.queuedURLSet removeObject:localFileURL];
 						}
 												
-						if ([self.queuedURLSet count] == 0) {
+						if ([fileControl.queuedURLSet count] == 0) {
 							[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateLocalDirectory object:nil];
 						}
 					}];
@@ -333,7 +335,6 @@
 			 userInfo: {
 			 NSDescription = "Unable to lstat destination path '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%85%E1%85%B5%E1%86%B8%20%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A9%E1%86%AB%20%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC.xls'.";
 			 }
-
 			 */
 			
 			NSString *title = nil;

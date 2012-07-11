@@ -54,7 +54,7 @@
 #pragma mark - Public
 + (FXDsuperGlobalControl*)sharedInstance;
 
-+ (BOOL)isOSversionNew;
++ (BOOL)isSystemVersionLatest;
 
 + (NSString*)deviceModelName;
 

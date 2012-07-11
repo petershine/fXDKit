@@ -152,8 +152,8 @@
 		[self showAlertViewForSelectingTwitterAccount];
 	}
 	else {
-		if ([FXDsuperGlobalControl isOSversionNew]) {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+		if ([FXDsuperGlobalControl isSystemVersionLatest]) {
+#if isNewestSDK
 			[self.accountStore
 			 requestAccessToAccountsWithType:self.accountType
 			 options:nil

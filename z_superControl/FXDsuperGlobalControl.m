@@ -198,20 +198,20 @@
 }
 
 #pragma mark -
-+ (BOOL)isOSversionNew {	
-	BOOL isNewVersion = NO;
++ (BOOL)isSystemVersionLatest {	
+	BOOL isSystemVersionLatest = NO;
 	
 	NSString *systemVersionString = [[UIDevice currentDevice] systemVersion];
 	
-	if ([systemVersionString floatValue] >= versionMaximumSupported) {
-		isNewVersion = YES;
+	if ([systemVersionString floatValue] >= latestSupportedSystemVersion) {
+		isSystemVersionLatest = YES;
 	}
 	
 #if ForDEVELOPER
-	FXDLog(@"isNewVersion: %@ %f >= %f", isNewVersion ? @"YES":@"NO", [systemVersionString floatValue], versionMaximumSupported);
+	FXDLog(@"isSystemVersionLatest: %@ %f >= %f", isSystemVersionLatest ? @"YES":@"NO", [systemVersionString floatValue], latestSupportedSystemVersion);
 #endif
 	
-	return isNewVersion;
+	return isSystemVersionLatest;
 }
 
 #pragma mark -

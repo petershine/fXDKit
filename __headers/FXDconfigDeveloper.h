@@ -66,9 +66,11 @@
 	#define application_AppStoreID	524312409
 #endif
 
-#ifndef versionMaximumSupported
-	#define versionMaximumSupported	6.0
+#ifndef latestSupportedSystemVersion
+	#define latestSupportedSystemVersion	6.0
 #endif
+
+#define isNewestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
 
 
 #if	USE_TestFlight

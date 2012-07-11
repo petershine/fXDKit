@@ -19,6 +19,8 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize registeredNibIdentifier = _registeredNibIdentifier;
+
 @synthesize rowCounts = _rowCounts;
 @synthesize cellTexts = _cellTexts;
 @synthesize defaultDatasource = _defaultDatasource;
@@ -54,6 +56,8 @@
 	// Instance variables
 	
 	// Properties
+	_registeredNibIdentifier = nil;
+	
 	_rowCounts = nil;
 	_cellTexts = nil;
 	_defaultDatasource = nil;
@@ -68,6 +72,15 @@
 
 
 #pragma mark - Accessor overriding
+- (NSString*)registeredNibIdentifier {
+	if (_registeredNibIdentifier == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _registeredNibIdentifier;
+}
+
+#pragma mark -
 - (NSArray*)rowCounts {
 	
 	if (_rowCounts == nil) {	FXDLog_OVERRIDE;
@@ -86,7 +99,7 @@
 	return _cellTexts;
 }
 
-- (NSArray*)defaultDatasource {
+- (NSMutableArray*)defaultDatasource {
 	
 	if (_defaultDatasource == nil) {	FXDLog_OVERRIDE;
 		//
