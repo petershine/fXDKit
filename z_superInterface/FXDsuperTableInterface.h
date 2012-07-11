@@ -22,7 +22,8 @@
 	NSMutableArray *_defaultDatasource;
 	
 	NSOperationQueue *_defaultOperationQueue;
-	NSMutableDictionary *_addedOperations;
+	NSMutableDictionary *_operationDictionary;
+	NSMutableArray *_operationArray;
 	
 	FXDFetchedResultsController *_defaultResultsController;
 }
@@ -35,7 +36,8 @@
 @property (strong, nonatomic) NSMutableArray *defaultDatasource;
 
 @property (strong, nonatomic) NSOperationQueue *defaultOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *addedOperations;
+@property (strong, nonatomic) NSMutableDictionary *operationDictionary;
+@property (strong, nonatomic) NSMutableArray *operationArray;
 
 @property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
 

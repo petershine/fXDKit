@@ -26,7 +26,8 @@
 @synthesize defaultDatasource = _defaultDatasource;
 
 @synthesize defaultOperationQueue = _defaultOperationQueue;
-@synthesize addedOperations = _addedOperations;
+@synthesize operationDictionary = _operationDictionary;
+@synthesize operationArray = _operationArray;
 
 @synthesize defaultResultsController = _defaultResultsController;
 
@@ -63,7 +64,8 @@
 	_defaultDatasource = nil;
 	
 	_defaultOperationQueue = nil;
-	_addedOperations = nil;
+	_operationDictionary = nil;
+	_operationArray = nil;
 	
 	_defaultResultsController = nil;
 	
@@ -118,13 +120,22 @@
 	return _defaultOperationQueue;
 }
 
-- (NSMutableDictionary*)addedOperations {
+- (NSMutableDictionary*)operationDictionary {
 	
-	if (_addedOperations == nil) {
-		_addedOperations = [[NSMutableDictionary alloc] initWithCapacity:0];
+	if (_operationDictionary == nil) {
+		_operationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	
-	return _addedOperations;
+	return _operationDictionary;
+}
+
+- (NSMutableArray*)operationArray {
+	
+	if (_operationArray == nil) {
+		_operationArray = [[NSMutableArray alloc] initWithCapacity:0];
+	}
+	
+	return _operationArray;
 }
 
 
