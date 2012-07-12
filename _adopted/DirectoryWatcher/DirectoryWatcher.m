@@ -109,8 +109,7 @@
 	return retVal;
 }
 
-- (void)invalidate
-{
+- (void)invalidate {
 	if (dirKQRef != NULL)
 	{
 		CFFileDescriptorInvalidate(dirKQRef);

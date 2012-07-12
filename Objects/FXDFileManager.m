@@ -94,7 +94,7 @@
 	return fullEnumerator;
 }
 
-- (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL {	FXDLog_DEFAULT;
+- (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL {	//FXDLog_DEFAULT;
 	FXDLog(@"rootURL: %@", rootURL);
 	
 	NSMutableArray *directoryTree = [[NSMutableArray alloc] initWithCapacity:0];
@@ -161,10 +161,6 @@
 		folder = nil;
 	}
 	
-#if ForDEVELOPER
-	FXDLog(@"directoryTree:\n%@", directoryTree);
-#endif
-
 	if ([directoryTree count] == 0) {
 		directoryTree = nil;
 	}

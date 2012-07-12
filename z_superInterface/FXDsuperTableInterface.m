@@ -85,7 +85,7 @@
 #pragma mark -
 - (NSArray*)rowCounts {
 	
-	if (_rowCounts == nil) {	FXDLog_OVERRIDE;
+	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -307,7 +307,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {	FXDLog_OVERRIDE;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {	//FXDLog_OVERRIDE;
 	NSInteger numberOfSections = 1;
 	
 	if (self.rowCounts) {
@@ -317,7 +317,7 @@
 	return numberOfSections;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	FXDLog_OVERRIDE;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	//FXDLog_OVERRIDE;
 	NSInteger numberOfRows = 0;
 
 	if (self.rowCounts) {

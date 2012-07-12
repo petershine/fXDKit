@@ -47,6 +47,6 @@
 @interface NSMetadataQuery (Added)
 - (void)applyDefaultConfiguration;
 
-- (void)logQueryResultsWithTransferringPercentage;
+- (BOOL)logQueryResultsWithTransferringPercentage;
 
 @end

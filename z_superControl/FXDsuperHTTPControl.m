@@ -205,10 +205,11 @@ static NSMutableSet *_staticHttpControlSet = nil;
 //MARK: - Delegate implementation
 #pragma mark - NSURLConnectionDelegate
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {	FXDLog_DEFAULT;
+	FXDLog(@"connection: %@", connection);
+	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
+	
 	if (error) {
-		FXDLog(@"connection: %@", connection);
 		FXDLog_ERROR;
 	}
 }

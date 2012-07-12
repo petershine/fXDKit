@@ -21,13 +21,14 @@
 
 #pragma mark Synthesizing
 // Properties
+@synthesize currentPathLevel = _currentPathLevel;
+
 @synthesize ubiquityIdentityToken = _ubiquityIdentityToken;
 
 @synthesize ubiquityContainerURL = _ubiquityContainerURL;
 @synthesize ubiquitousDocumentsURL = _ubiquitousDocumentsURL;
 
 @synthesize ubiquityMetadataQuery = _ubiquityMetadataQuery;
-
 @synthesize localDirectoryWatcher = _localDirectoryWatcher;
 
 @synthesize queuedURLSet = _queuedURLSet;
@@ -53,14 +54,15 @@
 		
 		// Instance variables
 		
-		// Properties		
+		// Properties
+		_currentPathLevel = 1;
+		
 		_ubiquityIdentityToken = nil;
 		
 		_ubiquityContainerURL = nil;
 		_ubiquitousDocumentsURL = nil;
 		
 		_ubiquityMetadataQuery = nil;
-		
 		_localDirectoryWatcher = nil;
 		
 		_queuedURLSet = nil;
@@ -129,7 +131,7 @@
 }
 
 #pragma mark -
-- (void)startCloudSynchronization {	FXDLog_DEFAULT;
+- (void)startUpdatingUbiquityContainerURL {	FXDLog_DEFAULT;
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
@@ -157,16 +159,12 @@
 	if (shouldRequestUbiquityContatinerURL) {
 		__block FXDsuperFileControl *fileControl = self;
 				
-		[[NSOperationQueue new] addOperationWithBlock:^{
-			NSURL *ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-			
-			fileControl.ubiquityContainerURL = ubiquityContainerURL;
+		[[NSOperationQueue new] addOperationWithBlock:^{			
+			fileControl.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			FXDLog(@"ubiquityContainerURL: %@", fileControl.ubiquityContainerURL);
-
 			
 #if DEBUG
-			NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL];
-			FXDLog(@"directoryTree count: %d", [directoryTree count]);
+			FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
 #endif
 			
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -228,74 +226,87 @@
 	}
 }
 
-- (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;	
+- (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
 	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:applicationDocumentsSearchPath delegate:self];
+	
+#if DEBUG
+	FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:applicationDocumentsDirectory]);
+	FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:applicationCacheDirectory]);
+#endif
 }
 
 #pragma mark -
-- (void)delayedUpdateUbiquitousDocuments {	FXDLog_DEFAULT;
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:self.ubiquitousDocumentsURL];
+- (void)enumerateUbiquitousDocuments {	FXDLog_DEFAULT;
 	
-	NSURL *nextObject = [enumerator nextObject];
+	__block FXDsuperFileControl *fileControl = self;
 	
-	NSUInteger currentLevel = 1;	//TODO: change level appropriately
+	__block NSMutableArray *files = [[NSMutableArray alloc] initWithCapacity:0];
+	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	NSMutableArray *files = [[NSMutableArray alloc] initWithCapacity:0];
-	
-	while (nextObject) {
-		//FXDLog(@"enumerator.level: %u", enumerator.level);
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:self.ubiquitousDocumentsURL];
 		
-		if (enumerator.level == currentLevel) {
-			[files addObject:nextObject];
+		NSURL *nextObject = [enumerator nextObject];
+		
+		while (nextObject) {
+			//FXDLog(@"enumerator.level: %u", enumerator.level);
+			
+			if (enumerator.level == fileControl.currentPathLevel) {	//TODO: change level appropriately
+				[files addObject:nextObject];
+			}
+			
+			nextObject = [enumerator nextObject];
 		}
 		
-		nextObject = [enumerator nextObject];
-	}
-	
-	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-	
-	if (files && [files count] > 0) {
-		[userInfo setObject:files forKey:@"ubiquitousFiles"];
-	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquitousDocuments object:self userInfo:userInfo];
+		if (files && [files count] > 0) {
+			[userInfo setObject:files forKey:@"ubiquitousFiles"];
+		}
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocuments object:fileControl userInfo:userInfo];
+		}];
+	}];
 }
 
-- (void)delayedUpdateLocalDirectory {	//FXDLog_DEFAULT;
+- (void)enumerateLocalDirectory {	FXDLog_DEFAULT;
+	
+	__block FXDsuperFileControl *fileControl = self;
 	
 	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:applicationDocumentsDirectory];
 	
 	NSURL *nextObject = [enumerator nextObject];
-	
+		
 	while (nextObject) {
-		__block NSURL *localFileURL = [[NSURL alloc] initWithString:[nextObject absoluteString]];
+		__block NSURL *localFileURL = nextObject;
 		
-		id isUbiquitousItem = nil;
-		
-		[localFileURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:nil];
-		
-		if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO) {
-			if ([self.queuedURLSet containsObject:localFileURL] == NO) {
-				[self.queuedURLSet addObject:localFileURL];
+		if ([fileControl.queuedURLSet containsObject:localFileURL] == NO) {
+			[fileControl.queuedURLSet addObject:localFileURL];
+			
+			[fileControl.operationQueue addOperationWithBlock:^{
+				id isUbiquitousItem = nil;
+				id isHidden = nil;
 				
-				__block FXDsuperFileControl *fileControl = self;
-												
-				[self.operationQueue addOperationWithBlock:^{
+				NSError *error = nil;
+				
+				[localFileURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
+				[localFileURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
+				
+				if (error) {	FXDLog_DEFAULT;
+					FXDLog_ERROR;
+				}
+				
+				if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO && [isHidden boolValue] == NO) {
 					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
 					
 					[fileControl setUbiquitousForLocalFiles:localFiles];
-					
-					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-						if ([fileControl.queuedURLSet containsObject:localFileURL]) {
-							[fileControl.queuedURLSet removeObject:localFileURL];
-						}
-												
-						if ([fileControl.queuedURLSet count] == 0) {
-							[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateLocalDirectory object:nil];
-						}
-					}];
+				}
+				
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+					if ([fileControl.queuedURLSet containsObject:localFileURL]) {
+						[fileControl.queuedURLSet removeObject:localFileURL];
+					}					
 				}];
-			}
+			}];
 		}
 
 		nextObject = [enumerator nextObject];
@@ -336,14 +347,28 @@
 			 localizedDescription: The operation couldn’t be completed. File name too long
 			 userInfo: {
 			 NSDescription = "Unable to lstat destination path '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%85%E1%85%B5%E1%86%B8%20%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A9%E1%86%AB%20%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC.xls'.";
+			 
+			 domain: NSCocoaErrorDomain
+			 code: 260
+			 localizedDescription: The operation couldn’t be completed. (Cocoa error 260.)
+			 userInfo: {
+			 NSFilePath = "/private/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Documents/IMG_1144.JPG";
+			 NSURL = "file://localhost/private/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Documents/IMG_1144.JPG";
+			 NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=2 \"The operation couldn\U2019t be completed. No such file or directory\" UserInfo=0xf89ddd0 {}";
+			 }
+
+			 domain: NSPOSIXErrorDomain
+			 code: 2
+			 localizedDescription: The operation couldn’t be completed. No such file or directory
+			 userInfo: {
+			 NSDescription = "Unable to rename '/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG' to '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/file://localhost/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG'.";
 			 }
 			 */
 			
 			NSString *title = nil;
 			
 			switch ([error code]) {
-				case 516:
-					//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
+				case 516:	//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
 					break;
 					
 				default:
@@ -370,28 +395,30 @@
 }
 
 #pragma mark -
-- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
 	
 }
 
-- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+	
+}
+
+- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+	//[self observedNSMetadataQueryDidUpdate:notification];	//MARK: treat it same as updated
+}
+
+- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+	/*
+#if DEBUG
 	NSMetadataQuery *metadataQuery = notification.object;
-	FXDLog(@"resultCount: %u", [metadataQuery resultCount]);
-}
-
-- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	[self observedNSMetadataQueryDidUpdate:notification];	//MARK: treat it same as updated
 	
-}
-
-- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	NSMetadataQuery *metadataQuery = notification.object;
-	FXDLog(@"resultCount: %u", [metadataQuery resultCount]);
+	BOOL didLogTransferring = [metadataQuery logQueryResultsWithTransferringPercentage];
 	
-	[metadataQuery logQueryResultsWithTransferringPercentage];
-	
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayedUpdateUbiquitousDocuments) object:nil];
-	[self performSelector:@selector(delayedUpdateUbiquitousDocuments) withObject:nil afterDelay:0];
+	if (didLogTransferring == NO) {	FXDLog_OVERRIDE;
+		FXDLog(@"resultCount: %u", [metadataQuery resultCount]);
+	}
+#endif
+	 */
 }
 
 
@@ -400,8 +427,7 @@
 
 #pragma mark - DirectoryWatcherDelegate
 - (void)directoryDidChange:(DirectoryWatcher*)folderWatcher {	//FXDLog_DEFAULT;
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayedUpdateLocalDirectory) object:nil];
-	[self performSelector:@selector(delayedUpdateLocalDirectory) withObject:nil afterDelay:0];
+	[self enumerateLocalDirectory];
 }
 
 

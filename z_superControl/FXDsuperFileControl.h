@@ -9,12 +9,13 @@
 #define applicationDocumentsSearchPath	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 
 #define applicationDocumentsDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
+#define applicationCacheDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
+
 
 
 #define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
 
-#define notificationFileControlDidUpdateUbiquitousDocuments	@"notificationFileControlDidUpdateUbiquitousDocuments"
-#define notificationFileControlDidUpdateLocalDirectory		@"notificationFileControlDidUpdateLocalDirectory"
+#define notificationFileControlDidEnumerateUbiquitousDocuments	@"notificationFileControlDidEnumerateUbiquitousDocuments"
 
 
 #ifndef shouldUseUbiquitousDocuments
@@ -45,14 +46,15 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference	
+	// Properties : For subclass to be able to reference
+	NSInteger _currentPathLevel;
+	
 	id _ubiquityIdentityToken;
 	
 	NSURL *_ubiquityContainerURL;
 	NSURL *_ubiquitousDocumentsURL;
 	
 	NSMetadataQuery *_ubiquityMetadataQuery;
-	
 	DirectoryWatcher *_localDirectoryWatcher;
 	
 	NSMutableSet *_queuedURLSet;
@@ -60,13 +62,14 @@
 }
 
 // Properties
+@property (assign, nonatomic) NSInteger currentPathLevel;
+
 @property (strong, nonatomic) id ubiquityIdentityToken;
 
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;
 @property (strong, nonatomic) NSURL *ubiquitousDocumentsURL;
 
 @property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
-
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
 @property (strong, nonatomic) NSMutableSet *queuedURLSet;
@@ -89,13 +92,13 @@
 #pragma mark - Public
 + (FXDsuperFileControl*)sharedInstance;
 
-- (void)startCloudSynchronization;
+- (void)startUpdatingUbiquityContainerURL;
 
 - (void)startObservingUbiquityMetadataQueryNotifications;
 - (void)startWatchingLocalDirectoryChange;
 
-- (void)delayedUpdateUbiquitousDocuments;
-- (void)delayedUpdateLocalDirectory;
+- (void)enumerateUbiquitousDocuments;
+- (void)enumerateLocalDirectory;
 
 - (void)setUbiquitousForLocalFiles:(NSArray*)localFiles;
 

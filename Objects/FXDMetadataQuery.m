@@ -82,7 +82,8 @@
 	[self setNotificationBatchingInterval:0.5];
 }
 
-- (void)logQueryResultsWithTransferringPercentage {
+- (BOOL)logQueryResultsWithTransferringPercentage {
+	BOOL didLogTransferring = NO;
 	
 	for (NSMetadataItem *metadataItem in [self results]) {
 		NSString *logString = @"";
@@ -97,6 +98,8 @@
 			NSNumber *isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
 			
 			if ([isUploading boolValue]) {
+				didLogTransferring = YES;
+				
 				NSNumber *percentUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentUploadedKey];
 				logString = [logString stringByAppendingFormat:@"uploading: %@", percentUploaded];
 			}
@@ -107,6 +110,8 @@
 			NSNumber *isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
 			
 			if ([isDownloading boolValue]) {
+				didLogTransferring = YES;
+				
 				NSNumber *percentDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentDownloadedKey];
 				logString = [logString stringByAppendingFormat:@"downloading %@", percentDownloaded];
 			}
@@ -119,6 +124,10 @@
 			FXDLog(@"%@", logString);
 		}
 	}
+	
+	FXDLog(@"%@", @" ");
+	
+	return didLogTransferring;
 }
 
 
