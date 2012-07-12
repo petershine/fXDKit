@@ -155,30 +155,32 @@
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %@", shouldRequestUbiquityContatinerURL ? @"YES":@"NO");
 	
 	if (shouldRequestUbiquityContatinerURL) {
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		__block FXDsuperFileControl *fileControl = self;
+		
+		[[NSOperationQueue currentQueue] addOperationWithBlock:^{
 			NSURL *ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			
-			dispatch_async(dispatch_get_main_queue(), ^{	FXDLog_DEFAULT;
-				self.ubiquityContainerURL = ubiquityContainerURL;
-				
-				FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
-				
+			fileControl.ubiquityContainerURL = ubiquityContainerURL;
+			FXDLog(@"ubiquityContainerURL: %@", fileControl.ubiquityContainerURL);
+
+			
 #if DEBUG
-				NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:self.ubiquitousDocumentsURL];
-				FXDLog(@"directoryTree count: %d", [directoryTree count]);
+			NSArray *directoryTree = [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL];
+			FXDLog(@"directoryTree count: %d", [directoryTree count]);
 #endif
-				
+			
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 #if shouldUseUbiquitousDocuments
-				[self startObservingUbiquityMetadataQueryNotifications];
+				[fileControl startObservingUbiquityMetadataQueryNotifications];
 #endif
 				
 #if shouldUseLocalDirectoryWatcher
-				[self startWatchingLocalDirectoryChange];
+				[fileControl startWatchingLocalDirectoryChange];
 #endif
 				
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
-			});
-		});
+			}];
+		}];
 	}
 	else {
 		//TODO: alert user about using iCloud;
