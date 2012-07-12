@@ -156,8 +156,8 @@
 	
 	if (shouldRequestUbiquityContatinerURL) {
 		__block FXDsuperFileControl *fileControl = self;
-		
-		[[NSOperationQueue currentQueue] addOperationWithBlock:^{
+				
+		[[NSOperationQueue new] addOperationWithBlock:^{
 			NSURL *ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			
 			fileControl.ubiquityContainerURL = ubiquityContainerURL;
@@ -380,8 +380,7 @@
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//TEST:
-	[self observedNSMetadataQueryDidUpdate:notification];
+	[self observedNSMetadataQueryDidUpdate:notification];	//MARK: treat it same as updated
 	
 }
 

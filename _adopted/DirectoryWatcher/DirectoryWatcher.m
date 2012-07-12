@@ -87,7 +87,7 @@
 	[super dealloc];
 }
 
-+ (DirectoryWatcher *)watchFolderWithPath:(NSString *)watchPath delegate:(id)watchDelegate {	FXDLog_DEFAULT;
++ (DirectoryWatcher *)watchFolderWithPath:(NSString *)watchPath delegate:(id)watchDelegate {	//FXDLog_DEFAULT;
 	FXDLog(@"watchPath: %@", watchPath);	//MARK: MUST USE searchPath instead of directory
 	
 	DirectoryWatcher *retVal = NULL;
