@@ -13,7 +13,7 @@
 
 		#define USE_loggingRotatingInterface	0
 		#define USE_loggingViewDrawing	0
-		#define USE_loggingSequeActions	1
+		#define USE_loggingSequeActions	0
 
 	#else
 		#define USE_FXDLog	0
@@ -45,7 +45,7 @@
 
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
-	#define FXDLog_ERROR	FXDLog(@"\ndomain: %@\ncode: %d\nlocalizedDescription: %@\nuserInfo: %@",[error domain],[error code],[error localizedDescription],[error userInfo])
+	#define FXDLog_ERROR	FXDLog(@"%@\nlocalizedDescription: %@\ndomain: %@ code: %d\nuserInfo:\n%@", strClassSelector, [error localizedDescription], [error domain], [error code], [error userInfo])
 
 #else
 	#define FXDLog_DEFAULT
@@ -102,3 +102,12 @@
 	#define LOGEVENT_DEFAULT
 
 #endif
+
+
+#define application_DocumentsSearchPath	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
+
+#define application_DocumentsDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
+#define application_CacheDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
+
+
+#define statements_SharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[self alloc] init];});return _sharedInstance

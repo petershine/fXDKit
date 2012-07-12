@@ -125,8 +125,6 @@
 		}
 	}
 	
-	FXDLog(@"%@", @" ");
-	
 	return didLogTransferring;
 }
 

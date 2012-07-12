@@ -6,13 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define applicationDocumentsSearchPath	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
-
-#define applicationDocumentsDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
-#define applicationCacheDirectory	[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
-
-
-
 #define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
 
 #define notificationFileControlDidEnumerateUbiquitousDocuments	@"notificationFileControlDidEnumerateUbiquitousDocuments"

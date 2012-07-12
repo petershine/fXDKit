@@ -132,15 +132,7 @@
 
 #pragma mark - Public
 + (FXDsuperTwitterControl*)sharedInstance {
-	static dispatch_once_t once;
-	
-    static id _sharedInstance = nil;
-	
-    dispatch_once(&once, ^{
-        _sharedInstance = [[self alloc] init];
-    });
-	
-    return _sharedInstance;
+	statements_SharedInstance;
 }
 
 #pragma mark -

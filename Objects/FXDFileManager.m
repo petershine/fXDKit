@@ -57,17 +57,6 @@
 
 
 #pragma mark - Public
-+ (FXDFileManager*)sharedInstance {
-	static dispatch_once_t once;
-	
-    static id _sharedInstance = nil;
-	
-    dispatch_once(&once, ^{
-        _sharedInstance = [[self alloc] init];
-    });
-	
-    return _sharedInstance;
-}
 
 
 //MARK: - Observer implementation

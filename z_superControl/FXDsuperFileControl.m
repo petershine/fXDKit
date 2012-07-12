@@ -119,15 +119,7 @@
 
 #pragma mark - Public
 + (FXDsuperFileControl*)sharedInstance {
-	static dispatch_once_t once;
-	
-    static id _sharedInstance = nil;
-	
-    dispatch_once(&once, ^{
-        _sharedInstance = [[self alloc] init];
-    });
-	
-    return _sharedInstance;
+	statements_SharedInstance;
 }
 
 #pragma mark -
@@ -227,11 +219,11 @@
 }
 
 - (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
-	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:applicationDocumentsSearchPath delegate:self];
+	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:application_DocumentsSearchPath delegate:self];
 	
 #if DEBUG
-	FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:applicationDocumentsDirectory]);
-	FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:applicationCacheDirectory]);
+	FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_DocumentsDirectory]);
+	FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_CacheDirectory]);
 #endif
 }
 
@@ -248,9 +240,7 @@
 		
 		NSURL *nextObject = [enumerator nextObject];
 		
-		while (nextObject) {
-			//FXDLog(@"enumerator.level: %u", enumerator.level);
-			
+		while (nextObject) {			
 			if (enumerator.level == fileControl.currentPathLevel) {	//TODO: change level appropriately
 				[files addObject:nextObject];
 			}
@@ -268,11 +258,11 @@
 	}];
 }
 
-- (void)enumerateLocalDirectory {	FXDLog_DEFAULT;
+- (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:applicationDocumentsDirectory];
+	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:application_DocumentsDirectory];
 	
 	NSURL *nextObject = [enumerator nextObject];
 		
@@ -291,7 +281,7 @@
 				[localFileURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
 				[localFileURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
 				
-				if (error) {	FXDLog_DEFAULT;
+				if (error) {
 					FXDLog_ERROR;
 				}
 				

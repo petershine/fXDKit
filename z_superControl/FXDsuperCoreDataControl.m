@@ -42,7 +42,7 @@
 - (id)initWithFileURL:(NSURL *)fileURL {	FXDLog_DEFAULT;
 	
 	if (fileURL == nil) {
-		fileURL = [applicationDocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
+		fileURL = [application_DocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
 	}
 	
 	FXDLog(@"fileURL: %@", fileURL);
@@ -104,14 +104,13 @@
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance {
 	static dispatch_once_t once;
+	static id _sharedInstance = nil;
 	
-    static id _sharedInstance = nil;
-	
-    dispatch_once(&once, ^{
-        _sharedInstance = [[self alloc] initWithFileURL:nil];
+	dispatch_once(&once,^{
+		_sharedInstance = [[self alloc] initWithFileURL:nil];
 	});
 	
-    return _sharedInstance;
+	return _sharedInstance;
 }
 
 #pragma mark -

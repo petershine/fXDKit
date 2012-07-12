@@ -34,7 +34,6 @@
 
 
 #pragma mark - Public
-+ (FXDFileManager*)sharedInstance;
 
 
 //MARK: - Observer implementation
