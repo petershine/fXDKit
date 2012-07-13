@@ -259,14 +259,18 @@
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-	
+#if isNewestSDK
 	__block FXDsuperFileControl *fileControl = self;
+#else
+	__weak FXDsuperFileControl *fileControl = self;
+#endif
 	
 	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:application_DocumentsDirectory];
 	
 	NSURL *nextObject = [enumerator nextObject];
 		
 	while (nextObject) {
+		
 		__block NSURL *localFileURL = nextObject;
 		
 		if ([fileControl.queuedURLSet containsObject:localFileURL] == NO) {

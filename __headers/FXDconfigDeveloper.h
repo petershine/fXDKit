@@ -45,7 +45,7 @@
 
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
-	#define FXDLog_ERROR	if(error){FXDLog(@"%@\nlocalizedDescription: %@\ndomain: %@ code: %d\nuserInfo:\n%@", strClassSelector, [error localizedDescription], [error domain], [error code], [error userInfo]);}
+	#define FXDLog_ERROR	if(error){FXDLog(@"\n%@\nlocalizedDescription: %@\ndomain: %@ code: %d\nuserInfo:\n%@", strClassSelector, [error localizedDescription], [error domain], [error code], [error userInfo]);}
 
 #else
 	#define FXDLog_DEFAULT
