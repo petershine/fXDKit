@@ -209,9 +209,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	
-	if (error) {
-		FXDLog_ERROR;
-	}
+	FXDLog_ERROR;
 }
 
 #pragma mark - NSURLConnectionDataDelegate

@@ -251,9 +251,7 @@
 			FXDLog(@"performFetch: %@", @"DONE");
 		}
 		
-		if (error) {
-			FXDLog_ERROR;
-		}
+		FXDLog_ERROR;
 	}
 	
 	return resultsController;

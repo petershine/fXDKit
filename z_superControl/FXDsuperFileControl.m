@@ -281,9 +281,8 @@
 				[localFileURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
 				[localFileURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
 				
-				if (error) {
-					FXDLog_ERROR;
-				}
+				FXDLog_ERROR;
+				
 				
 				if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO && [isHidden boolValue] == NO) {
 					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
@@ -319,9 +318,9 @@
 		
 		FXDLog(@"didSetUbiquitous: %@ %@", didSetUbiquitous ? @"YES":@"NO", localfilePath);
 		
+		FXDLog_ERROR;
+		
 		if (error) {
-			FXDLog_ERROR;
-			
 			//TODO: deal with following cases
 			/*
 			 domain: NSCocoaErrorDomain

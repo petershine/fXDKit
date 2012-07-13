@@ -108,9 +108,7 @@
 
 #pragma mark - Private
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
-	if (error) {
-		FXDLog_ERROR;
-	}
+	FXDLog_ERROR;
 	
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
@@ -152,9 +150,7 @@
 			 completion:^(BOOL granted, NSError *error) {
 				 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
 				 
-				 if (error) {
-					 FXDLog_ERROR;
-				 }
+				 FXDLog_ERROR;
 				 
 				 if (granted) {
 					 [self showAlertViewForSelectingTwitterAccount];
@@ -167,9 +163,7 @@
 										 withCompletionHandler:^(BOOL granted, NSError *error) {
 											 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
 											 
-											 if (error) {
-												 FXDLog_ERROR;
-											 }
+											 FXDLog_ERROR;
 											 
 											 if (granted) {
 												 [self showAlertViewForSelectingTwitterAccount];

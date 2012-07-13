@@ -129,9 +129,7 @@
 }
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error {	FXDLog_OVERRIDE;
-	if (error) {
-		FXDLog_ERROR;
-	}
+	FXDLog_ERROR;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -168,9 +166,7 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error {	FXDLog_OVERRIDE;
-	if (error) {
-		FXDLog_ERROR;
-	}
+	FXDLog_ERROR;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view didChangeDragState:(MKAnnotationViewDragState)newState 

@@ -465,9 +465,7 @@
 	
 	FXDLog(@"result: %d", result);
 
-	if (error) {
-		FXDLog_ERROR;
-	}
+	FXDLog_ERROR;
 	
 	[controller dismissViewControllerAnimated:YES completion:nil];
 }
