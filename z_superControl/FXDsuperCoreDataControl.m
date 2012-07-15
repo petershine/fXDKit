@@ -41,7 +41,7 @@
 #pragma mark - Initialization
 - (id)initWithFileURL:(NSURL *)fileURL {	FXDLog_DEFAULT;
 	
-	if (fileURL == nil) {
+	if (fileURL == nil) {	// searchPath is NOT valid
 		fileURL = [application_DocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
 	}
 	

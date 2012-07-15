@@ -83,6 +83,14 @@
 	return fullEnumerator;
 }
 
+- (NSArray*)directoryTreeForRootPath:(NSString*)rootPath {
+	NSURL *rootURL = [NSURL URLWithString:rootPath];
+	
+	NSArray *directoryTree = [self directoryTreeForRootURL:rootURL];
+	
+	return directoryTree;
+}
+
 - (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL {	//FXDLog_DEFAULT;
 	FXDLog(@"rootURL: %@", rootURL);
 	

@@ -232,6 +232,7 @@
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
+	__block NSMutableArray *folders = [[NSMutableArray alloc] initWithCapacity:0];
 	__block NSMutableArray *files = [[NSMutableArray alloc] initWithCapacity:0];
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
@@ -240,9 +241,24 @@
 		
 		NSURL *nextObject = [enumerator nextObject];
 		
-		while (nextObject) {			
+		while (nextObject) {
 			if (enumerator.level == fileControl.currentPathLevel) {	//TODO: change level appropriately
-				[files addObject:nextObject];
+				//FXDLog(@"enumerator.level: %d\n%@", enumerator.level, [nextObject fullResourceValuesWithError:nil]);
+				
+				id fileResourceType = nil;
+				
+				NSError *error = nil;
+				
+				[nextObject getResourceValue:&fileResourceType forKey:NSURLFileResourceTypeKey error:&error];
+				
+				FXDLog_ERROR;
+				
+				if ([fileResourceType isEqualToString:NSURLFileResourceTypeDirectory]) {
+					[folders addObject:nextObject];
+				}
+				else {
+					[files addObject:nextObject];
+				}
 			}
 			
 			nextObject = [enumerator nextObject];
@@ -250,6 +266,10 @@
 		
 		if (files && [files count] > 0) {
 			[userInfo setObject:files forKey:@"ubiquitousFiles"];
+		}
+		
+		if (folders && [folders count] > 0) {
+			[userInfo setObject:folders forKey:@"ubiquitousFolders"];
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -265,7 +285,10 @@
 	__weak FXDsuperFileControl *fileControl = self;
 #endif
 	
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:application_DocumentsDirectory];
+	NSURL *rootURL = [NSURL URLWithString:application_DocumentsSearchPath];
+	
+	//NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:application_DocumentsDirectory];
+	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:rootURL];
 	
 	NSURL *nextObject = [enumerator nextObject];
 		
@@ -370,15 +393,42 @@
 			}
 			
 			if (title) {
+				/*
 				UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
 																	message:nil
 																   delegate:nil
 														  cancelButtonTitle:text_OK
 														  otherButtonTitles:nil];
 				[alertView show];
+				 */
 			}
 		}
 	}
+}
+
+#pragma mark -
+- (void)addFolderInsideCurrentPathLevel {	FXDLog_DEFAULT;
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	NSError *error = nil;
+	
+	NSString *pathComponent = [NSString stringWithFormat:@"newfolder_%@", [NSDate date]];
+	NSURL *folderURL = [self.ubiquitousDocumentsURL URLByAppendingPathComponent:pathComponent];
+	
+	[fileManager createDirectoryAtURL:folderURL
+		  withIntermediateDirectories:NO
+						   attributes:nil
+								error:&error];
+	/*
+	[fileManager createDirectoryAtPath:[[self.ubiquitousDocumentsURL absoluteString] stringByAppendingPathComponent:@"New Folder"]
+		   withIntermediateDirectories:NO
+							attributes:nil
+								 error:&error];
+	 */
+	
+	FXDLog_ERROR;
+	
+	[self enumerateUbiquitousDocuments];
 }
 
 

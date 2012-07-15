@@ -95,6 +95,8 @@
 
 - (void)setUbiquitousForLocalFiles:(NSArray*)localFiles;
 
+- (void)addFolderInsideCurrentPathLevel;
+
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification;
