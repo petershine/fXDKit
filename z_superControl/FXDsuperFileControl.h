@@ -8,7 +8,14 @@
 
 #define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
 
-#define notificationFileControlDidEnumerateUbiquitousDocuments	@"notificationFileControlDidEnumerateUbiquitousDocuments"
+#define notificationFileControlMetadataQueryDidFinishGathering	@"notificationFileControlMetadataQueryDidFinishGathering"
+#define notificationFileControlMetadataQueryDidUpdate	@"notificationFileControlMetadataQueryDidUpdate"
+#define notificationFileControlMetadataQueryIsTransferring	@"notificationFileControlMetadataQueryIsTransferring"
+#define notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentURL	@"notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentURL"
+
+
+#define objkeyUbiquitousFolders	@"objkeyUbiquitousFolders"
+#define objkeyUbiquitousFiles	@"objkeyUbiquitousFiles"
 
 
 #ifndef shouldUseUbiquitousDocuments
@@ -25,7 +32,7 @@
 
 
 #ifndef pathcomponentDocuments
-	#define pathcomponentDocuments @"Documents"
+	#define pathcomponentDocuments @"Documents/"
 #endif
 
 
@@ -90,12 +97,12 @@
 - (void)startObservingUbiquityMetadataQueryNotifications;
 - (void)startWatchingLocalDirectoryChange;
 
-- (void)enumerateUbiquitousDocuments;
+- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentURL:(NSURL*)currentURL;
+
+- (void)addFolderInsideCurrentURL:(NSURL*)currentURL;
+
+- (void)enumerateUbiquitousDocumentsAtCurrentURL:(NSURL*)currentURL;
 - (void)enumerateLocalDirectory;
-
-- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles;
-
-- (void)addFolderInsideCurrentPathLevel;
 
 
 //MARK: - Observer implementation

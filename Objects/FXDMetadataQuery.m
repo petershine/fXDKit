@@ -69,14 +69,15 @@
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
 - (void)applyDefaultConfiguration {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemFSNameKey, @""];	// For all files
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
+	[self setPredicate:predicate];
 	
+	/*
 	NSMutableArray *sortDescriptors = [[NSMutableArray alloc] initWithCapacity:0];
 	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
 	[sortDescriptors addObject:descriptor];
-	
-	[self setPredicate:predicate];
 	[self setSortDescriptors:sortDescriptors];
+	 */
 	
 	[self setSearchScopes:[NSArray arrayWithObject:NSMetadataQueryUbiquitousDocumentsScope]];
 	[self setNotificationBatchingInterval:0.5];
