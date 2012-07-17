@@ -154,20 +154,20 @@
 		[[NSOperationQueue new] addOperationWithBlock:^{			
 			fileControl.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			FXDLog(@"ubiquityContainerURL: %@", fileControl.ubiquityContainerURL);
-			
-#if DEBUG
-			FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
-#endif
-			
+
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 #if shouldUseUbiquitousDocuments
 				[fileControl startObservingUbiquityMetadataQueryNotifications];
+				
+				FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
 #endif
 				
 #if shouldUseLocalDirectoryWatcher
 				[fileControl startWatchingLocalDirectoryChange];
-#endif
 				
+				FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_DocumentsDirectory]);
+				//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_CacheDirectory]);
+#endif
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 			}];
 		}];
@@ -221,10 +221,6 @@
 - (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
 	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:application_DocumentsSearchPath delegate:self];
 	
-#if DEBUG
-	FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_DocumentsDirectory]);
-	//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_CacheDirectory]);
-#endif
 }
 
 #pragma mark -
@@ -236,75 +232,84 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	for (NSURL *localfileURL in localFiles) {
-
 		NSString *localfilePath = [[[localfileURL absoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
+		localfilePath = [localfilePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 		
-		NSURL *destinationURL = [currentURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents
+		NSURL *destinationURL = [currentURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents		
 				
 		NSError *error = nil;
-		
+				
 		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:localfileURL destinationURL:destinationURL error:&error];
-		
-		FXDLog(@"didSetUbiquitous: %@ %@", didSetUbiquitous ? @"YES":@"NO", destinationURL);
 		
 		FXDLog_ERROR;
 		
+		FXDLog(@"didSetUbiquitous: %@ %@", didSetUbiquitous ? @"YES":@"NO", destinationURL);
+		FXDLog(@"resourceValues:\n%@", [destinationURL fullResourceValuesWithError:nil]);
+		
 		if (error) {
-			//TODO: deal with following cases
-			/*
-			 domain: NSCocoaErrorDomain
-			 code: 516
-			 localizedDescription: The operation couldn’t be completed. (Cocoa error 516.)
-			 userInfo: {
-			 NSFilePath = "/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/EasyFileSharing_1.1_0710.pdf";
-			 NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
-			 }
-			 
-			 domain: NSPOSIXErrorDomain
-			 code: 63
-			 localizedDescription: The operation couldn’t be completed. File name too long
-			 userInfo: {
-			 NSDescription = "Unable to lstat destination path '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%85%E1%85%B5%E1%86%B8%20%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A9%E1%86%AB%20%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC.xls'.";
-			 
-			 domain: NSCocoaErrorDomain
-			 code: 260
-			 localizedDescription: The operation couldn’t be completed. (Cocoa error 260.)
-			 userInfo: {
-			 NSFilePath = "/private/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Documents/IMG_1144.JPG";
-			 NSURL = "file://localhost/private/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Documents/IMG_1144.JPG";
-			 NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=2 \"The operation couldn\U2019t be completed. No such file or directory\" UserInfo=0xf89ddd0 {}";
-			 }
-
-			 domain: NSPOSIXErrorDomain
-			 code: 2
-			 localizedDescription: The operation couldn’t be completed. No such file or directory
-			 userInfo: {
-			 NSDescription = "Unable to rename '/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG' to '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/file://localhost/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG'.";
-			 }
-			 */
-			
-			NSString *title = nil;
-			
-			switch ([error code]) {
-				case 516:	//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
-					break;
-					
-				default:
-					title = [NSString stringWithFormat:@"%@\n%@", [error localizedDescription], localfilePath];
-					break;
-			}
-			
-			if (title) {
-				/*
-				UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
-																	message:nil
-																   delegate:nil
-														  cancelButtonTitle:text_OK
-														  otherButtonTitles:nil];
-				[alertView show];
-				 */
-			}
+			[self handleFailedLocalFileURL:localfileURL withDestinationURL:destinationURL withResultError:error];
 		}
+	}
+}
+
+- (void)handleFailedLocalFileURL:(NSURL*)localfileURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)error {	FXDLog_DEFAULT;
+	//TODO: deal with following cases
+	/*
+	 domain: NSCocoaErrorDomain
+	 code: 516
+	 localizedDescription: The operation couldn’t be completed. (Cocoa error 516.)
+	 userInfo: {
+	 NSFilePath = "/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/EasyFileSharing_1.1_0710.pdf";
+	 NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
+	 }
+	 
+	 domain: NSPOSIXErrorDomain
+	 code: 63
+	 localizedDescription: The operation couldn’t be completed. File name too long
+	 userInfo: {
+	 NSDescription = "Unable to lstat destination path '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%85%E1%85%B5%E1%86%B8%20%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A9%E1%86%AB%20%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC.xls'.";
+	 
+	 domain: NSCocoaErrorDomain
+	 code: 260
+	 localizedDescription: The operation couldn’t be completed. (Cocoa error 260.)
+	 userInfo: {
+	 NSFilePath = "/private/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Documents/IMG_1144.JPG";
+	 NSURL = "file://localhost/private/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Documents/IMG_1144.JPG";
+	 NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=2 \"The operation couldn\U2019t be completed. No such file or directory\" UserInfo=0xf89ddd0 {}";
+	 }
+	 
+	 domain: NSPOSIXErrorDomain
+	 code: 2
+	 localizedDescription: The operation couldn’t be completed. No such file or directory
+	 userInfo: {
+	 NSDescription = "Unable to rename '/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG' to '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/file://localhost/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG'.";
+	 }
+	 */
+	
+	NSString *title = nil;
+	
+	if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
+		switch ([error code]) {
+			case 63:	//The operation couldn’t be completed. File name too long
+				break;
+				
+			default:
+				break;
+		}
+	}
+	else if ([[error domain] isEqualToString:NSCocoaErrorDomain]) {
+		switch ([error code]) {				
+			case 516:	//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
+				break;
+				
+			default:
+				title = [NSString stringWithFormat:@"%@\n%@", [error localizedDescription], localfileURL];
+				break;
+		}
+	}
+	
+	if (title) {
+		//TODO: should alert?
 	}
 }
 
@@ -320,7 +325,7 @@
 	
 	NSError *error = nil;
 	
-	NSString *pathComponent = [NSString stringWithFormat:@"newfolder_%@", [NSDate date]];
+	NSString *pathComponent = [NSString stringWithFormat:@"%@", [NSDate date]];
 	NSURL *folderURL = [currentURL URLByAppendingPathComponent:pathComponent];
 	
 	[fileManager createDirectoryAtURL:folderURL
@@ -330,7 +335,9 @@
 	
 	FXDLog_ERROR;
 	
-	[self enumerateUbiquitousDocumentsAtCurrentURL:currentURL];
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		[self enumerateUbiquitousDocumentsAtCurrentURL:currentURL];
+	}];
 }
 
 #pragma mark -
@@ -340,7 +347,6 @@
 	}
 	
 	FXDLog(@"currentURL: %@", currentURL);
-
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
@@ -420,7 +426,6 @@
 				
 				FXDLog_ERROR;
 				
-				
 				if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO && [isHidden boolValue] == NO) {
 					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
 					
@@ -458,20 +463,17 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
 
-- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {
 	NSMetadataQuery *metadataQuery = notification.object;
 	
 	BOOL didLogTransferring = [metadataQuery logQueryResultsWithTransferringPercentage];
 	
 	//TODO: distinguish uploading and downloading and finished updating
 	
-	if (didLogTransferring) {
-		//TODO: use different notification
-		
+	if (didLogTransferring) {		
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
-
 	}
-	else {
+	else {	FXDLog_OVERRIDE;
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
 	}
 }

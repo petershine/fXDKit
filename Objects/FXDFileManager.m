@@ -106,12 +106,7 @@
 	
 	NSURL *nextObject = [enumerator nextObject];
 	
-	while (nextObject) {
-		/*
-		NSDictionary *resourceValues = [nextObject fullResourceValuesWithError:nil];
-		FXDLog(@"\nresourceValues:\n%@", resourceValues);
-		 */
-		
+	while (nextObject) {		
 		NSString *absoluteString = nextObject.absoluteString;
 		NSArray *components = [absoluteString componentsSeparatedByString:@"/"];
 		NSString *pathComponent = [components objectAtIndex:[components count] -1];

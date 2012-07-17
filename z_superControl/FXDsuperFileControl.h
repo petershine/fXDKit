@@ -98,6 +98,7 @@
 - (void)startWatchingLocalDirectoryChange;
 
 - (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentURL:(NSURL*)currentURL;
+- (void)handleFailedLocalFileURL:(NSURL*)localfileURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
 - (void)addFolderInsideCurrentURL:(NSURL*)currentURL;
 

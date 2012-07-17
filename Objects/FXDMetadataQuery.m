@@ -93,26 +93,25 @@
 		NSNumber *isUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadedKey];
 		
 		if ([isUploaded boolValue] == NO) {
-			logString = [logString stringByAppendingFormat:@"isUploaded: %@ ", [isUploaded boolValue] ? @"YES":@"NO"];
+			didLogTransferring = YES;
 			
+			logString = [logString stringByAppendingFormat:@"isUploaded: %@ ", [isUploaded boolValue] ? @"YES":@"NO"];
 			
 			NSNumber *isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
 			
 			if ([isUploading boolValue]) {
-				didLogTransferring = YES;
-				
 				NSNumber *percentUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentUploadedKey];
 				logString = [logString stringByAppendingFormat:@"uploading: %@", percentUploaded];
 			}
 		}
 		else if ([isDownloaded boolValue] == NO) {
+			didLogTransferring = YES;
+			
 			logString = [logString stringByAppendingFormat:@"isDownloaded: %@ ", [isDownloaded boolValue] ? @"YES":@"NO"];
 			
 			NSNumber *isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
 			
-			if ([isDownloading boolValue]) {
-				didLogTransferring = YES;
-				
+			if ([isDownloading boolValue]) {				
 				NSNumber *percentDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentDownloadedKey];
 				logString = [logString stringByAppendingFormat:@"downloading %@", percentDownloaded];
 			}
@@ -120,7 +119,7 @@
 		
 		if ([logString isEqualToString:@""] == NO) {
 			NSString *displayName = [metadataItem valueForKey:NSMetadataItemDisplayNameKey];
-			logString = [logString stringByAppendingFormat:@"    %@", displayName];
+			logString = [logString stringByAppendingFormat:@" %@", displayName];
 			
 			FXDLog(@"%@", logString);
 		}
