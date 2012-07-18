@@ -186,7 +186,7 @@
 
 #pragma mark - Public
 + (FXDsuperGlobalControl*)sharedInstance {
-	statements_SharedInstance;
+	IMPLEMENTATION_sharedInstance;
 }
 
 #pragma mark -

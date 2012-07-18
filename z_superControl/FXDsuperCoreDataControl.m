@@ -42,7 +42,7 @@
 - (id)initWithFileURL:(NSURL *)fileURL {	FXDLog_DEFAULT;
 	
 	if (fileURL == nil) {	// searchPath is NOT valid
-		fileURL = [application_DocumentsDirectory URLByAppendingPathComponent:documentnameManagedCoreData];
+		fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
 	}
 	
 	FXDLog(@"fileURL: %@", fileURL);
@@ -342,7 +342,7 @@
 		[controller.dynamicDelegate controllerWillChangeContent:controller];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 
@@ -352,7 +352,7 @@
 		[controller.dynamicDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 
@@ -362,7 +362,7 @@
 		[controller.dynamicDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 
@@ -372,7 +372,7 @@
 		[controller.dynamicDelegate controllerDidChangeContent:controller];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 

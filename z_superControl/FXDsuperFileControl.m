@@ -119,7 +119,7 @@
 
 #pragma mark - Public
 + (FXDsuperFileControl*)sharedInstance {
-	statements_SharedInstance;
+	IMPLEMENTATION_sharedInstance;
 }
 
 #pragma mark -
@@ -128,7 +128,7 @@
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
 	if ([FXDsuperGlobalControl isSystemVersionLatest]) {		
-#if isNewestSDK
+#if ENVIRONTMENT_newestSDK
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
 													 name:NSUbiquityIdentityDidChangeNotification
@@ -165,8 +165,8 @@
 #if shouldUseLocalDirectoryWatcher
 				[fileControl startWatchingLocalDirectoryChange];
 				
-				FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_DocumentsDirectory]);
-				//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:application_CacheDirectory]);
+				FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Document]);
+				//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
 #endif
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 			}];
@@ -219,7 +219,7 @@
 }
 
 - (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
-	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:application_DocumentsSearchPath delegate:self];
+	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:appSearhPath_Document delegate:self];
 	
 }
 
@@ -396,13 +396,13 @@
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-#if isNewestSDK
+#if ENVIRONTMENT_newestSDK
 	__block FXDsuperFileControl *fileControl = self;
 #else
 	__weak FXDsuperFileControl *fileControl = self;
 #endif
 	
-	NSURL *rootURL = [NSURL URLWithString:application_DocumentsSearchPath];
+	NSURL *rootURL = [NSURL URLWithString:appSearhPath_Document];
 	
 	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:rootURL];
 	

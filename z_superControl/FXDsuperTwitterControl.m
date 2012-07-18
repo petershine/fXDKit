@@ -130,7 +130,7 @@
 
 #pragma mark - Public
 + (FXDsuperTwitterControl*)sharedInstance {
-	statements_SharedInstance;
+	IMPLEMENTATION_sharedInstance;
 }
 
 #pragma mark -
@@ -143,7 +143,7 @@
 	}
 	else {
 		if ([FXDsuperGlobalControl isSystemVersionLatest]) {
-#if isNewestSDK
+#if ENVIRONTMENT_newestSDK
 			[self.accountStore
 			 requestAccessToAccountsWithType:self.accountType
 			 options:nil

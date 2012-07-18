@@ -101,7 +101,7 @@
 	
 #ifdef imageNavibarShadow
 	if ([FXDsuperGlobalControl isSystemVersionLatest]) {
-#if isNewestSDK
+#if ENVIRONTMENT_newestSDK
 		[self.navigationBar setShadowImage:imageNavibarShadow];
 #endif
 	}
