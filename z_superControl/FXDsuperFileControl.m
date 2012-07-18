@@ -224,9 +224,9 @@
 }
 
 #pragma mark -
-- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentURL:(NSURL*)currentURL {
-	if (currentURL == nil) {
-		currentURL = self.ubiquitousDocumentsURL;
+- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentFolderURL:(NSURL*)currentFolderURL {
+	if (currentFolderURL == nil) {
+		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -235,7 +235,7 @@
 		NSString *localfilePath = [[[localfileURL absoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
 		localfilePath = [localfilePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 		
-		NSURL *destinationURL = [currentURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents		
+		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents		
 				
 		NSError *error = nil;
 				
@@ -314,21 +314,21 @@
 }
 
 #pragma mark -
-- (void)addFolderInsideCurrentURL:(NSURL*)currentURL {	FXDLog_DEFAULT;
-	if (currentURL == nil) {
-		currentURL = self.ubiquitousDocumentsURL;
+- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
+	if (currentFolderURL == nil) {
+		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
-	FXDLog(@"currentURL: %@", currentURL);
+	FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
 	
 	NSString *pathComponent = [NSString stringWithFormat:@"%@", [NSDate date]];
-	NSURL *folderURL = [currentURL URLByAppendingPathComponent:pathComponent];
+	NSURL *newFolderURL = [currentFolderURL URLByAppendingPathComponent:pathComponent];
 	
-	[fileManager createDirectoryAtURL:folderURL
+	[fileManager createDirectoryAtURL:newFolderURL
 		  withIntermediateDirectories:YES
 						   attributes:nil
 								error:&error];
@@ -336,17 +336,17 @@
 	FXDLog_ERROR;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		[self enumerateUbiquitousDocumentsAtCurrentURL:currentURL];
+		[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
 	}];
 }
 
 #pragma mark -
-- (void)enumerateUbiquitousDocumentsAtCurrentURL:(NSURL*)currentURL {	FXDLog_DEFAULT;
-	if (currentURL == nil) {
-		currentURL = self.ubiquitousDocumentsURL;
+- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
+	if (currentFolderURL == nil) {
+		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
-	FXDLog(@"currentURL: %@", currentURL);
+	FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
@@ -356,7 +356,7 @@
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentURL];
+		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
 		
 		NSURL *nextObject = [enumerator nextObject];
 		
@@ -367,7 +367,7 @@
 			
 			[nextObject getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
 			
-			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentURL absoluteString]]) {
+			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
 				id fileResourceType = nil;
 				
 				[nextObject getResourceValue:&fileResourceType forKey:NSURLFileResourceTypeKey error:&error];
@@ -390,7 +390,7 @@
 		[userInfo setObject:files forKey:objkeyUbiquitousFiles];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentURL object:fileControl userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];
 		}];
 	}];
 }
@@ -429,7 +429,7 @@
 				if (isUbiquitousItem && [isUbiquitousItem boolValue] == NO && [isHidden boolValue] == NO) {
 					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
 					
-					[fileControl setUbiquitousForLocalFiles:localFiles withCurrentURL:self.ubiquitousDocumentsURL];
+					[fileControl setUbiquitousForLocalFiles:localFiles withCurrentFolderURL:self.ubiquitousDocumentsURL];
 				}
 				
 				[[NSOperationQueue mainQueue] addOperationWithBlock:^{

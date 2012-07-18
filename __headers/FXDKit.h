@@ -27,6 +27,7 @@
 #import "FXDimageNames.h"
 #import "FXDtextFonts.h"
 #import "FXDobjkeyUserDefaults.h"
+#import "FXDnotificationNames.h"
 
 
 // Objects
