@@ -61,6 +61,9 @@
 - (void)fadeIn;
 - (void)fadeOut;
 
+- (void)fadeInFromHidden;
+- (void)fadeOutThenHidden;
+
 - (void)fadeInAsAddSubview:(UIView*)subview;
 - (void)fadeOutAsRemoveSubview:(UIView*)subview;
 

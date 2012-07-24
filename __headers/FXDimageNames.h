@@ -6,21 +6,21 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#define imageNavibarBackground	[FXDImage bundledImageForName:@"navibarBackground"]
-#define imageNavibarShadow		[FXDImage bundledImageForName:@"navibarBackground_shadow"]
+#define imageNavibarBackground	[UIImage bundledImageForName:@"navibarBackground"]
+#define imageNavibarShadow		[UIImage bundledImageForName:@"navibarBackground_shadow"]
 
-#define imageToolbarBackground	[FXDImage bundledImageForName:@"toolbarBackground"]
+#define imageToolbarBackground	[UIImage bundledImageForName:@"toolbarBackground"]
 
-#define imageNavibarBtnBackOff	[FXDImage bundledImageForName:@"btn_back"]
-#define imageNavibarBtnBackOn	[FXDImage bundledImageForName:@"btn_back_on"]
+#define imageNavibarBtnBackOff	[UIImage bundledImageForName:@"btn_back"]
+#define imageNavibarBtnBackOn	[UIImage bundledImageForName:@"btn_back_on"]
 
-#define imageNavibarBtnHomeOff	[FXDImage bundledImageForName:@"btn_home"]
-#define imageNavibarBtnHomeOn	[FXDImage bundledImageForName:@"btn_home_on"]
+#define imageNavibarBtnHomeOff	[UIImage bundledImageForName:@"btn_home"]
+#define imageNavibarBtnHomeOn	[UIImage bundledImageForName:@"btn_home_on"]
 
-#define imageNavibarBtnCloseOff	[FXDImage bundledImageForName:@"btn_close"]
-#define imageNavibarBtnCloseOn	[FXDImage bundledImageForName:@"btn_close_on"]
+#define imageNavibarBtnCloseOff	[UIImage bundledImageForName:@"btn_close"]
+#define imageNavibarBtnCloseOn	[UIImage bundledImageForName:@"btn_close_on"]
 
 #ifndef imageDefaultBackground
-#define imageDefaultBackground	[FXDImage bundledImageForName:@"bg_default"]
+#define imageDefaultBackground	[UIImage bundledImageForName:@"bg_default"]
 #endif
 

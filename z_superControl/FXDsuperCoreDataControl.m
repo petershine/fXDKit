@@ -122,93 +122,97 @@
 	
 }
 
-- (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL {	FXDLog_DEFAULT;
-	FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
+- (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL {	//FXDLog_DEFAULT;
 	
-	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-	NSURL *storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
-	FXDLog(@"storeURL: %@", storeURL);
-	
-	
-	NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
-	[options setObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
-	[options setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
-	
-	
-	NSURL *ubiquitousContentURL = nil;
-	
-	if (ubiquityContainerURL) {	//TODO: get UUID unique URL
-		//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
-		//TEST: using ubiquityContainerURL instead
-		ubiquitousContentURL = ubiquityContainerURL;
+	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
+		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
 		
-		[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
-		[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
-	}
-	
-	FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
-	FXDLog(@"options:\n%@", options);
-	
-	
-	NSError *error = nil;
-	
-	BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
-																 ofType:NSSQLiteStoreType
-													 modelConfiguration:nil
-														   storeOptions:options
-																  error:&error];
-	
-	if (error || didConfigure == NO) {
-		FXDLog_ERROR;
-	}
-	
-	FXDLog(@"didConfigure: %@", didConfigure ? @"YES":@"NO");
-	
+		NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+		NSURL *storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
+		FXDLog(@"storeURL: %@", storeURL);
+		
+		
+		NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
+		[options setObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
+		[options setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
+		
+		
+		NSURL *ubiquitousContentURL = nil;
+		
+		if (ubiquityContainerURL) {	//TODO: get UUID unique URL
+			//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+			//TEST: using ubiquityContainerURL instead
+			ubiquitousContentURL = ubiquityContainerURL;
+			
+			[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
+			[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
+		}
+		
+		FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
+		FXDLog(@"options:\n%@", options);
+		
+		
+		NSError *error = nil;
+		
+		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
+																	 ofType:NSSQLiteStoreType
+														 modelConfiguration:nil
+															   storeOptions:options
+																	  error:&error];
+		
+		if (error || didConfigure == NO) {
+			FXDLog_ERROR;
+		}
+		
+		FXDLog(@"didConfigure: %@", didConfigure ? @"YES":@"NO");
+		
 #if ForDEVELOPER
-	NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;
-	
-	for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
-		FXDLog(@"persistentStore: %@", persistentStore.URL);
-		FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
-	}
+		NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;
+		
+		for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
+			FXDLog(@"persistentStore: %@", persistentStore.URL);
+			FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
+		}
 #endif
-	
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedUIApplicationDidEnterBackground:)
-						  name:UIApplicationDidEnterBackgroundNotification
-						object:nil];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedUIApplicationWillTerminate:)
-						  name:UIApplicationWillTerminateNotification
-						object:nil];
-	
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-						object:nil];
-	
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-						  name:NSManagedObjectContextObjectsDidChangeNotification
-						object:self.managedObjectContext];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSManagedObjectContextWillSave:)
-						  name:NSManagedObjectContextWillSaveNotification
-						object:self.managedObjectContext];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSManagedObjectContextDidSave:)
-						  name:NSManagedObjectContextDidSaveNotification
-						object:self.managedObjectContext];
-
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
+		
+		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedUIApplicationDidEnterBackground:)
+							  name:UIApplicationDidEnterBackgroundNotification
+							object:nil];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedUIApplicationWillTerminate:)
+							  name:UIApplicationWillTerminateNotification
+							object:nil];
+		
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+							  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+							object:nil];
+		
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+							  name:NSManagedObjectContextObjectsDidChangeNotification
+							object:self.managedObjectContext];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSManagedObjectContextWillSave:)
+							  name:NSManagedObjectContextWillSaveNotification
+							object:self.managedObjectContext];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSManagedObjectContextDidSave:)
+							  name:NSManagedObjectContextDidSaveNotification
+							object:self.managedObjectContext];
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
+		}];
+	}];
 }
 
 #pragma mark -

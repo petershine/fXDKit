@@ -21,7 +21,7 @@
 	NSDictionary *_cellTexts;
 	NSMutableArray *_defaultDatasource;
 	
-	NSOperationQueue *_defaultOperationQueue;
+	NSOperationQueue *_cellConfigurationQueue;
 	NSMutableDictionary *_operationDictionary;
 	NSMutableArray *_operationArray;
 	
@@ -35,7 +35,7 @@
 @property (strong, nonatomic) NSDictionary *cellTexts;
 @property (strong, nonatomic) NSMutableArray *defaultDatasource;
 
-@property (strong, nonatomic) NSOperationQueue *defaultOperationQueue;
+@property (strong, nonatomic) NSOperationQueue *cellConfigurationQueue;
 @property (strong, nonatomic) NSMutableDictionary *operationDictionary;
 @property (strong, nonatomic) NSMutableArray *operationArray;
 

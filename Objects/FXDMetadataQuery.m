@@ -130,3 +130,29 @@
 
 
 @end
+
+
+@implementation NSMetadataItem (Added)
+- (double)transferPercentage {
+	double transferPercentage = 0.0;
+		
+	BOOL isDownloading = NO;
+	
+	BOOL isUploading = [[self valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
+	
+	if (isUploading) {
+		transferPercentage = [[self valueForAttribute:NSMetadataUbiquitousItemPercentUploadedKey] doubleValue];
+	}
+	else {
+		isDownloading = [[self valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
+		
+		if (isDownloading) {
+			transferPercentage = [[self valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey] doubleValue];
+		}
+	}
+	
+	return transferPercentage;
+}
+
+
+@end

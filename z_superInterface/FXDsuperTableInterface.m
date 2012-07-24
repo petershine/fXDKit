@@ -25,7 +25,7 @@
 @synthesize cellTexts = _cellTexts;
 @synthesize defaultDatasource = _defaultDatasource;
 
-@synthesize defaultOperationQueue = _defaultOperationQueue;
+@synthesize cellConfigurationQueue = _cellConfigurationQueue;
 @synthesize operationDictionary = _operationDictionary;
 @synthesize operationArray = _operationArray;
 
@@ -63,7 +63,7 @@
 	_cellTexts = nil;
 	_defaultDatasource = nil;
 	
-	_defaultOperationQueue = nil;
+	_cellConfigurationQueue = nil;
 	_operationDictionary = nil;
 	_operationArray = nil;
 	
@@ -111,13 +111,13 @@
 }
 
 #pragma mark -
-- (NSOperationQueue*)defaultOperationQueue {
+- (NSOperationQueue*)cellConfigurationQueue {
 	
-	if (_defaultOperationQueue == nil) {
-		_defaultOperationQueue = [[NSOperationQueue alloc] init];
+	if (_cellConfigurationQueue == nil) {
+		_cellConfigurationQueue = [[NSOperationQueue alloc] init];
 	}
 	
-	return _defaultOperationQueue;
+	return _cellConfigurationQueue;
 }
 
 - (NSMutableDictionary*)operationDictionary {
@@ -254,7 +254,7 @@
 #ifdef imagenameformatSettingsCellMainOff
 	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOff, indexPath.section, indexPath.row];
 	
-	mainImage = [FXDImage bundledImageForName:imageName];
+	mainImage = [UIImage bundledImageForName:imageName];
 #endif
 		
 	return mainImage;
@@ -266,7 +266,7 @@
 #ifdef imagenameformatSettingsCellMainOn	
 	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOn, indexPath.section, indexPath.row];
 	
-	highlightedMainImage = [FXDImage bundledImageForName:imageName];
+	highlightedMainImage = [UIImage bundledImageForName:imageName];
 #endif
 		
 	return highlightedMainImage;

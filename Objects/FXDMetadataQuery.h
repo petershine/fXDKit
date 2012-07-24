@@ -50,3 +50,9 @@
 - (BOOL)logQueryResultsWithTransferringPercentage;
 
 @end
+
+
+@interface NSMetadataItem (Added)
+- (double)transferPercentage;
+
+@end

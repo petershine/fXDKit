@@ -12,10 +12,12 @@
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingSequeActions	0
 
+		#define USE_TestFlight	0
+	#else
+		#define USE_TestFlight	1
+
 	#endif
 
-
-	#define USE_TestFlight	1
 	#define USE_Flurry	0
 
 	#define USE_FXDLog	1

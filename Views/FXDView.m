@@ -172,6 +172,39 @@
 }
 
 #pragma mark -
+- (void)fadeInFromHidden {
+	self.alpha = 0.0;
+	
+	if (self.hidden) {
+		self.hidden = NO;
+	}
+	
+	[UIView animateWithDuration:0.15
+						  delay:0
+						options:UIViewAnimationCurveEaseOut
+					 animations:^{
+						 self.alpha = 1.0;
+					 }
+					 completion:^(BOOL finished) {
+						 //
+					 }];
+}
+
+- (void)fadeOutThenHidden {
+	[UIView animateWithDuration:0.15
+						  delay:0
+						options:UIViewAnimationCurveEaseOut
+					 animations:^{
+						 self.alpha = 0.0;
+					 }
+					 completion:^(BOOL finished) {						 
+						 if (self.hidden == NO) {
+							 self.hidden = YES;
+						 }
+					 }];
+}
+
+#pragma mark -
 - (void)fadeInAsAddSubview:(UIView*)subview {	FXDLog_DEFAULT;
 	subview.alpha = 0.0;
 	
