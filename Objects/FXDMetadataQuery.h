@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "FXDKit.h"
 
 
 @interface FXDMetadataQuery : NSMetadataQuery {

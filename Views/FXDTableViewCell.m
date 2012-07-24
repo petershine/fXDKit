@@ -91,13 +91,15 @@
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {	//FXDLog_DEFAULT;
 	[super setHighlighted:highlighted animated:animated];
 	
-	[self.backgroundImageview setHighlighted:highlighted];
-	
 	[self.imageView setHighlighted:highlighted];
 	[self.textLabel setHighlighted:highlighted];
 	
 	if ([self.accessoryView isKindOfClass:[UIImageView class]]) {
 		[(UIImageView*)self.accessoryView setHighlighted:highlighted];
+	}
+	
+	if (self.backgroundImageview) {
+		[self.backgroundImageview setHighlighted:highlighted];
 	}
 }
 

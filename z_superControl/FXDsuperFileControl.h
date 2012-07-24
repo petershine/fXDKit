@@ -11,11 +11,13 @@
 #define notificationFileControlMetadataQueryDidFinishGathering	@"notificationFileControlMetadataQueryDidFinishGathering"
 #define notificationFileControlMetadataQueryDidUpdate	@"notificationFileControlMetadataQueryDidUpdate"
 #define notificationFileControlMetadataQueryIsTransferring	@"notificationFileControlMetadataQueryIsTransferring"
+
+#define notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL"
 #define notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL"
 
 
 #define objkeyUbiquitousFolders	@"objkeyUbiquitousFolders"
-#define objkeyUbiquitousFiles	@"objkeyUbiquitousFiles"
+#define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
 #ifndef shouldUseUbiquitousDocuments
@@ -97,11 +99,12 @@
 - (void)startObservingUbiquityMetadataQueryNotifications;
 - (void)startWatchingLocalDirectoryChange;
 
-- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentFolderURL:(NSURL*)currentFolderURL;
+- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentFolderURL:(NSURL*)currentFolderURL withFileManager:(NSFileManager*)fileManager;
 - (void)handleFailedLocalFileURL:(NSURL*)localfileURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
 - (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL;
 
+- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateLocalDirectory;
 
