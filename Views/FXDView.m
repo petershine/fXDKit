@@ -179,7 +179,7 @@
 		self.hidden = NO;
 	}
 	
-	[UIView animateWithDuration:0.15
+	[UIView animateWithDuration:durationQuickAnimation
 						  delay:0
 						options:UIViewAnimationCurveEaseOut
 					 animations:^{
@@ -191,7 +191,7 @@
 }
 
 - (void)fadeOutThenHidden {
-	[UIView animateWithDuration:0.15
+	[UIView animateWithDuration:durationQuickAnimation
 						  delay:0
 						options:UIViewAnimationCurveEaseOut
 					 animations:^{

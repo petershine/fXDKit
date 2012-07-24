@@ -93,8 +93,8 @@
 	}
 }
 
-- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	FXDLog_DEFAULT;
-	FXDLog(@"capInsets: %@", NSStringFromUIEdgeInsets(capInsets));
+- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	//FXDLog_DEFAULT;
+	//FXDLog(@"capInsets: %@", NSStringFromUIEdgeInsets(capInsets));
 	
 	if (self.image) {
 		UIImage *resizeableImage = [self.image resizableImageWithCapInsets:capInsets];

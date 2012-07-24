@@ -7,7 +7,10 @@
 //
 
 #define integerNotDefined	-1
+
 #define durationAnimation	0.3
+#define durationQuickAnimation	0.15
+
 #define delayOneSecond	1.0
 
 #define delayPressedButton	0.05
