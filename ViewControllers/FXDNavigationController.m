@@ -21,7 +21,6 @@
 // Properties
 
 // IBOutlets
-@synthesize addedShadowImageview;
 
 
 #pragma mark - Memory management

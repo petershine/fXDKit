@@ -21,18 +21,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize currentPathLevel = _currentPathLevel;
-
-@synthesize ubiquityIdentityToken = _ubiquityIdentityToken;
-
-@synthesize ubiquityContainerURL = _ubiquityContainerURL;
-@synthesize ubiquitousDocumentsURL = _ubiquitousDocumentsURL;
-
-@synthesize ubiquityMetadataQuery = _ubiquityMetadataQuery;
-@synthesize localDirectoryWatcher = _localDirectoryWatcher;
-
-@synthesize queuedURLSet = _queuedURLSet;
-@synthesize operationQueue = _operationQueue;
 
 
 #pragma mark - Memory management

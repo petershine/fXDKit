@@ -21,7 +21,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize dynamicDelegate = _dynamicDelegate;
 
 
 #pragma mark - Memory management

@@ -28,16 +28,6 @@ static NSMutableSet *_staticHttpControlSet = nil;
 
 #pragma mark Synthesizing
 // Properties
-@synthesize httpContentLength = _httpContentLength;
-@synthesize receivedDataLength = _receivedDataLength;
-
-@synthesize httpURL = _httpURL;
-@synthesize httpRequest = _httpRequest;
-@synthesize httpConnection = _httpConnection;
-
-@synthesize receivedData = _receivedData;
-
-@synthesize nextHttpControl = _nextHttpControl;
 
 
 #pragma mark - Memory managment

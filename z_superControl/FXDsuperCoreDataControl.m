@@ -22,10 +22,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize defaultEntityName = _defaultEntityName;
-@synthesize defaultSortDescriptors = _defaultSortDescriptors;
-
-@synthesize defaultResultsController = _defaultResultsController;
 
 
 #pragma mark - Memory management

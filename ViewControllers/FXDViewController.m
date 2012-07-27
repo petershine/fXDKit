@@ -19,9 +19,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize presentingSegueName = _presentingSegueName;
-
-@synthesize presentedSegueDictionary = _presentedSegueDictionary;
 
 // IBOutlets
 

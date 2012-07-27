@@ -20,9 +20,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize disclaimerViewOffset = _disclaimerViewOffset;
-
-@synthesize initialDisclaimerViewFrame = _initialDisclaimerViewFrame;
 
 // IBOutlets
 

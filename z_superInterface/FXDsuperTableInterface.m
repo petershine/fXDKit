@@ -19,20 +19,8 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize registeredNibIdentifier = _registeredNibIdentifier;
-
-@synthesize rowCounts = _rowCounts;
-@synthesize cellTexts = _cellTexts;
-@synthesize defaultDatasource = _defaultDatasource;
-
-@synthesize cellConfigurationQueue = _cellConfigurationQueue;
-@synthesize operationDictionary = _operationDictionary;
-@synthesize operationArray = _operationArray;
-
-@synthesize defaultResultsController = _defaultResultsController;
 
 // IBOutlets
-@synthesize defaultTableview;
 
 
 #pragma mark - Memory management

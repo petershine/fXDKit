@@ -21,7 +21,6 @@
 // Properties
 
 // IBOutlets
-@synthesize defaultMapview;
 
 
 #pragma mark - Memory management

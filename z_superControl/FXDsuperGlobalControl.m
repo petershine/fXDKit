@@ -21,14 +21,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize didMakePurchase = _didMakePurchase;
-@synthesize didShareToSocialNet = _didShareToSocialNet;
-
-@synthesize deviceLanguageCode = _deviceLanguageCode;
-
-@synthesize mainStoryboard = _mainStoryboard;
-@synthesize rootInterface = _rootInterface;
-@synthesize homeInterface = _homeInterface;
 
 
 #pragma mark - Memory management

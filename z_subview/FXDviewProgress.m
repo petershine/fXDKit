@@ -22,10 +22,6 @@
 // Properties
 
 // IBOutlets
-@synthesize labelBelowActivityWheel;
-@synthesize labelAboveActivityWheel;
-
-@synthesize activitywheelProgress;
 
 
 #pragma mark - Memory management

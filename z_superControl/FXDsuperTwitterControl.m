@@ -22,11 +22,6 @@
 
 #pragma mark Synthesizing
 // Properties
-@synthesize accountStore = _accountStore;
-@synthesize accountType = _accountType;
-
-@synthesize twitterAccountArray = _twitterAccountArray;
-@synthesize mainTwitterAccount = _mainTwitterAccount;
 
 
 #pragma mark - Memory management
