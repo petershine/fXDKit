@@ -217,7 +217,7 @@
 	
 	NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
 	
-	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:screenName, objkeyTwitterScreenName, nil];
+	NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
 	
 	TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 												parameters:parameters
@@ -236,7 +236,7 @@
 	if (self.mainTwitterAccount) {
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 		
-		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:status, objkeyTwitterStatus, nil];
+		NSDictionary *parameters = @{objkeyTwitterStatus: status};
 		
 		TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 													parameters:parameters

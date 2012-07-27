@@ -227,7 +227,7 @@
 	
 	uname(&systemInfo);
 	
-	NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+	NSString *modelName = @(systemInfo.machine);
 	
 	if([modelName isEqualToString:@"i386"]) {
 		modelName = @"iPhone Simulator";
@@ -343,7 +343,7 @@
 
 	NSString *mailAddr = nil;
 		
-	NSArray *toRecipients = [NSArray arrayWithObject:mailAddr];
+	NSArray *toRecipients = @[mailAddr];
 
 #ifdef application_DisplayedName
 	NSString *bundleName = application_DisplayedName;

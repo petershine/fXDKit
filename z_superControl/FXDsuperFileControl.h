@@ -29,7 +29,7 @@
 #endif
 
 #ifndef limitPathLevel
-	#define limitPathLevel	5
+	#define limitPathLevel	6
 #endif
 
 
@@ -102,7 +102,7 @@
 - (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentFolderURL:(NSURL*)currentFolderURL withFileManager:(NSFileManager*)fileManager;
 - (void)handleFailedLocalFileURL:(NSURL*)localfileURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
-- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL;
+- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
 
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;

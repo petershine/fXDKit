@@ -320,19 +320,24 @@
 }
 
 #pragma mark -
-- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
+- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName {	//FXDLog_DEFAULT;
 	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
+	if (newFolderName == nil || [newFolderName isEqualToString:@""]) {
+		newFolderName = [[NSDate date] description];
+	}
+	
+	
+	NSString *pathComponent = [NSString stringWithFormat:@"%@", newFolderName];
+	NSURL *newFolderURL = [currentFolderURL URLByAppendingPathComponent:pathComponent];
+	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
-	
-	NSString *pathComponent = [NSString stringWithFormat:@"%@", [NSDate date]];
-	NSURL *newFolderURL = [currentFolderURL URLByAppendingPathComponent:pathComponent];
 	
 	[fileManager createDirectoryAtURL:newFolderURL
 		  withIntermediateDirectories:YES
@@ -468,7 +473,7 @@
 				FXDLog_ERROR;
 				
 				if ((isUbiquitousItem == nil || [isUbiquitousItem boolValue] == NO) && [isHidden boolValue] == NO) {
-					NSArray *localFiles = [NSArray arrayWithObject:localFileURL];
+					NSArray *localFiles = @[localFileURL];
 					
 					[fileControl setUbiquitousForLocalFiles:localFiles withCurrentFolderURL:self.ubiquitousDocumentsURL withFileManager:fileManager];
 				}

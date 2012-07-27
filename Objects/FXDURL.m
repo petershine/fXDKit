@@ -69,14 +69,12 @@
 #pragma mark - Category
 @implementation NSURL (Added)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	FXDLog_DEFAULT;
-	NSArray *ubiquitousItemKeys = [NSArray arrayWithObjects:
-								   NSURLIsUbiquitousItemKey,
+	NSArray *ubiquitousItemKeys = @[NSURLIsUbiquitousItemKey,
 								   NSURLUbiquitousItemHasUnresolvedConflictsKey,
 								   NSURLUbiquitousItemIsDownloadedKey,
 								   NSURLUbiquitousItemIsDownloadingKey,
 								   NSURLUbiquitousItemIsUploadedKey,
-								   NSURLUbiquitousItemIsUploadingKey,
-								   nil];
+								   NSURLUbiquitousItemIsUploadingKey];
 	
 	NSDictionary *resourceValues = [self resourceValuesForKeys:ubiquitousItemKeys error:error];
 	

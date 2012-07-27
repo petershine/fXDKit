@@ -79,7 +79,7 @@
 	[self setSortDescriptors:sortDescriptors];
 	 */
 	
-	[self setSearchScopes:[NSArray arrayWithObject:NSMetadataQueryUbiquitousDocumentsScope]];
+	[self setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
 	[self setNotificationBatchingInterval:0.5];
 }
 

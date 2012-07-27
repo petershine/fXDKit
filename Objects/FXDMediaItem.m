@@ -66,47 +66,48 @@
 - (NSDictionary*)propertiesDictionary {
 	NSMutableDictionary *propertiesDictionary = nil;
 	
-	NSArray *mediaProperties = [NSArray arrayWithObjects:
-								MPMediaItemPropertyPersistentID,
-								MPMediaItemPropertyMediaType,
-								MPMediaItemPropertyTitle,
-								MPMediaItemPropertyAlbumTitle,
-								MPMediaItemPropertyAlbumPersistentID,
-								
-								MPMediaItemPropertyArtist,
-								MPMediaItemPropertyArtistPersistentID,
-								
-								MPMediaItemPropertyAlbumArtist,
-								MPMediaItemPropertyAlbumArtistPersistentID,
-								
-								MPMediaItemPropertyGenre,
-								MPMediaItemPropertyGenrePersistentID,
-								
-								MPMediaItemPropertyComposer,
-								MPMediaItemPropertyComposerPersistentID,
-								
-								MPMediaItemPropertyPlaybackDuration,
-								MPMediaItemPropertyAlbumTrackNumber,
-								MPMediaItemPropertyAlbumTrackCount,
-								MPMediaItemPropertyDiscNumber,
-								MPMediaItemPropertyDiscCount,
-								MPMediaItemPropertyArtwork,
-								MPMediaItemPropertyLyrics,
-								MPMediaItemPropertyIsCompilation,
-								MPMediaItemPropertyReleaseDate,
-								
-								MPMediaItemPropertyBeatsPerMinute,
-								MPMediaItemPropertyComments,
-								MPMediaItemPropertyAssetURL,
-								
-								MPMediaItemPropertyPodcastTitle,
-								MPMediaItemPropertyPodcastPersistentID,
-								
-								MPMediaItemPropertyPlayCount,
-								MPMediaItemPropertySkipCount,
-								MPMediaItemPropertyRating,
-								MPMediaItemPropertyLastPlayedDate,
-								MPMediaItemPropertyUserGrouping, nil];
+	NSArray *mediaProperties = @[
+		MPMediaItemPropertyPersistentID,
+		MPMediaItemPropertyMediaType,
+		MPMediaItemPropertyTitle,
+		MPMediaItemPropertyAlbumTitle,
+		MPMediaItemPropertyAlbumPersistentID,
+		
+		MPMediaItemPropertyArtist,
+		MPMediaItemPropertyArtistPersistentID,
+		
+		MPMediaItemPropertyAlbumArtist,
+		MPMediaItemPropertyAlbumArtistPersistentID,
+		
+		MPMediaItemPropertyGenre,
+		MPMediaItemPropertyGenrePersistentID,
+		
+		MPMediaItemPropertyComposer,
+		MPMediaItemPropertyComposerPersistentID,
+		
+		MPMediaItemPropertyPlaybackDuration,
+		MPMediaItemPropertyAlbumTrackNumber,
+		MPMediaItemPropertyAlbumTrackCount,
+		MPMediaItemPropertyDiscNumber,
+		MPMediaItemPropertyDiscCount,
+		MPMediaItemPropertyArtwork,
+		MPMediaItemPropertyLyrics,
+		MPMediaItemPropertyIsCompilation,
+		MPMediaItemPropertyReleaseDate,
+		
+		MPMediaItemPropertyBeatsPerMinute,
+		MPMediaItemPropertyComments,
+		MPMediaItemPropertyAssetURL,
+		
+		MPMediaItemPropertyPodcastTitle,
+		MPMediaItemPropertyPodcastPersistentID,
+		
+		MPMediaItemPropertyPlayCount,
+		MPMediaItemPropertySkipCount,
+		MPMediaItemPropertyRating,
+		MPMediaItemPropertyLastPlayedDate,
+		MPMediaItemPropertyUserGrouping
+	];
 	
 	for (NSString *property in mediaProperties) {
 		id value = [self valueForProperty:property];

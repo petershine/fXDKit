@@ -133,9 +133,6 @@
 		
 		
 		NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
-		[options setObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
-		[options setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
-		
 		
 		NSURL *ubiquitousContentURL = nil;
 		
@@ -146,6 +143,10 @@
 			
 			[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
 			[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
+		}
+		else {
+			[options setObject:@(YES) forKey:NSMigratePersistentStoresAutomaticallyOption];
+			[options setObject:@(YES) forKey:NSInferMappingModelAutomaticallyOption];
 		}
 		
 		FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
@@ -175,41 +176,41 @@
 		}
 #endif
 		
-		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-		
-		[defaultCenter addObserver:self
-						  selector:@selector(observedUIApplicationDidEnterBackground:)
-							  name:UIApplicationDidEnterBackgroundNotification
-							object:nil];
-		
-		[defaultCenter addObserver:self
-						  selector:@selector(observedUIApplicationWillTerminate:)
-							  name:UIApplicationWillTerminateNotification
-							object:nil];
-		
-		
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-							  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-							object:nil];
-		
-		
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-							  name:NSManagedObjectContextObjectsDidChangeNotification
-							object:self.managedObjectContext];
-		
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSManagedObjectContextWillSave:)
-							  name:NSManagedObjectContextWillSaveNotification
-							object:self.managedObjectContext];
-		
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSManagedObjectContextDidSave:)
-							  name:NSManagedObjectContextDidSaveNotification
-							object:self.managedObjectContext];
-		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+			
+			[defaultCenter addObserver:self
+							  selector:@selector(observedUIApplicationDidEnterBackground:)
+								  name:UIApplicationDidEnterBackgroundNotification
+								object:nil];
+			
+			[defaultCenter addObserver:self
+							  selector:@selector(observedUIApplicationWillTerminate:)
+								  name:UIApplicationWillTerminateNotification
+								object:nil];
+			
+			
+			[defaultCenter addObserver:self
+							  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+								  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+								object:nil];
+			
+			
+			[defaultCenter addObserver:self
+							  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+								  name:NSManagedObjectContextObjectsDidChangeNotification
+								object:self.managedObjectContext];
+			
+			[defaultCenter addObserver:self
+							  selector:@selector(observedNSManagedObjectContextWillSave:)
+								  name:NSManagedObjectContextWillSaveNotification
+								object:self.managedObjectContext];
+			
+			[defaultCenter addObserver:self
+							  selector:@selector(observedNSManagedObjectContextDidSave:)
+								  name:NSManagedObjectContextDidSaveNotification
+								object:self.managedObjectContext];
+			
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
 		}];
 	}];

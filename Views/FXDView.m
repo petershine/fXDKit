@@ -32,12 +32,12 @@
 	
 	// IBOutlets
 	
-    FXDLog_DEFAULT;
+	//FXDLog_DEFAULT;
 }
 
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
+- (id)initWithFrame:(CGRect)frame {	//FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 	
     if (self) {
@@ -47,7 +47,7 @@
     return self;
 }
 
-- (void)awakeFromNib {	FXDLog_DEFAULT;
+- (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
 	// Primitives
