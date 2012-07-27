@@ -100,7 +100,7 @@
 
 
 #pragma mark - at autoRotate
-#if USE_loggingRotatingInterface
+#if USE_loggingRotatingOrientation
 - (NSUInteger)supportedInterfaceOrientations {	FXDLog_SEPARATE_FRAME;
 	return [super supportedInterfaceOrientations];
 }

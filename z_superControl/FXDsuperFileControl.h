@@ -28,10 +28,6 @@
 	#define shouldUseLocalDirectoryWatcher	1
 #endif
 
-#ifndef limitPathLevel
-	#define limitPathLevel	6
-#endif
-
 
 #ifndef pathcomponentDocuments
 	#define pathcomponentDocuments @"Documents/"

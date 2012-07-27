@@ -83,6 +83,21 @@
 	return fullEnumerator;
 }
 
+- (NSDirectoryEnumerator*)limitedEnumeratorForRootURL:(NSURL*)rootURL {
+	
+	NSDirectoryEnumerator *limitedEnumerator = [self enumeratorAtURL:rootURL
+										  includingPropertiesForKeys:nil
+															 options:NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsPackageDescendants
+														errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+															FXDLog_ERROR;
+															FXDLog(@"url: %@", url);
+															
+															return YES;
+														}];
+	
+	return limitedEnumerator;
+}
+
 - (NSArray*)directoryTreeForRootPath:(NSString*)rootPath {
 	NSURL *rootURL = [NSURL URLWithString:rootPath];
 	
