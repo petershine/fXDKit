@@ -438,7 +438,7 @@
 	
 	NSURL *rootURL = [NSURL URLWithString:appSearhPath_Document];
 	
-	NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:rootURL];
+	NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:rootURL];
 	
 	NSURL *nextObject = [enumerator nextObject];
 	
