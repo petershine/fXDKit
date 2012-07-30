@@ -6,9 +6,6 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-
 typedef enum {
 	sectionPositionOne,
 	sectionPositionTop,
@@ -17,6 +14,8 @@ typedef enum {
 	
 } SECTION_POSITION_TYPE;
 
+
+#import "FXDKit.h"
 
 @interface FXDTableViewCell : UITableViewCell {
     // Primitives

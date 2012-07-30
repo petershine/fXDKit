@@ -53,6 +53,7 @@
 @interface UIView (Added)
 + (id)viewFromNibName:(NSString*)nibName;
 + (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
++ (id)viewFromNib:(UINib*)nib;
 
 - (void)applyDefaultBorderLine;
 - (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius;

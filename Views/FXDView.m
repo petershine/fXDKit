@@ -101,13 +101,33 @@
 		nibName = NSStringFromClass([self class]);
 	}
 	
+	UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
+	
+	id view = [self viewFromNib:nib];
+	
+	return view;
+}
+
++ (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame {
+	id view = [self viewFromNibName:nibName];
+	
+	[(UIView*)view setFrame:modifiedFrame];
+	
+	return view;
+}
+
++ (id)viewFromNib:(UINib*)nib {
+	if (nib == nil) {
+		NSString *nibName = NSStringFromClass([self class]);
+		
+		nib = [UINib nibWithNibName:nibName bundle:nil];
+	}
+	
 	id view = nil;
 	
-	UINib *defaultNib = [UINib nibWithNibName:nibName bundle:nil];
+	NSArray *viewArray = [nib instantiateWithOwner:nil options:nil];
 	
-	NSArray *viewArray = [defaultNib instantiateWithOwner:nil options:nil];
-	
-	if (viewArray) {	
+	if (viewArray) {
 		for (id subview in viewArray) {	//Assumes there is only one root object
 			
 			if ([[self class] isSubclassOfClass:[subview class]]) {
@@ -119,14 +139,6 @@
 			}
 		}
 	}
-	
-	return view;
-}
-
-+ (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame {
-	id view = [self viewFromNibName:nibName];
-	
-	[(UIView*)view setFrame:modifiedFrame];
 	
 	return view;
 }
