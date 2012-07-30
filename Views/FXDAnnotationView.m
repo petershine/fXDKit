@@ -105,7 +105,7 @@
 
 #pragma mark -
 - (void)animateCustomDropAfterDelay:(NSTimeInterval)delay {
-	CGRect destinationRect = self.frame;
+	CGRect animatedFrame = self.frame;
 	
 	// Move annotation out of view
 	//FXDLog(@"superview.superview: %@", NSStringFromCGRect(self.superview.superview.frame));
@@ -119,7 +119,7 @@
 						  delay:delay
 						options:UIViewAnimationCurveEaseOut
 					 animations:^{
-						 self.frame = destinationRect;
+						 [self setFrame:animatedFrame];
 					 }
 					 completion:^(BOOL finished){
 						 if (finished) {
