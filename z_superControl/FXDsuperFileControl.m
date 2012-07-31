@@ -478,6 +478,31 @@
 	}
 }
 
+#pragma mark -
+- (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
+	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
+	
+	if (currentFolderURL == nil) {
+		currentFolderURL = self.ubiquitousDocumentsURL;
+	}
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	NSError *error = nil;
+	
+	for (NSURL *itemURL in selectedURLs) {
+		
+		BOOL didRemove = [fileManager removeItemAtURL:itemURL error:&error];
+		
+		FXDLog(@"didRemove: %@ itemURL: %@", didRemove ? @"YES":@"NO", itemURL);
+	}
+	
+	FXDLog_ERROR;
+	
+	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
+	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:currentFolderURL];
+}
+
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;

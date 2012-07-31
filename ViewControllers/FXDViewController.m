@@ -92,7 +92,7 @@
 - (NSDictionary*)segueIdentifiers {
 	
 	if (_presentedSegueDictionary == nil) {	FXDLog_OVERRIDE;
-		
+		//
 	}
 	
 	return _presentedSegueDictionary;
@@ -292,7 +292,7 @@
 	}
 }
 
-- (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	FXDLog_DEFAULT;
+- (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
 	
 	UIButton *button = [self buttonWithOnImage:onImage andOffImage:offImage orWithText:text];
 	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -321,7 +321,7 @@
 	[(UIViewController*)target navigationItem].rightBarButtonItem = barButtonItem;
 }
 
-- (void)customizeRightBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	FXDLog_DEFAULT;
+- (void)customizeRightBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
 	
 	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage forTarget:target forAction:action];
 	

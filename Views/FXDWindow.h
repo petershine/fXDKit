@@ -6,10 +6,14 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
+#define notificationApplicationWindowShouldFadeInProgressView	@"notificationApplicationWindowShouldFadeInProgressView"
+#define notificationApplicationWindowShouldFadeOutProgressView	@"notificationApplicationWindowShouldFadeOutProgressView"
+
 
 #import "FXDviewProgress.h"
 
+
+#import "FXDKit.h"
 
 @interface FXDWindow : UIWindow {
     // Primitives
@@ -45,6 +49,8 @@
 
 
 //MARK: - Observer implementation
+- (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification;
+- (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

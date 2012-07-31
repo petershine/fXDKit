@@ -129,6 +129,8 @@
 		
 		
 		NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
+		[options setObject:@(YES) forKey:NSMigratePersistentStoresAutomaticallyOption];
+		[options setObject:@(YES) forKey:NSInferMappingModelAutomaticallyOption];
 		
 		NSURL *ubiquitousContentURL = nil;
 		
@@ -141,8 +143,7 @@
 			[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
 		}
 		else {
-			[options setObject:@(YES) forKey:NSMigratePersistentStoresAutomaticallyOption];
-			[options setObject:@(YES) forKey:NSInferMappingModelAutomaticallyOption];
+			
 		}
 		
 		FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);

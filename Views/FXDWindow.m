@@ -25,6 +25,15 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+}
 
 
 #pragma mark - Initialization
@@ -41,6 +50,10 @@
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	[defaultCenter addObserver:self selector:@selector(observedApplicationWindowShouldFadeInProgressView:) name:notificationApplicationWindowShouldFadeInProgressView object:nil];
+	[defaultCenter addObserver:self selector:@selector(observedApplicationWindowShouldFadeOutProgressView:) name:notificationApplicationWindowShouldFadeOutProgressView object:nil];
+	
 	// Primitives
     
     // Instance variables
@@ -48,14 +61,14 @@
     // Properties
     
     // IBOutlets
-	self.backgroundColor = [UIColor clearColor];
+	//self.backgroundColor = [UIColor clearColor];
 }
 
 
 #pragma mark - Accessor overriding
 - (FXDviewProgress*)progressView {
 	if (_progressView == nil) {
-		_progressView = [FXDviewProgress viewFromNibName:nil];
+		_progressView = [FXDviewProgress viewFromNib:nil];
 		
 		[self addSubview:_progressView];
 		[self bringSubviewToFront:_progressView];
@@ -81,6 +94,13 @@
 
 
 //MARK: - Observer implementation
+- (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
+	[self.progressView fadeInFromHidden];
+}
+
+- (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
+	[self.progressView fadeOutThenHidden];
+}
 
 //MARK: - Delegate implementation
 
@@ -99,14 +119,14 @@
 #pragma mark -
 - (void)showProgressView {	FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
-
-	applicationWindow.progressView.hidden = NO;
+	
+	[applicationWindow observedApplicationWindowShouldFadeInProgressView:nil];
 }
 
 - (void)hideProgressView {	FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
-	applicationWindow.progressView.hidden = YES;
+	[applicationWindow observedApplicationWindowShouldFadeOutProgressView:nil];
 }
 
 #pragma mark -

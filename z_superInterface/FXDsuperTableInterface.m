@@ -82,7 +82,7 @@
 
 - (NSDictionary*)cellTexts {
 	
-	if (_cellTexts == nil) {	FXDLog_OVERRIDE;
+	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -91,7 +91,7 @@
 
 - (NSMutableArray*)defaultDatasource {
 	
-	if (_defaultDatasource == nil) {	FXDLog_OVERRIDE;
+	if (_defaultDatasource == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
