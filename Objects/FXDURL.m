@@ -89,5 +89,18 @@
 	return resourceValues;	
 }
 
+#pragma mark -
+- (NSDate*)attributeModificationDate {
+	NSDate *attributeModificationDate = nil;
+	
+	NSError *error = nil;
+	
+	[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];
+	
+	FXDLog_ERROR;
+	
+	return attributeModificationDate;
+}
+
 
 @end

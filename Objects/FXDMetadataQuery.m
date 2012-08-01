@@ -154,5 +154,17 @@
 	return transferPercentage;
 }
 
+- (NSString*)absoluteString {
+	NSString *absouteString = [self valueForAttribute:NSMetadataItemDisplayNameKey];
+	
+	return absouteString;
+}
+
+- (NSDate*)attributeModificationDate {
+	NSDate *attributeModificationDate = [self valueForAttribute:NSMetadataItemFSContentChangeDateKey];
+	
+	return attributeModificationDate;
+}
+
 
 @end

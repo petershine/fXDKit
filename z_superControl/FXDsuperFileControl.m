@@ -128,6 +128,8 @@
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
 		}
+#else
+		shouldRequestUbiquityContatinerURL = YES;
 #endif
 	}
 	else {
@@ -225,8 +227,8 @@
 	}
 	
 	for (NSURL *localfileURL in localFiles) {
-		NSString *localfilePath = [[[localfileURL absoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
-		localfilePath = [localfilePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString *localfilePath = [[localfileURL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		localfilePath = [[localfilePath componentsSeparatedByString:pathcomponentDocuments] lastObject];
 		
 		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents
 				
@@ -427,11 +429,7 @@
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-#if ENVIRONTMENT_newestSDK
 	__block FXDsuperFileControl *fileControl = self;
-#else
-	__weak FXDsuperFileControl *fileControl = self;
-#endif
 	
 	__block NSFileManager *fileManager = [NSFileManager defaultManager];
 	
@@ -479,19 +477,13 @@
 }
 
 #pragma mark -
-- (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
-	
-	if (currentFolderURL == nil) {
-		currentFolderURL = self.ubiquitousDocumentsURL;
-	}
+- (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;	
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
 	
-	for (NSURL *itemURL in selectedURLs) {
-		
+	for (NSURL *itemURL in selectedURLs) {		
 		BOOL didRemove = [fileManager removeItemAtURL:itemURL error:&error];
 		
 		FXDLog(@"didRemove: %@ itemURL: %@", didRemove ? @"YES":@"NO", itemURL);

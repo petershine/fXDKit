@@ -48,4 +48,6 @@
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError **)error;
 - (NSDictionary*)fullResourceValuesWithError:(NSError **)error;
 
+- (NSDate*)attributeModificationDate;
+
 @end
