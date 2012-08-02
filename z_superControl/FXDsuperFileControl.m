@@ -227,7 +227,7 @@
 	}
 	
 	for (NSURL *localfileURL in localFiles) {
-		NSString *localfilePath = [[localfileURL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString *localfilePath = [localfileURL unicodeAbsoluteString];
 		localfilePath = [[localfilePath componentsSeparatedByString:pathcomponentDocuments] lastObject];
 		
 		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents

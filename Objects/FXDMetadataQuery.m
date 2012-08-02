@@ -154,10 +154,9 @@
 	return transferPercentage;
 }
 
-- (NSString*)absoluteString {
-	NSString *absouteString = [self valueForAttribute:NSMetadataItemDisplayNameKey];
-	
-	return absouteString;
+#pragma mark -
+- (NSString*)unicodeAbsoluteString {
+	return [[[self valueForAttribute:NSMetadataItemURLKey] absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (NSDate*)attributeModificationDate {

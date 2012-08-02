@@ -90,6 +90,10 @@
 }
 
 #pragma mark -
+- (NSString*)unicodeAbsoluteString {
+	return [[self absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 - (NSDate*)attributeModificationDate {
 	NSDate *attributeModificationDate = nil;
 	

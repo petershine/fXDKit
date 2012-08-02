@@ -55,4 +55,8 @@
 @interface NSMetadataItem (Added)
 - (double)transferPercentage;
 
+- (NSString*)unicodeAbsoluteString;
+- (NSDate*)attributeModificationDate;
+
+
 @end

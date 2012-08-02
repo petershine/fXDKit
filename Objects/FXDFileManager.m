@@ -122,7 +122,7 @@
 	NSURL *nextObject = [enumerator nextObject];
 	
 	while (nextObject) {		
-		NSString *absoluteString = [[nextObject absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString *absoluteString = [nextObject unicodeAbsoluteString];
 		NSArray *components = [absoluteString componentsSeparatedByString:@"/"];
 		NSString *pathComponent = [components objectAtIndex:[components count] -1];
 		
