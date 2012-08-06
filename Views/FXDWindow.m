@@ -133,13 +133,13 @@
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
 	FXDWindow *applicationWindow = [self applicationWindow];
 	
-	[applicationWindow performSelector:@selector(showProgressView) withObject:nil afterDelay:delay inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+	[applicationWindow performSelector:@selector(showProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 }
 
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
 	FXDWindow *applicationWindow = [self applicationWindow];
 	
-	[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+	[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 }
 
 

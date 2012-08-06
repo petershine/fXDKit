@@ -120,7 +120,7 @@
 
 - (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL {	//FXDLog_DEFAULT;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{	FXDLog_DEFAULT;
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
 		
 		NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -171,9 +171,8 @@
 			FXDLog(@"persistentStore: %@", persistentStore.URL);
 			FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
 		}
-#endif
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+#endif		
+		dispatch_async(dispatch_get_main_queue(), ^{
 			NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 			
 			[defaultCenter addObserver:self
@@ -209,8 +208,8 @@
 								object:self.managedObjectContext];
 			
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
-		}];
-	}];
+		});
+	});
 }
 
 #pragma mark -

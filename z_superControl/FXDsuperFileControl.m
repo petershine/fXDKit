@@ -140,12 +140,12 @@
 	
 	if (shouldRequestUbiquityContatinerURL) {
 		__block FXDsuperFileControl *fileControl = self;
-				
-		[[NSOperationQueue new] addOperationWithBlock:^{			
+		
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			fileControl.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			FXDLog(@"ubiquityContainerURL: %@", fileControl.ubiquityContainerURL);
-
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
 #if shouldUseUbiquitousDocuments
 				[fileControl startObservingUbiquityMetadataQueryNotifications];
 				
@@ -159,8 +159,8 @@
 				//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
 #endif
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
-			}];
-		}];
+			});
+		});
 	}
 	else {
 		//TODO: alert user about using iCloud;
@@ -355,7 +355,7 @@
 	
 	//FXDLog(@"self.ubiquityMetadataQuery results] count: %d", [[self.ubiquityMetadataQuery results] count]);
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		for (NSMetadataItem *metadataItem in [self.ubiquityMetadataQuery results]) {
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
@@ -372,11 +372,10 @@
 		
 		[userInfo setObject:metadataItems forKey:objkeyUbiquitousMetadataItems];
 		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		dispatch_async(dispatch_get_main_queue(), ^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:fileControl userInfo:userInfo];
-		}];
-	}];
-
+		});
+	});
 }
 
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
@@ -392,12 +391,12 @@
 	
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
 		
 		NSURL *nextObject = [enumerator nextObject];
 		
-		while (nextObject) {			
+		while (nextObject) {
 			NSError *error = nil;
 			
 			id parentDirectoryURL = nil;
@@ -419,13 +418,12 @@
 			nextObject = [enumerator nextObject];
 		}
 		
-		
 		[userInfo setObject:folders forKey:objkeyUbiquitousFolders];
 		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		dispatch_async(dispatch_get_main_queue(), ^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];
-		}];
-	}];
+		});
+	});
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
