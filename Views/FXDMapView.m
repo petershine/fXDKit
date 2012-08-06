@@ -2,7 +2,7 @@
 //  FXDMapView.m
 //  PopTooUniversal
 //
-//  Created by Peter SHINe on 5/25/12.
+//  Created by petershine on 5/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 

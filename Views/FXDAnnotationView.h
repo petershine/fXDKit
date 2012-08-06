@@ -2,7 +2,7 @@
 //  FXDAnnotationView.h
 //  PopTooUniversal
 //
-//  Created by Peter SHINe on 5/11/12.
+//  Created by petershine on 5/11/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
