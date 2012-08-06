@@ -315,7 +315,7 @@
 	return numberOfRows;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	FXDLog_OVERRIDE;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
 	
 	static NSString *identifier = @"cellIdentifier";
 	
