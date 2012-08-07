@@ -67,6 +67,7 @@
 	// Instance variables
 	
 	// Properties
+	_shouldUseBackgroundImage = YES;
 	
 	// IBOutlets
 }
@@ -94,32 +95,34 @@
 	 [self.navigationBar setTitleTextAttributes:textAttributes];
 	 */
 	
+	if (self.shouldUseBackgroundImage) {
 #ifdef imageNavibarBackground
-	[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
+		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
 #endif
-	
+		
 #ifdef imageNavibarShadow
-	if ([FXDsuperGlobalControl isSystemVersionLatest]) {
+		if ([FXDsuperGlobalControl isSystemVersionLatest]) {
 #if ENVIRONTMENT_newestSDK
-		[self.navigationBar setShadowImage:imageNavibarShadow];
+			[self.navigationBar setShadowImage:imageNavibarShadow];
 #else
-		if (self.addedShadowImageview == nil) {
-			self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
-			self.addedShadowImageview.image = imageNavibarShadow;
+			if (self.addedShadowImageview == nil) {
+				self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
+				self.addedShadowImageview.image = imageNavibarShadow;
+			}
+			
+			[self.navigationBar addSubview:self.addedShadowImageview];
+#endif
 		}
-		
-		[self.navigationBar addSubview:self.addedShadowImageview];
+		else {
+			if (self.addedShadowImageview == nil) {
+				self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
+				self.addedShadowImageview.image = imageNavibarShadow;
+			}
+			
+			[self.navigationBar addSubview:self.addedShadowImageview];
+		}
 #endif
 	}
-	else {
-		if (self.addedShadowImageview == nil) {
-			self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
-			self.addedShadowImageview.image = imageNavibarShadow;
-		}
-		
-		[self.navigationBar addSubview:self.addedShadowImageview];
-	}
-#endif
 	
 #ifdef imageToolbarBackground
 	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];	

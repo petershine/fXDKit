@@ -212,12 +212,14 @@
 					 completion:^(BOOL finished) {						 
 						 if (self.hidden == NO) {
 							 self.hidden = YES;
+							 
+							 self.alpha = 1.0;
 						 }
 					 }];
 }
 
 #pragma mark -
-- (void)fadeInAsAddSubview:(UIView*)subview {	FXDLog_DEFAULT;
+- (void)addAsFadeInSubview:(UIView*)subview {	//FXDLog_DEFAULT;
 	subview.alpha = 0.0;
 	
 	[self addSubview:subview];
@@ -226,14 +228,16 @@
 	[subview fadeIn];
 }
 
-- (void)fadeOutAsRemoveSubview:(UIView*)subview {	FXDLog_DEFAULT;
+- (void)removeAsFadeOutSubview:(UIView*)subview afterFinished:(void(^)(void))afterFinished {	//FXDLog_DEFAULT;
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 0.0;
 					 }
 					 completion:^(BOOL finished) {
-						 if (finished) {
-							 [subview removeFromSuperview];
+						 [subview removeFromSuperview];
+						 
+						 if (afterFinished) {
+							 afterFinished();
 						 }
 					 }];
 }
