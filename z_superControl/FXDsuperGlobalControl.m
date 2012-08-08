@@ -29,7 +29,6 @@
 	
 	// Properties
 	
-	
 	FXDLog_SEPARATE;
 }
 
@@ -50,8 +49,8 @@
 		_didShareToSocialNet = NO;
 		
 		_mainStoryboard = nil;
-		_rootInterface = nil;
-		_homeInterface = nil;
+		_rootScene = nil;
+		_homeScene = nil;
 	}
 	
 	return self;
@@ -124,49 +123,49 @@
 	return _mainStoryboard;
 }
 
-- (id)rootInterface {
-	if (_rootInterface == nil) {
+- (id)rootScene {
+	if (_rootScene == nil) {
 		if (self.mainStoryboard) {
-			_rootInterface = [self.mainStoryboard instantiateInitialViewController];
+			_rootScene = [self.mainStoryboard instantiateInitialViewController];
 		}
 	}
 	
-	return _rootInterface;
+	return _rootScene;
 }
 
-- (id)homeInterface {
-	if (_homeInterface == nil) {
+- (id)homeScene {
+	if (_homeScene == nil) {
 		
-		if ([self.rootInterface respondsToSelector:@selector(viewControllers)]) {
+		if ([self.rootScene respondsToSelector:@selector(viewControllers)]) {
 			
-			NSArray *viewControllers = [self.rootInterface performSelector:@selector(viewControllers)];
+			NSArray *viewControllers = [self.rootScene performSelector:@selector(viewControllers)];
 			
 			if ([viewControllers count] > 0) {
-				if ([self.rootInterface isKindOfClass:[UITabBarController class]]) {
+				if ([self.rootScene isKindOfClass:[UITabBarController class]]) {
 					id tabbedViewController = [viewControllers objectAtIndex:0];
 					
 					if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
 						UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
 						
 						if ([tabbedNavigationController.viewControllers count] > 0) {
-							_homeInterface = [tabbedNavigationController.viewControllers objectAtIndex:0];
+							_homeScene = [tabbedNavigationController.viewControllers objectAtIndex:0];
 						}
 					}
 					else {
-						_homeInterface = tabbedViewController;
+						_homeScene = tabbedViewController;
 					}
 				}
 				else {
-					_homeInterface = [viewControllers objectAtIndex:0];
+					_homeScene = [viewControllers objectAtIndex:0];
 				}
 			}			
 		}
 		else {
-			_homeInterface = self.rootInterface;
+			_homeScene = self.rootScene;
 		}
 	}
 	
-	return _homeInterface;
+	return _homeScene;
 }
 
 

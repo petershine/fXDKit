@@ -68,7 +68,7 @@
 - (void)userLookUpWithScreenName:(NSString*)screenName;
 - (void)statusUpdateWithStatus:(NSString*)status;
 
-- (TWTweetComposeViewController*)tweetComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLArray:(NSArray*)urlArray;
+- (TWTweetComposeViewController*)tweetComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
 
 
 //MARK: - Observer implementation

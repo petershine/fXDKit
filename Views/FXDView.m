@@ -149,10 +149,11 @@
 }
 
 - (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius {
-	self.layer.borderColor = [UIColor darkGrayColor].CGColor;
-	self.layer.borderWidth = 1.0;
+	self.layer.masksToBounds = YES;
 	self.layer.cornerRadius = radius;
-	self.clipsToBounds = YES;
+	
+	self.layer.borderWidth = 1.0;
+	self.layer.borderColor = [UIColor darkGrayColor].CGColor;
 }
 
 - (void)reframeToBeAtTheCenterOfSuperview {	FXDLog_DEFAULT;

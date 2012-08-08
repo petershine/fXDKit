@@ -16,6 +16,7 @@
 	
 	// Properties : For subclass to be able to reference
 	NSString *_registeredNibIdentifier;
+	UINib *_defaultCellNib;
 	
 	NSArray *_rowCounts;
 	NSDictionary *_cellTexts;
@@ -30,6 +31,7 @@
 
 // Properties
 @property (strong, nonatomic) NSString *registeredNibIdentifier;
+@property (strong, nonatomic) UINib *defaultCellNib;
 
 @property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;

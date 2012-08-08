@@ -252,7 +252,7 @@
 }
 
 #pragma mark -
-- (TWTweetComposeViewController*)tweetComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLArray:(NSArray*)urlArray {	FXDLog_DEFAULT;
+- (TWTweetComposeViewController*)tweetComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
 	
 	TWTweetComposeViewController *tweetComposeInterface = nil;
 	
@@ -273,8 +273,8 @@
 			}
 		}
 		
-		if ([urlArray count] > 0) {
-			for (NSURL *url in urlArray) {
+		if ([URLarray count] > 0) {
+			for (NSURL *url in URLarray) {
 				if ([tweetComposeInterface addURL:url] == NO) {
 					FXDLog(@"URL: %@", url);
 				}

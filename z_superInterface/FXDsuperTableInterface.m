@@ -46,6 +46,7 @@
 	
 	// Properties
 	_registeredNibIdentifier = nil;
+	_defaultCellNib = nil;
 	
 	_rowCounts = nil;
 	_cellTexts = nil;
@@ -68,6 +69,16 @@
 	}
 	
 	return _registeredNibIdentifier;
+}
+
+- (UINib*)defaultCellNib {
+	if (_defaultCellNib == nil) {
+		if (self.registeredNibIdentifier) {
+			_defaultCellNib = [UINib nibWithNibName:self.registeredNibIdentifier bundle:nil];
+		}
+	}
+	
+	return _defaultCellNib;
 }
 
 #pragma mark -

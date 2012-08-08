@@ -25,8 +25,8 @@
 	NSString *_deviceLanguageCode;
 	
 	FXDStoryboard *_mainStoryboard;
-	id _rootInterface;
-	id _homeInterface;
+	id _rootScene;
+	id _homeScene;
 }
 
 // Properties
@@ -36,8 +36,8 @@
 @property (strong, nonatomic) NSString *deviceLanguageCode;
 
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
-@property (strong, nonatomic) id rootInterface;
-@property (strong, nonatomic) id homeInterface;
+@property (strong, nonatomic) id rootScene;
+@property (strong, nonatomic) id homeScene;
 
 
 #pragma mark - Memory management
