@@ -175,4 +175,18 @@
 	return directoryTree;
 }
 
+#pragma mark -
+- (NSString*)cachedPathForItemURL:(NSURL*)itemURL {
+	NSString *directoryPath = [[itemURL URLByDeletingLastPathComponent] unicodeAbsoluteString];
+	directoryPath = [[directoryPath componentsSeparatedByString:pathcomponentDocuments] lastObject];
+	directoryPath = [NSString pathWithComponents:@[appSearhPath_Caches, directoryPath]];
+	
+	NSString *filePathComponent = [[itemURL lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	filePathComponent = [NSString stringWithFormat:@"_cached_%@", filePathComponent];
+	
+	NSString *cachedPath = [NSString pathWithComponents:@[directoryPath, filePathComponent]];
+	
+	return cachedPath;
+}
+
 @end

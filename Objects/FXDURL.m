@@ -106,5 +106,35 @@
 	return attributeModificationDate;
 }
 
+#pragma mark -
+- (FILE_KIND_TYPE)fileKindType {
+	FILE_KIND_TYPE fileKindType = fileKindUndefined;
+	
+	NSString *typeIdentifier = nil;
+	
+	NSError *error = nil;
+	
+	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];
+	
+	FXDLog_ERROR;
+	
+	if ([typeIdentifier isEqual:(NSString*)kUTTypeImage]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG2000]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeTIFF]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypePICT]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeGIF]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypePNG]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeQuickTimeImage]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeAppleICNS]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeBMP]
+		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeICO]) {
+		
+		fileKindType = fileKindImage;
+	}
+	
+	return fileKindType;
+}
+
 
 @end

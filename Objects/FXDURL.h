@@ -6,7 +6,11 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+typedef enum {
+	fileKindUndefined,
+	fileKindImage,
+	
+} FILE_KIND_TYPE;
 
 
 @interface FXDURL : NSURL {
@@ -50,5 +54,7 @@
 
 - (NSString*)unicodeAbsoluteString;
 - (NSDate*)attributeModificationDate;
+
+- (FILE_KIND_TYPE)fileKindType;
 
 @end

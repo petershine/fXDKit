@@ -57,6 +57,8 @@
 
 - (UIImage*)scaledImageUsingModifiedSize:(CGSize)modifiedSize;
 
+- (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension;
+
 - (UIImage*)fixOrientation;
 
 

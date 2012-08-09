@@ -154,6 +154,8 @@
 #endif
 		}
 		else {
+#if ENVIRONTMENT_newestSDK
+#else
 			[self.accountStore requestAccessToAccountsWithType:self.accountType
 										 withCompletionHandler:^(BOOL granted, NSError *error) {
 											 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
@@ -164,6 +166,7 @@
 												 [self showAlertViewForSelectingTwitterAccount];
 											 }
 										 }];
+#endif
 		}
 	}
 }

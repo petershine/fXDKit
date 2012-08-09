@@ -66,7 +66,7 @@
 	
 	// To load from jpg, use specific scale value for retina
 	if (bundledImage == nil) {
-		if ([UIScreen mainScreen].scale > 2.0) {
+		if ([UIScreen mainScreen].scale >= 2.0) {
 			imageName = [imageName stringByAppendingString:@"@2x"];
 		}
 		
@@ -175,6 +175,42 @@
 	UIGraphicsEndImageContext();
 	
 	return scaledImage;
+}
+
+- (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension {
+	UIImage *thumbImage = nil;
+	
+	UIImageView *mainImageView = [[UIImageView alloc] initWithImage:self];
+	
+	BOOL widthGreaterThanHeight = (self.size.width > self.size.height);
+	
+	CGFloat sideFull = (widthGreaterThanHeight) ? self.size.height : self.size.width;
+	
+	CGRect clippedRect = CGRectMake(0, 0, sideFull, sideFull);	
+	
+	UIGraphicsBeginImageContext(CGSizeMake(thumbDimension, thumbDimension));
+	{
+		CGContextRef currentContext = UIGraphicsGetCurrentContext();
+		CGContextClipToRect( currentContext, clippedRect);
+		CGFloat scaleFactor = thumbDimension/sideFull;
+		
+		CGFloat translatedDistance = (self.size.width -sideFull) /2.0 *scaleFactor;
+		
+		if (widthGreaterThanHeight) {
+			CGContextTranslateCTM(currentContext, -translatedDistance, 0);
+		}
+		else {
+			CGContextTranslateCTM(currentContext, 0, -translatedDistance);
+		}
+		
+		CGContextScaleCTM(currentContext, scaleFactor, scaleFactor);
+		[mainImageView.layer renderInContext:currentContext];
+		
+		thumbImage = UIGraphicsGetImageFromCurrentImageContext();
+	}
+	UIGraphicsEndImageContext();
+	
+	return thumbImage;
 }
 
 - (UIImage*)fixOrientation {

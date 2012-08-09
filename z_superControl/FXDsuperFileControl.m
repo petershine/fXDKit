@@ -138,38 +138,39 @@
 	
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %@", shouldRequestUbiquityContatinerURL ? @"YES":@"NO");
 	
-	if (shouldRequestUbiquityContatinerURL) {
-		__block FXDsuperFileControl *fileControl = self;
-		
+	__block FXDsuperFileControl *fileControl = self;
+	
+	if (shouldRequestUbiquityContatinerURL) {		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			fileControl.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			FXDLog(@"ubiquityContainerURL: %@", fileControl.ubiquityContainerURL);
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
+				if (fileControl.ubiquityContainerURL) {
 #if shouldUseUbiquitousDocuments
-				[fileControl startObservingUbiquityMetadataQueryNotifications];
-				
-				//FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
+					[fileControl startObservingUbiquityMetadataQueryNotifications];
+	#if ForDEVELOPER
+					FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
+	#endif
 #endif
-				
+					
 #if shouldUseLocalDirectoryWatcher
-				[fileControl startWatchingLocalDirectoryChange];
-				
-				FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Document]);
-				//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
+					[fileControl startWatchingLocalDirectoryChange];
+	#if ForDEVELOPER
+					FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Document]);
+					FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
+	#endif
 #endif
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+					[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+				}
+				else {
+					[fileControl failedToUpdateUbiquityContainerURL];
+				}
 			});
 		});
 	}
 	else {
-		//TODO: alert user about using iCloud;
-		
-#if shouldUseLocalDirectoryWatcher
-		[self startWatchingLocalDirectoryChange];
-#endif
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
+		[fileControl failedToUpdateUbiquityContainerURL];
 	}
 }
 
@@ -211,6 +212,22 @@
 - (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
 	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:appSearhPath_Document delegate:self];
 	
+}
+
+#pragma mark -
+- (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
+	FXDAlertView *alertView = [[FXDAlertView alloc] initWithTitle:NSLocalizedString(@"alert_PleaseEnableiCloud", nil)
+														  message:nil
+														 delegate:nil
+												cancelButtonTitle:text_OK
+												otherButtonTitles:nil];
+	[alertView show];
+	
+#if shouldUseLocalDirectoryWatcher
+	[self startWatchingLocalDirectoryChange];
+#endif
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
 }
 
 #pragma mark -

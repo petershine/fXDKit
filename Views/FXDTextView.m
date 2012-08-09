@@ -89,7 +89,11 @@
 		
 		CGSize maximumSize = CGSizeMake(modifiedFrame.size.width, 100000000.0);
 		
+#if ENVIRONTMENT_newestSDK
+		CGSize sizeForAssignedText = [assignedText sizeWithFont:self.font constrainedToSize:maximumSize lineBreakMode:NSLineBreakByWordWrapping];
+#else
 		CGSize sizeForAssignedText = [assignedText sizeWithFont:self.font constrainedToSize:maximumSize lineBreakMode:UILineBreakModeWordWrap];
+#endif
 		
 		modifiedFrame.size.height = (sizeForAssignedText.height > self.contentSize.height) ? sizeForAssignedText.height : self.contentSize.height;
 		FXDLog(@"(after)modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));

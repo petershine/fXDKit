@@ -382,7 +382,11 @@
 			backLabel.font = [UIFont systemFontOfSize:13.0];
 		}
 		
+#if ENVIRONTMENT_newestSDK
+		backLabel.textAlignment = NSTextAlignmentCenter;
+#else
 		backLabel.textAlignment = UITextAlignmentCenter;
+#endif
 		
 		backLabel.backgroundColor = [UIColor clearColor];
 		
