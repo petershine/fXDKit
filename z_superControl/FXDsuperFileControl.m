@@ -140,23 +140,23 @@
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
-	if (shouldRequestUbiquityContatinerURL) {		
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	if (shouldRequestUbiquityContatinerURL) {
+		[[NSOperationQueue new] addOperationWithBlock:^{
 			fileControl.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			FXDLog(@"ubiquityContainerURL: %@", fileControl.ubiquityContainerURL);
 			
-			dispatch_async(dispatch_get_main_queue(), ^{
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				if (fileControl.ubiquityContainerURL) {
 #if shouldUseUbiquitousDocuments
 					[fileControl startObservingUbiquityMetadataQueryNotifications];
-	#if ForDEVELOPER
+	#if TEST_directoryTree
 					FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
 	#endif
 #endif
 					
 #if shouldUseLocalDirectoryWatcher
 					[fileControl startWatchingLocalDirectoryChange];
-	#if ForDEVELOPER
+	#if TEST_directoryTree
 					FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Document]);
 					FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
 	#endif
@@ -166,8 +166,8 @@
 				else {
 					[fileControl failedToUpdateUbiquityContainerURL];
 				}
-			});
-		});
+			}];
+		}];
 	}
 	else {
 		[fileControl failedToUpdateUbiquityContainerURL];
@@ -372,7 +372,7 @@
 	
 	//FXDLog(@"self.ubiquityMetadataQuery results] count: %d", [[self.ubiquityMetadataQuery results] count]);
 	
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	[[NSOperationQueue new] addOperationWithBlock:^{
 		for (NSMetadataItem *metadataItem in [self.ubiquityMetadataQuery results]) {
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
@@ -389,10 +389,10 @@
 		
 		[userInfo setObject:metadataItems forKey:objkeyUbiquitousMetadataItems];
 		
-		dispatch_async(dispatch_get_main_queue(), ^{
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:fileControl userInfo:userInfo];
-		});
-	});
+		}];
+	}];
 }
 
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
@@ -408,7 +408,7 @@
 	
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
 		
 		NSURL *nextObject = [enumerator nextObject];
@@ -437,10 +437,10 @@
 		
 		[userInfo setObject:folders forKey:objkeyUbiquitousFolders];
 		
-		dispatch_async(dispatch_get_main_queue(), ^{
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];
-		});
-	});
+		}];
+	}];
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
