@@ -131,7 +131,7 @@
 #pragma mark -
 - (void)signInBySelectingTwitterAccount {	FXDLog_DEFAULT;	
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
-	FXDLog(@"accountType.accessGranted: %@", self.accountType.accessGranted ? @"YES":@"NO");
+	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);
 	
 	if (self.accountType.accessGranted) {
 		[self showAlertViewForSelectingTwitterAccount];
@@ -143,7 +143,7 @@
 			 requestAccessToAccountsWithType:self.accountType
 			 options:nil
 			 completion:^(BOOL granted, NSError *error) {
-				 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
+				 FXDLog(@"granted: %d", granted);
 				 
 				 FXDLog_ERROR;
 				 
@@ -158,7 +158,7 @@
 #else
 			[self.accountStore requestAccessToAccountsWithType:self.accountType
 										 withCompletionHandler:^(BOOL granted, NSError *error) {
-											 FXDLog(@"granted: %@", granted ? @"YES":@"NO");
+											 FXDLog(@"granted: %d", granted);
 											 
 											 FXDLog_ERROR;
 											 

@@ -15,11 +15,11 @@
 	// Instance variables
 	
 	// Properties : For subclass to be able to reference
-	BOOL _shouldUseBackgroundImage;
+	BOOL _shouldUseDefaultNavigationBar;
 }
 
 // Properties
-@property (assign, nonatomic) BOOL shouldUseBackgroundImage;
+@property (assign, nonatomic) BOOL shouldUseDefaultNavigationBar;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *addedShadowImageview;

@@ -73,7 +73,7 @@
 		presentingViewController = parentViewController;
 	}
 	
-	FXDLog(@"shouldUseNavigationPush: %@", shouldUseNavigationPush ? @"YES":@"NO");
+	FXDLog(@"shouldUseNavigationPush: %d", shouldUseNavigationPush);
 	FXDLog(@"parentViewController: %@", parentViewController);
 	FXDLog(@"presentingViewController: %@", presentingViewController);
 	FXDLog(@"sourceViewController: %@", self.sourceViewController);

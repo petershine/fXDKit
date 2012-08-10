@@ -98,7 +98,7 @@
 			didLogTransferring = YES;
 			
 #if TEST_logTransferringPercentage
-			logString = [logString stringByAppendingFormat:@"isUploaded: %@ ", [isUploaded boolValue] ? @"YES":@"NO"];
+			logString = [logString stringByAppendingFormat:@"isUploaded: %d ", [isUploaded boolValue]];
 			
 			NSNumber *isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
 			
@@ -112,7 +112,7 @@
 			didLogTransferring = YES;
 			
 #if TEST_logTransferringPercentage
-			logString = [logString stringByAppendingFormat:@"isDownloaded: %@ ", [isDownloaded boolValue] ? @"YES":@"NO"];
+			logString = [logString stringByAppendingFormat:@"isDownloaded: %d ", [isDownloaded boolValue]];
 			
 			NSNumber *isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
 			

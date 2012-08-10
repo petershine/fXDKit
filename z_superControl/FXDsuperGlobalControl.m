@@ -191,7 +191,7 @@
 	}
 	
 #if ForDEVELOPER
-	FXDLog(@"isSystemVersionLatest: %@ %f >= %f", isSystemVersionLatest ? @"YES":@"NO", [systemVersionString floatValue], latestSupportedSystemVersion);
+	FXDLog(@"isSystemVersionLatest: %d %f >= %f", isSystemVersionLatest, [systemVersionString floatValue], latestSupportedSystemVersion);
 #endif
 	
 	return isSystemVersionLatest;

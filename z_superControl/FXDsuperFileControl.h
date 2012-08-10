@@ -15,6 +15,8 @@
 #define notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL"
 #define notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL"
 
+#define notificationFileControlDidEvictAllUbiquitousDocuments	@"notificationFileControlDidEvictAllUbiquitousDocuments"
+
 
 #define objkeyUbiquitousFolders	@"objkeyUbiquitousFolders"
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
@@ -105,6 +107,9 @@
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateLocalDirectory;
+
+- (void)evictAllUbiquitousDocuments;
+- (void)evictUbiquitousItemURLarray:(NSArray*)selectedURLarray;
 
 - (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL;
 

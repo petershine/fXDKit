@@ -49,7 +49,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithRootViewController:(UIViewController *)rootViewController {	//FXDLog_SEPARATE;
+- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_SEPARATE;
 	self  = [super initWithRootViewController:rootViewController];
 	
 	if (self) {
@@ -59,7 +59,7 @@
 	return self;
 }
 
-- (void)awakeFromNib {	//FXDLog_SEPARATE;
+- (void)awakeFromNib {	FXDLog_SEPARATE;
 	[super awakeFromNib];
 	
 	// Primitives
@@ -67,7 +67,7 @@
 	// Instance variables
 	
 	// Properties
-	_shouldUseBackgroundImage = YES;
+	_shouldUseDefaultNavigationBar = NO;
 	
 	// IBOutlets
 }
@@ -83,7 +83,7 @@
 
 
 #pragma mark - at viewDidLoad
-- (void)viewDidLoad {	//FXDLog_SEPARATE_FRAME;
+- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
     [super viewDidLoad];
 	
 	/*
@@ -95,7 +95,9 @@
 	 [self.navigationBar setTitleTextAttributes:textAttributes];
 	 */
 	
-	if (self.shouldUseBackgroundImage) {
+	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
+	
+	if (self.shouldUseDefaultNavigationBar == NO) {
 #ifdef imageNavibarBackground
 		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
 #endif

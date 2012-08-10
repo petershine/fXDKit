@@ -182,7 +182,7 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {	FXDLog_OVERRIDE;
-	FXDLog(@"mode: %d animated: %@", mode, animated ? @"YES":@"NO");
+	FXDLog(@"mode: %d animated: %d", mode, animated);
 	
 	
 }

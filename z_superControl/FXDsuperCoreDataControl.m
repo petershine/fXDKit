@@ -162,7 +162,7 @@
 			FXDLog_ERROR;
 		}
 		
-		FXDLog(@"didConfigure: %@", didConfigure ? @"YES":@"NO");
+		FXDLog(@"didConfigure: %d", didConfigure);
 		
 #if ForDEVELOPER
 		NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;

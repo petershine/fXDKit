@@ -136,7 +136,7 @@
 		shouldRequestUbiquityContatinerURL = YES;
 	}
 	
-	FXDLog(@"shouldRequestUbiquityContatinerURL: %@", shouldRequestUbiquityContatinerURL ? @"YES":@"NO");
+	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
@@ -158,8 +158,9 @@
 					[fileControl startWatchingLocalDirectoryChange];
 	#if TEST_directoryTree
 					FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Document]);
-					FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
+					//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
 	#endif
+					FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
 #endif
 					[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 				}
@@ -256,7 +257,7 @@
 		FXDLog_ERROR;
 		
 		if (error || didSetUbiquitous == NO) {
-			FXDLog(@"didSetUbiquitous: %@", didSetUbiquitous ? @"YES":@"NO");
+			FXDLog(@"didSetUbiquitous: %d", didSetUbiquitous);
 			//FXDLog(@"resourceValues:\n%@", [destinationURL fullResourceValuesWithError:nil]);
 			
 			[self handleFailedLocalFileURL:localfileURL withDestinationURL:destinationURL withResultError:error];
@@ -492,6 +493,57 @@
 }
 
 #pragma mark -
+- (void)evictAllUbiquitousDocuments {	FXDLog_DEFAULT;
+	__block FXDsuperFileControl *fileControl = self;
+	
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:self.ubiquitousDocumentsURL];
+		
+		NSURL *nextObject = [enumerator nextObject];
+		
+		while (nextObject) {
+			id isUbiquitousItem = nil;
+			
+			NSError *error = nil;
+			
+			[nextObject getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
+			
+			FXDLog_ERROR;
+			
+			if (isUbiquitousItem) {
+				[fileControl evictUbiquitousItemURLarray:@[nextObject]];
+			}
+			
+			nextObject = [enumerator nextObject];
+		}
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEvictAllUbiquitousDocuments object:fileControl userInfo:nil];
+		}];
+	}];
+}
+
+- (void)evictUbiquitousItemURLarray:(NSArray *)itemURLarray {
+#if ForDEVELOPER
+	if ([itemURLarray count] > 1) {
+		FXDLog_DEFAULT;
+	}
+#endif
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	NSError *error = nil;
+	
+	for (NSURL *itemURL in itemURLarray) {
+		BOOL didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];
+		
+		FXDLog(@"didEvict: %d %@", didEvict, itemURL);
+	}
+	
+	FXDLog_ERROR;
+}
+
+#pragma mark -
 - (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;	
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -501,7 +553,7 @@
 	for (NSURL *itemURL in selectedURLs) {		
 		BOOL didRemove = [fileManager removeItemAtURL:itemURL error:&error];
 		
-		FXDLog(@"didRemove: %@ itemURL: %@", didRemove ? @"YES":@"NO", itemURL);
+		FXDLog(@"didRemove: %d itemURL: %@", didRemove, itemURL);
 	}
 	
 	FXDLog_ERROR;
