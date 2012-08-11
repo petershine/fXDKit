@@ -53,7 +53,7 @@
 		_ubiquityMetadataQuery = nil;
 		_localDirectoryWatcher = nil;
 		
-		_queuedURLSet = nil;
+		_queuedURLset = nil;
 		_operationQueue = nil;
 	}
 	
@@ -82,12 +82,12 @@
 }
 
 #pragma mark -
-- (NSMutableSet*)queuedURLSet {
-	if (_queuedURLSet == nil) {
-		_queuedURLSet =[[NSMutableSet alloc] initWithCapacity:0];
+- (NSMutableSet*)queuedURLset {
+	if (_queuedURLset == nil) {
+		_queuedURLset =[[NSMutableSet alloc] initWithCapacity:0];
 	}
 	
-	return _queuedURLSet;
+	return _queuedURLset;
 }
 
 - (NSOperationQueue*)operationQueue {
@@ -232,7 +232,7 @@
 }
 
 #pragma mark -
-- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentFolderURL:(NSURL*)currentFolderURL withFileManager:(NSFileManager*)fileManager {	//FXDLog_DEFAULT;
+- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray withCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent withFileManager:(NSFileManager*)fileManager {	//FXDLog_DEFAULT;
 	
 	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
@@ -244,9 +244,9 @@
 		fileManager = [NSFileManager defaultManager];
 	}
 	
-	for (NSURL *itemURL in localFiles) {
+	for (NSURL *itemURL in localItemURLarray) {
 		NSString *localItemPath = [itemURL unicodeAbsoluteString];
-		localItemPath = [[localItemPath componentsSeparatedByString:pathcomponentDocuments] lastObject];
+		localItemPath = [[localItemPath componentsSeparatedByString:separatorPathComponent] lastObject];
 		
 		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localItemPath];	//Use iCloud /Documents
 				
@@ -257,15 +257,14 @@
 		FXDLog_ERROR;
 		
 		if (error || didSetUbiquitous == NO) {
-			FXDLog(@"didSetUbiquitous: %d", didSetUbiquitous);
 			//FXDLog(@"resourceValues:\n%@", [destinationURL fullResourceValuesWithError:nil]);
 			
-			[self handleFailedLocalFileURL:itemURL withDestinationURL:destinationURL withResultError:error];
+			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
 		}
 	}
 }
 
-- (void)handleFailedLocalFileURL:(NSURL*)localfileURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)error {	//FXDLog_DEFAULT;
+- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)error {	//FXDLog_DEFAULT;
 	//TODO: deal with following cases
 	/*
 	 domain: NSCocoaErrorDomain
@@ -275,12 +274,6 @@
 	 NSFilePath = "/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/EasyFileSharing_1.1_0710.pdf";
 	 NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
 	 }
-	 
-	 domain: NSPOSIXErrorDomain
-	 code: 63
-	 localizedDescription: The operation couldn’t be completed. File name too long
-	 userInfo: {
-	 NSDescription = "Unable to lstat destination path '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%90%E1%85%B3%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%85%E1%85%B5%E1%86%B8%20%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A9%E1%86%AB%20%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC.xls'.";
 	 
 	 domain: NSCocoaErrorDomain
 	 code: 260
@@ -316,7 +309,7 @@
 				break;
 				
 			default:
-				title = [NSString stringWithFormat:@"%@\n%@", [error localizedDescription], localfileURL];
+				title = [NSString stringWithFormat:@"%@\n%@", [error localizedDescription], localItemURL];
 				break;
 		}
 	}
@@ -458,10 +451,10 @@
 	
 	while (nextObject) {
 		
-		__block NSURL *localFileURL = nextObject;
+		__block NSURL *itemURL = nextObject;
 		
-		if ([fileControl.queuedURLSet containsObject:localFileURL] == NO) {
-			[fileControl.queuedURLSet addObject:localFileURL];
+		if ([fileControl.queuedURLset containsObject:itemURL] == NO) {
+			[fileControl.queuedURLset addObject:itemURL];
 			
 			[fileControl.operationQueue addOperationWithBlock:^{
 				id isUbiquitousItem = nil;
@@ -469,20 +462,20 @@
 				
 				NSError *error = nil;
 				
-				[localFileURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
-				[localFileURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
+				[itemURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
+				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
 				
 				FXDLog_ERROR;
 				
 				if ((isUbiquitousItem == nil || [isUbiquitousItem boolValue] == NO) && [isHidden boolValue] == NO) {
-					NSArray *localFiles = @[localFileURL];
+					NSArray *localItemURLarray = @[itemURL];
 					
-					[fileControl setUbiquitousForLocalFiles:localFiles withCurrentFolderURL:self.ubiquitousDocumentsURL withFileManager:fileManager];
+					[fileControl setUbiquitousForLocalItemURLarray:localItemURLarray withCurrentFolderURL:self.ubiquitousDocumentsURL withSeparatorPathComponent:pathcomponentDocuments withFileManager:fileManager];
 				}
 				
 				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					if ([fileControl.queuedURLSet containsObject:localFileURL]) {
-						[fileControl.queuedURLSet removeObject:localFileURL];
+					if ([fileControl.queuedURLset containsObject:itemURL]) {
+						[fileControl.queuedURLset removeObject:itemURL];
 					}
 				}];
 			}];
@@ -544,13 +537,13 @@
 }
 
 #pragma mark -
-- (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;	
+- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;	
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
 	
-	for (NSURL *itemURL in selectedURLs) {		
+	for (NSURL *itemURL in selectedURLarray) {
 		BOOL didRemove = [fileManager removeItemAtURL:itemURL error:&error];
 		
 		FXDLog(@"didRemove: %d itemURL: %@", didRemove, itemURL);

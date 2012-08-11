@@ -35,6 +35,10 @@
 	#define pathcomponentDocuments @"Documents/"
 #endif
 
+#ifndef pathcomponentCaches
+	#define pathcomponentCaches	@"Caches/"
+#endif
+
 
 #import "FXDKit.h"
 
@@ -57,7 +61,7 @@
 	NSMetadataQuery *_ubiquityMetadataQuery;
 	DirectoryWatcher *_localDirectoryWatcher;
 	
-	NSMutableSet *_queuedURLSet;
+	NSMutableSet *_queuedURLset;
 	NSOperationQueue *_operationQueue;
 }
 
@@ -72,7 +76,7 @@
 @property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
-@property (strong, nonatomic) NSMutableSet *queuedURLSet;
+@property (strong, nonatomic) NSMutableSet *queuedURLset;
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 
 
@@ -99,8 +103,8 @@
 
 - (void)failedToUpdateUbiquityContainerURL;
 
-- (void)setUbiquitousForLocalFiles:(NSArray*)localFiles withCurrentFolderURL:(NSURL*)currentFolderURL withFileManager:(NSFileManager*)fileManager;
-- (void)handleFailedLocalFileURL:(NSURL*)localfileURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
+- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray withCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent withFileManager:(NSFileManager*)fileManager;
+- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
 - (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
 
@@ -111,7 +115,7 @@
 - (void)evictAllUbiquitousDocuments;
 - (void)evictUbiquitousItemURLarray:(NSArray*)selectedURLarray;
 
-- (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL;
+- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL;
 
 - (NSString*)cachedPathForItemURL:(NSURL*)itemURL;
 
