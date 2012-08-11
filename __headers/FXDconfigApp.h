@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 
 #ifndef application_AppStoreID
 	#define application_AppStoreID	524312409

@@ -51,6 +51,5 @@
 - (NSArray*)directoryTreeForRootPath:(NSString*)rootPath;
 - (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL;
 
-- (NSString*)cachedPathForItemURL:(NSURL*)itemURL;
 
 @end

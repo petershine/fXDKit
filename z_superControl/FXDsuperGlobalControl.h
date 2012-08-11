@@ -6,14 +6,17 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 #import <MessageUI/MessageUI.h>
 
 #import "Reachability.h"
 
 
-@interface FXDsuperGlobalControl : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
+#import "FXDKit.h"
+
+@class FXDStoryboard;
+
+
+@interface FXDsuperGlobalControl : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
     // Primitives
 	
 	// Instance variables

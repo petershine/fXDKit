@@ -25,7 +25,7 @@
 #import <Twitter/Twitter.h>
 
 
-@interface FXDsuperTwitterControl : FXDObject <UIAlertViewDelegate> {
+@interface FXDsuperTwitterControl : NSObject <UIAlertViewDelegate> {
     // Primitives
 	
 	// Instance variables

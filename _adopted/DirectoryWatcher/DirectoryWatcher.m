@@ -58,6 +58,9 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 
+#import "FXDKit.h"
+
+
 @interface DirectoryWatcher (DirectoryWatcherPrivate)
 - (BOOL)startMonitoringDirectory:(NSString *)dirPath;
 - (void)kqueueFired;

@@ -1,6 +1,6 @@
 //
 //  FXDsuperCoreDataControl+CSVparser.h
-//  PushUpClub
+//
 //
 //  Created by Peter SHINe on 6/3/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
@@ -13,7 +13,10 @@
 #import "CHCSV.h"
 
 
-@interface FXDsuperCoreDataControl (CSVparser) <CHCSVParserDelegate>
+@interface FXDsuperCoreDataControl (CSVparser) <CHCSVParserDelegate> {
+	
+}
+
 
 - (void)parseFromCSVfileName:(NSString*)csvFileName;
 - (void)insertParsedObjForEntityName:(NSString*)entityName usingKeys:(NSArray*)keys usingValues:(NSArray*)values;

@@ -244,15 +244,15 @@
 		fileManager = [NSFileManager defaultManager];
 	}
 	
-	for (NSURL *localfileURL in localFiles) {
-		NSString *localfilePath = [localfileURL unicodeAbsoluteString];
-		localfilePath = [[localfilePath componentsSeparatedByString:pathcomponentDocuments] lastObject];
+	for (NSURL *itemURL in localFiles) {
+		NSString *localItemPath = [itemURL unicodeAbsoluteString];
+		localItemPath = [[localItemPath componentsSeparatedByString:pathcomponentDocuments] lastObject];
 		
-		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localfilePath];	//Use iCloud /Documents
+		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localItemPath];	//Use iCloud /Documents
 				
 		NSError *error = nil;
 				
-		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:localfileURL destinationURL:destinationURL error:&error];
+		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];
 		
 		FXDLog_ERROR;
 		
@@ -260,7 +260,7 @@
 			FXDLog(@"didSetUbiquitous: %d", didSetUbiquitous);
 			//FXDLog(@"resourceValues:\n%@", [destinationURL fullResourceValuesWithError:nil]);
 			
-			[self handleFailedLocalFileURL:localfileURL withDestinationURL:destinationURL withResultError:error];
+			[self handleFailedLocalFileURL:itemURL withDestinationURL:destinationURL withResultError:error];
 		}
 	}
 }
@@ -560,6 +560,21 @@
 	
 	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
 	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:currentFolderURL];
+}
+
+
+#pragma mark -
+- (NSString*)cachedPathForItemURL:(NSURL*)itemURL {
+	NSString *directoryPath = [[itemURL URLByDeletingLastPathComponent] unicodeAbsoluteString];
+	directoryPath = [[directoryPath componentsSeparatedByString:pathcomponentDocuments] lastObject];
+	directoryPath = [NSString pathWithComponents:@[appSearhPath_Caches, directoryPath]];
+	
+	NSString *filePathComponent = [[itemURL lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	filePathComponent = [NSString stringWithFormat:@"_cached_%@", filePathComponent];
+	
+	NSString *cachedPath = [NSString pathWithComponents:@[directoryPath, filePathComponent]];
+	
+	return cachedPath;
 }
 
 

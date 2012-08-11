@@ -19,6 +19,7 @@
 
 
 // Headers
+#import "FXDconfigApp.h"
 #import "FXDconfigDeveloper.h"
 
 #import "FXDenumTypes.h"
@@ -31,7 +32,6 @@
 
 
 // Objects
-#import "FXDObject.h"
 #import "FXDString.h"
 #import "FXDDate.h"
 #import "FXDURL.h"

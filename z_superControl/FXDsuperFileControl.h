@@ -41,7 +41,7 @@
 #import "DirectoryWatcher.h"
 
 
-@interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
+@interface FXDsuperFileControl : NSObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -112,6 +112,8 @@
 - (void)evictUbiquitousItemURLarray:(NSArray*)selectedURLarray;
 
 - (void)removeSelectedURLs:(NSArray*)selectedURLs fromCurrentFolderURL:(NSURL*)currentFolderURL;
+
+- (NSString*)cachedPathForItemURL:(NSURL*)itemURL;
 
 
 //MARK: - Observer implementation

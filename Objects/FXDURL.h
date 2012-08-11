@@ -13,6 +13,9 @@ typedef enum {
 } FILE_KIND_TYPE;
 
 
+#import "FXDKit.h"
+
+
 @interface FXDURL : NSURL {
     // Primitives
 	

@@ -34,6 +34,9 @@
  * Copyright 2010 Arash Payan. All rights reserved.
  */
 
+#import "FXDKit.h"
+
+
 #import <Foundation/Foundation.h>
 
 extern NSString *const kAppiraterFirstUseDate;

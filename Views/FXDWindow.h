@@ -10,10 +10,10 @@
 #define notificationApplicationWindowShouldFadeOutProgressView	@"notificationApplicationWindowShouldFadeOutProgressView"
 
 
-#import "FXDviewProgress.h"
-
-
 #import "FXDKit.h"
+
+@class FXDviewProgress;
+
 
 @interface FXDWindow : UIWindow {
     // Primitives

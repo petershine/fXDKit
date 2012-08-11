@@ -9,7 +9,7 @@
 #import "FXDKit.h"
 
 
-@interface FXDsuperHTTPControl : FXDObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
+@interface FXDsuperHTTPControl : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
     // Primitives
 	
 	// Instance variables
