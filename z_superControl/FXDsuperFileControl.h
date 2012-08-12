@@ -1,6 +1,6 @@
 //
 //  FXDsuperFileControl.h
-//  PopTooUniversal
+//
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
@@ -18,7 +18,7 @@
 #define notificationFileControlDidEvictAllUbiquitousDocuments	@"notificationFileControlDidEvictAllUbiquitousDocuments"
 
 
-#define objkeyUbiquitousFolders	@"objkeyUbiquitousFolders"
+#define objkeyUbiquitousFolders			@"objkeyUbiquitousFolders"
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
@@ -50,16 +50,14 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
-	NSInteger _currentPathLevel;
-	
+	// Properties : For subclass to be able to reference	
 	id _ubiquityIdentityToken;
 	
 	NSURL *_ubiquityContainerURL;
 	NSURL *_ubiquitousDocumentsURL;
 	NSURL *_ubiquitousCachesURL;
 	
-	NSMetadataQuery *_ubiquityMetadataQuery;
+	NSMetadataQuery *_ubiquitousDocumentsMetadataQuery;
 	DirectoryWatcher *_localDirectoryWatcher;
 	
 	NSMutableSet *_queuedURLset;
@@ -67,15 +65,13 @@
 }
 
 // Properties
-@property (assign, nonatomic) NSInteger currentPathLevel;
-
 @property (strong, nonatomic) id ubiquityIdentityToken;
 
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;
 @property (strong, nonatomic) NSURL *ubiquitousDocumentsURL;
 @property (strong, nonatomic) NSURL *ubiquitousCachesURL;
 
-@property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
+@property (strong, nonatomic) NSMetadataQuery *ubiquitousDocumentsMetadataQuery;
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
 @property (strong, nonatomic) NSMutableSet *queuedURLset;

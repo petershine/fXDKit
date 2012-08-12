@@ -1,6 +1,6 @@
 //
 //  FXDFetchedResultsController.h
-//  PopTooUniversal
+//
 //
 //  Created by petershine on 7/4/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.

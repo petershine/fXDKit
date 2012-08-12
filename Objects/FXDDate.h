@@ -1,6 +1,6 @@
 //
 //  FXDDate.h
-//  PopTooUniversal
+//
 //
 //  Created by petershine on 5/5/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.

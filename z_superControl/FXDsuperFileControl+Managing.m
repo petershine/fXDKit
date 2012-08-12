@@ -1,6 +1,6 @@
 //
 //  FXDsuperFileControl+Managing.m
-//  EasyFileSharing
+///
 //
 //  Created by petershine on 8/12/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  FXDMetadataQuery.m
-//  EasyFileSharing
+///
 //
 //  Created by petershine on 7/10/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.

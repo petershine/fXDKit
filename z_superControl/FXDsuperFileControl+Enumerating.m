@@ -1,6 +1,6 @@
 //
 //  FXDsuperFileControl+Enumerating.m
-//  EasyFileSharing
+///
 //
 //  Created by petershine on 8/12/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
@@ -26,7 +26,7 @@
 	//FXDLog(@"self.ubiquityMetadataQuery results] count: %d", [[self.ubiquityMetadataQuery results] count]);
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		for (NSMetadataItem *metadataItem in [self.ubiquityMetadataQuery results]) {
+		for (NSMetadataItem *metadataItem in [self.ubiquitousDocumentsMetadataQuery results]) {
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
 			NSError *error = nil;

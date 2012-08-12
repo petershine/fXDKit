@@ -1,6 +1,6 @@
 //
 //  FXDFileManager.m
-//  EasyFileSharing
+///
 //
 //  Created by petershine on 7/9/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
@@ -98,81 +98,57 @@
 	return limitedEnumerator;
 }
 
-- (NSArray*)directoryTreeForRootPath:(NSString*)rootPath {
-	NSURL *rootURL = [NSURL URLWithString:rootPath];
+#pragma mark -
+- (NSMutableDictionary*)infoDictionaryForFolderURL:(NSURL*)folderURL {
 	
-	NSArray *directoryTree = [self directoryTreeForRootURL:rootURL];
+	NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	return directoryTree;
-}
-
-- (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL {	//FXDLog_DEFAULT;
-	FXDLog(@"rootURL: %@", rootURL);
+	[infoDictionary setObject:[folderURL lastPathComponent] forKey:@"folderName"];
 	
-	NSMutableArray *directoryTree = [[NSMutableArray alloc] initWithCapacity:0];
 	
-	NSDirectoryEnumerator *enumerator = [self fullEnumeratorForRootURL:rootURL];
+	NSDirectoryEnumerator *enumerator = [self limitedEnumeratorForRootURL:folderURL];
 	
-	NSString *keyFolderName = @"_name";
-	NSString *keyFolderFiles = @"files";
+	NSMutableArray *itemArray = nil;
 	
-	NSMutableDictionary *folder = nil;
-	NSMutableArray *files = nil;
+	NSError *error = nil;
 	
-	NSURL *nextObject = [enumerator nextObject];
+	NSURL *nextURL = [enumerator nextObject];
 	
-	while (nextObject) {
-		NSArray *components = [[nextObject unicodeAbsoluteString] componentsSeparatedByString:@"/"];
-		NSString *pathComponent = [components objectAtIndex:[components count] -1];
+	while (nextURL) {
+		NSString *resourceType = nil;
+		[nextURL getResourceValue:&resourceType forKey:NSURLFileResourceTypeKey error:&error];
 		
-		if ([pathComponent isEqualToString:@""]) {
-			NSString *pathComponent = [components objectAtIndex:[components count] -2];
+		if ([resourceType isEqualToString:NSURLFileResourceTypeDirectory]) {
 			
-			if (folder) {
-				[directoryTree addObject:folder];
+			//MARK: recursively called
+			NSMutableDictionary *subInfoDictionary = [self infoDictionaryForFolderURL:nextURL];
+			
+			if (subInfoDictionary && [subInfoDictionary count] > 0) {
+				if (itemArray == nil) {
+					itemArray = [[NSMutableArray alloc] initWithCapacity:0];
+				}
 				
-				files = nil;
-				folder = nil;
-			}
-						
-			if (folder == nil) {
-				folder = [[NSMutableDictionary alloc] initWithCapacity:0];
-				[folder setObject:pathComponent forKey:keyFolderName];
-				
-				files = [[NSMutableArray alloc] initWithCapacity:0];
-				[folder setObject:files forKey:keyFolderFiles];
+				[itemArray addObject:subInfoDictionary];
 			}
 		}
 		else {
+			if (itemArray == nil) {
+				itemArray = [[NSMutableArray alloc] initWithCapacity:0];
+			}
 			
-			if (files == nil && folder == nil) {
-				[directoryTree addObject:pathComponent];
-			}
-			else if	(folder){
-				if (files == nil) {
-					files = [[NSMutableArray alloc] initWithCapacity:0];
-				}
-				
-				[files addObject:pathComponent];
-			}
+			[itemArray addObject:[nextURL lastPathComponent]];
 		}
 		
-		nextObject = [enumerator nextObject];
+		nextURL = [enumerator nextObject];
 	}
 	
-	if (folder) {
-		[directoryTree addObject:folder];
-		
-		files = nil;
-		folder = nil;
+	FXDLog_ERROR;
+	
+	if (itemArray && [itemArray count] > 0) {
+		[infoDictionary setObject:itemArray forKey:@"items"];
 	}
 	
-	if ([directoryTree count] == 0) {
-		directoryTree = nil;
-	}
-	
-	return directoryTree;
+	return infoDictionary;
 }
-
 
 @end

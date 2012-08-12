@@ -1,6 +1,6 @@
 //
 //  FXDFileManager.h
-//  EasyFileSharing
+///
 //
 //  Created by petershine on 7/9/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
@@ -48,8 +48,6 @@
 - (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL;
 - (NSDirectoryEnumerator*)limitedEnumeratorForRootURL:(NSURL*)rootURL;
 
-- (NSArray*)directoryTreeForRootPath:(NSString*)rootPath;
-- (NSArray*)directoryTreeForRootURL:(NSURL*)rootURL;
-
+- (NSMutableDictionary*)infoDictionaryForFolderURL:(NSURL*)folderURL;
 
 @end

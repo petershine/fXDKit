@@ -1,6 +1,6 @@
 //
 //  FXDsuperFileControl.m
-//  PopTooUniversal
+//
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
@@ -43,18 +43,6 @@
 		// Instance variables
 		
 		// Properties
-		_currentPathLevel = 1;
-		
-		_ubiquityIdentityToken = nil;
-		
-		_ubiquityContainerURL = nil;
-		_ubiquitousDocumentsURL = nil;
-		
-		_ubiquityMetadataQuery = nil;
-		_localDirectoryWatcher = nil;
-		
-		_queuedURLset = nil;
-		_operationQueue = nil;
 	}
 	
 	return self;
@@ -82,12 +70,12 @@
 }
 
 #pragma mark -
-- (NSMetadataQuery*)ubiquityMetadataQuery {
-	if (_ubiquityMetadataQuery == nil) {
-		_ubiquityMetadataQuery = [[NSMetadataQuery alloc] init];
+- (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
+	if (_ubiquitousDocumentsMetadataQuery == nil) {
+		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
 	}
 	
-	return _ubiquityMetadataQuery;
+	return _ubiquitousDocumentsMetadataQuery;
 }
 
 #pragma mark -
@@ -156,12 +144,12 @@
 			
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				if (fileControl.ubiquityContainerURL) {
-#if TEST_directoryTree
+#if TEST_infoDictionaryForFolderURL
 					NSFileManager *fileManager = [NSFileManager defaultManager];
-					FXDLog(@"ubiquityContainerURL: %@", [fileManager directoryTreeForRootURL:fileControl.ubiquityContainerURL]);
-					//FXDLog(@"ubiquitousDocumentsURL:\n%@", [fileManager directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
-					//FXDLog(@"documentsDirectory:\n%@", [fileManager directoryTreeForRootURL:appDirectory_Document]);
-					FXDLog(@"cachedDirectory:\n%@", [fileManager directoryTreeForRootURL:appDirectory_Caches]);
+					
+					FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:fileControl.ubiquityContainerURL]);
+					FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
+					FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
 #endif
 
 					
@@ -224,11 +212,11 @@
 						  name:NSMetadataQueryDidUpdateNotification
 						object:nil];
 	
-	[self.ubiquityMetadataQuery applyDefaultConfiguration];
+	[self.ubiquitousDocumentsMetadataQuery applyDefaultConfiguration];
 	
-	[self.ubiquityMetadataQuery enableUpdates];
+	[self.ubiquitousDocumentsMetadataQuery enableUpdates];
 	
-	BOOL didStart = [self.ubiquityMetadataQuery startQuery];
+	BOOL didStart = [self.ubiquitousDocumentsMetadataQuery startQuery];
 	
 	if (didStart == NO) {
 		//TODO: handle error
