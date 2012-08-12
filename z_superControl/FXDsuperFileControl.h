@@ -57,6 +57,7 @@
 	
 	NSURL *_ubiquityContainerURL;
 	NSURL *_ubiquitousDocumentsURL;
+	NSURL *_ubiquitousCachesURL;
 	
 	NSMetadataQuery *_ubiquityMetadataQuery;
 	DirectoryWatcher *_localDirectoryWatcher;
@@ -72,6 +73,7 @@
 
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;
 @property (strong, nonatomic) NSURL *ubiquitousDocumentsURL;
+@property (strong, nonatomic) NSURL *ubiquitousCachesURL;
 
 @property (strong, nonatomic) NSMetadataQuery *ubiquityMetadataQuery;
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
@@ -97,27 +99,16 @@
 + (FXDsuperFileControl*)sharedInstance;
 
 - (void)startUpdatingUbiquityContainerURL;
+- (void)failedToUpdateUbiquityContainerURL;
 
 - (void)startObservingUbiquityMetadataQueryNotifications;
 - (void)startWatchingLocalDirectoryChange;
 
-- (void)failedToUpdateUbiquityContainerURL;
-
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray withCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent withFileManager:(NSFileManager*)fileManager;
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
-- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
-
-- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
-- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;
-- (void)enumerateLocalDirectory;
-
 - (void)evictAllUbiquitousDocuments;
 - (void)evictUbiquitousItemURLarray:(NSArray*)selectedURLarray;
-
-- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL;
-
-- (NSString*)cachedPathForItemURL:(NSURL*)itemURL;
 
 
 //MARK: - Observer implementation
@@ -132,5 +123,24 @@
 #pragma mark - NSMetadataQueryDelegate
 #pragma mark - DirectoryWatcherDelegate
 
+@end
+
+
+#pragma mark - Category
+@interface FXDsuperFileControl (Managing)
+#pragma mark - Public
+- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
+- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL;
+
+- (NSURL*)cachedURLForItemURL:(NSURL*)itemURL;
+
+@end
+
+
+@interface FXDsuperFileControl (Enumerating)
+#pragma mark - Public
+- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
+- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;
+- (void)enumerateLocalDirectory;
 
 @end

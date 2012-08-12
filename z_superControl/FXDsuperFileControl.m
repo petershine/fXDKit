@@ -72,6 +72,15 @@
 	return _ubiquitousDocumentsURL;
 }
 
+- (NSURL*)ubiquitousCachesURL {
+	if (_ubiquitousCachesURL == nil) {
+		if (self.ubiquityContainerURL) {
+			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
+		}
+	}
+	return _ubiquitousCachesURL;
+}
+
 #pragma mark -
 - (NSMetadataQuery*)ubiquityMetadataQuery {
 	if (_ubiquityMetadataQuery == nil) {
@@ -147,20 +156,21 @@
 			
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				if (fileControl.ubiquityContainerURL) {
+#if TEST_directoryTree
+					NSFileManager *fileManager = [NSFileManager defaultManager];
+					FXDLog(@"ubiquityContainerURL: %@", [fileManager directoryTreeForRootURL:fileControl.ubiquityContainerURL]);
+					//FXDLog(@"ubiquitousDocumentsURL:\n%@", [fileManager directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
+					//FXDLog(@"documentsDirectory:\n%@", [fileManager directoryTreeForRootURL:appDirectory_Document]);
+					FXDLog(@"cachedDirectory:\n%@", [fileManager directoryTreeForRootURL:appDirectory_Caches]);
+#endif
+
+					
 #if shouldUseUbiquitousDocuments
 					[fileControl startObservingUbiquityMetadataQueryNotifications];
-	#if TEST_directoryTree
-					FXDLog(@"ubiquitousDocumentsURL:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:fileControl.ubiquitousDocumentsURL]);
-	#endif
 #endif
 					
 #if shouldUseLocalDirectoryWatcher
 					[fileControl startWatchingLocalDirectoryChange];
-	#if TEST_directoryTree
-					FXDLog(@"documentsDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Document]);
-					//FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
-	#endif
-					FXDLog(@"cachedDirectory:\n%@", [[NSFileManager defaultManager] directoryTreeForRootURL:appDirectory_Caches]);
 #endif
 					[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 				}
@@ -173,6 +183,21 @@
 	else {
 		[fileControl failedToUpdateUbiquityContainerURL];
 	}
+}
+
+- (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
+	FXDAlertView *alertView = [[FXDAlertView alloc] initWithTitle:NSLocalizedString(@"alert_PleaseEnableiCloud", nil)
+														  message:nil
+														 delegate:nil
+												cancelButtonTitle:text_OK
+												otherButtonTitles:nil];
+	[alertView show];
+	
+#if shouldUseLocalDirectoryWatcher
+	[self startWatchingLocalDirectoryChange];
+#endif
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
 }
 
 #pragma mark -
@@ -213,22 +238,6 @@
 - (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
 	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:appSearhPath_Document delegate:self];
 	
-}
-
-#pragma mark -
-- (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
-	FXDAlertView *alertView = [[FXDAlertView alloc] initWithTitle:NSLocalizedString(@"alert_PleaseEnableiCloud", nil)
-														  message:nil
-														 delegate:nil
-												cancelButtonTitle:text_OK
-												otherButtonTitles:nil];
-	[alertView show];
-	
-#if shouldUseLocalDirectoryWatcher
-	[self startWatchingLocalDirectoryChange];
-#endif
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
 }
 
 #pragma mark -
@@ -321,171 +330,6 @@
 }
 
 #pragma mark -
-- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName {	//FXDLog_DEFAULT;
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
-	
-	if (currentFolderURL == nil) {
-		currentFolderURL = self.ubiquitousDocumentsURL;
-	}
-	
-	if (newFolderName == nil || [newFolderName isEqualToString:@""]) {
-		newFolderName = [[NSDate date] description];
-	}
-	
-	
-	NSString *pathComponent = [NSString stringWithFormat:@"%@", newFolderName];
-	NSURL *newFolderURL = [currentFolderURL URLByAppendingPathComponent:pathComponent];
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	NSError *error = nil;
-	
-	[fileManager createDirectoryAtURL:newFolderURL
-		  withIntermediateDirectories:YES
-						   attributes:nil
-								error:&error];
-	
-	FXDLog_ERROR;
-	
-	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
-}
-
-#pragma mark -
-- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
-	
-	if (currentFolderURL == nil) {
-		currentFolderURL = self.ubiquitousDocumentsURL;
-	}
-	
-	__block FXDsuperFileControl *fileControl = self;
-	
-	__block NSMutableArray *metadataItems = [[NSMutableArray alloc] initWithCapacity:0];
-	
-	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-	
-	//FXDLog(@"self.ubiquityMetadataQuery results] count: %d", [[self.ubiquityMetadataQuery results] count]);
-	
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		for (NSMetadataItem *metadataItem in [self.ubiquityMetadataQuery results]) {
-			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
-			
-			NSError *error = nil;
-			
-			id parentDirectoryURL = nil;
-			
-			[itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
-			
-			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
-				[metadataItems addObject:metadataItem];
-			}
-		}
-		
-		[userInfo setObject:metadataItems forKey:objkeyUbiquitousMetadataItems];
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:fileControl userInfo:userInfo];
-		}];
-	}];
-}
-
-- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
-	
-	if (currentFolderURL == nil) {
-		currentFolderURL = self.ubiquitousDocumentsURL;
-	}
-	
-	__block FXDsuperFileControl *fileControl = self;
-	
-	__block NSMutableArray *folders = [[NSMutableArray alloc] initWithCapacity:0];
-	
-	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-	
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
-		
-		NSURL *nextObject = [enumerator nextObject];
-		
-		while (nextObject) {
-			NSError *error = nil;
-			
-			id parentDirectoryURL = nil;
-			
-			[nextObject getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
-			
-			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
-				id fileResourceType = nil;
-				
-				[nextObject getResourceValue:&fileResourceType forKey:NSURLFileResourceTypeKey error:&error];
-				
-				if ([fileResourceType isEqualToString:NSURLFileResourceTypeDirectory]) {
-					[folders addObject:nextObject];
-				}
-			}
-			
-			FXDLog_ERROR;
-			
-			nextObject = [enumerator nextObject];
-		}
-		
-		[userInfo setObject:folders forKey:objkeyUbiquitousFolders];
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];
-		}];
-	}];
-}
-
-- (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-	__block FXDsuperFileControl *fileControl = self;
-	
-	__block NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	
-	NSURL *rootURL = [NSURL URLWithString:appSearhPath_Document];
-	
-	NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:rootURL];
-	
-	NSURL *nextObject = [enumerator nextObject];
-	
-	while (nextObject) {
-		
-		__block NSURL *itemURL = nextObject;
-		
-		if ([fileControl.queuedURLset containsObject:itemURL] == NO) {
-			[fileControl.queuedURLset addObject:itemURL];
-			
-			[fileControl.operationQueue addOperationWithBlock:^{
-				id isUbiquitousItem = nil;
-				id isHidden = nil;
-				
-				NSError *error = nil;
-				
-				[itemURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
-				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
-				
-				FXDLog_ERROR;
-				
-				if ((isUbiquitousItem == nil || [isUbiquitousItem boolValue] == NO) && [isHidden boolValue] == NO) {
-					NSArray *localItemURLarray = @[itemURL];
-					
-					[fileControl setUbiquitousForLocalItemURLarray:localItemURLarray withCurrentFolderURL:self.ubiquitousDocumentsURL withSeparatorPathComponent:pathcomponentDocuments withFileManager:fileManager];
-				}
-				
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					if ([fileControl.queuedURLset containsObject:itemURL]) {
-						[fileControl.queuedURLset removeObject:itemURL];
-					}
-				}];
-			}];
-		}
-		
-		nextObject = [enumerator nextObject];
-	}
-}
-
-#pragma mark -
 - (void)evictAllUbiquitousDocuments {	FXDLog_DEFAULT;
 	__block FXDsuperFileControl *fileControl = self;
 	
@@ -534,40 +378,6 @@
 	}
 	
 	FXDLog_ERROR;
-}
-
-#pragma mark -
-- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;	
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	NSError *error = nil;
-	
-	for (NSURL *itemURL in selectedURLarray) {
-		BOOL didRemove = [fileManager removeItemAtURL:itemURL error:&error];
-		
-		FXDLog(@"didRemove: %d itemURL: %@", didRemove, itemURL);
-	}
-	
-	FXDLog_ERROR;
-	
-	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
-	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:currentFolderURL];
-}
-
-
-#pragma mark -
-- (NSString*)cachedPathForItemURL:(NSURL*)itemURL {
-	NSString *directoryPath = [[itemURL URLByDeletingLastPathComponent] unicodeAbsoluteString];
-	directoryPath = [[directoryPath componentsSeparatedByString:pathcomponentDocuments] lastObject];
-	directoryPath = [NSString pathWithComponents:@[appSearhPath_Caches, directoryPath]];
-	
-	NSString *filePathComponent = [[itemURL lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	filePathComponent = [NSString stringWithFormat:@"_cached_%@", filePathComponent];
-	
-	NSString *cachedPath = [NSString pathWithComponents:@[directoryPath, filePathComponent]];
-	
-	return cachedPath;
 }
 
 

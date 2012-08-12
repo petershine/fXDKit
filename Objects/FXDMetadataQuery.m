@@ -69,6 +69,7 @@
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
 - (void)applyDefaultConfiguration {
+	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 	[self setPredicate:predicate];
 	
@@ -80,7 +81,7 @@
 	 */
 	
 	[self setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-	[self setNotificationBatchingInterval:0.5];
+	[self setNotificationBatchingInterval:0.1];
 }
 
 - (BOOL)logQueryResultsWithTransferringPercentage {

@@ -121,9 +121,8 @@
 	
 	NSURL *nextObject = [enumerator nextObject];
 	
-	while (nextObject) {		
-		NSString *absoluteString = [nextObject unicodeAbsoluteString];
-		NSArray *components = [absoluteString componentsSeparatedByString:@"/"];
+	while (nextObject) {
+		NSArray *components = [[nextObject unicodeAbsoluteString] componentsSeparatedByString:@"/"];
 		NSString *pathComponent = [components objectAtIndex:[components count] -1];
 		
 		if ([pathComponent isEqualToString:@""]) {
