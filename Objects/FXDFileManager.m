@@ -115,10 +115,10 @@
 	NSURL *nextURL = [enumerator nextObject];
 	
 	while (nextURL) {
-		NSString *resourceType = nil;
-		[nextURL getResourceValue:&resourceType forKey:NSURLFileResourceTypeKey error:&error];
+		id isDirectory = nil;
+		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
 		
-		if ([resourceType isEqualToString:NSURLFileResourceTypeDirectory]) {
+		if ([isDirectory boolValue]) {
 			
 			//MARK: recursively called
 			NSMutableDictionary *subInfoDictionary = [self infoDictionaryForFolderURL:nextURL];

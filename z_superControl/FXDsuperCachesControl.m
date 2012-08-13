@@ -99,7 +99,7 @@
 	
 	UIImage *thumbImage = nil;
 	
-	NSURL *cachedURL = [[FXDsuperCachesControl sharedInstance] cachedURLForItemURL:itemURL];
+	NSURL *cachedURL = [[FXDsuperCachesControl sharedInstance] cachedURLforItemURL:itemURL];
 	
 	
 	thumbImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:cachedURL]];
@@ -112,7 +112,7 @@
 	UIImage *originalImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:itemURL]];
 	
 	if (originalImage == nil) {
-		FXDLog(@"originalImage: %@ %@", originalImage, [itemURL lastPathComponent]);
+		//FXDLog(@"originalImage: %@ %@", originalImage, [itemURL lastPathComponent]);
 		
 		return thumbImage;
 	}
@@ -128,30 +128,57 @@
 }
 
 #pragma mark -
-- (NSURL*)cachedURLForItemURL:(NSURL*)itemURL {
+- (NSURL*)cachedURLforItemURL:(NSURL*)itemURL {
 	NSURL *cachedURL = nil;
 	
-	EFScontrolFile *fileControl = [EFScontrolFile sharedInstance];
+	NSError *error = nil;
 	
-	if (fileControl.ubiquitousCachesURL == nil) {
-		return cachedURL;
+	id isDirectory = nil;
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+	
+	if ([isDirectory boolValue]) {
+		
+		NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:itemURL];
+		
+		if (cachedFolderURL) {
+			cachedURL = cachedFolderURL;
+		}
 	}
-	
-	
-	NSString *relativePath = [[[itemURL absoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
-	
-	NSString *filePathComponent = [relativePath lastPathComponent];
-	filePathComponent = [NSString stringWithFormat:@".cached_%@", filePathComponent];
-	
-	NSMutableArray *pathComponents = [[NSMutableArray alloc] initWithArray:[relativePath pathComponents]];
-	[pathComponents replaceObjectAtIndex:[pathComponents count]-1 withObject:filePathComponent];
-	
-	cachedURL = [fileControl.ubiquitousCachesURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
+	else {
+		NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:[itemURL URLByDeletingLastPathComponent]];
+		
+		if (cachedFolderURL) {
+			NSString *filePathComponent = [itemURL lastPathComponent];
+			filePathComponent = [NSString stringWithFormat:@".cached_%@", filePathComponent];
+			
+			cachedURL = [cachedFolderURL URLByAppendingPathComponent:filePathComponent];
+		}
+	}
 	
 	return cachedURL;
 }
 
+- (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL {
+	NSURL *cachedFolderURL = nil;
+	
+	EFScontrolFile *fileControl = [EFScontrolFile sharedInstance];
+	
+	if (fileControl.ubiquitousCachesURL == nil) {
+		return cachedFolderURL;
+	}
+	
+	
+	NSString *relativePath = [[[folderURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
+	
+	cachedFolderURL = [fileControl.ubiquitousCachesURL URLByAppendingPathComponent:relativePath];
+	
+	return cachedFolderURL;
+}
+
+#pragma mark -
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {	FXDLog_DEFAULT;
+	//FXDLog(@"cachedURL: %@", cachedURL);
+	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSData *imageData = UIImagePNGRepresentation(thumbImage);
@@ -186,12 +213,52 @@
 #pragma mark -
 - (void)manageCachedURLarrayWithItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL {	FXDLog_DEFAULT;
 	
+	for (NSURL *itemURL in itemURLarray) {
+		[self manageCachedURLwithItemURL:itemURL forItemActionType:itemActionType fromCurrentFolderURL:currentFolderURL toDestinationFolderURL:destinationFolderURL];
+	}
+}
+
+- (void)manageCachedURLwithItemURL:(NSURL*)itemURL forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL {
+	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
 	
-	for (NSURL *itemURL in itemURLarray) {
+	NSURL *cachedURL = [self cachedURLforItemURL:itemURL];
+	
+	BOOL didSucceed = NO;
+	
+	if (itemActionType == itemActionDelete) {
+		didSucceed = [fileManager removeItemAtURL:cachedURL error:&error];
+	}
+	else {
+		NSURL *parentDirectoryURL = [self cachedFolderURLforFolderURL:destinationFolderURL];
 		
+		BOOL didCreateDirectory = NO;
+		
+		if (parentDirectoryURL) {
+			didCreateDirectory = [fileManager createDirectoryAtURL:parentDirectoryURL
+									   withIntermediateDirectories:YES
+														attributes:nil
+															 error:&error];
+			FXDLog_ERROR;
+		}
+		
+		
+		NSURL *cachedDestinationURL = [parentDirectoryURL URLByAppendingPathComponent:[cachedURL lastPathComponent]];
+		
+		
+		if (itemActionType == itemActionMove) {
+			didSucceed = [fileManager moveItemAtURL:cachedURL toURL:cachedDestinationURL error:&error];
+		}
+		else if (itemActionType == itemActionCopy) {
+			didSucceed = [fileManager copyItemAtURL:cachedURL toURL:cachedDestinationURL error:&error];
+		}
+		
+		FXDLog_ERROR;
+		
+		
+		FXDLog(@"didCreateDirectory: %d didSucceed: %d %@", didCreateDirectory, didSucceed, cachedDestinationURL);
 	}
 }
 
@@ -199,13 +266,12 @@
 - (void)enumerateCachesMetadataQueryResults {
 	__block NSArray *results = self.ubiquitousCachesMetadataQuery.results;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
+	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;
 		
 		for (NSMetadataItem *metadataItem in results) {
-			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			
-			if (isDownloading == NO && isDownloaded) {
+			if (isDownloaded == NO) {
 				NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 				
 				NSError *error = nil;
@@ -224,7 +290,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_DEFAULT;
+- (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self enumerateCachesMetadataQueryResults];
 }
 

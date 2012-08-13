@@ -57,6 +57,10 @@
 		}
 	}
 	
+	if (_ubiquitousDocumentsURL == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"_ubiquitousDocumentsURL: %@", _ubiquitousDocumentsURL);
+	}
+	
 	return _ubiquitousDocumentsURL;
 }
 
@@ -66,16 +70,12 @@
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
 		}
 	}
-	return _ubiquitousCachesURL;
-}
-
-#pragma mark -
-- (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
-	if (_ubiquitousDocumentsMetadataQuery == nil) {
-		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
+	
+	if (_ubiquitousCachesURL == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"_ubiquitousCachesURL: %@", _ubiquitousCachesURL);
 	}
 	
-	return _ubiquitousDocumentsMetadataQuery;
+	return _ubiquitousCachesURL;
 }
 
 #pragma mark -
@@ -190,6 +190,8 @@
 
 #pragma mark -
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
+	self.ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
+	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	
 	[defaultCenter addObserver:self
@@ -329,22 +331,22 @@
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:self.ubiquitousDocumentsURL];
 		
-		NSURL *nextObject = [enumerator nextObject];
+		NSURL *nextURL = [enumerator nextObject];
 		
-		while (nextObject) {
+		while (nextURL) {
 			id isUbiquitousItem = nil;
 			
 			NSError *error = nil;
 			
-			[nextObject getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
+			[nextURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
 			
 			FXDLog_ERROR;
 			
 			if (isUbiquitousItem) {
-				[fileControl evictUbiquitousItemURLarray:@[nextObject]];
+				[fileControl evictUbiquitousItemURLarray:@[nextURL]];
 			}
 			
-			nextObject = [enumerator nextObject];
+			nextURL = [enumerator nextObject];
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{

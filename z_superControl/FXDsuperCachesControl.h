@@ -41,10 +41,13 @@
 
 - (UIImage*)thumbImageForItemURL:(NSURL*)itemURL forDimension:(CGFloat)thumbnailDimension;
 
-- (NSURL*)cachedURLForItemURL:(NSURL*)itemURL;
+- (NSURL*)cachedURLforItemURL:(NSURL*)itemURL;
+- (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL;
+
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL;
 
 - (void)manageCachedURLarrayWithItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL;
+- (void)manageCachedURLwithItemURL:(NSURL*)itemURL forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL;
 
 - (void)enumerateCachesMetadataQueryResults;
 

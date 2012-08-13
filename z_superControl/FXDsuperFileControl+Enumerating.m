@@ -73,28 +73,28 @@
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
 		
-		NSURL *nextObject = [enumerator nextObject];
+		NSURL *nextURL = [enumerator nextObject];
 		
-		while (nextObject) {
+		while (nextURL) {
 			NSError *error = nil;
 			
 			id parentDirectoryURL = nil;
 			
-			[nextObject getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
+			[nextURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
 			
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
-				id fileResourceType = nil;
 				
-				[nextObject getResourceValue:&fileResourceType forKey:NSURLFileResourceTypeKey error:&error];
+				id isDirectory = nil;
+				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
 				
-				if ([fileResourceType isEqualToString:NSURLFileResourceTypeDirectory]) {
-					[folders addObject:nextObject];
+				if ([isDirectory boolValue]) {
+					[folders addObject:nextURL];
 				}
 			}
 			
 			FXDLog_ERROR;
 			
-			nextObject = [enumerator nextObject];
+			nextURL = [enumerator nextObject];
 		}
 		
 		[userInfo setObject:folders forKey:objkeyUbiquitousFolders];
@@ -115,11 +115,11 @@
 	
 	NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:rootURL];
 	
-	NSURL *nextObject = [enumerator nextObject];
+	NSURL *nextURL = [enumerator nextObject];
 	
-	while (nextObject) {
+	while (nextURL) {
 		
-		__block NSURL *itemURL = nextObject;
+		__block NSURL *itemURL = nextURL;
 		
 		if ([fileControl.queuedURLset containsObject:itemURL] == NO) {
 			[fileControl.queuedURLset addObject:itemURL];
@@ -149,7 +149,7 @@
 			}];
 		}
 		
-		nextObject = [enumerator nextObject];
+		nextURL = [enumerator nextObject];
 	}
 }
 

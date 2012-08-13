@@ -43,13 +43,14 @@
 
 #pragma mark -
 - (void)manageItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL {	FXDLog_DEFAULT;
+	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
 	
 	for (NSURL *itemURL in itemURLarray) {
 		BOOL didSucceed = NO;
-		
+				
 		if (itemActionType == itemActionDelete) {
 			didSucceed = [fileManager removeItemAtURL:itemURL error:&error];
 		}
@@ -65,12 +66,18 @@
 		}
 		
 		FXDLog_ERROR;
+		
+		if (didSucceed) {
+			[[FXDsuperCachesControl sharedInstance] manageCachedURLwithItemURL:itemURL forItemActionType:itemActionType fromCurrentFolderURL:currentFolderURL toDestinationFolderURL:destinationFolderURL];
+		}
 	}
 	
 	if (currentFolderURL) {
 		[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
 		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:currentFolderURL];
 	}
+	
+	
 }
 
 
