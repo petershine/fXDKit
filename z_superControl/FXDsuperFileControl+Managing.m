@@ -11,11 +11,13 @@
 @implementation FXDsuperFileControl (Managing)
 #pragma mark - Public
 - (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName {	//FXDLog_DEFAULT;
+	/*
 	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
+	 */
 	
 	if (newFolderName == nil || [newFolderName isEqualToString:@""]) {
 		newFolderName = [[NSDate date] description];
@@ -39,22 +41,36 @@
 	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
 }
 
-- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
-	
+#pragma mark -
+- (void)manageItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL {	FXDLog_DEFAULT;
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	NSError *error = nil;
 	
-	for (NSURL *itemURL in selectedURLarray) {
-		BOOL didRemove = [fileManager removeItemAtURL:itemURL error:&error];
+	for (NSURL *itemURL in itemURLarray) {
+		BOOL didSucceed = NO;
 		
-		FXDLog(@"didRemove: %d itemURL: %@", didRemove, itemURL);
+		if (itemActionType == itemActionDelete) {
+			didSucceed = [fileManager removeItemAtURL:itemURL error:&error];
+		}
+		else {
+			NSURL *itemDestinationURL = [destinationFolderURL URLByAppendingPathComponent:[itemURL lastPathComponent]];
+			
+			if (itemActionType == itemActionMove) {
+				didSucceed = [fileManager moveItemAtURL:itemURL toURL:itemDestinationURL error:&error];
+			}
+			else if (itemActionType == itemActionCopy) {
+				didSucceed = [fileManager copyItemAtURL:itemURL toURL:itemDestinationURL error:&error];
+			}
+		}
+		
+		FXDLog_ERROR;
 	}
 	
-	FXDLog_ERROR;
-	
-	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
-	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:currentFolderURL];
+	if (currentFolderURL) {
+		[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
+		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:currentFolderURL];
+	}
 }
 
 

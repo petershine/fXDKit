@@ -43,6 +43,7 @@
 #import "FXDKit.h"
 
 #import "DirectoryWatcher.h"
+#import "FXDsuperCachesControl.h"
 
 
 @interface FXDsuperFileControl : NSObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
@@ -104,7 +105,7 @@
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
 - (void)evictAllUbiquitousDocuments;
-- (void)evictUbiquitousItemURLarray:(NSArray*)selectedURLarray;
+- (void)evictUbiquitousItemURLarray:(NSArray*)itemURLarray;
 
 
 //MARK: - Observer implementation
@@ -126,7 +127,8 @@
 @interface FXDsuperFileControl (Managing)
 #pragma mark - Public
 - (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
-- (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL;
+
+- (void)manageItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL;
 
 @end
 
