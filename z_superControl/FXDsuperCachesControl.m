@@ -95,39 +95,6 @@
 }
 
 #pragma mark -
-- (UIImage*)thumbImageForItemURL:(NSURL*)itemURL forDimension:(CGFloat)thumbnailDimension {
-	
-	UIImage *thumbImage = nil;
-	
-	NSURL *cachedURL = [[FXDsuperCachesControl sharedInstance] cachedURLforItemURL:itemURL];
-	
-	
-	thumbImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:cachedURL]];
-	
-	if (thumbImage) {
-		return thumbImage;
-	}
-	
-	
-	UIImage *originalImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:itemURL]];
-	
-	if (originalImage == nil) {
-		//FXDLog(@"originalImage: %@ %@", originalImage, [itemURL lastPathComponent]);
-		
-		return thumbImage;
-	}
-	
-	
-	thumbImage = [originalImage thumbImageUsingThumbDimension:thumbnailDimension];
-	
-	if (thumbImage) {
-		[self addNewThumbImage:thumbImage toCachedURL:cachedURL];
-	}
-	
-	return thumbImage;
-}
-
-#pragma mark -
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL {
 	NSURL *cachedURL = nil;
 	
@@ -208,58 +175,6 @@
 	
 	
 	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL lastPathComponent]);
-}
-
-#pragma mark -
-- (void)manageCachedURLarrayWithItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL {	FXDLog_DEFAULT;
-	
-	for (NSURL *itemURL in itemURLarray) {
-		[self manageCachedURLwithItemURL:itemURL forItemActionType:itemActionType fromCurrentFolderURL:currentFolderURL toDestinationFolderURL:destinationFolderURL];
-	}
-}
-
-- (void)manageCachedURLwithItemURL:(NSURL*)itemURL forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL {
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	NSError *error = nil;
-	
-	NSURL *cachedURL = [self cachedURLforItemURL:itemURL];
-	
-	BOOL didSucceed = NO;
-	
-	if (itemActionType == itemActionDelete) {
-		didSucceed = [fileManager removeItemAtURL:cachedURL error:&error];
-	}
-	else {
-		NSURL *parentDirectoryURL = [self cachedFolderURLforFolderURL:destinationFolderURL];
-		
-		BOOL didCreateDirectory = NO;
-		
-		if (parentDirectoryURL) {
-			didCreateDirectory = [fileManager createDirectoryAtURL:parentDirectoryURL
-									   withIntermediateDirectories:YES
-														attributes:nil
-															 error:&error];
-			FXDLog_ERROR;
-		}
-		
-		
-		NSURL *cachedDestinationURL = [parentDirectoryURL URLByAppendingPathComponent:[cachedURL lastPathComponent]];
-		
-		
-		if (itemActionType == itemActionMove) {
-			didSucceed = [fileManager moveItemAtURL:cachedURL toURL:cachedDestinationURL error:&error];
-		}
-		else if (itemActionType == itemActionCopy) {
-			didSucceed = [fileManager copyItemAtURL:cachedURL toURL:cachedDestinationURL error:&error];
-		}
-		
-		FXDLog_ERROR;
-		
-		
-		FXDLog(@"didCreateDirectory: %d didSucceed: %d %@", didCreateDirectory, didSucceed, cachedDestinationURL);
-	}
 }
 
 #pragma mark -

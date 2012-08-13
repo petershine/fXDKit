@@ -43,7 +43,6 @@
 #import "FXDKit.h"
 
 #import "DirectoryWatcher.h"
-#import "FXDsuperCachesControl.h"
 
 
 @interface FXDsuperFileControl : NSObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
@@ -127,8 +126,6 @@
 @interface FXDsuperFileControl (Managing)
 #pragma mark - Public
 - (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
-
-- (void)manageItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL;
 
 @end
 

@@ -39,15 +39,10 @@
 #pragma mark - Public
 + (FXDsuperCachesControl*)sharedInstance;
 
-- (UIImage*)thumbImageForItemURL:(NSURL*)itemURL forDimension:(CGFloat)thumbnailDimension;
-
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL;
 - (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL;
 
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL;
-
-- (void)manageCachedURLarrayWithItemURLarray:(NSArray*)itemURLarray forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL;
-- (void)manageCachedURLwithItemURL:(NSURL*)itemURL forItemActionType:(ITEM_ACTION_TYPE)itemActionType fromCurrentFolderURL:(NSURL*)currentFolderURL toDestinationFolderURL:(NSURL*)destinationFolderURL;
 
 - (void)enumerateCachesMetadataQueryResults;
 
