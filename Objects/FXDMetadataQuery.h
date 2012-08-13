@@ -45,8 +45,6 @@
 
 #pragma mark - Category
 @interface NSMetadataQuery (Added)
-- (void)applyDefaultConfiguration;
-
 - (BOOL)logQueryResultsWithTransferringPercentage;
 
 @end

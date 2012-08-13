@@ -195,24 +195,29 @@
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryDidStartGathering:)
 						  name:NSMetadataQueryDidStartGatheringNotification
-						object:nil];
+						object:self.ubiquitousDocumentsMetadataQuery];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryGatheringProgress:)
 						  name:NSMetadataQueryGatheringProgressNotification
-						object:nil];
+						object:self.ubiquitousDocumentsMetadataQuery];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
 						  name:NSMetadataQueryDidFinishGatheringNotification
-						object:nil];
+						object:self.ubiquitousDocumentsMetadataQuery];
 	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSMetadataQueryDidUpdate:)
 						  name:NSMetadataQueryDidUpdateNotification
-						object:nil];
+						object:self.ubiquitousDocumentsMetadataQuery];
 	
-	[self.ubiquitousDocumentsMetadataQuery applyDefaultConfiguration];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
+	[self.ubiquitousDocumentsMetadataQuery setPredicate:predicate];
+	
+	[self.ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
+	[self.ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:0.1];
+	
 	
 	[self.ubiquitousDocumentsMetadataQuery enableUpdates];
 	

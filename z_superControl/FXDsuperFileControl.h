@@ -128,8 +128,6 @@
 - (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
 - (void)removeSelectedURLarray:(NSArray*)selectedURLarray fromCurrentFolderURL:(NSURL*)currentFolderURL;
 
-- (NSURL*)cachedURLForItemURL:(NSURL*)itemURL;
-
 @end
 
 

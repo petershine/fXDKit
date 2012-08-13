@@ -68,7 +68,7 @@
 
 #pragma mark - Category
 @implementation NSURL (Added)
-- (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	FXDLog_DEFAULT;
+- (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	//FXDLog_DEFAULT;
 	NSArray *ubiquitousItemKeys = @[NSURLIsUbiquitousItemKey,
 								   NSURLUbiquitousItemHasUnresolvedConflictsKey,
 								   NSURLUbiquitousItemIsDownloadedKey,

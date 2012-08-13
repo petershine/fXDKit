@@ -58,26 +58,4 @@
 }
 
 
-#pragma mark -
-- (NSURL*)cachedURLForItemURL:(NSURL*)itemURL {
-	NSURL *cachedURL = nil;
-	
-	if (self.ubiquitousCachesURL == nil) {
-		return cachedURL;
-	}
-	
-		
-	NSString *relativePath = [[[itemURL absoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
-	
-	NSString *filePathComponent = [relativePath lastPathComponent];
-	filePathComponent = [NSString stringWithFormat:@".cached_%@", filePathComponent];
-	
-	NSMutableArray *pathComponents = [[NSMutableArray alloc] initWithArray:[relativePath pathComponents]];
-	[pathComponents replaceObjectAtIndex:[pathComponents count]-1 withObject:filePathComponent];
-	
-	cachedURL = [self.ubiquitousCachesURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
-	
-	return cachedURL;
-}
-
 @end

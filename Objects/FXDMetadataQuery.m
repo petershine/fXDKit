@@ -68,22 +68,6 @@
 
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
-- (void)applyDefaultConfiguration {
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
-	[self setPredicate:predicate];
-	
-	/*
-	NSMutableArray *sortDescriptors = [[NSMutableArray alloc] initWithCapacity:0];
-	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
-	[sortDescriptors addObject:descriptor];
-	[self setSortDescriptors:sortDescriptors];
-	 */
-	
-	[self setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-	[self setNotificationBatchingInterval:0.1];
-}
-
 - (BOOL)logQueryResultsWithTransferringPercentage {
 	BOOL didLogTransferring = NO;
 	
@@ -99,13 +83,13 @@
 			didLogTransferring = YES;
 			
 #if TEST_logTransferringPercentage
-			logString = [logString stringByAppendingFormat:@"isUploaded: %d ", [isUploaded boolValue]];
+			logString = [logString stringByAppendingFormat:@"isUploaded: %d", [isUploaded boolValue]];
 			
 			NSNumber *isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
 			
 			if ([isUploading boolValue]) {
 				NSNumber *percentUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentUploadedKey];
-				logString = [logString stringByAppendingFormat:@"uploading: %@", percentUploaded];
+				logString = [logString stringByAppendingFormat:@" uploading: %@", percentUploaded];
 			}
 #endif
 		}
@@ -113,13 +97,13 @@
 			didLogTransferring = YES;
 			
 #if TEST_logTransferringPercentage
-			logString = [logString stringByAppendingFormat:@"isDownloaded: %d ", [isDownloaded boolValue]];
+			logString = [logString stringByAppendingFormat:@"isDownloaded: %d", [isDownloaded boolValue]];
 			
 			NSNumber *isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
 			
 			if ([isDownloading boolValue]) {				
 				NSNumber *percentDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentDownloadedKey];
-				logString = [logString stringByAppendingFormat:@"downloading %@", percentDownloaded];
+				logString = [logString stringByAppendingFormat:@" downloading %@", percentDownloaded];
 			}
 #endif
 		}
