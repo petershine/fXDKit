@@ -156,12 +156,7 @@
 																	 ofType:NSSQLiteStoreType
 														 modelConfiguration:nil
 															   storeOptions:options
-																	  error:&error];
-		
-		if (error || didConfigure == NO) {
-			FXDLog_ERROR;
-		}
-		
+																	  error:&error];FXDLog_ERROR;
 		FXDLog(@"didConfigure: %d", didConfigure);
 		
 #if ForDEVELOPER
@@ -249,11 +244,9 @@
 		
 		NSError *error = nil;
 		
-		if ([resultsController performFetch:&error]) {
-			FXDLog(@"performFetch: %@", @"DONE");
-		}
+		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 		
-		FXDLog_ERROR;
+		FXDLog(@"didPerformFetch: %d", didPerformFetch);
 	}
 	
 	return resultsController;
@@ -290,11 +283,11 @@
 	
     if (managedObjectContext && managedObjectContext.hasChanges) {
 		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
+			
 			NSError *error = nil;
 			
-			if (![managedObjectContext save:&error]) {
-				FXDLog_ERROR;
-			}
+			BOOL didSave = [managedObjectContext save:&error];FXDLog_ERROR;
+			FXDLog(@"didSave: %d", didSave);
 		}];
     }
 }

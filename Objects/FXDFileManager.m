@@ -116,7 +116,7 @@
 	
 	while (nextURL) {
 		id isDirectory = nil;
-		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 		
 		if ([isDirectory boolValue]) {
 			
@@ -141,8 +141,6 @@
 		
 		nextURL = [enumerator nextObject];
 	}
-	
-	FXDLog_ERROR;
 	
 	if (itemArray && [itemArray count] > 0) {
 		[infoDictionary setObject:itemArray forKey:@"items"];

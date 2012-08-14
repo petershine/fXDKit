@@ -101,7 +101,7 @@
 	NSError *error = nil;
 	
 	id isDirectory = nil;
-	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 	
 	if ([isDirectory boolValue]) {
 		
@@ -143,7 +143,7 @@
 }
 
 #pragma mark -
-- (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {	FXDLog_DEFAULT;
+- (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {	//FXDLog_DEFAULT;
 	//FXDLog(@"cachedURL: %@", cachedURL);
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -154,7 +154,7 @@
 	
 	BOOL didCreate = [fileManager createFileAtPath:thumbItemPath contents:imageData attributes:nil];
 	
-	NSURL *thumbItemURL = [NSURL URLWithString:thumbItemPath];
+	NSURL *thumbItemURL = [NSURL fileURLWithPath:thumbItemPath];
 	
 	
 	NSError *error = nil;
@@ -162,18 +162,14 @@
 	[fileManager createDirectoryAtURL:[cachedURL URLByDeletingLastPathComponent]
 									withIntermediateDirectories:YES
 													 attributes:nil
-														  error:&error];
-	FXDLog_ERROR;
+														  error:&error];FXDLog_ERROR;
 	
 	
-	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];
-	FXDLog_ERROR;
+	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERROR;
 	
+	[cachedURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 	
-	[cachedURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&error];
-	FXDLog_ERROR;
-	
-	
+	FXDLog_DEFAULT;
 	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL lastPathComponent]);
 }
 
@@ -190,8 +186,7 @@
 				NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 				
 				NSError *error = nil;
-				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];
-				FXDLog_ERROR;
+				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
 				
 				FXDLog(@"didStartDownloading: %d %@", didStartDownloading, [itemURL lastPathComponent]);
 			}

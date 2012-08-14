@@ -95,13 +95,11 @@
 }
 
 - (NSDate*)attributeModificationDate {
-	NSDate *attributeModificationDate = nil;
 	
 	NSError *error = nil;
 	
-	[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];
-	
-	FXDLog_ERROR;
+	NSDate *attributeModificationDate = nil;
+	[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];FXDLog_ERROR;
 	
 	return attributeModificationDate;
 }
@@ -110,13 +108,10 @@
 - (FILE_KIND_TYPE)fileKindType {
 	FILE_KIND_TYPE fileKindType = fileKindUndefined;
 	
-	NSString *typeIdentifier = nil;
-	
 	NSError *error = nil;
 	
-	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];
-	
-	FXDLog_ERROR;
+	NSString *typeIdentifier = nil;
+	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];FXDLog_ERROR;
 	
 	if ([typeIdentifier isEqual:(NSString*)kUTTypeImage]
 		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG]

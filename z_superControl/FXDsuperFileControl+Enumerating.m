@@ -32,18 +32,15 @@
 			NSError *error = nil;
 			
 			id parentDirectoryURL = nil;
-			[itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
+			[itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERROR;
 			
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
 				
 				id isHidden = nil;
-				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
+				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 				//FXDLog(@"isHidden: %@", isHidden);
 				
-				if ([isHidden boolValue]) {
-					//SKIP
-				}
-				else {
+				if ([isHidden boolValue] == NO) {
 					[metadataItems addObject:metadataItem];
 				}
 			}
@@ -79,20 +76,17 @@
 			NSError *error = nil;
 			
 			id parentDirectoryURL = nil;
-			
-			[nextURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
+			[nextURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERROR;
 			
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
 				
 				id isDirectory = nil;
-				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 				
 				if ([isDirectory boolValue]) {
 					[folders addObject:nextURL];
 				}
 			}
-			
-			FXDLog_ERROR;
 			
 			nextURL = [enumerator nextObject];
 		}
@@ -106,47 +100,50 @@
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-	__block FXDsuperFileControl *fileControl = self;
+	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
-	__block NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
 	
-	
-	NSURL *rootURL = [NSURL URLWithString:appSearhPath_Document];
-	
-	NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:rootURL];
-	
-	NSURL *nextURL = [enumerator nextObject];
+	__block NSURL *nextURL = [enumerator nextObject];
 	
 	while (nextURL) {
+		NSError *error = nil;
 		
-		__block NSURL *itemURL = nextURL;
+		NSString *localizedName = nil;
+		[nextURL getResourceValue:&localizedName forKey:NSURLLocalizedNameKey error:&error];FXDLog_ERROR;
 		
-		if ([fileControl.queuedURLset containsObject:itemURL] == NO) {
-			[fileControl.queuedURLset addObject:itemURL];
+		if ([localizedName rangeOfString:@".sqlite"].length > 0) {	//SKIP
+			FXDLog(@"localizedName: %@", localizedName);
+		}
+		else {
+			id isHidden = nil;
+			[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 			
-			[fileControl.operationQueue addOperationWithBlock:^{
-				id isUbiquitousItem = nil;
-				id isHidden = nil;
+			if ([isHidden boolValue] == NO) {
+				__block FXDsuperFileControl *fileControl = self;
+								
+				BOOL doesContain = [fileControl.queuedURLset containsObject:nextURL];
 				
-				NSError *error = nil;
-				
-				[itemURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
-				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
-				
-				FXDLog_ERROR;
-				
-				if ((isUbiquitousItem == nil || [isUbiquitousItem boolValue] == NO) && [isHidden boolValue] == NO) {
-					NSArray *localItemURLarray = @[itemURL];
+				if (doesContain == NO) {
+					BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
 					
-					[fileControl setUbiquitousForLocalItemURLarray:localItemURLarray withCurrentFolderURL:self.ubiquitousDocumentsURL withSeparatorPathComponent:pathcomponentDocuments withFileManager:fileManager];
-				}
-				
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					if ([fileControl.queuedURLset containsObject:itemURL]) {
-						[fileControl.queuedURLset removeObject:itemURL];
+					if (isUbiquitousItem == NO) {
+						[fileControl.queuedURLset addObject:nextURL];
+						
+						[fileControl.operationQueue addOperationWithBlock:^{
+							NSArray *localItemURLarray = @[nextURL];
+							
+							[fileControl setUbiquitousForLocalItemURLarray:localItemURLarray atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+							
+							[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+								if ([fileControl.queuedURLset containsObject:nextURL]) {
+									[fileControl.queuedURLset removeObject:nextURL];
+								}
+							}];
+						}];
 					}
-				}];
-			}];
+				}
+			}
 		}
 		
 		nextURL = [enumerator nextObject];

@@ -236,7 +236,7 @@
 }
 
 #pragma mark -
-- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray withCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent withFileManager:(NSFileManager*)fileManager {	//FXDLog_DEFAULT;
+- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent {	//FXDLog_DEFAULT;
 	
 	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
@@ -244,9 +244,7 @@
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
-	if (fileManager == nil) {
-		fileManager = [NSFileManager defaultManager];
-	}
+	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	for (NSURL *itemURL in localItemURLarray) {
 		NSString *localItemPath = [itemURL unicodeAbsoluteString];
@@ -256,9 +254,7 @@
 				
 		NSError *error = nil;
 				
-		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];
-		
-		FXDLog_ERROR;
+		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];FXDLog_ERROR;
 		
 		if (error || didSetUbiquitous == NO) {
 			//FXDLog(@"resourceValues:\n%@", [destinationURL fullResourceValuesWithError:nil]);
@@ -334,13 +330,8 @@
 		NSURL *nextURL = [enumerator nextObject];
 		
 		while (nextURL) {
-			id isUbiquitousItem = nil;
 			
-			NSError *error = nil;
-			
-			[nextURL getResourceValue:&isUbiquitousItem forKey:NSURLIsUbiquitousItemKey error:&error];
-			
-			FXDLog_ERROR;
+			BOOL isUbiquitousItem = [[NSFileManager defaultManager] isUbiquitousItemAtURL:nextURL];
 			
 			if (isUbiquitousItem) {
 				[fileControl evictUbiquitousItemURLarray:@[nextURL]];
@@ -367,12 +358,10 @@
 	NSError *error = nil;
 	
 	for (NSURL *itemURL in itemURLarray) {
-		BOOL didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];
+		BOOL didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
 		
 		FXDLog(@"didEvict: %d %@", didEvict, itemURL);
 	}
-	
-	FXDLog_ERROR;
 }
 
 
@@ -382,12 +371,14 @@
 }
 
 #pragma mark -
-- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 	
 }
 
-- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
+	NSMetadataQuery *metadataQuery = notification.object;
 	
+	FXDLog(@"metadataQuery.resultCount: %d", metadataQuery.resultCount);
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;

@@ -27,9 +27,7 @@
 	[fileManager createDirectoryAtURL:newFolderURL
 		  withIntermediateDirectories:YES
 						   attributes:nil
-								error:&error];
-	
-	FXDLog_ERROR;
+								error:&error];FXDLog_ERROR;
 	
 	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:currentFolderURL];
 }
