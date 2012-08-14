@@ -28,6 +28,15 @@
 
 
 #pragma mark - Initialization
+- (void)dealloc {
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	FXDLog_DEFAULT;
+}
 
 
 #pragma mark - Accessor overriding

@@ -53,11 +53,14 @@ typedef enum {
 #pragma mark - Category
 @interface NSURL (Added)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError **)error;
-- (NSDictionary*)fullResourceValuesWithError:(NSError **)error;
+- (NSDictionary*)fullResourceValues;
 
 - (NSString*)unicodeAbsoluteString;
 - (NSDate*)attributeModificationDate;
 
 - (FILE_KIND_TYPE)fileKindType;
+
+- (NSString*)followingPathAfterPathComponent:(NSString*)pathComponent;
+- (NSString*)followingPathInDocuments;
 
 @end

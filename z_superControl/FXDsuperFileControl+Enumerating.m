@@ -11,7 +11,6 @@
 @implementation FXDsuperFileControl (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
@@ -55,7 +54,6 @@
 }
 
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
 	
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;

@@ -149,7 +149,6 @@
 
 #pragma mark -
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {	//FXDLog_DEFAULT;
-	//FXDLog(@"cachedURL: %@", cachedURL);
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
@@ -174,8 +173,7 @@
 	
 	[cachedURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 	
-	FXDLog_DEFAULT;
-	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL lastPathComponent]);
+	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
 
 #pragma mark -
@@ -212,7 +210,7 @@
 	NSArray *results = metadataQuery.results;
 	NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
 	
-	FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [[[lastItemURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentCaches] lastObject]);
+	FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathAfterPathComponent:pathcomponentCaches]);
 #endif
 }
 

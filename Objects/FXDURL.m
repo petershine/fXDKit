@@ -81,10 +81,12 @@
 	return resourceValues;
 }
 
-- (NSDictionary*)fullResourceValuesWithError:(NSError **)error {
-	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:error]];
+- (NSDictionary*)fullResourceValues {
+	NSError *error = nil;
 	
-	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:error]];
+	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];FXDLog_DEFAULT;
+	
+	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];FXDLog_DEFAULT;
 	
 	return resourceValues;	
 }
@@ -131,5 +133,13 @@
 	return fileKindType;
 }
 
+#pragma mark -
+- (NSString*)followingPathAfterPathComponent:(NSString *)pathComponent {
+	return [[[self unicodeAbsoluteString] componentsSeparatedByString:pathComponent] lastObject];
+}
+
+- (NSString*)followingPathInDocuments {
+	return [self followingPathAfterPathComponent:pathcomponentDocuments];
+}
 
 @end

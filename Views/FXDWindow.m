@@ -71,24 +71,10 @@
     // Properties
     
     // IBOutlets
-	//self.backgroundColor = [UIColor clearColor];
 }
 
 
 #pragma mark - Accessor overriding
-- (FXDviewProgress*)progressView {
-	if (_progressView == nil) {
-		_progressView = [FXDviewProgress viewFromNib:nil];
-		
-		[self addSubview:_progressView];
-		[self bringSubviewToFront:_progressView];
-		
-		FXDLog_DEFAULT;
-		FXDLog(@"self.subviews: %@", self.subviews);
-	}
-	
-	return _progressView;
-}
 
 
 #pragma mark - Private
@@ -105,11 +91,28 @@
 
 //MARK: - Observer implementation
 - (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self.progressView fadeInFromHidden];
+	
+	if (self.progressView == nil) {
+		self.progressView = [FXDviewProgress viewFromNib:nil];
+		
+		[self addSubview:self.progressView];
+		[self bringSubviewToFront:self.progressView];
+		
+		FXDLog(@"self.subviews: %@", self.subviews);
+		
+		[self.progressView fadeInFromHidden];
+	}
 }
 
-- (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self.progressView fadeOutThenHidden];
+- (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {
+	
+	if (self.progressView) {
+		[self removeAsFadeOutSubview:self.progressView removeAfterFinished:^{	FXDLog_DEFAULT;
+			self.progressView = nil;
+			
+			FXDLog(@"self.subviews: %@", self.subviews);
+		}];
+	}
 }
 
 //MARK: - Delegate implementation

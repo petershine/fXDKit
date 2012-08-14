@@ -213,9 +213,9 @@
 					 completion:^(BOOL finished) {						 
 						 if (self.hidden == NO) {
 							 self.hidden = YES;
-							 
-							 self.alpha = 1.0;
 						 }
+						 
+						 self.alpha = 1.0;
 					 }];
 }
 
@@ -229,16 +229,20 @@
 	[subview fadeIn];
 }
 
-- (void)removeAsFadeOutSubview:(UIView*)subview afterFinished:(void(^)(void))afterFinished {	//FXDLog_DEFAULT;
+- (void)removeAsFadeOutSubview:(UIView*)subview removeAfterFinished:(void(^)(void))removeAfterFinished {	//FXDLog_DEFAULT;
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 0.0;
 					 }
 					 completion:^(BOOL finished) {
+						 if (subview.hidden == NO) {
+							 subview.hidden = YES;
+						 }
+						 
 						 [subview removeFromSuperview];
 						 
-						 if (afterFinished) {
-							 afterFinished();
+						 if (removeAfterFinished) {
+							 removeAfterFinished();
 						 }
 					 }];
 }

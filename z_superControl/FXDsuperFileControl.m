@@ -321,6 +321,8 @@
 
 #pragma mark -
 - (void)evictAllUbiquitousDocuments {	FXDLog_DEFAULT;
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeInProgressView object:nil userInfo:nil];
+	
 	__block FXDsuperFileControl *fileControl = self;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
@@ -340,7 +342,7 @@
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEvictAllUbiquitousDocuments object:fileControl userInfo:nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeOutProgressView object:nil userInfo:nil];
 		}];
 	}];
 }
@@ -359,7 +361,7 @@
 	for (NSURL *itemURL in itemURLarray) {
 		BOOL didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
 		
-		FXDLog(@"didEvict: %d %@", didEvict, itemURL);
+		FXDLog(@"didEvict: %d %@", didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
 	}
 }
 
@@ -371,7 +373,7 @@
 
 #pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
-	
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeInProgressView object:nil userInfo:nil];
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
@@ -381,7 +383,7 @@
 	NSArray *results = metadataQuery.results;
 	NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
 	
-	FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [[[lastItemURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject]);
+	FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
 #endif
 }
 
