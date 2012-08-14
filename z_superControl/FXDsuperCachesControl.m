@@ -58,6 +58,11 @@
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 		
 		[defaultCenter addObserver:self
+						  selector:@selector(observedCachesMetadataQueryGatheringProgress:)
+							  name:NSMetadataQueryGatheringProgressNotification
+							object:_ubiquitousCachesMetadataQuery];
+		
+		[defaultCenter addObserver:self
 						  selector:@selector(observedCachesMetadataQueryDidFinishGathering:)
 							  name:NSMetadataQueryDidFinishGatheringNotification
 							object:_ubiquitousCachesMetadataQuery];
@@ -200,6 +205,17 @@
 
 
 //MARK: - Observer implementation
+- (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {
+#if DEBUG
+	NSMetadataQuery *metadataQuery = notification.object;
+	
+	NSArray *results = metadataQuery.results;
+	NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
+	
+	FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [[[lastItemURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentCaches] lastObject]);
+#endif
+}
+
 - (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self enumerateCachesMetadataQueryResults];
 }

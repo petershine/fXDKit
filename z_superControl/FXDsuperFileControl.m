@@ -237,9 +237,7 @@
 
 #pragma mark -
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent {	//FXDLog_DEFAULT;
-	
-	//FXDLog(@"currentFolderURL: %@", currentFolderURL);
-	
+		
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
@@ -256,15 +254,13 @@
 				
 		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];FXDLog_ERROR;
 		
-		if (error || didSetUbiquitous == NO) {
-			//FXDLog(@"resourceValues:\n%@", [destinationURL fullResourceValuesWithError:nil]);
-			
+		if (error || didSetUbiquitous == NO) {			
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
 		}
 	}
 }
 
-- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)error {	//FXDLog_DEFAULT;
+- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)resultError {	//FXDLog_DEFAULT;
 	//TODO: deal with following cases
 	/*
 	 domain: NSCocoaErrorDomain
@@ -294,8 +290,8 @@
 	
 	NSString *title = nil;
 	
-	if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
-		switch ([error code]) {
+	if ([[resultError domain] isEqualToString:NSPOSIXErrorDomain]) {
+		switch ([resultError code]) {
 			case 63:	//The operation couldn’t be completed. File name too long
 				break;
 				
@@ -303,13 +299,16 @@
 				break;
 		}
 	}
-	else if ([[error domain] isEqualToString:NSCocoaErrorDomain]) {
-		switch ([error code]) {				
-			case 516:	//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
-				break;
+	else if ([[resultError domain] isEqualToString:NSCocoaErrorDomain]) {
+		switch ([resultError code]) {				
+			case 516:	{
+				//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
+				NSError *error = nil;
+				[[NSFileManager defaultManager] removeItemAtURL:localItemURL error:&error];FXDLog_ERROR;
+			}	break;
 				
 			default:
-				title = [NSString stringWithFormat:@"%@\n%@", [error localizedDescription], localItemURL];
+				title = [NSString stringWithFormat:@"%@\n%@", [resultError localizedDescription], localItemURL];
 				break;
 		}
 	}
@@ -376,9 +375,14 @@
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
+#if DEBUG
 	NSMetadataQuery *metadataQuery = notification.object;
 	
-	FXDLog(@"metadataQuery.resultCount: %d", metadataQuery.resultCount);
+	NSArray *results = metadataQuery.results;
+	NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
+	
+	FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [[[lastItemURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject]);
+#endif
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
