@@ -97,7 +97,7 @@
 #pragma mark - Category
 @implementation UIView (Added)
 + (id)viewFromNibName:(NSString*)nibName {
-	if (nibName == nil) {
+	if (!nibName) {
 		nibName = NSStringFromClass([self class]);
 	}
 	
@@ -117,7 +117,7 @@
 }
 
 + (id)viewFromNib:(UINib*)nib {
-	if (nib == nil) {
+	if (!nib) {
 		NSString *nibName = NSStringFromClass([self class]);
 		
 		nib = [UINib nibWithNibName:nibName bundle:nil];
@@ -234,11 +234,7 @@
 					 animations:^{
 						 subview.alpha = 0.0;
 					 }
-					 completion:^(BOOL finished) {
-						 if (subview.hidden == NO) {
-							 subview.hidden = YES;
-						 }
-						 
+					 completion:^(BOOL finished) {						 
 						 [subview removeFromSuperview];
 						 
 						 if (removeAfterFinished) {

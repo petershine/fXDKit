@@ -34,8 +34,6 @@
 	// Instance variables
 	
 	// Properties
-	
-	FXDLog_DEFAULT;
 }
 
 

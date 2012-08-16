@@ -51,7 +51,7 @@
 #pragma mark - Accessor overriding
 // Properties
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
-	if (_ubiquitousCachesMetadataQuery == nil) {	//FXDLog_DEFAULT;
+	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
 		
 		
@@ -78,10 +78,10 @@
 		
 		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
 		
-		[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:1.0];
+		[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:0.5];
 		
-		
-		[_ubiquitousCachesMetadataQuery enableUpdates];
+		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
+		FXDLog(@"didStart: %d", didStart);
 	}
 	
 	return _ubiquitousCachesMetadataQuery;
@@ -205,12 +205,14 @@
 //MARK: - Observer implementation
 - (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {
 #if DEBUG
-	NSMetadataQuery *metadataQuery = notification.object;
-	
-	NSArray *results = metadataQuery.results;
-	NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
-	
-	FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathAfterPathComponent:pathcomponentCaches]);
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		NSMetadataQuery *metadataQuery = notification.object;
+		
+		NSArray *results = metadataQuery.results;
+		NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
+		
+		FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathAfterPathComponent:pathcomponentCaches]);
+	}];
 #endif
 }
 

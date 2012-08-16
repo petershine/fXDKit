@@ -50,7 +50,7 @@
 #pragma mark - Accessor overriding
 // Properties
 - (ACAccountStore*)accountStore {
-	if (_accountStore == nil) {
+	if (!_accountStore) {
 		_accountStore = [[ACAccountStore alloc] init];
 	}
 	
@@ -58,7 +58,7 @@
 }
 
 - (ACAccountType*)accountType {
-	if (_accountType == nil) {
+	if (!_accountType) {
 		_accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	}
 	
@@ -67,7 +67,7 @@
 
 #pragma mark -
 - (NSArray*)twitterAccountArray {
-	if (_twitterAccountArray == nil) {
+	if (!_twitterAccountArray) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
 	}
 	
@@ -76,7 +76,7 @@
 
 - (ACAccount*)mainTwitterAccount {	FXDLog_DEFAULT;
 	
-	if (_mainTwitterAccount == nil) {
+	if (!_mainTwitterAccount) {
 		NSString *identifier = [[NSUserDefaults standardUserDefaults] stringForKey:userdefaultObjKeyMainAccountIdentifier];
 		
 		FXDLog(@"accountIdentifier: %@", identifier);

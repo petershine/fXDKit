@@ -48,7 +48,9 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference	
+	// Properties : For subclass to be able to reference
+	BOOL _didFinishFirstGathering;
+	
 	id _ubiquityIdentityToken;
 	
 	NSURL *_ubiquityContainerURL;
@@ -63,6 +65,8 @@
 }
 
 // Properties
+@property (assign, nonatomic) BOOL didFinishFirstGathering;
+
 @property (strong, nonatomic) id ubiquityIdentityToken;
 
 @property (strong, nonatomic) NSURL *ubiquityContainerURL;

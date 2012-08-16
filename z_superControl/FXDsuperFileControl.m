@@ -79,6 +79,48 @@
 }
 
 #pragma mark -
+- (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
+	if (!_ubiquitousDocumentsMetadataQuery) {	FXDLog_DEFAULT;
+		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
+		
+		
+		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSMetadataQueryDidStartGathering:)
+							  name:NSMetadataQueryDidStartGatheringNotification
+							object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSMetadataQueryGatheringProgress:)
+							  name:NSMetadataQueryGatheringProgressNotification
+							object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
+							  name:NSMetadataQueryDidFinishGatheringNotification
+							object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter addObserver:self
+						  selector:@selector(observedNSMetadataQueryDidUpdate:)
+							  name:NSMetadataQueryDidUpdateNotification
+							object:_ubiquitousDocumentsMetadataQuery];
+		
+		
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
+		[_ubiquitousDocumentsMetadataQuery setPredicate:predicate];
+		
+		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
+		[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:0.1];
+		
+		BOOL didStart = [_ubiquitousDocumentsMetadataQuery startQuery];
+		FXDLog(@"didStart: %d", didStart);
+	}
+	
+	return _ubiquitousDocumentsMetadataQuery;
+}
+
+#pragma mark -
 - (NSMutableSet*)queuedURLset {
 	if (_queuedURLset == nil) {
 		_queuedURLset =[[NSMutableSet alloc] initWithCapacity:0];
@@ -148,8 +190,8 @@
 					NSFileManager *fileManager = [NSFileManager defaultManager];
 					
 					FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:fileControl.ubiquityContainerURL]);
-					FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 					FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
+					FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 #endif
 
 					
@@ -190,43 +232,9 @@
 
 #pragma mark -
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
-	self.ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
 	
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSMetadataQueryDidStartGathering:)
-						  name:NSMetadataQueryDidStartGatheringNotification
-						object:self.ubiquitousDocumentsMetadataQuery];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSMetadataQueryGatheringProgress:)
-						  name:NSMetadataQueryGatheringProgressNotification
-						object:self.ubiquitousDocumentsMetadataQuery];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
-						  name:NSMetadataQueryDidFinishGatheringNotification
-						object:self.ubiquitousDocumentsMetadataQuery];
-	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSMetadataQueryDidUpdate:)
-						  name:NSMetadataQueryDidUpdateNotification
-						object:self.ubiquitousDocumentsMetadataQuery];
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
-	[self.ubiquitousDocumentsMetadataQuery setPredicate:predicate];
-	
-	[self.ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-	[self.ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:0.1];
-	
-	
-	[self.ubiquitousDocumentsMetadataQuery enableUpdates];
-	
-	BOOL didStart = [self.ubiquitousDocumentsMetadataQuery startQuery];
-	
-	if (didStart == NO) {
-		//TODO: handle error
+	if (self.ubiquitousDocumentsMetadataQuery.isStarted) {
+		[self.ubiquitousDocumentsMetadataQuery enableUpdates];
 	}
 }
 
@@ -286,6 +294,15 @@
 	 userInfo: {
 	 NSDescription = "Unable to rename '/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG' to '/private/var/mobile/Library/Mobile Documents/EHB284SWG9~kr~co~ensight~EasyFileSharing/Documents/file://localhost/var/mobile/Applications/DB25E1BE-9D05-4613-88D1-3C79C9AA2F19/Library/Caches/IMG_1349.JPG'.";
 	 }
+	 
+	 2012-08-16 10:35:19.251 EasyFileSharing[21409:15b03] [EFScontrolCaches addNewThumbImage:toCachedURL:]
+	 localizedDescription: The operation couldn’t be completed. (LibrarianErrorDomain error 2 - Cannot enable syncing on a synced item.)
+	 domain: LibrarianErrorDomain code: 2
+	 userInfo:
+	 {
+	 NSDescription = "Cannot enable syncing on a synced item.";
+	 }
+
 	 */
 	
 	NSString *title = nil;
@@ -359,9 +376,16 @@
 	NSError *error = nil;
 	
 	for (NSURL *itemURL in itemURLarray) {
-		BOOL didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
+		id isUploaded = nil;
+		[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_DEFAULT;
 		
-		FXDLog(@"didEvict: %d %@", didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
+		BOOL didEvict = NO;
+		
+		if (isUploaded) {
+			didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
+		}
+		
+		FXDLog(@"isUploaded: %@ didEvict: %d %@", isUploaded, didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
 	}
 }
 
@@ -373,21 +397,31 @@
 
 #pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeInProgressView object:nil userInfo:nil];
+	//[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeInProgressView object:nil userInfo:nil];
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
+	__block NSMetadataQuery *metadataQuery = notification.object;
+	
+	if (!self.didFinishFirstGathering) {	//FXDLog_DEFAULT;
+		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
+	}
+	
 #if DEBUG
-	NSMetadataQuery *metadataQuery = notification.object;
-	
-	NSArray *results = metadataQuery.results;
-	NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
-	
-	FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		NSArray *results = metadataQuery.results;
+		NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
+		
+		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
+	}];
 #endif
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+	self.didFinishFirstGathering = YES;
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
 

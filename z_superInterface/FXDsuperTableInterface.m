@@ -44,19 +44,10 @@
 	
 	// Instance variables
 	
-	// Properties
-	_registeredNibIdentifier = nil;
-	_defaultCellNib = nil;
-	
-	_rowCounts = nil;
-	_cellTexts = nil;
-	_defaultDatasource = nil;
-	
-	_cellConfigurationQueue = nil;
-	_operationDictionary = nil;
-	_operationArray = nil;
-	
-	_defaultResultsController = nil;
+	// Properties	
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
+		_isSystemVersionLatest = YES;
+	}
 	
 	// IBOutlets
 }
@@ -64,7 +55,7 @@
 
 #pragma mark - Accessor overriding
 - (NSString*)registeredNibIdentifier {
-	if (_registeredNibIdentifier == nil) {	FXDLog_OVERRIDE;
+	if (!_registeredNibIdentifier) {	FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -72,7 +63,7 @@
 }
 
 - (UINib*)defaultCellNib {
-	if (_defaultCellNib == nil) {
+	if (!_defaultCellNib) {
 		if (self.registeredNibIdentifier) {
 			_defaultCellNib = [UINib nibWithNibName:self.registeredNibIdentifier bundle:nil];
 		}
@@ -84,7 +75,7 @@
 #pragma mark -
 - (NSArray*)rowCounts {
 	
-	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
+	if (!_rowCounts) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -93,7 +84,7 @@
 
 - (NSDictionary*)cellTexts {
 	
-	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
+	if (!_cellTexts) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -102,7 +93,7 @@
 
 - (NSMutableArray*)defaultDatasource {
 	
-	if (_defaultDatasource == nil) {	//FXDLog_OVERRIDE;
+	if (!_defaultDatasource) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -110,31 +101,41 @@
 }
 
 #pragma mark -
-- (NSOperationQueue*)cellConfigurationQueue {
+- (FXDFetchedResultsController*)defaultResultsController {
 	
-	if (_cellConfigurationQueue == nil) {
-		_cellConfigurationQueue = [[NSOperationQueue alloc] init];
+	if (!_defaultResultsController) {	//FXDLog_OVERRIDE;
+		//
 	}
 	
-	return _cellConfigurationQueue;
+	return _defaultResultsController;
 }
 
-- (NSMutableDictionary*)operationDictionary {
+#pragma mark -
+- (NSOperationQueue*)cellOperationQueue {
 	
-	if (_operationDictionary == nil) {
-		_operationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	if (_cellOperationQueue == nil) {
+		_cellOperationQueue = [[NSOperationQueue alloc] init];
 	}
 	
-	return _operationDictionary;
+	return _cellOperationQueue;
 }
 
-- (NSMutableArray*)operationArray {
+- (NSMutableDictionary*)queuedOperationDictionary {
 	
-	if (_operationArray == nil) {
-		_operationArray = [[NSMutableArray alloc] initWithCapacity:0];
+	if (_queuedOperationDictionary == nil) {
+		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	
-	return _operationArray;
+	return _queuedOperationDictionary;
+}
+
+- (NSMutableArray*)queuedOperationArray {
+	
+	if (_queuedOperationArray == nil) {
+		_queuedOperationArray = [[NSMutableArray alloc] initWithCapacity:0];
+	}
+	
+	return _queuedOperationArray;
 }
 
 
@@ -149,11 +150,11 @@
     [super viewDidLoad];
 	
 	if (self.defaultTableview) {
-		if (self.defaultTableview.dataSource == nil) {
+		if (!self.defaultTableview.dataSource) {
 			[self.defaultTableview setDataSource:self];
 		}
 		
-		if (self.defaultTableview.delegate == nil) {
+		if (!self.defaultTableview.delegate) {
 			[self.defaultTableview setDelegate:self];
 		}
 	}
@@ -190,6 +191,50 @@
 
 
 #pragma mark - Public
+- (FXDTableViewCell*)dequeueCellFromTableView:(UITableView*)tableView forRowAtIndexPath:(NSIndexPath*)indexPath withIdentifier:(NSString*)identifier andShouldPreconfigure:(BOOL)shouldPreconfigure {	FXDLog_OVERRIDE;
+	
+	if (identifier == nil) {
+		identifier = self.registeredNibIdentifier;
+	}
+	
+	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+	
+	if (!cell) {
+		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+	}
+	
+	if (shouldPreconfigure) {
+		//MARK: apply preconfiguration
+	}
+	
+	return cell;
+}
+
+#pragma mark -
+- (BOOL)shouldSkipQueuedCellOperationsForTableView:(UITableView*)tableView forAutoScrollingToTop:(BOOL)didStartAutoScrollingToTop forRowAtIndexPath:(NSIndexPath*)indexPath {
+	
+	BOOL shouldSkip = NO;
+	
+	if (didStartAutoScrollingToTop && indexPath.row > [[tableView indexPathsForVisibleRows] count]) {
+		shouldSkip = YES;
+		
+		NSString *operationObjKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
+		
+		NSBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
+		
+		if (cellOperation && cellOperation.isExecuting == NO) {
+			[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
+			
+			[cellOperation cancel];
+			
+			FXDLog(@"shouldSkip: %d, operationObjKey: %@", shouldSkip, operationObjKey);
+		}
+	}
+	
+	return shouldSkip;
+}
+
+#pragma mark -
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 	
 	NSInteger rowCount = [[self.rowCounts objectAtIndex:indexPath.section] integerValue];
@@ -283,7 +328,7 @@
 #endif
 	
 	if (accessoryView) {
-		if ([(UIImageView*)accessoryView image] == nil) {
+		if (![(UIImageView*)accessoryView image]) {
 			accessoryView = nil;
 		}
 	}
@@ -309,7 +354,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {	//FXDLog_OVERRIDE;
 	NSInteger numberOfSections = 1;
 	
-	if (self.rowCounts) {
+	if (self.defaultResultsController) {
+		//SKIP
+	}
+	else if (self.defaultDatasource) {
+		//SKIP
+	}
+	else if (self.rowCounts) {	FXDLog_OVERRIDE;
 		numberOfSections = [self.rowCounts count];
 	}
 	
@@ -318,8 +369,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	//FXDLog_OVERRIDE;
 	NSInteger numberOfRows = 0;
-
-	if (self.rowCounts) {
+	
+	if (self.defaultResultsController) {
+		NSArray *sections = self.defaultResultsController.sections;
+		
+		id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+		
+		numberOfRows = [sectionInfo numberOfObjects];
+	}
+	else if (self.defaultDatasource) {
+		numberOfRows = [self.defaultDatasource count];
+	}
+	else if (self.rowCounts) {	FXDLog_OVERRIDE;
 		numberOfRows = [[self.rowCounts objectAtIndex:section] integerValue];
 	}
 	
@@ -328,12 +389,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
 	
-	static NSString *identifier = @"cellIdentifier";
+	FXDTableViewCell *cell = [self dequeueCellFromTableView:tableView forRowAtIndexPath:indexPath withIdentifier:nil andShouldPreconfigure:YES];
 	
-	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+	BOOL shouldSkip = [self shouldSkipQueuedCellOperationsForTableView:tableView forAutoScrollingToTop:self.didStartAutoScrollingToTop forRowAtIndexPath:indexPath];
 	
-	if (cell == nil) {
-		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+	if (shouldSkip) {
+		return cell;
 	}
 	
 	[self configureCell:cell forIndexPath:indexPath];
@@ -343,12 +404,76 @@
 
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
+	//MARK: Use iOS 6 method
+	if (self.isSystemVersionLatest) {
+		return;
+	}
+	
+	
+	if (!tableView.isTracking && !tableView.isDragging && !tableView.isDecelerating && !self.didStartAutoScrollingToTop) {
+		return;
+	}
+	
+	
+	NSArray *visibleIndexPaths = [tableView indexPathsForVisibleRows];
+	NSInteger visibleCount = [visibleIndexPaths count];
+	
+	NSInteger disappearedRow = integerNotDefined;
+	NSInteger finalRow = integerNotDefined;
+	
+	NSInteger firstVisibleRow = [[visibleIndexPaths objectAtIndex:0] row];
+	NSInteger lastVisibleRow = [[visibleIndexPaths lastObject] row];
+	
+	if (indexPath.row == lastVisibleRow) {
+		disappearedRow = lastVisibleRow -visibleCount;
+		finalRow = 0;
+	}
+	else if (indexPath.row == firstVisibleRow) {
+		disappearedRow = firstVisibleRow +visibleCount;
+		finalRow = [self.defaultDatasource count] -1;
+	}
+	
+	if (disappearedRow >= 0 && finalRow >= 0) {
+		NSInteger startIndex = (disappearedRow > finalRow) ? finalRow:disappearedRow;
+		NSInteger endIndex = (disappearedRow > finalRow) ? (disappearedRow+1):(finalRow+1);
+#if ForDEVELOPER
+		NSInteger canceledCount = 0;
+#endif
+		for (NSInteger canceledRow = startIndex; canceledRow < endIndex; canceledRow++) {
+			NSString *operationObjKey = [NSString stringWithFormat:@"%d%d", indexPath.section, canceledRow];
+			
+			NSBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
+			
+			if (cellOperation && cellOperation.isExecuting == NO) {
+				[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
+				
+				[cellOperation cancel];
+#if ForDEVELOPER
+				canceledCount++;
+#endif
+			}
+		}
+#if ForDEVELOPER
+		if (canceledCount > 0) {
+			FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
+		}
+#endif
+	}
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+//MARK: Usable in iOS 6
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+	NSString *operationObjKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
 	
+	NSOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
+	
+	if (cellOperation && cellOperation.isExecuting == NO) {
+		[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
+		
+		[cellOperation cancel];
+	}
 }
 
 #pragma mark -
@@ -362,6 +487,36 @@
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
 	
+}
+
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	if (decelerate == NO) {
+		//MARK: do actions as if decelerating did end
+	}
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
+	// called on finger up as we are moving
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
+	// called when scroll view grinds to a halt
+}
+
+#pragma mark -
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
+	FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
+	
+	self.didStartAutoScrollingToTop = scrollView.scrollsToTop;
+	
+	return scrollView.scrollsToTop;
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
+	
+	self.didStartAutoScrollingToTop = NO;
 }
 
 
