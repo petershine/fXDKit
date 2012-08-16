@@ -17,6 +17,7 @@
 
 
 #define objkeyUbiquitousFolders			@"objkeyUbiquitousFolders"
+#define objkeyUbiquitousFiles			@"objkeyUbiquitousFiles"
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 

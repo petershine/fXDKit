@@ -61,7 +61,8 @@
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
-	__block NSMutableArray *folders = [[NSMutableArray alloc] initWithCapacity:0];
+	__block NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+	__block NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 	
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
@@ -82,14 +83,18 @@
 				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 				
 				if ([isDirectory boolValue]) {
-					[folders addObject:nextURL];
+					[folderURLarray addObject:nextURL];
+				}
+				else {
+					[fileURLarray addObject:nextURL];
 				}
 			}
 			
 			nextURL = [enumerator nextObject];
 		}
 		
-		[userInfo setObject:folders forKey:objkeyUbiquitousFolders];
+		[userInfo setObject:folderURLarray forKey:objkeyUbiquitousFolders];
+		[userInfo setObject:fileURLarray forKey:objkeyUbiquitousFolders];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];
