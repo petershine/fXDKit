@@ -120,7 +120,7 @@
 		[nextURL getResourceValue:&localizedName forKey:NSURLLocalizedNameKey error:&error];FXDLog_ERROR;
 		
 		if ([localizedName rangeOfString:@".sqlite"].length > 0) {	//SKIP
-			FXDLog(@"localizedName: %@", localizedName);
+			FXDLog(@"SKIPPED: localizedName: %@", localizedName);
 		}
 		else {
 			id isHidden = nil;

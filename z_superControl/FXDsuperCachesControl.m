@@ -106,7 +106,12 @@
 	NSError *error = nil;
 	
 	id isDirectory = nil;
-	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+	
+	if (error && error.code != 260) {
+		FXDLog_ERROR;
+	}
+
 	
 	if ([isDirectory boolValue]) {
 		
