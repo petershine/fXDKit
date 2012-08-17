@@ -377,7 +377,7 @@
 	
 	for (NSURL *itemURL in itemURLarray) {
 		id isUploaded = nil;
-		[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_DEFAULT;
+		[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_ERROR;
 		
 		BOOL didEvict = NO;
 		

@@ -69,12 +69,23 @@
 #pragma mark - Category
 @implementation NSURL (Added)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	//FXDLog_DEFAULT;
-	NSArray *ubiquitousItemKeys = @[NSURLIsUbiquitousItemKey,
-								   NSURLUbiquitousItemHasUnresolvedConflictsKey,
-								   NSURLUbiquitousItemIsDownloadedKey,
-								   NSURLUbiquitousItemIsDownloadingKey,
-								   NSURLUbiquitousItemIsUploadedKey,
-								   NSURLUbiquitousItemIsUploadingKey];
+	NSArray *ubiquitousItemKeys = @[
+	NSURLIsUbiquitousItemKey,
+	NSURLUbiquitousItemHasUnresolvedConflictsKey,
+	NSURLUbiquitousItemIsDownloadedKey,
+	NSURLUbiquitousItemIsDownloadingKey,
+	NSURLUbiquitousItemIsUploadedKey,
+	NSURLUbiquitousItemIsUploadingKey,
+	
+	NSURLFileSizeKey,
+	NSURLFileAllocatedSizeKey,
+	NSURLTotalFileSizeKey,
+	NSURLTotalFileAllocatedSizeKey,
+	NSURLIsAliasFileKey,
+	
+	NSURLEffectiveIconKey,
+	
+	];
 	
 	NSDictionary *resourceValues = [self resourceValuesForKeys:ubiquitousItemKeys error:error];
 	
@@ -86,7 +97,7 @@
 	
 	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];FXDLog_DEFAULT;
 	
-	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];FXDLog_DEFAULT;
+	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];FXDLog_ERROR;
 	
 	return resourceValues;	
 }
