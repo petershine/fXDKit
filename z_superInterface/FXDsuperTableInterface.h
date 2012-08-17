@@ -78,9 +78,7 @@
 
 
 #pragma mark - Public
-- (FXDTableViewCell*)dequeueCellFromTableView:(UITableView*)tableView forRowAtIndexPath:(NSIndexPath*)indexPath withIdentifier:(NSString*)identifier andShouldPreconfigure:(BOOL)shouldPreconfigure;
-
-- (BOOL)shouldSkipQueuedCellOperationsForTableView:(UITableView*)tableView forAutoScrollingToTop:(BOOL)didStartAutoScrollingToTop forRowAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)shouldSkipQueuedCellOperationsForTableView:(UITableView*)tableView forAutoScrollingToTop:(BOOL)didStartAutoScrollingToTop forOperationObjKey:(NSString*)operationObjKey atIndexPath:(NSIndexPath*)indexPath;
 
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 

@@ -126,17 +126,17 @@
 
 
 #pragma mark - Category
-@interface FXDsuperFileControl (Managing)
-#pragma mark - Public
-- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
-
-@end
-
-
 @interface FXDsuperFileControl (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateLocalDirectory;
+
+@end
+
+
+@interface FXDsuperFileControl (Managing)
+#pragma mark - Public
+- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
 
 @end

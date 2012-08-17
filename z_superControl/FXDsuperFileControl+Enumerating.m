@@ -78,9 +78,13 @@
 			[nextURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERROR;
 			
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
-				
 				id isDirectory = nil;
-				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
+				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+				
+				//NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=20 \"The operation couldn\U2019t be completed. Not a directory\" UserInfo=0x607f60 {}";
+				if (error && error.code != 256) {
+					FXDLog_ERROR;
+				}
 				
 				if ([isDirectory boolValue]) {
 					[folderURLarray addObject:nextURL];
@@ -94,7 +98,7 @@
 		}
 		
 		[userInfo setObject:folderURLarray forKey:objkeyUbiquitousFolders];
-		[userInfo setObject:fileURLarray forKey:objkeyUbiquitousFolders];
+		[userInfo setObject:fileURLarray forKey:objkeyUbiquitousFiles];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];

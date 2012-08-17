@@ -191,34 +191,16 @@
 
 
 #pragma mark - Public
-- (FXDTableViewCell*)dequeueCellFromTableView:(UITableView*)tableView forRowAtIndexPath:(NSIndexPath*)indexPath withIdentifier:(NSString*)identifier andShouldPreconfigure:(BOOL)shouldPreconfigure {	FXDLog_OVERRIDE;
-	
-	if (identifier == nil) {
-		identifier = self.registeredNibIdentifier;
-	}
-	
-	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-	
-	if (!cell) {
-		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-	}
-	
-	if (shouldPreconfigure) {
-		//MARK: apply preconfiguration
-	}
-	
-	return cell;
-}
-
-#pragma mark -
-- (BOOL)shouldSkipQueuedCellOperationsForTableView:(UITableView*)tableView forAutoScrollingToTop:(BOOL)didStartAutoScrollingToTop forRowAtIndexPath:(NSIndexPath*)indexPath {
+- (BOOL)shouldSkipQueuedCellOperationsForTableView:(UITableView*)tableView forAutoScrollingToTop:(BOOL)didStartAutoScrollingToTop forOperationObjKey:(NSString*)operationObjKey atIndexPath:(NSIndexPath*)indexPath {
 	
 	BOOL shouldSkip = NO;
 	
-	if (didStartAutoScrollingToTop && indexPath.row > [[tableView indexPathsForVisibleRows] count]) {
+	if (didStartAutoScrollingToTop == NO) {
+		return shouldSkip;
+	}
+	
+	if (indexPath.row > [[tableView indexPathsForVisibleRows] count]) {
 		shouldSkip = YES;
-		
-		NSString *operationObjKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
 		
 		NSBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
 		
@@ -389,13 +371,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
 	
-	FXDTableViewCell *cell = [self dequeueCellFromTableView:tableView forRowAtIndexPath:indexPath withIdentifier:nil andShouldPreconfigure:YES];
+	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.registeredNibIdentifier];
 	
-	BOOL shouldSkip = [self shouldSkipQueuedCellOperationsForTableView:tableView forAutoScrollingToTop:self.didStartAutoScrollingToTop forRowAtIndexPath:indexPath];
-	
-	if (shouldSkip) {
-		return cell;
+	if (!cell) {
+		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.registeredNibIdentifier];
 	}
+	
 	
 	[self configureCell:cell forIndexPath:indexPath];
 	
@@ -491,6 +472,7 @@
 
 
 #pragma mark - UIScrollViewDelegate
+/*
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 	if (decelerate == NO) {
 		//MARK: do actions as if decelerating did end
@@ -501,9 +483,10 @@
 	// called on finger up as we are moving
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
 	// called when scroll view grinds to a halt
 }
+ */
 
 #pragma mark -
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;

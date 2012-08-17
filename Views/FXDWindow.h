@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+#define delayBeforeShowOrHideProgressView	1.5
+
 #define notificationApplicationWindowShouldFadeInProgressView	@"notificationApplicationWindowShouldFadeInProgressView"
 #define notificationApplicationWindowShouldFadeOutProgressView	@"notificationApplicationWindowShouldFadeOutProgressView"
 
@@ -62,12 +64,11 @@
 @interface UIWindow (Added)
 + (id)applicationWindow;
 
-- (void)showProgressView;
-- (void)hideProgressView;
-
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay;
 
+- (void)showProgressView;
+- (void)hideProgressView;
 
 @end
 

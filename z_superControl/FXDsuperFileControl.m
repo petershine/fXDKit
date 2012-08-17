@@ -338,7 +338,7 @@
 
 #pragma mark -
 - (void)evictAllUbiquitousDocuments {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeInProgressView object:nil userInfo:nil];
+	[[FXDWindow applicationWindow] showProgressView];
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
@@ -359,7 +359,7 @@
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeOutProgressView object:nil userInfo:nil];
+			[[FXDWindow applicationWindow] hideProgressView];
 		}];
 	}];
 }
@@ -397,7 +397,7 @@
 
 #pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
-	//[[NSNotificationCenter defaultCenter] postNotificationName:notificationApplicationWindowShouldFadeInProgressView object:nil userInfo:nil];
+	//[[FXDWindow applicationWindow] showProgressView];
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;

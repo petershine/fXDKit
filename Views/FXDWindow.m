@@ -126,29 +126,31 @@
 }
 
 #pragma mark -
-- (void)showProgressView {	FXDLog_DEFAULT;
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
-	
-	[applicationWindow observedApplicationWindowShouldFadeInProgressView:nil];
-}
-
-- (void)hideProgressView {	FXDLog_DEFAULT;
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
-	
-	[applicationWindow observedApplicationWindowShouldFadeOutProgressView:nil];
-}
-
-#pragma mark -
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
 	FXDWindow *applicationWindow = [self applicationWindow];
 	
+	[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showProgressView) object:nil];
 	[applicationWindow performSelector:@selector(showProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 }
 
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
 	FXDWindow *applicationWindow = [self applicationWindow];
 	
+	[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];
 	[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+}
+
+#pragma mark -
+- (void)showProgressView {	//FXDLog_DEFAULT;
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
+	
+	[applicationWindow observedApplicationWindowShouldFadeInProgressView:nil];
+}
+
+- (void)hideProgressView {	//FXDLog_DEFAULT;
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
+	
+	[applicationWindow observedApplicationWindowShouldFadeOutProgressView:nil];
 }
 
 

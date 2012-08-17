@@ -63,4 +63,6 @@ typedef enum {
 - (NSString*)followingPathAfterPathComponent:(NSString*)pathComponent;
 - (NSString*)followingPathInDocuments;
 
+- (double)transferPercentage;
+
 @end
