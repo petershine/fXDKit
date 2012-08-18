@@ -67,17 +67,20 @@
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
+		//NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
+		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:currentFolderURL];
 		
 		NSURL *nextURL = [enumerator nextObject];
 		
 		while (nextURL) {
 			NSError *error = nil;
 			
+			/*
 			id parentDirectoryURL = nil;
 			[nextURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERROR;
 			
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
+			 */
 				id isDirectory = nil;
 				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
 				
@@ -92,7 +95,7 @@
 				else {
 					[fileURLarray addObject:nextURL];
 				}
-			}
+			//}
 			
 			nextURL = [enumerator nextObject];
 		}

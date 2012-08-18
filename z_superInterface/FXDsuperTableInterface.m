@@ -438,7 +438,7 @@
 		}
 #if ForDEVELOPER
 		if (canceledCount > 0) {
-			FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
+			//FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
 		}
 #endif
 	}
@@ -489,8 +489,8 @@
  */
 
 #pragma mark -
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
-	FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
+	//FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
 	
 	self.didStartAutoScrollingToTop = scrollView.scrollsToTop;
 	
