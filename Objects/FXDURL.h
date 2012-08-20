@@ -9,6 +9,9 @@
 typedef enum {
 	fileKindUndefined,
 	fileKindImage,
+	fileKindDocument,
+	fileKindAudio,
+	fileKindMovie,
 	
 } FILE_KIND_TYPE;
 

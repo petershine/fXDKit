@@ -497,7 +497,7 @@
 	return scrollView.scrollsToTop;
 }
 
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
 	
 	self.didStartAutoScrollingToTop = NO;
 }

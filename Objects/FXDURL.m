@@ -140,6 +140,30 @@
 		
 		fileKindType = fileKindImage;
 	}
+	else if ([typeIdentifier isEqual:(NSString*)kUTTypeRTF]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypePDF]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeRTFD]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeFlatRTFD]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeTXNTextAndMultimediaData]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeWebArchive]) {
+		
+		fileKindType = fileKindDocument;
+	}
+	else if ([typeIdentifier isEqual:(NSString*)kUTTypeAudio]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMP3]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMPEG4Audio]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeAppleProtectedMPEG4Audio]) {
+		
+		fileKindType = fileKindAudio;
+	}
+	else if ([typeIdentifier isEqual:(NSString*)kUTTypeMovie]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeVideo]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeQuickTimeMovie]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMPEG]
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMPEG4]) {
+		
+		fileKindType = fileKindMovie;
+	}
 	
 	return fileKindType;
 }

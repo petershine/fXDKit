@@ -134,9 +134,13 @@
 						[fileControl.queuedURLset addObject:nextURL];
 						
 						[fileControl.operationQueue addOperationWithBlock:^{
-							NSArray *localItemURLarray = @[nextURL];
+							//NSArray *localItemURLarray = @[nextURL];
+							FXDLog(@"nextURL: %@", nextURL);
 							
-							[fileControl setUbiquitousForLocalItemURLarray:localItemURLarray atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+							if (nextURL) {
+								[fileControl setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+							}
+							
 							
 							[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 								if ([fileControl.queuedURLset containsObject:nextURL]) {
