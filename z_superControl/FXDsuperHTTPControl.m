@@ -169,7 +169,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 															   message:@"Please make sure Internet is available for your device"
 															  delegate:nil
 													 cancelButtonTitle:nil
-													 otherButtonTitles:text_OK, nil];
+													 otherButtonTitles:NSLocalizedString(text_OK, nil), nil];
 			[alerview show];
 			[alerview release];
 			 */

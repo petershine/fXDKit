@@ -286,7 +286,7 @@
 	UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:title
 														message:message
 													   delegate:nil
-											  cancelButtonTitle:text_OK
+											  cancelButtonTitle:NSLocalizedString(text_OK, nil)
 											  otherButtonTitles:nil];
 	
 	[alertview show];
@@ -337,7 +337,7 @@
 	NSArray *toRecipients = @[mailAddr];
 
 #ifdef application_DisplayedName
-	NSString *bundleName = application_DisplayedName;
+	NSString *bundleName = NSLocalizedString(application_DisplayedName, nil);
 #else
 	NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];	
 #endif
@@ -389,7 +389,7 @@
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 	
 	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayedName]];
+	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", NSLocalizedString(application_DisplayedName, nil)]];
 	
 	if (image) {		
 		[emailInterface addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];

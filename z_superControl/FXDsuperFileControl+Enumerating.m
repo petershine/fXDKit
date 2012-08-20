@@ -75,27 +75,20 @@
 		while (nextURL) {
 			NSError *error = nil;
 			
-			/*
-			id parentDirectoryURL = nil;
-			[nextURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERROR;
+			id isDirectory = nil;
+			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
 			
-			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
-			 */
-				id isDirectory = nil;
-				[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
-				
-				//NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=20 \"The operation couldn\U2019t be completed. Not a directory\" UserInfo=0x607f60 {}";
-				if (error && error.code != 256) {
-					FXDLog_ERROR;
-				}
-				
-				if ([isDirectory boolValue]) {
-					[folderURLarray addObject:nextURL];
-				}
-				else {
-					[fileURLarray addObject:nextURL];
-				}
-			//}
+			//NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=20 \"The operation couldn\U2019t be completed. Not a directory\" UserInfo=0x607f60 {}";
+			if (error && error.code != 256) {
+				FXDLog_ERROR;
+			}
+			
+			if ([isDirectory boolValue]) {
+				[folderURLarray addObject:nextURL];
+			}
+			else {
+				[fileURLarray addObject:nextURL];
+			}
 			
 			nextURL = [enumerator nextObject];
 		}

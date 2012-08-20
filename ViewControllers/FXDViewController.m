@@ -280,7 +280,11 @@
 	
 	if (action) {
 		if (shouldUseBackTitle) {
-			[self customizeLeftBarbuttonWithText:text_Back andWithOnImage:onImage andWithOffImage:offImage forTarget:target forAction:action];
+			[self customizeLeftBarbuttonWithText:NSLocalizedString(text_Back, nil)
+								  andWithOnImage:onImage
+								 andWithOffImage:offImage
+									   forTarget:target
+									   forAction:action];
 		}
 		else {
 			[self customizeLeftBarbuttonWithOnImage:onImage andWithOffImage:offImage forTarget:target forAction:action];
@@ -365,7 +369,7 @@
 	if (text) {
 		CGRect modifiedFrame = buttonFrame;
 		
-		if ([text isEqualToString:text_Back]) {
+		if ([text isEqualToString:NSLocalizedString(text_Back, nil)]) {
 			modifiedFrame.origin.x = 7.0;
 		}
 		
@@ -375,10 +379,10 @@
 		
 		backLabel.font = [UIFont systemFontOfSize:12.0];
 		
-		if ([text isEqualToString:text_Back]) {
+		if ([text isEqualToString:NSLocalizedString(text_Back, nil)]) {
 			backLabel.textColor = [UIColor colorUsingIntegersForRed:234 forGreen:234 forBlue:234];
 		}
-		else if ([text isEqualToString:text_Reset]) {
+		else if ([text isEqualToString:NSLocalizedString(text_Reset, nil)]) {
 			backLabel.font = [UIFont systemFontOfSize:13.0];
 		}
 		

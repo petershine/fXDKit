@@ -8,51 +8,51 @@
 
 
 // Application
-#define application_DisplayedName	NSLocalizedString(@"application_DisplayedName", nil)
+#define application_DisplayedName	@"application_DisplayedName"
 
 
 // Alert
-#define alert_SelectTwitterAccount	NSLocalizedString(@"alert_SelectTwitterAccount", nil)
+#define alert_SelectTwitterAccount	@"alert_SelectTwitterAccount"
 
 
 // Message
-#define message_PleaseTryAgain NSLocalizedString(@"message_PleaseTryAgain", nil)
+#define message_PleaseTryAgain	@"message_PleaseTryAgain"
 
-#define message_PurposeOfUsingLocationService	NSLocalizedString(@"message_PurposeOfUsingLocationService", nil)
+#define message_PurposeOfUsingLocationService	@"message_PurposeOfUsingLocationService"
 
-#define message_PleaseSelectYourTwitterAcount NSLocalizedString(@"message_PleaseSelectYourTwitterAcount", nil)
+#define message_PleaseSelectYourTwitterAcount	@"message_PleaseSelectYourTwitterAcount"
 
 
 // Text
-#define text_Settings	NSLocalizedString(@"text_Settings", nil)
+#define text_Settings	@"text_Settings"
 
-#define text_Cancel		NSLocalizedString(@"text_Cancel", nil)
-#define text_OK			NSLocalizedString(@"text_OK", nil)
+#define text_Cancel		@"text_Cancel"
+#define text_OK			@"text_OK"
 
-#define text_Back		NSLocalizedString(@"text_Back", nil)
-#define text_Reset		NSLocalizedString(@"text_Reset", nil)
-#define text_About		NSLocalizedString(@"text_About", nil)
+#define text_Back		@"text_Back"
+#define text_Reset		@"text_Reset"
+#define text_About		@"text_About"
 
-#define text_Delete		NSLocalizedString(@"text_Delete", nil)
-#define text_DeleteAll	NSLocalizedString(@"text_DeleteAll", nil)
+#define text_Delete		@"text_Delete"
+#define text_DeleteAll	@"text_DeleteAll"
 
-#define text_Twitter	NSLocalizedString(@"text_Twitter", nil)
-#define text_Facebook	NSLocalizedString(@"text_Facebook", nil)
-#define text_Email		NSLocalizedString(@"text_Email", nil)
+#define text_Twitter	@"text_Twitter"
+#define text_Facebook	@"text_Facebook"
+#define text_Email		@"text_Email"
 
-#define text_Feedback	NSLocalizedString(@"text_Feedback", nil)
+#define text_Feedback	@"text_Feedback"
 
-#define text_Timeline	NSLocalizedString(@"text_Timeline", nil)
+#define text_Timeline	@"text_Timeline"
 
 
 // For Appirater
-#define alert_PleaseReviewThisApp NSLocalizedString(@"alert_PleaseReviewThisApp", nil)
+#define alert_PleaseReviewThisApp @"alert_PleaseReviewThisApp"
 
-#define message_PleaseLeavePositiveReview NSLocalizedString(@"message_PleaseLeavePositiveReview", nil)
+#define message_PleaseLeavePositiveReview @"message_PleaseLeavePositiveReview"
 
-#define text_Review NSLocalizedString(@"text_Review", nil)
-#define text_NextTime NSLocalizedString(@"text_NextTime", nil)
-#define text_NeverAskMe NSLocalizedString(@"text_NeverAskMe", nil)
+#define text_Review @"text_Review"
+#define text_NextTime @"text_NextTime"
+#define text_NeverAskMe @"text_NeverAskMe"
 
 
 /*

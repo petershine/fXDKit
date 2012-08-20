@@ -60,27 +60,27 @@ extern NSString *const kAppiraterDeclinedToRate;
  This is the message your users will see once they've passed the day+launches
  threshold.
  */
-#define APPIRATER_MESSAGE				message_PleaseLeavePositiveReview	//[NSString stringWithFormat:@"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!", APPIRATER_APP_NAME]
+#define APPIRATER_MESSAGE				NSLocalizedString(message_PleaseLeavePositiveReview, nil)	//[NSString stringWithFormat:@"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!", APPIRATER_APP_NAME]
 
 /*
  This is the title of the message alert that users will see.
  */
-#define APPIRATER_MESSAGE_TITLE			alert_PleaseReviewThisApp	//[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
+#define APPIRATER_MESSAGE_TITLE			NSLocalizedString(alert_PleaseReviewThisApp, nil)	//[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
 
 /*
  The text of the button that rejects reviewing the app.
  */
-#define APPIRATER_CANCEL_BUTTON			text_NeverAskMe	//@"No, Thanks"
+#define APPIRATER_CANCEL_BUTTON			NSLocalizedString(text_NeverAskMe, nil)	//@"No, Thanks"
 
 /*
  Text of button that will send user to app review page.
  */
-#define APPIRATER_RATE_BUTTON			text_Review	//[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
+#define APPIRATER_RATE_BUTTON			NSLocalizedString(text_Review, nil)	//[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
 
 /*
  Text for button to remind the user to review later.
  */
-#define APPIRATER_RATE_LATER			text_NextTime	//@"Remind me later"
+#define APPIRATER_RATE_LATER			NSLocalizedString(text_NextTime, nil)	//@"Remind me later"
 
 /*
  Users will need to have the same version of your app installed for this many

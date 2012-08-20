@@ -219,7 +219,7 @@
 	FXDAlertView *alertView = [[FXDAlertView alloc] initWithTitle:NSLocalizedString(@"alert_PleaseEnableiCloud", nil)
 														  message:nil
 														 delegate:nil
-												cancelButtonTitle:text_OK
+												cancelButtonTitle:NSLocalizedString(text_OK, nil)
 												otherButtonTitles:nil];
 	[alertView show];
 	
@@ -381,7 +381,7 @@
 		
 		BOOL didEvict = NO;
 		
-		if (isUploaded) {
+		if ([isUploaded boolValue]) {
 			didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
 		}
 		

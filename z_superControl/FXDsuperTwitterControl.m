@@ -175,13 +175,13 @@
 	
 	if ([self.twitterAccountArray count] > 0) {
 		
-		NSString *alertTitle = alert_SelectTwitterAccount;
-		NSString *alertMessage = message_PleaseSelectYourTwitterAcount;
-		NSString *cancelButtonTitle = text_Cancel;
+		NSString *alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
+		NSString *alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
+		NSString *cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
 		
 		if (self.mainTwitterAccount) {
-			alertTitle = alert_SelectTwitterAccount;
-			alertMessage = message_PleaseSelectYourTwitterAcount;
+			alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
+			alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
 			cancelButtonTitle = @"SIGN OUT";
 		}
 		
