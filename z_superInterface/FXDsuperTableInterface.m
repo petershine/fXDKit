@@ -337,7 +337,7 @@
 	NSInteger numberOfSections = 1;
 	
 	if (self.defaultResultsController) {
-		//SKIP
+		numberOfSections = [[self.defaultResultsController sections] count];
 	}
 	else if (self.defaultDatasource) {
 		//SKIP
@@ -353,11 +353,22 @@
 	NSInteger numberOfRows = 0;
 	
 	if (self.defaultResultsController) {
+#if DEBUG
 		NSArray *sections = self.defaultResultsController.sections;
 		
 		id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
 		
 		numberOfRows = [sectionInfo numberOfObjects];
+		
+		NSInteger fetchedObjectsCount = [self.defaultResultsController.fetchedObjects count];
+		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
+		
+		if (numberOfRows != fetchedObjectsCount) {
+			numberOfRows = fetchedObjectsCount;
+		}
+#else
+		numberOfRows = [self.defaultResultsController.fetchedObjects count];
+#endif
 	}
 	else if (self.defaultDatasource) {
 		numberOfRows = [self.defaultDatasource count];
@@ -397,8 +408,12 @@
 		return;
 	}
 	
+	//SKIP
+	//FXDLog_DEFAULT;
 	
 	NSArray *visibleIndexPaths = [tableView indexPathsForVisibleRows];
+	//FXDLog(@"visibleIndexPaths: %@", visibleIndexPaths);
+	
 	NSInteger visibleCount = [visibleIndexPaths count];
 	
 	NSInteger disappearedRow = integerNotDefined;
@@ -416,14 +431,19 @@
 		finalRow = [self.defaultDatasource count] -1;
 	}
 	
+	//FXDLog(@"disappearedRow: %d, finalRow: %d", disappearedRow, finalRow);
+	
 	if (disappearedRow >= 0 && finalRow >= 0) {
 		NSInteger startIndex = (disappearedRow > finalRow) ? finalRow:disappearedRow;
 		NSInteger endIndex = (disappearedRow > finalRow) ? (disappearedRow+1):(finalRow+1);
 #if ForDEVELOPER
 		NSInteger canceledCount = 0;
 #endif
+		//FXDLog(@"startIndex: %d, endIndex: %d", startIndex, endIndex);
+		
 		for (NSInteger canceledRow = startIndex; canceledRow < endIndex; canceledRow++) {
 			NSString *operationObjKey = [NSString stringWithFormat:@"%d%d", indexPath.section, canceledRow];
+			//FXDLog(@"operationObjKey: %@", operationObjKey);
 			
 			NSBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
 			
