@@ -13,6 +13,7 @@
 
 // Alert
 #define alert_SelectTwitterAccount	@"alert_SelectTwitterAccount"
+#define alert_PleaseEnableiCloud @"alert_PleaseEnableiCloud"
 
 
 // Message
@@ -44,6 +45,9 @@
 
 #define text_Timeline	@"text_Timeline"
 
+#define text_Folders @"text_Folders"
+#define text_Files @"text_Files"
+
 
 // For Appirater
 #define alert_PleaseReviewThisApp @"alert_PleaseReviewThisApp"
@@ -63,7 +67,8 @@
 
 // Alert
 "alert_SelectTwitterAccount" = "<#Select Twitter Account#>";
-
+"alert_PleaseEnableiCloud" = "<#alert_PleaseEnableiCloud#>";
+ 
 
 // Message
 "message_PleaseTryAgain" = "<#Please Try Again#>";
@@ -93,6 +98,9 @@
 "text_Feedback" = "<#Feedback#>";
 
 "text_Timeline" = "<#Timeline#>";
+ 
+"text_Folders" = "<#text_Folders#>";
+"text_Files" = "<#text_Files#>";
  
  
 // For Appirater
