@@ -133,10 +133,3 @@
 - (void)enumerateLocalDirectory;
 
 @end
-
-
-@interface FXDsuperFileControl (Managing)
-#pragma mark - Public
-- (void)addNewFolderInsideCurrentFolderURL:(NSURL*)currentFolderURL withNewFolderName:(NSString*)newFolderName;
-
-@end

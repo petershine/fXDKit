@@ -45,8 +45,14 @@
 
 #pragma mark - Category
 @interface NSDate (Added)
++ (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
++ (NSString*)shortLocateDateStringForUTCdate:(NSDate*)UTCdate;
+
 + (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
+
++ (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
++ (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
 - (NSInteger)yearValue;
 - (NSInteger)monthValue;
