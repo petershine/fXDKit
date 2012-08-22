@@ -55,7 +55,7 @@
 
 #pragma mark - Accessor overriding
 - (NSString*)registeredNibIdentifier {
-	if (!_registeredNibIdentifier) {	FXDLog_OVERRIDE;
+	if (!_registeredNibIdentifier) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -250,13 +250,13 @@
 }
 
 #pragma mark -
-- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
+- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
 }
 
-- (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
+- (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
@@ -342,7 +342,7 @@
 	else if (self.defaultDatasource) {
 		//SKIP
 	}
-	else if (self.rowCounts) {	FXDLog_OVERRIDE;
+	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
 		numberOfSections = [self.rowCounts count];
 	}
 	
@@ -373,7 +373,7 @@
 	else if (self.defaultDatasource) {
 		numberOfRows = [self.defaultDatasource count];
 	}
-	else if (self.rowCounts) {	FXDLog_OVERRIDE;
+	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
 		numberOfRows = [[self.rowCounts objectAtIndex:section] integerValue];
 	}
 	

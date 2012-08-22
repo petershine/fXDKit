@@ -68,4 +68,6 @@ typedef enum {
 
 - (double)transferPercentage;
 
+- (NSString*)fileSizeText;
+
 @end

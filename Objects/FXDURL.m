@@ -205,4 +205,32 @@
 	return transferPercentage;
 }
 
+- (NSString*)fileSizeText {
+	NSString *fileSizeText = nil;
+
+	
+	NSError *error = nil;
+	
+	NSNumber *fileSize = nil;
+	[self getResourceValue:&fileSize forKey:NSURLFileSizeKey error:&error];FXDLog_ERROR;
+	
+	
+	NSInteger kiloUnit = 1024;
+	
+	if ([fileSize integerValue] < kiloUnit) {
+		fileSizeText = [NSString stringWithFormat:@"%d B", [fileSize integerValue]];
+	}
+	else if ([fileSize integerValue] < (kiloUnit*kiloUnit)) {
+		fileSizeText = [NSString stringWithFormat:@"%d KB", ([fileSize integerValue] /kiloUnit)];
+	}
+	else if ([fileSize integerValue] < (kiloUnit*kiloUnit*kiloUnit)) {
+		fileSizeText = [NSString stringWithFormat:@"%d MB", ([fileSize integerValue] /(kiloUnit*kiloUnit))];
+	}
+	else if ([fileSize integerValue] < (kiloUnit*kiloUnit*kiloUnit*kiloUnit)) {
+		fileSizeText = [NSString stringWithFormat:@"%d GB", ([fileSize integerValue] /(kiloUnit*kiloUnit*kiloUnit))];
+	}
+	
+	return fileSizeText;
+}
+
 @end

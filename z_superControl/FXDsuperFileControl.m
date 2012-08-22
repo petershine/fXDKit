@@ -121,14 +121,6 @@
 }
 
 #pragma mark -
-- (NSMutableSet*)queuedURLset {
-	if (_queuedURLset == nil) {
-		_queuedURLset =[[NSMutableSet alloc] initWithCapacity:0];
-	}
-	
-	return _queuedURLset;
-}
-
 - (NSOperationQueue*)operationQueue {
 	if (_operationQueue == nil) {
 		_operationQueue = [[NSOperationQueue alloc] init];
@@ -137,6 +129,13 @@
 	return _operationQueue;
 }
 
+- (NSMutableDictionary*)queuedOperationDictionary {
+	if (_queuedOperationDictionary == nil) {
+		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+	
+	return _queuedOperationDictionary;
+}
 
 #pragma mark - Private
 

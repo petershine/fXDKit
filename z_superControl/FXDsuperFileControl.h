@@ -61,8 +61,8 @@
 	NSMetadataQuery *_ubiquitousDocumentsMetadataQuery;
 	DirectoryWatcher *_localDirectoryWatcher;
 	
-	NSMutableSet *_queuedURLset;
 	NSOperationQueue *_operationQueue;
+	NSMutableDictionary *_queuedOperationDictionary;
 }
 
 // Properties
@@ -77,8 +77,8 @@
 @property (strong, nonatomic) NSMetadataQuery *ubiquitousDocumentsMetadataQuery;
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
-@property (strong, nonatomic) NSMutableSet *queuedURLset;
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
 
 
 #pragma mark - Memory management

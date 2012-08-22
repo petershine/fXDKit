@@ -67,7 +67,6 @@
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		//NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:currentFolderURL];
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:currentFolderURL];
 		
 		NSURL *nextURL = [enumerator nextObject];
@@ -103,58 +102,44 @@
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-	NSFileManager *fileManager = [NSFileManager defaultManager];
+	__block FXDsuperFileControl *fileControl = self;
 	
-	NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
-	
-	__block NSURL *nextURL = [enumerator nextObject];
-	
-	while (nextURL) {
-		NSError *error = nil;
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		NSFileManager *fileManager = [NSFileManager defaultManager];
 		
-		NSString *localizedName = nil;
-		[nextURL getResourceValue:&localizedName forKey:NSURLLocalizedNameKey error:&error];FXDLog_ERROR;
+		NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
 		
-		if ([localizedName rangeOfString:@".sqlite"].length > 0) {	//SKIP
-			FXDLog(@"SKIPPED: localizedName: %@", localizedName);
-		}
-		else {
-			id isHidden = nil;
-			[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
+		NSURL *nextURL = [enumerator nextObject];
+		
+		while (nextURL) {
+			BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
 			
-			if ([isHidden boolValue] == NO) {
-				__block FXDsuperFileControl *fileControl = self;
-								
-				BOOL doesContain = [fileControl.queuedURLset containsObject:nextURL];
+			if (isUbiquitousItem == NO) {
+				NSError *error = nil;
 				
-				if (doesContain == NO) {
-					BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
+				NSString *fileName = nil;
+				[nextURL getResourceValue:&fileName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
+				
+				if ([fileName rangeOfString:@"AviaryContentPacks"].length > 0 || [fileName rangeOfString:@".sqlite"].length > 0) {	//SKIP
+					FXDLog(@"SKIPPED: fileName: %@", fileName);
+				}
+				else {
+					id isHidden = nil;
+					[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 					
-					if (isUbiquitousItem == NO) {
-						[fileControl.queuedURLset addObject:nextURL];
-						
-						[fileControl.operationQueue addOperationWithBlock:^{
-							//NSArray *localItemURLarray = @[nextURL];
-							FXDLog(@"nextURL: %@", nextURL);
-							
-							if (nextURL) {
-								[fileControl setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
-							}
-							
-							
-							[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-								if ([fileControl.queuedURLset containsObject:nextURL]) {
-									[fileControl.queuedURLset removeObject:nextURL];
-								}
-							}];
-						}];
+					if ([isHidden boolValue] == NO) {
+						[fileControl setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
 					}
 				}
 			}
+			
+			nextURL = [enumerator nextObject];
 		}
 		
-		nextURL = [enumerator nextObject];
-	}
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			//TODO:
+		}];
+	}];
 }
 
 
