@@ -274,9 +274,9 @@
 			}
 			else {
 				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];FXDLog_ERROR;
+				
+				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 			}
-			
-			FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -288,6 +288,7 @@
 
 //MARK: - Observer implementation
 - (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {
+	/*
 #if DEBUG
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSMetadataQuery *metadataQuery = notification.object;
@@ -298,13 +299,14 @@
 		FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathAfterPathComponent:pathcomponentCaches]);
 	}];
 #endif
+	 */
 }
 
-- (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	[self enumerateCachesMetadataQueryResults];
 }
 
-- (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	BOOL didLogTransferring = [self.ubiquitousCachesMetadataQuery logQueryResultsWithTransferringPercentage];
 	
 	if (didLogTransferring == NO) {
