@@ -8,7 +8,7 @@
 
 #import "FXDWindow.h"
 
-#import "FXDviewProgress.h"
+//#import "FXDviewProgress.h"
 
 
 #pragma mark - Private interface
@@ -105,9 +105,10 @@
 - (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {
 	
 	if (self.progressView) {
-		[self removeAsFadeOutSubview:self.progressView removeAfterFinished:^{	FXDLog_DEFAULT;
-			self.progressView = nil;
-		}];
+		[self removeAsFadeOutSubview:self.progressView
+						afterRemoved:^{	FXDLog_DEFAULT;
+							self.progressView = nil;
+						}];
 	}
 }
 

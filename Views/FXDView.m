@@ -229,7 +229,7 @@
 	[subview fadeIn];
 }
 
-- (void)removeAsFadeOutSubview:(UIView*)subview removeAfterFinished:(void(^)(void))removeAfterFinished {	//FXDLog_DEFAULT;
+- (void)removeAsFadeOutSubview:(UIView*)subview afterRemoved:(void(^)(void))afterRemoved {	//FXDLog_DEFAULT;
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 0.0;
@@ -237,8 +237,8 @@
 					 completion:^(BOOL finished) {						 
 						 [subview removeFromSuperview];
 						 
-						 if (removeAfterFinished) {
-							 removeAfterFinished();
+						 if (afterRemoved) {
+							 afterRemoved();
 						 }
 					 }];
 }

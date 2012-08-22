@@ -40,7 +40,10 @@
 + (FXDsuperCachesControl*)sharedInstance;
 
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL;
+- (NSURL*)itemURLforCachedURL:(NSURL*)cachedURL;
+
 - (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL;
+- (NSURL*)folderURLforCachedFolderURL:(NSURL*)cachedFolderURL;
 
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL;
 

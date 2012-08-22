@@ -114,12 +114,7 @@
 
 	
 	if ([isDirectory boolValue]) {
-		
-		NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:itemURL];
-		
-		if (cachedFolderURL) {
-			cachedURL = cachedFolderURL;
-		}
+		cachedURL = [self cachedFolderURLforFolderURL:itemURL];
 	}
 	else {
 		NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:[itemURL URLByDeletingLastPathComponent]];
@@ -135,6 +130,37 @@
 	return cachedURL;
 }
 
+- (NSURL*)itemURLforCachedURL:(NSURL*)cachedURL {
+	NSURL *itemURL = nil;
+	
+	NSError *error = nil;
+	
+	id isDirectory = nil;
+	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+	
+	if (error && error.code != 260) {
+		FXDLog_ERROR;
+	}
+	
+	
+	if ([isDirectory boolValue]) {
+		itemURL = [self folderURLforCachedFolderURL:cachedURL];
+	}
+	else {
+		NSURL *folderURL = [self folderURLforCachedFolderURL:[cachedURL URLByDeletingLastPathComponent]];
+		
+		if (folderURL) {
+			NSString *filePathComponent = [cachedURL lastPathComponent];
+			filePathComponent = [filePathComponent stringByReplacingOccurrencesOfString:@".cached_" withString:@""];
+			
+			itemURL = [folderURL URLByAppendingPathComponent:filePathComponent];
+		}
+	}
+	
+	return itemURL;
+}
+
+#pragma mark -
 - (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL {
 	NSURL *cachedFolderURL = nil;
 	
@@ -145,11 +171,36 @@
 	}
 	
 	
+	cachedFolderURL = fileControl.ubiquitousCachesURL;
+	
 	NSString *relativePath = [[[folderURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
 	
-	cachedFolderURL = [fileControl.ubiquitousCachesURL URLByAppendingPathComponent:relativePath];
+	if (relativePath.length > 0) {
+		cachedFolderURL = [cachedFolderURL URLByAppendingPathComponent:relativePath];
+	}
 	
 	return cachedFolderURL;
+}
+
+- (NSURL*)folderURLforCachedFolderURL:(NSURL*)cachedFolderURL {
+	NSURL *folderURL = nil;
+	
+	EFScontrolFile *fileControl = [EFScontrolFile sharedInstance];
+	
+	if (fileControl.ubiquitousDocumentsURL == nil) {
+		return folderURL;
+	}
+	
+	
+	folderURL = fileControl.ubiquitousDocumentsURL;
+				 
+	NSString *relativePath = [[[cachedFolderURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentCaches] lastObject];
+	
+	if (relativePath.length > 0) {
+		folderURL = [folderURL URLByAppendingPathComponent:relativePath];
+	}
+	
+	return folderURL;
 }
 
 #pragma mark -
@@ -174,9 +225,20 @@
 														  error:&error];FXDLog_ERROR;
 	
 	
+	/*
+	 localizedDescription: The operation couldn’t be completed. (Cocoa error 512.)
+	 domain: NSCocoaErrorDomain
+	 code: 512
+	 userInfo:
+	 {
+	 NSURL = "file://localhost/var/mobile/Applications/5E151CE4-2FBE-4CFA-8999-00A7FA83677A/Library/Caches/.cached_IMG_0748.JPG";
+	 NSUnderlyingError = "Error Domain=LibrarianErrorDomain Code=2 \"The operation couldn\U2019t be completed. (LibrarianErrorDomain error 2 - Cannot enable syncing on a synced item.)\" UserInfo=0x1f5341c0 {NSDescription=Cannot enable syncing on a synced item.}";
+	 }
+	 */
+	
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERROR;
 	
-	[cachedURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
+	//[cachedURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 	
 	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
@@ -186,18 +248,35 @@
 	__block NSArray *results = self.ubiquitousCachesMetadataQuery.results;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		
+		NSError *error = nil;
 		
 		for (NSMetadataItem *metadataItem in results) {
-			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+			NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
+			NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
 			
-			if (isDownloaded == NO) {
-				NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
-				
-				NSError *error = nil;
-				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
-				
-				FXDLog(@"didStartDownloading: %d %@", didStartDownloading, [itemURL lastPathComponent]);
+			BOOL didStartDownloading = NO;
+			BOOL didRemove = NO;
+			
+			BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];
+			
+			if (error && error.code != 260) {
+				FXDLog_ERROR;
 			}
+			
+			if (isReachable) {
+				BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+				
+				if (isDownloaded == NO) {
+					didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];FXDLog_ERROR;
+				}
+			}
+			else {
+				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];FXDLog_ERROR;
+			}
+			
+			FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{

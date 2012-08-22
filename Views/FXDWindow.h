@@ -14,7 +14,8 @@
 
 #import "FXDKit.h"
 
-@class FXDviewProgress;
+//@class FXDviewProgress;
+#import "FXDviewProgress.h"
 
 
 @interface FXDWindow : UIWindow {

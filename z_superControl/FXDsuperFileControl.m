@@ -256,7 +256,12 @@
 		NSString *localItemPath = [itemURL unicodeAbsoluteString];
 		localItemPath = [[localItemPath componentsSeparatedByString:separatorPathComponent] lastObject];
 		
-		NSURL *destinationURL = [currentFolderURL URLByAppendingPathComponent:localItemPath];	//Use iCloud /Documents
+		NSURL *destinationURL = currentFolderURL;
+		
+		if (localItemPath.length > 0) {
+			destinationURL = [destinationURL URLByAppendingPathComponent:localItemPath];
+		}
+
 				
 		NSError *error = nil;
 				
@@ -333,59 +338,6 @@
 	if (title) {	FXDLog_DEFAULT;
 		//TODO: should alert?
 		FXDLog(@"title: %@", title);
-	}
-}
-
-#pragma mark -
-- (void)evictAllUbiquitousDocuments {	FXDLog_DEFAULT;
-	[[FXDWindow applicationWindow] showProgressView];
-	
-	__block FXDsuperFileControl *fileControl = self;
-	
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] fullEnumeratorForRootURL:self.ubiquitousDocumentsURL];
-		
-		NSURL *nextURL = [enumerator nextObject];
-		
-		while (nextURL) {
-			
-			BOOL isUbiquitousItem = [[NSFileManager defaultManager] isUbiquitousItemAtURL:nextURL];
-			
-			if (isUbiquitousItem) {
-				[fileControl evictUbiquitousItemURLarray:@[nextURL]];
-			}
-			
-			nextURL = [enumerator nextObject];
-		}
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[FXDWindow applicationWindow] hideProgressView];
-		}];
-	}];
-}
-
-- (void)evictUbiquitousItemURLarray:(NSArray *)itemURLarray {
-#if ForDEVELOPER
-	if ([itemURLarray count] > 1) {
-		FXDLog_DEFAULT;
-	}
-#endif
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	NSError *error = nil;
-	
-	for (NSURL *itemURL in itemURLarray) {
-		id isUploaded = nil;
-		[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_ERROR;
-		
-		BOOL didEvict = NO;
-		
-		if ([isUploaded boolValue]) {
-			didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
-		}
-		
-		FXDLog(@"isUploaded: %@ didEvict: %d %@", isUploaded, didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
 	}
 }
 

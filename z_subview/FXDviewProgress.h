@@ -20,10 +20,13 @@
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activitywheelProgress;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorProgressing;
 
-@property (strong, nonatomic) IBOutlet UILabel *labelAboveActivityWheel;
-@property (strong, nonatomic) IBOutlet UILabel *labelBelowActivityWheel;
+@property (strong, nonatomic) IBOutlet UILabel *labelTitle;
+@property (strong, nonatomic) IBOutlet UILabel *labelMessage_0;
+@property (strong, nonatomic) IBOutlet UILabel *labelMessage_1;
+
+@property (strong, nonatomic) IBOutlet UISlider *sliderProgress;
 
 
 #pragma mark - Memory management
