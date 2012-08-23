@@ -110,11 +110,11 @@
 	
 	NSMutableArray *itemArray = nil;
 	
-	NSError *error = nil;
-	
 	NSURL *nextURL = [enumerator nextObject];
 	
 	while (nextURL) {
+		NSError *error = nil;
+		
 		id isDirectory = nil;
 		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 		

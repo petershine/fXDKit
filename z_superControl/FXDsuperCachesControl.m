@@ -214,7 +214,7 @@
 	[fileManager createDirectoryAtURL:[cachedURL URLByDeletingLastPathComponent]
 									withIntermediateDirectories:YES
 													 attributes:nil
-														  error:&error];FXDLog_ERROR;
+														  error:&error];FXDLog_ERRORexcept(516);
 
 	
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERROR;
@@ -229,9 +229,9 @@
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		
-		NSError *error = nil;
-		
 		for (NSMetadataItem *metadataItem in results) {
+			NSError *error = nil;
+			
 			NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 		
 			NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
@@ -284,11 +284,15 @@
 }
 
 - (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	//FXDLog_DEFAULT;
-	BOOL didLogTransferring = [self.ubiquitousCachesMetadataQuery logQueryResultsWithTransferringPercentage];
-	
-	if (didLogTransferring == NO) {
-		[self enumerateCachesMetadataQueryResults];
-	}
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		BOOL didLogTransferring = [self.ubiquitousCachesMetadataQuery logQueryResultsWithTransferringPercentage];
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			if (didLogTransferring == NO) {
+				[self enumerateCachesMetadataQueryResults];
+			}
+		}];
+	}];
 }
 
 //MARK: - Delegate implementation

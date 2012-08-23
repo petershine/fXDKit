@@ -380,16 +380,20 @@
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {
 	NSMetadataQuery *metadataQuery = notification.object;
 	
-	BOOL didLogTransferring = [metadataQuery logQueryResultsWithTransferringPercentage];
-	
-	//TODO: distinguish uploading and downloading and finished updating
-	
-	if (didLogTransferring) {		
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
-	}
-	else {	//FXDLog_OVERRIDE;
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
-	}
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		BOOL didLogTransferring = [metadataQuery logQueryResultsWithTransferringPercentage];
+		
+		//TODO: distinguish uploading and downloading and finished updating
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			if (didLogTransferring) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
+			}
+			else {	//FXDLog_OVERRIDE;
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
+			}
+		}];
+	}];
 }
 
 
