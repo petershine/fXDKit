@@ -250,7 +250,11 @@
 				}
 			}
 			else {
-				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];FXDLog_ERRORexcept(4);
+				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
+				
+				if (error && error.code != 4 && error.code != 260) {
+					FXDLog_ERROR;
+				}
 				
 				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 			}

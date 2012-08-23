@@ -69,9 +69,6 @@
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
 - (BOOL)logQueryResultsWithTransferringPercentage {
-#if TEST_logTransferringPercentage
-	FXDLog_DEFAULT;
-#endif
 	
 	BOOL didLogTransferring = NO;
 	
