@@ -117,11 +117,11 @@
 			if (isUbiquitousItem == NO) {
 				NSError *error = nil;
 				
-				NSString *fileName = nil;
-				[nextURL getResourceValue:&fileName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
+				NSString *itemName = nil;
+				[nextURL getResourceValue:&itemName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
 				
-				if ([fileName rangeOfString:@"AviaryContentPacks"].length > 0 || [fileName rangeOfString:@".sqlite"].length > 0) {	//SKIP
-					FXDLog(@"SKIPPED: fileName: %@", fileName);
+				if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0 || [itemName rangeOfString:@".sqlite"].length > 0) {	//SKIP
+					FXDLog(@"SKIPPED: itemName: %@", itemName);
 				}
 				else {
 					id isHidden = nil;

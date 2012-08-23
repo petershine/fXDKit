@@ -10,6 +10,8 @@
 
 #define notificationCachesControlDidEnumerateCachesMetadataQueryResults	@"notificationCachesControlDidEnumerateCachesMetadataQueryResults"
 
+#define prefixCached	@"_cached_"
+
 
 @interface FXDsuperCachesControl : NSObject <NSMetadataQueryDelegate> {
     // Primitives

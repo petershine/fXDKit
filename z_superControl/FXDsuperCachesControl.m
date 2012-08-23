@@ -121,7 +121,7 @@
 		
 		if (cachedFolderURL) {
 			NSString *filePathComponent = [itemURL lastPathComponent];
-			filePathComponent = [NSString stringWithFormat:@".cached_%@", filePathComponent];
+			filePathComponent = [NSString stringWithFormat:@"%@%@", prefixCached, filePathComponent];
 			
 			cachedURL = [cachedFolderURL URLByAppendingPathComponent:filePathComponent];
 		}
@@ -151,7 +151,7 @@
 		
 		if (folderURL) {
 			NSString *filePathComponent = [cachedURL lastPathComponent];
-			filePathComponent = [filePathComponent stringByReplacingOccurrencesOfString:@".cached_" withString:@""];
+			filePathComponent = [filePathComponent stringByReplacingOccurrencesOfString:prefixCached withString:@""];
 			
 			itemURL = [folderURL URLByAppendingPathComponent:filePathComponent];
 		}
@@ -223,23 +223,10 @@
 									withIntermediateDirectories:YES
 													 attributes:nil
 														  error:&error];FXDLog_ERROR;
-	
-	
-	/*
-	 localizedDescription: The operation couldn’t be completed. (Cocoa error 512.)
-	 domain: NSCocoaErrorDomain
-	 code: 512
-	 userInfo:
-	 {
-	 NSURL = "file://localhost/var/mobile/Applications/5E151CE4-2FBE-4CFA-8999-00A7FA83677A/Library/Caches/.cached_IMG_0748.JPG";
-	 NSUnderlyingError = "Error Domain=LibrarianErrorDomain Code=2 \"The operation couldn\U2019t be completed. (LibrarianErrorDomain error 2 - Cannot enable syncing on a synced item.)\" UserInfo=0x1f5341c0 {NSDescription=Cannot enable syncing on a synced item.}";
-	 }
-	 */
+
 	
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERROR;
-	
-	//[cachedURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
-	
+		
 	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
 
@@ -247,23 +234,25 @@
 - (void)enumerateCachesMetadataQueryResults {
 	__block NSArray *results = self.ubiquitousCachesMetadataQuery.results;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;
+	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		
 		NSError *error = nil;
 		
 		for (NSMetadataItem *metadataItem in results) {
 			NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
+		
 			NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
-			
-			BOOL didStartDownloading = NO;
-			BOOL didRemove = NO;
 			
 			BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];
 			
 			if (error && error.code != 260) {
 				FXDLog_ERROR;
 			}
+			
+			
+			BOOL didStartDownloading = NO;
+			BOOL didRemove = NO;
 			
 			if (isReachable) {
 				BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
@@ -277,6 +266,8 @@
 				
 				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 			}
+			
+			//FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -288,7 +279,6 @@
 
 //MARK: - Observer implementation
 - (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {
-	/*
 #if DEBUG
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSMetadataQuery *metadataQuery = notification.object;
@@ -299,7 +289,6 @@
 		FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathAfterPathComponent:pathcomponentCaches]);
 	}];
 #endif
-	 */
 }
 
 - (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_DEFAULT;

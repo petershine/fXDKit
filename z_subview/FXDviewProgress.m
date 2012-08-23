@@ -26,14 +26,27 @@
 
 #pragma mark - Memory management
 
-
-#pragma mark - Initialization
 - (void)dealloc {
 	// Primitives
 	
 	// Instance variables
 	
 	// Properties
+}
+
+
+#pragma mark - Initialization
+- (void)awakeFromNib {	//FXDLog_DEFAULT;
+	[super awakeFromNib];
+	
+	// Primitives
+	
+	// Instance variables
+	
+	// Properties
+	
+	// IBOutlets
+	
 }
 
 

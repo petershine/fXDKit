@@ -75,33 +75,34 @@
 #if TEST_logTransferringPercentage
 		NSString *logString = @"";
 #endif
-		
-		NSNumber *isDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadedKey];
-		NSNumber *isUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadedKey];
+		id isDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadedKey];
+		id isUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadedKey];
 		
 		if ([isUploaded boolValue] == NO) {
-			didLogTransferring = YES;
+			id isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
 			
+			if ([isUploading boolValue]) {
+				didLogTransferring = YES;
+			}
 #if TEST_logTransferringPercentage
 			logString = [logString stringByAppendingFormat:@"isUploaded: %d", [isUploaded boolValue]];
 			
-			NSNumber *isUploading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsUploadingKey];
-			
-			if ([isUploading boolValue]) {
+			if (didLogTransferring) {
 				NSNumber *percentUploaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentUploadedKey];
 				logString = [logString stringByAppendingFormat:@" uploading: %@", percentUploaded];
 			}
 #endif
 		}
 		else if ([isDownloaded boolValue] == NO) {
-			didLogTransferring = YES;
+			id isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
 			
+			if ([isDownloading boolValue]) {
+				didLogTransferring = YES;
+			}
 #if TEST_logTransferringPercentage
 			logString = [logString stringByAppendingFormat:@"isDownloaded: %d", [isDownloaded boolValue]];
 			
-			NSNumber *isDownloading = [metadataItem valueForKey:NSMetadataUbiquitousItemIsDownloadingKey];
-			
-			if ([isDownloading boolValue]) {				
+			if (didLogTransferring) {
 				NSNumber *percentDownloaded = [metadataItem valueForKey:NSMetadataUbiquitousItemPercentDownloadedKey];
 				logString = [logString stringByAppendingFormat:@" downloading %@", percentDownloaded];
 			}
@@ -111,9 +112,8 @@
 #if TEST_logTransferringPercentage
 		if ([logString isEqualToString:@""] == NO) {
 			NSString *displayName = [metadataItem valueForKey:NSMetadataItemDisplayNameKey];
-			logString = [logString stringByAppendingFormat:@" %@", displayName];
 			
-			FXDLog(@"%@", logString);
+			FXDLog(@"item: %@ %@", displayName, logString);
 		}
 #endif
 	}

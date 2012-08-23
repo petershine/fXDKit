@@ -254,6 +254,7 @@
 	for (NSURL *itemURL in localItemURLarray) {
 		NSString *localItemPath = [itemURL unicodeAbsoluteString];
 		localItemPath = [[localItemPath componentsSeparatedByString:separatorPathComponent] lastObject];
+
 		
 		NSURL *destinationURL = currentFolderURL;
 		
