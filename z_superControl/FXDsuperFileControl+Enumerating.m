@@ -75,12 +75,7 @@
 			NSError *error = nil;
 			
 			id isDirectory = nil;
-			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
-			
-			//NSUnderlyingError = "Error Domain=NSPOSIXErrorDomain Code=20 \"The operation couldn\U2019t be completed. Not a directory\" UserInfo=0x607f60 {}";
-			if (error && error.code != 256) {
-				FXDLog_ERROR;
-			}
+			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 			
 			if ([isDirectory boolValue]) {
 				[folderURLarray addObject:nextURL];

@@ -106,11 +106,7 @@
 	NSError *error = nil;
 	
 	id isDirectory = nil;
-	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
-	
-	if (error && error.code != 260) {
-		FXDLog_ERROR;
-	}
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 
 	
 	if ([isDirectory boolValue]) {
@@ -136,11 +132,7 @@
 	NSError *error = nil;
 	
 	id isDirectory = nil;
-	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
-	
-	if (error && error.code != 260) {
-		FXDLog_ERROR;
-	}
+	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 	
 	
 	if ([isDirectory boolValue]) {
@@ -244,11 +236,7 @@
 		
 			NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
 			
-			BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];
-			
-			if (error && error.code != 260) {
-				FXDLog_ERROR;
-			}
+			BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERRORexcept(260);
 			
 			
 			BOOL didStartDownloading = NO;
@@ -262,7 +250,7 @@
 				}
 			}
 			else {
-				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];FXDLog_ERROR;
+				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];FXDLog_ERRORexcept(4);
 				
 				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 			}
