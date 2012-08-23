@@ -271,7 +271,8 @@
 
 //MARK: - Observer implementation
 - (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {
-#if DEBUG
+	/*
+#if ForDEVELOPER
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSMetadataQuery *metadataQuery = notification.object;
 		
@@ -281,6 +282,7 @@
 		FXDLog(@"cached: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathAfterPathComponent:pathcomponentCaches]);
 	}];
 #endif
+	 */
 }
 
 - (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_DEFAULT;

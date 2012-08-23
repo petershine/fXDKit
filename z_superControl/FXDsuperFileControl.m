@@ -361,13 +361,18 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
 	}
 	
-#if DEBUG
-	[[NSOperationQueue new] addOperationWithBlock:^{
+	
+#if ForDEVELOPER
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSArray *results = metadataQuery.results;
 		NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
 		
 		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
-	}];
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			//
+		});
+	});
 #endif
 }
 
