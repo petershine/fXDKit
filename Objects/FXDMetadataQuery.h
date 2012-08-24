@@ -45,7 +45,7 @@
 
 #pragma mark - Category
 @interface NSMetadataQuery (Added)
-- (BOOL)logQueryResultsWithTransferringPercentage;
+- (BOOL)isQueryResultsTransferring:(NSString**)trasferringLog;
 
 @end
 

@@ -18,11 +18,10 @@
 	
 	__block FXDsuperFileControl *fileControl = self;
 	
-	__block NSMutableArray *metadataItems = [[NSMutableArray alloc] initWithCapacity:0];
+	__block NSMutableArray *metadataItemArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
 	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	//FXDLog(@"self.ubiquityMetadataQuery results] count: %d", [[self.ubiquityMetadataQuery results] count]);
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		for (NSMetadataItem *metadataItem in [self.ubiquitousDocumentsMetadataQuery results]) {
@@ -37,15 +36,16 @@
 				
 				id isHidden = nil;
 				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
-				//FXDLog(@"isHidden: %@", isHidden);
 				
 				if ([isHidden boolValue] == NO) {
-					[metadataItems addObject:metadataItem];
+					[metadataItemArray addObject:metadataItem];
+					
+					[self updateEvictCandidateURLarrayWithMetadataItem:metadataItem];
 				}
 			}
 		}
 		
-		[userInfo setObject:metadataItems forKey:objkeyUbiquitousMetadataItems];
+		[userInfo setObject:metadataItemArray forKey:objkeyUbiquitousMetadataItems];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:fileControl userInfo:userInfo];

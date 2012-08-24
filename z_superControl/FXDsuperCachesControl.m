@@ -291,7 +291,7 @@
 
 - (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		BOOL didLogTransferring = [self.ubiquitousCachesMetadataQuery logQueryResultsWithTransferringPercentage];
+		BOOL didLogTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferring:nil];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if (didLogTransferring == NO) {

@@ -341,6 +341,100 @@
 	}
 }
 
+#pragma mark -
+- (void)updateEvictCandidateURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
+	BOOL isUploading  = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
+	
+	if (isUploading == NO) {
+		return;
+	}
+	
+	//FXDLog_DEFAULT;
+	
+	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
+	
+	if (self.evictCandidateURLarray == nil) {
+		self.evictCandidateURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		
+		[self.evictCandidateURLarray addObject:itemURL];
+		
+		return;
+	}
+	
+	if ([self.evictCandidateURLarray containsObject:itemURL] == NO) {
+		[self.evictCandidateURLarray addObject:itemURL];
+	}
+	
+	FXDLog(@"self.evictCandidateURLarray count: %d", [self.evictCandidateURLarray count]);
+}
+
+- (void)evictAllCandidateURLarray {
+	if ([self.evictCandidateURLarray count] == 0) {
+		self.evictCandidateURLarray = nil;
+		
+		return;
+	}
+	
+	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
+		
+		while ([self.evictCandidateURLarray count] > 0) {
+			NSURL *itemURL = [self.evictCandidateURLarray lastObject];
+			[self.evictCandidateURLarray removeLastObject];
+			
+			if (itemURL) {
+				[self evictUploadedUbiquitousItemURL:itemURL];
+			}
+		}
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			if ([self.evictCandidateURLarray count] == 0) {
+				self.evictCandidateURLarray = nil;
+			}
+		}];
+	}];
+}
+
+- (BOOL)evictUploadedUbiquitousItemURL:(NSURL*)itemURL {
+	BOOL didEvict = NO;
+	
+	NSError *error = nil;
+	
+	id isDirectory = nil;
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
+	
+	if ([isDirectory boolValue]) {
+		return didEvict;
+	}
+	
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:itemURL];
+	
+	if (isUbiquitousItem == NO) {
+		return didEvict;
+	}
+	
+	
+	id isUploaded = nil;
+	id isDownloaded = nil;
+	
+	[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_ERROR;
+	[itemURL getResourceValue:&isDownloaded forKey:NSURLUbiquitousItemIsDownloadedKey error:&error];FXDLog_ERROR;
+	
+	if ([isUploaded boolValue] && [isDownloaded boolValue]) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+			applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
+		}];
+		
+		didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
+	}
+	
+	FXDLog(@"isUploaded: %d isDownloaded: %d didEvict: %d %@", [isUploaded boolValue], [isDownloaded boolValue], didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
+	
+	return didEvict;
+}
+
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
@@ -386,7 +480,7 @@
 	NSMetadataQuery *metadataQuery = notification.object;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		BOOL didLogTransferring = [metadataQuery logQueryResultsWithTransferringPercentage];
+		BOOL didLogTransferring = [metadataQuery isQueryResultsTransferring:nil];
 		
 		//TODO: distinguish uploading and downloading and finished updating
 		
