@@ -35,7 +35,7 @@
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
 				
 				id isHidden = nil;
-				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
+				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERRORexcept(260);
 				
 				if ([isHidden boolValue] == NO) {
 					[metadataItemArray addObject:metadataItem];

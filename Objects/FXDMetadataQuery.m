@@ -68,13 +68,13 @@
 
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
-- (BOOL)isQueryResultsTransferring:(NSString**)logString {
+- (BOOL)isQueryResultsTransferringWithLogString:(NSString*)logString {
 	
 	BOOL isTransferring = NO;
 	
 	for (NSMetadataItem *metadataItem in [self results]) {
 #if TEST_logTransferringPercentage
-		*logString = @"";
+		logString = @"";
 #endif
 		id isDownloaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
 		id isUploaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey];
@@ -85,12 +85,13 @@
 			if ([isUploading boolValue]) {
 				isTransferring = YES;
 			}
+			
 #if TEST_logTransferringPercentage
-			*logString = [*logString stringByAppendingFormat:@"isUploaded: %d", [isUploaded boolValue]];
+			logString = [logString stringByAppendingFormat:@"isUploaded: %d", [isUploaded boolValue]];
 			
 			if (isTransferring) {
 				NSNumber *percentUploaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemPercentUploadedKey];
-				*logString = [*logString stringByAppendingFormat:@" uploading: %@", percentUploaded];
+				logString = [logString stringByAppendingFormat:@" uploading: %@", percentUploaded];
 			}
 #endif
 		}
@@ -101,20 +102,20 @@
 				isTransferring = YES;
 			}
 #if TEST_logTransferringPercentage
-			*logString = [*logString stringByAppendingFormat:@"isDownloaded: %d", [isDownloaded boolValue]];
+			logString = [logString stringByAppendingFormat:@"isDownloaded: %d", [isDownloaded boolValue]];
 			
 			if (isTransferring) {
 				NSNumber *percentDownloaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-				*logString = [*logString stringByAppendingFormat:@" downloading %@", percentDownloaded];
+				logString = [logString stringByAppendingFormat:@" downloading %@", percentDownloaded];
 			}
 #endif
 		}
 		
 #if TEST_logTransferringPercentage
-		if ([*logString isEqualToString:@""] == NO) {
+		if (isTransferring && [logString isEqualToString:@""] == NO) {
 			NSString *itemName = [metadataItem valueForAttribute:NSMetadataItemFSNameKey];
 			
-			FXDLog(@"item: %@ %@", itemName, *logString);
+			FXDLog(@"item: %@ %@", itemName, logString);
 		}
 #endif
 	}

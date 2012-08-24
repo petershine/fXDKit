@@ -291,10 +291,10 @@
 
 - (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		BOOL didLogTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferring:nil];
+		BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			if (didLogTransferring == NO) {
+			if (isTransferring == NO) {
 				[self enumerateCachesMetadataQueryResults];
 			}
 		}];

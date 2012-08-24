@@ -364,8 +364,6 @@
 	if ([self.evictCandidateURLarray containsObject:itemURL] == NO) {
 		[self.evictCandidateURLarray addObject:itemURL];
 	}
-	
-	FXDLog(@"self.evictCandidateURLarray count: %d", [self.evictCandidateURLarray count]);
 }
 
 - (void)evictAllCandidateURLarray {
@@ -400,7 +398,7 @@
 	NSError *error = nil;
 	
 	id isDirectory = nil;
-	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 	
 	if ([isDirectory boolValue]) {
 		return didEvict;
@@ -480,12 +478,12 @@
 	NSMetadataQuery *metadataQuery = notification.object;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		BOOL didLogTransferring = [metadataQuery isQueryResultsTransferring:nil];
+		BOOL isTransferring = [metadataQuery isQueryResultsTransferringWithLogString:nil];
 		
 		//TODO: distinguish uploading and downloading and finished updating
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			if (didLogTransferring) {
+			if (isTransferring) {
 				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
 			}
 			else {	//FXDLog_OVERRIDE;
