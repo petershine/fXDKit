@@ -64,7 +64,7 @@
 	NSOperationQueue *_operationQueue;
 	NSMutableDictionary *_queuedOperationDictionary;
 	
-	NSMutableArray *_evictCandidateURLarray;
+	NSMutableArray *_collectedURLarray;
 }
 
 // Properties
@@ -82,7 +82,7 @@
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
 
-@property (strong, nonatomic) NSMutableArray *evictCandidateURLarray;
+@property (strong, nonatomic) NSMutableArray *collectedURLarray;
 
 
 #pragma mark - Memory management
@@ -110,8 +110,8 @@
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent;
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
 
-- (void)updateEvictCandidateURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem;
-- (void)evictAllCandidateURLarray;
+- (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem;
+- (void)startEvictingCollectedURLarray;
 - (BOOL)evictUploadedUbiquitousItemURL:(NSURL*)itemURL;
 
 

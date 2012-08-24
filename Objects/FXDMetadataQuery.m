@@ -72,6 +72,8 @@
 	
 	BOOL isTransferring = NO;
 	
+	double percentage = 0.0;
+	
 	for (NSMetadataItem *metadataItem in [self results]) {
 #if TEST_logTransferringPercentage
 		logString = @"";
@@ -91,6 +93,8 @@
 			
 			if (isTransferring) {
 				NSNumber *percentUploaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemPercentUploadedKey];
+				percentage = [percentUploaded doubleValue];
+				
 				logString = [logString stringByAppendingFormat:@" uploading: %@", percentUploaded];
 			}
 #endif
@@ -106,13 +110,15 @@
 			
 			if (isTransferring) {
 				NSNumber *percentDownloaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
+				percentage = [percentDownloaded doubleValue];
+				
 				logString = [logString stringByAppendingFormat:@" downloading %@", percentDownloaded];
 			}
 #endif
 		}
 		
 #if TEST_logTransferringPercentage
-		if (isTransferring && [logString isEqualToString:@""] == NO) {
+		if (isTransferring && percentage > 0.0 && [logString isEqualToString:@""] == NO) {
 			NSString *itemName = [metadataItem valueForAttribute:NSMetadataItemFSNameKey];
 			
 			FXDLog(@"item: %@ %@", itemName, logString);

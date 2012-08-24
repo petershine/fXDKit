@@ -342,7 +342,7 @@
 }
 
 #pragma mark -
-- (void)updateEvictCandidateURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
+- (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
 	BOOL isUploading  = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
 	
 	if (isUploading == NO) {
@@ -353,40 +353,38 @@
 	
 	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 	
-	if (self.evictCandidateURLarray == nil) {
-		self.evictCandidateURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+	if (self.collectedURLarray == nil) {
+		self.collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
-		[self.evictCandidateURLarray addObject:itemURL];
+		[self.collectedURLarray addObject:itemURL];
 		
 		return;
 	}
 	
-	if ([self.evictCandidateURLarray containsObject:itemURL] == NO) {
-		[self.evictCandidateURLarray addObject:itemURL];
+	if ([self.collectedURLarray containsObject:itemURL] == NO) {
+		[self.collectedURLarray addObject:itemURL];
 	}
 }
 
-- (void)evictAllCandidateURLarray {
-	if ([self.evictCandidateURLarray count] == 0) {
-		self.evictCandidateURLarray = nil;
+- (void)startEvictingCollectedURLarray {
+	if ([self.collectedURLarray count] == 0) {
+		self.collectedURLarray = nil;
 		
 		return;
 	}
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
-		
-		while ([self.evictCandidateURLarray count] > 0) {
-			NSURL *itemURL = [self.evictCandidateURLarray lastObject];
-			[self.evictCandidateURLarray removeLastObject];
+		for (NSURL *itemURL in self.collectedURLarray) {
+			BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 			
-			if (itemURL) {
-				[self evictUploadedUbiquitousItemURL:itemURL];
+			if (didEvict) {
+				[self.collectedURLarray removeObject:itemURL];
 			}
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			if ([self.evictCandidateURLarray count] == 0) {
-				self.evictCandidateURLarray = nil;
+			if ([self.collectedURLarray count] == 0) {
+				self.collectedURLarray = nil;
 			}
 		}];
 	}];

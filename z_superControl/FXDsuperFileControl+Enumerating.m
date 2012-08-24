@@ -40,7 +40,7 @@
 				if ([isHidden boolValue] == NO) {
 					[metadataItemArray addObject:metadataItem];
 					
-					[self updateEvictCandidateURLarrayWithMetadataItem:metadataItem];
+					[self updateCollectedURLarrayWithMetadataItem:metadataItem];
 				}
 			}
 		}
