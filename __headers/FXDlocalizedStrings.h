@@ -9,7 +9,7 @@
 
 // Application
 #define application_DisplayedName	@"application_DisplayedName"
-
+#define application_IconName	@"application_IconName"
 
 // Alert
 #define alert_SelectTwitterAccount	@"alert_SelectTwitterAccount"
@@ -63,6 +63,7 @@
 // FXDKit 
 // Application
 "application_DisplayedName" = "<#application_DisplayedName#>";
+"application_IconName" = "<#application_IconName#>";
 
 
 // Alert

@@ -89,7 +89,7 @@
 			}
 		}
 		
-		if ([alignedParagraph isEqualToString:@""] == NO) {
+		if (alignedParagraph.length > 0) {
 			alignedParagraph = [alignedParagraph stringByAppendingString:@"\n"];
 		}
 		

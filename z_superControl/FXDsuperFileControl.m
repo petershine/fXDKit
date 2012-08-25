@@ -310,7 +310,7 @@
 
 	 */
 	
-	NSString *title = nil;
+	NSString *alertTitle = nil;
 	
 	if ([[resultError domain] isEqualToString:NSPOSIXErrorDomain]) {
 		switch ([resultError code]) {
@@ -330,14 +330,14 @@
 			}	break;
 				
 			default:
-				title = [NSString stringWithFormat:@"%@\n%@", [resultError localizedDescription], localItemURL];
+				alertTitle = [NSString stringWithFormat:@"%@\n%@", [resultError localizedDescription], localItemURL];
 				break;
 		}
 	}
 	
-	if (title) {	FXDLog_DEFAULT;
+	if (alertTitle) {	FXDLog_DEFAULT;
 		//TODO: should alert?
-		FXDLog(@"title: %@", title);
+		FXDLog(@"title: %@", alertTitle);
 	}
 }
 

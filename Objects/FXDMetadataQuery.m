@@ -118,7 +118,7 @@
 		}
 		
 #if TEST_logTransferringPercentage
-		if (isTransferring && percentage > 0.0 && [logString isEqualToString:@""] == NO) {
+		if (isTransferring && percentage > 0.0 && logString.length > 0) {
 			NSString *itemName = [metadataItem valueForAttribute:NSMetadataItemFSNameKey];
 			
 			FXDLog(@"item: %@ %@", itemName, logString);
