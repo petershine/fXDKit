@@ -252,8 +252,11 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	for (NSURL *itemURL in localItemURLarray) {
+		NSString *localItemPath = [itemURL lastPathComponent];
+		/*
 		NSString *localItemPath = [itemURL unicodeAbsoluteString];
 		localItemPath = [[localItemPath componentsSeparatedByString:separatorPathComponent] lastObject];
+		 */
 
 		
 		NSURL *destinationURL = currentFolderURL;
@@ -265,7 +268,7 @@
 				
 		NSError *error = nil;
 				
-		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];FXDLog_ERROR;
+		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];FXDLog_ERRORexcept(516);
 		
 		if (error || didSetUbiquitous == NO) {			
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];

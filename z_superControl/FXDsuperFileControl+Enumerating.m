@@ -100,30 +100,38 @@
 	__block FXDsuperFileControl *fileControl = self;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
+		
 		NSFileManager *fileManager = [NSFileManager defaultManager];
+		
+		NSError *error = nil;
 		
 		NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
 		
 		NSURL *nextURL = [enumerator nextObject];
 		
 		while (nextURL) {
-			BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
+			id isDirectory = nil;
+			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 			
-			if (isUbiquitousItem == NO) {
-				NSError *error = nil;
+			if ([isDirectory boolValue] == NO) {
+				BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
 				
-				NSString *itemName = nil;
-				[nextURL getResourceValue:&itemName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
-				
-				if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0 || [itemName rangeOfString:@".sqlite"].length > 0) {	//SKIP
-					FXDLog(@"SKIPPED: itemName: %@", itemName);
-				}
-				else {
-					id isHidden = nil;
-					[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
+				if (isUbiquitousItem == NO) {
+					NSError *error = nil;
 					
-					if ([isHidden boolValue] == NO) {
-						[fileControl setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+					NSString *itemName = nil;
+					[nextURL getResourceValue:&itemName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
+					
+					if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0 || [itemName rangeOfString:@".sqlite"].length > 0) {	//SKIP
+						FXDLog(@"SKIPPED: itemName: %@", itemName);
+					}
+					else {
+						id isHidden = nil;
+						[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
+						
+						if ([isHidden boolValue] == NO) {
+							[fileControl setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+						}
 					}
 				}
 			}

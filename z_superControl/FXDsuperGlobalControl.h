@@ -67,6 +67,7 @@
 
 
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title;
++ (void)alertCancelAndOKwithMessage:(NSString*)message withTitle:(NSString*)title alertDelegate:(id)alertDelegate;
 
 + (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 

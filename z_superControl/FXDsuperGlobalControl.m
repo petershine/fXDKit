@@ -283,11 +283,21 @@
 
 #pragma mark -
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title {
-	UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:title
+	FXDAlertView *alertview = [[FXDAlertView alloc] initWithTitle:title
 														message:message
 													   delegate:nil
 											  cancelButtonTitle:NSLocalizedString(text_OK, nil)
 											  otherButtonTitles:nil];
+	
+	[alertview show];
+}
+
++ (void)alertCancelAndOKwithMessage:(NSString*)message withTitle:(NSString*)title alertDelegate:(id)alertDelegate {
+	FXDAlertView *alertview = [[FXDAlertView alloc] initWithTitle:title
+														  message:message
+														 delegate:alertDelegate
+												cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+												otherButtonTitles:NSLocalizedString(text_OK, nil), nil];
 	
 	[alertview show];
 }

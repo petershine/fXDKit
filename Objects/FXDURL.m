@@ -145,7 +145,9 @@
 			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeRTFD]
 			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeFlatRTFD]
 			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeTXNTextAndMultimediaData]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeWebArchive]) {
+			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeWebArchive]
+			 
+			 || [typeIdentifier rangeOfString:@"org.openxmlformats"].length > 0) {
 		
 		fileKindType = fileKindDocument;
 	}
