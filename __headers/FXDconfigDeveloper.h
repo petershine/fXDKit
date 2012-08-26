@@ -9,8 +9,9 @@
 #if DEBUG
 	#if ForDEVELOPER
 		#define USE_loggingRotatingOrientation	0
-		#define USE_loggingViewDrawing	1
+		#define USE_loggingViewDrawing	0
 		#define USE_loggingSequeActions	0
+		#define USE_loggingBorderLine	0
 
 		//#define USE_TestFlight	0
 		#define USE_TestFlight	1

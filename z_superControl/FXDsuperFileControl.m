@@ -379,6 +379,8 @@
 			BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 			
 			if (didEvict) {
+				CHECKPOINT(([NSString stringWithFormat:@"AUTO CLEANING didEvict: YES %@", [itemURL followingPathInDocuments]]));
+				
 				[self.collectedURLarray removeObject:itemURL];
 			}
 		}
@@ -418,11 +420,18 @@
 	[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_ERROR;
 	[itemURL getResourceValue:&isDownloaded forKey:NSURLUbiquitousItemIsDownloadedKey error:&error];FXDLog_ERROR;
 	
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+		applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
+	}];
+	
 	if ([isUploaded boolValue] && [isDownloaded boolValue]) {
+		/*
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 			applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
 		}];
+		 */
 		
 		didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
 	}
