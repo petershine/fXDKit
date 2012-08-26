@@ -224,12 +224,11 @@
 
 #pragma mark -
 - (void)enumerateCachesMetadataQueryResults {
-	__block NSArray *results = self.ubiquitousCachesMetadataQuery.results;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		
-		for (NSMetadataItem *metadataItem in results) {
+		for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
 			NSError *error = nil;
 			
 			NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];

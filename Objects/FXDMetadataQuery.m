@@ -71,8 +71,10 @@
 - (BOOL)isQueryResultsTransferringWithLogString:(NSString*)logString {
 	
 	BOOL isTransferring = NO;
-	
+
+#if TEST_logTransferringPercentage
 	double percentage = 0.0;
+#endif
 	
 	for (NSMetadataItem *metadataItem in [self results]) {
 #if TEST_logTransferringPercentage

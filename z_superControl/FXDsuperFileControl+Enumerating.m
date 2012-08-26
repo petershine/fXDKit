@@ -16,14 +16,13 @@
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
-	__block FXDsuperFileControl *fileControl = self;
-	
-	__block NSMutableArray *metadataItemArray = [[NSMutableArray alloc] initWithCapacity:0];
-	
-	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-	
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
+		__block NSMutableArray *metadataItemArray = [[NSMutableArray alloc] initWithCapacity:0];
+		
+		__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+		
+		
 		for (NSMetadataItem *metadataItem in [self.ubiquitousDocumentsMetadataQuery results]) {
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
@@ -48,7 +47,7 @@
 		[userInfo setObject:metadataItemArray forKey:objkeyUbiquitousMetadataItems];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:fileControl userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:self userInfo:userInfo];
 		}];
 	}];
 }
@@ -58,15 +57,15 @@
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
-	
-	__block FXDsuperFileControl *fileControl = self;
-	
-	__block NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
-	__block NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
-	
-	__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
+		__block NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		__block NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		
+		__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+		
+		
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:currentFolderURL];
 		
 		NSURL *nextURL = [enumerator nextObject];
@@ -91,13 +90,12 @@
 		[userInfo setObject:fileURLarray forKey:objkeyUbiquitousFiles];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:fileControl userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:self userInfo:userInfo];
 		}];
 	}];
 }
 
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
-	__block FXDsuperFileControl *fileControl = self;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		
@@ -130,7 +128,7 @@
 						[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 						
 						if ([isHidden boolValue] == NO) {
-							[fileControl setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+							[self setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
 						}
 					}
 				}

@@ -279,14 +279,13 @@
 
 #pragma mark -
 - (void)saveContext {	FXDLog_SEPARATE;
-    __block NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
 	
-    if (managedObjectContext && managedObjectContext.hasChanges) {
-		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
+    if (self.managedObjectContext && self.managedObjectContext.hasChanges) {
+		[self.managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
 			
 			NSError *error = nil;
 			
-			BOOL didSave = [managedObjectContext save:&error];FXDLog_ERROR;
+			BOOL didSave = [self.managedObjectContext save:&error];FXDLog_ERROR;
 			FXDLog(@"didSave: %d", didSave);
 		}];
     }
