@@ -413,19 +413,20 @@
 		return didEvict;
 	}
 	
-	
+	/*
 	id isUploaded = nil;
 	id isDownloaded = nil;
 	
 	[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_ERROR;
 	[itemURL getResourceValue:&isDownloaded forKey:NSURLUbiquitousItemIsDownloadedKey error:&error];FXDLog_ERROR;
+	 */
 	
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 		applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
 	}];
 	
-	if ([isUploaded boolValue] && [isDownloaded boolValue]) {
+	//if ([isUploaded boolValue] && [isDownloaded boolValue]) {
 		/*
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			FXDWindow *applicationWindow = [FXDWindow applicationWindow];
@@ -434,9 +435,10 @@
 		 */
 		
 		didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
-	}
+	//}
 	
-	FXDLog(@"isUploaded: %d isDownloaded: %d didEvict: %d %@", [isUploaded boolValue], [isDownloaded boolValue], didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
+	//FXDLog(@"isUploaded: %d isDownloaded: %d didEvict: %d %@", [isUploaded boolValue], [isDownloaded boolValue], didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
+	FXDLog(@"didEvict: %d %@", didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
 	
 	return didEvict;
 }

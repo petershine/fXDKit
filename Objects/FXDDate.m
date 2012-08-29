@@ -67,7 +67,7 @@
 	if (localDate == nil) {
 		localDate = [self date];
 	}
-	
+
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	
     NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];

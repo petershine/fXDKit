@@ -180,33 +180,6 @@
 }
 
 #pragma mark -
-- (double)transferPercentage {
-	double transferPercentage = 0.0;
-	
-	id percentValue = nil;
-	
-	id isUploading = nil;
-	[self getResourceValue:&isUploading forKey:NSURLUbiquitousItemIsUploadingKey error:nil];//FXDLog_ERROR;
-	
-	if ([isUploading boolValue]) {
-		[self getResourceValue:&percentValue forKey:NSURLUbiquitousItemPercentUploadedKey error:nil];//FXDLog_ERROR;
-	}
-	else {
-		id isDownloading = nil;
-		[self getResourceValue:&isDownloading forKey:NSURLUbiquitousItemIsDownloadingKey error:nil];//FXDLog_ERROR;
-		
-		if ([isDownloading boolValue]) {
-			[self getResourceValue:&percentValue forKey:NSURLUbiquitousItemPercentDownloadedKey error:nil];//FXDLog_ERROR;
-		}
-	}
-	
-	if (percentValue) {
-		transferPercentage = [percentValue doubleValue];
-	}
-	
-	return transferPercentage;
-}
-
 - (NSString*)fileSizeText {
 	NSString *fileSizeText = nil;
 

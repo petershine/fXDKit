@@ -368,23 +368,28 @@
 	
 	if (text) {
 		CGRect modifiedFrame = buttonFrame;
-		
+
+		/*
 		if ([text isEqualToString:NSLocalizedString(text_Back, nil)]) {
 			modifiedFrame.origin.x = 7.0;
 		}
+		 */
 		
 		UILabel *backLabel = [[UILabel alloc] initWithFrame:modifiedFrame];
 		backLabel.text = text;
 		backLabel.textColor = [UIColor whiteColor];
 		
-		backLabel.font = [UIFont systemFontOfSize:12.0];
-		
+		//backLabel.font = [UIFont systemFontOfSize:12.0];
+		backLabel.font = [UIFont boldSystemFontOfSize:12.0];
+
+		/*
 		if ([text isEqualToString:NSLocalizedString(text_Back, nil)]) {
 			backLabel.textColor = [UIColor colorUsingIntegersForRed:234 forGreen:234 forBlue:234];
 		}
 		else if ([text isEqualToString:NSLocalizedString(text_Reset, nil)]) {
 			backLabel.font = [UIFont systemFontOfSize:13.0];
 		}
+		 */
 		
 #if ENVIRONTMENT_newestSDK
 		backLabel.textAlignment = NSTextAlignmentCenter;
