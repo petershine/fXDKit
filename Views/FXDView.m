@@ -97,7 +97,7 @@
 #pragma mark - Category
 @implementation UIView (Added)
 + (id)viewFromNibName:(NSString*)nibName {
-	if (!nibName) {
+	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
 	}
 	
@@ -117,7 +117,7 @@
 }
 
 + (id)viewFromNib:(UINib*)nib {
-	if (!nib) {
+	if (nib == nil) {
 		NSString *nibName = NSStringFromClass([self class]);
 		
 		nib = [UINib nibWithNibName:nibName bundle:nil];

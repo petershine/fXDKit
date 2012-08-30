@@ -92,7 +92,7 @@
 //MARK: - Observer implementation
 - (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
 	
-	if (!self.progressView) {
+	if (self.progressView == nil) {
 		self.progressView = [FXDviewProgress viewFromNib:nil];
 		
 		[self addSubview:self.progressView];

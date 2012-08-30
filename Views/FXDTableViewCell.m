@@ -120,7 +120,7 @@
 	if (image) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		
-		if (!self.backgroundImageview) {
+		if (self.backgroundImageview == nil) {
 			self.backgroundImageview = [[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage];
 			
 			self.backgroundImageview.userInteractionEnabled = NO;

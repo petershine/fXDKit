@@ -55,7 +55,7 @@
 
 #pragma mark - Accessor overriding
 - (NSString*)registeredNibIdentifier {
-	if (!_registeredNibIdentifier) {	//FXDLog_OVERRIDE;
+	if (_registeredNibIdentifier == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -63,7 +63,7 @@
 }
 
 - (UINib*)defaultCellNib {
-	if (!_defaultCellNib) {
+	if (_defaultCellNib == nil) {
 		if (self.registeredNibIdentifier) {
 			_defaultCellNib = [UINib nibWithNibName:self.registeredNibIdentifier bundle:nil];
 		}
@@ -75,7 +75,7 @@
 #pragma mark -
 - (NSArray*)rowCounts {
 	
-	if (!_rowCounts) {	//FXDLog_OVERRIDE;
+	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -84,7 +84,7 @@
 
 - (NSDictionary*)cellTexts {
 	
-	if (!_cellTexts) {	//FXDLog_OVERRIDE;
+	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -93,7 +93,7 @@
 
 - (NSMutableArray*)defaultDatasource {
 	
-	if (!_defaultDatasource) {	//FXDLog_OVERRIDE;
+	if (_defaultDatasource == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -103,7 +103,7 @@
 #pragma mark -
 - (FXDFetchedResultsController*)defaultResultsController {
 	
-	if (!_defaultResultsController) {	//FXDLog_OVERRIDE;
+	if (_defaultResultsController == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
@@ -150,11 +150,11 @@
     [super viewDidLoad];
 	
 	if (self.defaultTableview) {
-		if (!self.defaultTableview.dataSource) {
+		if (self.defaultTableview.dataSource == nil) {
 			[self.defaultTableview setDataSource:self];
 		}
 		
-		if (!self.defaultTableview.delegate) {
+		if (self.defaultTableview.delegate == nil) {
 			[self.defaultTableview setDelegate:self];
 		}
 	}
@@ -310,7 +310,7 @@
 #endif
 	
 	if (accessoryView) {
-		if (![(UIImageView*)accessoryView image]) {
+		if ([(UIImageView*)accessoryView image] == nil) {
 			accessoryView = nil;
 		}
 	}
@@ -384,7 +384,7 @@
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.registeredNibIdentifier];
 	
-	if (!cell) {
+	if (cell == nil) {
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.registeredNibIdentifier];
 	}
 	

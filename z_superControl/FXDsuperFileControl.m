@@ -80,7 +80,7 @@
 
 #pragma mark -
 - (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
-	if (!_ubiquitousDocumentsMetadataQuery) {	FXDLog_DEFAULT;
+	if (_ubiquitousDocumentsMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
 		
 		
@@ -456,7 +456,7 @@
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	
-	if (!self.didFinishFirstGathering) {	//FXDLog_DEFAULT;
+	if (self.didFinishFirstGathering == NO) {	//FXDLog_DEFAULT;
 		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];

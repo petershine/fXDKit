@@ -11,7 +11,7 @@
 		#define USE_loggingRotatingOrientation	0
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingSequeActions	0
-		#define USE_loggingBorderLine	1
+		#define USE_loggingBorderLine	0
 
 		#define USE_TestFlight	0
 	#else

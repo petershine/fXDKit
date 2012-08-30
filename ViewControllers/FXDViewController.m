@@ -48,7 +48,7 @@
 #pragma mark - Initialization
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 	
-	if (!nibNameOrNil) {
+	if (nibNameOrNil == nil) {
 		NSString *filename = nil;
 		NSString *resourcePath = nil;
 		
@@ -65,7 +65,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	
     if (self) {
-		if (!nibNameOrNil) {
+		if (nibNameOrNil == nil) {
 			[self awakeFromNib];
 		}
     }
@@ -91,7 +91,7 @@
 #pragma mark - Accessor overriding
 - (NSDictionary*)segueIdentifiers {
 	
-	if (!_presentedSegueDictionary) {	FXDLog_OVERRIDE;
+	if (_presentedSegueDictionary == nil) {	FXDLog_OVERRIDE;
 		//
 	}
 	
