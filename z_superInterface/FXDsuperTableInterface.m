@@ -32,7 +32,7 @@
 	// Properties
 	
 	// IBOutlets
-	self.defaultTableview = nil;
+	self.mainTableview = nil;
 }
 
 
@@ -54,22 +54,22 @@
 
 
 #pragma mark - Accessor overriding
-- (NSString*)registeredNibIdentifier {
-	if (_registeredNibIdentifier == nil) {	//FXDLog_OVERRIDE;
+- (NSString*)mainCellIdentifier {
+	if (_mainCellIdentifier == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
-	return _registeredNibIdentifier;
+	return _mainCellIdentifier;
 }
 
-- (UINib*)defaultCellNib {
-	if (_defaultCellNib == nil) {
-		if (self.registeredNibIdentifier) {
-			_defaultCellNib = [UINib nibWithNibName:self.registeredNibIdentifier bundle:nil];
+- (UINib*)mainCellNib {
+	if (_mainCellNib == nil) {
+		if (self.mainCellIdentifier) {
+			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
 		}
 	}
 	
-	return _defaultCellNib;
+	return _mainCellNib;
 }
 
 #pragma mark -
@@ -91,23 +91,23 @@
 	return _cellTexts;
 }
 
-- (NSMutableArray*)defaultDatasource {
+- (NSMutableArray*)mainDataSource {
 	
-	if (_defaultDatasource == nil) {	//FXDLog_OVERRIDE;
+	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
-	return _defaultDatasource;
+	return _mainDataSource;
 }
 
 #pragma mark -
-- (FXDFetchedResultsController*)defaultResultsController {
+- (FXDFetchedResultsController*)mainResultsController {
 	
-	if (_defaultResultsController == nil) {	//FXDLog_OVERRIDE;
+	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
 		//
 	}
 	
-	return _defaultResultsController;
+	return _mainResultsController;
 }
 
 #pragma mark -
@@ -129,13 +129,14 @@
 	return _queuedOperationDictionary;
 }
 
-- (NSMutableArray*)queuedOperationArray {
+#pragma mark -
+- (NSMutableDictionary*)cachedImageDictionary {
 	
-	if (_queuedOperationArray == nil) {
-		_queuedOperationArray = [[NSMutableArray alloc] initWithCapacity:0];
+	if (_cachedImageDictionary == nil) {
+		_cachedImageDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	
-	return _queuedOperationArray;
+	return _cachedImageDictionary;
 }
 
 
@@ -149,13 +150,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	if (self.defaultTableview) {
-		if (self.defaultTableview.dataSource == nil) {
-			[self.defaultTableview setDataSource:self];
+	if (self.mainTableview) {
+		if (self.mainTableview.dataSource == nil) {
+			[self.mainTableview setDataSource:self];
 		}
 		
-		if (self.defaultTableview.delegate == nil) {
-			[self.defaultTableview setDelegate:self];
+		if (self.mainTableview.delegate == nil) {
+			[self.mainTableview setDelegate:self];
 		}
 	}
 }
@@ -336,10 +337,10 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {	//FXDLog_OVERRIDE;
 	NSInteger numberOfSections = 1;
 	
-	if (self.defaultResultsController) {
-		numberOfSections = [[self.defaultResultsController sections] count];
+	if (self.mainResultsController) {
+		numberOfSections = [[self.mainResultsController sections] count];
 	}
-	else if (self.defaultDatasource) {
+	else if (self.mainDataSource) {
 		//SKIP
 	}
 	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
@@ -352,15 +353,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	//FXDLog_OVERRIDE;
 	NSInteger numberOfRows = 0;
 	
-	if (self.defaultResultsController) {
+	if (self.mainResultsController) {
 #if DEBUG
-		NSArray *sections = self.defaultResultsController.sections;
+		NSArray *sections = self.mainResultsController.sections;
 		
 		id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
 		
 		numberOfRows = [sectionInfo numberOfObjects];
 		
-		NSInteger fetchedObjectsCount = [self.defaultResultsController.fetchedObjects count];
+		NSInteger fetchedObjectsCount = [self.mainResultsController.fetchedObjects count];
 		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
 		
 		if (numberOfRows != fetchedObjectsCount) {
@@ -370,8 +371,8 @@
 		numberOfRows = [self.defaultResultsController.fetchedObjects count];
 #endif
 	}
-	else if (self.defaultDatasource) {
-		numberOfRows = [self.defaultDatasource count];
+	else if (self.mainDataSource) {
+		numberOfRows = [self.mainDataSource count];
 	}
 	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
 		numberOfRows = [[self.rowCounts objectAtIndex:section] integerValue];
@@ -382,10 +383,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
 	
-	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.registeredNibIdentifier];
+	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 	
 	if (cell == nil) {
-		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.registeredNibIdentifier];
+		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 	}
 	
 	
@@ -428,7 +429,7 @@
 	}
 	else if (indexPath.row == firstVisibleRow) {
 		disappearedRow = firstVisibleRow +visibleCount;
-		finalRow = [self.defaultDatasource count] -1;
+		finalRow = [self.mainDataSource count] -1;
 	}
 	
 	//FXDLog(@"disappearedRow: %d, finalRow: %d", disappearedRow, finalRow);
@@ -458,7 +459,7 @@
 		}
 #if ForDEVELOPER
 		if (canceledCount > 0) {
-			//FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
+			FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
 		}
 #endif
 	}

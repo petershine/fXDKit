@@ -18,40 +18,42 @@
 	BOOL _isSystemVersionLatest;
 	BOOL _didStartAutoScrollingToTop;
 	
-	NSString *_registeredNibIdentifier;
-	UINib *_defaultCellNib;
+	NSString *_mainCellIdentifier;
+	UINib *_mainCellNib;
 	
 	NSArray *_rowCounts;
 	NSDictionary *_cellTexts;
-	NSMutableArray *_defaultDatasource;
+	NSMutableArray *_mainDataSource;
 	
-	FXDFetchedResultsController *_defaultResultsController;
+	FXDFetchedResultsController *_mainResultsController;
 	
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_queuedOperationDictionary;
-	NSMutableArray *_queuedOperationArray;
+
+	NSMutableDictionary *_cachedImageDictionary;
 }
 
 // Properties
 @property (assign, nonatomic) BOOL isSystemVersionLatest;
 @property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
 
-@property (strong, nonatomic) NSString *registeredNibIdentifier;
-@property (strong, nonatomic) UINib *defaultCellNib;
+@property (strong, nonatomic) NSString *mainCellIdentifier;
+@property (strong, nonatomic) UINib *mainCellNib;
 
 @property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;
-@property (strong, nonatomic) NSMutableArray *defaultDatasource;
+@property (strong, nonatomic) NSMutableArray *mainDataSource;
 
-@property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
+@property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
-@property (strong, nonatomic) NSMutableArray *queuedOperationArray;
+
+@property (strong, nonatomic) NSMutableDictionary *cachedImageDictionary;
 
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UITableView *defaultTableview;
+@property (strong, nonatomic) IBOutlet UITableView *mainTableview;
 
 
 #pragma mark - IBActions

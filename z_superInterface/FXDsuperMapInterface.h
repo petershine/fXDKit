@@ -22,7 +22,7 @@
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDMapView *defaultMapview;
+@property (strong, nonatomic) IBOutlet FXDMapView *mainMapview;
 
 
 #pragma mark - IBActions

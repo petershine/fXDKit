@@ -32,7 +32,7 @@
 	// Properties
 	
 	// IBOutlets
-	self.defaultMapview = nil;
+	self.mainMapview = nil;
 }
 
 
@@ -63,7 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[self.defaultMapview setDelegate:self];
+	[self.mainMapview setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
