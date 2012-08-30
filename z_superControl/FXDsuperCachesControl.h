@@ -1,6 +1,6 @@
 //
 //  FXDsuperCachesControl.h
-//  EasyFileSharing
+//
 //
 //  Created by petershine on 8/13/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
@@ -23,19 +23,6 @@
 
 // Properties
 @property (strong, nonatomic) NSMetadataQuery *ubiquitousCachesMetadataQuery;
-
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Accessor overriding
-
-
-#pragma mark - Private : if declared here, it's for subclass to be able to use these
-
-
-#pragma mark - Overriding
 
 
 #pragma mark - Public

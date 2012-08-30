@@ -8,8 +8,6 @@
 
 #import "FXDWindow.h"
 
-//#import "FXDviewProgress.h"
-
 
 #pragma mark - Private interface
 @interface FXDWindow (Private)

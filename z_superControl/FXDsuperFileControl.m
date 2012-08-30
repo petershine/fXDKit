@@ -470,11 +470,7 @@
 		NSArray *results = metadataQuery.results;
 		NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
 		
-		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
-		
-		dispatch_async(dispatch_get_main_queue(), ^{
-			//
-		});
+		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);		
 	});
 #endif
 }

@@ -25,26 +25,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *addedShadowImageview;
 
 
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Accessor overriding
-
-
-#pragma mark - at loadView
-
-#pragma mark - at autoRotate
-
-#pragma mark - at viewDidLoad
-
-
-#pragma mark - Private : if declared here, it's for subclass to be able to use these
-
-
-#pragma mark - Overriding
-
-
 #pragma mark - Segues
 
 

@@ -18,9 +18,9 @@
 	
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		__block NSMutableArray *metadataItemArray = [[NSMutableArray alloc] initWithCapacity:0];
+		NSMutableArray *metadataItemArray = [[NSMutableArray alloc] initWithCapacity:0];
 		
-		__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
 		
 		for (NSMetadataItem *metadataItem in [self.ubiquitousDocumentsMetadataQuery results]) {
@@ -60,10 +60,10 @@
 
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		__block NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
-		__block NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
-		__block NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
 		
 		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:currentFolderURL];

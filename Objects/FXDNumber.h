@@ -1,27 +1,23 @@
 //
-//  FXDAnnotation.h
+//  FXDNumber.h
 //
 //
-//  Created by petershine on 6/24/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
+//  Created by petershine on 8/30/12.
+//  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
 #import "FXDKit.h"
 
-#import <MapKit/MapKit.h>
 
-
-@interface FXDAnnotation : MKPointAnnotation {
+@interface FXDNumber : NSNumber {
     // Primitives
-	
+
 	// Instance variables
-	
+
 	// Properties : For subclass to be able to reference
-	id _addedObj;
 }
 
 // Properties
-@property (strong, nonatomic) id addedObj;
 
 
 #pragma mark - Public
@@ -31,5 +27,11 @@
 
 //MARK: - Delegate implementation
 
+
+@end
+
+#pragma mark - Category
+@interface NSNumber (Added)
+- (NSString*)byteUnitFormatted;
 
 @end

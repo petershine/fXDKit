@@ -99,6 +99,9 @@
 }
 
 
+#pragma mark - at loadView
+
+
 #pragma mark - at autoRotate
 #if USE_loggingRotatingOrientation
 - (NSUInteger)supportedInterfaceOrientations {	FXDLog_SEPARATE_FRAME;
@@ -122,9 +125,6 @@
 	FXDLog(@"%@: %d %@", NSStringFromSelector(_cmd), fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
 }
 #endif
-
-
-#pragma mark - at loadView
 
 
 #pragma mark - at viewDidLoad

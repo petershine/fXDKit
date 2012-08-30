@@ -118,9 +118,7 @@
 		id isDirectory = nil;
 		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 		
-		if ([isDirectory boolValue]) {
-			
-			//MARK: recursively called
+		if ([isDirectory boolValue]) {	//MARK: recursively called
 			NSMutableDictionary *subInfoDictionary = [self infoDictionaryForFolderURL:nextURL];
 			
 			if (subInfoDictionary && [subInfoDictionary count] > 0) {
