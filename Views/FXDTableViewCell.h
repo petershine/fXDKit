@@ -25,12 +25,14 @@ typedef enum {
 	SECTION_POSITION_TYPE _sectionPositionType;
 	
 	id _addedObj;
+	id _linkedOperationIdentifier;
 }
 
 // Properties
 @property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
 @property (strong, nonatomic) id addedObj;
+@property (strong, nonatomic) id linkedOperationIdentifier;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageview;

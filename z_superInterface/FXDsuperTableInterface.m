@@ -221,34 +221,14 @@
 
 	BOOL didCancel = NO;
 
-	/*
-	for (FXDBlockOperation *cellOperation in self.cellOperationQueue.operations) {
-		
-		if ([cellOperation.operationObjKey isEqualToString:operationObjKey]) {
-			[cellOperation cancel];
-		}
-
-		if (cellOperation.isCancelled) {
-			FXDLog(@"isCancelled: %d, isExecuting: %d isFinished: %d isConcurrent: %d operationObjKey: %@", cellOperation.isCancelled, cellOperation.isExecuting, cellOperation.isFinished, cellOperation.isConcurrent, operationObjKey);
-		}
-	}
-	 */
-
 
 	FXDBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
-	
-	//if (cellOperation && cellOperation.isExecuting == NO) {
+
 	if (cellOperation) {
 		[cellOperation cancel];
 
-		//if (cellOperation.isCancelled) {
-
-		//}
-
 		didCancel = cellOperation.isCancelled;
 	}
-
-	//FXDLog(@"isCancelled: %d, isExecuting: %d isFinished: %d isConcurrent: %d operationObjKey: %@ operationCount: %u", cellOperation.isCancelled, cellOperation.isExecuting, cellOperation.isFinished, cellOperation.isConcurrent, operationObjKey, self.cellOperationQueue.operationCount);
 
 	[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
 	
@@ -514,15 +494,19 @@
 	}
 
 #if ForDEVELOPER
-	//if (canceledCount > 0) {
+	if (canceledCount > 0) {
 		FXDLog(@"CANCELED: %d rows operationCount: %u disappearedRow: %d", canceledCount, self.cellOperationQueue.operationCount, disappearedRow);
-	//}
+	}
 #endif
 }
 
 //MARK: Usable in iOS 6
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-	[self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
+	BOOL didCancel = [self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
+
+	if (didCancel) {
+		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
+	}
 }
 
 #pragma mark -

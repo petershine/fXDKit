@@ -18,7 +18,6 @@
 }
 
 // Properties
-@property (weak, nonatomic) IBOutlet id operationObjKey;
 
 
 #pragma mark - Public
