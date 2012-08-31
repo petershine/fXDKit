@@ -221,14 +221,34 @@
 
 	BOOL didCancel = NO;
 
-	NSBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
+	/*
+	for (FXDBlockOperation *cellOperation in self.cellOperationQueue.operations) {
+		
+		if ([cellOperation.operationObjKey isEqualToString:operationObjKey]) {
+			[cellOperation cancel];
+		}
 
+		if (cellOperation.isCancelled) {
+			FXDLog(@"isCancelled: %d, isExecuting: %d isFinished: %d isConcurrent: %d operationObjKey: %@", cellOperation.isCancelled, cellOperation.isExecuting, cellOperation.isFinished, cellOperation.isConcurrent, operationObjKey);
+		}
+	}
+	 */
+
+
+	FXDBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
+	
 	//if (cellOperation && cellOperation.isExecuting == NO) {
 	if (cellOperation) {
 		[cellOperation cancel];
 
+		//if (cellOperation.isCancelled) {
+
+		//}
+
 		didCancel = cellOperation.isCancelled;
 	}
+
+	//FXDLog(@"isCancelled: %d, isExecuting: %d isFinished: %d isConcurrent: %d operationObjKey: %@ operationCount: %u", cellOperation.isCancelled, cellOperation.isExecuting, cellOperation.isFinished, cellOperation.isConcurrent, operationObjKey, self.cellOperationQueue.operationCount);
 
 	[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
 	
@@ -414,11 +434,11 @@
 	return numberOfRows;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	//FXDLog_OVERRIDE;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 	
-	if (cell == nil) {
+	if (cell == nil) {	FXDLog_OVERRIDE;
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 	}
 	
@@ -470,7 +490,9 @@
 		shouldEvaluateBackward = YES;
 	}
 
+#if ForDEVELOPER
 	NSInteger canceledCount = 0;
+#endif
 
 	if (shouldEvaluateBackward) {
 		for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {
@@ -493,7 +515,7 @@
 
 #if ForDEVELOPER
 	//if (canceledCount > 0) {
-		FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
+		FXDLog(@"CANCELED: %d rows operationCount: %u disappearedRow: %d", canceledCount, self.cellOperationQueue.operationCount, disappearedRow);
 	//}
 #endif
 }

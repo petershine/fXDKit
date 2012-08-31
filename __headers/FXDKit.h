@@ -36,6 +36,7 @@
 #import "FXDDate.h"
 #import "FXDURL.h"
 #import "FXDNumber.h"
+#import "FXDBlockOperation.h"
 
 #import "FXDColor.h"
 #import "FXDImage.h"
