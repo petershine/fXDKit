@@ -6,7 +6,9 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef NSString* (^EFSobjkeyOperation)(NSIndexPath* indexPath, NSInteger rowIndex);
+#define isTableViewScrolling	(tableView.isDragging && tableView.isDecelerating && !tableView.isTracking)
+
+typedef NSString* (^EFSobjkeyOperation)(NSInteger sectionIndex, NSInteger rowIndex);
 
 
 #import "FXDKit.h"

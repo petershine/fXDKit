@@ -49,14 +49,11 @@
     // Primitives
 	
 	// Instance variables
-	_mainOperationObjKey = ^(NSIndexPath* indexPath, NSInteger rowIndex) {
+	_mainOperationObjKey = ^(NSInteger sectionIndex, NSInteger rowIndex) {
 		NSString *operationObjKey = nil;
 
-		if (indexPath) {
-			operationObjKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
-		}
-		else if (rowIndex != integerNotDefined){
-			operationObjKey = [NSString stringWithFormat:@"%d%d", 0, rowIndex];
+		if (sectionIndex != integerNotDefined && rowIndex != integerNotDefined){
+			operationObjKey = [NSString stringWithFormat:@"%d%d", sectionIndex, rowIndex];
 		}
 
 		return operationObjKey;
@@ -213,7 +210,12 @@
 - (BOOL)didCancelQueuedCellOperationForObjKey:(NSString*)operationObjKey orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
 
 	if (operationObjKey == nil) {
-		operationObjKey = _mainOperationObjKey(indexPath, integerNotDefined);
+		if (indexPath) {
+			operationObjKey = _mainOperationObjKey(indexPath.section, indexPath.row);
+		}
+		else {
+			operationObjKey = _mainOperationObjKey(0, rowIndex);
+		}
 	}
 	
 
@@ -221,15 +223,15 @@
 
 	NSBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
 
-	if (cellOperation && cellOperation.isExecuting == NO) {
-		[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
-
+	//if (cellOperation && cellOperation.isExecuting == NO) {
+	if (cellOperation) {
 		[cellOperation cancel];
 
-		didCancel = YES;
-
-		FXDLog(@"didCancel: %d operationObjKey: %@", didCancel, operationObjKey);
+		didCancel = cellOperation.isCancelled;
 	}
+
+	[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
+	
 
 	return didCancel;
 }
@@ -241,7 +243,7 @@
 	if (isForAutoScrollingToTop && indexPath.row > [[tableView indexPathsForVisibleRows] count]) {
 		shouldSkip = YES;
 
-		FXDLog(@"shouldSkip: %d indexPath.row: %d", shouldSkip, indexPath.row);
+		//FXDLog(@"shouldSkip: %d indexPath.row: %d", shouldSkip, indexPath.row);
 	}
 
 	return shouldSkip;
@@ -435,8 +437,7 @@
 		return;
 	}
 	
-	
-	if (!tableView.isTracking && !tableView.isDragging && !self.didStartAutoScrollingToTop) {
+	if (isTableViewScrolling == NO) {
 		return;
 	}
 	
@@ -491,15 +492,14 @@
 	}
 
 #if ForDEVELOPER
-	if (canceledCount > 0) {
+	//if (canceledCount > 0) {
 		FXDLog(@"CANCELED: %d rows queuedOperation.count: %d disappearedRow: %d", canceledCount, [self.queuedOperationDictionary count], disappearedRow);
-	}
+	//}
 #endif
 }
 
 //MARK: Usable in iOS 6
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-
 	[self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
 }
 
