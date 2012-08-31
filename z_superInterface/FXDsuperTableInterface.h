@@ -6,6 +6,9 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+typedef NSString* (^EFSobjkeyOperation)(NSIndexPath* indexPath, NSInteger rowIndex);
+
+
 #import "FXDKit.h"
 
 
@@ -13,6 +16,7 @@
     // Primitives
 	
 	// Instance variables
+	EFSobjkeyOperation _mainOperationObjKey;
 	
 	// Properties : For subclass to be able to reference
 	BOOL _isSystemVersionLatest;
@@ -60,7 +64,8 @@
 
 
 #pragma mark - Public
-- (BOOL)shouldSkipQueuedCellOperationsForTableView:(UITableView*)tableView forAutoScrollingToTop:(BOOL)didStartAutoScrollingToTop forOperationObjKey:(NSString*)operationObjKey atIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)didCancelQueuedCellOperationForObjKey:(NSString*)operationObjKey orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
+- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forTableView:(UITableView*)tableView atIndexPath:(NSIndexPath*)indexPath;
 
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 
