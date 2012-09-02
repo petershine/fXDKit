@@ -470,9 +470,8 @@
 		shouldEvaluateBackward = YES;
 	}
 
-#if ForDEVELOPER
+	
 	NSInteger canceledCount = 0;
-#endif
 
 	if (shouldEvaluateBackward) {
 		for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {

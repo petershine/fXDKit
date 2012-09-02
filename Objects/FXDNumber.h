@@ -33,5 +33,6 @@
 #pragma mark - Category
 @interface NSNumber (Added)
 - (NSString*)byteUnitFormatted;
+- (NSString*)timerUnitFormatted;
 
 @end

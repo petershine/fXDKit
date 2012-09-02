@@ -92,4 +92,44 @@
 	return formattedString;
 }
 
+- (NSString*)timerUnitFormatted {
+	NSString *formattedString = nil;
+
+	double timerInterval = [self doubleValue];
+
+	NSInteger seconds = (NSInteger)timerInterval % 60;
+
+	if (seconds < 10) {
+		formattedString = [NSString stringWithFormat:@"0%d", seconds];
+	}
+	else {
+		formattedString = [NSString stringWithFormat:@"%d", seconds];
+	}
+
+
+	NSInteger minutes = (NSInteger)timerInterval / 60;
+
+	if (minutes < 60) {
+		formattedString = [NSString stringWithFormat:@"%d:%@", minutes, formattedString];
+
+		return formattedString;
+	}
+
+
+	NSInteger hours = minutes / 60;
+	minutes = minutes % 60;
+
+	if (minutes < 10) {
+		formattedString = [NSString stringWithFormat:@"0%d:%@", minutes, formattedString];
+	}
+	else {
+		formattedString = [NSString stringWithFormat:@"%d:%@", minutes, formattedString];
+	}
+
+	formattedString = [NSString stringWithFormat:@"%d:%@", hours, formattedString];
+	
+
+	return formattedString;
+}
+
 @end

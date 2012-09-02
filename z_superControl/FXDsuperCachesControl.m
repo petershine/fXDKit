@@ -217,9 +217,9 @@
 														  error:&error];FXDLog_ERRORexcept(516);
 
 	
-	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERROR;
+	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERRORexcept(2);
 		
-	FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
+	//FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
 
 #pragma mark -
