@@ -14,7 +14,7 @@
 	
 	// Instance variables
 	
-	// Properties : for subclass to be able to reference
+	// Properties : For accessor overriding
 }
 
 // Properties

@@ -16,7 +16,7 @@
 	
 	// Instance variables
 	
-    // Properties : For subclass to be able to reference
+    // Properties : For accessor overriding
 	id<NSFetchedResultsControllerDelegate> _dynamicDelegate;
 }
 

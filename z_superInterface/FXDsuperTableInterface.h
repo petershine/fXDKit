@@ -20,7 +20,7 @@ typedef NSString* (^EFSobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
 	// Instance variables
 	EFSobjkeyOperation _mainOperationObjKey;
 	
-	// Properties : For subclass to be able to reference
+	// Properties : For accessor overriding
 	BOOL _isSystemVersionLatest;
 	BOOL _didStartAutoScrollingToTop;
 	

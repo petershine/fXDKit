@@ -21,7 +21,7 @@ typedef enum {
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
+	// Properties : For accessor overriding
 	SECTION_POSITION_TYPE _sectionPositionType;
 	
 	id _addedObj;

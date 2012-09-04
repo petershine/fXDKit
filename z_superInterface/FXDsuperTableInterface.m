@@ -445,6 +445,13 @@
 	// Get valid index row for disappeared cell
 	NSArray *visibleIndexPaths = [tableView indexPathsForVisibleRows];	
 	NSInteger visibleRowCount = [visibleIndexPaths count];
+
+	if (visibleRowCount == 0) {
+		FXDLog(@"visibleRowCount: %d", visibleRowCount);
+
+		return;
+	}
+	
 	
 	NSInteger firstVisibleRow = [[visibleIndexPaths objectAtIndex:0] row];
 	NSInteger lastVisibleRow = [[visibleIndexPaths lastObject] row];

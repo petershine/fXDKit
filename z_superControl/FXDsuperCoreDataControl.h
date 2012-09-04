@@ -43,7 +43,7 @@
 	
 	// Instance variables
 	
-    // Properties : For subclass to be able to reference
+    // Properties : For accessor overriding
 	NSString *_defaultEntityName;
 	NSArray *_defaultSortDescriptors;
 	

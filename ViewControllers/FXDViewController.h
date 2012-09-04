@@ -14,7 +14,7 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference
+	// Properties : For accessor overriding
 	NSDictionary *_presentedSegueDictionary;
 	NSString *_presentingSegueName;
 }

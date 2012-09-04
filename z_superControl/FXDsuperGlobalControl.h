@@ -21,7 +21,7 @@
 	
 	// Instance variables
 	
-	// Properties : For subclass to be able to reference	
+	// Properties : For accessor overriding	
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
 	
