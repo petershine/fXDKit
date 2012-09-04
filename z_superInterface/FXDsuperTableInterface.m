@@ -500,9 +500,11 @@
 	}
 
 #if ForDEVELOPER
+	/*
 	if (canceledCount > 0) {
 		FXDLog(@"CANCELED: %d rows operationCount: %u disappearedRow: %d", canceledCount, self.cellOperationQueue.operationCount, disappearedRow);
 	}
+	 */
 #endif
 }
 

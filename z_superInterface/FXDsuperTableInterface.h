@@ -8,7 +8,7 @@
 
 #define isTableViewScrolling	(tableView.isDragging && tableView.isDecelerating && !tableView.isTracking)
 
-typedef NSString* (^EFSobjkeyOperation)(NSInteger sectionIndex, NSInteger rowIndex);
+typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowIndex);
 
 
 #import "FXDKit.h"
@@ -18,7 +18,7 @@ typedef NSString* (^EFSobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
     // Primitives
 	
 	// Instance variables
-	EFSobjkeyOperation _mainOperationObjKey;
+	FXDobjkeyOperation _mainOperationObjKey;
 	
 	// Properties : For accessor overriding
 	BOOL _isSystemVersionLatest;

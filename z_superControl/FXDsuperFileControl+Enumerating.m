@@ -22,8 +22,7 @@
 		
 		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
-		
-		for (NSMetadataItem *metadataItem in [self.ubiquitousDocumentsMetadataQuery results]) {
+		for (NSMetadataItem *metadataItem in self.ubiquitousDocumentsMetadataQuery.results) {
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
 			NSError *error = nil;
@@ -60,7 +59,7 @@
 
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		NSMutableArray *subfolderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
 		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -77,7 +76,7 @@
 			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 			
 			if ([isDirectory boolValue]) {
-				[folderURLarray addObject:nextURL];
+				[subfolderURLarray addObject:nextURL];
 			}
 			else {
 				[fileURLarray addObject:nextURL];
@@ -86,7 +85,7 @@
 			nextURL = [enumerator nextObject];
 		}
 		
-		[userInfo setObject:folderURLarray forKey:objkeyUbiquitousFolders];
+		[userInfo setObject:subfolderURLarray forKey:objkeyUbiquitousFolders];
 		[userInfo setObject:fileURLarray forKey:objkeyUbiquitousFiles];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{

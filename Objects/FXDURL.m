@@ -192,4 +192,34 @@
 	return formattedString;
 }
 
+#pragma mark -
+- (double)transferPercentage {
+	double transferPercentage = 0.0;
+
+	id isTransferringObj = nil;
+	[self getResourceValue:&isTransferringObj forKey:NSURLUbiquitousItemIsUploadingKey error:nil];
+
+	if ([isTransferringObj boolValue]) {
+		NSNumber *percentage = nil;
+		[self getResourceValue:&percentage forKey:NSURLUbiquitousItemPercentUploadedKey error:nil];
+
+		transferPercentage = [percentage doubleValue];
+
+		return transferPercentage;
+	}
+
+
+	isTransferringObj = nil;
+	[self getResourceValue:&isTransferringObj forKey:NSURLUbiquitousItemIsDownloadingKey error:nil];
+
+	if ([isTransferringObj boolValue]) {
+		NSNumber *percentage = nil;
+		[self getResourceValue:&percentage forKey:NSURLUbiquitousItemPercentDownloadedKey error:nil];
+
+		transferPercentage = [percentage doubleValue];
+	}
+
+	return transferPercentage;
+}
+
 @end

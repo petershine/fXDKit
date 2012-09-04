@@ -200,6 +200,9 @@
 					[self startWatchingLocalDirectoryChange];
 #endif
 					[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+
+
+					[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
 				}
 				else {
 					[self failedToUpdateUbiquityContainerURL];
@@ -459,7 +462,7 @@
 	if (self.didFinishFirstGathering == NO) {	//FXDLog_DEFAULT;
 		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
+		//[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
 	}
 	
 	
@@ -470,7 +473,7 @@
 		NSArray *results = metadataQuery.results;
 		NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
 		
-		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);		
+		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
 	});
 #endif
 }
