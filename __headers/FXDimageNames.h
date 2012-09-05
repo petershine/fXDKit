@@ -21,6 +21,6 @@
 #define imageNavibarBtnCloseOn	[UIImage bundledImageForName:@"btn_close_on"]
 
 #ifndef imageDefaultBackground
-#define imageDefaultBackground	[UIImage bundledImageForName:@"bg_default"]
+	#define imageDefaultBackground	[UIImage bundledImageForName:@"bg_default"]
 #endif
 

@@ -51,23 +51,6 @@
 #endif
 
 
-#if USE_Flurry
-	#import "FlurryAnalytics.h"
-
-	#ifndef flurryApplicationKey
-		#define flurryApplicationKey	@"MG21RAFW4CXACSJL2JF9"
-	#endif
-
-	#define	LOGEVENT(v)			[FlurryAnalytics logEvent:v]
-	#define LOGEVENT_DEFAULT	LOGEVENT(strClassSelector)
-
-#else
-	#define	LOGEVENT(v)
-	#define LOGEVENT_DEFAULT
-
-#endif
-
-
 //#define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
 #define strClassSelector	[NSString stringWithFormat:@"[%@ %s]", NSStringFromClass([self class]), __FUNCTION__]
 #define FXDLog	NSLog

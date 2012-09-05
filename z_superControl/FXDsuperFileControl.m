@@ -177,11 +177,15 @@
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 	
 	if (shouldRequestUbiquityContatinerURL) {
+		[[FXDWindow applicationWindow] showProgressView];
+
 		[[NSOperationQueue new] addOperationWithBlock:^{
 			self.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 			FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
 			
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				[FXDWindow hideProgressViewAfterDelay:delayBeforeShowOrHideProgressView];
+
 				if (self.ubiquityContainerURL) {
 #if TEST_infoDictionaryForFolderURL
 					NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -258,7 +262,6 @@
 		NSString *localItemPath = [itemURL unicodeAbsoluteString];
 		localItemPath = [[localItemPath componentsSeparatedByString:separatorPathComponent] lastObject];
 		 */
-
 		
 		NSURL *destinationURL = currentFolderURL;
 		
@@ -278,6 +281,7 @@
 }
 
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)resultError {	//FXDLog_DEFAULT;
+	
 	//TODO: deal with following cases
 	/*
 	 domain: NSCocoaErrorDomain
@@ -441,7 +445,7 @@
 	//}
 	
 	//FXDLog(@"isUploaded: %d isDownloaded: %d didEvict: %d %@", [isUploaded boolValue], [isDownloaded boolValue], didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
-	FXDLog(@"didEvict: %d %@", didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
+	//FXDLog(@"didEvict: %d %@", didEvict, [itemURL followingPathAfterPathComponent:pathcomponentDocuments]);
 	
 	return didEvict;
 }
@@ -454,7 +458,7 @@
 
 #pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
-	//[[FXDWindow applicationWindow] showProgressView];
+
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
@@ -464,8 +468,8 @@
 		
 		//[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
 	}
-	
-	
+
+	/*
 #if ForDEVELOPER
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSMetadataQuery *metadataQuery = notification.object;
@@ -476,6 +480,7 @@
 		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
 	});
 #endif
+	 */
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
