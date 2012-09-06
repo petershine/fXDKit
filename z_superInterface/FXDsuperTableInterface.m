@@ -387,7 +387,7 @@
 	NSInteger numberOfRows = 0;
 	
 	if (self.mainResultsController) {
-#if DEBUG
+#if ForDEVELOPER
 		NSArray *sections = self.mainResultsController.sections;
 		
 		id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
@@ -401,7 +401,7 @@
 			numberOfRows = fetchedObjectsCount;
 		}
 #else
-		numberOfRows = [self.defaultResultsController.fetchedObjects count];
+		numberOfRows = [self.mainResultsController.fetchedObjects count];
 #endif
 	}
 	else if (self.mainDataSource) {
@@ -437,7 +437,7 @@
 		return;
 	}
 	
-	if (isTableViewScrolling == NO) {
+	if ([tableView isScrollingCurrently] == NO) {
 		return;
 	}
 	

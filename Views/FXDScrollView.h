@@ -42,4 +42,6 @@
 - (void)reframeSubView:(UIView*)subView shouldModifyOffset:(BOOL)shouldModifyOffset;
 - (void)scrollToCenterToShowSubView:(UIView*)subView withAnimation:(BOOL)withAnimation;
 
+- (BOOL)isScrollingCurrently;
+
 @end

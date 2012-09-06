@@ -122,4 +122,10 @@
 	[self scrollRectToVisible:visibleRect animated:withAnimation];
 }
 
+#pragma mark -
+- (BOOL)isScrollingCurrently {
+	return (self.isDragging && self.isDecelerating && !self.isTracking);
+}
+
+
 @end

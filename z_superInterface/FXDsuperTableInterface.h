@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define isTableViewScrolling	(tableView.isDragging && tableView.isDecelerating && !tableView.isTracking)
-
 typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowIndex);
 
 

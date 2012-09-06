@@ -223,7 +223,7 @@
 	
 	[defaultRequest
 	 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
-#if DEBUG
+#if ForDEVELOPER
 		 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif		 
 	 }];
@@ -244,7 +244,7 @@
 		
 		[defaultRequest
 		 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
-#if DEBUG
+#if ForDEVELOPER
 			 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif		 
 		 }];
