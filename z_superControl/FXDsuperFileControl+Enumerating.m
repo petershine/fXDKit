@@ -18,7 +18,7 @@
 	
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSMutableArray *metadataItemArray = [[NSMutableArray alloc] initWithCapacity:0];
+		NSMutableDictionary *metadataItemArray = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
 		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
@@ -36,7 +36,7 @@
 				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERRORexcept(260);
 				
 				if ([isHidden boolValue] == NO) {
-					[metadataItemArray addObject:metadataItem];
+					[metadataItemArray setObject:metadataItem forKey:[itemURL absoluteString]];
 					
 					[self updateCollectedURLarrayWithMetadataItem:metadataItem];
 				}

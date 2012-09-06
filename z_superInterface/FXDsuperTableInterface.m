@@ -512,9 +512,11 @@
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	BOOL didCancel = [self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
+	/*
 	if (didCancel) {
 		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
 	}
+	 */
 }
 
 #pragma mark -

@@ -75,10 +75,12 @@
 		
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousCachesMetadataQuery setPredicate:predicate];
+
+		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		[_ubiquitousCachesMetadataQuery setSortDescriptors:@[sortDescriptor]];
 		
 		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
-		
-		[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:0.5];
+		//[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
 		
 		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);

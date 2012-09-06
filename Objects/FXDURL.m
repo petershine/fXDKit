@@ -112,7 +112,8 @@
 	NSError *error = nil;
 	
 	NSDate *attributeModificationDate = nil;
-	[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];FXDLog_ERROR;
+	//[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];FXDLog_ERROR;
+	[self getResourceValue:&attributeModificationDate forKey:NSURLCreationDateKey error:&error];FXDLog_ERROR;
 	
 	return attributeModificationDate;
 }

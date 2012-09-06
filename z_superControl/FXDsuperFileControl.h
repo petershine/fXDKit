@@ -16,6 +16,8 @@
 #define notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL"
 
 
+#define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
+
 #define objkeyUbiquitousFolders			@"objkeyUbiquitousFolders"
 #define objkeyUbiquitousFiles			@"objkeyUbiquitousFiles"
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
@@ -89,6 +91,8 @@
 + (FXDsuperFileControl*)sharedInstance;
 
 - (void)startUpdatingUbiquityContainerURL;
+- (void)evaluateSavedUbiquityContainerURL;
+- (void)activatedUbiquityContainerURL;
 - (void)failedToUpdateUbiquityContainerURL;
 
 - (void)startObservingUbiquityMetadataQueryNotifications;

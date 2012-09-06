@@ -109,9 +109,12 @@
 		
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousDocumentsMetadataQuery setPredicate:predicate];
+
+		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		[_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
 		
 		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-		[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:0.1];
+		[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
 		
 		BOOL didStart = [_ubiquitousDocumentsMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
@@ -178,35 +181,33 @@
 	
 	if (shouldRequestUbiquityContatinerURL) {
 		[[FXDWindow applicationWindow] showProgressView];
+		
+		[self evaluateSavedUbiquityContainerURL];		
 
 		[[NSOperationQueue new] addOperationWithBlock:^{
-			self.ubiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-			FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
-			
+			NSURL *activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+			FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
+
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				[FXDWindow hideProgressViewAfterDelay:delayBeforeShowOrHideProgressView];
 
-				if (self.ubiquityContainerURL) {
-#if TEST_infoDictionaryForFolderURL
-					NSFileManager *fileManager = [NSFileManager defaultManager];
-					
-					FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
-					FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
-					FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
-#endif
+				if (activeUbiquityContainerURL) {					
+					if (self.ubiquityContainerURL) {
+						if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
+							//TODO: what to do?
+						}
+					}
 
-					
-#if shouldUseUbiquitousDocuments
-					[self startObservingUbiquityMetadataQueryNotifications];
-#endif
-					
-#if shouldUseLocalDirectoryWatcher
-					[self startWatchingLocalDirectoryChange];
-#endif
-					[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+					_ubiquityContainerURL = nil;
+					_ubiquitousDocumentsURL = nil;
+					_ubiquitousCachesURL = nil;
 
+					self.ubiquityContainerURL = activeUbiquityContainerURL;
 
-					[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+					[[NSUserDefaults standardUserDefaults] setObject:[self.ubiquityContainerURL absoluteString] forKey:userdefaultStringSavedUbiquityContainerURL];
+					[[NSUserDefaults standardUserDefaults] synchronize];
+
+					[self activatedUbiquityContainerURL];
 				}
 				else {
 					[self failedToUpdateUbiquityContainerURL];
@@ -217,6 +218,54 @@
 	else {
 		[self failedToUpdateUbiquityContainerURL];
 	}
+}
+
+- (void)evaluateSavedUbiquityContainerURL {	FXDLog_DEFAULT;
+	NSURL *savedUbiquityContainerURL = nil;
+
+	NSString *containerURLstring = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultStringSavedUbiquityContainerURL];
+
+	if (containerURLstring) {
+		savedUbiquityContainerURL = [NSURL URLWithString:containerURLstring];
+	}
+
+	FXDLog(@"savedUbiquityContainerURL: %@", savedUbiquityContainerURL);
+
+	if (savedUbiquityContainerURL) {
+		_ubiquityContainerURL = nil;
+		_ubiquitousDocumentsURL = nil;
+		_ubiquitousCachesURL = nil;
+		
+		self.ubiquityContainerURL = savedUbiquityContainerURL;
+
+		[self activatedUbiquityContainerURL];
+		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+	}
+
+	FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
+}
+
+- (void)activatedUbiquityContainerURL {	FXDLog_DEFAULT;
+#if TEST_infoDictionaryForFolderURL
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+
+	FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
+	FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
+	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
+#endif
+
+#if shouldUseUbiquitousDocuments
+	[self startObservingUbiquityMetadataQueryNotifications];
+
+	//[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+#endif
+
+#if shouldUseLocalDirectoryWatcher
+	[self startWatchingLocalDirectoryChange];
+#endif
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 }
 
 - (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
@@ -465,22 +514,22 @@
 	
 	if (self.didFinishFirstGathering == NO) {	//FXDLog_DEFAULT;
 		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
+
+		//MARK: fix initial gathering performance issue
 		
 		//[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
-	}
 
-	/*
 #if ForDEVELOPER
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSMetadataQuery *metadataQuery = notification.object;
-		
-		NSArray *results = metadataQuery.results;
-		NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
-		
-		FXDLog(@"documents: %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
-	});
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			NSMetadataQuery *metadataQuery = notification.object;
+
+			NSArray *results = metadataQuery.results;
+			NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
+
+			FXDLog(@"metadataItem gathered : %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
+		});
 #endif
-	 */
+	}
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
