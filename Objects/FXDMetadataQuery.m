@@ -163,8 +163,8 @@
 }
 
 - (NSDate*)attributeModificationDate {
-	//NSDate *attributeModificationDate = [self valueForAttribute:NSMetadataItemFSContentChangeDateKey];
-	NSDate *attributeModificationDate = [self valueForAttribute:NSMetadataItemFSCreationDateKey];
+	NSDate *attributeModificationDate = [self valueForAttribute:NSMetadataItemFSContentChangeDateKey];
+	//NSDate *attributeModificationDate = [self valueForAttribute:NSMetadataItemFSCreationDateKey];
 	
 	return attributeModificationDate;
 }

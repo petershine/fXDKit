@@ -6,7 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowIndex);
+#define limitMaximumCachedImageCount	200
+
+
+typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger rowIndex);
 
 
 #import "FXDKit.h"
@@ -16,7 +19,7 @@ typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
     // Primitives
 	
 	// Instance variables
-	FXDobjkeyOperation _mainOperationObjKey;
+	FXDidentifierOperation _mainOperationIdentifier;
 	
 	// Properties : For accessor overriding
 	BOOL _isSystemVersionLatest;
@@ -33,6 +36,7 @@ typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
 	
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_queuedOperationDictionary;
+	NSMutableDictionary *_secondaryQueuedOperationDictionary;
 
 	NSMutableDictionary *_cachedImageDictionary;
 }
@@ -52,6 +56,7 @@ typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
+@property (strong, nonatomic) NSMutableDictionary *secondaryQueuedOperationDictionary;
 
 @property (strong, nonatomic) NSMutableDictionary *cachedImageDictionary;
 
@@ -64,7 +69,7 @@ typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
 
 
 #pragma mark - Public
-- (BOOL)didCancelQueuedCellOperationForObjKey:(NSString*)operationObjKey orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
+- (BOOL)didCancelQueuedCellOperationForIdentifier:(NSString*)operationIdentifier orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
 - (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forTableView:(UITableView*)tableView atIndexPath:(NSIndexPath*)indexPath;
 
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
@@ -77,6 +82,8 @@ typedef NSString* (^FXDobjkeyOperation)(NSInteger sectionIndex, NSInteger rowInd
 - (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath;
 
 - (UIView*)sectionDividerViewForWidth:(CGFloat)width andHeight:(CGFloat)height;
+
+- (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath forFinishedHandler:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler;
 
 
 //MARK: - Observer implementation

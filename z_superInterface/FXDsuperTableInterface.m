@@ -30,6 +30,7 @@
     // Release any cached data, images, etc that aren't in use.
 	
 	// Properties
+	self.cachedImageDictionary = nil;
 	
 	// IBOutlets
 	self.mainTableview = nil;
@@ -49,14 +50,14 @@
     // Primitives
 	
 	// Instance variables
-	_mainOperationObjKey = ^(NSInteger sectionIndex, NSInteger rowIndex) {
-		NSString *operationObjKey = nil;
+	_mainOperationIdentifier = ^(NSInteger sectionIndex, NSInteger rowIndex) {
+		NSString *operationIdentifier = nil;
 
 		if (sectionIndex != integerNotDefined && rowIndex != integerNotDefined){
-			operationObjKey = [NSString stringWithFormat:@"%d%d", sectionIndex, rowIndex];
+			operationIdentifier = [NSString stringWithFormat:@"%d%d", sectionIndex, rowIndex];
 		}
 
-		return operationObjKey;
+		return operationIdentifier;
 	};
 	
 	// Properties	
@@ -144,6 +145,15 @@
 	return _queuedOperationDictionary;
 }
 
+- (NSMutableDictionary*)secondaryQueuedOperationDictionary {
+
+	if (_secondaryQueuedOperationDictionary == nil) {
+		_secondaryQueuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+
+	return _secondaryQueuedOperationDictionary;
+}
+
 #pragma mark -
 - (NSMutableDictionary*)cachedImageDictionary {
 	
@@ -207,14 +217,14 @@
 
 
 #pragma mark - Public
-- (BOOL)didCancelQueuedCellOperationForObjKey:(NSString*)operationObjKey orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
+- (BOOL)didCancelQueuedCellOperationForIdentifier:(NSString*)operationIdentifier orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
 
-	if (operationObjKey == nil) {
+	if (operationIdentifier == nil) {
 		if (indexPath) {
-			operationObjKey = _mainOperationObjKey(indexPath.section, indexPath.row);
+			operationIdentifier = _mainOperationIdentifier(indexPath.section, indexPath.row);
 		}
 		else {
-			operationObjKey = _mainOperationObjKey(0, rowIndex);
+			operationIdentifier = _mainOperationIdentifier(0, rowIndex);
 		}
 	}
 	
@@ -222,7 +232,7 @@
 	BOOL didCancel = NO;
 
 
-	FXDBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationObjKey];
+	FXDBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationIdentifier];
 
 	if (cellOperation) {
 		[cellOperation cancel];
@@ -230,7 +240,15 @@
 		didCancel = cellOperation.isCancelled;
 	}
 
-	[self.queuedOperationDictionary removeObjectForKey:operationObjKey];
+	FXDBlockOperation *secondaryCellOperation = [self.secondaryQueuedOperationDictionary objectForKey:operationIdentifier];
+
+	if (secondaryCellOperation) {
+		[secondaryCellOperation cancel];
+	}
+
+
+	[self.queuedOperationDictionary removeObjectForKey:operationIdentifier];
+	[self.secondaryQueuedOperationDictionary removeObjectForKey:operationIdentifier];
 	
 
 	return didCancel;
@@ -362,6 +380,55 @@
 	return sectionDividingView;
 }
 
+#pragma mark -
+- (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath forFinishedHandler:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler {
+
+	BOOL shouldContinue = NO;
+
+	// Get valid index row for disappeared cell
+	NSArray *visibleIndexPaths = [self.mainTableview indexPathsForVisibleRows];
+	NSInteger visibleRowCount = [visibleIndexPaths count];
+
+	if (visibleRowCount == 0) {
+		FXDLog(@"visibleRowCount: %d", visibleRowCount);
+
+		finishedHandler(shouldContinue, integerNotDefined, NO);
+
+		return;
+	}
+
+
+	NSInteger firstVisibleRow = [[visibleIndexPaths objectAtIndex:0] row];
+	NSInteger lastVisibleRow = [[visibleIndexPaths lastObject] row];
+
+	NSInteger disappearedRow = integerNotDefined;
+
+	if (indexPath.row == lastVisibleRow) {
+		disappearedRow = lastVisibleRow -visibleRowCount;
+	}
+	else if (indexPath.row == firstVisibleRow) {
+		disappearedRow = firstVisibleRow +visibleRowCount;
+	}
+
+	if (disappearedRow < 0) {
+		finishedHandler(shouldContinue, integerNotDefined, NO);
+		
+		return;
+	}
+
+
+	// Canceling queuedOperations
+	BOOL shouldEvaluateBackward = NO;
+
+	if (indexPath.row == lastVisibleRow) {
+		shouldEvaluateBackward = YES;
+	}
+
+	shouldContinue = YES;
+
+
+	finishedHandler(shouldContinue, disappearedRow, shouldEvaluateBackward);
+}
 
 //MARK: - Observer implementation
 
@@ -441,82 +508,48 @@
 		return;
 	}
 	
-	
-	// Get valid index row for disappeared cell
-	NSArray *visibleIndexPaths = [tableView indexPathsForVisibleRows];	
-	NSInteger visibleRowCount = [visibleIndexPaths count];
 
-	if (visibleRowCount == 0) {
-		FXDLog(@"visibleRowCount: %d", visibleRowCount);
+	[self processWithDisappearedRowAndDirectionForIndexPath:indexPath forFinishedHandler:^(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward) {
 
-		return;
-	}
-	
-	
-	NSInteger firstVisibleRow = [[visibleIndexPaths objectAtIndex:0] row];
-	NSInteger lastVisibleRow = [[visibleIndexPaths lastObject] row];
+		if (shouldContinue == NO) {
+			return;
+		}
 
-	NSInteger disappearedRow = integerNotDefined;
+		NSInteger canceledCount = 0;
 
-	if (indexPath.row == lastVisibleRow) {
-		disappearedRow = lastVisibleRow -visibleRowCount;
-	}
-	else if (indexPath.row == firstVisibleRow) {
-		disappearedRow = firstVisibleRow +visibleRowCount;
-	}
+		if (shouldEvaluateBackward) {
+			for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {
+				BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:nil orRowIndex:evaluatedRow];
 
-	if (disappearedRow < 0) {
-		return;
-	}
-
-
-	// Canceling queuedOperations
-	BOOL shouldEvaluateBackward = NO;
-
-	if (indexPath.row == lastVisibleRow) {
-		shouldEvaluateBackward = YES;
-	}
-
-	
-	NSInteger canceledCount = 0;
-
-	if (shouldEvaluateBackward) {
-		for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {
-			BOOL didCancel = [self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:nil orRowIndex:evaluatedRow];
-
-			if (didCancel) {
-				canceledCount++;
+				if (didCancel) {
+					canceledCount++;
+				}
 			}
 		}
-	}
-	else {
-		for (NSInteger evaluatedRow = disappearedRow; evaluatedRow < [self.mainDataSource count]; evaluatedRow++) {
-			BOOL didCancel = [self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:nil orRowIndex:evaluatedRow];
+		else {
+			for (NSInteger evaluatedRow = disappearedRow; evaluatedRow < [self.mainDataSource count]; evaluatedRow++) {
+				BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:nil orRowIndex:evaluatedRow];
 
-			if (didCancel) {
-				canceledCount++;
+				if (didCancel) {
+					canceledCount++;
+				}
 			}
 		}
-	}
-
 #if ForDEVELOPER
-	/*
-	if (canceledCount > 0) {
-		FXDLog(@"CANCELED: %d rows operationCount: %u disappearedRow: %d", canceledCount, self.cellOperationQueue.operationCount, disappearedRow);
-	}
-	 */
+		if (canceledCount > 0) {
+			 FXDLog(@"CANCELED: %d rows operationCount: %u disappearedRow: %d", canceledCount, self.cellOperationQueue.operationCount, disappearedRow);
+		}
 #endif
+	}];
 }
 
 //MARK: Usable in iOS 6
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-	BOOL didCancel = [self didCancelQueuedCellOperationForObjKey:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
+	BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
-	/*
 	if (didCancel) {
-		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
+		//FXDLog(@"didCancel: %d %@", didCancel, indexPath);
 	}
-	 */
 }
 
 #pragma mark -

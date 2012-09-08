@@ -110,11 +110,15 @@
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousDocumentsMetadataQuery setPredicate:predicate];
 
-		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
+		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
 		[_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
+
+		//TODO: Need to find other way
+		//[_ubiquitousDocumentsMetadataQuery setGroupingAttributes:@[NSMetadataItemPathKey]];
 		
 		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-		[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
+		//[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
 		
 		BOOL didStart = [_ubiquitousDocumentsMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
@@ -239,7 +243,9 @@
 		self.ubiquityContainerURL = savedUbiquityContainerURL;
 
 		[self activatedUbiquityContainerURL];
+
 		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+		[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
 	}
 
 	FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
@@ -254,16 +260,19 @@
 	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 #endif
 
+
 #if shouldUseUbiquitousDocuments
 	[self startObservingUbiquityMetadataQueryNotifications];
 
-	//[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
 	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
 #endif
+
 
 #if shouldUseLocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif
+
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 }
@@ -287,7 +296,7 @@
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
 	
 	if (self.ubiquitousDocumentsMetadataQuery.isStarted) {
-		[self.ubiquitousDocumentsMetadataQuery enableUpdates];
+		//
 	}
 }
 
@@ -515,25 +524,13 @@
 	if (self.didFinishFirstGathering == NO) {	//FXDLog_DEFAULT;
 		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 
-		//MARK: fix initial gathering performance issue
-		
-		//[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
-
-#if ForDEVELOPER
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSMetadataQuery *metadataQuery = notification.object;
-
-			NSArray *results = metadataQuery.results;
-			NSURL *lastItemURL = [(NSMetadataItem*)[results lastObject] valueForAttribute:NSMetadataItemURLKey];
-
-			FXDLog(@"metadataItem gathered : %d %@", metadataQuery.resultCount-1, [lastItemURL followingPathInDocuments]);
-		});
-#endif
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
 	}
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
 	self.didFinishFirstGathering = YES;
+
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
@@ -542,6 +539,7 @@
 	NSMetadataQuery *metadataQuery = notification.object;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
+
 		BOOL isTransferring = [metadataQuery isQueryResultsTransferringWithLogString:nil];
 		
 		//TODO: distinguish uploading and downloading and finished updating

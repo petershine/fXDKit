@@ -76,7 +76,8 @@
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousCachesMetadataQuery setPredicate:predicate];
 
-		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
+		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
 		[_ubiquitousCachesMetadataQuery setSortDescriptors:@[sortDescriptor]];
 		
 		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
@@ -227,10 +228,13 @@
 #pragma mark -
 - (void)enumerateCachesMetadataQueryResults {
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
+	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		
-		for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
+		//for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
+		for (NSUInteger i = 0; i < self.ubiquitousCachesMetadataQuery.resultCount; i++) {
+			NSMetadataItem *metadataItem = [self.ubiquitousCachesMetadataQuery resultAtIndex:i];
+			
 			NSError *error = nil;
 			
 			NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
@@ -273,7 +277,7 @@
 	//
 }
 
-- (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_DEFAULT;
+- (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self enumerateCachesMetadataQueryResults];
 }
 

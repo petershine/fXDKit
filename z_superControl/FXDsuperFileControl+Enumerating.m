@@ -15,14 +15,18 @@
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
-	
+
+	[self.ubiquitousDocumentsMetadataQuery disableUpdates];
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSMutableDictionary *metadataItemArray = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
 		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-		
-		for (NSMetadataItem *metadataItem in self.ubiquitousDocumentsMetadataQuery.results) {
+
+		//for (NSMetadataItem *metadataItem in self.ubiquitousDocumentsMetadataQuery.results) {
+		for (NSUInteger i = 0; i < self.ubiquitousDocumentsMetadataQuery.resultCount; i++) {
+			NSMetadataItem *metadataItem = [self.ubiquitousDocumentsMetadataQuery resultAtIndex:i];
+
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
 			NSError *error = nil;
@@ -46,6 +50,8 @@
 		[userInfo setObject:metadataItemArray forKey:objkeyUbiquitousMetadataItems];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
+
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:self userInfo:userInfo];
 		}];
 	}];
