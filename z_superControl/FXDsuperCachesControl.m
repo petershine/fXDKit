@@ -156,44 +156,14 @@
 }
 
 #pragma mark -
-- (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL {
+- (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL {	FXDLog_OVERRIDE;
 	NSURL *cachedFolderURL = nil;
-	
-	EFScontrolFile *fileControl = [EFScontrolFile sharedInstance];
-	
-	if (fileControl.ubiquitousCachesURL == nil) {
-		return cachedFolderURL;
-	}
-	
-	
-	cachedFolderURL = fileControl.ubiquitousCachesURL;
-	
-	NSString *relativePath = [[[folderURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentDocuments] lastObject];
-	
-	if (relativePath.length > 0) {
-		cachedFolderURL = [cachedFolderURL URLByAppendingPathComponent:relativePath];
-	}
 	
 	return cachedFolderURL;
 }
 
-- (NSURL*)folderURLforCachedFolderURL:(NSURL*)cachedFolderURL {
+- (NSURL*)folderURLforCachedFolderURL:(NSURL*)cachedFolderURL {	FXDLog_OVERRIDE;
 	NSURL *folderURL = nil;
-	
-	EFScontrolFile *fileControl = [EFScontrolFile sharedInstance];
-	
-	if (fileControl.ubiquitousDocumentsURL == nil) {
-		return folderURL;
-	}
-	
-	
-	folderURL = fileControl.ubiquitousDocumentsURL;
-				 
-	NSString *relativePath = [[[cachedFolderURL unicodeAbsoluteString] componentsSeparatedByString:pathcomponentCaches] lastObject];
-	
-	if (relativePath.length > 0) {
-		folderURL = [folderURL URLByAppendingPathComponent:relativePath];
-	}
 	
 	return folderURL;
 }

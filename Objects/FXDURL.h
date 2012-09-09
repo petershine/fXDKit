@@ -16,6 +16,15 @@ typedef enum {
 } FILE_KIND_TYPE;
 
 
+#ifndef pathcomponentDocuments
+	#define pathcomponentDocuments @"Documents/"
+#endif
+
+#ifndef pathcomponentCaches
+	#define pathcomponentCaches	@"Caches/"
+#endif
+
+
 #import "FXDKit.h"
 
 

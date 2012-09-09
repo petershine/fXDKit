@@ -33,15 +33,6 @@
 #endif
 
 
-#ifndef pathcomponentDocuments
-	#define pathcomponentDocuments @"Documents/"
-#endif
-
-#ifndef pathcomponentCaches
-	#define pathcomponentCaches	@"Caches/"
-#endif
-
-
 #import "FXDKit.h"
 
 #import "DirectoryWatcher.h"
