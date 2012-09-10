@@ -36,6 +36,8 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 	
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_queuedOperationDictionary;
+
+	NSOperationQueue *_secondaryOperationQueue;
 	NSMutableDictionary *_secondaryQueuedOperationDictionary;
 
 	NSMutableDictionary *_cachedImageDictionary;
@@ -56,6 +58,8 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
+
+@property (strong, nonatomic) NSOperationQueue *secondaryOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *secondaryQueuedOperationDictionary;
 
 @property (strong, nonatomic) NSMutableDictionary *cachedImageDictionary;

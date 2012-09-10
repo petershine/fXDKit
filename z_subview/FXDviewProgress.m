@@ -60,6 +60,9 @@
 
 
 #pragma mark - IBActions
+- (IBAction)pressedCancelButton:(id)sender {	FXDLog_DEFAULT;
+	self.didPressCancelButton = YES;
+}
 
 
 #pragma mark - Public

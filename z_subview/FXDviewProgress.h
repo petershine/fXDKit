@@ -15,9 +15,11 @@
 	// Instance variables
 	
 	// Properties : For accessor overriding
+	BOOL _didPressCancelButton;
 }
 
 // Properties
+@property (assign, nonatomic) BOOL didPressCancelButton;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
@@ -29,8 +31,11 @@
 @property (strong, nonatomic) IBOutlet UISlider *sliderProgress;
 @property (strong, nonatomic) IBOutlet UIProgressView *indicatorProgress;
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonCancel;
+
 
 #pragma mark - IBActions
+- (IBAction)pressedCancelButton:(id)sender;
 
 
 #pragma mark - Public

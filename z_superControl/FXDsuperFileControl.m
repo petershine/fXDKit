@@ -114,9 +114,6 @@
 		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
 		[_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
 
-		//TODO: Need to find other way
-		//[_ubiquitousDocumentsMetadataQuery setGroupingAttributes:@[NSMetadataItemPathKey]];
-		
 		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
 		//[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
 		
@@ -244,8 +241,10 @@
 
 		[self activatedUbiquityContainerURL];
 
+		/*
 		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
 		[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+		 */
 	}
 
 	FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);

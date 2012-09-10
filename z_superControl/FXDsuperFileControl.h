@@ -25,11 +25,11 @@
 
 
 #ifndef shouldUseUbiquitousDocuments
-	#define shouldUseUbiquitousDocuments	1
+	#define shouldUseUbiquitousDocuments	0
 #endif
 
 #ifndef shouldUseLocalDirectoryWatcher
-	#define shouldUseLocalDirectoryWatcher	1
+	#define shouldUseLocalDirectoryWatcher	0
 #endif
 
 

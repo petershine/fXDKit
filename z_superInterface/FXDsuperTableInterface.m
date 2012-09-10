@@ -145,6 +145,15 @@
 	return _queuedOperationDictionary;
 }
 
+#pragma mark -
+- (NSOperationQueue*)secondaryOperationQueue {
+	if (_secondaryOperationQueue == nil) {
+		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
+	}
+
+	return _secondaryOperationQueue;
+}
+
 - (NSMutableDictionary*)secondaryQueuedOperationDictionary {
 
 	if (_secondaryQueuedOperationDictionary == nil) {
@@ -595,6 +604,8 @@
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
 	
 	self.didStartAutoScrollingToTop = NO;
+
+	[self.mainTableview reloadRowsAtIndexPaths:[self.mainTableview indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 
