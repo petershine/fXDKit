@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define limitMaximumCachedImageCount	100
+#define limitMaximumCachedImageCount	200
 
 
 typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger rowIndex);

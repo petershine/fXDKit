@@ -127,6 +127,8 @@
 					
 					if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0 || [itemName rangeOfString:@".sqlite"].length > 0) {	//SKIP
 						FXDLog(@"SKIPPED: itemName: %@", itemName);
+
+						[nextURL setResourceValue:@YES forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 					}
 					else {
 						id isHidden = nil;
