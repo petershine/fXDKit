@@ -181,7 +181,7 @@
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 	
 	if (shouldRequestUbiquityContatinerURL) {
-		[[FXDWindow applicationWindow] showProgressView];
+		[[FXDWindow applicationWindow] showDefaultProgressView];
 		
 		[self evaluateSavedUbiquityContainerURL];		
 

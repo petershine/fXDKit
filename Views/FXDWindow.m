@@ -89,15 +89,7 @@
 
 //MARK: - Observer implementation
 - (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
-	
-	if (self.progressView == nil) {
-		self.progressView = [FXDviewProgress viewFromNib:nil];
-		
-		[self addSubview:self.progressView];
-		[self bringSubviewToFront:self.progressView];
-		
-		[self.progressView fadeInFromHidden];
-	}
+	[self showProgressViewWithNibName:nil];
 }
 
 - (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {
@@ -128,8 +120,8 @@
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
 	FXDWindow *applicationWindow = [self applicationWindow];
 	
-	[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showProgressView) object:nil];
-	[applicationWindow performSelector:@selector(showProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
+	[applicationWindow performSelector:@selector(showDefaultProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 }
 
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
@@ -140,12 +132,32 @@
 }
 
 #pragma mark -
-- (void)showProgressView {	//FXDLog_DEFAULT;
+- (void)showCustomProgressView {	FXDLog_DEFAULT;
+	[self showProgressViewWithNibName:nibnameCustomProgressView];
+}
+
+- (void)showDefaultProgressView {	//FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	[applicationWindow observedApplicationWindowShouldFadeInProgressView:nil];
 }
 
+- (void)showProgressViewWithNibName:(NSString*)nibName {	FXDLog_DEFAULT;
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
+	
+	FXDLog(@"nibName: %@", nibName);
+
+	if (applicationWindow.progressView == nil) {
+		applicationWindow.progressView = [FXDviewProgress viewFromNibName:nibName];
+
+		[applicationWindow addSubview:applicationWindow.progressView];
+		[applicationWindow bringSubviewToFront:applicationWindow.progressView];
+
+		[applicationWindow.progressView fadeInFromHidden];
+	}
+}
+
+#pragma mark -
 - (void)hideProgressView {	//FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	

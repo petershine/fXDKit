@@ -54,7 +54,10 @@
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay;
 
-- (void)showProgressView;
+- (void)showCustomProgressView;
+- (void)showDefaultProgressView;
+- (void)showProgressViewWithNibName:(NSString*)nibName;
+
 - (void)hideProgressView;
 
 @end

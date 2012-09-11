@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
+#ifndef nibnameCustomProgressView
+	#define nibnameCustomProgressView NSStringFromClass([self class])
+#endif
+
 
 #import "FXDKit.h"
 
@@ -22,6 +26,7 @@
 @property (assign, nonatomic) BOOL didPressCancelButton;
 
 // IBOutlets
+@property (strong, nonatomic) IBOutlet UIImageView *imageviewCover;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
