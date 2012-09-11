@@ -61,6 +61,12 @@
 					  selector:@selector(observedApplicationWindowShouldFadeOutProgressView:)
 						  name:notificationApplicationWindowShouldFadeOutProgressView
 						object:nil];
+
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
+						  name:UIDeviceOrientationDidChangeNotification
+						object:nil];
 	
 	// Primitives
     
@@ -99,6 +105,32 @@
 						afterRemoved:^{	FXDLog_DEFAULT;
 							self.progressView = nil;
 						}];
+	}
+}
+
+#pragma mark -
+- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLog(@"notification: %@", notification);
+
+	if (self.progressView.viewIndicatorGroup) {
+		self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
+
+		FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
+		UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
+
+		if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+
+			CGAffineTransform modifiedTransform = self.progressView.viewIndicatorGroup.transform;
+
+			if (orientation == UIDeviceOrientationLandscapeLeft) {
+				modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((90)/180.0 * M_PI));
+			}
+			else if (orientation == UIDeviceOrientationLandscapeRight) {
+				modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((270)/180.0 * M_PI));
+			}
+
+			self.progressView.viewIndicatorGroup.transform = modifiedTransform;
+		}
 	}
 }
 
@@ -150,26 +182,7 @@
 	if (applicationWindow.progressView == nil) {
 		applicationWindow.progressView = [FXDviewProgress viewFromNibName:nibName];
 
-		if (applicationWindow.progressView.viewIndicatorGroup) {
-			FXDLog(@"bounds: %@ frame: %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(self.frame));
-			FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
-
-			UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
-
-			if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
-
-				CGAffineTransform rotationTransform = CGAffineTransformIdentity;
-
-				if (orientation == UIDeviceOrientationLandscapeLeft) {
-					rotationTransform = CGAffineTransformRotate(rotationTransform, ((90)/180.0 * M_PI));
-				}
-				else if (orientation == UIDeviceOrientationLandscapeRight) {
-					rotationTransform = CGAffineTransformRotate(rotationTransform, ((270)/180.0 * M_PI));
-				}
-
-				applicationWindow.progressView.viewIndicatorGroup.transform = rotationTransform;
-			}
-		}
+		[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
 
 		[applicationWindow addSubview:applicationWindow.progressView];
 		[applicationWindow bringSubviewToFront:applicationWindow.progressView];
