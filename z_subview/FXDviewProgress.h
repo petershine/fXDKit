@@ -26,6 +26,8 @@
 @property (assign, nonatomic) BOOL didPressCancelButton;
 
 // IBOutlets
+@property (strong, nonatomic) IBOutlet UIView *viewIndicatorGroup;
+
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewCover;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 
@@ -37,6 +39,7 @@
 @property (strong, nonatomic) IBOutlet UIProgressView *indicatorProgress;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonCancel;
+@property (strong, nonatomic) IBOutlet UILabel *labelCanceling;
 
 
 #pragma mark - IBActions

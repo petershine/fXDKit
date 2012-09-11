@@ -28,6 +28,7 @@
 #define text_Settings	@"text_Settings"
 
 #define text_Cancel		@"text_Cancel"
+#define text_Canceling	@"text_Canceling"
 #define text_OK			@"text_OK"
 
 #define text_Back		@"text_Back"

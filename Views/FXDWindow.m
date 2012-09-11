@@ -150,6 +150,27 @@
 	if (applicationWindow.progressView == nil) {
 		applicationWindow.progressView = [FXDviewProgress viewFromNibName:nibName];
 
+		if (applicationWindow.progressView.viewIndicatorGroup) {
+			FXDLog(@"bounds: %@ frame: %@", NSStringFromCGRect(self.bounds), NSStringFromCGRect(self.frame));
+			FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
+
+			UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
+
+			if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+
+				CGAffineTransform rotationTransform = CGAffineTransformIdentity;
+
+				if (orientation == UIDeviceOrientationLandscapeLeft) {
+					rotationTransform = CGAffineTransformRotate(rotationTransform, ((90)/180.0 * M_PI));
+				}
+				else if (orientation == UIDeviceOrientationLandscapeRight) {
+					rotationTransform = CGAffineTransformRotate(rotationTransform, ((270)/180.0 * M_PI));
+				}
+
+				applicationWindow.progressView.viewIndicatorGroup.transform = rotationTransform;
+			}
+		}
+
 		[applicationWindow addSubview:applicationWindow.progressView];
 		[applicationWindow bringSubviewToFront:applicationWindow.progressView];
 

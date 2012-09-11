@@ -62,6 +62,10 @@
 #pragma mark - IBActions
 - (IBAction)pressedCancelButton:(id)sender {	FXDLog_DEFAULT;
 	self.didPressCancelButton = YES;
+
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		self.labelCanceling.text = NSLocalizedString(text_Canceling, nil);
+	}];
 }
 
 
