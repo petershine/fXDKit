@@ -209,11 +209,12 @@
 						}
 					}
 
-					_ubiquityContainerURL = nil;
+					
 					_ubiquitousDocumentsURL = nil;
 					_ubiquitousCachesURL = nil;
 
-					self.ubiquityContainerURL = activeUbiquityContainerURL;
+					_ubiquityContainerURL = activeUbiquityContainerURL;
+
 
 					[[NSUserDefaults standardUserDefaults] setObject:[self.ubiquityContainerURL absoluteString] forKey:userdefaultStringSavedUbiquityContainerURL];
 					[[NSUserDefaults standardUserDefaults] synchronize];
@@ -243,13 +244,12 @@
 	FXDLog(@"savedUbiquityContainerURL: %@", savedUbiquityContainerURL);
 
 	if (savedUbiquityContainerURL) {
-		_ubiquityContainerURL = nil;
 		_ubiquitousDocumentsURL = nil;
 		_ubiquitousCachesURL = nil;
 		
-		self.ubiquityContainerURL = savedUbiquityContainerURL;
+		_ubiquityContainerURL = savedUbiquityContainerURL;
 
-		[self activatedUbiquityContainerURL];
+		//[self activatedUbiquityContainerURL];
 
 		/*
 		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
@@ -257,7 +257,7 @@
 		 */
 	}
 
-	FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
+	//FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
 }
 
 - (void)activatedUbiquityContainerURL {	FXDLog_DEFAULT;
@@ -281,7 +281,6 @@
 #if shouldUseLocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif
-
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 }
@@ -539,7 +538,6 @@
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
 	self.didFinishFirstGathering = YES;
-
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }

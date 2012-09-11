@@ -51,8 +51,6 @@
 		// Instance variables
 		
 		// Properties
-		_defaultEntityName = nil;
-		_defaultSortDescriptors = nil;
 	}
 	
 	return self;
@@ -137,6 +135,7 @@
 		if (ubiquityContainerURL) {	//TODO: get UUID unique URL
 			//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
 			//TEST: using ubiquityContainerURL instead
+
 			ubiquitousContentURL = ubiquityContainerURL;
 			
 			[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
@@ -260,7 +259,7 @@
 	FXDLog(@"predicate: %@", predicate);
 		
 	NSArray *filteredArray = [self.defaultResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
-	
+		
 	if ([filteredArray count] > 0) {
 		resultObj = [filteredArray objectAtIndex:0];
 		
@@ -336,7 +335,7 @@
 		[controller.dynamicDelegate controllerWillChangeContent:controller];
 	}
 	else {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 }
 
@@ -346,7 +345,7 @@
 		[controller.dynamicDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 	}
 	else {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 }
 
@@ -356,7 +355,8 @@
 		[controller.dynamicDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 	}
 	else {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
+		//prepareCoreDataControlUsingUbiquityContainerURL;
 	}
 }
 
@@ -366,7 +366,7 @@
 		[controller.dynamicDelegate controllerDidChangeContent:controller];
 	}
 	else {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 }
 
