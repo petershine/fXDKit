@@ -109,13 +109,13 @@
 }
 
 #pragma mark -
-- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLog(@"notification: %@", notification);
+- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	//FXDLog_DEFAULT;
+	//FXDLog(@"notification: %@", notification);
 
 	if (self.progressView.viewIndicatorGroup) {
 		self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
 
-		FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
+		//FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
 		UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
 
 		if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {

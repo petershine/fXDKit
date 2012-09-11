@@ -103,7 +103,7 @@
 	static id _sharedInstance = nil;
 	
 	dispatch_once(&once,^{
-		_sharedInstance = [[self alloc] initWithFileURL:nil];
+		_sharedInstance = [[self alloc] initWithFileURL:nil];	//MARK: Cannot use default implementation because of using this different initializer
 	});
 	
 	return _sharedInstance;

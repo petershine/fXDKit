@@ -125,12 +125,22 @@
 }
 
 #pragma mark -
-- (NSOperationQueue*)operationQueue {
-	if (_operationQueue == nil) {
-		_operationQueue = [[NSOperationQueue alloc] init];
+- (NSOperationQueue*)fileManagingOperationQueue {
+	if (_fileManagingOperationQueue == nil) {
+		_fileManagingOperationQueue = [[NSOperationQueue alloc] init];
+		[_fileManagingOperationQueue setMaxConcurrentOperationCount:1];
+	}
+
+	return _fileManagingOperationQueue;
+}
+
+#pragma mark -
+- (NSOperationQueue*)mainOperationQueue {
+	if (_mainOperationQueue == nil) {
+		_mainOperationQueue = [[NSOperationQueue alloc] init];
 	}
 	
-	return _operationQueue;
+	return _mainOperationQueue;
 }
 
 - (NSMutableDictionary*)queuedOperationDictionary {
@@ -438,7 +448,7 @@
 		return;
 	}
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
+	[self.fileManagingOperationQueue addOperationWithBlock:^{	FXDLog_DEFAULT;
 		for (NSURL *itemURL in self.collectedURLarray) {
 			BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 			
