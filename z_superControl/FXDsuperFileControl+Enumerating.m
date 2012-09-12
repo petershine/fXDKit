@@ -30,6 +30,16 @@
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 			
 			NSError *error = nil;
+
+#if shouldDownloadEvictedFiles
+			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
+
+			if (isDownloaded == NO && isDownloading == NO) {
+				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
+				FXDLog(@"didStartDownloading: %d itemURL followingPathInDocuments: %@", didStartDownloading, [itemURL followingPathInDocuments]);
+			}
+#endif			
 			
 			id parentDirectoryURL = nil;
 			[itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERRORexcept(260);
@@ -57,7 +67,7 @@
 	}];
 }
 
-- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
+- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
 	
 	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
@@ -125,10 +135,12 @@
 					NSString *itemName = nil;
 					[nextURL getResourceValue:&itemName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
 					
-					if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0 || [itemName rangeOfString:@".sqlite"].length > 0) {	//SKIP
+					if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0
+						|| [itemName rangeOfString:@".sqlite"].length > 0
+						|| [itemName rangeOfString:@"aviary"].length > 0) {	//SKIP
 						FXDLog(@"SKIPPED: itemName: %@", itemName);
 
-						[nextURL setResourceValue:@YES forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
+						//[nextURL setResourceValue:@YES forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 					}
 					else {
 						id isHidden = nil;

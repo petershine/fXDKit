@@ -32,6 +32,10 @@
 	#define shouldUseLocalDirectoryWatcher	0
 #endif
 
+#ifndef shouldDownloadEvictedFiles
+	#define shouldDownloadEvictedFiles	0
+#endif
+
 
 #import "FXDKit.h"
 

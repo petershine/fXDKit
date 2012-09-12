@@ -219,8 +219,9 @@
 			
 			if (isReachable) {
 				BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+				BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 				
-				if (isDownloaded == NO) {
+				if (isDownloaded == NO && isDownloading == NO) {
 					didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];FXDLog_ERROR;
 				}
 			}
