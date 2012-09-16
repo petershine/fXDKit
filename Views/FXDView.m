@@ -31,8 +31,6 @@
 	// Properties
 	
 	// IBOutlets
-	
-	//FXDLog_DEFAULT;
 }
 
 
@@ -67,20 +65,6 @@
 
 
 #pragma mark - Overriding
-#if USE_loggingViewDrawing
-- (void)layoutSubviews {
-	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
-	
-	// Implement or Erase
-	
-}
-
-- (void)drawRect:(CGRect)rect {	
-	FXDLog(@" ");FXDLog(@"OVERRIDE: %@ : %@", strClassSelector, NSStringFromCGRect(self.frame));
-	
-	// Implement or Erase
-}
-#endif
 
 
 #pragma mark - Public

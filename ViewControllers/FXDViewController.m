@@ -104,6 +104,10 @@
 
 #pragma mark - at autoRotate
 #if USE_loggingRotatingOrientation
+- (BOOL)shouldAutorotate {	FXDLog_SEPARATE_FRAME;
+	return [super shouldAutorotate];
+}
+
 - (NSUInteger)supportedInterfaceOrientations {	FXDLog_SEPARATE_FRAME;
 	return [super supportedInterfaceOrientations];
 }
@@ -113,16 +117,17 @@
 	
 }
 
+#pragma mark -
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %d, duration: %f %@", NSStringFromSelector(_cmd), toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
+	FXDLog(@"%@: %d, duration: %f %@ %@", NSStringFromSelector(_cmd), toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %d, duration: %f %@", NSStringFromSelector(_cmd), interfaceOrientation, duration, NSStringFromCGRect(self.view.frame));
+	FXDLog(@"%@: %d, duration: %f %@ %@", NSStringFromSelector(_cmd), interfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"%@: %d %@", NSStringFromSelector(_cmd), fromInterfaceOrientation, NSStringFromCGRect(self.view.frame));
+	FXDLog(@"%@: %d %@ %@", NSStringFromSelector(_cmd), fromInterfaceOrientation, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 }
 #endif
 
