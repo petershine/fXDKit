@@ -115,16 +115,7 @@
 		
 #ifdef imageNavibarShadow
 		if ([FXDsuperGlobalControl isSystemVersionLatest]) {
-#if ENVIRONTMENT_newestSDK
 			[self.navigationBar setShadowImage:imageNavibarShadow];
-#else
-			if (self.addedShadowImageview == nil) {
-				self.addedShadowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, self.navigationBar.frame.size.height, self.navigationBar.frame.size.width, imageNavibarShadow.size.height)];
-				self.addedShadowImageview.image = imageNavibarShadow;
-			}
-			
-			[self.navigationBar addSubview:self.addedShadowImageview];
-#endif
 		}
 		else {
 			if (self.addedShadowImageview == nil) {

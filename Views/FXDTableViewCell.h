@@ -23,9 +23,6 @@ typedef enum {
 	
 	// Properties : For accessor overriding
 	SECTION_POSITION_TYPE _sectionPositionType;
-	
-	id _addedObj;
-	id _linkedOperationIdentifier;
 }
 
 // Properties

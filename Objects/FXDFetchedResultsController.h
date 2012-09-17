@@ -17,11 +17,10 @@
 	// Instance variables
 	
     // Properties : For accessor overriding
-	id<NSFetchedResultsControllerDelegate> _dynamicDelegate;
 }
 
 // Properties
-@property (strong, nonatomic) id<NSFetchedResultsControllerDelegate> dynamicDelegate;
+@property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> dynamicDelegate;
 
 
 #pragma mark - Public

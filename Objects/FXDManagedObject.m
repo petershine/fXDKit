@@ -73,6 +73,7 @@
 		if (value == nil) {
 			value = [keyedValues objectForKey:[attribute uppercaseString]];
 		}
+		
 		if (value == nil) {
 			value = [keyedValues objectForKey:[attribute lowercaseString]];
 		}

@@ -138,7 +138,6 @@
 	}
 	else {
 		if ([FXDsuperGlobalControl isSystemVersionLatest]) {
-#if ENVIRONTMENT_newestSDK
 			[self.accountStore
 			 requestAccessToAccountsWithType:self.accountType
 			 options:nil
@@ -151,7 +150,6 @@
 					 [self showAlertViewForSelectingTwitterAccount];
 				 }
 			 }];
-#endif
 		}
 		else {
 #if ENVIRONTMENT_newestSDK

@@ -19,7 +19,6 @@
 	// Instance variables
 	
 	// Properties : For accessor overriding
-	BOOL _didPressCancelButton;
 }
 
 // Properties

@@ -178,6 +178,10 @@
 	NSString *thumbItemPath = [appSearhPath_Caches stringByAppendingPathComponent:[cachedURL lastPathComponent]];
 	
 	BOOL didCreate = [fileManager createFileAtPath:thumbItemPath contents:imageData attributes:nil];
+
+	if (didCreate) {
+		//TODO:
+	}
 	
 	NSURL *thumbItemURL = [NSURL fileURLWithPath:thumbItemPath];
 	
@@ -191,7 +195,11 @@
 
 	
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERRORexcept(2);
-		
+
+	if (didSetUbiquitous) {
+		//TODO:
+	}
+
 	//FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
 

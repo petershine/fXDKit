@@ -81,15 +81,13 @@
 	// Instance variables
 	
 	// Properties
-	_presentedSegueDictionary = nil;
-	_presentingSegueName = nil;
 	
 	// IBOutlets
 }
 
 
 #pragma mark - Accessor overriding
-- (NSDictionary*)segueIdentifiers {
+- (NSDictionary*)presentedSegueDictionary {
 	
 	if (_presentedSegueDictionary == nil) {	FXDLog_OVERRIDE;
 		//
@@ -185,13 +183,11 @@
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
-#if ENVIRONTMENT_newestSDK
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
 	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
 	
 	return [super shouldPerformSegueWithIdentifier:identifier sender:sender];
 }
-#endif
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;
 	FXDLog(@"segue: %@", segue);
@@ -202,7 +198,6 @@
 	
 }
 
-#if ENVIRONTMENT_newestSDK
 - (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_DEFAULT;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 	
@@ -221,7 +216,6 @@
 	return [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
 
 }
-#endif
 #endif
 
 	 

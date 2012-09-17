@@ -41,7 +41,6 @@
 		// Instance variables
 		
 		// Properties
-		_addedObj = nil;
 	}
 	
 	return self;

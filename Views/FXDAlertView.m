@@ -46,7 +46,6 @@
     // Instance variables
 	
     // Properties
-	_addedObj = nil;
 	
     // IBOutlets
 }

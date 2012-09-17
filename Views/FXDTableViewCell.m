@@ -47,9 +47,7 @@
 	
 	// Properties
 	_sectionPositionType = integerNotDefined;
-	
-	_addedObj = nil;
-	
+		
 	// IBOutlets
 	if (self.imageView) {
 		[self modifySizeOfCellSubview:self.imageView];
@@ -78,13 +76,7 @@
 
 
 #pragma mark - Overriding
-/*
-- (void)layoutSubviews {
-	[super layoutSubviews];
- 
-	//USE modify methods for cellSubview
-}
- */
+
 
 #pragma mark -
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_DEFAULT;

@@ -17,7 +17,6 @@
 	// Instance variables
 	
 	// Properties : For accessor overriding
-	id _addedObj;
 }
 
 // Properties

@@ -168,7 +168,6 @@
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
 	if ([FXDsuperGlobalControl isSystemVersionLatest]) {		
-#if ENVIRONTMENT_newestSDK
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
 													 name:NSUbiquityIdentityDidChangeNotification
@@ -180,9 +179,6 @@
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
 		}
-#else
-		shouldRequestUbiquityContatinerURL = YES;
-#endif
 	}
 	else {
 		shouldRequestUbiquityContatinerURL = YES;
