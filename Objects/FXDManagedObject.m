@@ -67,22 +67,22 @@
     NSDictionary *attributes = [[self entity] attributesByName];
 	
     for (NSString *attribute in attributes) {
-		id value = [keyedValues objectForKey:attribute];
+		id value = keyedValues[attribute];
 		
 		//MARK: Check cases
 		if (value == nil) {
-			value = [keyedValues objectForKey:[attribute uppercaseString]];
+			value = keyedValues[[attribute uppercaseString]];
 		}
 		
 		if (value == nil) {
-			value = [keyedValues objectForKey:[attribute lowercaseString]];
+			value = keyedValues[[attribute lowercaseString]];
 		}
 		
         if (value == nil) {
             continue;	// EMPTY
         }
 		
-        NSAttributeType attributeType = [[attributes objectForKey:attribute] attributeType];
+        NSAttributeType attributeType = [attributes[attribute] attributeType];
 		
         if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
             value = [[value stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

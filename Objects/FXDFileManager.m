@@ -103,7 +103,7 @@
 	
 	NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	[infoDictionary setObject:[folderURL lastPathComponent] forKey:@"folderName"];
+	infoDictionary[@"folderName"] = [folderURL lastPathComponent];
 	
 	
 	NSDirectoryEnumerator *enumerator = [self limitedEnumeratorForRootURL:folderURL];
@@ -141,7 +141,7 @@
 	}
 	
 	if (itemArray && [itemArray count] > 0) {
-		[infoDictionary setObject:itemArray forKey:@"items"];
+		infoDictionary[@"items"] = itemArray;
 	}
 	
 	return infoDictionary;

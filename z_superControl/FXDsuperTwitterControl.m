@@ -303,7 +303,7 @@
 	
 	if (buttonIndex != alertView.cancelButtonIndex) {
 
-		_mainTwitterAccount = [self.twitterAccountArray objectAtIndex:buttonIndex];
+		_mainTwitterAccount = (self.twitterAccountArray)[buttonIndex];
 		
 		identifier = _mainTwitterAccount.identifier;
 		

@@ -50,14 +50,14 @@
 				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERRORexcept(260);
 				
 				if ([isHidden boolValue] == NO) {
-					[metadataItemArray setObject:metadataItem forKey:[itemURL absoluteString]];
+					metadataItemArray[[itemURL absoluteString]] = metadataItem;
 					
 					[self updateCollectedURLarrayWithMetadataItem:metadataItem];
 				}
 			}
 		}
 		
-		[userInfo setObject:metadataItemArray forKey:objkeyUbiquitousMetadataItems];
+		userInfo[objkeyUbiquitousMetadataItems] = metadataItemArray;
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
@@ -101,8 +101,8 @@
 			nextURL = [enumerator nextObject];
 		}
 		
-		[userInfo setObject:subfolderURLarray forKey:objkeyUbiquitousFolders];
-		[userInfo setObject:fileURLarray forKey:objkeyUbiquitousFiles];
+		userInfo[objkeyUbiquitousFolders] = subfolderURLarray;
+		userInfo[objkeyUbiquitousFiles] = fileURLarray;
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:self userInfo:userInfo];

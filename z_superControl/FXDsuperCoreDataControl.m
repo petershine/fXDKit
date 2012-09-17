@@ -127,8 +127,8 @@
 		
 		
 		NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
-		[options setObject:@(YES) forKey:NSMigratePersistentStoresAutomaticallyOption];
-		[options setObject:@(YES) forKey:NSInferMappingModelAutomaticallyOption];
+		options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
+		options[NSInferMappingModelAutomaticallyOption] = @(YES);
 		
 		NSURL *ubiquitousContentURL = nil;
 		
@@ -138,8 +138,8 @@
 
 			ubiquitousContentURL = ubiquityContainerURL;
 			
-			[options setObject:ubiquitousCoreDataContentName forKey:NSPersistentStoreUbiquitousContentNameKey];
-			[options setObject:ubiquitousContentURL forKey:NSPersistentStoreUbiquitousContentURLKey];
+			options[NSPersistentStoreUbiquitousContentNameKey] = ubiquitousCoreDataContentName;
+			options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
 		}
 		else {
 			
@@ -261,7 +261,7 @@
 	NSArray *filteredArray = [self.defaultResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 		
 	if ([filteredArray count] > 0) {
-		resultObj = [filteredArray objectAtIndex:0];
+		resultObj = filteredArray[0];
 		
 		if ([filteredArray count] > 1) {
 			FXDLog(@"filteredArray:\n%@", filteredArray);

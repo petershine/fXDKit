@@ -210,7 +210,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	
 	//FXDLog(@"\nallHeaderFields:\n%@", [(NSHTTPURLResponse*)response allHeaderFields]);
 	
-	self.httpContentLength = [[[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Content-Length"] integerValue];
+	self.httpContentLength = [[(NSHTTPURLResponse*)response allHeaderFields][@"Content-Length"] integerValue];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

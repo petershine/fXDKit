@@ -241,7 +241,7 @@
 	BOOL didCancel = NO;
 
 
-	FXDBlockOperation *cellOperation = [self.queuedOperationDictionary objectForKey:operationIdentifier];
+	FXDBlockOperation *cellOperation = (self.queuedOperationDictionary)[operationIdentifier];
 
 	if (cellOperation) {
 		[cellOperation cancel];
@@ -249,7 +249,7 @@
 		didCancel = cellOperation.isCancelled;
 	}
 
-	FXDBlockOperation *secondaryCellOperation = [self.secondaryQueuedOperationDictionary objectForKey:operationIdentifier];
+	FXDBlockOperation *secondaryCellOperation = (self.secondaryQueuedOperationDictionary)[operationIdentifier];
 
 	if (secondaryCellOperation) {
 		[secondaryCellOperation cancel];
@@ -280,7 +280,7 @@
 #pragma mark -
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 	
-	NSInteger rowCount = [[self.rowCounts objectAtIndex:indexPath.section] integerValue];
+	NSInteger rowCount = [(self.rowCounts)[indexPath.section] integerValue];
 	
 	if (rowCount == 1) {
 		cell.sectionPositionType = sectionPositionOne;
@@ -329,7 +329,7 @@
 	if (self.cellTexts) {				
 		NSString *objKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
 		
-		cellText = [self.cellTexts objectForKey:objKey];
+		cellText = (self.cellTexts)[objKey];
 	}
 	
 	return cellText;
@@ -407,7 +407,7 @@
 	}
 
 
-	NSInteger firstVisibleRow = [[visibleIndexPaths objectAtIndex:0] row];
+	NSInteger firstVisibleRow = [visibleIndexPaths[0] row];
 	NSInteger lastVisibleRow = [[visibleIndexPaths lastObject] row];
 
 	NSInteger disappearedRow = integerNotDefined;
@@ -466,7 +466,7 @@
 #if ForDEVELOPER
 		NSArray *sections = self.mainResultsController.sections;
 		
-		id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+		id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
 		
 		numberOfRows = [sectionInfo numberOfObjects];
 		
@@ -484,7 +484,7 @@
 		numberOfRows = [self.mainDataSource count];
 	}
 	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
-		numberOfRows = [[self.rowCounts objectAtIndex:section] integerValue];
+		numberOfRows = [(self.rowCounts)[section] integerValue];
 	}
 	
 	return numberOfRows;

@@ -117,7 +117,7 @@
 				propertiesDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 			}
 			
-			[propertiesDictionary setObject:value forKey:property];
+			propertiesDictionary[property] = value;
 		}
 	}
 	
