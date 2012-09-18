@@ -56,6 +56,9 @@
 
 @property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
 
+@property (strong, nonatomic) NSMutableArray *fieldValues;
+@property (strong, nonatomic) NSMutableArray *fieldKeys;
+
 
 #pragma mark - Public
 + (FXDsuperCoreDataControl*)sharedInstance;

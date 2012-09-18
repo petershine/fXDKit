@@ -81,6 +81,7 @@
 // ViewControllers
 #import "FXDViewController.h"
 #import "FXDNavigationController.h"
+#import "FXDPopoverController.h"
 
 
 // Global control

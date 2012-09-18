@@ -43,14 +43,6 @@
 		// Instance variables
 		
 		// Properties
-		_deviceLanguageCode = nil;
-		
-		_didMakePurchase = NO;
-		_didShareToSocialNet = NO;
-		
-		_mainStoryboard = nil;
-		_rootScene = nil;
-		_homeScene = nil;
 	}
 	
 	return self;

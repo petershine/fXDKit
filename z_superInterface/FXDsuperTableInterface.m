@@ -192,6 +192,10 @@
 		if (self.mainTableview.delegate == nil) {
 			[self.mainTableview setDelegate:self];
 		}
+
+		if (self.mainCellIdentifier) {
+			[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
+		}
 	}
 }
 
@@ -494,7 +498,7 @@
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 	
-	if (cell == nil) {	FXDLog_OVERRIDE;
+	if (cell == nil) {	//FXDLog_OVERRIDE;
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 	}
 	

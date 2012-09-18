@@ -15,6 +15,7 @@
 	// Instance variables
 	
 	// Properties : For accessor overriding
+	NSDictionary *_presentedSegueDictionary;
 }
 
 // Properties

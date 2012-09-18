@@ -14,10 +14,17 @@
 
 
 @interface FXDsuperCoreDataControl (CSVparser) <CHCSVParserDelegate> {
-	
+	// Primitives
+
+	// Instance variables
+
+    // Properties : For accessor overriding
 }
 
+// Properties
 
+
+#pragma mark - Public
 - (void)parseFromCSVfileName:(NSString*)csvFileName;
 - (void)insertParsedObjForEntityName:(NSString*)entityName usingKeys:(NSArray*)keys usingValues:(NSArray*)values;
 
