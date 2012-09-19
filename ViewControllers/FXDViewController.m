@@ -180,25 +180,32 @@
 #pragma mark - Segues
 #if USE_loggingSequeActions
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
+	FXDLog(@"identifier: %@", identifier);
+	FXDLog(@"sender: %@", sender);
+
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
 	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
+	FXDLog(@"identifier: %@", identifier);
+	FXDLog(@"sender: %@", sender);
 	
 	return [super shouldPerformSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;
-	FXDLog(@"segue: %@", segue);
 	FXDLog(@"identifier: %@", segue.identifier);
+	FXDLog(@"sender: %@", sender);
+	FXDLog(@"segue: %@", segue);
 	FXDLog(@"source: %@", segue.sourceViewController);
 	FXDLog(@"destination: %@", segue.destinationViewController);
-	FXDLog(@"sender: %@", sender);
+
 	
 }
 
-- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_DEFAULT;
+#pragma mark -
+- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 	
 	return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];

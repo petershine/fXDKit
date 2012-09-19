@@ -11,7 +11,7 @@
 		#define USE_loggingRotatingOrientation	0
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingSequeActions	1
-		#define USE_loggingBorderLine	1
+		#define USE_loggingBorderLine	0
 
 		#define USE_TestFlight	0
 
@@ -53,7 +53,7 @@
 
 
 //#define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
-#define strClassSelector	[NSString stringWithFormat:@"[%@ %s]", NSStringFromClass([self class]), __FUNCTION__]
+#define strClassSelector	[NSString stringWithFormat:@"%@ > %s", NSStringFromClass([self class]), __FUNCTION__]
 #define FXDLog	NSLog
 
 #if USE_FXDLog
@@ -67,7 +67,7 @@
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
 	#define FXDLog_ERROR	if(error){FXDLog(@" ");FXDLog(@"\n\n%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);error=nil;}
-	#define FXDLog_ERRORexcept(v)	if(error){if(error.code!=v){FXDLog_ERROR;}error=nil;}
+	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}error=nil;}
 
 #else
 	#define FXDLog_DEFAULT

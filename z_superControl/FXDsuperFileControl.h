@@ -32,8 +32,8 @@
 	#define shouldUseLocalDirectoryWatcher	0
 #endif
 
-#ifndef shouldDownloadEvictedFiles
-	#define shouldDownloadEvictedFiles	0
+#ifndef shouldDownloadEvictedFilesInitially
+	#define shouldDownloadEvictedFilesInitially	0
 #endif
 
 

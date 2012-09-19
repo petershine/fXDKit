@@ -110,9 +110,11 @@
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousDocumentsMetadataQuery setPredicate:predicate];
 
+		/*
 		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
 		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
 		[_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
+		 */
 
 		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
 		//[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
@@ -406,8 +408,8 @@
 	}
 	
 	if (alertTitle) {	FXDLog_DEFAULT;
+		FXDLog(@"alertTitle: %@", alertTitle);
 		//TODO: should alert?
-		FXDLog(@"title: %@", alertTitle);
 	}
 }
 

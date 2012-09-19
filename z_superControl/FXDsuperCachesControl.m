@@ -194,7 +194,12 @@
 														  error:&error];FXDLog_ERRORexcept(516);
 
 	
-	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];FXDLog_ERRORexcept(2);
+	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];
+
+	if ([error code] != 2 && [error code] != 516) {
+		FXDLog_ERROR;
+	}
+	
 
 	if (didSetUbiquitous) {
 		//TODO:
@@ -207,6 +212,8 @@
 - (void)enumerateCachesMetadataQueryResults {
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;
+		NSString *alertTitle = nil;
+
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		
 		//for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
@@ -230,13 +237,28 @@
 				BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 				
 				if (isDownloaded == NO && isDownloading == NO) {
-					didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];FXDLog_ERROR;
+					didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+
+					if ([error code] == 512) {
+						if (alertTitle == nil) {
+							NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
+
+							if (underlyingError) {
+								NSDictionary *userInfo = [underlyingError userInfo];
+
+								alertTitle = userInfo[@"NSDescription"];
+							}
+						}
+					}
+					else {
+						FXDLog_ERROR;
+					}
 				}
 			}
 			else {
 				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
 				
-				if (error && error.code != 4 && error.code != 260) {
+				if (error && [error code] != 4 && [error code] != 260) {
 					FXDLog_ERROR;
 				}
 				
@@ -245,7 +267,14 @@
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCachesControlDidEnumerateCachesMetadataQueryResults object:nil userInfo:nil];
+			NSMutableDictionary *userInfo = nil;
+
+			if (alertTitle) {
+				userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+				userInfo[@"alertTitle"] = alertTitle;
+			}
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCachesControlDidEnumerateCachesMetadataQueryResults object:nil userInfo:userInfo];
 		}];
 	}];
 }

@@ -23,6 +23,8 @@
 		
 		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 
+		NSString *alertTitle = nil;
+
 		//for (NSMetadataItem *metadataItem in self.ubiquitousDocumentsMetadataQuery.results) {
 		for (NSUInteger i = 0; i < self.ubiquitousDocumentsMetadataQuery.resultCount; i++) {
 			NSMetadataItem *metadataItem = [self.ubiquitousDocumentsMetadataQuery resultAtIndex:i];
@@ -31,13 +33,28 @@
 			
 			NSError *error = nil;
 
-#if shouldDownloadEvictedFiles
+#if shouldDownloadEvictedFilesInitially
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 
 			if (isDownloaded == NO && isDownloading == NO) {
-				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
-				FXDLog(@"didStartDownloading: %d itemURL followingPathInDocuments: %@", didStartDownloading, [itemURL followingPathInDocuments]);
+				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];
+
+				if ([error code] == 512) {
+					if (alertTitle == nil) {
+						NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
+
+						if (underlyingError) {
+							NSDictionary *userInfo = [underlyingError userInfo];
+
+							alertTitle = userInfo[@"NSDescription"];
+						}
+					}
+				}
+				else {
+					//FXDLog(@"didStartDownloading: %d itemURL followingPathInDocuments: %@", didStartDownloading, [itemURL followingPathInDocuments]);
+					FXDLog_ERROR;
+				}
 			}
 #endif			
 			
@@ -58,6 +75,10 @@
 		}
 		
 		userInfo[objkeyUbiquitousMetadataItems] = metadataItemArray;
+
+		if (alertTitle) {
+			userInfo[@"alertTitle"] = alertTitle;
+		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
