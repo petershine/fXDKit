@@ -107,9 +107,19 @@
 }
 
 #pragma mark -
+- (NSString*)mainStoryboardName {
+	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
+		//TODO:
+	}
+
+	return _mainStoryboardName;
+}
+
 - (FXDStoryboard*)mainStoryboard {
-	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
-		//
+	if (_mainStoryboard == nil) {
+		if (self.mainStoryboardName) {
+			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
+		}
 	}
 	
 	return _mainStoryboard;

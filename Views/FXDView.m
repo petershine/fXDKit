@@ -101,19 +101,26 @@
 }
 
 + (id)viewFromNib:(UINib*)nib {
+	
+	id view = [self viewFromNib:nib withOwner:nil];
+	
+	return view;
+}
+
++ (id)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil {
 	if (nib == nil) {
 		NSString *nibName = NSStringFromClass([self class]);
-		
+
 		nib = [UINib nibWithNibName:nibName bundle:nil];
 	}
-	
+
 	id view = nil;
-	
-	NSArray *viewArray = [nib instantiateWithOwner:nil options:nil];
-	
+
+	NSArray *viewArray = [nib instantiateWithOwner:ownerOrNil options:nil];
+
 	if (viewArray) {
 		for (id subview in viewArray) {	//Assumes there is only one root object
-			
+
 			if ([[self class] isSubclassOfClass:[subview class]]) {
 				view = subview;
 				break;
@@ -123,7 +130,7 @@
 			}
 		}
 	}
-	
+
 	return view;
 }
 

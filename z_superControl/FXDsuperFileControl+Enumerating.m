@@ -142,6 +142,9 @@
 		NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
 		
 		NSURL *nextURL = [enumerator nextObject];
+
+		NSMutableArray *receivedURLarray = [[UIApplication sharedApplication].delegate performSelector:@selector(receivedURLarray)];
+		FXDLog(@"receivedURLarray:\n%@", receivedURLarray);
 		
 		while (nextURL) {
 			id isDirectory = nil;
@@ -168,7 +171,22 @@
 						[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 						
 						if ([isHidden boolValue] == NO) {
-							[self setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+							BOOL shouldSkip = NO;
+
+							if (receivedURLarray && [receivedURLarray count] > 0) {
+								for (NSURL *receivedURL in receivedURLarray) {
+									if ([[receivedURL absoluteString] isEqualToString:[nextURL absoluteString]]) {
+										FXDLog(@"SKIPPED until passcode entered: receivedURL: %@ nextURL: %@", receivedURL, nextURL);
+										shouldSkip = YES;
+									}
+								}
+							}
+
+							FXDLog(@"shouldSkip: %d", shouldSkip);
+
+							if (shouldSkip == NO) {
+								[self setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
+							}
 						}
 					}
 				}

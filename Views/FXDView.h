@@ -41,6 +41,7 @@
 + (id)viewFromNibName:(NSString*)nibName;
 + (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
 + (id)viewFromNib:(UINib*)nib;
++ (id)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil;
 
 - (void)applyDefaultBorderLine;
 - (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius;

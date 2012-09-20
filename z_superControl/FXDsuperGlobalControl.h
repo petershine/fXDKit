@@ -26,7 +26,8 @@
 	BOOL _didShareToSocialNet;
 	
 	NSString *_deviceLanguageCode;
-	
+
+	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
 	id _rootScene;
 	id _homeScene;
@@ -38,6 +39,7 @@
 
 @property (strong, nonatomic) NSString *deviceLanguageCode;
 
+@property (strong, nonatomic) NSString *mainStoryboardName;
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) id rootScene;
 @property (strong, nonatomic) id homeScene;

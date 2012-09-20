@@ -17,10 +17,10 @@
 #pragma mark - Public implementation
 @implementation FXDPopoverController
 
+#pragma mark Static objects
+
 #pragma mark Synthesizing
 // Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -37,35 +37,21 @@
     self = [super initWithContentViewController:viewController];
 
     if (self) {
-    	[self awakeFromNib];
+    	// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
     }
 
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-    // Primitives
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets
-}
-
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - at loadView
-
-
-#pragma mark - at autoRotate
-
-
-#pragma mark - at viewDidLoad
+// Properties
 
 
 #pragma mark - Private
@@ -87,12 +73,6 @@
 - (void)dismissPopoverAnimated:(BOOL)animated {	FXDLog_DEFAULT;
 	[super dismissPopoverAnimated:animated];
 }
-
-
-#pragma mark - Segues
-
-
-#pragma mark - IBActions
 
 
 #pragma mark - Public
