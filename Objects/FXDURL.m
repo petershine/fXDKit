@@ -93,10 +93,11 @@
 }
 
 - (NSDictionary*)fullResourceValues {
+
 	NSError *error = nil;
-	
-	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];FXDLog_DEFAULT;
-	
+	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];FXDLog_ERROR;
+
+	error = nil;
 	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];FXDLog_ERROR;
 	
 	return resourceValues;	
@@ -109,9 +110,9 @@
 
 - (NSDate*)attributeModificationDate {
 	
-	NSError *error = nil;
-	
 	NSDate *attributeModificationDate = nil;
+
+	NSError *error = nil;
 	//[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];FXDLog_ERROR;
 	[self getResourceValue:&attributeModificationDate forKey:NSURLCreationDateKey error:&error];FXDLog_ERROR;
 	
@@ -121,10 +122,11 @@
 #pragma mark -
 - (FILE_KIND_TYPE)fileKindType {
 	FILE_KIND_TYPE fileKindType = fileKindUndefined;
-	
-	NSError *error = nil;
+
 	
 	NSString *typeIdentifier = nil;
+
+	NSError *error = nil;
 	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];FXDLog_ERRORexcept(260);
 	
 	if ([typeIdentifier isEqual:(NSString*)kUTTypeImage]
@@ -183,9 +185,9 @@
 #pragma mark -
 - (NSString*)fileSizeString {
 	
-	NSError *error = nil;
-	
 	NSNumber *fileSize = nil;
+
+	NSError *error = nil;
 	[self getResourceValue:&fileSize forKey:NSURLFileSizeKey error:&error];FXDLog_ERROR;
 
 	NSString *formattedString = [fileSize byteUnitFormatted];

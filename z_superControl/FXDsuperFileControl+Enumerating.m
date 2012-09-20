@@ -30,14 +30,14 @@
 			NSMetadataItem *metadataItem = [self.ubiquitousDocumentsMetadataQuery resultAtIndex:i];
 
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
-			
-			NSError *error = nil;
+
 
 #if shouldDownloadEvictedFilesInitially
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 
 			if (isDownloaded == NO && isDownloading == NO) {
+				NSError *error = nil;
 				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];
 
 				if ([error code] == 512) {
@@ -59,11 +59,15 @@
 #endif			
 			
 			id parentDirectoryURL = nil;
+
+			NSError *error = nil;
 			[itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERRORexcept(260);
 			
 			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
 				
 				id isHidden = nil;
+
+				NSError *error = nil;
 				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERRORexcept(260);
 				
 				if ([isHidden boolValue] == NO) {
@@ -107,9 +111,10 @@
 		NSURL *nextURL = [enumerator nextObject];
 		
 		while (nextURL) {
-			NSError *error = nil;
 			
 			id isDirectory = nil;
+
+			NSError *error = nil;
 			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 			
 			if ([isDirectory boolValue]) {
@@ -136,8 +141,7 @@
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		
 		NSFileManager *fileManager = [NSFileManager defaultManager];
-		
-		NSError *error = nil;
+
 		
 		NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
 		
@@ -148,15 +152,18 @@
 		
 		while (nextURL) {
 			id isDirectory = nil;
+
+			NSError *error = nil;
 			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 			
 			if ([isDirectory boolValue] == NO) {
 				BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
 				
 				if (isUbiquitousItem == NO) {
-					NSError *error = nil;
 					
 					NSString *itemName = nil;
+
+					error = nil;
 					[nextURL getResourceValue:&itemName forKey:NSURLNameKey error:&error];FXDLog_ERROR;
 					
 					if ([itemName rangeOfString:@"AviaryContentPacks"].length > 0
@@ -168,6 +175,8 @@
 					}
 					else {
 						id isHidden = nil;
+
+						error = nil;
 						[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 						
 						if ([isHidden boolValue] == NO) {

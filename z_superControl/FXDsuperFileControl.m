@@ -333,10 +333,9 @@
 			destinationURL = [destinationURL URLByAppendingPathComponent:localItemPath];
 		}
 
-				
+
 		NSError *error = nil;
-				
-		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];FXDLog_ERRORexcept(516);
+		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];
 		
 		if (error || didSetUbiquitous == NO) {			
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
@@ -467,9 +466,9 @@
 - (BOOL)evictUploadedUbiquitousItemURL:(NSURL*)itemURL {
 	BOOL didEvict = NO;
 	
-	NSError *error = nil;
-	
 	id isDirectory = nil;
+
+	NSError *error = nil;
 	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 	
 	if ([isDirectory boolValue]) {
@@ -504,7 +503,8 @@
 			applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
 		}];
 		 */
-		
+
+		error = nil;
 		didEvict = [fileManager evictUbiquitousItemAtURL:itemURL error:&error];FXDLog_ERROR;
 	//}
 	

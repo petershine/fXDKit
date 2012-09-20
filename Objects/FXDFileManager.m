@@ -113,9 +113,10 @@
 	NSURL *nextURL = [enumerator nextObject];
 	
 	while (nextURL) {
-		NSError *error = nil;
 		
 		id isDirectory = nil;
+
+		NSError *error = nil;
 		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 		
 		if ([isDirectory boolValue]) {	//MARK: recursively called

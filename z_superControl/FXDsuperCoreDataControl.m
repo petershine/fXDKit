@@ -148,9 +148,8 @@
 		FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 		FXDLog(@"options:\n%@", options);
 		
-		
+
 		NSError *error = nil;
-		
 		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
 																	 ofType:NSSQLiteStoreType
 														 modelConfiguration:nil
@@ -240,9 +239,9 @@
 
 		
 		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:entityName];
-		
+
+
 		NSError *error = nil;
-		
 		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 		
 		FXDLog(@"didPerformFetch: %d", didPerformFetch);
@@ -283,7 +282,6 @@
 		[self.managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
 			
 			NSError *error = nil;
-			
 			BOOL didSave = [self.managedObjectContext save:&error];FXDLog_ERROR;
 			FXDLog(@"didSave: %d", didSave);
 		}];

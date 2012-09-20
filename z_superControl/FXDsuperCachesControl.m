@@ -105,10 +105,11 @@
 #pragma mark -
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL {
 	NSURL *cachedURL = nil;
-	
-	NSError *error = nil;
+
 	
 	id isDirectory = nil;
+
+	NSError *error = nil;
 	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 
 	
@@ -132,9 +133,10 @@
 - (NSURL*)itemURLforCachedURL:(NSURL*)cachedURL {
 	NSURL *itemURL = nil;
 	
-	NSError *error = nil;
 	
 	id isDirectory = nil;
+
+	NSError *error = nil;
 	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
 	
 	
@@ -185,15 +187,15 @@
 	
 	NSURL *thumbItemURL = [NSURL fileURLWithPath:thumbItemPath];
 	
-	
+
+
 	NSError *error = nil;
-	
 	[fileManager createDirectoryAtURL:[cachedURL URLByDeletingLastPathComponent]
 									withIntermediateDirectories:YES
 													 attributes:nil
 														  error:&error];FXDLog_ERRORexcept(516);
 
-	
+	error = nil;
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];
 
 	if ([error code] != 2 && [error code] != 516) {
