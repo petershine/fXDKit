@@ -203,26 +203,6 @@
 
 	
 }
-
-#pragma mark -
-- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
-	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
-	
-	return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-}
-
-- (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
-	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
-	
-	return [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-}
-
-- (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
-	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
-	
-	return [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
-
-}
 #endif
 
 	 

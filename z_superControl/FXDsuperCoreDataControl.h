@@ -44,17 +44,17 @@
 	// Instance variables
 	
     // Properties : For accessor overriding
-	NSString *_defaultEntityName;
-	NSArray *_defaultSortDescriptors;
+	NSString *_mainEntityName;
+	NSArray *_mainSortDescriptors;
 	
-	FXDFetchedResultsController *_defaultResultsController;
+	FXDFetchedResultsController *_mainResultsController;
 }
 
 // Properties
-@property (strong, nonatomic) NSString *defaultEntityName;
-@property (strong, nonatomic) NSArray *defaultSortDescriptors;
+@property (strong, nonatomic) NSString *mainEntityName;
+@property (strong, nonatomic) NSArray *mainSortDescriptors;
 
-@property (strong, nonatomic) FXDFetchedResultsController *defaultResultsController;
+@property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSMutableArray *fieldValues;
 @property (strong, nonatomic) NSMutableArray *fieldKeys;
@@ -64,12 +64,13 @@
 + (FXDsuperCoreDataControl*)sharedInstance;
 
 - (void)startObservingFileControlNotifications;
-- (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL;
+- (void)prepareCoreDataControlWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL forFinishedHandler:(void(^)(BOOL didFinish))finishedHandler;
+
 
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
-- (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj;
+- (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj;
 
 - (void)saveContext;
 

@@ -39,8 +39,9 @@
 #pragma mark - Category
 @interface UIView (Added)
 + (id)viewFromNibName:(NSString*)nibName;
-+ (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame;
 + (id)viewFromNib:(UINib*)nib;
+
++ (id)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil;
 + (id)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil;
 
 - (void)applyDefaultBorderLine;

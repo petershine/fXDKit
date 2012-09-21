@@ -58,34 +58,34 @@
 
 #pragma mark - Accessor overriding
 // Properties
-- (NSString*)defaultEntityName {
-	if (_defaultEntityName == nil) {	FXDLog_OVERRIDE;
+- (NSString*)mainEntityName {
+	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
 		
 	}
 	
-	return _defaultEntityName;
+	return _mainEntityName;
 }
 
-- (NSArray*)defaultSortDescriptors {
-	if (_defaultSortDescriptors == nil) {	FXDLog_OVERRIDE;
+- (NSArray*)mainSortDescriptors {
+	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
 		
 	}
 	
-	return _defaultSortDescriptors;
+	return _mainSortDescriptors;
 }
 
 #pragma mark -
-- (NSFetchedResultsController*)defaultResultsController {
-	if (_defaultResultsController == nil) {	FXDLog_DEFAULT;
-		_defaultResultsController = [self resultsControllerForEntityName:self.defaultEntityName
-													 withSortDescriptors:self.defaultSortDescriptors
+- (NSFetchedResultsController*)mainResultsController {
+	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
+		_mainResultsController = [self resultsControllerForEntityName:self.mainEntityName
+													 withSortDescriptors:self.mainSortDescriptors
 															   withLimit:integerNotDefined
 												fromManagedObjectContext:self.managedObjectContext];
 		
-		[_defaultResultsController setDelegate:self];
+		[_mainResultsController setDelegate:self];
 	}
 	
-	return _defaultResultsController;
+	return _mainResultsController;
 }
 
 
@@ -116,9 +116,9 @@
 	
 }
 
-- (void)prepareCoreDataControlUsingUbiquityContainerURL:(NSURL*)ubiquityContainerURL {	//FXDLog_DEFAULT;
+- (void)prepareCoreDataControlWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL forFinishedHandler:(void(^)(BOOL didFinish))finishedHandler {	//FXDLog_DEFAULT;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{
+	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
 		
 		NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -142,7 +142,7 @@
 			options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
 		}
 		else {
-			
+			//MARK: Not using iCloud
 		}
 		
 		FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
@@ -200,6 +200,10 @@
 							  selector:@selector(observedNSManagedObjectContextDidSave:)
 								  name:NSManagedObjectContextDidSaveNotification
 								object:self.managedObjectContext];
+
+			if (finishedHandler) {
+				finishedHandler(didConfigure);
+			}
 			
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
 		}];
@@ -209,11 +213,11 @@
 #pragma mark -
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
 	if (entityName == nil) {
-		entityName = self.defaultEntityName;
+		entityName = self.mainEntityName;
 	}
 	
 	if (sortDescriptors == nil) {
-		sortDescriptors = self.defaultSortDescriptors;
+		sortDescriptors = self.mainSortDescriptors;
 	}
 	
 	if (limit == integerNotDefined) {
@@ -257,7 +261,7 @@
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
 	FXDLog(@"predicate: %@", predicate);
 		
-	NSArray *filteredArray = [self.defaultResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
+	NSArray *filteredArray = [self.mainResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 		
 	if ([filteredArray count] > 0) {
 		resultObj = filteredArray[0];
@@ -270,7 +274,7 @@
 	return resultObj;
 }
 
-- (void)insertNewObjectForDefaultEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;
+- (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;
 	FXDLog(@"collectionObj:%@", collectionObj);
 	
 }
@@ -300,7 +304,7 @@
 
 #pragma mark -
 - (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self prepareCoreDataControlUsingUbiquityContainerURL:notification.object];
+	[self prepareCoreDataControlWithUbiquityContainerURL:notification.object forFinishedHandler:nil];
 }
 
 #pragma mark -
@@ -354,7 +358,6 @@
 	}
 	else {
 		FXDLog_OVERRIDE;
-		//prepareCoreDataControlUsingUbiquityContainerURL;
 	}
 }
 

@@ -81,21 +81,7 @@
 #pragma mark - Category
 @implementation UIView (Added)
 + (id)viewFromNibName:(NSString*)nibName {
-	if (nibName == nil) {
-		nibName = NSStringFromClass([self class]);
-	}
-	
-	UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
-	
-	id view = [self viewFromNib:nib];
-	
-	return view;
-}
-
-+ (id)viewFromNibName:(NSString*)nibName forModifiedFrame:(CGRect)modifiedFrame {
-	id view = [self viewFromNibName:nibName];
-	
-	[(UIView*)view setFrame:modifiedFrame];
+	id view = [self viewFromNibName:nibName withOwner:nil];
 	
 	return view;
 }
@@ -104,6 +90,19 @@
 	
 	id view = [self viewFromNib:nib withOwner:nil];
 	
+	return view;
+}
+
+#pragma mark -
++ (id)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil {
+	if (nibName == nil) {
+		nibName = NSStringFromClass([self class]);
+	}
+
+	UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
+
+	id view = [self viewFromNib:nib withOwner:ownerOrNil];
+
 	return view;
 }
 
