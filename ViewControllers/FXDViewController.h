@@ -53,11 +53,10 @@
 - (UIBarButtonItem*)barButtonWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action;
 - (UIButton*)buttonWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage orWithText:(NSString*)text;
 
+- (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
+
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;
 - (IBAction)popInterfaceWithAnimation:(id)sender;
 - (IBAction)dismissInterfaceWithAnimation:(id)sender;
-
-- (void)delayedActionForSender:(id)sender;
-
 
 @end

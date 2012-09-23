@@ -29,3 +29,10 @@
 
 
 @end
+
+
+#pragma mark - Category
+@interface UIStoryboardSegue (Added)
+- (NSDictionary*)fullDescription;
+
+@end

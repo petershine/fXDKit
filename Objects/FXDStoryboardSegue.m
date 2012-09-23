@@ -97,3 +97,30 @@
 
 
 @end
+
+
+#pragma mark - Category
+@implementation UIStoryboardSegue (Added)
+- (NSDictionary*)fullDescription {
+	NSMutableDictionary *fullDescription = [[NSMutableDictionary alloc] initWithCapacity:0];
+
+	if (self.identifier) {
+		fullDescription[@"identifier"] = self.identifier;
+	}
+
+	if (self.sourceViewController) {
+		fullDescription[@"source"] = self.sourceViewController;
+	}
+
+	if (self.destinationViewController) {
+		fullDescription[@"destination"] = self.destinationViewController;
+	}
+
+	if ([fullDescription count] == 0) {
+		fullDescription = nil;
+	}
+
+	return fullDescription;
+}
+
+@end

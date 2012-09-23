@@ -69,10 +69,10 @@
 
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
-- (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
+- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController;
 - (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj;
 
-- (void)saveContext;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
 
 //MARK: - Observer implementation

@@ -255,21 +255,30 @@
 }
 
 #pragma mark -
-- (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {	FXDLog_DEFAULT;
-	NSManagedObject *resultObj = nil;
+- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController {	//FXDLog_DEFAULT;
+
+	if (resultsController == nil) {
+		resultsController = self.mainResultsController;
+	}
+
+	
+	FXDManagedObject *resultObj = nil;
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
-	FXDLog(@"predicate: %@", predicate);
 		
-	NSArray *filteredArray = [self.mainResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
+	NSArray *filteredArray = [resultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 		
 	if ([filteredArray count] > 0) {
 		resultObj = filteredArray[0];
-		
-		if ([filteredArray count] > 1) {
-			FXDLog(@"filteredArray:\n%@", filteredArray);
-		}
-	}	
+	}
+
+#if DEBUG
+	if (resultObj == nil || [filteredArray count] > 1) {
+		FXDLog_DEFAULT;
+		FXDLog(@"predicate: %@", predicate);
+		FXDLog(@"filteredArray count: %d\n%@", [filteredArray count], filteredArray);
+	}
+#endif
 	
 	return resultObj;
 }
@@ -280,13 +289,18 @@
 }
 
 #pragma mark -
-- (void)saveContext {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_SEPARATE;
+
+	if (managedObjectContext == nil) {
+		managedObjectContext = self.managedObjectContext;
+	}
+
 	
-    if (self.managedObjectContext && self.managedObjectContext.hasChanges) {
-		[self.managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
+    if (managedObjectContext && managedObjectContext.hasChanges) {
+		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
 			
 			NSError *error = nil;
-			BOOL didSave = [self.managedObjectContext save:&error];FXDLog_ERROR;
+			BOOL didSave = [managedObjectContext save:&error];FXDLog_ERROR;
 			FXDLog(@"didSave: %d", didSave);
 		}];
     }
@@ -299,7 +313,7 @@
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;;
-	[self saveContext];
+	[self saveManagedObjectContext:nil];
 }
 
 #pragma mark -

@@ -101,21 +101,20 @@
 
 
 #pragma mark - at autoRotate
-#if USE_loggingRotatingOrientation
-- (BOOL)shouldAutorotate {	FXDLog_SEPARATE_FRAME;
+- (BOOL)shouldAutorotate {	//FXDLog_SEPARATE_FRAME;
 	return [super shouldAutorotate];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {	FXDLog_SEPARATE_FRAME;
+- (NSUInteger)supportedInterfaceOrientations {	//FXDLog_SEPARATE_FRAME;
 	return [super supportedInterfaceOrientations];
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_SEPARATE_FRAME;
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_SEPARATE_FRAME;
 	return [super preferredInterfaceOrientationForPresentation];
 	
 }
 
-#pragma mark -
+#if USE_loggingRotatingOrientation
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	FXDLog(@"%@: %d, duration: %f %@ %@", NSStringFromSelector(_cmd), toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 }
@@ -178,32 +177,26 @@
 
 
 #pragma mark - Segues
-#if USE_loggingSequeActions
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
-	FXDLog(@"identifier: %@", identifier);
 	FXDLog(@"sender: %@", sender);
+	FXDLog(@"identifier: %@", identifier);
 
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
 	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
-	FXDLog(@"identifier: %@", identifier);
 	FXDLog(@"sender: %@", sender);
+	FXDLog(@"identifier: %@", identifier);
 	
 	return [super shouldPerformSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;
-	FXDLog(@"identifier: %@", segue.identifier);
 	FXDLog(@"sender: %@", sender);
-	FXDLog(@"segue: %@", segue);
-	FXDLog(@"source: %@", segue.sourceViewController);
-	FXDLog(@"destination: %@", segue.destinationViewController);
 
-	
+	FXDLog(@"fullDescription:\n%@", [segue fullDescription]);
 }
-#endif
 
 	 
 #pragma mark - IBActions
@@ -396,6 +389,11 @@
 }
 
 #pragma mark -
+- (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
+	FXDLog(@"fullDescription:\n%@", [unwindSegue fullDescription]);
+}
+
+#pragma mark -
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender {
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -405,18 +403,13 @@
 }
 
 - (IBAction)dismissInterfaceWithAnimation:(id)sender {
-	
+
 	if (self.navigationController) {
 		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	}
 	else {
 		[self dismissViewControllerAnimated:YES completion:nil];
 	}
-}
-
-#pragma mark -
-- (void)delayedActionForSender:(id)sender {	FXDLog_OVERRIDE;
-	
 }
 
 
