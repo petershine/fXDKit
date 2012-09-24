@@ -124,11 +124,16 @@
 				view = subview;
 				break;
 			}
-			else {	FXDLog_DEFAULT;
-				FXDLog(@"self class: %@ subview class: %@", [self class], [subview class]);
-			}
 		}
 	}
+
+#if DEBUG
+	if (view == nil) {
+		FXDLog_DEFAULT;
+		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
+	}
+#endif
+
 
 	return view;
 }

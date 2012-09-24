@@ -8,7 +8,7 @@
 
 #if DEBUG
 	#if ForDEVELOPER
-		#define USE_loggingRotatingOrientation	0
+		#define USE_loggingRotatingOrientation	1
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingBorderLine	0
 

@@ -79,7 +79,7 @@
 	}
 	else {
 		if (self.fieldKeys) {
-			[self insertParsedObjForEntityName:self.defaultEntityName usingKeys:self.fieldKeys usingValues:self.fieldValues];
+			[self insertParsedObjForEntityName:self.mainEntityName usingKeys:self.fieldKeys usingValues:self.fieldValues];
 		}
 	}
 	
@@ -90,7 +90,7 @@
 	
 	self.fieldKeys = nil;
 	
-	[self saveContext];
+	[self saveManagedObjectContext:nil];
 }
 
 - (void) parser:(CHCSVParser *)parser didFailWithError:(NSError *)error {	FXDLog_DEFAULT;
@@ -102,7 +102,7 @@
 	self.fieldKeys = nil;
 	self.fieldValues = nil;
 	
-	[self saveContext];
+	[self saveManagedObjectContext:nil];
 }
 
 
