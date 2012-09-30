@@ -64,6 +64,7 @@
 #import "FXDTextView.h"
 #import "FXDImageView.h"
 #import "FXDTableViewCell.h"
+#import "FXDCollectionViewCell.h"
 #import "FXDLabel.h"
 
 #import "FXDAlertView.h"

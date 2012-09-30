@@ -11,6 +11,7 @@
 
 @interface FXDViewController : UIViewController {
     // Primitives
+	BOOL _shouldSkipNilifyingOutlets;
 	
 	// Instance variables
 	

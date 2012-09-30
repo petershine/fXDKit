@@ -74,7 +74,7 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 
 #pragma mark - Public
 - (BOOL)didCancelQueuedCellOperationForIdentifier:(NSString*)operationIdentifier orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
-- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forTableView:(UITableView*)tableView atIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forScrollView:(UIScrollView*)scrollView atIndexPath:(NSIndexPath*)indexPath;
 
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 

@@ -26,9 +26,14 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+
+	if (_shouldSkipNilifyingOutlets) {
+		return;
+	}
 	
+
     // Release any cached data, images, etc that aren't in use.
-	
+
 	// Properties
 	self.cachedImageDictionary = nil;
 	
@@ -267,12 +272,21 @@
 	return didCancel;
 }
 
-- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forTableView:(UITableView*)tableView atIndexPath:(NSIndexPath*)indexPath {
+- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forScrollView:(UIScrollView*)scrollView atIndexPath:(NSIndexPath*)indexPath {
 
 	BOOL shouldSkip = NO;
 
-	if (isForAutoScrollingToTop && indexPath.row > [[tableView indexPathsForVisibleRows] count]) {
-		shouldSkip = YES;
+	if (isForAutoScrollingToTop) {
+		if ([scrollView isKindOfClass:[UITableView class]]) {
+			if (indexPath.row > [[(UITableView*)scrollView indexPathsForVisibleRows] count]) {
+				shouldSkip = YES;
+			}
+		}
+		else if ([scrollView isKindOfClass:[UICollectionView class]]) {
+			if (indexPath.row > [[(UICollectionView*)scrollView indexPathsForVisibleItems] count]) {
+				shouldSkip = YES;
+			}
+		}
 
 		//FXDLog(@"shouldSkip: %d indexPath.row: %d", shouldSkip, indexPath.row);
 	}

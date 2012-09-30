@@ -26,6 +26,11 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+
+	if (_shouldSkipNilifyingOutlets) {
+		return;
+	}
+	
 	
     // Release any cached data, images, etc that aren't in use.
 	
