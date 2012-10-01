@@ -114,6 +114,12 @@
 	
 }
 
+// For older iOS 5
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
 #if USE_loggingRotatingOrientation
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	FXDLog(@"%@ %@: %d, duration: %f frame: %@ bounds: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
@@ -370,7 +376,7 @@
 		}
 		 */
 		
-#if ENVIRONTMENT_newestSDK
+#if ENVIRONMENT_newestSDK
 		backLabel.textAlignment = NSTextAlignmentCenter;
 #else
 		backLabel.textAlignment = UITextAlignmentCenter;

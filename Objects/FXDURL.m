@@ -203,7 +203,7 @@
 	[self getResourceValue:&isTransferringObj forKey:NSURLUbiquitousItemIsUploadingKey error:nil];
 
 	if ([isTransferringObj boolValue]) {
-#if ENVIRONTMENT_newestSDK
+#if ENVIRONMENT_newestSDK
 #else
 		NSNumber *percentage = nil;
 		[self getResourceValue:&percentage forKey:NSURLUbiquitousItemPercentUploadedKey error:nil];
@@ -219,7 +219,7 @@
 	[self getResourceValue:&isTransferringObj forKey:NSURLUbiquitousItemIsDownloadingKey error:nil];
 
 	if ([isTransferringObj boolValue]) {
-#if ENVIRONTMENT_newestSDK
+#if ENVIRONMENT_newestSDK
 #else
 		NSNumber *percentage = nil;
 		[self getResourceValue:&percentage forKey:NSURLUbiquitousItemPercentDownloadedKey error:nil];

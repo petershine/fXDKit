@@ -152,7 +152,7 @@
 			 }];
 		}
 		else {
-#if ENVIRONTMENT_newestSDK
+#if ENVIRONMENT_newestSDK
 #else
 			[self.accountStore requestAccessToAccountsWithType:self.accountType
 										 withCompletionHandler:^(BOOL granted, NSError *error) {

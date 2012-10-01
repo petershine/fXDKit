@@ -87,7 +87,7 @@
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[self alloc] init];});return _sharedInstance
 
 
-#define ENVIRONTMENT_newestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+#define ENVIRONMENT_newestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
 
 
 #define appSearhPath_Document	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
