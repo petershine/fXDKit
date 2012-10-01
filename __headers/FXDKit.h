@@ -42,6 +42,8 @@
 #import "FXDColor.h"
 #import "FXDImage.h"
 
+#import "FXDCollectionViewLayout.h"
+
 #import "FXDStoryboardSegue.h"
 #import "FXDStoryboard.h"
 
@@ -71,6 +73,7 @@
 #import "FXDActionSheet.h"
 
 #import "FXDScrollView.h"
+#import "FXDCollectionView.h"
 
 #import "FXDWindow.h"
 

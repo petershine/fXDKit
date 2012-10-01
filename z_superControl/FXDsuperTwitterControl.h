@@ -22,7 +22,12 @@
 #import "FXDKit.h"
 
 #import <Accounts/Accounts.h>
+#import <Social/Social.h>
+
+#if ENVIRONMENT_newestSDK
+#else
 #import <Twitter/Twitter.h>
+#endif
 
 
 @interface FXDsuperTwitterControl : NSObject <UIAlertViewDelegate> {
@@ -55,7 +60,11 @@
 - (void)userLookUpWithScreenName:(NSString*)screenName;
 - (void)statusUpdateWithStatus:(NSString*)status;
 
-- (TWTweetComposeViewController*)tweetComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
+#if ENVIRONMENT_newestSDK
+- (SLComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
+#else
+- (TWTweetComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
+#endif
 
 
 //MARK: - Observer implementation

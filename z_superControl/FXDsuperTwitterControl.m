@@ -214,10 +214,14 @@
 	NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
 	
 	NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
-	
+
+#if ENVIRONMENT_newestSDK
+	SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
+#else
 	TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 												parameters:parameters
 											 requestMethod:TWRequestMethodGET];
+#endif
 	
 	[defaultRequest
 	 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
@@ -231,12 +235,16 @@
 	
 	if (self.mainTwitterAccount) {
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
-		
+
 		NSDictionary *parameters = @{objkeyTwitterStatus: status};
-		
+
+#if ENVIRONMENT_newestSDK
+		SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:requestURL parameters:parameters];
+#else
 		TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
 													parameters:parameters
 												 requestMethod:TWRequestMethodPOST];
+#endif
 		
 		defaultRequest.account = self.mainTwitterAccount;
 		
@@ -253,40 +261,59 @@
 }
 
 #pragma mark -
-- (TWTweetComposeViewController*)tweetComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
-	
-	TWTweetComposeViewController *tweetComposeInterface = nil;
-	
-	if ([TWTweetComposeViewController canSendTweet]) {
-		tweetComposeInterface = [[TWTweetComposeViewController alloc] init];
-		
-		if (initialText) {
-			if ([tweetComposeInterface setInitialText:initialText] == NO) {
-				FXDLog(@"initialText: %@", initialText);
-			}
-		}
-		
-		if ([imageArray count] > 0) {
-			for (UIImage *image in imageArray) {
-				if ([tweetComposeInterface addImage:image] == NO) {
-					FXDLog(@"image: %@", image);
-				}
-			}
-		}
-		
-		if ([URLarray count] > 0) {
-			for (NSURL *url in URLarray) {
-				if ([tweetComposeInterface addURL:url] == NO) {
-					FXDLog(@"URL: %@", url);
-				}
-			}
-		}
+#if ENVIRONMENT_newestSDK
+- (SLComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
+
+	SLComposeViewController *socialComposeInterface = nil;
+
+	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
+		//TODO: test facebook
+
+		return socialComposeInterface;
 	}
-	else {
+
+
+	socialComposeInterface = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+
+#else
+- (TWTweetComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
+
+	TWTweetComposeViewController *socialComposeInterface = nil;
+	
+	if ([TWTweetComposeViewController canSendTweet] == NO) {
 		//TODO: notify
+
+		return socialComposeInterface;
 	}
+
+
+	socialComposeInterface = [[TWTweetComposeViewController alloc] init];
 	
-	return tweetComposeInterface;
+#endif
+
+	if (initialText) {
+		if ([socialComposeInterface setInitialText:initialText] == NO) {
+			FXDLog(@"initialText: %@", initialText);
+		}
+	}
+
+	if ([imageArray count] > 0) {
+		for (UIImage *image in imageArray) {
+			if ([socialComposeInterface addImage:image] == NO) {
+				FXDLog(@"image: %@", image);
+			}
+		}
+	}
+
+	if ([URLarray count] > 0) {
+		for (NSURL *url in URLarray) {
+			if ([socialComposeInterface addURL:url] == NO) {
+				FXDLog(@"URL: %@", url);
+			}
+		}
+	}
+
+	return socialComposeInterface;
 }
 
 

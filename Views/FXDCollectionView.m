@@ -1,21 +1,21 @@
 //
-//  FXDCollectionViewCell.m
+//  FXDCollectionView.m
 //
 //
 //  Created by petershine on 10/1/12.
 //  Copyright (c) 2012 petershine. All rights reserved.
 //
 
-#import "FXDCollectionViewCell.h"
+#import "FXDCollectionView.h"
 
 
 #pragma mark - Private interface
-@interface FXDCollectionViewCell (Private)
+@interface FXDCollectionView (Private)
 @end
 
 
 #pragma mark - Public implementation
-@implementation FXDCollectionViewCell
+@implementation FXDCollectionView
 
 
 #pragma mark Synthesizing
@@ -35,14 +35,16 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
+	// the designated initializer
 
-    if (self) {
+	self = [super initWithFrame:frame collectionViewLayout:layout];
+
+	if (self) {
 		[self awakeFromNib];
-    }
+	}
 
-    return self;
+	return self;
 }
 
 - (void)awakeFromNib {
