@@ -6,6 +6,11 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#ifndef USE_loggingResultObjFiltering
+	#define USE_loggingResultObjFiltering	0
+#endif
+
+
 #ifndef applicationSqlitePathComponent
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
@@ -65,6 +70,7 @@
 
 - (void)startObservingFileControlNotifications;
 - (void)prepareCoreDataControlWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL forFinishedHandler:(void(^)(BOOL didFinish))finishedHandler;
+- (void)prepareCoredataControlObserverMethods;
 
 
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
@@ -86,6 +92,10 @@
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
+
+- (void)observedPrivateManagedObjectContextObjectsDidChange:(NSNotification*)notification;
+- (void)observedPrivateManagedObjectContextWillSave:(NSNotification*)notification;
+- (void)observedPrivateManagedObjectContextDidSave:(NSNotification*)notification;
 
 
 //MARK: - Delegate implementation

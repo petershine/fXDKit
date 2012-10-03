@@ -57,5 +57,7 @@
 - (void)addAsFadeInSubview:(UIView*)subview;
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemoved:(void(^)(void))afterRemoved;
 
+- (UIImage*)imageWithView:(UIView*)view;
+
 
 @end

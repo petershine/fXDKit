@@ -225,6 +225,7 @@
 }
 
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemoved:(void(^)(void))afterRemoved {	//FXDLog_DEFAULT;
+
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
 						 subview.alpha = 0.0;
@@ -238,5 +239,25 @@
 					 }];
 }
 
+#pragma mark -
+- (UIImage*)imageWithView:(UIView*)view {
+	if (view == nil) {
+		view = self;
+	}
+
+
+	UIImage *image = nil;
+
+	UIGraphicsBeginImageContextWithOptions(view.bounds.size,
+										   view.opaque,
+										   [[UIScreen mainScreen] scale]);
+	{
+		[view.layer renderInContext:UIGraphicsGetCurrentContext()];
+		image = UIGraphicsGetImageFromCurrentImageContext();
+	}
+	UIGraphicsEndImageContext();
+
+    return image;
+}
 
 @end

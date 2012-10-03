@@ -167,39 +167,7 @@
 #endif
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedUIApplicationDidEnterBackground:)
-								  name:UIApplicationDidEnterBackgroundNotification
-								object:nil];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedUIApplicationWillTerminate:)
-								  name:UIApplicationWillTerminateNotification
-								object:nil];
-			
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-								  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-								object:nil];
-			
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-								  name:NSManagedObjectContextObjectsDidChangeNotification
-								object:self.managedObjectContext];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSManagedObjectContextWillSave:)
-								  name:NSManagedObjectContextWillSaveNotification
-								object:self.managedObjectContext];
-			
-			[defaultCenter addObserver:self
-							  selector:@selector(observedNSManagedObjectContextDidSave:)
-								  name:NSManagedObjectContextDidSaveNotification
-								object:self.managedObjectContext];
+			[self prepareCoredataControlObserverMethods];
 
 			if (finishedHandler) {
 				finishedHandler(didConfigure);
@@ -208,6 +176,58 @@
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
 		}];
 	}];
+}
+
+- (void)prepareCoredataControlObserverMethods {	FXDLog_DEFAULT;
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedUIApplicationDidEnterBackground:)
+						  name:UIApplicationDidEnterBackgroundNotification
+						object:nil];
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedUIApplicationWillTerminate:)
+						  name:UIApplicationWillTerminateNotification
+						object:nil];
+
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+						object:nil];
+
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+						  name:NSManagedObjectContextObjectsDidChangeNotification
+						object:self.managedObjectContext];
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSManagedObjectContextWillSave:)
+						  name:NSManagedObjectContextWillSaveNotification
+						object:self.managedObjectContext];
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedNSManagedObjectContextDidSave:)
+						  name:NSManagedObjectContextDidSaveNotification
+						object:self.managedObjectContext];
+
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedPrivateManagedObjectContextObjectsDidChange:)
+						  name:NSManagedObjectContextObjectsDidChangeNotification
+						object:self.managedObjectContext.parentContext];
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedPrivateManagedObjectContextWillSave:)
+						  name:NSManagedObjectContextWillSaveNotification
+						object:self.managedObjectContext.parentContext];
+
+	[defaultCenter addObserver:self
+					  selector:@selector(observedPrivateManagedObjectContextDidSave:)
+						  name:NSManagedObjectContextDidSaveNotification
+						object:self.managedObjectContext.parentContext];
 }
 
 #pragma mark -
@@ -272,7 +292,7 @@
 		resultObj = filteredArray[0];
 	}
 
-#if DEBUG
+#if USE_loggingResultObjFiltering
 	if (resultObj == nil || [filteredArray count] > 1) {
 		FXDLog_DEFAULT;
 		FXDLog(@"predicate: %@", predicate);
@@ -335,13 +355,35 @@
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	
+	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 }
 
+#pragma mark -
+- (void)observedPrivateManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+}
+
+- (void)observedPrivateManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+}
+
+- (void)observedPrivateManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+
+	[self.managedObjectContext performBlock:^{
+		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+	}];
+}
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate

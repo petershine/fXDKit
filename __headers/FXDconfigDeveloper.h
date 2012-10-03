@@ -52,7 +52,7 @@
 
 
 //#define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
-#define strClassSelector	[NSString stringWithFormat:@"%s > %@", __FUNCTION__, NSStringFromClass([self class])]
+#define strClassSelector	[NSString stringWithFormat:@"%@ %s", NSStringFromClass([self class]), __FUNCTION__]
 #define FXDLog	NSLog
 
 #if USE_FXDLog

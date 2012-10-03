@@ -22,7 +22,6 @@
 @property (assign, nonatomic) BOOL shouldUseDefaultNavigationBar;
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UIImageView *addedShadowImageview;
 
 
 #pragma mark - Segues
