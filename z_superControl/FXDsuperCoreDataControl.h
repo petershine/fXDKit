@@ -24,15 +24,6 @@
 #endif
 
 
-#ifndef limitDefaultFetch
-	#define limitDefaultFetch	1000
-#endif
-
-#ifndef sizeDefaultBatch
-	#define sizeDefaultBatch	10
-#endif
-
-
 #define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
 
 

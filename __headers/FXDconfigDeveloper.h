@@ -16,7 +16,7 @@
 
 		#define USE_FXDLog	1
 	#else
-		#define USE_TestFlight	1
+		#define USE_TestFlight	0
 
 		#define USE_FXDLog	0
 	#endif

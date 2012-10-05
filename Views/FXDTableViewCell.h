@@ -28,8 +28,8 @@ typedef enum {
 // Properties
 @property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
-@property (strong, nonatomic) id addedObj;
-@property (strong, nonatomic) id linkedOperationIdentifier;
+@property (weak, nonatomic) id addedObj;
+@property (weak, nonatomic) id linkedOperationIdentifier;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageview;

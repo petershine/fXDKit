@@ -75,7 +75,7 @@
 }
 
 #pragma mark -
-- (NSFetchedResultsController*)mainResultsController {
+- (FXDFetchedResultsController*)mainResultsController {
 	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
 		_mainResultsController = [self.managedObjectContext
 								  resultsControllerForEntityName:self.mainEntityName
@@ -242,9 +242,6 @@
 		sortDescriptors = self.mainSortDescriptors;
 	}
 
-	if (limit == integerNotDefined) {
-		limit = limitDefaultFetch;
-	}
 
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
@@ -315,7 +312,7 @@
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+	FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
 
 }
 
