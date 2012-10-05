@@ -52,7 +52,7 @@
 					}
 				}
 				else {
-					//FXDLog(@"didStartDownloading: %d itemURL followingPathInDocuments: %@", didStartDownloading, [itemURL followingPathInDocuments]);
+					FXDLog(@"didStartDownloading: %d itemURL followingPathInDocuments: %@", didStartDownloading, [itemURL followingPathInDocuments]);
 					FXDLog_ERROR;
 				}
 			}

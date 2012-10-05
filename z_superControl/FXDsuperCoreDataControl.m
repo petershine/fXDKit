@@ -77,11 +77,12 @@
 #pragma mark -
 - (NSFetchedResultsController*)mainResultsController {
 	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
-		_mainResultsController = [self resultsControllerForEntityName:self.mainEntityName
-													 withSortDescriptors:self.mainSortDescriptors
-															   withLimit:integerNotDefined
-												fromManagedObjectContext:self.managedObjectContext];
-		
+		_mainResultsController = [self.managedObjectContext
+								  resultsControllerForEntityName:self.mainEntityName
+								  withSortDescriptors:self.mainSortDescriptors
+								  withPredicate:nil
+								  withLimit:integerNotDefined];
+
 		[_mainResultsController setDelegate:self];
 	}
 	
@@ -231,46 +232,26 @@
 }
 
 #pragma mark -
-- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
+- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
+
 	if (entityName == nil) {
 		entityName = self.mainEntityName;
 	}
-	
+
 	if (sortDescriptors == nil) {
 		sortDescriptors = self.mainSortDescriptors;
 	}
-	
+
 	if (limit == integerNotDefined) {
 		limit = limitDefaultFetch;
 	}
-	
+
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
 	}
-	
-	FXDFetchedResultsController *resultsController = nil;
-	
-	if (entityName && sortDescriptors) {
-		NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:managedObjectContext];
 
-		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-		
-		[fetchRequest setEntity:entityDescription];
-		[fetchRequest setSortDescriptors:sortDescriptors];
-		
-		[fetchRequest setFetchLimit:limit];
-		[fetchRequest setFetchBatchSize:sizeDefaultBatch];
+	FXDFetchedResultsController *resultsController = [managedObjectContext resultsControllerForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
 
-		
-		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:entityName];
-
-
-		NSError *error = nil;
-		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
-		
-		FXDLog(@"didPerformFetch: %d", didPerformFetch);
-	}
-	
 	return resultsController;
 }
 
@@ -280,25 +261,9 @@
 	if (resultsController == nil) {
 		resultsController = self.mainResultsController;
 	}
-
 	
-	FXDManagedObject *resultObj = nil;
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
-		
-	NSArray *filteredArray = [resultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
-		
-	if ([filteredArray count] > 0) {
-		resultObj = filteredArray[0];
-	}
 
-#if USE_loggingResultObjFiltering
-	if (resultObj == nil || [filteredArray count] > 1) {
-		FXDLog_DEFAULT;
-		FXDLog(@"predicate: %@", predicate);
-		FXDLog(@"filteredArray count: %d\n%@", [filteredArray count], filteredArray);
-	}
-#endif
+	FXDManagedObject *resultObj = [resultsController resultObjForAttributeKey:attributeKey andForAttributeValue:attributeValue];
 	
 	return resultObj;
 }

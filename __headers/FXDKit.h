@@ -47,12 +47,13 @@
 #import "FXDStoryboardSegue.h"
 #import "FXDStoryboard.h"
 
-#import "FXDManagedObject.h"
 #import "FXDMediaItem.h"
 
 #import "FXDAnnotation.h"
 
+#import "FXDManagedObject.h"
 #import "FXDFetchedResultsController.h"
+#import "FXDManagedObjectContext.h"
 
 #import "FXDFileManager.h"
 

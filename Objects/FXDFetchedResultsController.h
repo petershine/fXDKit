@@ -35,4 +35,6 @@
 
 #pragma mark - Category
 @interface NSFetchedResultsController (Added)
+- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
+
 @end

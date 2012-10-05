@@ -27,6 +27,8 @@
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
     [super didReceiveMemoryWarning];
 
+	FXDLog(@"_shouldSkipNilifyingOutlets: %d", _shouldSkipNilifyingOutlets);
+
 	if (_shouldSkipNilifyingOutlets) {
 		return;
 	}

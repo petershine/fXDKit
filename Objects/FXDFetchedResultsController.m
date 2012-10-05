@@ -51,4 +51,26 @@
 
 #pragma mark - Category
 @implementation FXDFetchedResultsController (Added)
+- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {
+
+	FXDManagedObject *resultObj = nil;
+
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
+
+	NSArray *filteredArray = [[self.fetchedObjects copy] filteredArrayUsingPredicate:predicate];
+
+	if ([filteredArray count] > 0) {
+		resultObj = filteredArray[0];
+	}
+
+#if USE_loggingResultObjFiltering
+	if (resultObj == nil || [filteredArray count] > 1) {
+		FXDLog_DEFAULT;
+		FXDLog(@"predicate: %@", predicate);
+		FXDLog(@"filteredArray count: %d\n%@", [filteredArray count], filteredArray);
+	}
+#endif
+
+	return resultObj;
+}
 @end
