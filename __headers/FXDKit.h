@@ -16,6 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <TargetConditionals.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <ImageIO/ImageIO.h>
 
 
 // Headers

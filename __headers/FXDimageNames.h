@@ -6,19 +6,41 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#define imageNavibarBackground	[UIImage bundledImageForName:@"navibarBackground"]
-#define imageNavibarShadow		[UIImage bundledImageForName:@"navibarBackground_shadow"]
+#ifndef imageNavibarBackground
+	#define imageNavibarBackground	[UIImage bundledImageForName:@"navibarBackground"]
+#endif
 
-#define imageToolbarBackground	[UIImage bundledImageForName:@"toolbarBackground"]
+#ifndef imageNavibarShadow
+	#define imageNavibarShadow		[UIImage bundledImageForName:@"navibarBackground_shadow"]
+#endif
 
-#define imageNavibarBtnBackOff	[UIImage bundledImageForName:@"btn_back"]
-#define imageNavibarBtnBackOn	[UIImage bundledImageForName:@"btn_back_on"]
+#ifndef imageToolbarBackground
+	#define imageToolbarBackground	[UIImage bundledImageForName:@"toolbarBackground"]
+#endif
 
-#define imageNavibarBtnHomeOff	[UIImage bundledImageForName:@"btn_home"]
-#define imageNavibarBtnHomeOn	[UIImage bundledImageForName:@"btn_home_on"]
+#ifndef imageNavibarBtnBackOff
+	#define imageNavibarBtnBackOff	[UIImage bundledImageForName:@"btn_back"]
+#endif
 
-#define imageNavibarBtnCloseOff	[UIImage bundledImageForName:@"btn_close"]
-#define imageNavibarBtnCloseOn	[UIImage bundledImageForName:@"btn_close_on"]
+#ifndef imageNavibarBtnBackOn
+	#define imageNavibarBtnBackOn	[UIImage bundledImageForName:@"btn_back_on"]
+#endif
+
+#ifndef imageNavibarBtnHomeOff
+	#define imageNavibarBtnHomeOff	[UIImage bundledImageForName:@"btn_home"]
+#endif
+
+#ifndef imageNavibarBtnHomeOn
+	#define imageNavibarBtnHomeOn	[UIImage bundledImageForName:@"btn_home_on"]
+#endif
+
+#ifndef imageNavibarBtnCloseOff
+	#define imageNavibarBtnCloseOff	[UIImage bundledImageForName:@"btn_close"]
+#endif
+
+#ifndef imageNavibarBtnCloseOn
+	#define imageNavibarBtnCloseOn	[UIImage bundledImageForName:@"btn_close_on"]
+#endif
 
 #ifndef imageDefaultBackground
 	#define imageDefaultBackground	[UIImage bundledImageForName:@"bg_default"]

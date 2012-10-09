@@ -78,6 +78,8 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 
+- (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
+
 - (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)cellTextAtIndexPath:(NSIndexPath*)indexPath;

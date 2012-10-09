@@ -297,9 +297,27 @@
 
 #pragma mark -
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
+
+	[self configureSectionPostionTypeForCell:cell forIndexPath:indexPath];
 	
+	UIImage *backgroundImage = [self backgroundImageForCellAtIndexPath:indexPath];
+	UIImage *highlightedImage = [self selectedBackgroundImageForCellAtIndexPath:indexPath];
+	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
+	
+	cell.textLabel.text = [self cellTextAtIndexPath:indexPath];
+	
+	UIImage *mainImage = [self mainImageForCellAtIndexPath:indexPath];
+	UIImage *highlightedMainImage = [self highlightedMainImageForCellAtIndexPath:indexPath];
+	[cell customizeWithMainImage:mainImage withHighlightedMainImage:highlightedMainImage];
+	
+	cell.accessoryView = [self accessoryViewForCellAtIndexPath:indexPath];
+}
+
+#pragma mark -
+- (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
+
 	NSInteger rowCount = [(self.rowCounts)[indexPath.section] integerValue];
-	
+
 	if (rowCount == 1) {
 		cell.sectionPositionType = sectionPositionOne;
 	}
@@ -314,18 +332,6 @@
 			cell.sectionPositionType = sectionPositionMiddle;
 		}
 	}
-	
-	UIImage *backgroundImage = [self backgroundImageForCellAtIndexPath:indexPath];
-	UIImage *highlightedImage = [self selectedBackgroundImageForCellAtIndexPath:indexPath];
-	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
-	
-	cell.textLabel.text = [self cellTextAtIndexPath:indexPath];
-	
-	UIImage *mainImage = [self mainImageForCellAtIndexPath:indexPath];
-	UIImage *highlightedMainImage = [self highlightedMainImageForCellAtIndexPath:indexPath];
-	[cell customizeWithMainImage:mainImage withHighlightedMainImage:highlightedMainImage];
-	
-	cell.accessoryView = [self accessoryViewForCellAtIndexPath:indexPath];
 }
 
 #pragma mark -
@@ -481,21 +487,23 @@
 	NSInteger numberOfRows = 0;
 	
 	if (self.mainResultsController) {
-#if ForDEVELOPER
-		NSArray *sections = self.mainResultsController.sections;
-		
-		id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
-		
-		numberOfRows = [sectionInfo numberOfObjects];
-		
 		NSInteger fetchedObjectsCount = [self.mainResultsController.fetchedObjects count];
 		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
+		
+#if ForDEVELOPER
+		NSArray *sections = self.mainResultsController.sections;
+
+		if (section < [sections count]) {
+			id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
+
+			numberOfRows = [sectionInfo numberOfObjects];
+		}
 		
 		if (numberOfRows != fetchedObjectsCount) {
 			numberOfRows = fetchedObjectsCount;
 		}
 #else
-		numberOfRows = [self.mainResultsController.fetchedObjects count];
+		numberOfRows = fetchedObjectsCount;
 #endif
 	}
 	else if (self.mainDataSource) {

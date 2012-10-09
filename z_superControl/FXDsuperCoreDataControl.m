@@ -277,6 +277,8 @@
 		managedObjectContext = self.managedObjectContext;
 	}
 
+	FXDLog(@"managedObjectContext.concurrencyType: %d", managedObjectContext.concurrencyType);
+	FXDLog(@"managedObjectContext.userInfo:\n%@", managedObjectContext.userInfo);
 	
     if (managedObjectContext && managedObjectContext.hasChanges) {
 		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
@@ -305,6 +307,8 @@
 
 #pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
+	
 	[self.managedObjectContext performBlock:^{
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}];
@@ -312,16 +316,14 @@
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
 
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
 	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
@@ -329,15 +331,14 @@
 
 #pragma mark -
 - (void)observedPrivateManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+
 }
 
 - (void)observedPrivateManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
+
 }
 
 - (void)observedPrivateManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification.userInfo:\n%@", notification.userInfo);
 	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);

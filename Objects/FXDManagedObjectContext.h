@@ -1,6 +1,6 @@
 //
 //  FXDManagedObjectContext.h
-//  Waffle
+//
 //
 //  Created by petershine on 10/5/12.
 //  Copyright (c) 2012 petershine. All rights reserved.
