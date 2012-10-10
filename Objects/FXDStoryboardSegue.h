@@ -35,4 +35,6 @@
 @interface UIStoryboardSegue (Added)
 - (NSDictionary*)fullDescription;
 
+- (BOOL)shouldUseNavigationPush;
+
 @end

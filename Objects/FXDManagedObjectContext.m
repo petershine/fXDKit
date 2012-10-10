@@ -80,17 +80,56 @@
 @implementation NSManagedObjectContext (Added)
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
+	FXDFetchedResultsController *resultsController = nil;
+
+	NSFetchRequest *fetchRequest = [self fetchRequestForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
+
+	if (fetchRequest) {
+		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self sectionNameKeyPath:nil cacheName:entityName];
+
+
+		NSError *error = nil;
+		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
+
+		FXDLog(@"didPerformFetch: %d concurrencyType: %d", didPerformFetch, self.concurrencyType);
+	}
+
+	return resultsController;
+}
+
+- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+
+	NSMutableArray *fetchedObjArray = nil;
+
+	NSFetchRequest *fetchRequest = [self fetchRequestForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
+
+	if (fetchRequest) {
+
+		NSError *error = nil;
+		NSArray *resultObjArray = [self executeFetchRequest:fetchRequest error:&error];FXDLog_ERROR;
+
+		FXDLog(@"resultObjArray: %d concurrencyType: %d", [resultObjArray count], self.concurrencyType);
+
+		fetchedObjArray = [resultObjArray mutableCopy];
+	}
+
+	return fetchedObjArray;
+}
+
+#pragma mark -
+- (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+
 	if (limit == integerNotDefined) {
 		limit = limitDefaultFetch;
 	}
+	
 
-
-	FXDFetchedResultsController *resultsController = nil;
+	NSFetchRequest *fetchRequest = nil;
 
 	if (entityName && sortDescriptors) {
-		NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
+		fetchRequest = [[NSFetchRequest alloc] init];
 
-		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+		NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
 
 		[fetchRequest setEntity:entityDescription];
 		[fetchRequest setSortDescriptors:sortDescriptors];
@@ -102,18 +141,9 @@
 
 		[fetchRequest setFetchLimit:limit];
 		[fetchRequest setFetchBatchSize:sizeDefaultBatch];
-
-
-		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self sectionNameKeyPath:nil cacheName:entityName];
-
-
-		NSError *error = nil;
-		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
-
-		FXDLog(@"didPerformFetch: %d", didPerformFetch);
 	}
 
-	return resultsController;
+	return fetchRequest;
 }
 
 @end

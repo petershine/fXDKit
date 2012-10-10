@@ -1,15 +1,19 @@
 //
-//  FXDPopoverController.h
+//  FXDimageviewTemp.h
 //
 //
-//  Created by petershine on 9/18/12.
+//  Created by petershine on 10/9/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDKit.h"
+#ifndef USE_tempImageview
+	#define USE_tempImageview	0
+#endif
 
 
-@interface FXDPopoverController : UIPopoverController {
+#import "FXDImageView.h"
+
+@interface FXDimageviewTemp : FXDImageView {
     // Primitives
 
 	// Instance variables
@@ -18,6 +22,11 @@
 }
 
 // Properties
+
+// IBOutlets
+
+
+#pragma mark - IBActions
 
 
 #pragma mark - Public
@@ -28,8 +37,4 @@
 //MARK: - Delegate implementation
 
 
-@end
-
-#pragma mark - Category
-@interface UIPopoverController (Added)
 @end

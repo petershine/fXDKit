@@ -173,8 +173,9 @@
 			if (finishedHandler) {
 				finishedHandler(didConfigure);
 			}
-			
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
+			else {
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
+			}
 		}];
 	}];
 }
@@ -250,6 +251,26 @@
 	FXDFetchedResultsController *resultsController = [managedObjectContext resultsControllerForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
 
 	return resultsController;
+}
+
+- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {
+
+	if (entityName == nil) {
+		entityName = self.mainEntityName;
+	}
+
+	if (sortDescriptors == nil) {
+		sortDescriptors = self.mainSortDescriptors;
+	}
+
+
+	if (managedObjectContext == nil) {
+		managedObjectContext = self.managedObjectContext;
+	}
+
+	NSMutableArray *fetchedObjArray = [managedObjectContext fetchedObjArrayForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
+
+	return fetchedObjArray;
 }
 
 #pragma mark -

@@ -1,6 +1,6 @@
 //
 //  FXDPopoverController.m
-//  KeyChamp
+//
 //
 //  Created by petershine on 9/18/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
