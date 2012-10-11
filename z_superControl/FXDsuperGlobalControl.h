@@ -45,17 +45,6 @@
 @property (strong, nonatomic) id homeScene;
 
 
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-
-#pragma mark - Private : if declared here, it's for subclass to be able to use these
-
-
-#pragma mark - Overriding
-
-
 #pragma mark - Public
 + (FXDsuperGlobalControl*)sharedInstance;
 

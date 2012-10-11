@@ -9,19 +9,8 @@
 #import "FXDCollectionViewCell.h"
 
 
-#pragma mark - Private interface
-@interface FXDCollectionViewCell (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDCollectionViewCell
-
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -59,9 +48,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

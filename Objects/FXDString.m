@@ -9,18 +9,8 @@
 #import "FXDString.h"
 
 
-#pragma mark - Private interface
-@interface FXDString (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDString
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -42,10 +32,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
 
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

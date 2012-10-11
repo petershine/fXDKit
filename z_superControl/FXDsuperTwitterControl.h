@@ -26,7 +26,7 @@
 
 #if ENVIRONMENT_newestSDK
 #else
-#import <Twitter/Twitter.h>
+	#import <Twitter/Twitter.h>
 #endif
 
 
@@ -65,6 +65,8 @@
 #else
 - (TWTweetComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
 #endif
+
+- (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
 
 
 //MARK: - Observer implementation

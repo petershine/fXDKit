@@ -9,19 +9,8 @@
 #import "FXDsuperTwitterControl.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperTwitterControl (Private)
-- (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperTwitterControl
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -37,18 +26,13 @@
 		// Instance variables
 		
 		// Properties		
-		_accountStore = nil;
-		_accountType = nil;
-		
-		_twitterAccountArray = nil;
-		_mainTwitterAccount = nil;
 	}
 	
 	return self;
 }
 
 #pragma mark - Accessor overriding
-// Properties
+
 - (ACAccountStore*)accountStore {
 	if (_accountStore == nil) {
 		_accountStore = [[ACAccountStore alloc] init];
@@ -98,25 +82,6 @@
 	FXDLog(@"_mainTwitterAccount: %@", _mainTwitterAccount);
 	
 	return _mainTwitterAccount;
-}
-
-
-#pragma mark - Private
-- (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
-	FXDLog_ERROR;
-	
-	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
-		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
-		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
-		FXDLog(@"httpResponse: %d : %@", statusCode, statusCodeDescription);
-		
-		FXDLog(@"allHeaderFields:\n%@", [(NSHTTPURLResponse*)urlResponse allHeaderFields]);
-	}
-	
-	FXDLog(@"responseData.length: %d bytes", responseData.length);
-	
-	id parsedObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
-	FXDLog(@"parsedObject: %@\n %@", [parsedObject class], parsedObject);
 }
 
 
@@ -314,6 +279,24 @@
 	}
 
 	return socialComposeInterface;
+}
+
+#pragma mark -
+- (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
+	FXDLog_ERROR;
+
+	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
+		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
+		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
+		FXDLog(@"httpResponse: %d : %@", statusCode, statusCodeDescription);
+
+		FXDLog(@"allHeaderFields:\n%@", [(NSHTTPURLResponse*)urlResponse allHeaderFields]);
+	}
+
+	FXDLog(@"responseData.length: %d bytes", responseData.length);
+
+	id parsedObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
+	FXDLog(@"parsedObject: %@\n %@", [parsedObject class], parsedObject);
 }
 
 

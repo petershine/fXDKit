@@ -9,18 +9,8 @@
 #import "FXDsuperFileControl.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperFileControl (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperFileControl
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -49,7 +39,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
+
 - (NSURL*)ubiquitousDocumentsURL {
 	if (_ubiquitousDocumentsURL == nil) {
 		if (self.ubiquityContainerURL) {
@@ -152,8 +142,6 @@
 	
 	return _queuedOperationDictionary;
 }
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

@@ -9,19 +9,8 @@
 #import "FXDAnnotationView.h"
 
 
-#pragma mark - Private interface
-@interface FXDAnnotationView (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDAnnotationView
-
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -62,9 +51,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

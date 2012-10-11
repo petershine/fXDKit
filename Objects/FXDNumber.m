@@ -9,26 +9,11 @@
 #import "FXDNumber.h"
 
 
-#pragma mark - Private interface
-@interface FXDNumber (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDNumber
 
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
-
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-
-	// Properties
-}
 
 
 #pragma mark - Initialization
@@ -47,10 +32,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
 
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

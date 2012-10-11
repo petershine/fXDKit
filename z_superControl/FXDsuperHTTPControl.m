@@ -9,11 +9,6 @@
 #import "FXDsuperHTTPControl.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperHTTPControl (Private)
-@end
-
-
 #pragma mark - Public implemenatation
 @implementation FXDsuperHTTPControl
 
@@ -24,10 +19,6 @@ static Reachability *reachabilityForWifi = nil;
 static Reachability *reachabilityForInternet = nil;
 
 static NSMutableSet *_staticHttpControlSet = nil;
-
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory managment
@@ -43,25 +34,12 @@ static NSMutableSet *_staticHttpControlSet = nil;
 		// Instance variables
 		
 		// Properties
-		_httpContentLength = 0;
-		_receivedDataLength = 0;
-		
-		_httpURL = nil;
-		_httpRequest = nil;
-		_httpConnection = nil;
-		
-		_receivedData = nil;
-		
-		_nextHttpControl = nil;
 	}
 	
 	return self;
 }
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

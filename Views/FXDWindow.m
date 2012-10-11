@@ -9,11 +9,6 @@
 #import "FXDWindow.h"
 
 
-#pragma mark - Private interface
-@interface FXDWindow (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDWindow
 
@@ -79,9 +74,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding
@@ -150,17 +142,21 @@
 
 #pragma mark -
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
-	FXDWindow *applicationWindow = [self applicationWindow];
-	
-	[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
-	[applicationWindow performSelector:@selector(showDefaultProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		FXDWindow *applicationWindow = [self applicationWindow];
+
+		[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
+		[applicationWindow performSelector:@selector(showDefaultProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	}];
 }
 
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
-	FXDWindow *applicationWindow = [self applicationWindow];
-	
-	[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];
-	[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		FXDWindow *applicationWindow = [self applicationWindow];
+
+		[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];
+		[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	}];
 }
 
 #pragma mark -

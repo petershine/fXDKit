@@ -9,18 +9,8 @@
 #import "FXDNavigationController.h"
 
 
-#pragma mark - Private interface
-@interface FXDNavigationController (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDNavigationController
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -120,9 +110,6 @@
 	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];	
 #endif
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

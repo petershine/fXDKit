@@ -9,18 +9,8 @@
 #import "FXDFetchedResultsController.h"
 
 
-#pragma mark - Private interface
-@interface FXDFetchedResultsController (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDFetchedResultsController
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -30,10 +20,7 @@
 
 
 #pragma mark - Accessor overriding
-// Properties
 
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding
@@ -65,9 +52,8 @@
 
 #if USE_loggingResultObjFiltering
 	if (resultObj == nil || [filteredArray count] > 1) {
-		FXDLog_DEFAULT;
-		FXDLog(@"predicate: %@", predicate);
-		FXDLog(@"filteredArray count: %d\n%@", [filteredArray count], filteredArray);
+		//FXDLog_DEFAULT;
+		FXDLog(@"predicate: %@ filteredArray count: %d", predicate, [filteredArray count]);
 	}
 #endif
 

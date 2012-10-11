@@ -9,18 +9,8 @@
 #import "FXDsuperTableInterface.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperTableInterface (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperTableInterface	
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -223,9 +213,6 @@
 	[super viewDidDisappear:animated];
 	
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

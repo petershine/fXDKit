@@ -9,18 +9,8 @@
 #import "FXDManagedObject.h"
 
 
-#pragma mark - Private interface
-@interface FXDManagedObject (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDManagedObject
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -42,10 +32,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
 
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

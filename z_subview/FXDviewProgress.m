@@ -9,11 +9,6 @@
 #import "FXDviewProgress.h"
 
 
-#pragma mark - Private interface
-@interface FXDviewProgress (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDviewProgress
 
@@ -51,9 +46,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

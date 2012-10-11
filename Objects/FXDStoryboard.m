@@ -9,28 +9,11 @@
 #import "FXDStoryboard.h"
 
 
-#pragma mark - Private interface
-@interface FXDStoryboard (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDStoryboard
 
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
-
 
 #pragma mark - Memory management
-- (void)dealloc {	
-	// Instance variables
-	
-	// Properties
-		
-	FXDLog_SEPARATE;
-}
 
 
 #pragma mark - Initialization
@@ -49,10 +32,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
 
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

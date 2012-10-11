@@ -40,19 +40,6 @@
 @property (strong, nonatomic) FXDsuperHTTPControl *nextHttpControl;
 
 
-#pragma mark - Memory managment
-
-#pragma mark - Initialization
-
-#pragma mark - Accessor overriding
-
-
-#pragma mark - Private
-
-
-#pragma mark - Overriding
-
-
 #pragma mark - Public
 + (void)prepareConnectionReachabilities;
 + (void)deallocateConnectionReachabilities;

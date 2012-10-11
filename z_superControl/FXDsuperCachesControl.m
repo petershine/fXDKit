@@ -9,18 +9,8 @@
 #import "FXDsuperCachesControl.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperCachesControl (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperCachesControl
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -49,7 +39,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
+
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
 	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
@@ -89,9 +79,6 @@
 	
 	return _ubiquitousCachesMetadataQuery;
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

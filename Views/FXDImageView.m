@@ -9,19 +9,8 @@
 #import "FXDImageView.h"
 
 
-#pragma mark - Private interface
-@interface FXDImageView (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDImageView
-
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -52,9 +41,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

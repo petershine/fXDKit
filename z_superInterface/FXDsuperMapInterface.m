@@ -9,18 +9,8 @@
 #import "FXDsuperMapInterface.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperMapInterface (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperMapInterface
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -38,6 +28,12 @@
 	
 	// IBOutlets
 	self.mainMapview = nil;
+}
+
+- (void)dealloc {
+	// Instance variables
+
+	// Properties
 }
 
 
@@ -90,9 +86,6 @@
 	[super viewDidDisappear:animated];
 	
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

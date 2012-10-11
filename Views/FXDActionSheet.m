@@ -9,19 +9,8 @@
 #import "FXDActionSheet.h"
 
 
-#pragma mark - Private interface
-@interface FXDActionSheet (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDActionSheet
-
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -68,9 +57,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

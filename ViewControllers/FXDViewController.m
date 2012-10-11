@@ -9,11 +9,6 @@
 #import "FXDViewController.h"
 
 
-#pragma mark - Private interface
-@interface FXDViewController (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDViewController
 
@@ -181,9 +176,6 @@
 	[super viewDidDisappear:animated];
 	
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

@@ -10,18 +10,8 @@
 #import "FXDsuperCoreDataControl+CSVparser.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperCoreDataControl (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperCoreDataControl
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -57,7 +47,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
+
 - (NSString*)mainEntityName {
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
 		
@@ -88,9 +78,6 @@
 	
 	return _mainResultsController;
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

@@ -9,19 +9,8 @@
 #import "FXDMapView.h"
 
 
-#pragma mark - Private interface
-@interface FXDMapView (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDMapView
-
-
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
 
 
 #pragma mark - Memory management
@@ -54,9 +43,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

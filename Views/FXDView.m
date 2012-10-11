@@ -9,11 +9,6 @@
 #import "FXDView.h"
 
 
-#pragma mark - Private interface
-@interface FXDView (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDView
 
@@ -59,9 +54,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

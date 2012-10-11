@@ -9,18 +9,8 @@
 #import "FXDsuperGlobalControl.h"
 
 
-#pragma mark - Private interface
-@interface FXDsuperGlobalControl (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperGlobalControl
-
-#pragma mark Static objects
-
-#pragma mark Synthesizing
-// Properties
 
 
 #pragma mark - Memory management
@@ -49,7 +39,7 @@
 }
 
 #pragma mark - Accessor overriding
-// Properties
+
 - (BOOL)didMakePurchase {	//FXDLog_DEFAULT;
 	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidMakePurchase];
 	
@@ -169,9 +159,6 @@
 	
 	return _homeScene;
 }
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding
