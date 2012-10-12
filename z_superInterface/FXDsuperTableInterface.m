@@ -17,18 +17,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
-	if (_shouldSkipNilifyingOutlets) {
-		return;
-	}
-	
-
     // Release any cached data, images, etc that aren't in use.
+	
+	// Instance variables
 
 	// Properties
 	self.cachedImageDictionary = nil;
-	
-	// IBOutlets
-	self.mainTableview = nil;
 }
 
 - (void)dealloc {

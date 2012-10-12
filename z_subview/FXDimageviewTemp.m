@@ -18,11 +18,6 @@
 @implementation FXDimageviewTemp
 
 
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
-
 
 #pragma mark - Memory management
 - (void)dealloc {
@@ -54,9 +49,6 @@
 
 
 #pragma mark - Accessor overriding
-
-
-#pragma mark - Private
 
 
 #pragma mark - Overriding

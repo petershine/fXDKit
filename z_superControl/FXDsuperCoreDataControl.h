@@ -64,14 +64,14 @@
 - (void)prepareCoredataControlObserverMethods;
 
 
-- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext;
 
-- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext;
 
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController;
 - (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj;
 
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+- (void)saveManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext;
 
 
 //MARK: - Observer implementation

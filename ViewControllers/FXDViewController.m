@@ -14,29 +14,22 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
-	FXDLog(@"_shouldSkipNilifyingOutlets: %d", _shouldSkipNilifyingOutlets);
-
-	if (_shouldSkipNilifyingOutlets) {
-		return;
-	}
-	
+	FXDLog_DEFAULT;
     
     // Release any cached data, images, etc that aren't in use.
+
+	// Instance variables
 	
 	// Properties
-	
-	// IBOutlets
 }
 
 - (void)dealloc {	
 	// Instance variables
 	
 	// Properties
-	
-	// IBOutlets
 	
 	FXDLog_SEPARATE;
 }
@@ -188,8 +181,10 @@
 	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
 	FXDLog(@"sender: %@", sender);
 	FXDLog(@"identifier: %@", identifier);
+
+	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
 	
-	return [super shouldPerformSegueWithIdentifier:identifier sender:sender];
+	return shouldPerform;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;

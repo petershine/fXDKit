@@ -20,18 +20,16 @@
 	FXDLog_SEPARATE;
 	
     // Release any cached data, images, etc that aren't in use.
-	
-	// Properties
 
-	// IBOutlets
+	// Instance variables
+
+	// Properties
 }
 
 - (void)dealloc {	
 	// Instance variables
 	
 	// Properties
-	
-	// IBOutlets
 	
 	FXDLog_SEPARATE;
 }
