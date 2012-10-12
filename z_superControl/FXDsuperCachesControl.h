@@ -13,7 +13,7 @@
 #define prefixCached	@"_cached_"
 
 
-@interface FXDsuperCachesControl : NSObject <NSMetadataQueryDelegate> {
+@interface FXDsuperCachesControl : FXDObject <NSMetadataQueryDelegate> {
     // Primitives
 	
 	// Instance variables

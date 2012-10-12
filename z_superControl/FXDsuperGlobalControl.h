@@ -16,7 +16,7 @@
 @class FXDStoryboard;
 
 
-@interface FXDsuperGlobalControl : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
+@interface FXDsuperGlobalControl : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
     // Primitives
 	
 	// Instance variables

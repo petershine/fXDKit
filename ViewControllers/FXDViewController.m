@@ -12,11 +12,6 @@
 #pragma mark - Public implementation
 @implementation FXDViewController
 
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
-
 
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;

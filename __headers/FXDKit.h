@@ -34,6 +34,8 @@
 
 
 // Objects
+#import "FXDObject.h"
+
 #import "FXDString.h"
 #import "FXDDate.h"
 #import "FXDURL.h"

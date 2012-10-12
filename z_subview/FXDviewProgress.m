@@ -13,21 +13,7 @@
 @implementation FXDviewProgress
 
 
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
-
-
 #pragma mark - Memory management
-
-- (void)dealloc {
-	// Primitives
-	
-	// Instance variables
-	
-	// Properties
-}
 
 
 #pragma mark - Initialization

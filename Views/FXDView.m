@@ -13,20 +13,7 @@
 @implementation FXDView
 
 
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
-
-
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
-}
 
 
 #pragma mark - Initialization

@@ -42,7 +42,7 @@
 #import "DirectoryWatcher.h"
 
 
-@interface FXDsuperFileControl : NSObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
+@interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	
 	// Instance variables

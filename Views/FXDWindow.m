@@ -13,12 +13,6 @@
 @implementation FXDWindow
 
 
-#pragma mark Synthesizing
-// Properties
-
-// IBOutlets
-
-
 #pragma mark - Memory management
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];

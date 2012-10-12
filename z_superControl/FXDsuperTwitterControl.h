@@ -30,7 +30,7 @@
 #endif
 
 
-@interface FXDsuperTwitterControl : NSObject <UIAlertViewDelegate> {
+@interface FXDsuperTwitterControl : FXDObject <UIAlertViewDelegate> {
     // Primitives
 	
 	// Instance variables
