@@ -73,7 +73,9 @@
 		NSError *error = nil;
 		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 
-		FXDLog(@"didPerformFetch: %d concurrencyType: %d", didPerformFetch, self.concurrencyType);
+		if (didPerformFetch == NO) {
+			FXDLog(@"didPerformFetch: %d concurrencyType: %d", didPerformFetch, self.concurrencyType);
+		}
 	}
 
 	return resultsController;
@@ -90,9 +92,14 @@
 		NSError *error = nil;
 		NSArray *resultObjArray = [self executeFetchRequest:fetchRequest error:&error];FXDLog_ERROR;
 
-		FXDLog(@"resultObjArray: %d concurrencyType: %d", [resultObjArray count], self.concurrencyType);
-
-		fetchedObjArray = [resultObjArray mutableCopy];
+		if (resultObjArray == nil || [resultObjArray count] == 0) {
+#if USE_loggingResultObjFiltering
+			FXDLog(@"resultObjArray: %d concurrencyType: %d", [resultObjArray count], self.concurrencyType);
+#endif
+		}
+		else {
+			fetchedObjArray = [resultObjArray mutableCopy];
+		}
 	}
 
 	return fetchedObjArray;

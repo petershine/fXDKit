@@ -22,6 +22,13 @@ static NSMutableSet *_staticHttpControlSet = nil;
 
 
 #pragma mark - Memory managment
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
+	// Instance variables
+
+	// Properties
+}
 
 
 #pragma mark - Initialization

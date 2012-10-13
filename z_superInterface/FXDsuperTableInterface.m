@@ -469,7 +469,6 @@
 	
 	if (self.mainResultsController) {
 		NSInteger fetchedObjectsCount = [self.mainResultsController.fetchedObjects count];
-		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
 		
 #if ForDEVELOPER
 		NSArray *sections = self.mainResultsController.sections;
@@ -479,6 +478,8 @@
 
 			numberOfRows = [sectionInfo numberOfObjects];
 		}
+
+		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
 		
 		if (numberOfRows != fetchedObjectsCount) {
 			numberOfRows = fetchedObjectsCount;
@@ -622,16 +623,20 @@
 	
 }
 
-- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
+- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
 	
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	FXDLog_OVERRIDE;
+	FXDLog(@"type: %d", type);
+	FXDLog(@"indexPath: %@ newIndexPath: %@", indexPath, newIndexPath);
 	
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
-	
+	if (self.mainTableview) {
+		[self.mainTableview reloadData];
+	}
 }
 
 

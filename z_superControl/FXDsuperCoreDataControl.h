@@ -6,11 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef USE_loggingResultObjFiltering
-	#define USE_loggingResultObjFiltering	1
-#endif
-
-
 #ifndef applicationSqlitePathComponent
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
@@ -64,14 +59,14 @@
 - (void)prepareCoredataControlObserverMethods;
 
 
-- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext;
+- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
-- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext;
+- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController;
 - (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj;
 
-- (void)saveManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
 
 //MARK: - Observer implementation

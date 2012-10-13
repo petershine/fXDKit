@@ -38,8 +38,9 @@
 
 
 #pragma mark - Overriding
-- (void)perform {	FXDLog_OVERRIDE;
-	
+- (void)perform {	FXDLog_DEFAULT;
+	FXDLog(@"fullDescription:\n%@", [self fullDescription]);
+
 }
 
 
@@ -73,6 +74,9 @@
 
 	if ([fullDescription count] == 0) {
 		fullDescription = nil;
+	}
+	else {
+		fullDescription[@"class"] = NSStringFromClass([self class]);
 	}
 
 	return fullDescription;

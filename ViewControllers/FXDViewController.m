@@ -170,27 +170,74 @@
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	FXDLog(@"sender: %@", sender);
 	FXDLog(@"identifier: %@", identifier);
 
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_OVERRIDE;
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	// Invoked immediately prior to initiating a segue. Return NO to prevent the segue from firing. The default implementation returns YES. This method is not invoked when -performSegueWithIdentifier:sender: is used.
 	FXDLog(@"sender: %@", sender);
 	FXDLog(@"identifier: %@", identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
-	
+
 	return shouldPerform;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_OVERRIDE;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"sender: %@", sender);
+	FXDLog(@"segue:\n%@", [segue fullDescription]);
+
+	[super prepareForSegue:segue sender:sender];
+}
+
+#pragma mark -
+- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
+
+	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
+
+	FXDLog(@"action: %@", NSStringFromSelector(action));
+	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"sender: %@", sender);
 
-	FXDLog(@"fullDescription:\n%@", [segue fullDescription]);
+	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+
+	FXDLog(@"canPerform: %d", canPerform);
+
+	return canPerform;
+}
+
+- (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
+	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
+	FXDLog(@"MUST RETURN LOCAL INSTANCE: %@", @"Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.");
+
+	FXDLog(@"action: %@", NSStringFromSelector(action));
+	FXDLog(@"fromViewController: %@", fromViewController);
+	FXDLog(@"sender: %@", sender);
+
+	UIViewController *viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+
+	FXDLog(@"viewController: %@", viewController);
+
+	return viewController;
+}
+
+- (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
+	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
+	FXDLog(@"MUST RETURN LOCAL INSTANCE: %@", @"Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.");
+
+	FXDLog(@"toViewController: %@", toViewController);
+	FXDLog(@"fromViewController: %@", fromViewController);
+	FXDLog(@"identifier: %@", identifier);
+
+	UIStoryboardSegue *segue = [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
+
+	FXDLog(@"segue: %@", segue);
+
+	return segue;
 }
 
 	 
@@ -210,6 +257,32 @@
 
 #pragma mark - Category
 @implementation UIViewController (Added)
+#pragma mark - IBActions
+//MARK: should be implemented by destinationController(parentController, containerController) to work properly
+- (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
+	FXDLog(@"unwindSegue:\n%@", [unwindSegue fullDescription]);
+}
+
+#pragma mark -
+- (IBAction)popToRootInterfaceWithAnimation:(id)sender {
+	[self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)popInterfaceWithAnimation:(id)sender {
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)dismissInterfaceWithAnimation:(id)sender {
+
+	if (self.navigationController) {
+		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
+	}
+	else {
+		[self dismissViewControllerAnimated:YES completion:nil];
+	}
+}
+
+#pragma mark - Public
 - (void)customizeBackBarbuttonWithDefaultImagesForTarget:(id)target shouldHideForRoot:(BOOL)shouldHideForRoot {	FXDLog_DEFAULT;
 	
 	UIImage *offImage = nil;
@@ -381,30 +454,6 @@
 	}
 	
 	return button;
-}
-
-#pragma mark -
-- (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
-	FXDLog(@"fullDescription:\n%@", [unwindSegue fullDescription]);
-}
-
-#pragma mark -
-- (IBAction)popToRootInterfaceWithAnimation:(id)sender {
-	[self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (IBAction)popInterfaceWithAnimation:(id)sender {
-	[self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)dismissInterfaceWithAnimation:(id)sender {
-
-	if (self.navigationController) {
-		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
-	}
-	else {
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}
 }
 
 

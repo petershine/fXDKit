@@ -82,16 +82,7 @@
 #pragma mark - at viewDidLoad
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
     [super viewDidLoad];
-	
-	/*
-	 NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-	 fontSystemBold20, UITextAttributeFont,
-	 [UIColor whiteColor], UITextAttributeTextColor,
-	 nil];
-	 
-	 [self.navigationBar setTitleTextAttributes:textAttributes];
-	 */
-	
+		
 	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
 	
 	if (self.shouldUseDefaultNavigationBar == NO) {
@@ -115,7 +106,9 @@
 
 #pragma mark - Segues
 - (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
+
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
+
 	FXDLog(@"action: %@", NSStringFromSelector(action));
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"sender: %@", sender);
@@ -129,6 +122,8 @@
 
 - (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
+	FXDLog(@"MUST RETURN LOCAL INSTANCE: %@", @"Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.");
+
 	FXDLog(@"action: %@", NSStringFromSelector(action));
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"sender: %@", sender);
@@ -142,6 +137,7 @@
 
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
 	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
+	FXDLog(@"MUST RETURN LOCAL INSTANCE: %@", @"Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.");
 
 	FXDLog(@"toViewController: %@", toViewController);
 	FXDLog(@"fromViewController: %@", fromViewController);
@@ -149,7 +145,7 @@
 
 	UIStoryboardSegue *segue = [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
 
-	FXDLog(@"segue fullDescription:\n%@", [segue fullDescription]);
+	FXDLog(@"segue: %@", segue);
 
 	return segue;
 }

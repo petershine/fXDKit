@@ -220,7 +220,7 @@
 }
 
 #pragma mark -
-- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
+- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
 
 	if (entityName == nil) {
 		entityName = self.mainEntityName;
@@ -232,7 +232,7 @@
 
 
 	if (managedObjectContext == nil) {
-		managedObjectContext = (FXDManagedObjectContext*)self.managedObjectContext;
+		managedObjectContext = self.managedObjectContext;
 	}
 
 	FXDFetchedResultsController *resultsController = [managedObjectContext resultsControllerForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
@@ -240,7 +240,7 @@
 	return resultsController;
 }
 
-- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext {
+- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {
 
 	if (entityName == nil) {
 		entityName = self.mainEntityName;
@@ -252,7 +252,7 @@
 
 
 	if (managedObjectContext == nil) {
-		managedObjectContext = (FXDManagedObjectContext*)self.managedObjectContext;
+		managedObjectContext = self.managedObjectContext;
 	}
 
 	NSMutableArray *fetchedObjArray = [managedObjectContext fetchedObjArrayForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
@@ -279,21 +279,24 @@
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(FXDManagedObjectContext*)managedObjectContext {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_SEPARATE;
 
 	if (managedObjectContext == nil) {
-		managedObjectContext = (FXDManagedObjectContext*)self.managedObjectContext;
+		managedObjectContext = self.managedObjectContext;
 	}
 
-	FXDLog(@"managedObjectContext.concurrencyType: %d", managedObjectContext.concurrencyType);
-	FXDLog(@"managedObjectContext.userInfo:\n%@", managedObjectContext.userInfo);
-	
     if (managedObjectContext && managedObjectContext.hasChanges) {
+
 		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
 			
 			NSError *error = nil;
 			BOOL didSave = [managedObjectContext save:&error];FXDLog_ERROR;
 			FXDLog(@"didSave: %d", didSave);
+
+			if (didSave == NO) {
+				FXDLog(@"managedObjectContext.concurrencyType: %d", managedObjectContext.concurrencyType);
+				FXDLog(@"managedObjectContext.userInfo:\n%@", managedObjectContext.userInfo);
+			}
 		}];
     }
 }
