@@ -20,7 +20,6 @@
 
 // Properties
 @property (strong, nonatomic) NSDictionary *presentedSegueDictionary;
-@property (strong, nonatomic) NSString *presentingSegueName;
 
 // IBOutlets
 
@@ -45,7 +44,7 @@
 #pragma mark - Category
 @interface UIViewController (Added)
 #pragma mark - IBActions
-//MARK: should be implemented by destinationController(parentController, containerController) to work properly
+//MARK: implement this for controller whick will unwind
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
 
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;

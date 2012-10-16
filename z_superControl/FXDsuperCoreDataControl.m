@@ -46,8 +46,20 @@
 	return self;
 }
 
-#pragma mark - Accessor overriding
+#pragma mark -
++ (FXDsuperCoreDataControl*)sharedInstance {
+	static dispatch_once_t once;
+	static id _sharedInstance = nil;
 
+	dispatch_once(&once,^{
+		_sharedInstance = [[self alloc] initWithFileURL:nil];	//MARK: Cannot use default implementation because of using this different initializer
+	});
+
+	return _sharedInstance;
+}
+
+
+#pragma mark - Accessor overriding
 - (NSString*)mainEntityName {
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
 		
@@ -84,18 +96,6 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCoreDataControl*)sharedInstance {
-	static dispatch_once_t once;
-	static id _sharedInstance = nil;
-	
-	dispatch_once(&once,^{
-		_sharedInstance = [[self alloc] initWithFileURL:nil];	//MARK: Cannot use default implementation because of using this different initializer
-	});
-	
-	return _sharedInstance;
-}
-
-#pragma mark -
 - (void)startObservingFileControlNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
@@ -350,6 +350,8 @@
 }
 
 - (void)observedPrivateManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//FXDLog(@"notification: %@", notification);
+
 	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
@@ -387,7 +389,7 @@
 		[controller.dynamicDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 

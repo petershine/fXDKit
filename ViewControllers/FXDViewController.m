@@ -73,6 +73,9 @@
 	// Properties
 	
 	// IBOutlets
+	if (self.view == nil) {
+		self.view = [[self.view class] viewFromNibName:NSStringFromClass([self class]) withOwner:self];
+	}
 }
 
 
@@ -258,9 +261,10 @@
 #pragma mark - Category
 @implementation UIViewController (Added)
 #pragma mark - IBActions
-//MARK: should be implemented by destinationController(parentController, containerController) to work properly
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
 	FXDLog(@"unwindSegue:\n%@", [unwindSegue fullDescription]);
+	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+
 }
 
 #pragma mark -

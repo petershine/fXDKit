@@ -14,32 +14,22 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	
+- (void)dealloc {
 	// Instance variables
-	
+
 	// Properties
-	
+
 	FXDLog_SEPARATE;
 }
 
 
 #pragma mark - Initialization
-- (id)init {
-	self = [super init];
-	
-	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-	}
-	
-	return self;
++ (FXDsuperGlobalControl*)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
 }
 
-#pragma mark - Accessor overriding
 
+#pragma mark - Accessor overriding
 - (BOOL)didMakePurchase {	//FXDLog_DEFAULT;
 	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidMakePurchase];
 	
@@ -165,12 +155,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperGlobalControl*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
-#pragma mark -
-+ (BOOL)isSystemVersionLatest {	
++ (BOOL)isSystemVersionLatest {
 	BOOL isSystemVersionLatest = NO;
 	
 	NSString *systemVersionString = [[UIDevice currentDevice] systemVersion];

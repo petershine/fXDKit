@@ -17,22 +17,9 @@
 
 
 #pragma mark - Initialization
-- (id)init {	FXDLog_SEPARATE;
-	self = [super init];
-	
-	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-	}
-	
-	return self;
-}
+
 
 #pragma mark - Accessor overriding
-
 
 
 #pragma mark - Overriding
@@ -43,6 +30,7 @@
 	
 	return instantiatedViewController;
 }
+
 
 #pragma mark - Public
 

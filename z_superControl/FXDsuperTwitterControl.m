@@ -14,25 +14,20 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+	// Instance variables
+
+	// Properties
+}
 
 
 #pragma mark - Initialization
-- (id)init {
-	self = [super init];
-	
-	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties		
-	}
-	
-	return self;
++ (FXDsuperTwitterControl*)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
 }
 
-#pragma mark - Accessor overriding
 
+#pragma mark - Accessor overriding
 - (ACAccountStore*)accountStore {
 	if (_accountStore == nil) {
 		_accountStore = [[ACAccountStore alloc] init];
@@ -89,11 +84,6 @@
 
 
 #pragma mark - Public
-+ (FXDsuperTwitterControl*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
-#pragma mark -
 - (void)signInBySelectingTwitterAccount {	FXDLog_DEFAULT;	
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
 	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);

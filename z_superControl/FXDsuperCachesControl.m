@@ -24,22 +24,12 @@
 
 
 #pragma mark - Initialization
-- (id)init {
-	self = [super init];
-	
-	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-	}
-	
-	return self;
++ (FXDsuperCachesControl*)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
 }
 
-#pragma mark - Accessor overriding
 
+#pragma mark - Accessor overriding
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
 	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
@@ -85,11 +75,6 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCachesControl*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
-#pragma mark -
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL {
 	NSURL *cachedURL = nil;
 

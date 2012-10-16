@@ -24,22 +24,12 @@
 
 
 #pragma mark - Initialization
-- (id)init {
-	self = [super init];
-	
-	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-	}
-	
-	return self;
++ (FXDsuperFileControl*)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
 }
 
-#pragma mark - Accessor overriding
 
+#pragma mark - Accessor overriding
 - (NSURL*)ubiquitousDocumentsURL {
 	if (_ubiquitousDocumentsURL == nil) {
 		if (self.ubiquityContainerURL) {
@@ -148,11 +138,6 @@
 
 
 #pragma mark - Public
-+ (FXDsuperFileControl*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
-#pragma mark -
 - (void)startUpdatingUbiquityContainerURL {	FXDLog_DEFAULT;
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;

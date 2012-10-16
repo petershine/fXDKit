@@ -14,27 +14,9 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-
-	// Properties
-}
 
 
 #pragma mark - Initialization
-- (id)init {
-	self = [super init];
-
-	if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-	}
-
-	return self;
-}
 
 
 #pragma mark - Accessor overriding

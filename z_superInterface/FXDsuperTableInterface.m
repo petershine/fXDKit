@@ -478,8 +478,6 @@
 
 			numberOfRows = [sectionInfo numberOfObjects];
 		}
-
-		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
 		
 		if (numberOfRows != fetchedObjectsCount) {
 			numberOfRows = fetchedObjectsCount;
@@ -487,6 +485,7 @@
 #else
 		numberOfRows = fetchedObjectsCount;
 #endif
+		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
 	}
 	else if (self.mainDataSource) {
 		numberOfRows = [self.mainDataSource count];
