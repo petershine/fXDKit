@@ -18,11 +18,9 @@ typedef enum {
 
 @interface FXDTableViewCell : UITableViewCell {
     // Primitives
+	SECTION_POSITION_TYPE _sectionPositionType;
 	
 	// Instance variables
-	
-	// Properties : For accessor overriding
-	SECTION_POSITION_TYPE _sectionPositionType;
 }
 
 // Properties

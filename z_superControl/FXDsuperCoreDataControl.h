@@ -33,8 +33,6 @@
     // Primitives
 	
 	// Instance variables
-	
-    // Properties : For accessor overriding
 	NSString *_mainEntityName;
 	NSArray *_mainSortDescriptors;
 	

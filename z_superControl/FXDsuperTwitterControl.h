@@ -34,8 +34,6 @@
     // Primitives
 	
 	// Instance variables
-	
-    // Properties : For accessor overriding	
 	ACAccountStore *_accountStore;
 	ACAccountType *_accountType;
 	

@@ -17,14 +17,12 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 
 @interface FXDsuperTableInterface : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
-	
-	// Instance variables
 	FXDidentifierOperation _mainOperationIdentifier;
-	
-	// Properties : For accessor overriding
+
 	BOOL _isSystemVersionLatest;
 	BOOL _didStartAutoScrollingToTop;
 	
+	// Instance variables
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
 	

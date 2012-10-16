@@ -263,7 +263,6 @@
 #pragma mark - IBActions
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
 	FXDLog(@"unwindSegue:\n%@", [unwindSegue fullDescription]);
-	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 
 }
 

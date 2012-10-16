@@ -44,12 +44,9 @@
 
 @interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
-	
-	// Instance variables
-	
-	// Properties : For accessor overriding
 	BOOL _didFinishFirstGathering;
 	
+	// Instance variables
 	id _ubiquityIdentityToken;
 	
 	NSURL *_ubiquityContainerURL;

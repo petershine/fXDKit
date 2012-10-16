@@ -15,8 +15,6 @@
     // Primitives
 	
 	// Instance variables
-	
-    // Properties : For accessor overriding
 	CGRect _initialDisclaimerViewFrame;
 	CGPoint _disclaimerViewOffset;
 }

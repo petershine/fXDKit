@@ -18,13 +18,10 @@
 
 @interface FXDsuperGlobalControl : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
     // Primitives
-	
-	// Instance variables
-	
-	// Properties : For accessor overriding	
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
 	
+	// Instance variables
 	NSString *_deviceLanguageCode;
 
 	NSString *_mainStoryboardName;
