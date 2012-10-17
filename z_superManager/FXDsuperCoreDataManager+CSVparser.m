@@ -90,7 +90,7 @@
 	
 	self.fieldKeys = nil;
 	
-	[self saveManagedObjectContext:nil];
+	[self saveManagedObjectContext:nil forFinishedBlock:nil];
 }
 
 - (void) parser:(CHCSVParser *)parser didFailWithError:(NSError *)error {	FXDLog_DEFAULT;
@@ -102,7 +102,7 @@
 	self.fieldKeys = nil;
 	self.fieldValues = nil;
 	
-	[self saveManagedObjectContext:nil];
+	[self saveManagedObjectContext:nil forFinishedBlock:nil];
 }
 
 

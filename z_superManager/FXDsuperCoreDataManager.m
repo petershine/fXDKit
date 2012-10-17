@@ -190,33 +190,17 @@
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
 						  name:NSManagedObjectContextObjectsDidChangeNotification
-						object:self.managedObjectContext];
+						object:nil];
 
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextWillSave:)
 						  name:NSManagedObjectContextWillSaveNotification
-						object:self.managedObjectContext];
+						object:nil];
 
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextDidSave:)
 						  name:NSManagedObjectContextDidSaveNotification
-						object:self.managedObjectContext];
-
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedPrivateManagedObjectContextObjectsDidChange:)
-						  name:NSManagedObjectContextObjectsDidChangeNotification
-						object:self.managedObjectContext.parentContext];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedPrivateManagedObjectContextWillSave:)
-						  name:NSManagedObjectContextWillSaveNotification
-						object:self.managedObjectContext.parentContext];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedPrivateManagedObjectContextDidSave:)
-						  name:NSManagedObjectContextDidSaveNotification
-						object:self.managedObjectContext.parentContext];
+						object:nil];
 }
 
 #pragma mark -
@@ -279,23 +263,29 @@
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext forFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
 
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
 	}
 
     if (managedObjectContext && managedObjectContext.hasChanges) {
+		[managedObjectContext performBlock:^{
+			FXDLog_DEFAULT;
+			FXDLog(@"managedObjectContext.concurrencyType: %d", managedObjectContext.concurrencyType);
 
-		[managedObjectContext performBlockAndWait:^{	FXDLog_DEFAULT;
-			
 			NSError *error = nil;
-			BOOL didSave = [managedObjectContext save:&error];FXDLog_ERROR;
+			BOOL didSave = [managedObjectContext save:&error];
+
+			FXDLog_DEFAULT;
 			FXDLog(@"didSave: %d", didSave);
 
 			if (didSave == NO) {
-				FXDLog(@"managedObjectContext.concurrencyType: %d", managedObjectContext.concurrencyType);
-				FXDLog(@"managedObjectContext.userInfo:\n%@", managedObjectContext.userInfo);
+				FXDLog_ERROR;
+			}
+
+			if (finishedBlock) {
+				finishedBlock();
 			}
 		}];
     }
@@ -308,7 +298,7 @@
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;;
-	[self saveManagedObjectContext:nil];
+	[self saveManagedObjectContext:nil forFinishedBlock:nil];
 }
 
 #pragma mark -
@@ -318,48 +308,42 @@
 
 #pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification: %@", notification);
-	
-	[self.managedObjectContext performBlock:^{
+	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
+	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
+
+	if ([notification.object isEqual:self.managedObjectContext] == NO) {
+		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-	}];
+	}
 }
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-}
+	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
+	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
-#pragma mark -
-- (void)observedPrivateManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-
-}
-
-- (void)observedPrivateManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-
-}
-
-- (void)observedPrivateManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	//FXDLog(@"notification: %@", notification);
-
-	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-
-	[self.managedObjectContext performBlock:^{
+	if ([notification.object isEqual:self.managedObjectContext] == NO) {
+		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+		
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-	}];
+	}
 }
+
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate

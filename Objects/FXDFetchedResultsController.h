@@ -34,5 +34,6 @@
 #pragma mark - Category
 @interface NSFetchedResultsController (Added)
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
+- (FXDManagedObject*)resultObjForPredicate:(NSPredicate*)predicate;
 
 @end

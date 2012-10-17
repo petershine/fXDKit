@@ -64,7 +64,7 @@
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController;
 - (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj;
 
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext forFinishedBlock:(void(^)(void))finishedBlock;
 
 
 //MARK: - Observer implementation
@@ -78,10 +78,6 @@
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
-
-- (void)observedPrivateManagedObjectContextObjectsDidChange:(NSNotification*)notification;
-- (void)observedPrivateManagedObjectContextWillSave:(NSNotification*)notification;
-- (void)observedPrivateManagedObjectContextDidSave:(NSNotification*)notification;
 
 
 //MARK: - Delegate implementation

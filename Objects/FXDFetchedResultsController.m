@@ -40,9 +40,16 @@
 @implementation FXDFetchedResultsController (Added)
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {
 
-	FXDManagedObject *resultObj = nil;
-
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
+
+	FXDManagedObject *resultObj = [self resultObjForPredicate:predicate];
+
+	return resultObj;
+}
+
+- (FXDManagedObject*)resultObjForPredicate:(NSPredicate*)predicate {
+
+	FXDManagedObject *resultObj = nil;
 
 	NSArray *filteredArray = [[self.fetchedObjects copy] filteredArrayUsingPredicate:predicate];
 
@@ -59,4 +66,5 @@
 
 	return resultObj;
 }
+
 @end
