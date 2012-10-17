@@ -1,5 +1,5 @@
 //
-//  FXDsuperHTTPControl.h
+//  FXDsuperHttpManager.h
 //
 //
 //  Created by petershine on 10/27/11.
@@ -9,7 +9,7 @@
 #import "FXDKit.h"
 
 
-@interface FXDsuperHTTPControl : FXDObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
+@interface FXDsuperHttpManager : FXDObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -24,7 +24,7 @@
 	
 	NSMutableData *_receivedData;
 	
-	FXDsuperHTTPControl *_nextHttpControl;
+	FXDsuperHttpManager *_nextHttpControl;
 }
 
 // Properties
@@ -37,7 +37,7 @@
 
 @property (strong, nonatomic) NSMutableData *receivedData;
 
-@property (strong, nonatomic) FXDsuperHTTPControl *nextHttpControl;
+@property (strong, nonatomic) FXDsuperHttpManager *nextHttpControl;
 
 
 #pragma mark - Public
@@ -47,8 +47,8 @@
 + (BOOL)isWiFiConnected;
 
 + (NSMutableSet*)httpControlSet;
-+ (FXDsuperHTTPControl*)popAndRemoveAnyHttpControlFromSet;
-+ (void)addHttpControl:(FXDsuperHTTPControl*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet;
++ (FXDsuperHttpManager*)popAndRemoveAnyHttpControlFromSet;
++ (void)addHttpControl:(FXDsuperHttpManager*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet;
 
 - (void)observedReachabilityChanged:(NSNotification*)notification;
 

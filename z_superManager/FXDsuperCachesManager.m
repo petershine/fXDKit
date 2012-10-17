@@ -1,16 +1,16 @@
 //
-//  FXDsuperCachesControl.m
+//  FXDsuperCachesManager.m
 
 //
 //  Created by petershine on 8/13/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDsuperCachesControl.h"
+#import "FXDsuperCachesManager.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCachesControl
+@implementation FXDsuperCachesManager
 
 
 #pragma mark - Memory management
@@ -24,7 +24,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperCachesControl*)sharedInstance {
++ (FXDsuperCachesManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -281,5 +281,5 @@
 @end
 
 #pragma mark - Category
-@implementation FXDsuperCachesControl (Added)
+@implementation FXDsuperCachesManager (Added)
 @end

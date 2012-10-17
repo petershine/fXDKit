@@ -1,14 +1,14 @@
 //
-//  FXDsuperFileControl+Enumerating.m
+//  FXDsuperFileManager+Enumerating.m
 ///
 //
 //  Created by petershine on 8/12/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDsuperFileControl.h"
+#import "FXDsuperFileManager.h"
 
-@implementation FXDsuperFileControl (Enumerating)
+@implementation FXDsuperFileManager (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
 	

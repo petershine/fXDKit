@@ -1,5 +1,5 @@
 //
-//  FXDsuperCachesControl.h
+//  FXDsuperCachesManager.h
 //
 //
 //  Created by petershine on 8/13/12.
@@ -13,7 +13,7 @@
 #define prefixCached	@"_cached_"
 
 
-@interface FXDsuperCachesControl : FXDObject <NSMetadataQueryDelegate> {
+@interface FXDsuperCachesManager : FXDObject <NSMetadataQueryDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -24,7 +24,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCachesControl*)sharedInstance;
++ (FXDsuperCachesManager*)sharedInstance;
 
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL;
 - (NSURL*)itemURLforCachedURL:(NSURL*)cachedURL;
@@ -47,5 +47,5 @@
 @end
 
 #pragma mark - Category
-@interface FXDsuperCachesControl (Added)
+@interface FXDsuperCachesManager (Added)
 @end

@@ -1,19 +1,19 @@
 //
-//  FXDsuperHTTPControl.m
+//  FXDsuperHttpManager.m
 //
 //
 //  Created by petershine on 10/27/11.
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#import "FXDsuperHTTPControl.h"
+#import "FXDsuperHttpManager.h"
 
 
 #pragma mark - Public implemenatation
-@implementation FXDsuperHTTPControl
+@implementation FXDsuperHttpManager
 
 #pragma mark Static objects
-static FXDsuperHTTPControl *observerForReachability = nil;
+static FXDsuperHttpManager *observerForReachability = nil;
 
 static Reachability *reachabilityForWifi = nil;
 static Reachability *reachabilityForInternet = nil;
@@ -58,7 +58,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	
 	reachabilityForInternet = [Reachability reachabilityForInternetConnection];
 	
-	observerForReachability = [[FXDsuperHTTPControl alloc] init];
+	observerForReachability = [[FXDsuperHttpManager alloc] init];
 	
 	[reachabilityForWifi startNotifier];
 	[reachabilityForInternet startNotifier];
@@ -100,11 +100,11 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	return _staticHttpControlSet;
 }
 
-+ (FXDsuperHTTPControl*)popAndRemoveAnyHttpControlFromSet {	FXDLog_DEFAULT;
-	FXDsuperHTTPControl *httpControl = nil;
++ (FXDsuperHttpManager*)popAndRemoveAnyHttpControlFromSet {	FXDLog_DEFAULT;
+	FXDsuperHttpManager *httpControl = nil;
 	
 	if (_staticHttpControlSet) {
-		FXDsuperHTTPControl *anyHttpControl = [_staticHttpControlSet anyObject];
+		FXDsuperHttpManager *anyHttpControl = [_staticHttpControlSet anyObject];
 		
 		if (anyHttpControl) {
 			httpControl = anyHttpControl;
@@ -117,7 +117,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	return httpControl;
 }
 
-+ (void)addHttpControl:(FXDsuperHTTPControl*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet {
++ (void)addHttpControl:(FXDsuperHttpManager*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet {
 	if (httpControlSet == nil) {
 		if (_staticHttpControlSet == nil) {
 			_staticHttpControlSet = [[NSMutableSet alloc] initWithCapacity:0];

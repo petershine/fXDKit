@@ -1,17 +1,17 @@
 //
-//  FXDsuperCoreDataControl.m
+//  FXDsuperCoreDataManager.m
 //
 //
 //  Created by petershine on 3/16/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCoreDataControl.h"
-#import "FXDsuperCoreDataControl+CSVparser.h"
+#import "FXDsuperCoreDataManager.h"
+#import "FXDsuperCoreDataManager+CSVparser.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCoreDataControl
+@implementation FXDsuperCoreDataManager
 
 
 #pragma mark - Memory management
@@ -47,7 +47,7 @@
 }
 
 #pragma mark -
-+ (FXDsuperCoreDataControl*)sharedInstance {
++ (FXDsuperCoreDataManager*)sharedInstance {
 	static dispatch_once_t once;
 	static id _sharedInstance = nil;
 

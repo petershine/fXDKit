@@ -1,5 +1,5 @@
 //
-//  FXDsuperCoreDataControl.h
+//  FXDsuperCoreDataManager.h
 //
 //
 //  Created by petershine on 3/16/12.
@@ -26,10 +26,10 @@
 
 #import <CoreData/CoreData.h>
 
-#import "FXDsuperFileControl.h"
+#import "FXDsuperFileManager.h"
 
 
-@interface FXDsuperCoreDataControl : UIManagedDocument <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperCoreDataManager : UIManagedDocument <NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -50,7 +50,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCoreDataControl*)sharedInstance;
++ (FXDsuperCoreDataManager*)sharedInstance;
 
 - (void)startObservingFileControlNotifications;
 - (void)prepareCoreDataControlWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL forFinishedHandler:(void(^)(BOOL didFinish))finishedHandler;

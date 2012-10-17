@@ -1,5 +1,5 @@
 //
-//  FXDsuperGlobalControl.h
+//  FXDsuperGlobalManager.h
 //
 //
 //  Created by petershine on 10/4/11.
@@ -16,7 +16,7 @@
 @class FXDStoryboard;
 
 
-@interface FXDsuperGlobalControl : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
+@interface FXDsuperGlobalManager : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
     // Primitives
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
@@ -43,7 +43,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperGlobalControl*)sharedInstance;
++ (FXDsuperGlobalManager*)sharedInstance;
 
 + (BOOL)isSystemVersionLatest;
 

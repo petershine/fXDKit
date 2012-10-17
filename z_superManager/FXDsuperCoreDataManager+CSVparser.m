@@ -1,15 +1,15 @@
 //
-//  FXDsuperCoreDataControl+CSVparser.m
+//  FXDsuperCoreDataManager+CSVparser.m
 //
 //
 //  Created by Peter SHINe on 6/3/12.
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDsuperCoreDataControl+CSVparser.h"
+#import "FXDsuperCoreDataManager+CSVparser.h"
 
 
-@implementation FXDsuperCoreDataControl (CSVparser)
+@implementation FXDsuperCoreDataManager (CSVparser)
 
 - (void)parseFromCSVfileName:(NSString*)csvFileName {	FXDLog_DEFAULT;
 	NSString *csvFilePath = [[NSBundle mainBundle] pathForResource:csvFileName ofType:@"csv"];

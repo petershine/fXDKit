@@ -1,5 +1,5 @@
 //
-//  FXDsuperTwitterControl.h
+//  FXDsuperSocialManager.h
 //
 //
 //  Created by petershine on 5/3/12.
@@ -30,7 +30,7 @@
 #endif
 
 
-@interface FXDsuperTwitterControl : FXDObject <UIAlertViewDelegate> {
+@interface FXDsuperSocialManager : FXDObject <UIAlertViewDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -50,7 +50,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperTwitterControl*)sharedInstance;
++ (FXDsuperSocialManager*)sharedInstance;
 
 - (void)signInBySelectingTwitterAccount;
 - (void)showAlertViewForSelectingTwitterAccount;

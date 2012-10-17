@@ -1,5 +1,5 @@
 //
-//  FXDsuperTableInterface.h
+//  FXDsuperTableController.h
 //
 //
 //  Created by petershine on 1/20/12.
@@ -15,7 +15,7 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 #import "FXDKit.h"
 
 
-@interface FXDsuperTableInterface : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
+@interface FXDsuperTableController : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
 	FXDidentifierOperation _mainOperationIdentifier;
 

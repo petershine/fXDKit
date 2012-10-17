@@ -93,5 +93,5 @@
 
 
 // Global control
-#import "FXDsuperGlobalControl.h"
+#import "FXDsuperGlobalManager.h"
 

@@ -1,16 +1,16 @@
 //
-//  FXDsuperGlobalControl.m
+//  FXDsuperGlobalManager.m
 //
 //
 //  Created by petershine on 10/4/11.
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDsuperGlobalControl.h"
+#import "FXDsuperGlobalManager.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperGlobalControl
+@implementation FXDsuperGlobalManager
 
 
 #pragma mark - Memory management
@@ -24,7 +24,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperGlobalControl*)sharedInstance {
++ (FXDsuperGlobalManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -331,7 +331,7 @@
 	NSString *stringLine = @"_______________________________";
 	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
 	
-	NSString *machineStr = [FXDsuperGlobalControl deviceModelName];
+	NSString *machineStr = [FXDsuperGlobalManager deviceModelName];
 	
 	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", machineStr, [[UIDevice currentDevice] systemVersion]];		
 	

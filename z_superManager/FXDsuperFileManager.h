@@ -1,5 +1,5 @@
 //
-//  FXDsuperFileControl.h
+//  FXDsuperFileManager.h
 //
 //
 //  Created by petershine on 6/25/12.
@@ -42,7 +42,7 @@
 #import "DirectoryWatcher.h"
 
 
-@interface FXDsuperFileControl : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
+@interface FXDsuperFileManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	BOOL _didFinishFirstGathering;
 	
@@ -85,7 +85,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperFileControl*)sharedInstance;
++ (FXDsuperFileManager*)sharedInstance;
 
 - (void)startUpdatingUbiquityContainerURL;
 - (void)evaluateSavedUbiquityContainerURL;
@@ -119,7 +119,7 @@
 
 
 #pragma mark - Category
-@interface FXDsuperFileControl (Enumerating)
+@interface FXDsuperFileManager (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;

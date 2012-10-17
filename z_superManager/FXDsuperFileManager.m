@@ -1,16 +1,16 @@
 //
-//  FXDsuperFileControl.m
+//  FXDsuperFileManager.m
 //
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperFileControl.h"
+#import "FXDsuperFileManager.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperFileControl
+@implementation FXDsuperFileManager
 
 
 #pragma mark - Memory management
@@ -24,7 +24,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperFileControl*)sharedInstance {
++ (FXDsuperFileManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -142,7 +142,7 @@
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
-	if ([FXDsuperGlobalControl isSystemVersionLatest]) {		
+	if ([FXDsuperGlobalManager isSystemVersionLatest]) {		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
 													 name:NSUbiquityIdentityDidChangeNotification

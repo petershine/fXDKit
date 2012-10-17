@@ -1,17 +1,17 @@
 //
-//  FXDsuperMapInterface.h
+//  FXDsuperMapController.h
 //
 //
 //  Created by petershine on 4/24/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperTableInterface.h"
+#import "FXDsuperTableController.h"
 
 #import <MapKit/MapKit.h>
 
 
-@interface FXDsuperMapInterface : FXDsuperTableInterface <MKMapViewDelegate> {
+@interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate> {
     // Primitives
 	
 	// Instance variables

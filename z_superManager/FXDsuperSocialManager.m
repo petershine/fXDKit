@@ -1,16 +1,16 @@
 //
-//  FXDsuperTwitterControl.m
+//  FXDsuperSocialManager.m
 //
 //
 //  Created by petershine on 5/3/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperTwitterControl.h"
+#import "FXDsuperSocialManager.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperTwitterControl
+@implementation FXDsuperSocialManager
 
 
 #pragma mark - Memory management
@@ -22,7 +22,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperTwitterControl*)sharedInstance {
++ (FXDsuperSocialManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -92,7 +92,7 @@
 		[self showAlertViewForSelectingTwitterAccount];
 	}
 	else {
-		if ([FXDsuperGlobalControl isSystemVersionLatest]) {
+		if ([FXDsuperGlobalManager isSystemVersionLatest]) {
 			[self.accountStore
 			 requestAccessToAccountsWithType:self.accountType
 			 options:nil

@@ -1,5 +1,5 @@
 //
-//  FXDsuperCoreDataControl+CSVparser.h
+//  FXDsuperCoreDataManager+CSVparser.h
 //
 //
 //  Created by Peter SHINe on 6/3/12.
@@ -8,12 +8,12 @@
 
 #import "FXDKit.h"
 
-#import "FXDsuperCoreDataControl.h"
+#import "FXDsuperCoreDataManager.h"
 
 #import "CHCSV.h"
 
 
-@interface FXDsuperCoreDataControl (CSVparser) <CHCSVParserDelegate> {
+@interface FXDsuperCoreDataManager (CSVparser) <CHCSVParserDelegate> {
 	// Primitives
 
 	// Instance variables
