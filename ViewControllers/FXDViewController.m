@@ -192,7 +192,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
 	FXDLog(@"sender: %@", sender);
-	FXDLog(@"segue:\n%@", [segue fullDescription]);
+	FXDLog(@"segue: %@", segue);
 
 	[super prepareForSegue:segue sender:sender];
 }
@@ -261,7 +261,7 @@
 @implementation UIViewController (Added)
 #pragma mark - IBActions
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
-	FXDLog(@"unwindSegue:\n%@", [unwindSegue fullDescription]);
+	FXDLog(@"unwindSegue: %@", unwindSegue);
 
 }
 

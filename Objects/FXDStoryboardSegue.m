@@ -38,9 +38,17 @@
 
 
 #pragma mark - Overriding
-- (void)perform {	FXDLog_DEFAULT;
-	FXDLog(@"fullDescription:\n%@", [self fullDescription]);
+- (NSString*)description {
+	NSString *descriptionString = [super description];
 
+	descriptionString = [descriptionString stringByAppendingFormat:@"\n%@", [self fullDescription]];
+
+	return descriptionString;
+}
+
+#pragma mark -
+- (void)perform {	FXDLog_OVERRIDE;
+	//
 }
 
 

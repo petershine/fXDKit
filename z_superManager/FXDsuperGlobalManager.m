@@ -173,27 +173,13 @@
 
 #pragma mark -
 + (NSString*)deviceModelName {
-	/*
-	 @"i386"      on the simulator
-	 @"iPod1,1"   on iPod Touch
-	 @"iPod2,1"   on iPod Touch Second Generation
-	 @"iPod3,1"   on iPod Touch Third Generation
-	 @"iPod4,1"   on iPod Touch Fourth Generation
-	 @"iPhone1,1" on iPhone
-	 @"iPhone1,2" on iPhone 3G
-	 @"iPhone2,1" on iPhone 3GS
-	 @"iPad1,1"   on iPad
-	 @"iPad2,1"   on iPad 2
-	 @"iPhone3,1" on iPhone 4
-	 @"iPhone4,1" on iPhone 4S
-	 */	
-	
+
 	struct utsname systemInfo;
-	
+
 	uname(&systemInfo);
-	
-	NSString *modelName = @(systemInfo.machine);
-	
+
+	NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+
 	if([modelName isEqualToString:@"i386"]) {
 		modelName = @"iPhone Simulator";
 	}
@@ -212,6 +198,10 @@
 	else if([modelName isEqualToString:@"iPhone4,1"]) {
 		modelName = @"iPhone 4S";
 	}
+	else if([modelName isEqualToString:@"iPhone5,1"]) {
+		modelName = @"iPhone 5";
+	}
+
 	else if([modelName isEqualToString:@"iPod1,1"]) {
 		modelName = @"iPod 1st Gen";
 	}
@@ -221,6 +211,13 @@
 	else if([modelName isEqualToString:@"iPod3,1"]) {
 		modelName = @"iPod 3rd Gen";
 	}
+	else if([modelName isEqualToString:@"iPod4,1"]) {
+		modelName = @"iPod 4th Gen";
+	}
+	else if([modelName isEqualToString:@"iPod5,1"]) {
+		modelName = @"iPod 5th Gen";
+	}
+
     else if([modelName isEqualToString:@"iPad1,1"]) {
         modelName = @"iPad";
 	}
@@ -232,6 +229,15 @@
 	}
     else if([modelName isEqualToString:@"iPad2,3"]) {
         modelName = @"iPad 2(CDMA)";
+	}
+	else if([modelName isEqualToString:@"iPad3,1"]) {
+        modelName = @"New iPad (WiFi)";
+	}
+    else if([modelName isEqualToString:@"iPad3,2"]) {
+        modelName = @"New iPad (GSM)";
+	}
+    else if([modelName isEqualToString:@"iPad3,3"]) {
+        modelName = @"New iPad (CDMA)";
 	}
 
 	return modelName;
