@@ -8,172 +8,24 @@
 
 #import "FXDsuperCoverController.h"
 
-#pragma mark - Category
-@implementation FXDViewController (Covering)
 
-- (IBAction)uncoverUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
-
-}
-
-- (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
-	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionLeft;
-
-	return coverDirectionType;
-}
-
+@implementation FXDsegueTransition
 @end
-
 
 @implementation FXDsegueCovering
 - (void)perform {	FXDLog_DEFAULT;
-
 	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.sourceViewController navigationController];
 
-	FXDViewController *destination = (FXDViewController*)self.destinationViewController;
-
-	FXDLog(@"coverController: %@", coverController);
-	FXDLog(@"destination: %@", destination);
-
-	if ([coverController isKindOfClass:[FXDsuperCoverController class]] == NO
-		|| [destination isKindOfClass:[FXDViewController class]] == NO) {
-		FXDLog(@"WRONG CLASSES!");
-
-		return;
-	}
-
-
-	CGRect modifiedFrame = destination.view.frame;
-	CGRect animatedFrame = destination.view.frame;
-
-	void (^animationBlock)(void) = NULL;
-
-	
-	switch ([destination coverDirectionType]) {
-		case coverDirectionTop:
-			modifiedFrame.origin.y = coverController.view.frame.size.height;
-			break;
-
-		case coverDirectionLeft:
-			modifiedFrame.origin.x = coverController.view.frame.size.width;
-			break;
-
-		case coverDirectionBottom:
-			modifiedFrame.origin.y = 0.0 -coverController.view.frame.size.height;
-			break;
-
-		case coverDirectionRight:
-			modifiedFrame.origin.x = 0.0 -coverController.view.frame.size.width;
-			break;
-
-		default:
-			break;
-	}
-
-	[destination.view setFrame:modifiedFrame];
-
-
-	if (animationBlock == NULL) {
-		animationBlock = ^{
-			[destination.view setFrame:animatedFrame];
-		};
-	}
-
-
-	[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
-	[coverController setToolbarItems:destination.toolbarItems animated:YES];
-	
-	[coverController addChildViewController:destination];
-
-	[coverController.view insertSubview:destination.view belowSubview:coverController.navigationBar];
-
-
-	[UIView animateWithDuration:durationAnimation
-						  delay:0
-						options:UIViewAnimationCurveEaseOut
-					 animations:animationBlock
-					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-						 FXDLog(@"finished: %d", finished);
-					 }];
+	[coverController coverWithCoveringSegue:self];
 }
 
 @end
 
 @implementation FXDsegueUncovering
 - (void)perform {	FXDLog_DEFAULT;
+	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.sourceViewController navigationController];
 
-	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.destinationViewController navigationController];
-
-	FXDViewController *destination = (FXDViewController*)self.destinationViewController;
-	FXDViewController *source = (FXDViewController*)self.sourceViewController;
-
-	FXDLog(@"coverController: %@", coverController);
-	FXDLog(@"destination: %@", destination);
-	FXDLog(@"source: %@", source);
-
-	if ([coverController isKindOfClass:[FXDsuperCoverController class]] == NO
-		|| [source isKindOfClass:[FXDViewController class]] == NO) {
-		FXDLog(@"WRONG CLASSES!");
-
-		return;
-	}
-
-
-	CGRect animatedFrame = source.view.frame;
-
-	void (^animationBlock)(void) = NULL;
-	
-
-	switch ([source coverDirectionType]) {
-		case coverDirectionTop:
-			animatedFrame.origin.y = coverController.view.frame.size.height;
-			break;
-
-		case coverDirectionLeft:
-			animatedFrame.origin.x = coverController.view.frame.size.width;
-			break;
-
-		case coverDirectionBottom:
-			animatedFrame.origin.y = 0.0 -coverController.view.frame.size.height;
-			break;
-
-		case coverDirectionRight:
-			animatedFrame.origin.x = 0.0 -coverController.view.frame.size.width;
-			break;
-
-		default:
-			break;
-	}
-
-	if (animationBlock == NULL) {
-		animationBlock = ^{
-			[source.view setFrame:animatedFrame];
-		};
-	}
-
-
-	if ([coverController.navigationBar.topItem isEqual:source.navigationItem]) {
-		[coverController.navigationBar popNavigationItemAnimated:YES];
-	}
-
-	if ([coverController.navigationBar.topItem isEqual:destination.navigationItem] == NO) {
-		[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
-	}
-
-	[coverController setToolbarItems:destination.toolbarItems animated:YES];
-
-
-	[UIView animateWithDuration:durationAnimation
-						  delay:0
-						options:UIViewAnimationCurveEaseOut
-					 animations:animationBlock
-					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-						 FXDLog(@"finished: %d", finished);
-
-						 [source.view removeFromSuperview];
-						 [source removeFromParentViewController];
-
-						 FXDLog(@"coverController.childViewControllers:\n%@", coverController.childViewControllers);
-					 }];
+	[coverController uncoverWithUncoveringSegue:self];
 }
 
 @end
@@ -205,6 +57,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
+	//MARK: Necessary to nullify regular Navigation push and pop
 	[self.navigationBar setDelegate:self];
 
     // Primitives
@@ -273,37 +126,196 @@
 
 
 #pragma mark - Public
+- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue {	FXDLog_DEFAULT;
+
+	BOOL canAnimate = NO;
+
+	FXDViewController *destination = (FXDViewController*)transitionSegue.destinationViewController;
+	FXDViewController *source = (FXDViewController*)transitionSegue.sourceViewController;
+
+	FXDLog(@"destination: %@", destination);
+	FXDLog(@"source: %@", source);
+
+	if ([source isKindOfClass:[FXDViewController class]]
+		&& [destination isKindOfClass:[FXDViewController class]]) {
+		canAnimate = YES;
+	}
+	else {
+		FXDLog(@"WRONG CLASSES!");
+	}
+
+	return canAnimate;
+}
+
+#pragma mark -
+- (void)coverWithCoveringSegue:(FXDsegueCovering*)coveringSegue {	FXDLog_DEFAULT;
+	if ([self canAnimateWithTransitionSegue:coveringSegue] == NO) {
+		return;
+	}
+
+	
+	FXDViewController *destination = (FXDViewController*)coveringSegue.destinationViewController;
+
+	//MARK: Back button may not work with coverController
+	destination.navigationItem.hidesBackButton = YES;
+
+	[self addChildViewController:destination];
+	
+	
+	CGRect modifiedFrame = destination.view.frame;
+	CGRect animatedFrame = destination.view.frame;
+
+	switch ([destination coverDirectionType]) {
+		case coverDirectionTop:
+			modifiedFrame.origin.y = self.view.frame.size.height;
+			break;
+
+		case coverDirectionLeft:
+			modifiedFrame.origin.x = self.view.frame.size.width;
+			break;
+
+		case coverDirectionBottom:
+			modifiedFrame.origin.y = 0.0 -self.view.frame.size.height;
+			break;
+
+		case coverDirectionRight:
+			modifiedFrame.origin.x = 0.0 -self.view.frame.size.width;
+			break;
+
+		default:
+			break;
+	}
+
+	[destination.view setFrame:modifiedFrame];
+
+
+	//MARK: Making toolbar push and pop much easier
+	if (destination.toolbarItems == nil) {
+		[destination setToolbarItems:[coveringSegue.sourceViewController toolbarItems]];
+	}
+
+	if (destination.navigationItem && [destination shouldSkipPushingNavigationItems] == NO) {
+		[self.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
+	}
+
+
+	[self.view insertSubview:destination.view belowSubview:self.navigationBar];
+
+	[UIView animateWithDuration:durationAnimation
+						  delay:0
+						options:UIViewAnimationCurveEaseOut
+					 animations:^{
+						 [destination.view setFrame:animatedFrame];
+					 }
+					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+						 FXDLog(@"finished: %d", finished);
+
+						 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+					 }];
+}
+
+- (void)uncoverWithUncoveringSegue:(FXDsegueUncovering*)uncoveringSegue {	FXDLog_DEFAULT;
+	if ([self canAnimateWithTransitionSegue:uncoveringSegue] == NO) {
+		return;
+	}
+
+
+	FXDViewController *source = (FXDViewController*)uncoveringSegue.sourceViewController;
+	FXDViewController *destination = (FXDViewController*)uncoveringSegue.destinationViewController;
+	
+	
+	CGRect animatedFrame = source.view.frame;
+
+	switch ([source coverDirectionType]) {
+		case coverDirectionTop:
+			animatedFrame.origin.y = self.view.frame.size.height;
+			break;
+
+		case coverDirectionLeft:
+			animatedFrame.origin.x = self.view.frame.size.width;
+			break;
+
+		case coverDirectionBottom:
+			animatedFrame.origin.y = 0.0 -self.view.frame.size.height;
+			break;
+
+		case coverDirectionRight:
+			animatedFrame.origin.x = 0.0 -self.view.frame.size.width;
+			break;
+
+		default:
+			break;
+	}
+
+
+	if ([self.navigationBar.topItem isEqual:source.navigationItem]) {
+		[self.navigationBar popNavigationItemAnimated:YES];
+	}
+
+
+	[UIView animateWithDuration:durationAnimation
+						  delay:0
+						options:UIViewAnimationCurveEaseOut
+					 animations:^{
+						 [source.view setFrame:animatedFrame];
+					 }
+					 completion:^(BOOL finished) {
+						 [source.view removeFromSuperview];
+						 [source removeFromParentViewController];
+
+						 FXDLog_DEFAULT;
+						 FXDLog(@"finished: %d", finished);
+
+						 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+					 }];
+}
 
 
 //MARK: - Observer implementation
 
-//MARK: - Delegate implementation
+//MARK: - Delegate implementation	//MARK: Necessary to nullify regular Navigation push and pop
 #pragma mark - UINavigationBarDelegate
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
-
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	//FXDLog_DEFAULT;
 	BOOL shouldPush = YES;
 
 	return shouldPush;
 }
 
 - (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 
 }
 
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
-
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {	//FXDLog_DEFAULT;
 	BOOL shouldPush = YES;
 
 	return shouldPush;
 }
 
 - (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
-	
+
 }
 
+@end
+
+
+#pragma mark - Category
+@implementation FXDViewController (Covering)
+
+- (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
+
+}
+
+#pragma mark -
+- (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
+	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionLeft;
+
+	return coverDirectionType;
+}
+
+- (BOOL)shouldSkipPushingNavigationItems {	FXDLog_OVERRIDE;
+	BOOL shouldSkip = NO;
+
+	return shouldSkip;
+}
 
 @end

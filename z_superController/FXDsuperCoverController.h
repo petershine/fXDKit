@@ -8,19 +8,14 @@
 
 #import "FXDKit.h"
 
-#pragma mark - Category
-@interface FXDViewController (Covering)
-- (IBAction)uncoverUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
 
-- (COVER_DIRECTION_TYPE)coverDirectionType;
-
+@interface FXDsegueTransition : FXDStoryboardSegue
 @end
 
-
-@interface FXDsegueCovering : FXDStoryboardSegue
+@interface FXDsegueCovering : FXDsegueTransition
 @end
 
-@interface FXDsegueUncovering : FXDStoryboardSegue
+@interface FXDsegueUncovering : FXDsegueTransition
 @end
 
 
@@ -43,6 +38,10 @@
 
 
 #pragma mark - Public
+- (void)coverWithCoveringSegue:(FXDsegueCovering*)coveringSegue;
+- (void)uncoverWithUncoveringSegue:(FXDsegueUncovering*)uncoveringSegue;
+
+- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue;
 
 
 //MARK: - Observer implementation
@@ -50,5 +49,15 @@
 //MARK: - Delegate implementation
 #pragma mark - UINavigationBarDelegate
 
+
+@end
+
+
+#pragma mark - Category
+@interface FXDViewController (Covering)
+- (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
+
+- (COVER_DIRECTION_TYPE)coverDirectionType;
+- (BOOL)shouldSkipPushingNavigationItems;
 
 @end
