@@ -24,7 +24,7 @@
 
 #import "FXDNavigationController.h"
 
-@interface FXDsuperCoverController : FXDNavigationController <UINavigationControllerDelegate> {
+@interface FXDsuperCoverController : FXDNavigationController {
     // Primitives
 
 	// Instance variables
@@ -32,7 +32,6 @@
 }
 
 // Properties
-@property (strong, nonatomic) NSMutableArray *previousToolbarItemsArray;
 
 // IBOutlets
 
@@ -49,7 +48,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UINavigationControllerDelegate
 
 
 @end

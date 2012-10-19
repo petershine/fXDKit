@@ -47,8 +47,8 @@
 	[coverController addChildViewController:destination];
 
 
-	CGRect animatedFrame = destination.view.frame;
 	CGRect modifiedFrame = destination.view.frame;
+	CGRect animatedFrame = destination.view.frame;
 
 	void (^animationBlock)(void) = NULL;
 
@@ -74,6 +74,9 @@
 			break;
 	}
 
+	[destination.view setFrame:modifiedFrame];
+
+
 	if (animationBlock == NULL) {
 		animationBlock = ^{
 			[destination.view setFrame:animatedFrame];
@@ -81,28 +84,11 @@
 	}
 
 
-	[destination.view setFrame:modifiedFrame];
-
 	[coverController.view insertSubview:destination.view belowSubview:coverController.navigationBar];
 
 
-	if (destination.navigationItem) {
-		[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
-	}
-
-	if (destination.toolbarItems) {
-		if (coverController.toolbarItems) {
-			if (coverController.previousToolbarItemsArray == nil) {
-				coverController.previousToolbarItemsArray = [[NSMutableArray alloc] initWithCapacity:0];
-			}
-
-			[coverController.previousToolbarItemsArray addObject:coverController.toolbarItems];
-
-			FXDLog(@"previousToolBarItems:\n%@", coverController.previousToolbarItemsArray);
-		}
-
-		[coverController setToolbarItems:destination.toolbarItems animated:YES];
-	}
+	[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
+	[coverController setToolbarItems:destination.toolbarItems animated:YES];
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
@@ -120,9 +106,11 @@
 
 	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.destinationViewController navigationController];
 
+	FXDViewController *destination = (FXDViewController*)self.destinationViewController;
 	FXDViewController *source = (FXDViewController*)self.sourceViewController;
 
 	FXDLog(@"coverController: %@", coverController);
+	FXDLog(@"destination: %@", destination);
 	FXDLog(@"source: %@", source);
 
 	if ([coverController isKindOfClass:[FXDsuperCoverController class]] == NO
@@ -166,22 +154,13 @@
 	}
 
 
-	if (source.navigationItem) {
+	if ([coverController.navigationBar.topItem isEqual:source.navigationItem]) {
 		[coverController.navigationBar popNavigationItemAnimated:YES];
 	}
 
-	if (source.toolbarItems) {
-		NSArray *previousToolbarItems = nil;
+	[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
+	[coverController setToolbarItems:destination.toolbarItems animated:YES];
 
-		if ([coverController.previousToolbarItemsArray count] > 0) {
-			previousToolbarItems = [coverController.previousToolbarItemsArray lastObject];
-			[coverController.previousToolbarItemsArray removeLastObject];
-		}
-
-		FXDLog(@"previousToolBarItems:\n%@", coverController.previousToolbarItemsArray);
-
-		[coverController setToolbarItems:previousToolbarItems animated:YES];
-	}
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
@@ -249,7 +228,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	[self setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -298,16 +276,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UINavigationControllerDelegate
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {	FXDLog_DEFAULT;
-	FXDLog(@"viewController: %@", viewController);
-
-}
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {	FXDLog_DEFAULT;
-
-	FXDLog(@"viewController: %@", viewController);
-}
 
 
 @end
