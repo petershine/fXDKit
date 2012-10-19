@@ -8,10 +8,10 @@
 
 #import "FXDKit.h"
 
-#import "FXDsuperCoreDataManager.h"
-
 #import "CHCSV.h"
 
+
+#import "FXDsuperCoreDataManager.h"
 
 @interface FXDsuperCoreDataManager (CSVparser) <CHCSVParserDelegate> {
 	// Primitives

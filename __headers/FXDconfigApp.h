@@ -17,13 +17,13 @@
 
 
 #if USE_Flurry
-	#import "FlurryAnalytics.h"
+	#import "Flurry.h"
 
 	#ifndef flurryApplicationKey
-		#define flurryApplicationKey	@"MG21RAFW4CXACSJL2JF9"
+		#define flurryApplicationKey	@"8IEDWHXIGT3ZZDS5ANN3"
 	#endif
 
-	#define	LOGEVENT(v)			[FlurryAnalytics logEvent:v]
+	#define	LOGEVENT(v)			[Flurry logEvent:v]
 	#define LOGEVENT_DEFAULT	LOGEVENT(strClassSelector)
 
 #else

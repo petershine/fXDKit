@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperTableController.h"
-
 #import <MapKit/MapKit.h>
 
+
+#import "FXDsuperTableController.h"
 
 @interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate> {
     // Primitives

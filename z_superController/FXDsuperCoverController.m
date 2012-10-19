@@ -18,8 +18,6 @@
 - (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
 	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionLeft;
 
-	FXDLog(@"coverDirectionType: %d", coverDirectionType);
-
 	return coverDirectionType;
 }
 
@@ -42,9 +40,6 @@
 
 		return;
 	}
-
-
-	[coverController addChildViewController:destination];
 
 
 	CGRect modifiedFrame = destination.view.frame;
@@ -84,11 +79,13 @@
 	}
 
 
-	[coverController.view insertSubview:destination.view belowSubview:coverController.navigationBar];
-
-
 	[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
 	[coverController setToolbarItems:destination.toolbarItems animated:YES];
+	
+	[coverController addChildViewController:destination];
+
+	[coverController.view insertSubview:destination.view belowSubview:coverController.navigationBar];
+
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
@@ -158,7 +155,10 @@
 		[coverController.navigationBar popNavigationItemAnimated:YES];
 	}
 
-	[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
+	if ([coverController.navigationBar.topItem isEqual:destination.navigationItem] == NO) {
+		[coverController.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
+	}
+
 	[coverController setToolbarItems:destination.toolbarItems animated:YES];
 
 
@@ -204,6 +204,8 @@
 #pragma mark - Initialization
 - (void)awakeFromNib {
 	[super awakeFromNib];
+
+	[self.navigationBar setDelegate:self];
 
     // Primitives
 
@@ -276,6 +278,32 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
+#pragma mark - UINavigationBarDelegate
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
+	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+
+	BOOL shouldPush = YES;
+
+	return shouldPush;
+}
+
+- (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
+	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+
+}
+
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
+	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+
+	BOOL shouldPush = YES;
+
+	return shouldPush;
+}
+
+- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
+	FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+	
+}
 
 
 @end

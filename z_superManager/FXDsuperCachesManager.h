@@ -8,6 +8,7 @@
 
 #import "FXDKit.h"
 
+
 #define notificationCachesControlDidEnumerateCachesMetadataQueryResults	@"notificationCachesControlDidEnumerateCachesMetadataQueryResults"
 
 #define prefixCached	@"_cached_"

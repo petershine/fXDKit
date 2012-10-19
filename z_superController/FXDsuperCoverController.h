@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#import "FXDKit.h"
+
 #pragma mark - Category
 @interface FXDViewController (Covering)
 - (IBAction)uncoverUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
@@ -22,9 +24,7 @@
 @end
 
 
-#import "FXDNavigationController.h"
-
-@interface FXDsuperCoverController : FXDNavigationController {
+@interface FXDsuperCoverController : FXDNavigationController <UINavigationBarDelegate> {
     // Primitives
 
 	// Instance variables
@@ -48,6 +48,7 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
+#pragma mark - UINavigationBarDelegate
 
 
 @end
