@@ -41,7 +41,7 @@
 - (NSString*)description {
 	NSString *descriptionString = [super description];
 
-	descriptionString = [descriptionString stringByAppendingFormat:@"\n%@", [self fullDescription]];
+	descriptionString = [descriptionString stringByAppendingFormat:@" source: %@ destination: %@", self.sourceViewController, self.destinationViewController];
 
 	return descriptionString;
 }

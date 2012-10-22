@@ -221,7 +221,6 @@
 
 
 	FXDViewController *source = (FXDViewController*)uncoveringSegue.sourceViewController;
-	FXDViewController *destination = (FXDViewController*)uncoveringSegue.destinationViewController;
 	
 	
 	CGRect animatedFrame = source.view.frame;

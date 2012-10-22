@@ -118,8 +118,9 @@
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	
-	if (_cellOperationQueue == nil) {
+	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
+		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
 	}
 	
 	return _cellOperationQueue;
