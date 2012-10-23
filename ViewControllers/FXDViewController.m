@@ -90,9 +90,6 @@
 }
 
 
-#pragma mark - at loadView
-
-
 #pragma mark - at autoRotate
 - (BOOL)shouldAutorotate {	//FXDLog_SEPARATE_FRAME;
 	return [super shouldAutorotate];

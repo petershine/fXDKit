@@ -13,14 +13,13 @@
 		#define USE_loggingBorderLine	0
 		#define USE_loggingResultObjFiltering	0
 
-
 		#define USE_FXDLog	1
-
 		#define USE_TestFlight	0
 	#else
-		#define USE_FXDLog	0
 
+		#define USE_FXDLog	0
 		#define USE_TestFlight	0
+
 	#endif
 
 	#define USE_Flurry	1

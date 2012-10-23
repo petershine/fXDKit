@@ -164,9 +164,6 @@
 }
 
 
-#pragma mark - at loadView
-
-
 #pragma mark - at autoRotate
 
 

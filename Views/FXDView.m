@@ -219,7 +219,7 @@
 }
 
 #pragma mark -
-- (UIImage*)imageWithView:(UIView*)view {
+- (UIImage*)renderedImageFromView:(UIView*)view {
 	if (view == nil) {
 		view = self;
 	}

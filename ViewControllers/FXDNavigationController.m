@@ -62,9 +62,6 @@
 #pragma mark - Accessor overriding
 
 
-#pragma mark - at loadView
-
-
 #pragma mark - at autoRotate
 - (BOOL)shouldAutorotate {	//FXDLog_OVERRIDE;
 	return [super shouldAutorotate];

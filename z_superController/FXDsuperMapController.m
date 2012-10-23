@@ -48,9 +48,6 @@
 #pragma mark - Accessor overriding
 
 
-#pragma mark - at loadView
-
-
 #pragma mark - at autoRotate
 
 
