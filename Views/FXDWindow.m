@@ -89,7 +89,7 @@
 	if (self.progressView) {
 		[self removeAsFadeOutSubview:self.progressView
 						afterRemoved:^{	FXDLog_DEFAULT;
-							self.progressView = nil;
+							_progressView = nil;
 						}];
 	}
 }
@@ -171,6 +171,10 @@
 
 	if (applicationWindow.progressView == nil) {
 		applicationWindow.progressView = [FXDviewProgress viewFromNibName:nibName];
+
+		CGRect modifiedFrame = applicationWindow.progressView.frame;
+		modifiedFrame.size = applicationWindow.frame.size;
+		[applicationWindow.progressView setFrame:modifiedFrame];
 
 		[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
 

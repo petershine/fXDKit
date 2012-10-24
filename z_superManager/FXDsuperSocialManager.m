@@ -315,7 +315,7 @@
 	[[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];	
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
-	self.twitterAccountArray = nil;
+	_twitterAccountArray = nil;
 }
 
 

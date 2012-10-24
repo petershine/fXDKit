@@ -269,6 +269,8 @@
 		managedObjectContext = self.managedObjectContext;
 	}
 
+	FXDLog(@"hasChanges: %d", managedObjectContext.hasChanges);
+
     if (managedObjectContext && managedObjectContext.hasChanges) {
 		[managedObjectContext performBlock:^{
 			FXDLog_DEFAULT;
@@ -289,6 +291,11 @@
 			}
 		}];
     }
+	else {
+		if (finishedBlock) {
+			finishedBlock();
+		}
+	}
 }
 
 

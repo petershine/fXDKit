@@ -37,6 +37,9 @@
 	NSArray *_mainSortDescriptors;
 	
 	FXDFetchedResultsController *_mainResultsController;
+
+	NSMutableArray *_fieldValues;
+	NSMutableArray *_fieldKeys;
 }
 
 // Properties

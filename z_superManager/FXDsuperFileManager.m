@@ -398,7 +398,7 @@
 	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 	
 	if (self.collectedURLarray == nil) {
-		self.collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+		_collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
 		[self.collectedURLarray addObject:itemURL];
 		
@@ -412,7 +412,7 @@
 
 - (void)startEvictingCollectedURLarray {
 	if ([self.collectedURLarray count] == 0) {
-		self.collectedURLarray = nil;
+		_collectedURLarray = nil;
 		
 		return;
 	}
@@ -430,7 +430,7 @@
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if ([self.collectedURLarray count] == 0) {
-				self.collectedURLarray = nil;
+				_collectedURLarray = nil;
 			}
 		}];
 	}];
@@ -514,6 +514,7 @@
 }
 
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {
+	
 	NSMetadataQuery *metadataQuery = notification.object;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{

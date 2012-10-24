@@ -17,8 +17,6 @@
 	// Primitives
 
 	// Instance variables
-
-    // Properties : For accessor overriding
 }
 
 // Properties

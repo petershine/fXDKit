@@ -9,14 +9,8 @@
 #import "FXDimageviewTemp.h"
 
 
-#pragma mark - Private interface
-@interface FXDimageviewTemp (Private)
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDimageviewTemp
-
 
 
 #pragma mark - Memory management

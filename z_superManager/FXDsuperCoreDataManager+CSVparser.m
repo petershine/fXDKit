@@ -64,7 +64,7 @@
 	//FXDLog(@"field: %@", field);
 	
 	if (self.fieldValues == nil) {
-		self.fieldValues = [[NSMutableArray alloc] initWithCapacity:0];
+		_fieldValues = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	
 	[self.fieldValues addObject:field];
@@ -74,8 +74,8 @@
 	//FXDLog(@"lineNumber: %u\n%@", lineNumber, self.fieldValues);
 	
 	if (lineNumber == 1) {	// Assume this is key line
-		self.fieldKeys = nil;
-		self.fieldKeys = [[NSMutableArray alloc] initWithArray:self.fieldValues];
+		_fieldKeys = nil;
+		_fieldKeys = [[NSMutableArray alloc] initWithArray:self.fieldValues];
 	}
 	else {
 		if (self.fieldKeys) {
@@ -83,12 +83,12 @@
 		}
 	}
 	
-	self.fieldValues = nil;
+	_fieldValues = nil;
 }
 
 - (void) parser:(CHCSVParser *)parser didEndDocument:(NSString *)csvFile {	FXDLog_DEFAULT;
 	
-	self.fieldKeys = nil;
+	_fieldKeys = nil;
 	
 	[self saveManagedObjectContext:nil forFinishedBlock:nil];
 }
@@ -99,8 +99,8 @@
 	}
 	
 	
-	self.fieldKeys = nil;
-	self.fieldValues = nil;
+	_fieldKeys = nil;
+	_fieldValues = nil;
 	
 	[self saveManagedObjectContext:nil forFinishedBlock:nil];
 }

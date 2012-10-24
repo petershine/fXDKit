@@ -22,7 +22,7 @@
 	// Instance variables
 
 	// Properties
-	self.cachedImageDictionary = nil;
+	_cachedImageDictionary = nil;
 }
 
 - (void)dealloc {

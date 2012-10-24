@@ -139,7 +139,6 @@
 - (void)enumerateLocalDirectory {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 
 		

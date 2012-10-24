@@ -190,7 +190,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
 	if (self.receivedData == nil) {
-		self.receivedData = [[NSMutableData alloc] initWithLength:0];
+		_receivedData = [[NSMutableData alloc] initWithLength:0];
 	}
 	
 	if (self.receivedData) {

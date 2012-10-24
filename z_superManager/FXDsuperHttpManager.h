@@ -11,19 +11,16 @@
 
 @interface FXDsuperHttpManager : FXDObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
     // Primitives
-	
-	// Instance variables
-	
-	// Properties
 	NSInteger _httpContentLength;
 	NSInteger _receivedDataLength;
 	
+	// Instance variables
 	NSURL *_httpURL;
 	NSMutableURLRequest *_httpRequest;
 	NSURLConnection *_httpConnection;
-	
+
 	NSMutableData *_receivedData;
-	
+
 	FXDsuperHttpManager *_nextHttpControl;
 }
 
