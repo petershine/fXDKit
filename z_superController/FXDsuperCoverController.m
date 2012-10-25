@@ -70,9 +70,6 @@
 }
 
 
-#pragma mark - at loadView
-
-
 #pragma mark - Autorotating
 
 
