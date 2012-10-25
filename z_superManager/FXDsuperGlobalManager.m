@@ -29,50 +29,50 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 - (BOOL)didMakePurchase {	//FXDLog_DEFAULT;
 	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidMakePurchase];
-	
+
 	return _didMakePurchase;
 }
 
 - (void)setDidMakePurchase:(BOOL)didMake {	FXDLog_DEFAULT;
 	_didMakePurchase = didMake;
-	
+
 	[[NSUserDefaults standardUserDefaults] setBool:_didMakePurchase forKey:userdefaultBoolDidMakePurchase];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)didShareToSocialNet {	//FXDLog_DEFAULT;
 	_didShareToSocialNet = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidShareToSocialNet];
-	
+
 	return _didShareToSocialNet;
 }
 
 - (void)setDidShareToSocialNet:(BOOL)didShare {	FXDLog_DEFAULT;
 	_didShareToSocialNet = didShare;
-	
+
 	[[NSUserDefaults standardUserDefaults] setBool:_didShareToSocialNet forKey:userdefaultBoolDidShareToSocialNet];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark -
 - (NSString*)deviceLanguageCode {
-	
+
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-		
+
 		_deviceLanguageCode = languages[0];
-		
+
 		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
 			_deviceLanguageCode = @"ch";
 		}
 		else if ([_deviceLanguageCode isEqualToString:@"zh-Hant"]) {
 			_deviceLanguageCode = @"tw";
 		}
-		
+
 		FXDLog(@"_deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
-		
+
 		//MARK: limit supported languages
 		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
 			&& [_deviceLanguageCode isEqualToString:@"ko"] == NO
@@ -82,7 +82,7 @@
 			_deviceLanguageCode = @"en";
 		}
 	}
-	
+
 	return _deviceLanguageCode;
 }
 
@@ -101,7 +101,7 @@
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
 	}
-	
+
 	return _mainStoryboard;
 }
 
@@ -111,24 +111,24 @@
 			_rootScene = [self.mainStoryboard instantiateInitialViewController];
 		}
 	}
-	
+
 	return _rootScene;
 }
 
 - (id)homeScene {
 	if (_homeScene == nil) {
-		
+
 		if ([self.rootScene respondsToSelector:@selector(viewControllers)]) {
-			
+
 			NSArray *viewControllers = [self.rootScene performSelector:@selector(viewControllers)];
-			
+
 			if ([viewControllers count] > 0) {
 				if ([self.rootScene isKindOfClass:[UITabBarController class]]) {
 					id tabbedViewController = viewControllers[0];
-					
+
 					if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
 						UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
-						
+
 						if ([tabbedNavigationController.viewControllers count] > 0) {
 							_homeScene = (tabbedNavigationController.viewControllers)[0];
 						}
@@ -140,18 +140,18 @@
 				else {
 					_homeScene = viewControllers[0];
 				}
-			}			
+			}
 		}
 		else {
 			_homeScene = self.rootScene;
 		}
 	}
-	
+
 	return _homeScene;
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - Public

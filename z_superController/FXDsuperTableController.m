@@ -58,116 +58,10 @@
 }
 
 
-#pragma mark - Accessor overriding
-- (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _mainCellIdentifier;
-}
-
-- (UINib*)mainCellNib {
-	if (_mainCellNib == nil) {
-		if (self.mainCellIdentifier) {
-			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
-		}
-	}
-	
-	return _mainCellNib;
-}
-
-#pragma mark -
-- (NSArray*)rowCounts {
-	
-	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _rowCounts;
-}
-
-- (NSDictionary*)cellTexts {
-	
-	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _cellTexts;
-}
-
-- (NSMutableArray*)mainDataSource {
-	
-	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _mainDataSource;
-}
-
-#pragma mark -
-- (FXDFetchedResultsController*)mainResultsController {
-	
-	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _mainResultsController;
-}
-
-#pragma mark -
-- (NSOperationQueue*)cellOperationQueue {
-	
-	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
-		_cellOperationQueue = [[NSOperationQueue alloc] init];
-		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
-	}
-	
-	return _cellOperationQueue;
-}
-
-- (NSMutableDictionary*)queuedOperationDictionary {
-	
-	if (_queuedOperationDictionary == nil) {
-		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-	
-	return _queuedOperationDictionary;
-}
-
-#pragma mark -
-- (NSOperationQueue*)secondaryOperationQueue {
-	if (_secondaryOperationQueue == nil) {
-		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
-	}
-
-	return _secondaryOperationQueue;
-}
-
-- (NSMutableDictionary*)secondaryQueuedOperationDictionary {
-
-	if (_secondaryQueuedOperationDictionary == nil) {
-		_secondaryQueuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-
-	return _secondaryQueuedOperationDictionary;
-}
-
-#pragma mark -
-- (NSMutableDictionary*)cachedImageDictionary {
-	
-	if (_cachedImageDictionary == nil) {
-		_cachedImageDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-	
-	return _cachedImageDictionary;
-}
+#pragma mark - Autorotating
 
 
-#pragma mark - at autoRotate
-
-
-#pragma mark - at viewDidLoad
+#pragma mark - View Loading & Appearing
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
@@ -207,7 +101,113 @@
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Property overriding
+- (NSString*)mainCellIdentifier {
+	if (_mainCellIdentifier == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+
+	return _mainCellIdentifier;
+}
+
+- (UINib*)mainCellNib {
+	if (_mainCellNib == nil) {
+		if (self.mainCellIdentifier) {
+			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
+		}
+	}
+
+	return _mainCellNib;
+}
+
+#pragma mark -
+- (NSArray*)rowCounts {
+
+	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+
+	return _rowCounts;
+}
+
+- (NSDictionary*)cellTexts {
+
+	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+
+	return _cellTexts;
+}
+
+- (NSMutableArray*)mainDataSource {
+
+	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+
+	return _mainDataSource;
+}
+
+#pragma mark -
+- (FXDFetchedResultsController*)mainResultsController {
+
+	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+
+	return _mainResultsController;
+}
+
+#pragma mark -
+- (NSOperationQueue*)cellOperationQueue {
+
+	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
+		_cellOperationQueue = [[NSOperationQueue alloc] init];
+		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
+	}
+
+	return _cellOperationQueue;
+}
+
+- (NSMutableDictionary*)queuedOperationDictionary {
+
+	if (_queuedOperationDictionary == nil) {
+		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+
+	return _queuedOperationDictionary;
+}
+
+#pragma mark -
+- (NSOperationQueue*)secondaryOperationQueue {
+	if (_secondaryOperationQueue == nil) {
+		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
+	}
+
+	return _secondaryOperationQueue;
+}
+
+- (NSMutableDictionary*)secondaryQueuedOperationDictionary {
+
+	if (_secondaryQueuedOperationDictionary == nil) {
+		_secondaryQueuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+
+	return _secondaryQueuedOperationDictionary;
+}
+
+#pragma mark -
+- (NSMutableDictionary*)cachedImageDictionary {
+
+	if (_cachedImageDictionary == nil) {
+		_cachedImageDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+
+	return _cachedImageDictionary;
+}
+
+
+#pragma mark - Method overriding
 
 
 #pragma mark - IBActions

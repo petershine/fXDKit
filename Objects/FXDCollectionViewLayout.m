@@ -19,10 +19,10 @@
 #pragma mark - Initialization
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 + (Class)layoutAttributesClass {	FXDLog_DEFAULT;
 	// override this method to provide a custom class to be used when instantiating instances of UICollectionViewLayoutAttributes
 	Class attributesClass = [super layoutAttributesClass];

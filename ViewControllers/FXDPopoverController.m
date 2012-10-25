@@ -35,11 +35,10 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 
 
-
-#pragma mark - Overriding
+#pragma mark - Method overriding
 - (void)presentPopoverFromRect:(CGRect)rect inView:(UIView *)view permittedArrowDirections:(UIPopoverArrowDirection)arrowDirections animated:(BOOL)animated {	FXDLog_DEFAULT;
 
 	[super presentPopoverFromRect:rect inView:view permittedArrowDirections:arrowDirections animated:animated];

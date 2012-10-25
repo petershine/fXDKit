@@ -47,10 +47,10 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - IBActions

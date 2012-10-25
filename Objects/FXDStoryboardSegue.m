@@ -33,11 +33,11 @@
 	return self;
 }
 
-#pragma mark - Accessor overriding
+
+#pragma mark - Property overriding
 
 
-
-#pragma mark - Overriding
+#pragma mark - Method overriding
 - (NSString*)description {
 	NSString *descriptionString = [super description];
 

@@ -65,6 +65,10 @@
 
 - (void)awakeFromNib {	FXDLog_SEPARATE;
 	[super awakeFromNib];
+
+	if (self.view == nil) {
+		self.view = [[self.view class] viewFromNibName:NSStringFromClass([self class]) withOwner:self];
+	}
 	
 	// Primitives
 	
@@ -73,24 +77,10 @@
 	// Properties
 	
 	// IBOutlets
-	if (self.view == nil) {
-		self.view = [[self.view class] viewFromNibName:NSStringFromClass([self class]) withOwner:self];
-	}
 }
 
 
-#pragma mark - Accessor overriding
-- (NSDictionary*)presentedSegueDictionary {
-	
-	if (_presentedSegueDictionary == nil) {	FXDLog_OVERRIDE;
-		//
-	}
-	
-	return _presentedSegueDictionary;
-}
-
-
-#pragma mark - at autoRotate
+#pragma mark - Autorotating
 - (BOOL)shouldAutorotate {	//FXDLog_SEPARATE_FRAME;
 	return [super shouldAutorotate];
 }
@@ -104,7 +94,7 @@
 	
 }
 
-// For older iOS 5
+//MARK: For older iOS 5
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -125,7 +115,7 @@
 #endif
 
 
-#pragma mark - at viewDidLoad
+#pragma mark - View Loading & Appearing
 - (void)viewDidLoad {
     [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
 	
@@ -166,7 +156,10 @@
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Property overriding
+
+
+#pragma mark - Method overriding
 
 
 #pragma mark - Segues

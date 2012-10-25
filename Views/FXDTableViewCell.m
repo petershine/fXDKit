@@ -58,10 +58,10 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark -
@@ -98,7 +98,7 @@
 	if (image) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		
-		if (self.backgroundImageview == nil) {
+		if (_backgroundImageview == nil) {
 			_backgroundImageview = [[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage];
 			
 			self.backgroundImageview.userInteractionEnabled = NO;

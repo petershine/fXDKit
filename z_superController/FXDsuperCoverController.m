@@ -70,16 +70,13 @@
 }
 
 
-#pragma mark - Accessor overriding
-
-
 #pragma mark - at loadView
 
 
-#pragma mark - at autoRotate
+#pragma mark - Autorotating
 
 
-#pragma mark - at viewDidLoad
+#pragma mark - View Loading & Appearing
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -106,7 +103,10 @@
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Property overriding
+
+
+#pragma mark - Method overriding
 
 
 #pragma mark - Segues

@@ -34,10 +34,10 @@ static NSMutableSet *_staticHttpControlSet = nil;
 #pragma mark - Initialization
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - Public
@@ -189,7 +189,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
-	if (self.receivedData == nil) {
+	if (_receivedData == nil) {
 		_receivedData = [[NSMutableData alloc] initWithLength:0];
 	}
 	

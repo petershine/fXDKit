@@ -27,12 +27,12 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 - (ACAccountStore*)accountStore {
 	if (_accountStore == nil) {
 		_accountStore = [[ACAccountStore alloc] init];
 	}
-	
+
 	return _accountStore;
 }
 
@@ -40,7 +40,7 @@
 	if (_accountType == nil) {
 		_accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	}
-	
+
 	return _accountType;
 }
 
@@ -49,38 +49,38 @@
 	if (_twitterAccountArray == nil) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
 	}
-	
+
 	return _twitterAccountArray;
 }
 
 - (ACAccount*)mainTwitterAccount {	FXDLog_DEFAULT;
-	
+
 	if (_mainTwitterAccount == nil) {
 		NSString *identifier = [[NSUserDefaults standardUserDefaults] stringForKey:userdefaultObjKeyMainAccountIdentifier];
-		
+
 		FXDLog(@"accountIdentifier: %@", identifier);
-		
+
 		if (identifier) {
-			
-			if (self.accountType.accessGranted) {	
+
+			if (self.accountType.accessGranted) {
 				_mainTwitterAccount = [self.accountStore accountWithIdentifier:identifier];
 			}
 			else {
 				identifier = nil;
 			}
 		}
-		
-		[[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];	
+
+		[[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
-	
+
 	FXDLog(@"_mainTwitterAccount: %@", _mainTwitterAccount);
-	
+
 	return _mainTwitterAccount;
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - Public

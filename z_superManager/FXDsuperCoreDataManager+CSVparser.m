@@ -63,7 +63,7 @@
 - (void) parser:(CHCSVParser *)parser didReadField:(NSString *)field {	//FXDLog_DEFAULT;
 	//FXDLog(@"field: %@", field);
 	
-	if (self.fieldValues == nil) {
+	if (_fieldValues == nil) {
 		_fieldValues = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	

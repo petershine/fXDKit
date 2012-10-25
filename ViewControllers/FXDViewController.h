@@ -13,11 +13,9 @@
     // Primitives
 	
 	// Instance variables
-	NSDictionary *_presentedSegueDictionary;
 }
 
 // Properties
-@property (strong, nonatomic) NSDictionary *presentedSegueDictionary;
 
 // IBOutlets
 

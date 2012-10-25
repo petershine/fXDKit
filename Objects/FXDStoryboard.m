@@ -19,10 +19,10 @@
 #pragma mark - Initialization
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 - (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
 	FXDLog(@"identifier: %@", identifier);
 	

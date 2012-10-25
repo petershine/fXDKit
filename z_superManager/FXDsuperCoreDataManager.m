@@ -59,20 +59,20 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 - (NSString*)mainEntityName {
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
-		
+
 	}
-	
+
 	return _mainEntityName;
 }
 
 - (NSArray*)mainSortDescriptors {
 	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
-		
+
 	}
-	
+
 	return _mainSortDescriptors;
 }
 
@@ -87,12 +87,12 @@
 
 		[_mainResultsController setDelegate:self];
 	}
-	
+
 	return _mainResultsController;
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - Public

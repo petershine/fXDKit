@@ -29,18 +29,18 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 - (NSURL*)ubiquitousDocumentsURL {
 	if (_ubiquitousDocumentsURL == nil) {
 		if (self.ubiquityContainerURL) {
-			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];			
+			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];
 		}
 	}
-	
+
 	if (_ubiquitousDocumentsURL == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"_ubiquitousDocumentsURL: %@", _ubiquitousDocumentsURL);
 	}
-	
+
 	return _ubiquitousDocumentsURL;
 }
 
@@ -50,11 +50,11 @@
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
 		}
 	}
-	
+
 	if (_ubiquitousCachesURL == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"_ubiquitousCachesURL: %@", _ubiquitousCachesURL);
 	}
-	
+
 	return _ubiquitousCachesURL;
 }
 
@@ -62,47 +62,47 @@
 - (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
 	if (_ubiquitousDocumentsMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
-		
-		
+
+
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedNSMetadataQueryDidStartGathering:)
 							  name:NSMetadataQueryDidStartGatheringNotification
 							object:_ubiquitousDocumentsMetadataQuery];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedNSMetadataQueryGatheringProgress:)
 							  name:NSMetadataQueryGatheringProgressNotification
 							object:_ubiquitousDocumentsMetadataQuery];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
 							  name:NSMetadataQueryDidFinishGatheringNotification
 							object:_ubiquitousDocumentsMetadataQuery];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedNSMetadataQueryDidUpdate:)
 							  name:NSMetadataQueryDidUpdateNotification
 							object:_ubiquitousDocumentsMetadataQuery];
-		
-		
+
+
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousDocumentsMetadataQuery setPredicate:predicate];
 
 		/*
-		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
-		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
-		[_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
+		 NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
+		 //NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		 [_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
 		 */
 
 		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
 		//[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
-		
+
 		BOOL didStart = [_ubiquitousDocumentsMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
 	}
-	
+
 	return _ubiquitousDocumentsMetadataQuery;
 }
 
@@ -121,7 +121,7 @@
 	if (_mainOperationQueue == nil) {
 		_mainOperationQueue = [[NSOperationQueue alloc] init];
 	}
-	
+
 	return _mainOperationQueue;
 }
 
@@ -129,12 +129,12 @@
 	if (_queuedOperationDictionary == nil) {
 		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
-	
+
 	return _queuedOperationDictionary;
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - Public
@@ -397,7 +397,7 @@
 	
 	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 	
-	if (self.collectedURLarray == nil) {
+	if (_collectedURLarray == nil) {
 		_collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
 		[self.collectedURLarray addObject:itemURL];

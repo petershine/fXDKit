@@ -59,10 +59,7 @@
 }
 
 
-#pragma mark - Accessor overriding
-
-
-#pragma mark - at autoRotate
+#pragma mark - Autorotating
 - (BOOL)shouldAutorotate {	//FXDLog_OVERRIDE;
 	return [super shouldAutorotate];
 }
@@ -76,7 +73,7 @@
 }
 
 
-#pragma mark - at viewDidLoad
+#pragma mark - View Loading & Appearing
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
     [super viewDidLoad];
 		
@@ -98,7 +95,10 @@
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Property overriding
+
+
+#pragma mark - Method overriding
 
 
 #pragma mark - Segues

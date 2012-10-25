@@ -29,49 +29,49 @@
 }
 
 
-#pragma mark - Accessor overriding
+#pragma mark - Property overriding
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
 	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
-		
-		
+
+
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedCachesMetadataQueryGatheringProgress:)
 							  name:NSMetadataQueryGatheringProgressNotification
 							object:_ubiquitousCachesMetadataQuery];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedCachesMetadataQueryDidFinishGathering:)
 							  name:NSMetadataQueryDidFinishGatheringNotification
 							object:_ubiquitousCachesMetadataQuery];
-		
+
 		[defaultCenter addObserver:self
 						  selector:@selector(observedCachesMetadataQueryDidUpdate:)
 							  name:NSMetadataQueryDidUpdateNotification
 							object:_ubiquitousCachesMetadataQuery];
-		
-		
+
+
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousCachesMetadataQuery setPredicate:predicate];
 
 		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
 		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
 		[_ubiquitousCachesMetadataQuery setSortDescriptors:@[sortDescriptor]];
-		
+
 		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
 		//[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
-		
+
 		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
 	}
-	
+
 	return _ubiquitousCachesMetadataQuery;
 }
 
 
-#pragma mark - Overriding
+#pragma mark - Method overriding
 
 
 #pragma mark - Public
