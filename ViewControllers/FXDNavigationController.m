@@ -16,14 +16,10 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-	FXDLog_SEPARATE;
 	
     // Release any cached data, images, etc that aren't in use.
 
-	// Instance variables
-
-	// Properties
+	FXDLog_SEPARATE;
 }
 
 - (void)dealloc {	
