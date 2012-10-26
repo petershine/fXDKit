@@ -9,6 +9,7 @@
 #import "FXDKit.h"
 
 
+#define limitConcurrentOperationCount	1
 #define limitMaximumCachedImageCount	50
 
 

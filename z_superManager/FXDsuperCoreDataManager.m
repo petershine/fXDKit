@@ -263,7 +263,7 @@
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext forFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext withFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
 
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
@@ -305,7 +305,7 @@
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;;
-	[self saveManagedObjectContext:nil forFinishedBlock:nil];
+	[self saveManagedObjectContext:nil withFinishedBlock:nil];
 }
 
 #pragma mark -

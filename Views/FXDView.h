@@ -57,5 +57,7 @@
 
 - (UIImage*)renderedImageFromView:(UIView*)view;
 
+- (id)parentViewOfClassName:(NSString*)className;
+
 
 @end

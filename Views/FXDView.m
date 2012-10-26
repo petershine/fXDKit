@@ -239,4 +239,21 @@
     return image;
 }
 
+#pragma mark -
+- (id)parentViewOfClassName:(NSString*)className {
+	id parentView = nil;
+
+	if (self.superview) {
+		if ([self.superview isKindOfClass:NSClassFromString(className)]) {
+			parentView = self.superview;
+		}
+		else {
+			parentView = [self.superview parentViewOfClassName:className];
+		}
+	}
+
+	return parentView;
+
+}
+
 @end

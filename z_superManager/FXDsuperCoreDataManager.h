@@ -67,7 +67,7 @@
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController;
 - (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj;
 
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext forFinishedBlock:(void(^)(void))finishedBlock;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext withFinishedBlock:(void(^)(void))finishedBlock;
 
 
 //MARK: - Observer implementation

@@ -74,7 +74,7 @@
 			[self.mainTableview setDelegate:self];
 		}
 
-		if (self.mainCellIdentifier) {
+		if (self.mainCellIdentifier || self.mainCellNib) {
 			[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 		}
 	}
@@ -163,6 +163,7 @@
 
 	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
+		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
 	}
 
