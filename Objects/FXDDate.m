@@ -69,7 +69,6 @@
     return shortLocalDateString;
 }
 
-#pragma mark -
 + (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate {
 	if (localDate == nil) {
 		localDate = [self date];
@@ -101,7 +100,6 @@
 	return UTCdate;
 }
 
-#pragma mark -
 + (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate {
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	
@@ -128,7 +126,6 @@
 	return localDate;
 }
 
-#pragma mark -
 - (NSInteger)yearValue {
 	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
 	
@@ -147,7 +144,6 @@
 	return [dateComponents day];
 }
 
-#pragma mark -
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate {
 	BOOL isSame = NO;
 	

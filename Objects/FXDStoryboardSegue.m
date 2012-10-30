@@ -46,7 +46,6 @@
 	return descriptionString;
 }
 
-#pragma mark -
 - (void)perform {	FXDLog_OVERRIDE;
 	FXDLog(@"segue: %@", self);
 }
@@ -90,7 +89,6 @@
 	return fullDescription;
 }
 
-#pragma mark -
 - (BOOL)shouldUseNavigationPush {
 	BOOL shouldUseNavigationPush = NO;
 

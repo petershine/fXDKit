@@ -89,7 +89,6 @@
 	return self;
 }
 
-#pragma mark -
 - (void)animateCustomDropAfterDelay:(NSTimeInterval)delay {
 	CGRect animatedFrame = self.frame;
 	

@@ -58,7 +58,6 @@
 	return _ubiquitousCachesURL;
 }
 
-#pragma mark -
 - (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
 	if (_ubiquitousDocumentsMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
@@ -106,7 +105,6 @@
 	return _ubiquitousDocumentsMetadataQuery;
 }
 
-#pragma mark -
 - (NSOperationQueue*)fileManagingOperationQueue {
 	if (_fileManagingOperationQueue == nil) {
 		_fileManagingOperationQueue = [[NSOperationQueue alloc] init];
@@ -116,7 +114,6 @@
 	return _fileManagingOperationQueue;
 }
 
-#pragma mark -
 - (NSOperationQueue*)mainOperationQueue {
 	if (_mainOperationQueue == nil) {
 		_mainOperationQueue = [[NSOperationQueue alloc] init];
@@ -271,7 +268,6 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
 }
 
-#pragma mark -
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
 	
 	if (self.ubiquitousDocumentsMetadataQuery.isStarted) {
@@ -284,7 +280,6 @@
 	
 }
 
-#pragma mark -
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent {	//FXDLog_DEFAULT;
 		
 	if (currentFolderURL == nil) {
@@ -385,7 +380,6 @@
 	}
 }
 
-#pragma mark -
 - (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
 	BOOL isUploading  = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
 	
@@ -493,7 +487,6 @@
 	FXDLog(@"notification: %@", notification);
 }
 
-#pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 
 }

@@ -129,7 +129,6 @@
 	return itemURL;
 }
 
-#pragma mark -
 - (NSURL*)cachedFolderURLforFolderURL:(NSURL*)folderURL {	FXDLog_OVERRIDE;
 	NSURL *cachedFolderURL = nil;
 	
@@ -142,7 +141,6 @@
 	return folderURL;
 }
 
-#pragma mark -
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {	//FXDLog_DEFAULT;
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -182,7 +180,6 @@
 	//FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
 
-#pragma mark -
 - (void)enumerateCachesMetadataQueryResults {
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;

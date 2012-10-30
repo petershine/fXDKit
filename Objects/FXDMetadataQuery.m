@@ -126,7 +126,6 @@
 	return transferPercentage;
 }
 
-#pragma mark -
 - (NSString*)unicodeAbsoluteString {
 	return [[[self valueForAttribute:NSMetadataItemURLKey] absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }

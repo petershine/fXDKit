@@ -120,7 +120,6 @@
 	return _mainCellNib;
 }
 
-#pragma mark -
 - (NSArray*)rowCounts {
 
 	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
@@ -148,7 +147,6 @@
 	return _mainDataSource;
 }
 
-#pragma mark -
 - (FXDFetchedResultsController*)mainResultsController {
 
 	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
@@ -158,7 +156,6 @@
 	return _mainResultsController;
 }
 
-#pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 
 	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
@@ -179,7 +176,6 @@
 	return _queuedOperationDictionary;
 }
 
-#pragma mark -
 - (NSOperationQueue*)secondaryOperationQueue {
 	if (_secondaryOperationQueue == nil) {
 		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
@@ -197,7 +193,6 @@
 	return _secondaryQueuedOperationDictionary;
 }
 
-#pragma mark -
 - (NSMutableDictionary*)cachedImageDictionary {
 
 	if (_cachedImageDictionary == nil) {
@@ -275,7 +270,6 @@
 }
 
 
-#pragma mark -
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 
 	[self configureSectionPostionTypeForCell:cell forIndexPath:indexPath];
@@ -293,7 +287,6 @@
 	cell.accessoryView = [self accessoryViewForCellAtIndexPath:indexPath];
 }
 
-#pragma mark -
 - (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
 
 	NSInteger rowCount = [(self.rowCounts)[indexPath.section] integerValue];
@@ -314,7 +307,6 @@
 	}
 }
 
-#pragma mark -
 - (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
@@ -383,7 +375,6 @@
 	return (UIView*)accessoryView;
 }
 
-#pragma mark -
 - (UIView*)sectionDividerViewForWidth:(CGFloat)width andHeight:(CGFloat)height {
 	CGRect dividerFrame = CGRectMake(0.0, 0.0, width, height);
 	
@@ -393,7 +384,6 @@
 	return sectionDividingView;
 }
 
-#pragma mark -
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath forFinishedHandler:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler {
 
 	BOOL shouldContinue = NO;
@@ -568,7 +558,6 @@
 	}
 }
 
-#pragma mark -
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
 	return YES;
 }
@@ -599,7 +588,6 @@
 }
  */
 
-#pragma mark -
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
 	//FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
 	

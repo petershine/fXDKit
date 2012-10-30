@@ -183,7 +183,6 @@
 	[super prepareForSegue:segue sender:sender];
 }
 
-#pragma mark -
 - (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 
@@ -251,7 +250,6 @@
 
 }
 
-#pragma mark -
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender {
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -369,7 +367,6 @@
 	}
 }
 
-#pragma mark -
 - (UIBarButtonItem*)barButtonWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {
 	
 	UIBarButtonItem *barButtonItem = nil;

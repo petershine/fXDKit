@@ -46,7 +46,6 @@
 	return self;
 }
 
-#pragma mark -
 + (FXDsuperCoreDataManager*)sharedInstance {
 	static dispatch_once_t once;
 	static id _sharedInstance = nil;
@@ -76,7 +75,6 @@
 	return _mainSortDescriptors;
 }
 
-#pragma mark -
 - (FXDFetchedResultsController*)mainResultsController {
 	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
 		_mainResultsController = [self.managedObjectContext
@@ -203,7 +201,6 @@
 						object:nil];
 }
 
-#pragma mark -
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
 
 	if (entityName == nil) {
@@ -244,7 +241,6 @@
 	return fetchedObjArray;
 }
 
-#pragma mark -
 - (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController {	//FXDLog_DEFAULT;
 
 	if (resultsController == nil) {
@@ -262,7 +258,6 @@
 	
 }
 
-#pragma mark -
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext withFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
 
 	if (managedObjectContext == nil) {
@@ -308,12 +303,10 @@
 	[self saveManagedObjectContext:nil withFinishedBlock:nil];
 }
 
-#pragma mark -
 - (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self prepareCoreDataControlWithUbiquityContainerURL:notification.object forFinishedHandler:nil];
 }
 
-#pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
@@ -327,7 +320,6 @@
 	}
 }
 
-#pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 

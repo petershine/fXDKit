@@ -61,7 +61,6 @@
 	return bundledImage;
 }
 
-#pragma mark -
 - (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect {	FXDLog_DEFAULT;
 	FXDLog(@"self.size: %@", NSStringFromCGSize(self.size));
 	FXDLog(@"cropRect: %@", NSStringFromCGRect(cropRect));

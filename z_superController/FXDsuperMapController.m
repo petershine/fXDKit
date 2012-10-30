@@ -90,7 +90,6 @@
 	
 }
 
-#pragma mark -
 - (void)refreshDefaultMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
 	
 }

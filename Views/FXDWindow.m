@@ -94,7 +94,6 @@
 	}
 }
 
-#pragma mark -
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	//FXDLog(@"notification: %@", notification);
 
@@ -134,7 +133,6 @@
 	return applicationWindow;
 }
 
-#pragma mark -
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		FXDWindow *applicationWindow = [self applicationWindow];
@@ -153,7 +151,6 @@
 	}];
 }
 
-#pragma mark -
 - (void)showCustomProgressView {	FXDLog_DEFAULT;
 	[self showProgressViewWithNibName:nibnameCustomProgressView];
 }
@@ -185,7 +182,6 @@
 	}
 }
 
-#pragma mark -
 - (void)hideProgressView {	//FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	

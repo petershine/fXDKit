@@ -142,7 +142,6 @@ static char encodingTable[64] = {
     return self;
 }
 
-#pragma mark -
 
 - (NSString *) base64Encoding {
     return [self base64EncodingWithLineLength:0];
@@ -218,7 +217,6 @@ static char encodingTable[64] = {
 //  Also Check http://deusty.blogspot.com/2007/07/gzip-compressiondecompression.html
 // ================================================================================================
 
-#pragma mark -
 #pragma mark GZIP
 
 - (NSData *)gzipDeflate

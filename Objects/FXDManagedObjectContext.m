@@ -92,7 +92,6 @@
 	return fetchedObjArray;
 }
 
-#pragma mark -
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	if (limit == integerNotDefined) {

@@ -80,7 +80,6 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	reachabilityForInternet = nil;
 }
 
-#pragma mark -
 + (BOOL)isWiFiConnected {
 	BOOL isConnected = NO;
 	
@@ -95,7 +94,6 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	return isConnected;
 }
 
-#pragma mark -
 + (NSMutableSet*)httpControlSet {
 	return _staticHttpControlSet;
 }
@@ -129,7 +127,6 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	[httpControlSet addObject:httpControl];
 }
 
-#pragma mark -
 - (void)observedReachabilityChanged:(NSNotification*)notification {
 	Reachability *changedReachability = [notification object];
 	
@@ -150,7 +147,6 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	}
 }
 
-#pragma mark -
 - (void)startHttpConnectionWithURLstring:(NSString*)urlString {	FXDLog_DEFAULT;
 	[self startHttpConnectionWithURLstring:urlString withPostBody:nil withHttpHeaders:nil];
 }

@@ -67,7 +67,6 @@
 @end
 
 
-#pragma mark -
 
 @implementation DirectoryWatcher
 
@@ -133,7 +132,6 @@
 @end
 
 
-#pragma mark -
 
 @implementation DirectoryWatcher (DirectoryWatcherPrivate)
 

@@ -72,7 +72,6 @@
 	return view;
 }
 
-#pragma mark -
 + (id)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil {
 	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
@@ -117,7 +116,6 @@
 	return view;
 }
 
-#pragma mark -
 - (void)applyDefaultBorderLine {
 	[self applyDefaultBorderLineWithCornerRadius:radiusCorner];
 }
@@ -141,7 +139,6 @@
 	}
 }
 
-#pragma mark -
 - (void)fadeIn {
 	self.alpha = 0.0;
 	
@@ -158,7 +155,6 @@
 					 }];
 }
 
-#pragma mark -
 - (void)fadeInFromHidden {
 	self.alpha = 0.0;
 	
@@ -193,7 +189,6 @@
 					 }];
 }
 
-#pragma mark -
 - (void)addAsFadeInSubview:(UIView*)subview {	//FXDLog_DEFAULT;
 	subview.alpha = 0.0;
 	
@@ -218,8 +213,14 @@
 					 }];
 }
 
-#pragma mark -
 - (UIImage*)renderedImageFromView:(UIView*)view {
+
+	UIImage *image = [self renderedImageFromView:view forScale:[[UIScreen mainScreen] scale]];
+
+    return image;
+}
+
+- (UIImage*)renderedImageFromView:(UIView*)view forScale:(CGFloat)scale {
 	if (view == nil) {
 		view = self;
 	}
@@ -229,17 +230,19 @@
 
 	UIGraphicsBeginImageContextWithOptions(view.bounds.size,
 										   view.opaque,
-										   [[UIScreen mainScreen] scale]);
+										   scale);
 	{
 		[view.layer renderInContext:UIGraphicsGetCurrentContext()];
 		image = UIGraphicsGetImageFromCurrentImageContext();
 	}
 	UIGraphicsEndImageContext();
 
+	FXDLog_DEFAULT;
+	FXDLog(@"image.size: %@", NSStringFromCGSize(image.size));
+
     return image;
 }
 
-#pragma mark -
 - (id)parentViewOfClassName:(NSString*)className {
 	id parentView = nil;
 

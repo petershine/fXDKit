@@ -56,7 +56,6 @@
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-#pragma mark -
 - (NSString*)deviceLanguageCode {
 
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
@@ -86,10 +85,9 @@
 	return _deviceLanguageCode;
 }
 
-#pragma mark -
 - (NSString*)mainStoryboardName {
 	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
-		//TODO:
+		
 	}
 
 	return _mainStoryboardName;
@@ -118,32 +116,38 @@
 - (id)homeScene {
 	if (_homeScene == nil) {
 
-		if ([self.rootScene respondsToSelector:@selector(viewControllers)]) {
+		if ([self.rootScene respondsToSelector:@selector(viewControllers)] == NO) {
+			_homeScene = self.rootScene;
 
-			NSArray *viewControllers = [self.rootScene performSelector:@selector(viewControllers)];
+			return _homeScene;
+		}
 
-			if ([viewControllers count] > 0) {
-				if ([self.rootScene isKindOfClass:[UITabBarController class]]) {
-					id tabbedViewController = viewControllers[0];
 
-					if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
-						UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
+		NSArray *viewControllers = [self.rootScene performSelector:@selector(viewControllers)];
 
-						if ([tabbedNavigationController.viewControllers count] > 0) {
-							_homeScene = (tabbedNavigationController.viewControllers)[0];
-						}
-					}
-					else {
-						_homeScene = tabbedViewController;
-					}
-				}
-				else {
-					_homeScene = viewControllers[0];
-				}
+		if ([viewControllers count] == 0) {
+			return _homeScene;
+		}
+
+
+		if ([self.rootScene isKindOfClass:[UITabBarController class]] == NO) {
+			_homeScene = viewControllers[0];
+
+			return _homeScene;
+		}
+
+
+		id tabbedViewController = viewControllers[0];
+
+		if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
+			UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
+
+			if ([tabbedNavigationController.viewControllers count] > 0) {
+				_homeScene = (tabbedNavigationController.viewControllers)[0];
 			}
 		}
 		else {
-			_homeScene = self.rootScene;
+			_homeScene = tabbedViewController;
 		}
 	}
 
@@ -171,7 +175,6 @@
 	return isSystemVersionLatest;
 }
 
-#pragma mark -
 + (NSString*)deviceModelName {
 
 	struct utsname systemInfo;
@@ -243,7 +246,6 @@
 	return modelName;
 }
 
-#pragma mark -
 + (NSString*)deviceCountryCode {
 	NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
 	
@@ -254,14 +256,12 @@
 	return countryCode;
 }
 
-#pragma mark -
 + (NSString*)deviceLanguageCode {	
 	NSString *firstLanguage = [self sharedInstance].deviceLanguageCode;
 	
 	return firstLanguage;
 }
 
-#pragma mark -
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title {
 	FXDAlertView *alertview = [[FXDAlertView alloc] initWithTitle:title
 														message:message
@@ -282,7 +282,6 @@
 	[alertview show];
 }
 
-#pragma mark -
 + (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {	
 	if (alertBody) {
 		if (delay == 0.0) {
@@ -299,18 +298,15 @@
 	}
 }
 
-#pragma mark -
 + (void)printoutListOfFonts {	FXDLog_DEFAULT;
 	FXDLog(@"UIFont familyNames: %@", [UIFont familyNames]);
 }
 
-#pragma mark -
 + (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 	
 	[[self sharedInstance] presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
 }
 
-#pragma mark -
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;	
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
 	

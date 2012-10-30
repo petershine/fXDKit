@@ -72,7 +72,6 @@
 	return resourceValues;	
 }
 
-#pragma mark -
 - (NSString*)unicodeAbsoluteString {
 	return [[self absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
@@ -88,7 +87,6 @@
 	return attributeModificationDate;
 }
 
-#pragma mark -
 - (FILE_KIND_TYPE)fileKindType {
 	FILE_KIND_TYPE fileKindType = fileKindUndefined;
 
@@ -142,7 +140,6 @@
 	return fileKindType;
 }
 
-#pragma mark -
 - (NSString*)followingPathAfterPathComponent:(NSString *)pathComponent {
 	return [[[self unicodeAbsoluteString] componentsSeparatedByString:pathComponent] lastObject];
 }
@@ -151,7 +148,6 @@
 	return [self followingPathAfterPathComponent:pathcomponentDocuments];
 }
 
-#pragma mark -
 - (NSString*)fileSizeString {
 	
 	NSNumber *fileSize = nil;
@@ -164,7 +160,6 @@
 	return formattedString;
 }
 
-#pragma mark -
 - (double)transferPercentage {
 	double transferPercentage = 0.0;
 

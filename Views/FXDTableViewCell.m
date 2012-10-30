@@ -64,7 +64,6 @@
 #pragma mark - Method overriding
 
 
-#pragma mark -
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_DEFAULT;
     [super setSelected:selected animated:animated];
 
@@ -147,7 +146,6 @@
 	}
 }
 
-#pragma mark -
 - (void)modifySizeOfCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
 	
 }

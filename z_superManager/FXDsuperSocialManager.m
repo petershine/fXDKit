@@ -44,7 +44,6 @@
 	return _accountType;
 }
 
-#pragma mark -
 - (NSArray*)twitterAccountArray {
 	if (_twitterAccountArray == nil) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
@@ -163,7 +162,6 @@
 	}
 }
 
-#pragma mark -
 - (void)userLookUpWithScreenName:(NSString*)screenName {
 	
 	NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
@@ -215,7 +213,6 @@
 	}
 }
 
-#pragma mark -
 #if ENVIRONMENT_newestSDK
 - (SLComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
 
@@ -271,7 +268,6 @@
 	return socialComposeInterface;
 }
 
-#pragma mark -
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
 	FXDLog_ERROR;
 

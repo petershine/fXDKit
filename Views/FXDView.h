@@ -56,6 +56,7 @@
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemoved:(void(^)(void))afterRemoved;
 
 - (UIImage*)renderedImageFromView:(UIView*)view;
+- (UIImage*)renderedImageFromView:(UIView*)view forScale:(CGFloat)scale;
 
 - (id)parentViewOfClassName:(NSString*)className;
 

@@ -154,7 +154,6 @@
 // Static Functions Implementation
 // ================================================================================================
 
-#pragma mark -
 #pragma mark Static Functions implementation
 
 @implementation TBXML (StaticFunctions)
@@ -224,7 +223,6 @@
 // Private Implementation
 // ================================================================================================
 
-#pragma mark -
 #pragma mark Private implementation
 
 @implementation TBXML (Private)

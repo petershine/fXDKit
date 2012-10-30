@@ -98,7 +98,6 @@
 	return (NSDictionary*)propertiesDictionary;
 }
 
-#pragma mark -
 - (UIImage*)artworkImageWithSize:(CGSize)size {
 	UIImage *artworkImage = nil;
 	
@@ -111,7 +110,6 @@
 	return artworkImage;
 }
 
-#pragma mark -
 - (NSNumber*)propertyPersistentID {
 	return [self valueForProperty:MPMediaItemPropertyPersistentID];
 }

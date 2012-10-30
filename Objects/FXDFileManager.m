@@ -67,7 +67,6 @@
 	return limitedEnumerator;
 }
 
-#pragma mark -
 - (NSMutableDictionary*)infoDictionaryForFolderURL:(NSURL*)folderURL {
 	
 	NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
