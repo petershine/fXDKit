@@ -16,8 +16,8 @@
 }
 
 // Properties
-@property (weak, nonatomic) id addedObj;
-@property (weak, nonatomic) id linkedOperationIdentifier;
+@property (strong, nonatomic) id addedObj;
+@property (strong, nonatomic) id linkedOperationIdentifier;
 
 // IBOutlets
 
