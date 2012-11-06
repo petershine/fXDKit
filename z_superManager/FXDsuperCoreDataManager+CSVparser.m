@@ -49,7 +49,6 @@
 
 //MARK: - Observer implementation
 
-
 //MARK: - Delegate implementation
 #pragma mark - CHCSVParserDelegate
 - (void) parser:(CHCSVParser *)parser didStartDocument:(NSString *)csvFile {	FXDLog_DEFAULT;

@@ -70,7 +70,6 @@
 
 //MARK: - Observer implementation
 
-
 //MARK: - Delegate implementation
 #pragma mark - UIAlertViewDelegate
 #pragma mark - MFMailComposeViewControllerDelegate

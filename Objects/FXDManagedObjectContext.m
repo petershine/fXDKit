@@ -110,7 +110,9 @@
 		[fetchRequest setSortDescriptors:sortDescriptors];
 
 		if (predicate) {
+#if USE_loggingResultObjFiltering
 			FXDLog(@"predicate: %@", predicate);
+#endif
 			[fetchRequest setPredicate:predicate];
 		}
 

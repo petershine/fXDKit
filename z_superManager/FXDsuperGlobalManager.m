@@ -423,7 +423,6 @@
 
 //MARK: - Observer implementation
 
-
 //MARK: - Delegate implementation
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

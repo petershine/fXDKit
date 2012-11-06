@@ -262,17 +262,23 @@
 
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
+
+		FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+
+		if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType
+			&& managedObjectContext.hasChanges == NO) {
+			managedObjectContext = self.managedObjectContext.parentContext;
+		}
 	}
 
-	FXDLog(@"hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
     if (managedObjectContext && managedObjectContext.hasChanges) {
-		[managedObjectContext performBlock:^{
+		[managedObjectContext performBlock:^{	FXDLog_DEFAULT;
 
 			NSError *error = nil;
 			BOOL didSave = [managedObjectContext save:&error];
 
-			FXDLog_DEFAULT;
 			FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
 
 			if (didSave == NO) {
@@ -309,11 +315,15 @@
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
-	if ([notification.object isEqual:self.managedObjectContext] == NO) {
+	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
+	if ([notification.object isEqual:self.managedObjectContext] == NO
+		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
+
 		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 
+		FXDLog(@"mergeChangesFromContextDidSaveNotification:");
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}
 }
@@ -321,19 +331,12 @@
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
-	
-	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
-	if ([notification.object isEqual:self.managedObjectContext]) {
-		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 
-		[self saveManagedObjectContext:self.managedObjectContext withFinishedBlock:nil];
-	}
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
+	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
 }
 
@@ -342,11 +345,14 @@
 	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
 	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
-	if ([notification.object isEqual:self.managedObjectContext] == NO) {	FXDLog(@"mergeChangesFromContextDidSaveNotification:");
+	if ([notification.object isEqual:self.managedObjectContext] == NO
+		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
+
 		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-		
+
+		FXDLog(@"mergeChangesFromContextDidSaveNotification:");
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}
 }
