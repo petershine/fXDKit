@@ -94,6 +94,8 @@
 }
 
 - (FXDStoryboard*)mainStoryboard {
+	//MARK: Testing storyboard instantiating at the moment without retaining it
+	/*
 	if (_mainStoryboard == nil) {
 		if (self.mainStoryboardName) {
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
@@ -101,6 +103,15 @@
 	}
 
 	return _mainStoryboard;
+	 */
+	
+	FXDStoryboard *_tempStoryboard = nil;
+
+	if (self.mainStoryboardName) {
+		_tempStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
+	}
+
+	return _tempStoryboard;
 }
 
 - (id)rootScene {

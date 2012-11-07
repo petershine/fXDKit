@@ -144,7 +144,6 @@
 	return canAnimate;
 }
 
-#pragma mark -
 - (void)coverWithCoveringSegue:(FXDsegueCovering*)coveringSegue {	FXDLog_DEFAULT;
 	if ([self canAnimateWithTransitionSegue:coveringSegue] == NO) {
 		return;
@@ -301,7 +300,6 @@
 
 }
 
-#pragma mark -
 - (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
 	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionLeft;
 

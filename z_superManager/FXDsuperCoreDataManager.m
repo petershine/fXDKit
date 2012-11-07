@@ -312,20 +312,13 @@
 }
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
+	FXDLog(@"notification.name: %@", notification.name);
+	FXDLog(@"notification.object: %@", notification.object);
 
-	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
-	if ([notification.object isEqual:self.managedObjectContext] == NO
-		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
+	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 
-		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-
-		FXDLog(@"mergeChangesFromContextDidSaveNotification:");
-		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-	}
 }
 
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;

@@ -114,7 +114,6 @@
 
 - (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
-	//FXDLog(@"MUST RETURN LOCAL INSTANCE: %@", @"Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.");
 
 	FXDLog(@"action: %@", NSStringFromSelector(action));
 	FXDLog(@"fromViewController: %@", fromViewController);
@@ -122,14 +121,24 @@
 
 	UIViewController *viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 
-	FXDLog(@"viewController: %@", viewController);
+	FXDLog(@"1.viewController: %@", viewController);
+
+	if (viewController == nil) {
+		for (UIViewController *childScene in self.childViewControllers) {
+			if ([childScene canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
+				viewController = childScene;
+				break;
+			}
+		}
+	}
+
+	FXDLog(@"2.viewController: %@", viewController);
 
 	return viewController;
 }
 
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
 	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
-	//FXDLog(@"MUST RETURN LOCAL INSTANCE: %@", @"Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.");
 
 	FXDLog(@"toViewController: %@", toViewController);
 	FXDLog(@"fromViewController: %@", fromViewController);
