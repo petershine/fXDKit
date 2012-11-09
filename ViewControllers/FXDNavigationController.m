@@ -19,7 +19,7 @@
 	
     // Release any cached data, images, etc that aren't in use.
 
-	FXDLog_SEPARATE;
+	//FXDLog_SEPARATE;
 }
 
 - (void)dealloc {	
@@ -27,7 +27,7 @@
 	
 	// Properties
 	
-	FXDLog_SEPARATE;
+	//FXDLog_SEPARATE;
 }
 
 

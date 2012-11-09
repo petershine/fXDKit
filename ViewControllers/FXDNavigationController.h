@@ -13,7 +13,6 @@
     // Primitives
 	
 	// Instance variables
-	BOOL _shouldUseDefaultNavigationBar;
 }
 
 // Properties
