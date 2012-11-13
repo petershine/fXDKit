@@ -29,28 +29,35 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
-    [super awakeFromNib];
-	
-    // Primitives
-	
+	// Primitives
+
+    // Instance variables
+
+    // Properties
+
+    // IBOutlets
+	[super awakeFromNib];
+
+}
+
+- (void)viewDidLoad {
+	// Primitives
+
 	// Instance variables
-	
+
 	// Properties
-	
+
 	// IBOutlets
+    [super viewDidLoad];
+
+	[self.mainMapview setDelegate:self];
 }
 
 
 #pragma mark - Autorotating
 
 
-#pragma mark - View Loading & Appearing
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	[self.mainMapview setDelegate:self];
-}
-
+#pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	

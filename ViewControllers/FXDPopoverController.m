@@ -17,9 +17,9 @@
 
 
 #pragma mark - Initialization
-- (id)initWithContentViewController:(UIViewController *)viewController {	FXDLog_SEPARATE;
+- (id)initWithContentViewController:(UIViewController *)viewController {
 
-    self = [super initWithContentViewController:viewController];
+    self = [super initWithContentViewController:viewController];	FXDLog_SEPARATE;
 
     if (self) {
     	// Primitives

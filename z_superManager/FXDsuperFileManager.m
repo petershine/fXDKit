@@ -398,6 +398,7 @@
 		
 		return;
 	}
+
 	
 	if ([self.collectedURLarray containsObject:itemURL] == NO) {
 		[self.collectedURLarray addObject:itemURL];

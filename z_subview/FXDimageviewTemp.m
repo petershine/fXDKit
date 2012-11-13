@@ -25,13 +25,6 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
-	[super awakeFromNib];
-
-#if USE_tempImageview
-#else
-	self.image = nil;
-#endif
-
     // Primitives
 
     // Instance variables
@@ -39,6 +32,12 @@
     // Properties
 
     // IBOutlets
+	[super awakeFromNib];
+
+#if USE_tempImageview
+#else
+	self.image = nil;
+#endif
 }
 
 

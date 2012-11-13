@@ -46,5 +46,6 @@
 
 - (UIImage*)fixOrientation;
 
+- (UIImage*)maskedImageWithMaskImageName:(NSString*)maskImageName;
 
 @end

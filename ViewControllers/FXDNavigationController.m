@@ -32,26 +32,84 @@
 
 
 #pragma mark - Initialization
-- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_SEPARATE;
-	self  = [super initWithRootViewController:rootViewController];
-	
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];	FXDLog_SEPARATE;
+
 	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	FXDLog(@"DONE: %@", strClassSelector);
+
+	return self;
+}
+
+- (id)initWithRootViewController:(UIViewController *)rootViewController {
+	self  = [super initWithRootViewController:rootViewController];	FXDLog_SEPARATE;
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
 		[self awakeFromNib];
 	}
+
+	FXDLog(@"DONE: %@", strClassSelector);
 	
 	return self;
 }
 
-- (void)awakeFromNib {	FXDLog_SEPARATE;
-	[super awakeFromNib];
-	
+- (void)awakeFromNib {
 	// Primitives
-	
+
+    // Instance variables
+
+    // Properties
+
+    // IBOutlets
+	[super awakeFromNib];	FXDLog_SEPARATE;
+
+	FXDLog(@"DONE: %@", strClassSelector);
+}
+
+- (void)viewDidLoad {
+	// Primitives
+
 	// Instance variables
-	
+
 	// Properties
-	
-	// IBOutlets
+
+	// IBOutlet
+    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+
+	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
+
+	if (self.shouldUseDefaultNavigationBar == NO) {
+#ifdef imageNavibarBackground
+		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
+#endif
+
+#ifdef imageNavibarShadow
+		[self.navigationBar setShadowImage:imageNavibarShadow];
+#endif
+	}
+
+#ifdef imageToolbarBackground
+	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+#endif
+
+	FXDLog(@"DONE: %@", strClassSelector);
 }
 
 
@@ -69,26 +127,7 @@
 }
 
 
-#pragma mark - View Loading & Appearing
-- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
-    [super viewDidLoad];
-		
-	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
-	
-	if (self.shouldUseDefaultNavigationBar == NO) {
-#ifdef imageNavibarBackground
-		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
-#endif
-		
-#ifdef imageNavibarShadow
-		[self.navigationBar setShadowImage:imageNavibarShadow];
-#endif
-	}
-	
-#ifdef imageToolbarBackground
-	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];	
-#endif
-}
+#pragma mark - View Appearing
 
 
 #pragma mark - Property overriding

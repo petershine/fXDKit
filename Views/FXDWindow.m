@@ -26,10 +26,34 @@
 
 
 #pragma mark - Initialization
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	return self;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 	
     if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
 		[self awakeFromNib];
     }
 	
@@ -37,15 +61,13 @@
 }
 
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
-	[super awakeFromNib];
-	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-	
+
 	[defaultCenter addObserver:self
 					  selector:@selector(observedApplicationWindowShouldFadeInProgressView:)
 						  name:notificationApplicationWindowShouldFadeInProgressView
 						object:nil];
-	
+
 	[defaultCenter addObserver:self
 					  selector:@selector(observedApplicationWindowShouldFadeOutProgressView:)
 						  name:notificationApplicationWindowShouldFadeOutProgressView
@@ -58,12 +80,14 @@
 						object:nil];
 	
 	// Primitives
-    
-    // Instance variables
-    
-    // Properties
-    
-    // IBOutlets
+
+	// Instance variables
+
+	// Properties
+
+	// IBOutlets
+	[super awakeFromNib];
+
 }
 
 

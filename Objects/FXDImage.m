@@ -41,16 +41,29 @@
 + (UIImage*)bundledImageForName:(NSString*)imageName {
 	UIImage *bundledImage = [UIImage imageNamed:imageName];
 	
-	// To load from jpg, use specific scale value for retina
+	//MARK: To load from .jpg, use specific scale value for retina
 	if (bundledImage == nil) {
+		NSString *scaledImageName = nil;
+		
 		if ([UIScreen mainScreen].scale >= 2.0) {
-			imageName = [imageName stringByAppendingString:@"@2x"];
+			scaledImageName = [imageName stringByAppendingString:@"@2x"];
+		}
+		else {
+			scaledImageName = imageName;
 		}
 		
-		imageName = [imageName stringByAppendingString:@".jpg"];
+		scaledImageName = [scaledImageName stringByAppendingString:@".jpg"];
 		
+		bundledImage = [UIImage imageNamed:scaledImageName];
+	}
+
+	//MARK: If scale value added name is not working try normal name
+	if (bundledImage == nil) {
+		imageName = [imageName stringByAppendingString:@".jpg"];
+
 		bundledImage = [UIImage imageNamed:imageName];
 	}
+
 	
 #if ForDEVELOPER
 	if (bundledImage == nil) {
@@ -264,6 +277,34 @@
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
     return img;
+}
+
+- (UIImage*)maskedImageWithMaskImageName:(NSString*)maskImageName {
+	UIImage *maskedImage = self;
+
+	UIImage *maskImage = [UIImage bundledImageForName:maskImageName];
+	FXDLog(@"maskImageName: %@, maskImage: %@", maskImageName, maskImage);
+
+	if (maskImage) {
+		CGImageRef maskRef = maskImage.CGImage;
+		FXDLog(@"maskRef: %@", maskRef);
+
+		CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
+											CGImageGetHeight(maskRef),
+											CGImageGetBitsPerComponent(maskRef),
+											CGImageGetBitsPerPixel(maskRef),
+											CGImageGetBytesPerRow(maskRef),
+											CGImageGetDataProvider(maskRef), NULL, false);
+		FXDLog(@"mask: %@", mask);
+
+		CGImageRef masked = CGImageCreateWithMask([maskedImage CGImage], mask);
+		FXDLog(@"masked: %@", masked);
+
+		maskedImage = [UIImage imageWithCGImage:masked];
+		FXDLog(@"maskedImage: %@", maskedImage);
+	}
+
+	return maskedImage;
 }
 
 @end

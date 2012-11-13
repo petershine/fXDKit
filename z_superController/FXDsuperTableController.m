@@ -30,11 +30,9 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
-    [super awakeFromNib];
-	
-    // Primitives
-	
-	// Instance variables
+	// Primitives
+
+    // Instance variables
 	_mainOperationIdentifier = ^(NSInteger sectionIndex, NSInteger rowIndex) {
 		NSString *operationIdentifier = nil;
 
@@ -44,28 +42,32 @@
 
 		return operationIdentifier;
 	};
-	
-	// Properties	
+
+    // Properties
 	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
 		_isSystemVersionLatest = YES;
 	}
+
+    // IBOutlets
+	[super awakeFromNib];
 	
-	// IBOutlets
 }
 
-
-#pragma mark - Autorotating
-
-
-#pragma mark - View Loading & Appearing
 - (void)viewDidLoad {
+	// Primitives
+
+	// Instance variables
+
+	// Properties
+
+	// IBOutlets
     [super viewDidLoad];
-	
+
 	if (self.mainTableview) {
 		if (self.mainTableview.dataSource == nil) {
 			[self.mainTableview setDataSource:self];
 		}
-		
+
 		if (self.mainTableview.delegate == nil) {
 			[self.mainTableview setDelegate:self];
 		}
@@ -76,6 +78,11 @@
 	}
 }
 
+
+#pragma mark - Autorotating
+
+
+#pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
@@ -358,7 +365,7 @@
 	accessoryView = [[UIImageView alloc] initWithImage:imagenameSettingsCellArrowOff];
 	
 	#ifdef imagenameSettingsCellArrowOn
-	[(UIImageView*)accessoryView setHighlightedImage:imagenameSettingsCellArrowOn];
+		[(UIImageView*)accessoryView setHighlightedImage:imagenameSettingsCellArrowOn];
 	#endif
 #endif
 	
@@ -424,7 +431,7 @@
 	}
 
 	shouldContinue = YES;
-
+	
 
 	finishedHandler(shouldContinue, disappearedRow, shouldEvaluateBackward);
 }
@@ -440,7 +447,7 @@
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
 	else if (self.mainDataSource) {
-		//SKIP
+		//MARK: Assume it's just one array
 	}
 	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
 		numberOfSections = [self.rowCounts count];
@@ -485,7 +492,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
-	
+
+	//MARK: If cell Nib is registered, this will never be nil
 	if (cell == nil) {	//FXDLog_OVERRIDE;
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 	}
@@ -545,12 +553,11 @@
 	}];
 }
 
-//MARK: Usable in iOS 6
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
 	if (didCancel) {
-		//FXDLog(@"didCancel: %d %@", didCancel, indexPath);
+		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
 	}
 }
 

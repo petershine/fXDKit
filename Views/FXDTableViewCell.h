@@ -11,6 +11,7 @@ typedef enum {
 	sectionPositionTop,
 	sectionPositionMiddle,
 	sectionPositionBottom
+	
 } SECTION_POSITION_TYPE;
 
 

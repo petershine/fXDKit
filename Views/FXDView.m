@@ -17,10 +17,34 @@
 
 
 #pragma mark - Initialization
+- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
+	self = [super initWithCoder:aDecoder];
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	return self;
+}
+
 - (id)initWithFrame:(CGRect)frame {	//FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 	
     if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
 		[self awakeFromNib];
 	}
 	
@@ -28,15 +52,15 @@
 }
 
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
+	// Primitives
+
+    // Instance variables
+
+    // Properties
+
+    // IBOutlets
 	[super awakeFromNib];
 	
-	// Primitives
-	
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
 }
 
 
@@ -95,13 +119,11 @@
 
 	NSArray *viewArray = [nib instantiateWithOwner:ownerOrNil options:nil];
 
-	if (viewArray) {
-		for (id subview in viewArray) {	//Assumes there is only one root object
+	for (id subview in viewArray) {	//Assumes there is only one root object
 
-			if ([[self class] isSubclassOfClass:[subview class]]) {
-				view = subview;
-				break;
-			}
+		if ([[self class] isSubclassOfClass:[subview class]]) {
+			view = subview;
+			break;
 		}
 	}
 
@@ -111,7 +133,6 @@
 		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
 	}
 #endif
-
 
 	return view;
 }

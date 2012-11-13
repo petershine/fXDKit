@@ -17,20 +17,34 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-	
-    if (self) {
-    	[self awakeFromNib];
-    }
-	
-    return self;
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	return self;
 }
 
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
 		[self awakeFromNib];
 	}
 	
@@ -38,15 +52,15 @@
 }
 
 - (void)awakeFromNib {
+	// Primitives
+
+    // Instance variables
+
+    // Properties
+
+    // IBOutlets
 	[super awakeFromNib];
 	
-	// Primitives
-	
-    // Instance variables
-	
-    // Properties
-	
-    // IBOutlets
 }
 
 

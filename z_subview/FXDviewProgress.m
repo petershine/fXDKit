@@ -17,16 +17,15 @@
 
 
 #pragma mark - Initialization
-- (void)awakeFromNib {	//FXDLog_DEFAULT;
-	[super awakeFromNib];
-	
+- (void)awakeFromNib {
 	// Primitives
-	
+
 	// Instance variables
-	
+
 	// Properties
-	
+
 	// IBOutlets
+	[super awakeFromNib];
 	
 }
 

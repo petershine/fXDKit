@@ -55,11 +55,18 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
+	// Primitives
+
+    // Instance variables
+
+    // Properties
+
+    // IBOutlets
 	[super awakeFromNib];
+	
+}
 
-	//MARK: Necessary to nullify regular Navigation push and pop
-	[self.navigationBar setDelegate:self];
-
+- (void)viewDidLoad {
     // Primitives
 
     // Instance variables
@@ -67,18 +74,17 @@
     // Properties
 
     // IBOutlets
+    [super viewDidLoad];
+
+	//MARK: Necessary to nullify regular Navigation push and pop
+	[self.navigationBar setDelegate:self];
 }
 
 
 #pragma mark - Autorotating
 
 
-#pragma mark - View Loading & Appearing
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-}
-
+#pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 

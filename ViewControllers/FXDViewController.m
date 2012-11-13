@@ -32,8 +32,28 @@
 
 
 #pragma mark - Initialization
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
-	
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];	FXDLog_SEPARATE;
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	FXDLog(@"DONE: %@", strClassSelector);
+
+	return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+
+	/*MARK: Unnecessary check
 	if (nibNameOrNil == nil) {
 		NSString *filename = nil;
 		NSString *resourcePath = nil;
@@ -47,32 +67,57 @@
 		
 		FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
 	}
+	 */
 	
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];	FXDLog_SEPARATE;
+
     if (self) {
 		if (nibNameOrNil == nil) {
+			// Primitives
+
+			// Instance variables
+
+			// Properties
+
+			// IBOutlets
 			[self awakeFromNib];
 		}
     }
+
+	FXDLog(@"DONE: %@", strClassSelector);
 	
     return self;
 }
 
-- (void)awakeFromNib {	FXDLog_SEPARATE;
-	[super awakeFromNib];
-
-	if (self.view == nil) {
-		self.view = [[self.view class] viewFromNibName:NSStringFromClass([self class]) withOwner:self];
-	}
-	
+- (void)awakeFromNib {
 	// Primitives
-	
+
 	// Instance variables
-	
+
 	// Properties
+
+	// IBOutlets
+	[super awakeFromNib];	FXDLog_SEPARATE;
 	
 	// IBOutlets
+	if (self.view == nil) {
+		self.view = [UIView viewFromNibName:NSStringFromClass([self class]) withOwner:self];
+	}
+
+	FXDLog(@"DONE: %@", strClassSelector);
+}
+
+- (void)viewDidLoad {
+	// Primitives
+
+	// Instance variables
+
+	// Properties
+
+	// IBOutlets
+	[super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+
+	FXDLog(@"DONE: %@", strClassSelector);
 }
 
 
@@ -111,26 +156,21 @@
 #endif
 
 
-#pragma mark - View Loading & Appearing
-- (void)viewDidLoad {
-    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
-	
-}
-
+#pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];	FXDLog_SEPARATE_FRAME;
 	
 }
 
 #if USE_loggingViewDrawing
-- (void)viewWillLayoutSubviews {	FXDLog_SEPARATE_FRAME;
-	[super viewWillLayoutSubviews];
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];	FXDLog_SEPARATE_FRAME;
 	
 	// Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
 
-- (void)viewDidLayoutSubviews {	FXDLog_SEPARATE_FRAME;
-	[super viewDidLayoutSubviews];
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];	FXDLog_SEPARATE_FRAME;
 	
 	// Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
@@ -141,13 +181,13 @@
 	
 }
 
-- (void)viewWillDisappear:(BOOL)animated {	//FXDLog_DEFAULT;
-	[super viewWillDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];	//FXDLog_DEFAULT;
 	
 }
 
-- (void)viewDidDisappear:(BOOL)animated {	//FXDLog_DEFAULT;
-	[super viewDidDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {
+	[super viewDidDisappear:animated];	//FXDLog_DEFAULT;
 	
 }
 

@@ -17,10 +17,34 @@
 
 
 #pragma mark - Initialization
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	return self;
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-	
+
     if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
 		[self awakeFromNib];
     }
 	
@@ -28,16 +52,16 @@
 }
 
 - (void)awakeFromNib {
-	[super awakeFromNib];
-	
 	// Primitives
-	
-	// Instance variables
-	
-	// Properties
+
+    // Instance variables
+
+    // Properties
 	_sectionPositionType = integerNotDefined;
+
+    // IBOutlets
+	[super awakeFromNib];
 		
-	// IBOutlets
 	if (self.imageView) {
 		[self modifySizeOfCellSubview:self.imageView];
 		[self modifyOriginXofCellSubview:self.imageView];

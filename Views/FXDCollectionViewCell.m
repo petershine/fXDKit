@@ -24,10 +24,34 @@
 
 
 #pragma mark - Initialization
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+
+	if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
+		//MARK: awakeFromNib is called automatically
+	}
+
+	return self;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
     if (self) {
+		// Primitives
+
+		// Instance variables
+
+		// Properties
+
+		// IBOutlets
 		[self awakeFromNib];
     }
 
@@ -35,15 +59,15 @@
 }
 
 - (void)awakeFromNib {
-	[super awakeFromNib];
-
-    // Primitives
+	// Primitives
 
     // Instance variables
 
     // Properties
 
     // IBOutlets
+	[super awakeFromNib];
+	
 }
 
 
