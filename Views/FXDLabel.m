@@ -21,13 +21,6 @@
 	self = [super initWithCoder:aDecoder];
 
 	if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		//MARK: awakeFromNib is called automatically
 	}
 
@@ -38,13 +31,6 @@
     self = [super initWithFrame:frame];
 	
     if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		[self awakeFromNib];
     }
 	
@@ -52,6 +38,8 @@
 }
 
 - (void)awakeFromNib {
+	[super awakeFromNib];
+
 	// Primitives
 
     // Instance variables
@@ -59,7 +47,6 @@
     // Properties
 
     // IBOutlets
-	[super awakeFromNib];
 	
 }
 

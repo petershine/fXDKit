@@ -36,17 +36,8 @@
 	self = [super initWithCoder:aDecoder];	FXDLog_SEPARATE;
 
 	if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		//MARK: awakeFromNib is called automatically
 	}
-
-	FXDLog(@"DONE: %@", strClassSelector);
 
 	return self;
 }
@@ -55,22 +46,15 @@
 	self  = [super initWithRootViewController:rootViewController];	FXDLog_SEPARATE;
 
 	if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		[self awakeFromNib];
 	}
 
-	FXDLog(@"DONE: %@", strClassSelector);
-	
 	return self;
 }
 
 - (void)awakeFromNib {
+	[super awakeFromNib];	FXDLog_SEPARATE;
+
 	// Primitives
 
     // Instance variables
@@ -78,23 +62,20 @@
     // Properties
 
     // IBOutlets
-	[super awakeFromNib];	FXDLog_SEPARATE;
 
-	FXDLog(@"DONE: %@", strClassSelector);
 }
 
 - (void)viewDidLoad {
+	[super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+
 	// Primitives
 
 	// Instance variables
 
 	// Properties
-
-	// IBOutlet
-    [super viewDidLoad];	FXDLog_SEPARATE_FRAME;
-
 	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
 
+	// IBOutlet
 	if (self.shouldUseDefaultNavigationBar == NO) {
 #ifdef imageNavibarBackground
 		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
@@ -109,7 +90,6 @@
 	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
 #endif
 
-	FXDLog(@"DONE: %@", strClassSelector);
 }
 
 

@@ -25,14 +25,15 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
-    // Primitives
+    [super awakeFromNib];
+
+	// Primitives
 
     // Instance variables
 
     // Properties
 
     // IBOutlets
-	[super awakeFromNib];
 
 #if USE_tempImageview
 #else

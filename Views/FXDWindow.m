@@ -30,13 +30,6 @@
 	self = [super initWithCoder:aDecoder];
 
 	if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		//MARK: awakeFromNib is called automatically
 	}
 
@@ -47,13 +40,6 @@
     self = [super initWithFrame:frame];
 	
     if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		[self awakeFromNib];
     }
 	
@@ -61,6 +47,16 @@
 }
 
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
+	[super awakeFromNib];
+
+	// Primitives
+
+	// Instance variables
+
+	// Properties
+
+	// IBOutlets
+
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
 	[defaultCenter addObserver:self
@@ -78,16 +74,6 @@
 					  selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
 						  name:UIDeviceOrientationDidChangeNotification
 						object:nil];
-	
-	// Primitives
-
-	// Instance variables
-
-	// Properties
-
-	// IBOutlets
-	[super awakeFromNib];
-
 }
 
 

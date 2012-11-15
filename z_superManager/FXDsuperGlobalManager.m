@@ -87,37 +87,32 @@
 
 - (NSString*)mainStoryboardName {
 	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
-		
+		//
 	}
 
 	return _mainStoryboardName;
 }
 
 - (FXDStoryboard*)mainStoryboard {
-	//MARK: Testing storyboard instantiating at the moment without retaining it
-	/*
 	if (_mainStoryboard == nil) {
 		if (self.mainStoryboardName) {
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
+		else {
+			FXDLog_OVERRIDE;
+		}
 	}
 
 	return _mainStoryboard;
-	 */
-	
-	FXDStoryboard *_tempStoryboard = nil;
-
-	if (self.mainStoryboardName) {
-		_tempStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
-	}
-
-	return _tempStoryboard;
 }
 
 - (id)rootScene {
 	if (_rootScene == nil) {
 		if (self.mainStoryboard) {
 			_rootScene = [self.mainStoryboard instantiateInitialViewController];
+		}
+		else {
+			FXDLog_OVERRIDE;
 		}
 	}
 

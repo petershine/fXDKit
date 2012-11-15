@@ -18,6 +18,8 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
+	[super awakeFromNib];
+
 	// Primitives
 
 	// Instance variables
@@ -25,7 +27,6 @@
 	// Properties
 
 	// IBOutlets
-	[super awakeFromNib];
 	
 }
 

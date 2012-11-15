@@ -36,60 +36,49 @@
 	self = [super initWithCoder:aDecoder];	FXDLog_SEPARATE;
 
 	if (self) {
-		// Primitives
-
-		// Instance variables
-
-		// Properties
-
-		// IBOutlets
 		//MARK: awakeFromNib is called automatically
 	}
-
-	FXDLog(@"DONE: %@", strClassSelector);
 
 	return self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 
-	/*MARK: Unnecessary check
+	BOOL shouldUseAwakeFromNib = NO;
+
+	NSString *filename = nil;
+	NSString *resourcePath = nil;
+
 	if (nibNameOrNil == nil) {
-		NSString *filename = nil;
-		NSString *resourcePath = nil;
-		
 		filename = NSStringFromClass([self class]);
 		resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
 		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
 			nibNameOrNil = filename;
 		}
-		
-		FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
+		else {
+			shouldUseAwakeFromNib = YES;
+		}
 	}
-	 */
 	
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];	FXDLog_SEPARATE;
 
+	FXDLog(@"shouldUseAwakeFromNib: %d", shouldUseAwakeFromNib);
+
     if (self) {
-		if (nibNameOrNil == nil) {
-			// Primitives
-
-			// Instance variables
-
-			// Properties
-
-			// IBOutlets
+		if (shouldUseAwakeFromNib) {
+			FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
+			
 			[self awakeFromNib];
 		}
     }
 
-	FXDLog(@"DONE: %@", strClassSelector);
-	
     return self;
 }
 
 - (void)awakeFromNib {
+	[super awakeFromNib];	FXDLog_SEPARATE;
+
 	// Primitives
 
 	// Instance variables
@@ -97,17 +86,12 @@
 	// Properties
 
 	// IBOutlets
-	[super awakeFromNib];	FXDLog_SEPARATE;
-	
-	// IBOutlets
-	if (self.view == nil) {
-		self.view = [UIView viewFromNibName:NSStringFromClass([self class]) withOwner:self];
-	}
 
-	FXDLog(@"DONE: %@", strClassSelector);
 }
 
 - (void)viewDidLoad {
+	[super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+
 	// Primitives
 
 	// Instance variables
@@ -115,9 +99,7 @@
 	// Properties
 
 	// IBOutlets
-	[super viewDidLoad];	FXDLog_SEPARATE_FRAME;
 
-	FXDLog(@"DONE: %@", strClassSelector);
 }
 
 
@@ -159,12 +141,14 @@
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];	FXDLog_SEPARATE_FRAME;
+	FXDLog(@"animated: %d", animated);
 	
 }
 
 #if USE_loggingViewDrawing
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];	FXDLog_SEPARATE_FRAME;
+	FXDLog(@"animated: %d", animated);
 	
 	// Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
@@ -178,16 +162,19 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];	FXDLog_SEPARATE_FRAME;
+	FXDLog(@"animated: %d", animated);
 	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];	//FXDLog_DEFAULT;
+	[super viewWillDisappear:animated];	FXDLog_SEPARATE_FRAME;
+	FXDLog(@"animated: %d", animated);
 	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];	//FXDLog_DEFAULT;
+	[super viewDidDisappear:animated];	FXDLog_SEPARATE_FRAME;
+	FXDLog(@"animated: %d", animated);
 	
 }
 

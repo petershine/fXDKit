@@ -30,6 +30,8 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
+	[super awakeFromNib];
+
 	// Primitives
 
     // Instance variables
@@ -49,11 +51,12 @@
 	}
 
     // IBOutlets
-	[super awakeFromNib];
 	
 }
 
 - (void)viewDidLoad {
+	[super viewDidLoad];
+
 	// Primitives
 
 	// Instance variables
@@ -61,8 +64,6 @@
 	// Properties
 
 	// IBOutlets
-    [super viewDidLoad];
-
 	if (self.mainTableview) {
 		if (self.mainTableview.dataSource == nil) {
 			[self.mainTableview setDataSource:self];
@@ -623,9 +624,11 @@
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
+	/*
 	if (self.mainTableview) {
 		[self.mainTableview reloadData];
 	}
+	 */
 }
 
 

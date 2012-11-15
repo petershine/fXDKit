@@ -55,6 +55,8 @@
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
+	[super awakeFromNib];
+
 	// Primitives
 
     // Instance variables
@@ -62,11 +64,12 @@
     // Properties
 
     // IBOutlets
-	[super awakeFromNib];
 	
 }
 
 - (void)viewDidLoad {
+	[super viewDidLoad];
+
     // Primitives
 
     // Instance variables
@@ -74,7 +77,6 @@
     // Properties
 
     // IBOutlets
-    [super viewDidLoad];
 
 	//MARK: Necessary to nullify regular Navigation push and pop
 	[self.navigationBar setDelegate:self];
