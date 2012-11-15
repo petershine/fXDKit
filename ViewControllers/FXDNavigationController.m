@@ -32,8 +32,8 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];	FXDLog_SEPARATE;
+- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_DEFAULT;
+	self = [super initWithCoder:aDecoder];
 
 	if (self) {
 		//MARK: awakeFromNib is called automatically
@@ -42,8 +42,8 @@
 	return self;
 }
 
-- (id)initWithRootViewController:(UIViewController *)rootViewController {
-	self  = [super initWithRootViewController:rootViewController];	FXDLog_SEPARATE;
+- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_SEPARATE;
+	self  = [super initWithRootViewController:rootViewController];
 
 	if (self) {
 		[self awakeFromNib];
@@ -52,8 +52,8 @@
 	return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];	FXDLog_SEPARATE;
+- (void)awakeFromNib {	FXDLog_DEFAULT;
+	[super awakeFromNib];
 
 	// Primitives
 
@@ -65,8 +65,8 @@
 
 }
 
-- (void)viewDidLoad {
-	[super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
+	[super viewDidLoad];
 
 	// Primitives
 

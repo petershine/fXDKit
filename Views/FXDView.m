@@ -17,7 +17,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
+- (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
 
 	if (self) {
@@ -27,7 +27,7 @@
 	return self;
 }
 
-- (id)initWithFrame:(CGRect)frame {	//FXDLog_DEFAULT;
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 	
     if (self) {
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (void)awakeFromNib {	//FXDLog_DEFAULT;
+- (void)awakeFromNib {
 	[super awakeFromNib];
 
 	// Primitives

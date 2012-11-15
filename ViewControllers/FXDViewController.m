@@ -32,8 +32,8 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];	FXDLog_SEPARATE;
+- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_DEFAULT;
+	self = [super initWithCoder:aDecoder];
 
 	if (self) {
 		//MARK: awakeFromNib is called automatically
@@ -42,16 +42,13 @@
 	return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 
 	BOOL shouldUseAwakeFromNib = NO;
 
-	NSString *filename = nil;
-	NSString *resourcePath = nil;
-
 	if (nibNameOrNil == nil) {
-		filename = NSStringFromClass([self class]);
-		resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
+		NSString *filename = NSStringFromClass([self class]);
+		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
 		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
 			nibNameOrNil = filename;
@@ -59,16 +56,16 @@
 		else {
 			shouldUseAwakeFromNib = YES;
 		}
+
+		FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
 	}
-	
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];	FXDLog_SEPARATE;
 
 	FXDLog(@"shouldUseAwakeFromNib: %d", shouldUseAwakeFromNib);
+	
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
 		if (shouldUseAwakeFromNib) {
-			FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
-			
 			[self awakeFromNib];
 		}
     }
@@ -76,8 +73,8 @@
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];	FXDLog_SEPARATE;
+- (void)awakeFromNib {	FXDLog_DEFAULT;
+	[super awakeFromNib];
 
 	// Primitives
 
@@ -89,8 +86,8 @@
 
 }
 
-- (void)viewDidLoad {
-	[super viewDidLoad];	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
+	[super viewDidLoad];
 
 	// Primitives
 
@@ -118,9 +115,11 @@
 }
 
 //MARK: For older iOS 5
+/*
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+ */
 
 
 #if USE_loggingRotatingOrientation
@@ -139,42 +138,44 @@
 
 
 #pragma mark - View Appearing
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];	FXDLog_SEPARATE_FRAME;
+- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	FXDLog(@"animated: %d", animated);
-	
+
+	[super viewWillAppear:animated];
 }
 
 #if USE_loggingViewDrawing
-- (void)viewWillLayoutSubviews {
-	[super viewWillLayoutSubviews];	FXDLog_SEPARATE_FRAME;
-	FXDLog(@"animated: %d", animated);
+- (void)viewWillLayoutSubviews {	FXDLog_SEPARATE_FRAME;
+	[super viewWillLayoutSubviews];
 	
 	// Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
 
-- (void)viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLayoutSubviews {	FXDLog_SEPARATE_FRAME;
+	[super viewDidLayoutSubviews];
 	
 	// Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
 #endif
 
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];	FXDLog_SEPARATE_FRAME;
+- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	FXDLog(@"animated: %d", animated);
+	
+	[super viewDidAppear:animated];
 	
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];	FXDLog_SEPARATE_FRAME;
+- (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	FXDLog(@"animated: %d", animated);
+
+	[super viewWillDisappear:animated];
 	
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];	FXDLog_SEPARATE_FRAME;
+- (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	FXDLog(@"animated: %d", animated);
+
+	[super viewDidDisappear:animated];
 	
 }
 
