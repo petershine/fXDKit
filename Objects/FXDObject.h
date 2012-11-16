@@ -8,6 +8,7 @@
 
 #import "FXDKit.h"
 
+
 @interface FXDObject : NSObject {
     // Primitives
 

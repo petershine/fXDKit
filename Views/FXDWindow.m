@@ -8,6 +8,8 @@
 
 #import "FXDWindow.h"
 
+#import "FXDviewProgress.h"
+
 
 #pragma mark - Public implementation
 @implementation FXDWindow

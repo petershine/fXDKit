@@ -6,10 +6,17 @@
 //  Copyright (c) 2012 petershine. All rights reserved.
 //
 
+#ifndef limitDefaultFetch
+	#define limitDefaultFetch	1000
+#endif
+
+#ifndef sizeDefaultBatch
+	#define sizeDefaultBatch	10
+#endif
+
+
 #import "FXDKit.h"
 
-
-#import <CoreData/CoreData.h>
 
 @interface FXDManagedObjectContext : NSManagedObjectContext {
     // Primitives

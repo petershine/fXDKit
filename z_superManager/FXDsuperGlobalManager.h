@@ -6,13 +6,10 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
-
 #import "Reachability.h"
 
 
-#import "FXDKit.h"
-
+#import "FXDObject.h"
 
 @interface FXDsuperGlobalManager : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
     // Primitives

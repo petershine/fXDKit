@@ -8,8 +8,6 @@
 
 #import "FXDKit.h"
 
-#import <MapKit/MapKit.h>
-
 
 @interface FXDAnnotation : MKPointAnnotation {
     // Primitives
@@ -18,7 +16,7 @@
 }
 
 // Properties
-@property (strong, nonatomic) id addedObj;
+@property (weak, nonatomic) id addedObj;
 
 
 #pragma mark - Public

@@ -8,8 +8,6 @@
 
 #import "FXDKit.h"
 
-#import <MediaPlayer/MediaPlayer.h>
-
 
 @interface FXDMediaItem : MPMediaItem {
     // Primitives

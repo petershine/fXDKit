@@ -8,6 +8,7 @@
 
 #import "FXDsuperFileManager.h"
 
+
 @implementation FXDsuperFileManager (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;

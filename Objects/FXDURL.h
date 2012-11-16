@@ -6,16 +6,6 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-typedef enum {
-	fileKindUndefined,
-	fileKindImage,
-	fileKindDocument,
-	fileKindAudio,
-	fileKindMovie,
-	
-} FILE_KIND_TYPE;
-
-
 #ifndef pathcomponentDocuments
 	#define pathcomponentDocuments @"Documents/"
 #endif

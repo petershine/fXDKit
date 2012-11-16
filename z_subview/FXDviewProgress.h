@@ -11,7 +11,7 @@
 #endif
 
 
-#import "FXDKit.h"
+#import "FXDView.h"
 
 @interface FXDviewProgress : FXDView {
     // Primitives

@@ -24,10 +24,10 @@
 
 #import "FXDKit.h"
 
-#import <CoreData/CoreData.h>
-
 #import "FXDsuperFileManager.h"
 
+
+//TODO: Add FXDManagedDocumnet
 
 @interface FXDsuperCoreDataManager : UIManagedDocument <NSFetchedResultsControllerDelegate> {
     // Primitives

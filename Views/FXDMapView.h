@@ -8,8 +8,6 @@
 
 #import "FXDKit.h"
 
-#import <MapKit/MapKit.h>
-
 
 @interface FXDMapView : MKMapView {
     // Primitives

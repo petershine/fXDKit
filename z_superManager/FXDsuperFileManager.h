@@ -37,10 +37,10 @@
 #endif
 
 
-#import "FXDKit.h"
-
 #import "DirectoryWatcher.h"
 
+
+#import "FXDObject.h"
 
 @interface FXDsuperFileManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives

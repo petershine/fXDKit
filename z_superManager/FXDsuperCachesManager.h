@@ -6,13 +6,12 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-
 #define notificationCachesControlDidEnumerateCachesMetadataQueryResults	@"notificationCachesControlDidEnumerateCachesMetadataQueryResults"
 
 #define prefixCached	@"_cached_"
 
+
+#import "FXDObject.h"
 
 @interface FXDsuperCachesManager : FXDObject <NSMetadataQueryDelegate> {
     // Primitives

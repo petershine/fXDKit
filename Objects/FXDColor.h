@@ -32,5 +32,6 @@
 @interface UIColor (Added)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue;
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(float)alpha;
++ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(float)alpha;	// Use 0xFF0000 type
 
 @end

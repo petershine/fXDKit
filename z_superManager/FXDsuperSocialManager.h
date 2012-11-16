@@ -19,16 +19,7 @@
 #define objkeyTwitterStatus		@"status"
 
 
-#import "FXDKit.h"
-
-#import <Accounts/Accounts.h>
-#import <Social/Social.h>
-
-#if ENVIRONMENT_newestSDK
-#else
-	#import <Twitter/Twitter.h>
-#endif
-
+#import "FXDObject.h"
 
 @interface FXDsuperSocialManager : FXDObject <UIAlertViewDelegate> {
     // Primitives

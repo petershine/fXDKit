@@ -17,6 +17,16 @@
 #import <TargetConditionals.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
+#import <MapKit/MapKit.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <MessageUI/MessageUI.h>
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
+
+#if ENVIRONMENT_newestSDK
+#else
+	#import <Twitter/Twitter.h>
+#endif
 
 
 // Headers

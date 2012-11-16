@@ -6,15 +6,14 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
-
 #define limitConcurrentOperationCount	1
 #define limitMaximumCachedImageCount	50
 
 
 typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger rowIndex);
 
+
+#import "FXDViewController.h"
 
 @interface FXDsuperTableController : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives

@@ -8,8 +8,6 @@
 
 #import "FXDKit.h"
 
-#import <CoreData/CoreData.h>
-
 
 @interface FXDFetchedResultsController : NSFetchedResultsController {
     // Primitives
