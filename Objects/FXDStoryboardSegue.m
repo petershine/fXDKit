@@ -46,7 +46,7 @@
 	return descriptionString;
 }
 
-- (void)perform {	FXDLog_OVERRIDE;
+- (void)perform {	FXDLog_DEFAULT;
 	FXDLog(@"segue: %@", self);
 }
 

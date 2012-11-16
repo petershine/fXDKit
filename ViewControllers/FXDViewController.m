@@ -200,6 +200,7 @@
 	FXDLog(@"identifier: %@", identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
+	FXDLog(@"shouldPerform: %d", shouldPerform);
 
 	return shouldPerform;
 }
@@ -225,7 +226,6 @@
 	FXDLog(@"sender: %@", sender);
 
 	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-
 	FXDLog(@"canPerform: %d", canPerform);
 
 	return canPerform;

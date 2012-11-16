@@ -13,8 +13,6 @@
 
 #import "FXDKit.h"
 
-@class FXDStoryboard;
-
 
 @interface FXDsuperGlobalManager : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
     // Primitives
