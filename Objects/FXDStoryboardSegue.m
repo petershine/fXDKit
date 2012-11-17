@@ -79,6 +79,10 @@
 		fullDescription[@"destination"] = self.destinationViewController;
 	}
 
+	if ([self respondsToSelector:@selector(popoverController)]) {
+		fullDescription[@"popoverController"] = [self performSelector:@selector(popoverController)];
+	}
+
 	if ([fullDescription count] == 0) {
 		fullDescription = nil;
 	}

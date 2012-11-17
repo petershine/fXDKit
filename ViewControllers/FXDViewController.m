@@ -139,8 +139,6 @@
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
-	FXDLog(@"animated: %d", animated);
-
 	[super viewWillAppear:animated];
 }
 
@@ -159,22 +157,16 @@
 #endif
 
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
-	FXDLog(@"animated: %d", animated);
-	
 	[super viewDidAppear:animated];
 	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
-	FXDLog(@"animated: %d", animated);
-
 	[super viewWillDisappear:animated];
 	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
-	FXDLog(@"animated: %d", animated);
-
 	[super viewDidDisappear:animated];
 	
 }
