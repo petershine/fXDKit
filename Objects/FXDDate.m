@@ -46,14 +46,15 @@
 	
     NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:UTCtimezone];
-    [dateFormatter setDateFormat:@"YYMMdd_HHmm"];
+    //[dateFormatter setDateFormat:@"YYMMdd_HHmm"];
+	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
 	
     NSString *shortUTCdateString = [dateFormatter stringFromDate:localDate];
 	
     return shortUTCdateString;
 }
 
-+ (NSString*)shortLocateDateStringForUTCdate:(NSDate*)UTCdate {
++ (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate {
 	if (UTCdate == nil) {
 		UTCdate = [self date];
 	}
@@ -62,7 +63,8 @@
 	
     NSTimeZone *UTCtimezone = [NSTimeZone defaultTimeZone];
     [dateFormatter setTimeZone:UTCtimezone];
-    [dateFormatter setDateFormat:@"YYMMdd_HHmm"];
+    //[dateFormatter setDateFormat:@"YYMMdd_HHmm"];
+	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
 	
     NSString *shortLocalDateString = [dateFormatter stringFromDate:UTCdate];
 	
