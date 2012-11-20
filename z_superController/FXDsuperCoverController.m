@@ -205,6 +205,8 @@
 
 	[self.view insertSubview:destination.view belowSubview:self.navigationBar];
 
+	[destination didMoveToParentViewController:self];
+
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
 						options:UIViewAnimationCurveEaseOut
@@ -253,6 +255,7 @@
 		[self.navigationBar popNavigationItemAnimated:YES];
 	}
 
+	[source willMoveToParentViewController:nil];
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
