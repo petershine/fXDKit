@@ -478,7 +478,7 @@
 #else
 		numberOfRows = fetchedObjectsCount;
 #endif
-		FXDLog(@"numberOfRows: %d == fetchedObjectsCount: %d", numberOfRows, fetchedObjectsCount);
+		FXDLog(@"section: %d numberOfRows: %d == fetchedObjectsCount: %d", section, numberOfRows, fetchedObjectsCount);
 	}
 	else if (self.mainDataSource) {
 		numberOfRows = [self.mainDataSource count];

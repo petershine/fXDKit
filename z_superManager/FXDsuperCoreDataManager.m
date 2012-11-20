@@ -273,28 +273,42 @@
 
 	FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
-    if (managedObjectContext && managedObjectContext.hasChanges) {
-		[managedObjectContext performBlock:^{	FXDLog_DEFAULT;
 
-			NSError *error = nil;
-			BOOL didSave = [managedObjectContext save:&error];
-
-			FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
-
-			if (didSave == NO) {
-				FXDLog_ERROR;
-			}
-
-			if (finishedBlock) {
-				finishedBlock();
-			}
-		}];
-    }
-	else {
+	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
+		
 		if (finishedBlock) {
 			finishedBlock();
 		}
+
+		return;
 	}
+
+
+	void (^_contextSavingBlock)() = ^{	FXDLog_DEFAULT;
+		//TODO: check if it's still deleting
+
+		NSError *error = nil;
+		BOOL didSave = [managedObjectContext save:&error];
+
+		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
+
+		if (didSave == NO) {
+			FXDLog_ERROR;
+		}
+
+		if (finishedBlock) {
+			finishedBlock();
+		}
+	};
+
+	[managedObjectContext performBlockAndWait:_contextSavingBlock];
+
+	//MARK: Study about performBlock for asynchronous saving, and when to use it properly
+	/*
+	if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType) {
+		[managedObjectContext performBlock:_contextSavingBlock];
+	}
+	 */
 }
 
 

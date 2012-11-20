@@ -8,6 +8,7 @@
 
 #define integerNotDefined	-1
 
+
 #define durationAnimation	0.3
 #define durationQuickAnimation	0.15
 

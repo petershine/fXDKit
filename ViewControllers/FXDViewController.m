@@ -176,6 +176,21 @@
 
 
 #pragma mark - Method overriding
+- (void)willMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
+	FXDLog(@"parent: %@", parent);
+
+	[super willMoveToParentViewController:parent];
+}
+
+- (void)removeFromParentViewController {	FXDLog_DEFAULT;
+	[super removeFromParentViewController];
+}
+
+- (void)didMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
+	FXDLog(@"parent: %@", parent);
+
+	[super didMoveToParentViewController:parent];
+}
 
 
 #pragma mark - Segues
