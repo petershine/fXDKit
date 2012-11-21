@@ -17,16 +17,6 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-
-	if (self) {
-		//MARK: awakeFromNib is called automatically
-	}
-
-	return self;
-}
-
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	

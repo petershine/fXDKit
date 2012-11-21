@@ -186,6 +186,7 @@
 	[super removeFromParentViewController];
 }
 
+#warning @"//TODO: find why this is being called more than once"
 - (void)didMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
 	FXDLog(@"parent: %@", parent);
 

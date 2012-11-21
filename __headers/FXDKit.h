@@ -95,6 +95,8 @@
 
 #import "FXDMapView.h"
 
+#import "FXDPopoverBackgroundView.h"
+
 
 // ViewControllers
 #import "FXDViewController.h"

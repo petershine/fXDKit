@@ -14,24 +14,9 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	// Instance variables
-
-	// Properties
-}
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super initWithCoder:aDecoder];
-
-	if (self) {
-		//MARK: awakeFromNib is called automatically
-	}
-
-	return self;
-}
-
 - (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
 
 	self = [super initWithFrame:frame collectionViewLayout:layout];

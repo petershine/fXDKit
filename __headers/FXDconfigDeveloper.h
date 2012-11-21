@@ -5,11 +5,6 @@
 //  Copyright 2011 Ensight. All rights reserved.
 //
 
-#ifndef ENVIRONMENT_newestSDK
-	#define ENVIRONMENT_newestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
-#endif
-
-
 #if DEBUG
 	#if ForDEVELOPER
 		#define USE_loggingRotatingOrientation	0
@@ -17,15 +12,17 @@
 		#define USE_loggingBorderLine	0
 		#define USE_loggingResultObjFiltering	0
 
-		#define USE_TestFlight	0
+		#define USE_FXDLog	1
+
+		#define USE_TestFlight	1
 
 	#else
+		#define USE_FXDLog	0
+
 		#define USE_TestFlight	1
 
 	#endif
 
-
-	#define USE_FXDLog	1
 
 	#define USE_Flurry	0
 
@@ -109,3 +106,7 @@
 
 #endif
 
+
+#ifndef ENVIRONMENT_newestSDK
+	#define ENVIRONMENT_newestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+#endif
