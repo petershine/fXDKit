@@ -5,6 +5,10 @@
 //  Copyright 2011 Ensight. All rights reserved.
 //
 
+#ifndef ENVIRONMENT_newestSDK
+	#define ENVIRONMENT_newestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+#endif
+
 
 #if DEBUG
 	#if ForDEVELOPER
@@ -13,46 +17,27 @@
 		#define USE_loggingBorderLine	0
 		#define USE_loggingResultObjFiltering	0
 
-		#define USE_FXDLog	1
 		#define USE_TestFlight	0
-	#else
 
-		#define USE_FXDLog	0
-		#define USE_TestFlight	0
+	#else
+		#define USE_TestFlight	1
 
 	#endif
 
-	#define USE_Flurry	1
+
+	#define USE_FXDLog	1
+
+	#define USE_Flurry	0
 
 #else
 	#define USE_FXDLog	0
-	#define USE_TestFlight	0
 
+	#define USE_TestFlight	0
 	#define USE_Flurry	1
 
 #endif
 
 
-#if	USE_TestFlight
-	#import "TestFlight.h"
-
-	#ifndef testflightTeamToken
-		#define testflightTeamToken	@"c22710bbb9f61076a6111ca395109328_MzY2NQ"
-	#endif
-
-	#define NSLog	TFLog
-
-	#define	CHECKPOINT(v)		[TestFlight passCheckpoint:v]
-	#define CHECKPOINT_DEFAULT	CHECKPOINT(strClassSelector)
-
-#else
-	#define	CHECKPOINT(v)
-	#define CHECKPOINT_DEFAULT
-
-#endif
-
-
-//#define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
 #define strClassSelector	[NSString stringWithFormat:@"%@%s", NSStringFromClass([self class]), __FUNCTION__]
 #define FXDLog	NSLog
 
@@ -89,15 +74,38 @@
 #endif
 
 
-#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[self alloc] init];});return _sharedInstance
+#if	USE_TestFlight
+	#import "TestFlight.h"
+
+	#ifndef testflightTeamToken
+		#define testflightTeamToken	@"c22710bbb9f61076a6111ca395109328_MzY2NQ"
+	#endif
+
+	#define NSLog	TFLog
+
+	#define	CHECKPOINT(v)		[TestFlight passCheckpoint:v]
+	#define CHECKPOINT_DEFAULT	CHECKPOINT(strClassSelector)
+
+#else
+	#define	CHECKPOINT(v)
+	#define CHECKPOINT_DEFAULT
+
+#endif
 
 
-#define ENVIRONMENT_newestSDK	__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1
+#if USE_Flurry
+	#import "Flurry.h"
 
+	#ifndef flurryApplicationKey
+		#define flurryApplicationKey	@"8IEDWHXIGT3ZZDS5ANN3"
+	#endif
 
-#define appSearhPath_Document	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
-#define appSearhPath_Caches		[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
+	#define	LOGEVENT(v)			[Flurry logEvent:v]
+	#define LOGEVENT_DEFAULT	LOGEVENT(strClassSelector)
 
-#define appDirectory_Document	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
-#define appDirectory_Caches		[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
+#else
+	#define	LOGEVENT(v)
+	#define LOGEVENT_DEFAULT
+
+#endif
 

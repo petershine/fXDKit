@@ -6,15 +6,6 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#ifndef pathcomponentDocuments
-	#define pathcomponentDocuments @"Documents/"
-#endif
-
-#ifndef pathcomponentCaches
-	#define pathcomponentCaches	@"Caches/"
-#endif
-
-
 #import "FXDKit.h"
 
 
