@@ -18,3 +18,4 @@
 #define delayPressedButton	0.1
 
 #define radiusCorner	5.0
+#define radiusBigCorner	8.0

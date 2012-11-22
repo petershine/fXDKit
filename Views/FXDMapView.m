@@ -47,6 +47,8 @@
 
 #pragma mark - Method overriding
 - (void)layoutSubviews {
+	[super layoutSubviews];
+	
 	id disclaimerView = [self disclaimerView];
 	
 	if (disclaimerView) {

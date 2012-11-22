@@ -6,11 +6,6 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#ifndef popoverCornerRadius
-	#define popoverCornerRadius 8.0
-#endif
-
-
 #import "FXDKit.h"
 
 

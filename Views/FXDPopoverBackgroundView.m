@@ -32,8 +32,6 @@
 #if DEBUG
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
 #endif
-		self.layer.masksToBounds = YES;
-		self.layer.cornerRadius = popoverCornerRadius;
 
 		// Primitives
 
@@ -85,17 +83,21 @@
 }
 
 - (void)layoutSubviews {	FXDLog_DEFAULT;
+	[super layoutSubviews];
 
-	CGFloat popoverArrowHeight = [[self class] arrowHeight];
-	CGFloat popoverArrowBase = [[self class] arrowBase];
+	CGFloat arrowHeight = [[self class] arrowHeight];
+	CGFloat arrowBase = [[self class] arrowBase];
 
-	UIEdgeInsets popoverContentViewInsets = [[self class] contentViewInsets];
+	UIEdgeInsets contentViewInsets = [[self class] contentViewInsets];
 
 
 	if (self.viewBackground == nil) {
 		
 		self.viewBackground = [[UIView alloc] initWithFrame:
-							   CGRectMake(0, popoverArrowHeight, self.frame.size.width, self.frame.size.height-popoverArrowHeight)];
+							   CGRectMake(0,
+										  arrowHeight,
+										  self.frame.size.width,
+										  self.frame.size.height -arrowHeight)];
 #if DEBUG
 		self.viewBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
 #else
@@ -104,27 +106,25 @@
 
 		self.viewBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
-		self.viewBackground.layer.masksToBounds = YES;
-		self.viewBackground.layer.cornerRadius = self.layer.cornerRadius;
-
 		[self addSubview:self.viewBackground];
 	}
 
 
 	if (self.imageviewArrow == nil) {
-		FXDLog(@"self.arrowOffset: %f", self.arrowOffset);
-		FXDLog(@"self.arrowDirection: %d", self.arrowDirection);
 
 		self.imageviewArrow = [[UIImageView alloc] initWithFrame:
-							   CGRectMake(0, 0, popoverArrowBase, popoverArrowBase+self.viewBackground.layer.cornerRadius)];
+							   CGRectMake(0,
+										  0,
+										  arrowBase,
+										  arrowHeight)];
 
 #if DEBUG
 		self.imageviewArrow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
 #else
-		self.viewBackground.backgroundColor = [UIColor clearColor];
+		self.imageviewArrow.backgroundColor = [UIColor clearColor];
 #endif
 
-		//TODO: Modify based arrowDirection
+		//TODO: Modify based on arrowDirection
 		CGFloat modifiedCenterX = (self.frame.size.width/2.0) +self.arrowOffset;
 		self.imageviewArrow.center = CGPointMake(modifiedCenterX, self.imageviewArrow.center.y);
 
@@ -138,7 +138,7 @@
 
 	if (self.viewTitle == nil && self.titleText) {
 		self.viewTitle = [[UILabel alloc] initWithFrame:
-						  CGRectMake(0, 0, self.frame.size.width, popoverContentViewInsets.top)];
+						  CGRectMake(0, 0, self.frame.size.width, contentViewInsets.top)];
 
 		self.viewTitle.backgroundColor = [UIColor clearColor];
 
@@ -153,8 +153,8 @@
 	if (self.viewTitle) {
 		CGRect modifiedFrame = self.viewTitle.frame;
 		modifiedFrame.origin.x = ((self.frame.size.width -modifiedFrame.size.width)/2.0);
-		modifiedFrame.origin.y = ((popoverContentViewInsets.top -modifiedFrame.size.height)/2.0);
-		modifiedFrame.origin.y += popoverArrowHeight;
+		modifiedFrame.origin.y = ((contentViewInsets.top -modifiedFrame.size.height)/2.0);
+		modifiedFrame.origin.y += arrowHeight;
 		[self.viewTitle setFrame:modifiedFrame];
 
 		[self addSubview:self.viewTitle];

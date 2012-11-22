@@ -83,7 +83,7 @@
 	// Properties
 
 	// IBOutlets
-
+#warning @"//TODO: remove IBOutlets configuration from awakeFromNib
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
@@ -96,7 +96,7 @@
 	// Properties
 
 	// IBOutlets
-
+#warning @"//TODO: remove NON IBOutlets configuration from viewDidLoad
 }
 
 
