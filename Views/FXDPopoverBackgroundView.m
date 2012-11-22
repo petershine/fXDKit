@@ -14,9 +14,9 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_OVERRIDE;
+- (void)dealloc {	FXDLog_DEFAULT;
 	[[self class] sharedInstance].titleText = nil;
-	[[self class] sharedInstance].titleView = nil;
+	[[self class] sharedInstance].viewTitle = nil;
 	
 	// Instance variables
 
@@ -34,11 +34,6 @@
 #endif
 		self.layer.masksToBounds = YES;
 		self.layer.cornerRadius = popoverCornerRadius;
-
-		self.layer.shadowColor = [UIColor blackColor].CGColor;
-		self.layer.shadowOpacity = 0.4;
-		self.layer.shadowRadius = 2;
-		self.layer.shadowOffset = CGSizeMake(0, 2);
 
 		// Primitives
 
@@ -77,65 +72,93 @@
 
 
 #pragma mark - Method overriding
-+ (CGFloat)arrowHeight {
-	return popoverArrowHeight;
++ (CGFloat)arrowHeight {	FXDLog_OVERRIDE;
+	return 22;
 }
 
-+ (CGFloat)arrowBase {
-	return popoverArrowBase;
++ (CGFloat)arrowBase {	FXDLog_OVERRIDE;
+	return 22;
 }
 
-+ (UIEdgeInsets)contentViewInsets {
-	return UIEdgeInsetsMake(popoverContentViewInsetsTop, popoverContentViewInsetsLeft, popoverContentViewInsetsBottom, popoverContentViewInsetsRight);
++ (UIEdgeInsets)contentViewInsets {	FXDLog_OVERRIDE;
+	return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 - (void)layoutSubviews {	FXDLog_DEFAULT;
-	[super layoutSubviews];
 
-	if (self.backgroundView == nil) {
-		CGRect modifiedFrame = self.frame;
-		modifiedFrame.origin.x = 0.0;
-		modifiedFrame.origin.y = popoverArrowHeight;
-		modifiedFrame.size.height -= popoverArrowHeight;
+	CGFloat popoverArrowHeight = [[self class] arrowHeight];
+	CGFloat popoverArrowBase = [[self class] arrowBase];
 
-		self.backgroundView = [[UIView alloc] initWithFrame:modifiedFrame];
-		self.backgroundView.backgroundColor = [UIColor blackColor];
+	UIEdgeInsets popoverContentViewInsets = [[self class] contentViewInsets];
 
-		self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
-		self.backgroundView.layer.masksToBounds = YES;
-		self.backgroundView.layer.cornerRadius = popoverCornerRadius;
+	if (self.viewBackground == nil) {
+		
+		self.viewBackground = [[UIView alloc] initWithFrame:
+							   CGRectMake(0, popoverArrowHeight, self.frame.size.width, self.frame.size.height-popoverArrowHeight)];
+#if DEBUG
+		self.viewBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+#else
+		self.viewBackground.backgroundColor = [UIColor clearColor];
+#endif
 
-		[self addSubview:self.backgroundView];
-		[self sendSubviewToBack:self.backgroundView];
+		self.viewBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+
+		self.viewBackground.layer.masksToBounds = YES;
+		self.viewBackground.layer.cornerRadius = self.layer.cornerRadius;
+
+		[self addSubview:self.viewBackground];
 	}
-	
 
-	[self configureTitleTextAndTitleViewFromSharedInstance];
 
-	if (self.titleView == nil && self.titleText) {
-		self.titleView = [[UILabel alloc] initWithFrame:
-						  CGRectMake(0, 0, self.frame.size.width, popoverContentViewInsetsTop)];
+	if (self.imageviewArrow == nil) {
+		FXDLog(@"self.arrowOffset: %f", self.arrowOffset);
+		FXDLog(@"self.arrowDirection: %d", self.arrowDirection);
 
-		self.titleView.backgroundColor = [UIColor clearColor];
+		self.imageviewArrow = [[UIImageView alloc] initWithFrame:
+							   CGRectMake(0, 0, popoverArrowBase, popoverArrowBase+self.viewBackground.layer.cornerRadius)];
 
-		[(UILabel*)self.titleView setTextAlignment:NSTextAlignmentCenter];
-		[(UILabel*)self.titleView setFont:[UIFont boldSystemFontOfSize:20]];
-		[(UILabel*)self.titleView setTextColor:[UIColor whiteColor]];
-		[(UILabel*)self.titleView setShadowColor:[UIColor darkGrayColor]];
+#if DEBUG
+		self.imageviewArrow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+#else
+		self.viewBackground.backgroundColor = [UIColor clearColor];
+#endif
 
-		[(UILabel*)self.titleView setText:self.titleText];
+		//TODO: Modify based arrowDirection
+		CGFloat modifiedCenterX = (self.frame.size.width/2.0) +self.arrowOffset;
+		self.imageviewArrow.center = CGPointMake(modifiedCenterX, self.imageviewArrow.center.y);
+
+		[self addSubview:self.imageviewArrow];
 	}
-	
-	if (self.titleView) {
-		CGRect modifiedFrame = self.titleView.frame;
+
+
+	self.titleText = [[self class] sharedInstance].titleText;
+	self.viewTitle = [[self class] sharedInstance].viewTitle;
+
+
+	if (self.viewTitle == nil && self.titleText) {
+		self.viewTitle = [[UILabel alloc] initWithFrame:
+						  CGRectMake(0, 0, self.frame.size.width, popoverContentViewInsets.top)];
+
+		self.viewTitle.backgroundColor = [UIColor clearColor];
+
+		[(UILabel*)self.viewTitle setTextAlignment:NSTextAlignmentCenter];
+		[(UILabel*)self.viewTitle setFont:[UIFont boldSystemFontOfSize:20]];
+		[(UILabel*)self.viewTitle setTextColor:[UIColor whiteColor]];
+		[(UILabel*)self.viewTitle setShadowColor:[UIColor darkGrayColor]];
+
+		[(UILabel*)self.viewTitle setText:self.titleText];
+	}
+
+	if (self.viewTitle) {
+		CGRect modifiedFrame = self.viewTitle.frame;
 		modifiedFrame.origin.x = ((self.frame.size.width -modifiedFrame.size.width)/2.0);
-		modifiedFrame.origin.y = ((popoverContentViewInsetsTop -modifiedFrame.size.height)/2.0);
+		modifiedFrame.origin.y = ((popoverContentViewInsets.top -modifiedFrame.size.height)/2.0);
 		modifiedFrame.origin.y += popoverArrowHeight;
-		[self.titleView setFrame:modifiedFrame];
+		[self.viewTitle setFrame:modifiedFrame];
 
-		[self addSubview:self.titleView];
-		[self bringSubviewToFront:self.titleView];
+		[self addSubview:self.viewTitle];
+		[self bringSubviewToFront:self.viewTitle];
 	}
 }
 
@@ -144,11 +167,6 @@
 
 
 #pragma mark - Public
-- (void)configureTitleTextAndTitleViewFromSharedInstance {	FXDLog_OVERRIDE;
-
-	self.titleText = [[self class] sharedInstance].titleText;
-	self.titleView = [[self class] sharedInstance].titleView;
-}
 
 
 //MARK: - Observer implementation
