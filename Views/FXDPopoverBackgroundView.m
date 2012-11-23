@@ -138,7 +138,10 @@
 
 	if (self.viewTitle == nil && self.titleText) {
 		self.viewTitle = [[UILabel alloc] initWithFrame:
-						  CGRectMake(0, 0, self.frame.size.width, contentViewInsets.top)];
+						  CGRectMake(0,
+									 0,
+									 self.frame.size.width,
+									 contentViewInsets.top)];
 
 		self.viewTitle.backgroundColor = [UIColor clearColor];
 
