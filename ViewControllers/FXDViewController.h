@@ -40,7 +40,7 @@
 #pragma mark - Category
 @interface UIViewController (Added)
 #pragma mark - IBActions
-//MARK: implement this for controller whick will unwind
+//MARK: implement this for controller which will unwind
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
 
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;

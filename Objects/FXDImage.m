@@ -307,4 +307,13 @@
 	return maskedImage;
 }
 
+- (CGSize)deviceScaledSize {
+	FXDLog(@"self.size: %@", NSStringFromCGSize(self.size));
+
+	CGSize scaledSize = CGSizeMake(self.size.width/self.scale, self.size.height /self.scale);
+	FXDLog(@"scaledSize: %@", NSStringFromCGSize(scaledSize));
+
+	return scaledSize;
+}
+
 @end

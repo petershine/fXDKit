@@ -30,10 +30,12 @@
 
 
 #pragma mark - Category
-// Use snippets from this link: http://iphoneincubator.com/blog/windows-views/image-processing-tricks
+
 @interface UIImage (Added)
+
 + (UIImage*)bundledImageForName:(NSString*)imagename;
 
+// Use snippets from this link: http://iphoneincubator.com/blog/windows-views/image-processing-tricks
 - (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect;
 
 - (UIImage*)smallerImageUsingMaximumSize:(CGSize)maximumSize;
@@ -47,5 +49,7 @@
 - (UIImage*)fixOrientation;
 
 - (UIImage*)maskedImageWithMaskImageName:(NSString*)maskImageName;
+
+- (CGSize)deviceScaledSize;
 
 @end

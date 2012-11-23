@@ -82,18 +82,11 @@
 
 	// Properties
 
-	// IBOutlets
 #warning @"//TODO: remove IBOutlets configuration from awakeFromNib
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
-
-	// Primitives
-
-	// Instance variables
-
-	// Properties
 
 	// IBOutlets
 #warning @"//TODO: remove NON IBOutlets configuration from viewDidLoad
@@ -158,7 +151,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidAppear:animated];
-	
+#warning @"//TODO: review viewcontroller lifecycle, make sure self.view is not confusing viewLoading and view appearing
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
