@@ -110,7 +110,7 @@
 //MARK: For older iOS 5
 /*
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
  */
 
@@ -149,9 +149,9 @@
 }
 #endif
 
+#warning @"//TODO: review viewcontroller lifecycle, make sure self.view is not confusing viewLoading and view appearing
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidAppear:animated];
-#warning @"//TODO: review viewcontroller lifecycle, make sure self.view is not confusing viewLoading and view appearing
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
@@ -169,14 +169,21 @@
 
 
 #pragma mark - Method overriding
-- (void)willMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
-	FXDLog(@"parent: %@", parent);
+- (void)addChildViewController:(UIViewController *)childController {	FXDLog_DEFAULT;
+	FXDLog(@"childController: %@", childController);
 
-	[super willMoveToParentViewController:parent];
+	[super addChildViewController:childController];
+
 }
 
 - (void)removeFromParentViewController {	FXDLog_DEFAULT;
 	[super removeFromParentViewController];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
+	FXDLog(@"parent: %@", parent);
+
+	[super willMoveToParentViewController:parent];
 }
 
 #warning @"//TODO: find why this is being called more than once"
@@ -239,17 +246,23 @@
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"sender: %@", sender);
 
-	UIViewController *viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+	__block UIViewController *viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 
 	FXDLog(@"1.viewController: %@", viewController);
 
 	if (viewController == nil) {
-		for (UIViewController *childScene in self.childViewControllers) {
-			if ([childScene canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-				viewController = childScene;
-				break;
-			}
-		}
+		//MARK: Iterate backward
+		[self.childViewControllers
+		 enumerateObjectsWithOptions:NSEnumerationReverse
+		 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
+
+			 if (obj && viewController == nil) {
+				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
+					 viewController = (UIViewController*)obj;
+				 }
+			 }
+		 }];
 	}
 
 	FXDLog(@"2.viewController: %@", viewController);

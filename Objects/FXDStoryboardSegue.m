@@ -18,11 +18,11 @@
 
 
 #pragma mark - Initialization
-- (id)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {
+- (id)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {	FXDLog_DEFAULT;
 	
 	self = [super initWithIdentifier:identifier source:source destination:destination];
 
-	if (self) {	FXDLog_DEFAULT;
+	if (self) {
 		// Primitives
 		
 		// Instance variables
