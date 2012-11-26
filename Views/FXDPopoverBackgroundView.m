@@ -79,7 +79,9 @@
 }
 
 + (UIEdgeInsets)contentViewInsets {	FXDLog_OVERRIDE;
-	return UIEdgeInsetsMake(10, 10, 10, 10);
+	CGFloat minimumInset = [self minimumInset];
+	
+	return UIEdgeInsetsMake(minimumInset, minimumInset, minimumInset, minimumInset);
 }
 
 - (void)layoutSubviews {	FXDLog_DEFAULT;
@@ -125,6 +127,7 @@
 #endif
 
 		//TODO: Modify based on arrowDirection
+		
 		CGFloat modifiedCenterX = (self.frame.size.width/2.0) +self.arrowOffset;
 		self.imageviewArrow.center = CGPointMake(modifiedCenterX, self.imageviewArrow.center.y);
 
@@ -154,10 +157,17 @@
 	}
 
 	if (self.viewTitle) {
+		CGFloat minimumInset = [[self class] minimumInset];
+		
 		CGRect modifiedFrame = self.viewTitle.frame;
-		modifiedFrame.origin.x = ((self.frame.size.width -modifiedFrame.size.width)/2.0);
+		modifiedFrame.origin.x = minimumInset;
+
 		modifiedFrame.origin.y = ((contentViewInsets.top -modifiedFrame.size.height)/2.0);
 		modifiedFrame.origin.y += arrowHeight;
+		modifiedFrame.origin.y -= (minimumInset/2.0);
+
+		modifiedFrame.size.width = self.frame.size.width -(minimumInset*2.0);
+
 		[self.viewTitle setFrame:modifiedFrame];
 
 		[self addSubview:self.viewTitle];
@@ -170,6 +180,9 @@
 
 
 #pragma mark - Public
++ (CGFloat)minimumInset {	FXDLog_OVERRIDE;
+	return 0.0;
+}
 
 
 //MARK: - Observer implementation

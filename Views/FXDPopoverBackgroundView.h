@@ -34,6 +34,8 @@
 #pragma mark - Public
 + (FXDPopoverBackgroundView*)sharedInstance;
 
++ (CGFloat)minimumInset;
+
 
 //MARK: - Observer implementation
 

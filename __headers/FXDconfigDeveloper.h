@@ -70,7 +70,7 @@
 	#import "TestFlight.h"
 
 	#ifndef testflightTeamToken
-		#define testflightTeamToken	@"c22710bbb9f61076a6111ca395109328_MzY2NQ"
+		#define testflightTeamToken	@"testflightTeamToken"
 	#endif
 
 	#define NSLog	TFLog
@@ -89,7 +89,7 @@
 	#import "Flurry.h"
 
 	#ifndef flurryApplicationKey
-		#define flurryApplicationKey	@"8IEDWHXIGT3ZZDS5ANN3"
+		#define flurryApplicationKey	@"flurryApplicationKey"
 	#endif
 
 	#define	LOGEVENT(v)			[Flurry logEvent:v]
