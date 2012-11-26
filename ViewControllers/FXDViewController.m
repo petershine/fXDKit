@@ -373,11 +373,16 @@
 			[self customizeLeftBarbuttonWithText:NSLocalizedString(text_Back, nil)
 								  andWithOnImage:onImage
 								 andWithOffImage:offImage
+									  withOffset:CGPointZero
 									   forTarget:target
 									   forAction:action];
 		}
 		else {
-			[self customizeLeftBarbuttonWithOnImage:onImage andWithOffImage:offImage forTarget:target forAction:action];
+			[self customizeLeftBarbuttonWithOnImage:onImage
+									andWithOffImage:offImage
+										 withOffset:CGPointZero
+										  forTarget:target
+										  forAction:action];
 		}
 	}
 	else {
@@ -386,53 +391,50 @@
 	}
 }
 
-- (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
+- (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
 	
-	UIButton *button = [self buttonWithOnImage:onImage andOffImage:offImage orWithText:text];
-	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+	UIView *buttonGroupview = [self buttonGroupviewWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
 	
-	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroupview];
 	
 	[(UIViewController*)target navigationItem].leftBarButtonItem = barButtonItem;
 }
 
-- (void)customizeLeftBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
+- (void)customizeLeftBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
 	
-	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage forTarget:target forAction:action];
+	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage withOffset:offset forTarget:target forAction:action];
 	
 	if (barButtonItem) {
 		[(UIViewController*)target navigationItem].leftBarButtonItem = barButtonItem;
 	}
 }
 
-- (void)customizeRightBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {
+- (void)customizeRightBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {
 	
-	UIButton *button = [self buttonWithOnImage:onImage andOffImage:offImage orWithText:text];
-	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+	UIView *buttonGroupview = [self buttonGroupviewWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
 	
-	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroupview];
 	
 	[(UIViewController*)target navigationItem].rightBarButtonItem = barButtonItem;
 }
 
-- (void)customizeRightBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
+- (void)customizeRightBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
 	
-	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage forTarget:target forAction:action];
+	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage withOffset:offset forTarget:target forAction:action];
 	
 	if (barButtonItem) {
 		[(UIViewController*)target navigationItem].rightBarButtonItem = barButtonItem;
 	}
 }
 
-- (UIBarButtonItem*)barButtonWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage forTarget:(id)target forAction:(SEL)action {
+- (UIBarButtonItem*)barButtonWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {
 	
 	UIBarButtonItem *barButtonItem = nil;
 	
 	if (offImage) {
-		UIButton *button = [self buttonWithOnImage:onImage andOffImage:offImage orWithText:nil];
-		[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+		UIView *buttonGroupview = [self buttonGroupviewWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:nil forTarget:target forAction:action];
 		
-		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroupview];
 	}
 	else {
 		if (action == @selector(dismissInterfaceWithAnimation:)) {
@@ -443,11 +445,13 @@
 	return barButtonItem;
 }
 
-- (UIButton*)buttonWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage orWithText:(NSString*)text {
+- (UIView*)buttonGroupviewWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage withOffset:(CGPoint)offset orWithText:(NSString*)text forTarget:(id)target forAction:(SEL)action {
+
 	CGRect buttonFrame = CGRectMake(0.0, 0.0, onImage.size.width, onImage.size.height);
 	
 	UIButton *button = [[UIButton alloc] initWithFrame:buttonFrame];
-	
+	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+
 	[button setBackgroundImage:offImage forState:UIControlStateNormal];
 	
 	if (onImage) {
@@ -455,30 +459,11 @@
 		[button setBackgroundImage:onImage forState:UIControlStateSelected];
 	}
 	
-	if (text) {
-		CGRect modifiedFrame = buttonFrame;
-
-		/*
-		if ([text isEqualToString:NSLocalizedString(text_Back, nil)]) {
-			modifiedFrame.origin.x = 7.0;
-		}
-		 */
-		
-		UILabel *backLabel = [[UILabel alloc] initWithFrame:modifiedFrame];
+	if (text) {		
+		UILabel *backLabel = [[UILabel alloc] initWithFrame:buttonFrame];
 		backLabel.text = text;
 		backLabel.textColor = [UIColor whiteColor];
-		
-		//backLabel.font = [UIFont systemFontOfSize:12.0];
 		backLabel.font = [UIFont boldSystemFontOfSize:12.0];
-
-		/*
-		if ([text isEqualToString:NSLocalizedString(text_Back, nil)]) {
-			backLabel.textColor = [UIColor colorUsingIntegersForRed:234 forGreen:234 forBlue:234];
-		}
-		else if ([text isEqualToString:NSLocalizedString(text_Reset, nil)]) {
-			backLabel.font = [UIFont systemFontOfSize:13.0];
-		}
-		 */
 		
 		backLabel.textAlignment = NSTextAlignmentCenter;
 		backLabel.backgroundColor = [UIColor clearColor];
@@ -487,8 +472,26 @@
 		
 		[button addSubview:backLabel];
 	}
-	
-	return button;
+
+
+	UIView *buttonGroupview = nil;
+
+	if (CGPointEqualToPoint(offset, CGPointZero) == NO) {
+		buttonGroupview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width+ABS(offset.x), onImage.size.height+ABS(offset.y))];
+
+		// Add only when they are positive numbers
+		CGRect modifiedFrame = button.frame;
+		modifiedFrame.origin.x += (offset.x > 0) ? offset.x : 0;
+		modifiedFrame.origin.y += (offset.y > 0) ? offset.y : 0;
+		[button setFrame:modifiedFrame];
+	}
+	else {
+		buttonGroupview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width, onImage.size.height)];
+	}
+
+	[buttonGroupview addSubview:button];
+
+	return buttonGroupview;
 }
 
 
