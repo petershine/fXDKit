@@ -298,10 +298,14 @@
 		FXDLog(@"mask: %@", mask);
 
 		CGImageRef masked = CGImageCreateWithMask([maskedImage CGImage], mask);
+		CFRelease(mask);
+		
 		FXDLog(@"masked: %@", masked);
 
 		maskedImage = [UIImage imageWithCGImage:masked];
 		FXDLog(@"maskedImage: %@", maskedImage);
+
+		CFRelease(masked);
 	}
 
 	return maskedImage;
