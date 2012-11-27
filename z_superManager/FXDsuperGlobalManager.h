@@ -6,6 +6,8 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#warning @"//TODO: remove unnecessary methods, not related to app launching and managing, especially those for utility providing"
+
 #import "Reachability.h"
 
 
@@ -41,6 +43,10 @@
 
 #pragma mark - Public
 + (FXDsuperGlobalManager*)sharedInstance;
+
+- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
+
+#warning @"//TODO: refactor following method to be organized into categories or subclasses
 
 + (BOOL)isSystemVersionLatest;
 

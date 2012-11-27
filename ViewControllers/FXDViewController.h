@@ -39,8 +39,8 @@
 
 #pragma mark - Category
 @interface UIViewController (Added)
-#pragma mark - IBActions
 
+#pragma mark - IBActions
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;	//MARK: implement this for controller which will unwind childScene (previousScene)
 
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;

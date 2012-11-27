@@ -165,6 +165,15 @@
 
 
 #pragma mark - Public
+- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_OVERRIDE;
+	FXDLog(@"windowLoadingBlock: %@", windowLoadingBlock);
+
+	if (windowLoadingBlock) {
+		windowLoadingBlock();
+	}
+}
+
+
 + (BOOL)isSystemVersionLatest {
 	BOOL isSystemVersionLatest = NO;
 	
@@ -313,7 +322,7 @@
 	[[self sharedInstance] presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
 }
 
-- (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;	
+- (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
 	
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
