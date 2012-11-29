@@ -15,6 +15,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
+	[[self class] sharedInstance].shouldHideArrowView = NO;
+
 	[[self class] sharedInstance].titleText = nil;
 	[[self class] sharedInstance].viewTitle = nil;
 	
@@ -71,11 +73,23 @@
 
 #pragma mark - Method overriding
 + (CGFloat)arrowHeight {	FXDLog_OVERRIDE;
-	return 22;
+	CGFloat arrowHeight = 22.0;
+
+	if ([[self class] sharedInstance].shouldHideArrowView) {
+		arrowHeight = 0.0;
+	}
+
+	return arrowHeight;
 }
 
 + (CGFloat)arrowBase {	FXDLog_OVERRIDE;
-	return 22;
+	CGFloat arrowBase = 22.0;
+
+	if ([[self class] sharedInstance].shouldHideArrowView) {
+		arrowBase = 0.0;
+	}
+
+	return arrowBase;
 }
 
 + (UIEdgeInsets)contentViewInsets {	FXDLog_OVERRIDE;

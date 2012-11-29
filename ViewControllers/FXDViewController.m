@@ -92,7 +92,6 @@
 - (void)loadView {	FXDLog_DEFAULT;
 	[super loadView];
 
-	FXDLog(@"self.view: %@", self.view);
 }
 
 #pragma mark -
@@ -182,9 +181,12 @@
 }
 
 - (void)removeFromParentViewController {	FXDLog_DEFAULT;
+	__weak UIViewController *parentScene = self.parentViewController;
+
 	[super removeFromParentViewController];
 
-	FXDLog(@"self.parentViewController.childViewControllers:\n%@", self.parentViewController.childViewControllers);
+	//MAKE: self will be deallocated!. log before calling super
+	FXDLog(@"parentScene.childViewControllers:\n%@", parentScene.childViewControllers);
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
@@ -195,7 +197,6 @@
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
 	//MARK: May be called redundantly if removeFromSuperview is used previously
-	
 	FXDLog(@"parent: %@", parent);
 
 	[super didMoveToParentViewController:parent];

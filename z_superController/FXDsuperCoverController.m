@@ -264,15 +264,11 @@
 						 [source.view setFrame:animatedFrame];
 					 }
 					 completion:^(BOOL finished) {
-
-						 [source willMoveToParentViewController:nil];
-						 //[source.view removeFromSuperview];
+						 [source.view removeFromSuperview];
 						 [source removeFromParentViewController];
 
 						 FXDLog_DEFAULT;
 						 FXDLog(@"finished: %d", finished);
-
-						 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 					 }];
 }
 

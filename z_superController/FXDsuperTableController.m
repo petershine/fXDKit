@@ -23,6 +23,14 @@
 
 - (void)dealloc {
 	// Instance variables
+	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
+	FXDLog(@"_secondaryOperationQueue operationCount: %u", [_secondaryOperationQueue operationCount]);
+
+	[_cellOperationQueue cancelAllOperations];
+	[_secondaryOperationQueue cancelAllOperations];
+
+	_cellOperationQueue = nil;
+	_secondaryOperationQueue = nil;
 
 	// Properties
 }
@@ -555,6 +563,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+	
 	BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
 	if (didCancel) {

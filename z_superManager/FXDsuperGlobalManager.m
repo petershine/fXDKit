@@ -272,7 +272,7 @@
 }
 
 + (NSString*)deviceLanguageCode {	
-	NSString *firstLanguage = [self sharedInstance].deviceLanguageCode;
+	NSString *firstLanguage = [[self class] sharedInstance].deviceLanguageCode;
 	
 	return firstLanguage;
 }
@@ -319,7 +319,7 @@
 
 + (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 	
-	[[self sharedInstance] presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
+	[[[self class] sharedInstance] presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
 }
 
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;

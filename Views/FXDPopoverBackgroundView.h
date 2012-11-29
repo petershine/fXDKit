@@ -18,6 +18,7 @@
 }
 
 // Properties
+@property (assign, nonatomic) BOOL shouldHideArrowView;
 @property (strong, nonatomic) NSString *titleText;
 
 // IBOutlets
