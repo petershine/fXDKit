@@ -205,6 +205,8 @@
 
 	[self.view insertSubview:destination.view belowSubview:self.navigationBar];
 
+	[destination didMoveToParentViewController:self];
+
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
 						options:UIViewAnimationCurveEaseOut
@@ -263,7 +265,8 @@
 					 }
 					 completion:^(BOOL finished) {
 
-						 [source.view removeFromSuperview];
+						 [source willMoveToParentViewController:nil];
+						 //[source.view removeFromSuperview];
 						 [source removeFromParentViewController];
 
 						 FXDLog_DEFAULT;

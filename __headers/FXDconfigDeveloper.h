@@ -7,11 +7,12 @@
 
 #if DEBUG
 	#if ForDEVELOPER
+		#define USE_loggingViewControllerLifeCycle	0
 		#define USE_loggingRotatingOrientation	0
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingBorderLine	0
 		#define USE_loggingResultObjFiltering	0
-		#define USE_loggingManagedObjectActivities	1
+		#define USE_loggingManagedObjectActivities	0
 
 	#else
 

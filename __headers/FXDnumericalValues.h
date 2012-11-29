@@ -19,3 +19,7 @@
 
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0
+
+
+#define durationKeyboardAnimation	0.25
+#define heightKeyboard_iPad	352.0
