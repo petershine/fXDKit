@@ -129,22 +129,85 @@
 }
 
 - (NSInteger)yearValue {
-	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
 	
 	return [dateComponents year];
 }
 
 - (NSInteger)monthValue {
-	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
 	
 	return [dateComponents month];
 }
 
 - (NSInteger)dayValue {
-	NSDateComponents* dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
 	
 	return [dateComponents day];
 }
+
+- (NSString*)weekdayString {
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
+
+	NSString *weekdayString = nil;
+
+	switch ([dateComponents weekday]) {
+		case 0:
+			break;
+
+		case 1:
+			weekdayString = @"Sunday";
+			break;
+
+		case 2:
+			weekdayString = @"Monday";
+			break;
+
+		case 3:
+			weekdayString = @"Tuesday";
+			break;
+
+		case 4:
+			weekdayString = @"Wednesday";
+			break;
+
+		case 5:
+			weekdayString = @"Thursday";
+			break;
+
+		case 6:
+			weekdayString = @"Friday";
+			break;
+
+		case 7:
+			weekdayString = @"Saturday";
+			break;
+
+		default:
+			break;
+	}
+
+	return weekdayString;
+}
+
+- (NSInteger)hourValue {
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
+
+	return [dateComponents hour];
+}
+
+- (NSInteger)minuteValue {
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
+
+	return [dateComponents minute];
+}
+
+- (NSInteger)secondValue {
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
+
+	return [dateComponents second];
+}
+
 
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate {
 	BOOL isSame = NO;

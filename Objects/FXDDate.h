@@ -42,6 +42,11 @@
 - (NSInteger)yearValue;
 - (NSInteger)monthValue;
 - (NSInteger)dayValue;
+- (NSString*)weekdayString;
+
+- (NSInteger)hourValue;
+- (NSInteger)minuteValue;
+- (NSInteger)secondValue;
 
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
 

@@ -51,11 +51,15 @@
 
 #import <netinet/in.h>
 
+#if USE_ApigeeAnalytics
+#else
 typedef enum {
 	NotReachable = 0,
 	ReachableViaWiFi,
 	ReachableViaWWAN
 } NetworkStatus;
+#endif
+
 #define kReachabilityChangedNotification @"kNetworkReachabilityChangedNotification"
 
 @interface Reachability: NSObject

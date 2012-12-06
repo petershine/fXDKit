@@ -14,14 +14,12 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
+	FXDLog(@"self isViewLoaded: %d, self.view.window: %@", [self isViewLoaded], self.view.window);
+
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-	
-	FXDLog_DEFAULT;
-
-	FXDLog(@"self isViewLoaded: %d, self.view.window: %@", [self isViewLoaded], self.view.window);
 }
 
 - (void)dealloc {	
@@ -46,30 +44,22 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 
-	BOOL shouldUseAwakeFromNib = NO;
-
+#if ForDEVELOPER
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
 		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
-		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
-			nibNameOrNil = filename;
+		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath] == NO) {
+			FXDLog(@"NO fileExistsAtPath:resourcePath: %@ for %@", resourcePath, filename);
 		}
-		else {
-			shouldUseAwakeFromNib = YES;
-		}
-
-		FXDLog(@"resourcePath: %@ for %@", resourcePath, filename);
 	}
+#endif
 
-	FXDLog(@"shouldUseAwakeFromNib: %d", shouldUseAwakeFromNib);
 	
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
-		if (shouldUseAwakeFromNib) {
-			[self awakeFromNib];
-		}
+		[self awakeFromNib];
     }
 
     return self;
@@ -161,6 +151,7 @@
 #warning @"//TODO: review viewcontroller lifecycle, make sure self.view is not confusing viewLoading and view appearing
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidAppear:animated];
+	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
@@ -175,18 +166,17 @@
 
 #pragma mark -
 - (void)addChildViewController:(UIViewController *)childController {	FXDLog_DEFAULT;
+	FXDLog(@"childController: %@", childController);
+
 	[super addChildViewController:childController];
 
-	FXDLog(@"self.childViewControllers:\n%@", self.childViewControllers);
+	FXDLog_DEFAULT;
 }
 
 - (void)removeFromParentViewController {	FXDLog_DEFAULT;
-	__weak UIViewController *parentScene = self.parentViewController;
+	FXDLog(@"parentViewController: %@", self.parentViewController);
 
 	[super removeFromParentViewController];
-
-	//MAKE: self will be deallocated!. log before calling super
-	FXDLog(@"parentScene.childViewControllers:\n%@", parentScene.childViewControllers);
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
@@ -196,7 +186,6 @@
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
-	//MARK: May be called redundantly if removeFromSuperview is used previously
 	FXDLog(@"parent: %@", parent);
 
 	[super didMoveToParentViewController:parent];
@@ -204,6 +193,13 @@
 
 #pragma mark -
 - (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {	FXDLog_DEFAULT;
+
+	FXDLog(@"fromViewController: %@", fromViewController);
+	FXDLog(@"toViewController: %@", toViewController);
+	FXDLog(@"duration: %f", duration);
+	FXDLog(@"options: %u", options);
+
+	[super transitionFromViewController:fromViewController toViewController:toViewController duration:duration options:options animations:animations completion:completion];
 }
 
 - (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {	FXDLog_DEFAULT;
@@ -225,6 +221,13 @@
 
 
 #pragma mark - Segues
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"sender: %@", sender);
+	FXDLog(@"identifier: %@", identifier);
+
+	[super performSegueWithIdentifier:identifier sender:sender];
+}
+
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
@@ -235,13 +238,6 @@
 	FXDLog(@"shouldPerform: %d", shouldPerform);
 
 	return shouldPerform;
-}
-
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"sender: %@", sender);
-	FXDLog(@"identifier: %@", identifier);
-
-	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
