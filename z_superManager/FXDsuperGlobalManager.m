@@ -317,11 +317,6 @@
 	FXDLog(@"UIFont familyNames: %@", [UIFont familyNames]);
 }
 
-+ (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
-	
-	[[[self class] sharedInstance] presentMailComposeInterfaceForPresentingInterface:presentingInterface usingImage:image usingMessage:message];
-}
-
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
 	

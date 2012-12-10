@@ -82,7 +82,7 @@
 @implementation NSArray (CHCSVAdditions)
 
 + (id) arrayWithContentsOfCSVStream:(NSInputStream *)csvStream encoding:(NSStringEncoding)encoding error:(NSError **)error {
-    return [[[self alloc] initWithContentsOfCSVStream:csvStream encoding:encoding error:error] autorelease];
+    return [[[[self class] alloc] initWithContentsOfCSVStream:csvStream encoding:encoding error:error] autorelease];
 }
 - (id) initWithContentsOfCSVStream:(NSInputStream *)csvStream encoding:(NSStringEncoding)encoding error:(NSError **)error {
     return [self initWithContentsOfCSVStream:csvStream encoding:encoding delimiter:@"," error:error];
@@ -92,7 +92,7 @@
 }
 
 + (id) arrayWithContentsOfCSVStream:(NSInputStream *)csvStream usedEncoding:(NSStringEncoding *)usedEncoding error:(NSError **)error {
-    return [[[self alloc] initWithContentsOfCSVStream:csvStream usedEncoding:usedEncoding error:error] autorelease];
+    return [[[[self class] alloc] initWithContentsOfCSVStream:csvStream usedEncoding:usedEncoding error:error] autorelease];
 }
 - (id) initWithContentsOfCSVStream:(NSInputStream *)csvStream usedEncoding:(NSStringEncoding *)usedEncoding error:(NSError **)error {
     return [self initWithContentsOfCSVStream:csvStream usedEncoding:usedEncoding delimiter:@"," error:error];
@@ -125,7 +125,7 @@
 }
 
 + (id) arrayWithContentsOfCSVFile:(NSString *)csvFile encoding:(NSStringEncoding)encoding error:(NSError **)error {
-	return [[[self alloc] initWithContentsOfCSVFile:csvFile encoding:encoding error:error] autorelease];
+	return [[[[self class] alloc] initWithContentsOfCSVFile:csvFile encoding:encoding error:error] autorelease];
 }
 
 - (id) initWithContentsOfCSVFile:(NSString *)csvFile encoding:(NSStringEncoding)encoding error:(NSError **)error {
@@ -138,7 +138,7 @@
 }
 
 + (id) arrayWithContentsOfCSVFile:(NSString *)csvFile usedEncoding:(NSStringEncoding *)usedEncoding error:(NSError **)error {
-	return [[[self alloc] initWithContentsOfCSVFile:csvFile usedEncoding:usedEncoding error:error] autorelease];
+	return [[[[self class] alloc] initWithContentsOfCSVFile:csvFile usedEncoding:usedEncoding error:error] autorelease];
 }
 
 - (id) initWithContentsOfCSVFile:(NSString *)csvFile usedEncoding:(NSStringEncoding *)usedEncoding error:(NSError **)error {
@@ -151,7 +151,7 @@
 }
 
 + (id) arrayWithContentsOfCSVString:(NSString *)csvString encoding:(NSStringEncoding)encoding error:(NSError **)error {
-	return [[[self alloc] initWithContentsOfCSVString:csvString encoding:encoding error:error] autorelease];
+	return [[[[self class] alloc] initWithContentsOfCSVString:csvString encoding:encoding error:error] autorelease];
 }
 
 - (id) initWithContentsOfCSVString:(NSString *)csvString encoding:(NSStringEncoding)encoding error:(NSError **)error {

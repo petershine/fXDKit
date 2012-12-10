@@ -51,7 +51,7 @@
 	static id _sharedInstance = nil;
 
 	dispatch_once(&once,^{
-		_sharedInstance = [[self alloc] initWithFileURL:nil];	//MARK: Cannot use default implementation because of using this different initializer
+		_sharedInstance = [[[self class] alloc] initWithFileURL:nil];	//MARK: Cannot use default implementation because of using this different initializer
 	});
 
 	return _sharedInstance;
@@ -141,7 +141,8 @@
 														 modelConfiguration:nil
 															   storeOptions:options
 																	  error:&error];FXDLog_ERROR;
-		FXDLog(@"didConfigure: %d", didConfigure);
+
+		FXDLog(@"1.didConfigure: %d", didConfigure);
 		
 #if ForDEVELOPER
 		NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;
@@ -155,11 +156,29 @@
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self prepareCoredataControlObserverMethods];
 
+			FXDLog(@"2.didConfigure: %d", didConfigure);
+
+#if ForDEVELOPER
+			if (error) {
+				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
+				NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason]];
+
+				FXDAlertView *alertView = [[FXDAlertView alloc] initWithTitle:title
+																	  message:message
+																	 delegate:nil
+															cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+															otherButtonTitles:nil];
+				[alertView show];
+			}
+#endif
+			
 			if (finishedHandler) {
 				finishedHandler(didConfigure);
 			}
 			else {
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self];
+				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self userInfo:userInfo];
 			}
 		}];
 	}];
@@ -284,29 +303,29 @@
 	}
 
 
+	__weak FXDManagedObjectContext *_weakObjectContext = (FXDManagedObjectContext*)managedObjectContext;
+
 	void (^_contextSavingBlock)() = ^{	FXDLog_DEFAULT;
 		//TODO: check if it's still deleting
 
 		NSError *error = nil;
-		BOOL didSave = [managedObjectContext save:&error];
+		BOOL didSave = [_weakObjectContext save:&error];
 
-		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
+		FXDLog(@"didSave: %d concurrencyType: %d", didSave, _weakObjectContext.concurrencyType);
 
-		if (didSave == NO) {
-			FXDLog_ERROR;
-		}
+		FXDLog_ERROR;
 
 		if (finishedBlock) {
 			finishedBlock();
 		}
 	};
 
-	[managedObjectContext performBlockAndWait:_contextSavingBlock];
+	[_weakObjectContext performBlockAndWait:_contextSavingBlock];
 
 	//MARK: Study about performBlock for asynchronous saving, and when to use it properly
 	/*
-	if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType) {
-		[managedObjectContext performBlock:_contextSavingBlock];
+	if (_weakObjectContext.concurrencyType == NSMainQueueConcurrencyType) {
+		[_weakObjectContext performBlock:_contextSavingBlock];
 	}
 	 */
 }
