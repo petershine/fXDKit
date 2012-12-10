@@ -18,6 +18,7 @@
 
 
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
+#define userdefaultObjSavedUbiquityIdentityToken	@"SavedUbiquityIdentityTokenObjKey"
 
 #define objkeyUbiquitousFolders			@"objkeyUbiquitousFolders"
 #define objkeyUbiquitousFiles			@"objkeyUbiquitousFiles"

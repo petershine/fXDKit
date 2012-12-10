@@ -147,9 +147,25 @@
 		
 		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
 		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);
-		
+
+		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
+		FXDLog(@"savedTokenData: %@", updatedIdentityTokenData);
+
+		FXDLog(@"self.ubiquityIdentityToken: %@, updatedIdentityTokenData: %@ isEqual: %d", self.ubiquityIdentityToken, updatedIdentityTokenData, [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
+
+#warning @"//TODO: learn about how to handle ubiquityIdentityToken changed"
+
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
+
+			if (updatedIdentityTokenData == nil) {
+				updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
+
+				[[NSUserDefaults standardUserDefaults] setObject:updatedIdentityTokenData forKey:userdefaultObjSavedUbiquityIdentityToken];
+			}
+		}
+		else {
+			[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjSavedUbiquityIdentityToken];
 		}
 	}
 	else {
@@ -488,6 +504,7 @@
 	FXDLog(@"notification: %@", notification);
 }
 
+#pragma mark -
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 
 }

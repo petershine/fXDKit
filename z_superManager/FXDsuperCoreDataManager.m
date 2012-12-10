@@ -171,6 +171,7 @@
 				[alertView show];
 			}
 #endif
+#warning @"//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
 			
 			if (finishedHandler) {
 				finishedHandler(didConfigure);
@@ -344,6 +345,7 @@
 	[self prepareCoreDataControlWithUbiquityContainerURL:notification.object forFinishedHandler:nil];
 }
 
+#pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.name: %@", notification.name);
 	FXDLog(@"notification.object: %@", notification.object);
@@ -354,6 +356,7 @@
 
 }
 
+#pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
