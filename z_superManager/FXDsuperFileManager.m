@@ -151,7 +151,7 @@
 		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
 		FXDLog(@"savedTokenData: %@", updatedIdentityTokenData);
 
-		FXDLog(@"self.ubiquityIdentityToken: %@, updatedIdentityTokenData: %@ isEqual: %d", self.ubiquityIdentityToken, updatedIdentityTokenData, [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
+		FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
 
 #warning @"//TODO: learn about how to handle ubiquityIdentityToken changed"
 

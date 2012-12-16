@@ -79,7 +79,7 @@
 
 }
 
-- (void)loadView {	FXDLog_DEFAULT;
+- (void)loadView {	//FXDLog_DEFAULT;
 	[super loadView];
 
 }
@@ -169,8 +169,6 @@
 	FXDLog(@"childController: %@", childController);
 
 	[super addChildViewController:childController];
-
-	FXDLog_DEFAULT;
 }
 
 - (void)removeFromParentViewController {	FXDLog_DEFAULT;
@@ -179,37 +177,39 @@
 	[super removeFromParentViewController];
 }
 
-- (void)willMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
-	FXDLog(@"parent: %@", parent);
+- (void)willMoveToParentViewController:(UIViewController *)parent {	//FXDLog_DEFAULT;
+	//FXDLog(@"parent: %@", parent);
 
 	[super willMoveToParentViewController:parent];
 }
 
-- (void)didMoveToParentViewController:(UIViewController *)parent {	FXDLog_DEFAULT;
-	FXDLog(@"parent: %@", parent);
+- (void)didMoveToParentViewController:(UIViewController *)parent {	//FXDLog_DEFAULT;
+	//FXDLog(@"parent: %@", parent);
 
 	[super didMoveToParentViewController:parent];
 }
 
 #pragma mark -
-- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {	FXDLog_DEFAULT;
+- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {	//FXDLog_DEFAULT;
 
+	/*
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"toViewController: %@", toViewController);
 	FXDLog(@"duration: %f", duration);
 	FXDLog(@"options: %u", options);
+	 */
 
 	[super transitionFromViewController:fromViewController toViewController:toViewController duration:duration options:options animations:animations completion:completion];
 }
 
-- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {	FXDLog_DEFAULT;
-	FXDLog(@"isAppearing: %d animated: %d", isAppearing, animated);
+- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {	//FXDLog_DEFAULT;
+	//FXDLog(@"isAppearing: %d animated: %d", isAppearing, animated);
 
 	[super beginAppearanceTransition:isAppearing animated:animated];
 
 }
 
-- (void)endAppearanceTransition {	FXDLog_DEFAULT;
+- (void)endAppearanceTransition {	//FXDLog_DEFAULT;
 	[super endAppearanceTransition];
 }
 

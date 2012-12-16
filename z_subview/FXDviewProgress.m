@@ -27,7 +27,6 @@
 	// Properties
 
 	// IBOutlets
-	
 }
 
 
