@@ -190,5 +190,58 @@
 	[applicationWindow observedApplicationWindowShouldFadeOutProgressView:nil];
 }
 
+#pragma mark -
+- (void)configureRootViewController:(UIViewController*)rootViewController withAnimation:(BOOL)withAnimation willBecomeRootViewControllerBlock:(void (^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void (^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock {	FXDLog_DEFAULT;
+	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
+
+	if (withAnimation == NO) {
+		if (willBecomeRootViewControllerBlock) {
+			willBecomeRootViewControllerBlock();
+		}
+
+		[self setRootViewController:rootViewController];
+
+		if (didBecomeRootViewControllerBlock) {
+			didBecomeRootViewControllerBlock();
+		}
+
+		if (finishedAnimationBlock) {
+			finishedAnimationBlock();
+		}
+
+		return;
+	}
+
+	
+	UIViewController *previousScene = self.rootViewController;
+	
+
+	if (willBecomeRootViewControllerBlock) {
+		willBecomeRootViewControllerBlock();
+	}
+
+	[self setRootViewController:rootViewController];
+
+	[self addSubview:previousScene.view];
+
+
+	if (didBecomeRootViewControllerBlock) {
+		didBecomeRootViewControllerBlock();
+	}
+
+
+	[UIView animateWithDuration:delayOneSecond
+						  delay:0.0
+						options:UIViewAnimationCurveEaseIn
+					 animations:^{
+						 [previousScene.view setAlpha:0.0];
+					 } completion:^(BOOL finished) {
+						 [previousScene.view removeFromSuperview];
+
+						 if (finishedAnimationBlock) {
+							 finishedAnimationBlock();
+						 }
+					 }];
+}
 
 @end

@@ -44,16 +44,17 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 
-#if ForDEVELOPER
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
 		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
-		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath] == NO) {
+		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
+			nibNameOrNil = filename;
+		}
+		else {
 			FXDLog(@"NO fileExistsAtPath:resourcePath: %@ for %@", resourcePath, filename);
 		}
 	}
-#endif
 
 	
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
