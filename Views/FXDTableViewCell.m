@@ -97,8 +97,8 @@
 	if (image) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		
-		if (_backgroundImageview == nil) {
-			_backgroundImageview = [[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage];
+		if (self.backgroundImageview == nil) {
+			self.backgroundImageview = [[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage];
 			
 			self.backgroundImageview.userInteractionEnabled = NO;
 			
@@ -119,7 +119,7 @@
 		if (self.backgroundImageview) {
 			[self.backgroundImageview removeFromSuperview];
 			
-			_backgroundImageview = nil;
+			self.backgroundImageview = nil;
 			
 			self.selectionStyle = UITableViewCellSelectionStyleBlue;
 		}

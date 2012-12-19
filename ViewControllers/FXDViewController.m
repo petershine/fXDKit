@@ -149,7 +149,6 @@
 }
 #endif
 
-#warning @"//TODO: review viewcontroller lifecycle, make sure self.view is not confusing viewLoading and view appearing
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidAppear:animated];
 	

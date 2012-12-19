@@ -91,7 +91,7 @@
 	if (self.progressView) {
 		[self removeAsFadeOutSubview:self.progressView
 						afterRemoved:^{	FXDLog_DEFAULT;
-							_progressView = nil;
+							self.progressView = nil;
 						}];
 	}
 }
