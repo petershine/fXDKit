@@ -187,16 +187,26 @@
 					 }];
 }
 
-- (void)addAsFadeInSubview:(UIView*)subview {	//FXDLog_DEFAULT;
+- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock {
 	subview.alpha = 0.0;
-	
+
 	[self addSubview:subview];
 	[self bringSubviewToFront:subview];
-	
-	[subview fadeIn];
+
+	[UIView animateWithDuration:durationAnimation
+					 animations:^{
+						 subview.alpha = 1.0;
+					 }
+					 completion:^(BOOL finished) {
+
+						 if (afterAddedBlock) {
+							 afterAddedBlock();
+						 }
+					 }];
+
 }
 
-- (void)removeAsFadeOutSubview:(UIView*)subview afterRemoved:(void(^)(void))afterRemoved {	//FXDLog_DEFAULT;
+- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock {	//FXDLog_DEFAULT;
 
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
@@ -205,8 +215,8 @@
 					 completion:^(BOOL finished) {						 
 						 [subview removeFromSuperview];
 						 
-						 if (afterRemoved) {
-							 afterRemoved();
+						 if (afterRemovedBlock) {
+							 afterRemovedBlock();
 						 }
 					 }];
 }
