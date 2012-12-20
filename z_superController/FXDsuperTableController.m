@@ -150,6 +150,16 @@
 	return _cellTexts;
 }
 
+- (NSDictionary*)segueNames {
+
+	if (_segueNames == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+
+	return _segueNames;
+}
+
+#pragma mark -
 - (NSMutableArray*)mainDataSource {
 
 	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
@@ -281,7 +291,7 @@
 	return shouldSkip;
 }
 
-
+#pragma mark -
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 
 	[self configureSectionPostionTypeForCell:cell forIndexPath:indexPath];
@@ -343,6 +353,19 @@
 	return cellText;
 }
 
+- (NSString*)segueNameAtIndexPath:(NSIndexPath*)indexPath {
+	NSString *segueName = nil;
+
+	if (self.segueNames) {
+		NSString *objKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
+
+		segueName = (self.segueNames)[objKey];
+	}
+
+	return segueName;
+}
+
+#pragma mark -
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *mainImage = nil;
 	
@@ -633,11 +656,7 @@
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
-	/*
-	if (self.mainTableview) {
-		[self.mainTableview reloadData];
-	}
-	 */
+
 }
 
 
