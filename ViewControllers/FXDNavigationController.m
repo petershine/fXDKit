@@ -14,12 +14,10 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
     [super didReceiveMemoryWarning];
 	
     // Release any cached data, images, etc that aren't in use.
-
-	FXDLog_DEFAULT;
 }
 
 - (void)dealloc {	

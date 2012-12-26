@@ -53,6 +53,13 @@
 
 
 #pragma mark - Autorotating
+- (BOOL)shouldAutorotate {	FXDLog_DEFAULT;
+	return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+}
 
 
 #pragma mark - View Appearing

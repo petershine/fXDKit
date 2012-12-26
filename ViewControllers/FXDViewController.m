@@ -15,16 +15,18 @@
 
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
+	[super didReceiveMemoryWarning];
+
 	FXDLog(@"self isViewLoaded: %d, self.view.window: %@ self.view.superview: %@", [self isViewLoaded], self.view.window, self.view.superview);
 
-	if ([self isViewLoaded] == NO
-		|| self.view.superview == nil
-		|| self.view.window == nil) {
+#warning @"//TODO: find the right way to nilify unusable view for memory management"
+#if TEST_didReceiveMemoryWarningViewNilifying
+	if (([self isViewLoaded] && self.view.window == nil)
+		|| self.view.superview == nil) {
+
 		self.view = nil;
 	}
-
-
-    [super didReceiveMemoryWarning];
+#endif
     
     // Release any cached data, images, etc that aren't in use.
 }
@@ -49,7 +51,7 @@
 	return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
 
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
@@ -87,7 +89,7 @@
 
 }
 
-- (void)loadView {	//FXDLog_DEFAULT;
+- (void)loadView {	FXDLog_DEFAULT;
 	[super loadView];
 
 }
@@ -113,15 +115,14 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_SEPARATE_FRAME;
 	return [super preferredInterfaceOrientationForPresentation];
-	
 }
 
-//MARK: For older iOS 5
-/*
+
+#warning @"//MARK: For older iOS 5"
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
- */
+
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	FXDLog(@"%@ %@: %d, duration: %f frame: %@ bounds: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
