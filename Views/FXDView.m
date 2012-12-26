@@ -237,7 +237,7 @@
 	UIImage *image = nil;
 
 	UIGraphicsBeginImageContextWithOptions(view.bounds.size,
-										   view.opaque,
+										   NO,	//MARK: to allow transparency
 										   scale);
 	{
 		[view.layer renderInContext:UIGraphicsGetCurrentContext()];

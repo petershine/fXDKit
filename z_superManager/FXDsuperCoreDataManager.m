@@ -171,6 +171,7 @@
 				[alertView show];
 			}
 #endif
+			
 #warning @"//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
 			
 			if (finishedHandler) {

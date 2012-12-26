@@ -19,8 +19,10 @@
 // Properties
 @property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
-@property (weak, nonatomic) id addedObj;
-@property (weak, nonatomic) id linkedOperationIdentifier;
+@property (strong, nonatomic) id addedObj;
+@property (strong, nonatomic) id linkedOperationIdentifier;
+
+@property (strong, nonatomic) NSIndexPath *linkedIndexPath;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageview;

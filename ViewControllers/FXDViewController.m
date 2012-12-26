@@ -15,7 +15,14 @@
 
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
-	FXDLog(@"self isViewLoaded: %d, self.view.window: %@", [self isViewLoaded], self.view.window);
+	FXDLog(@"self isViewLoaded: %d, self.view.window: %@ self.view.superview: %@", [self isViewLoaded], self.view.window, self.view.superview);
+
+	if ([self isViewLoaded] == NO
+		|| self.view.superview == nil
+		|| self.view.window == nil) {
+		self.view = nil;
+	}
+
 
     [super didReceiveMemoryWarning];
     

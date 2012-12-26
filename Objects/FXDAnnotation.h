@@ -16,7 +16,7 @@
 }
 
 // Properties
-@property (weak, nonatomic) id addedObj;
+@property (strong, nonatomic) id addedObj;
 
 
 #pragma mark - Public
