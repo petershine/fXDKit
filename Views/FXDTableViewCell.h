@@ -11,7 +11,6 @@
 
 @interface FXDTableViewCell : UITableViewCell {
     // Primitives
-	SECTION_POSITION_TYPE _sectionPositionType;
 	
 	// Instance variables
 }
@@ -20,7 +19,6 @@
 @property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
 @property (strong, nonatomic) id addedObj;
-@property (strong, nonatomic) id linkedOperationIdentifier;
 
 @property (strong, nonatomic) NSIndexPath *linkedIndexPath;
 

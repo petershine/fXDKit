@@ -35,7 +35,7 @@
     // Instance variables
 
     // Properties
-	_sectionPositionType = integerNotDefined;
+	self.sectionPositionType = integerNotDefined;
 
     // IBOutlets		
 	if (self.imageView) {

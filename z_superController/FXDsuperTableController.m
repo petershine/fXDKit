@@ -18,7 +18,6 @@
     [super didReceiveMemoryWarning];
 
     // Release any cached data, images, etc that aren't in use.
-	_cachedImageDictionary = nil;
 }
 
 - (void)dealloc {
@@ -32,6 +31,12 @@
 	_cellOperationQueue = nil;
 	_secondaryOperationQueue = nil;
 
+	[_queuedCellOperationDictionary removeAllObjects];
+	_queuedCellOperationDictionary = nil;
+
+	[_secondaryQueuedOperationDictionary removeAllObjects];
+	_secondaryQueuedOperationDictionary = nil;
+
 	// Properties
 }
 
@@ -43,15 +48,6 @@
 	// Primitives
 
     // Instance variables
-	_mainOperationIdentifier = ^(NSInteger sectionIndex, NSInteger rowIndex) {
-		NSString *operationIdentifier = nil;
-
-		if (sectionIndex != integerNotDefined && rowIndex != integerNotDefined){
-			operationIdentifier = [NSString stringWithFormat:@"%d%d", sectionIndex, rowIndex];
-		}
-
-		return operationIdentifier;
-	};
 
     // Properties
 	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
@@ -189,17 +185,17 @@
 	return _cellOperationQueue;
 }
 
-- (NSMutableDictionary*)queuedOperationDictionary {
+- (NSMutableDictionary*)queuedCellOperationDictionary {
 
-	if (_queuedOperationDictionary == nil) {
-		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	if (_queuedCellOperationDictionary == nil) {
+		_queuedCellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 
-	return _queuedOperationDictionary;
+	return _queuedCellOperationDictionary;
 }
 
 - (NSOperationQueue*)secondaryOperationQueue {
-	if (_secondaryOperationQueue == nil) {
+	if (_secondaryOperationQueue == nil) {	FXDLog_OVERRIDE;
 		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
 	}
 
@@ -215,15 +211,6 @@
 	return _secondaryQueuedOperationDictionary;
 }
 
-- (NSMutableDictionary*)cachedImageDictionary {
-
-	if (_cachedImageDictionary == nil) {
-		_cachedImageDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-
-	return _cachedImageDictionary;
-}
-
 
 #pragma mark - Method overriding
 
@@ -232,22 +219,25 @@
 
 
 #pragma mark - Public
-- (BOOL)didCancelQueuedCellOperationForIdentifier:(NSString*)operationIdentifier orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
-
-	if (operationIdentifier == nil) {
-		if (indexPath) {
-			operationIdentifier = _mainOperationIdentifier(indexPath.section, indexPath.row);
-		}
-		else {
-			operationIdentifier = _mainOperationIdentifier(0, rowIndex);
-		}
-	}
-	
+- (BOOL)didCancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
 
 	BOOL didCancel = NO;
 
+	id operationObjKey = nil;
 
-	FXDBlockOperation *cellOperation = (self.queuedOperationDictionary)[operationIdentifier];
+	if (indexPath) {
+		operationObjKey = indexPath;
+	}
+	else if (rowIndex != integerNotDefined) {
+		operationObjKey = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+	}
+
+	if (operationObjKey == nil) {
+		return didCancel;
+	}
+
+
+	FXDBlockOperation *cellOperation = (self.queuedCellOperationDictionary)[operationObjKey];
 
 	if (cellOperation) {
 		[cellOperation cancel];
@@ -255,40 +245,27 @@
 		didCancel = cellOperation.isCancelled;
 	}
 
-	FXDBlockOperation *secondaryCellOperation = (self.secondaryQueuedOperationDictionary)[operationIdentifier];
+	[self.queuedCellOperationDictionary removeObjectForKey:operationObjKey];
 
-	if (secondaryCellOperation) {
-		[secondaryCellOperation cancel];
+
+	if (self.shouldCancelSecondaryOperation == NO) {
+		return didCancel;
 	}
 
 
-	[self.queuedOperationDictionary removeObjectForKey:operationIdentifier];
-	[self.secondaryQueuedOperationDictionary removeObjectForKey:operationIdentifier];
-	
+	if ([self.secondaryQueuedOperationDictionary count] > 0) {
+		FXDBlockOperation *secondaryCellOperation = (self.secondaryQueuedOperationDictionary)[operationObjKey];
+
+		if (secondaryCellOperation) {
+			[secondaryCellOperation cancel];
+
+			FXDLog(@"operationObjKey: %@ secondaryCellOperation.isCancelled: %d", operationObjKey, secondaryCellOperation.isCancelled);
+		}
+
+		[self.secondaryQueuedOperationDictionary removeObjectForKey:operationObjKey];
+	}
 
 	return didCancel;
-}
-
-- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forScrollView:(UIScrollView*)scrollView atIndexPath:(NSIndexPath*)indexPath {
-
-	BOOL shouldSkip = NO;
-
-	if (isForAutoScrollingToTop) {
-		if ([scrollView isKindOfClass:[UITableView class]]) {
-			if (indexPath.row > [[(UITableView*)scrollView indexPathsForVisibleRows] count]) {
-				shouldSkip = YES;
-			}
-		}
-		else if ([scrollView isKindOfClass:[UICollectionView class]]) {
-			if (indexPath.row > [[(UICollectionView*)scrollView indexPathsForVisibleItems] count]) {
-				shouldSkip = YES;
-			}
-		}
-
-		//FXDLog(@"shouldSkip: %d indexPath.row: %d", shouldSkip, indexPath.row);
-	}
-
-	return shouldSkip;
 }
 
 #pragma mark -
@@ -550,6 +527,7 @@
 	}
 	
 
+#warning @"//TODO: Only use this when supporting for iOS version previous to 6
 	[self processWithDisappearedRowAndDirectionForIndexPath:indexPath forFinishedHandler:^(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward) {
 
 		if (shouldContinue == NO) {
@@ -561,7 +539,7 @@
 
 		if (shouldEvaluateBackward) {
 			for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {
-				BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:nil orRowIndex:evaluatedRow];
+				BOOL didCancel = [self didCancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
 
 				if (didCancel) {
 					canceledCount++;
@@ -570,7 +548,7 @@
 		}
 		else {
 			for (NSInteger evaluatedRow = disappearedRow; evaluatedRow < [self.mainDataSource count]; evaluatedRow++) {
-				BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:nil orRowIndex:evaluatedRow];
+				BOOL didCancel = [self didCancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
 
 				if (didCancel) {
 					canceledCount++;
@@ -587,7 +565,7 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	
-	BOOL didCancel = [self didCancelQueuedCellOperationForIdentifier:nil orAtIndexPath:indexPath orRowIndex:integerNotDefined];
+	BOOL didCancel = [self didCancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
 	if (didCancel) {
 		FXDLog(@"didCancel: %d %@", didCancel, indexPath);

@@ -17,7 +17,6 @@
 
 // Properties
 @property (strong, nonatomic) id addedObj;
-@property (strong, nonatomic) id linkedOperationIdentifier;
 
 @property (strong, nonatomic) NSIndexPath *linkedIndexPath;
 

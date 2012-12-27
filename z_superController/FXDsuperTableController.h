@@ -10,17 +10,15 @@
 #define limitMaximumCachedImageCount	50
 
 
-typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger rowIndex);
-
-
 #import "FXDViewController.h"
 
 @interface FXDsuperTableController : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
-	FXDidentifierOperation _mainOperationIdentifier;
 
 	BOOL _isSystemVersionLatest;
 	BOOL _didStartAutoScrollingToTop;
+
+	BOOL _shouldCancelSecondaryOperation;
 	
 	// Instance variables
 	NSString *_mainCellIdentifier;
@@ -35,17 +33,17 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 	FXDFetchedResultsController *_mainResultsController;
 	
 	NSOperationQueue *_cellOperationQueue;
-	NSMutableDictionary *_queuedOperationDictionary;
+	NSMutableDictionary *_queuedCellOperationDictionary;
 
 	NSOperationQueue *_secondaryOperationQueue;
 	NSMutableDictionary *_secondaryQueuedOperationDictionary;
-
-	NSMutableDictionary *_cachedImageDictionary;
 }
 
 // Properties
 @property (assign, nonatomic) BOOL isSystemVersionLatest;
 @property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
+
+@property (assign, nonatomic) BOOL shouldCancelSecondaryOperation;
 
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
@@ -59,12 +57,10 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
+@property (strong, nonatomic) NSMutableDictionary *queuedCellOperationDictionary;
 
 @property (strong, nonatomic) NSOperationQueue *secondaryOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *secondaryQueuedOperationDictionary;
-
-@property (strong, nonatomic) NSMutableDictionary *cachedImageDictionary;
 
 
 // IBOutlets
@@ -75,8 +71,7 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 
 
 #pragma mark - Public
-- (BOOL)didCancelQueuedCellOperationForIdentifier:(NSString*)operationIdentifier orAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
-- (BOOL)shouldSkipReturningCellForAutoScrollingToTop:(BOOL)isForAutoScrollingToTop forScrollView:(UIScrollView*)scrollView atIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)didCancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
 
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 
@@ -93,6 +88,7 @@ typedef NSString* (^FXDidentifierOperation)(NSInteger sectionIndex, NSInteger ro
 
 - (UIView*)sectionDividerViewForWidth:(CGFloat)width andHeight:(CGFloat)height;
 
+#warning @"//TODO: Only use this when supporting for iOS version previous to 6
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath forFinishedHandler:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler;
 
 
