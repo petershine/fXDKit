@@ -201,6 +201,7 @@
 		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
 		[_secondaryOperationQueue setName:@"secondaryOperationQueue"];
 
+		[_secondaryOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 		FXDLog(@"maxConcurrentOperationCount: %d", [_secondaryOperationQueue maxConcurrentOperationCount]);
 	}
 
