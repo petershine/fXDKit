@@ -7,7 +7,6 @@
 //
 
 #define limitConcurrentOperationCount	1
-#define limitMaximumCachedImageCount	50
 
 
 #import "FXDViewController.h"
