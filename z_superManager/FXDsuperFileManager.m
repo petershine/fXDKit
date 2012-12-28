@@ -407,8 +407,8 @@
 	
 	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 	
-	if (_collectedURLarray == nil) {
-		_collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
+	if (self.collectedURLarray == nil) {
+		self.collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
 		[self.collectedURLarray addObject:itemURL];
 		
@@ -423,7 +423,7 @@
 
 - (void)startEvictingCollectedURLarray {
 	if ([self.collectedURLarray count] == 0) {
-		_collectedURLarray = nil;
+		self.collectedURLarray = nil;
 		
 		return;
 	}
@@ -441,7 +441,7 @@
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if ([self.collectedURLarray count] == 0) {
-				_collectedURLarray = nil;
+				self.collectedURLarray = nil;
 			}
 		}];
 	}];

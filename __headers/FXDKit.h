@@ -72,6 +72,8 @@
 
 #import "FXDMetadataQuery.h"
 
+#import	"FXDIndexPath.h"
+
 
 // Views
 #import "FXDView.h"

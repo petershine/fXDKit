@@ -245,8 +245,10 @@
 	}
 	UIGraphicsEndImageContext();
 
+	/*
 	FXDLog_DEFAULT;
 	FXDLog(@"image.size: %@", NSStringFromCGSize(image.size));
+	 */
 
     return image;
 }

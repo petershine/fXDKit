@@ -178,6 +178,8 @@
 
 	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
+		[_cellOperationQueue setName:@"cellOperationQueue"];
+
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
 	}
@@ -197,6 +199,9 @@
 - (NSOperationQueue*)secondaryOperationQueue {
 	if (_secondaryOperationQueue == nil) {	FXDLog_OVERRIDE;
 		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
+		[_secondaryOperationQueue setName:@"secondaryOperationQueue"];
+
+		FXDLog(@"maxConcurrentOperationCount: %d", [_secondaryOperationQueue maxConcurrentOperationCount]);
 	}
 
 	return _secondaryOperationQueue;
@@ -226,10 +231,10 @@
 	id operationObjKey = nil;
 
 	if (indexPath) {
-		operationObjKey = indexPath;
+		operationObjKey = [indexPath stringValue];
 	}
 	else if (rowIndex != integerNotDefined) {
-		operationObjKey = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+		operationObjKey = [[NSIndexPath indexPathForRow:rowIndex inSection:0] stringValue];
 	}
 
 	if (operationObjKey == nil) {
