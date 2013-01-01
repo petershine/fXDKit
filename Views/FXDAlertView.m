@@ -14,6 +14,15 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+	// Instance variables
+
+	if (_delegateBlock) {
+		_delegateBlock = nil;
+	}
+
+	FXDLog_DEFAULT;
+}
 
 
 #pragma mark - Initialization
@@ -51,11 +60,34 @@
 
 
 #pragma mark - Public
+- (id)initWithTitle:(NSString *)title message:(NSString *)message clickedButtonAtIndexBlock:(void(^)(FXDAlertView *alertView, NSInteger buttonIndex))clickedButtonAtIndexBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
+
+	self = [self initWithTitle:title
+					   message:message
+					  delegate:nil
+			 cancelButtonTitle:cancelButtonTitle
+			 otherButtonTitles:otherButtonTitles, nil];
+
+	if (self) {
+		[self setDelegate:self];
+
+		_delegateBlock = clickedButtonAtIndexBlock;
+	}
+
+	return self;
+}
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_DEFAULT;
+	FXDLog(@"buttonIndex: %d", buttonIndex);
+
+	if (_delegateBlock) {
+		_delegateBlock(self, buttonIndex);
+	}
+}
 
 
 @end
