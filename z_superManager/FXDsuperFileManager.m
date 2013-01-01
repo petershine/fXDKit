@@ -175,7 +175,6 @@
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 	
 	if (shouldRequestUbiquityContatinerURL) {
-		[[FXDWindow applicationWindow] showDefaultProgressView];
 		
 		[self evaluateSavedUbiquityContainerURL];		
 
@@ -184,7 +183,6 @@
 			FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
 
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[FXDWindow hideProgressViewAfterDelay:delayBeforeShowOrHideProgressView];
 
 				if (activeUbiquityContainerURL) {					
 					if (self.ubiquityContainerURL) {

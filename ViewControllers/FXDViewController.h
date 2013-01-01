@@ -15,9 +15,13 @@
     // Primitives
 	
 	// Instance variables
+	NSDictionary *_segueNames;
 }
 
 // Properties
+@property (assign, nonatomic) BOOL isSystemVersionLatest;
+
+@property (strong, nonatomic) NSDictionary *segueNames;
 
 // IBOutlets
 

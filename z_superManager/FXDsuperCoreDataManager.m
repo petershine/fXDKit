@@ -303,17 +303,15 @@
 
 		return;
 	}
-
-
-	__weak FXDManagedObjectContext *_weakObjectContext = (FXDManagedObjectContext*)managedObjectContext;
+	
 
 	void (^_contextSavingBlock)() = ^{	FXDLog_DEFAULT;
 		//TODO: check if it's still deleting
 
 		NSError *error = nil;
-		BOOL didSave = [_weakObjectContext save:&error];
+		BOOL didSave = [managedObjectContext save:&error];
 
-		FXDLog(@"didSave: %d concurrencyType: %d", didSave, _weakObjectContext.concurrencyType);
+		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
 
 		FXDLog_ERROR;
 
@@ -322,14 +320,9 @@
 		}
 	};
 
-	[_weakObjectContext performBlockAndWait:_contextSavingBlock];
+	[managedObjectContext performBlockAndWait:_contextSavingBlock];
 
 	//MARK: Study about performBlock for asynchronous saving, and when to use it properly
-	/*
-	if (_weakObjectContext.concurrencyType == NSMainQueueConcurrencyType) {
-		[_weakObjectContext performBlock:_contextSavingBlock];
-	}
-	 */
 }
 
 

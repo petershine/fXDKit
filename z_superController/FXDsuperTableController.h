@@ -13,53 +13,38 @@
 
 @interface FXDsuperTableController : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
-
-	BOOL _isSystemVersionLatest;
 	BOOL _didStartAutoScrollingToTop;
 
-	BOOL _shouldCancelSecondaryOperation;
-	
 	// Instance variables
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
 	
 	NSArray *_rowCounts;
 	NSDictionary *_cellTexts;
-	NSDictionary *_segueNames;
 
 	NSMutableArray *_mainDataSource;
 	
 	FXDFetchedResultsController *_mainResultsController;
 	
 	NSOperationQueue *_cellOperationQueue;
-	NSMutableDictionary *_queuedCellOperationDictionary;
-
-	NSOperationQueue *_secondaryOperationQueue;
-	NSMutableDictionary *_secondaryQueuedOperationDictionary;
+	NSMutableDictionary *_cellOperationDictionary;
 }
 
 // Properties
-@property (assign, nonatomic) BOOL isSystemVersionLatest;
 @property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
-
-@property (assign, nonatomic) BOOL shouldCancelSecondaryOperation;
 
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
 
 @property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;
-@property (strong, nonatomic) NSDictionary *segueNames;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *queuedCellOperationDictionary;
-
-@property (strong, nonatomic) NSOperationQueue *secondaryOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *secondaryQueuedOperationDictionary;
+@property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
 
 // IBOutlets

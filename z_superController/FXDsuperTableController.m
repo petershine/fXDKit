@@ -23,19 +23,13 @@
 - (void)dealloc {
 	// Instance variables
 	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
-	FXDLog(@"_secondaryOperationQueue operationCount: %u", [_secondaryOperationQueue operationCount]);
 
 	[_cellOperationQueue cancelAllOperations];
-	[_secondaryOperationQueue cancelAllOperations];
-
 	_cellOperationQueue = nil;
-	_secondaryOperationQueue = nil;
+	
 
-	[_queuedCellOperationDictionary removeAllObjects];
-	_queuedCellOperationDictionary = nil;
-
-	[_secondaryQueuedOperationDictionary removeAllObjects];
-	_secondaryQueuedOperationDictionary = nil;
+	[_cellOperationDictionary removeAllObjects];
+	_cellOperationDictionary = nil;
 
 	// Properties
 }
@@ -50,9 +44,6 @@
     // Instance variables
 
     // Properties
-	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
-		_isSystemVersionLatest = YES;
-	}
 
     // IBOutlets
 	
@@ -146,15 +137,6 @@
 	return _cellTexts;
 }
 
-- (NSDictionary*)segueNames {
-
-	if (_segueNames == nil) {	FXDLog_OVERRIDE;
-		//
-	}
-
-	return _segueNames;
-}
-
 #pragma mark -
 - (NSMutableArray*)mainDataSource {
 
@@ -187,34 +169,13 @@
 	return _cellOperationQueue;
 }
 
-- (NSMutableDictionary*)queuedCellOperationDictionary {
+- (NSMutableDictionary*)cellOperationDictionary {
 
-	if (_queuedCellOperationDictionary == nil) {
-		_queuedCellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	if (_cellOperationDictionary == nil) {
+		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 
-	return _queuedCellOperationDictionary;
-}
-
-- (NSOperationQueue*)secondaryOperationQueue {
-	if (_secondaryOperationQueue == nil) {	FXDLog_OVERRIDE;
-		_secondaryOperationQueue = [[NSOperationQueue alloc] init];
-		[_secondaryOperationQueue setName:@"secondaryOperationQueue"];
-
-		[_secondaryOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
-		FXDLog(@"maxConcurrentOperationCount: %d", [_secondaryOperationQueue maxConcurrentOperationCount]);
-	}
-
-	return _secondaryOperationQueue;
-}
-
-- (NSMutableDictionary*)secondaryQueuedOperationDictionary {
-
-	if (_secondaryQueuedOperationDictionary == nil) {
-		_secondaryQueuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-
-	return _secondaryQueuedOperationDictionary;
+	return _cellOperationDictionary;
 }
 
 
@@ -243,7 +204,7 @@
 	}
 
 
-	FXDBlockOperation *cellOperation = (self.queuedCellOperationDictionary)[operationObjKey];
+	FXDBlockOperation *cellOperation = (self.cellOperationDictionary)[operationObjKey];
 
 	if (cellOperation) {
 		[cellOperation cancel];
@@ -251,25 +212,8 @@
 		didCancel = cellOperation.isCancelled;
 	}
 
-	[self.queuedCellOperationDictionary removeObjectForKey:operationObjKey];
+	[self.cellOperationDictionary removeObjectForKey:operationObjKey];
 
-
-	if (self.shouldCancelSecondaryOperation == NO) {
-		return didCancel;
-	}
-
-
-	if ([self.secondaryQueuedOperationDictionary count] > 0) {
-		FXDBlockOperation *secondaryCellOperation = (self.secondaryQueuedOperationDictionary)[operationObjKey];
-
-		if (secondaryCellOperation) {
-			[secondaryCellOperation cancel];
-
-			FXDLog(@"operationObjKey: %@ secondaryCellOperation.isCancelled: %d", operationObjKey, secondaryCellOperation.isCancelled);
-		}
-
-		[self.secondaryQueuedOperationDictionary removeObjectForKey:operationObjKey];
-	}
 
 	return didCancel;
 }
@@ -608,19 +552,20 @@
 }
  */
 
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
-	//FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
+	FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
 	
 	self.didStartAutoScrollingToTop = scrollView.scrollsToTop;
 	
 	return scrollView.scrollsToTop;
 }
 
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
 	
 	self.didStartAutoScrollingToTop = NO;
 
-	[self.mainTableview reloadRowsAtIndexPaths:[self.mainTableview indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+	//[self.mainTableview reloadRowsAtIndexPaths:[self.mainTableview indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+	[self.mainTableview reloadData];
 }
 
 

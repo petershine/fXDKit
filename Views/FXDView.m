@@ -104,9 +104,8 @@
 		}
 	}
 
-#if DEBUG
-	if (view == nil) {
-		FXDLog_DEFAULT;
+#if ForDEVELOPER
+	if (view == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
 	}
 #endif
@@ -221,26 +220,16 @@
 					 }];
 }
 
-- (UIImage*)renderedImageFromView:(UIView*)view {
-
-	UIImage *image = [self renderedImageFromView:view forScale:[[UIScreen mainScreen] scale]];
-
-    return image;
-}
-
-- (UIImage*)renderedImageFromView:(UIView*)view forScale:(CGFloat)scale {
-	if (view == nil) {
-		view = self;
-	}
-
+#pragma mark -
+- (UIImage*)renderedImageForScale:(CGFloat)scale {
 
 	UIImage *image = nil;
 
-	UIGraphicsBeginImageContextWithOptions(view.bounds.size,
+	UIGraphicsBeginImageContextWithOptions(self.bounds.size,
 										   NO,	//MARK: to allow transparency
 										   scale);
 	{
-		[view.layer renderInContext:UIGraphicsGetCurrentContext()];
+		[self.layer renderInContext:UIGraphicsGetCurrentContext()];
 		image = UIGraphicsGetImageFromCurrentImageContext();
 	}
 	UIGraphicsEndImageContext();
@@ -253,6 +242,7 @@
     return image;
 }
 
+#pragma mark -
 - (id)parentViewOfClassName:(NSString*)className {
 	id parentView = nil;
 

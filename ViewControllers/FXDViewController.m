@@ -20,9 +20,11 @@
 	FXDLog(@"self isViewLoaded: %d, self.view.window: %@ self.view.superview: %@", [self isViewLoaded], self.view.window, self.view.superview);
 
 #warning @"//TODO: find the right way to nilify unusable view for memory management"
+	
 #if TEST_didReceiveMemoryWarningViewNilifying
-	if (([self isViewLoaded] && self.view.window == nil)
-		|| self.view.superview == nil) {
+	if (([self isViewLoaded]
+		 && self.view.window == nil
+		 && self.view.superview == nil) {
 
 		self.view = nil;
 	}
@@ -33,9 +35,7 @@
 
 - (void)dealloc {	
 	// Instance variables
-	
-	// Properties
-	
+		
 	FXDLog_DEFAULT;
 }
 
@@ -82,11 +82,13 @@
 	FXDLog(@"self.storyboard: %@, self.nibName: %@", self.storyboard, self.nibName);
 
 	// Primitives
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
+		self.isSystemVersionLatest = YES;
+	}
 
 	// Instance variables
 
 	// Properties
-
 }
 
 - (void)loadView {	FXDLog_DEFAULT;
@@ -223,6 +225,14 @@
 
 
 #pragma mark - Property overriding
+- (NSDictionary*)segueNames {
+
+	if (_segueNames == nil) {	FXDLog_OVERRIDE;
+		//
+	}
+
+	return _segueNames;
+}
 
 
 #pragma mark - Method overriding
