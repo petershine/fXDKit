@@ -193,7 +193,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 		[self.receivedData appendData:data];
 		
 		//FXDLog(@"self.receivedData.length: %d", self.receivedData.length);
-		//FXDLog(@"percentReceived: %f %%", ((float)self.receivedData.length/(float)self.httpContentLength)*100.0);
+		//FXDLog(@"percentReceived: %f %%", ((CGFloat)self.receivedData.length/(CGFloat)self.httpContentLength)*100.0);
 	}
 }
 

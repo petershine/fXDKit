@@ -83,7 +83,7 @@
 
 	// Primitives
 	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
-		self.isSystemVersionLatest = YES;
+		_isSystemVersionLatest = YES;
 	}
 
 	// Instance variables

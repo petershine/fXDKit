@@ -68,7 +68,7 @@
 	self.contentMode = UIViewContentModeScaleAspectFit;
 	
 	if (self.image) {
-		CGFloat aspectRatio = (float)self.image.size.width / (float)self.image.size.height;
+		CGFloat aspectRatio = (CGFloat)self.image.size.width / (CGFloat)self.image.size.height;
 		
 		CGRect modifiedFrame = self.frame;
 		FXDLog(@"(before)modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));

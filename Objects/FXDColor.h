@@ -31,7 +31,7 @@
 #pragma mark - Category
 @interface UIColor (Added)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue;
-+ (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(float)alpha;
-+ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(float)alpha;	// Use 0xFF0000 type
++ (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(CGFloat)alpha;
++ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha;	// Use 0xFF0000 type
 
 @end

@@ -102,7 +102,7 @@
 	
 	CGSize modifiedSize = self.size;
 	
-	CGFloat aspectRatio = (float)modifiedSize.width / (float)modifiedSize.height;
+	CGFloat aspectRatio = (CGFloat)modifiedSize.width / (CGFloat)modifiedSize.height;
 	
 	if (aspectRatio > 1.0) {
 		if (modifiedSize.width > maximumSize.width) {				
@@ -128,7 +128,7 @@
 	
 	CGSize modifiedSize = self.size;
 	
-	CGFloat aspectRatio = (float)modifiedSize.width / (float)modifiedSize.height;
+	CGFloat aspectRatio = (CGFloat)modifiedSize.width / (CGFloat)modifiedSize.height;
 	
 	if (aspectRatio > 1.0) {
 		if (modifiedSize.height < minimumSize.height) {	// Retina size
