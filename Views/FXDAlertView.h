@@ -11,14 +11,14 @@
 
 @class FXDAlertView;
 
-typedef void (^_FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger buttonIndex);
+typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger buttonIndex);
 
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate> {
     // Primitives
 
 	// Instance variables
-	_FXDblockButtonAtIndexClicked _delegateBlock;
+	FXDblockButtonAtIndexClicked _delegateBlock;
 }
 
 // Properties
@@ -31,7 +31,7 @@ typedef void (^_FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger
 
 
 #pragma mark - Public
-- (id)initWithTitle:(NSString *)title message:(NSString *)message clickedButtonAtIndexBlock:(void(^)(FXDAlertView *alertView, NSInteger buttonIndex))clickedButtonAtIndexBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
+- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 
 //MARK: - Observer implementation
 

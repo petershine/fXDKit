@@ -19,8 +19,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	// Instance variables
-	
-	// Properties
 }
 
 
@@ -281,10 +279,12 @@
 
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext withFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
 
+	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+
 	if (managedObjectContext == nil) {
 		managedObjectContext = self.managedObjectContext;
 
-		FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 		if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType
 			&& managedObjectContext.hasChanges == NO) {
@@ -292,7 +292,7 @@
 		}
 	}
 
-	FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 
 	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
@@ -305,8 +305,7 @@
 	}
 	
 
-	void (^_contextSavingBlock)() = ^{	FXDLog_DEFAULT;
-		//TODO: check if it's still deleting
+	void (^_contextSavingBlock)(void) = ^{	FXDLog_DEFAULT;
 
 		NSError *error = nil;
 		BOOL didSave = [managedObjectContext save:&error];

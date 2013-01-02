@@ -18,10 +18,10 @@
 	NSDictionary *_segueNames;
 }
 
+@property (strong, nonatomic) NSDictionary *segueNames;
+
 // Properties
 @property (assign, nonatomic) BOOL isSystemVersionLatest;
-
-@property (strong, nonatomic) NSDictionary *segueNames;
 
 // IBOutlets
 

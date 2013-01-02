@@ -60,7 +60,7 @@
 
 
 #pragma mark - Public
-- (id)initWithTitle:(NSString *)title message:(NSString *)message clickedButtonAtIndexBlock:(void(^)(FXDAlertView *alertView, NSInteger buttonIndex))clickedButtonAtIndexBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
+- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
 
 	self = [self initWithTitle:title
 					   message:message
@@ -82,7 +82,6 @@
 
 //MARK: - Delegate implementation
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_DEFAULT;
-	FXDLog(@"buttonIndex: %d", buttonIndex);
 
 	if (_delegateBlock) {
 		_delegateBlock(self, buttonIndex);

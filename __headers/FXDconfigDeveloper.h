@@ -95,12 +95,14 @@
 		#define flurryApplicationKey	@"flurryApplicationKey"
 	#endif
 
-	#define	LOGEVENT(v)			[Flurry logEvent:v]
-	#define LOGEVENT_DEFAULT	LOGEVENT(strClassSelector)
+	#define	LOGEVENT(format, ...)	[Flurry logEvent:[NSString stringWithFormat:format, ##__VA_ARGS__]]
+	#define LOGEVENT_DEFAULT		LOGEVENT(@"%@",strClassSelector)
+	#define LOGEVENT_ERROR			if(error){LOGEVENT(@"%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);}
 
 #else
-	#define	LOGEVENT(v)
+	#define	LOGEVENT(format, ...)
 	#define LOGEVENT_DEFAULT
+	#define LOGEVENT_ERROR
 
 #endif
 

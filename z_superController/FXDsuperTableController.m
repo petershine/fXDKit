@@ -160,7 +160,6 @@
 
 	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
-		[_cellOperationQueue setName:@"cellOperationQueue"];
 
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
