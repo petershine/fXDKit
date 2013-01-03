@@ -43,17 +43,19 @@
 	[super viewDidLoad];
 
     // IBOutlet
-	if ([[UIScreen mainScreen] bounds].size.height > 480.0) {
-		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch568h];
+	CGSize windowSize = [[FXDWindow applicationWindow] bounds].size;
+
+	if (MAX(windowSize.width, windowSize.height) <= 480.0) {
+		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch];
 	}
 	else {
-		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch];
+		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch568h];
 	}
 }
 
 
 #pragma mark - Autorotating
-- (BOOL)shouldAutorotate {	FXDLog_DEFAULT;
+- (BOOL)shouldAutorotate {
 	return NO;
 }
 

@@ -78,12 +78,14 @@
 
 	#define NSLog	TFLog
 
-	#define	CHECKPOINT(v)		[TestFlight passCheckpoint:v]
-	#define CHECKPOINT_DEFAULT	CHECKPOINT(strClassSelector)
+	#define	CHECKPOINT(format, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:format, ##__VA_ARGS__]]
+	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@",strClassSelector)
+	#define CHECKPOINT_ERROR	if(error){CHECKPOINT(@"%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);}
 
 #else
-	#define	CHECKPOINT(v)
+	#define	CHECKPOINT(format, ...)
 	#define CHECKPOINT_DEFAULT
+	#define CHECKPOINT_ERROR
 
 #endif
 

@@ -11,7 +11,6 @@
 
 @interface FXDNavigationController : UINavigationController {
     // Primitives
-	BOOL _shouldUseDefaultNavigationBar;
 	
 	// Instance variables
 }

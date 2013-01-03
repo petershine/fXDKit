@@ -431,7 +431,7 @@
 			BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 			
 			if (didEvict) {
-				CHECKPOINT(([NSString stringWithFormat:@"AUTO CLEANING didEvict: YES %@", [itemURL followingPathInDocuments]]));
+				FXDLog(@"AUTO CLEANING didEvict: YES %@", [itemURL followingPathInDocuments]);
 				
 				[self.collectedURLarray removeObject:itemURL];
 			}

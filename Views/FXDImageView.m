@@ -85,8 +85,10 @@
 	
 	if (self.image) {
 		UIImage *resizeableImage = [self.image resizableImageWithCapInsets:capInsets];
-		
-		self.image = resizeableImage;
+
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			self.image = resizeableImage;
+		}];
 	}
 }
 	 
