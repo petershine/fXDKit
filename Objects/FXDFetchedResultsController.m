@@ -50,7 +50,7 @@
 
 	FXDManagedObject *resultObj = nil;
 
-	NSArray *filteredArray = [[self.fetchedObjects copy] filteredArrayUsingPredicate:predicate];
+	NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
 
 	if ([filteredArray count] > 0) {
 		resultObj = filteredArray[0];

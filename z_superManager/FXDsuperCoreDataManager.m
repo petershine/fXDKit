@@ -370,11 +370,12 @@
 	if ([notification.object isEqual:self.managedObjectContext] == NO
 		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
 
+		FXDLog(@" ");
+		FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
 		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 
-		FXDLog(@"mergeChangesFromContextDidSaveNotification:");
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}
 }
