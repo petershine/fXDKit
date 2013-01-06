@@ -185,7 +185,7 @@
 
 
 #pragma mark - Public
-- (BOOL)didCancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
+- (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
 
 	BOOL didCancel = NO;
 
@@ -488,7 +488,7 @@
 
 		if (shouldEvaluateBackward) {
 			for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {
-				BOOL didCancel = [self didCancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
+				BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
 
 				if (didCancel) {
 					canceledCount++;
@@ -497,7 +497,7 @@
 		}
 		else {
 			for (NSInteger evaluatedRow = disappearedRow; evaluatedRow < [self.mainDataSource count]; evaluatedRow++) {
-				BOOL didCancel = [self didCancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
+				BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
 
 				if (didCancel) {
 					canceledCount++;
@@ -514,7 +514,7 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	
-	BOOL didCancel = [self didCancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
+	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
 	if (didCancel) {
 		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
@@ -552,7 +552,7 @@
  */
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
-	FXDLog(@"scrollView.scrollsToTop: %d", scrollView.scrollsToTop);
+	FXDLog(@"scrollView.scrollsToTop: %d self.didStartAutoScrollingToTop: %d", scrollView.scrollsToTop, self.didStartAutoScrollingToTop);
 	
 	self.didStartAutoScrollingToTop = scrollView.scrollsToTop;
 	
@@ -562,9 +562,6 @@
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
 	
 	self.didStartAutoScrollingToTop = NO;
-
-	//[self.mainTableview reloadRowsAtIndexPaths:[self.mainTableview indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
-	[self.mainTableview reloadData];
 }
 
 
