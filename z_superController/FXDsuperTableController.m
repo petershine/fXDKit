@@ -209,10 +209,10 @@
 		[cellOperation cancel];
 
 		didCancel = cellOperation.isCancelled;
+
+		[self.cellOperationDictionary removeObjectForKey:operationObjKey];
 	}
-
-	[self.cellOperationDictionary removeObjectForKey:operationObjKey];
-
+	
 
 	return didCancel;
 }
