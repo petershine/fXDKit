@@ -156,7 +156,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	self.httpURL = [NSURL URLWithString:urlString];
 	self.httpRequest = [NSMutableURLRequest requestWithURL:self.httpURL];
 	
-	//TODO: implement to use postBody and httpHeaders
+#warning @"//TODO: implement to use postBody and httpHeaders"
 	
 	self.httpConnection = [NSURLConnection connectionWithRequest:self.httpRequest delegate:self];
 }

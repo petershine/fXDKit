@@ -219,7 +219,7 @@
 	SLComposeViewController *socialComposeInterface = nil;
 
 	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
-		//TODO: test facebook
+#warning @"//TODO: test facebook"
 
 		return socialComposeInterface;
 	}

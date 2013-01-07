@@ -187,7 +187,7 @@
 				if (activeUbiquityContainerURL) {					
 					if (self.ubiquityContainerURL) {
 						if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
-							//TODO: what to do?
+#warning @"//TODO: find what to do when containerURL is different"
 						}
 					}
 
@@ -327,7 +327,7 @@
 
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)resultError {	//FXDLog_DEFAULT;
 	
-	//TODO: deal with following cases
+#warning @"//TODO: deal with following cases"
 	/*
 	 domain: NSCocoaErrorDomain
 	 code: 516
@@ -390,7 +390,6 @@
 	
 	if (alertTitle) {	FXDLog_DEFAULT;
 		FXDLog(@"alertTitle: %@", alertTitle);
-		//TODO: should alert?
 	}
 }
 
@@ -530,7 +529,7 @@
 
 		BOOL isTransferring = [metadataQuery isQueryResultsTransferringWithLogString:nil];
 		
-		//TODO: distinguish uploading and downloading and finished updating
+#warning @"//TODO: distinguish uploading and downloading and finished updating"
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if (isTransferring) {

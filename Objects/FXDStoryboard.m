@@ -47,8 +47,7 @@
 + (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
 	NSString *storyboardName = NSStringFromClass([self class]);
 	
-	//TODO: distinguish interface idiom to select appropriate storyboard
-	
+#warning @"//TODO: distinguish based on interface idiom to select appropriate storyboard"	
 	FXDLog(@"storyboardName: %@", storyboardName);
 	
 	UIStoryboard *storyboard = [self storyboardWithName:storyboardName bundle:nil];
