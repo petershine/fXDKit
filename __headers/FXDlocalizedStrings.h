@@ -19,9 +19,12 @@
 // Message
 #define message_PleaseTryAgain	@"message_PleaseTryAgain"
 
-#define message_PurposeOfUsingLocationService	@"message_PurposeOfUsingLocationService"
-
 #define message_PleaseSelectYourTwitterAcount	@"message_PleaseSelectYourTwitterAcount"
+
+#ifndef message_PurposeOfUsingLocationService
+	#define message_PurposeOfUsingLocationService	@"message_PurposeOfUsingLocationService"
+#endif
+
 
 
 // Text

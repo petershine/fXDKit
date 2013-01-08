@@ -72,7 +72,7 @@
 
 - (UIView*)sectionDividerViewForWidth:(CGFloat)width andHeight:(CGFloat)height;
 
-#warning @"//TODO: Only use this when supporting for iOS version previous to 6
+#warning "//TODO: Only use this when supporting for iOS version previous to 6
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath forFinishedHandler:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler;
 
 

@@ -153,7 +153,7 @@
 
 		FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
 
-#warning @"//TODO: learn about how to handle ubiquityIdentityToken changed"
+#warning "//TODO: learn about how to handle ubiquityIdentityToken changed"
 
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
@@ -187,7 +187,7 @@
 				if (activeUbiquityContainerURL) {					
 					if (self.ubiquityContainerURL) {
 						if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
-#warning @"//TODO: find what to do when containerURL is different"
+#warning "//TODO: find what to do when containerURL is different"
 						}
 					}
 
@@ -327,7 +327,7 @@
 
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)resultError {	//FXDLog_DEFAULT;
 	
-#warning @"//TODO: deal with following cases"
+#warning "//TODO: deal with following cases"
 	/*
 	 domain: NSCocoaErrorDomain
 	 code: 516
@@ -529,7 +529,7 @@
 
 		BOOL isTransferring = [metadataQuery isQueryResultsTransferringWithLogString:nil];
 		
-#warning @"//TODO: distinguish uploading and downloading and finished updating"
+#warning "//TODO: distinguish uploading and downloading and finished updating"
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if (isTransferring) {

@@ -19,7 +19,7 @@
 
 	FXDLog(@"self isViewLoaded: %d, self.view.window: %@ self.view.superview: %@", [self isViewLoaded], self.view.window, self.view.superview);
 
-#warning @"//TODO: find the right way to nilify unusable view for memory management"
+#warning "//TODO: find the right way to nilify unusable view for memory management"
 	
 #if TEST_didReceiveMemoryWarningViewNilifying
 	if (([self isViewLoaded]
@@ -120,7 +120,7 @@
 }
 
 
-#warning @"//MARK: For older iOS 5"
+#warning "//MARK: For older iOS 5"
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }

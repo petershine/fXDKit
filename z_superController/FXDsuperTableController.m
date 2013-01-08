@@ -476,7 +476,7 @@
 	}
 	
 
-#warning @"//TODO: Only use this when supporting for iOS version previous to 6
+#warning "//TODO: Only use this when supporting for iOS version previous to 6
 	[self processWithDisappearedRowAndDirectionForIndexPath:indexPath forFinishedHandler:^(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward) {
 
 		if (shouldContinue == NO) {

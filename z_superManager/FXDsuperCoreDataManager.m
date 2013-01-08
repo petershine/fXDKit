@@ -116,7 +116,7 @@
 		
 		NSURL *ubiquitousContentURL = nil;
 		
-#warning @"TODO: get UUID unique URL using ubiquityContainerURL instead"
+#warning "TODO: get UUID unique URL using ubiquityContainerURL instead"
 		//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
 		
 		if (ubiquityContainerURL) {
@@ -171,7 +171,7 @@
 			}
 #endif
 			
-#warning @"//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
+#warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
 			
 			if (finishedHandler) {
 				finishedHandler(didConfigure);

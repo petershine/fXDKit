@@ -106,40 +106,40 @@
 	return _mainStoryboard;
 }
 
-- (id)rootScene {
-	if (_rootScene == nil) {
+- (id)rootController {
+	if (_rootController == nil) {
 		if (self.mainStoryboard) {
-			_rootScene = [self.mainStoryboard instantiateInitialViewController];
+			_rootController = [self.mainStoryboard instantiateInitialViewController];
 		}
 		else {
 			FXDLog_OVERRIDE;
 		}
 	}
 
-	return _rootScene;
+	return _rootController;
 }
 
-- (id)homeScene {
-	if (_homeScene == nil) {
+- (id)homeController {
+	if (_homeController == nil) {
 
-		if ([self.rootScene respondsToSelector:@selector(viewControllers)] == NO) {
-			_homeScene = self.rootScene;
+		if ([self.rootController respondsToSelector:@selector(viewControllers)] == NO) {
+			_homeController = self.rootController;
 
-			return _homeScene;
+			return _homeController;
 		}
 
 
-		NSArray *viewControllers = [self.rootScene performSelector:@selector(viewControllers)];
+		NSArray *viewControllers = [self.rootController performSelector:@selector(viewControllers)];
 
 		if ([viewControllers count] == 0) {
-			return _homeScene;
+			return _homeController;
 		}
 
 
-		if ([self.rootScene isKindOfClass:[UITabBarController class]] == NO) {
-			_homeScene = viewControllers[0];
+		if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
+			_homeController = viewControllers[0];
 
-			return _homeScene;
+			return _homeController;
 		}
 
 
@@ -149,15 +149,15 @@
 			UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
 
 			if ([tabbedNavigationController.viewControllers count] > 0) {
-				_homeScene = (tabbedNavigationController.viewControllers)[0];
+				_homeController = (tabbedNavigationController.viewControllers)[0];
 			}
 		}
 		else {
-			_homeScene = tabbedViewController;
+			_homeController = tabbedViewController;
 		}
 	}
 
-	return _homeScene;
+	return _homeController;
 }
 
 

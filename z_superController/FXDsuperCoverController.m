@@ -45,7 +45,6 @@
 - (void)dealloc {
 	// Instance variables
 
-	// Properties
 }
 
 
@@ -59,18 +58,10 @@
 
     // Properties
 
-    // IBOutlets
-	
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-
-    // Primitives
-
-    // Instance variables
-
-    // Properties
 
     // IBOutlets
 
@@ -149,6 +140,7 @@
 }
 
 - (void)coverWithCoveringSegue:(FXDsegueCovering*)coveringSegue {	FXDLog_DEFAULT;
+	
 	if ([self canAnimateWithTransitionSegue:coveringSegue] == NO) {
 		return;
 	}
@@ -304,7 +296,7 @@
 }
 
 - (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
-	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionLeft;
+	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionTop;
 
 	return coverDirectionType;
 }

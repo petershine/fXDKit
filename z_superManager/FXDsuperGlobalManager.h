@@ -6,7 +6,7 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#warning @"//TODO: remove unnecessary methods, not related to app launching and managing, especially those for utility providing"
+#warning "//TODO: remove unnecessary methods, not related to app launching and managing, especially those for utility providing"
 
 #import "Reachability.h"
 
@@ -17,28 +17,23 @@
     // Primitives
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
-	
-	// Instance variables
-	NSString *_deviceLanguageCode;
 
+	// Instance variables
 	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
-
-	id _rootScene;
-	id _homeScene;
 }
 
-// Properties
 @property (assign, nonatomic) BOOL didMakePurchase;
 @property (assign, nonatomic) BOOL didShareToSocialNet;
-
-@property (strong, nonatomic) NSString *deviceLanguageCode;
 
 @property (strong, nonatomic) NSString *mainStoryboardName;
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 
-@property (strong, nonatomic) id rootScene;
-@property (strong, nonatomic) id homeScene;
+// Properties
+@property (strong, nonatomic) NSString *deviceLanguageCode;
+
+@property (strong, nonatomic) id rootController;
+@property (strong, nonatomic) id homeController;
 
 
 #pragma mark - Public
@@ -46,7 +41,7 @@
 
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
-#warning @"//TODO: refactor following method to be organized into categories or subclasses"
+#warning "//TODO: refactor following method to be organized into categories or subclasses"
 
 + (BOOL)isSystemVersionLatest;
 
