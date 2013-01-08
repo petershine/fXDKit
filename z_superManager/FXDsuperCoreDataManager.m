@@ -273,11 +273,7 @@
 	return resultObj;
 }
 
-- (void)insertNewObjectForMainEntityNameWithCollectionObj:(id)collectionObj {	FXDLog_OVERRIDE;
-	FXDLog(@"collectionObj:%@", collectionObj);
-	
-}
-
+#pragma mark -
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext withFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
 
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
