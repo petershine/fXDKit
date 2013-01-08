@@ -79,7 +79,7 @@
 								  resultsControllerForEntityName:self.mainEntityName
 								  withSortDescriptors:self.mainSortDescriptors
 								  withPredicate:nil
-								  withLimit:integerNotDefined];
+								  withLimit:0];
 
 		[_mainResultsController setDelegate:self];
 	}
@@ -286,9 +286,9 @@
 		if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType
 			&& managedObjectContext.hasChanges == NO) {
 			managedObjectContext = self.managedObjectContext.parentContext;
-		}
 
-		FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+		}
 	}
 
 

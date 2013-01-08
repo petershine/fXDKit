@@ -50,10 +50,12 @@
 
 	FXDManagedObject *resultObj = nil;
 
-	NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
+	if ([self.fetchedObjects count] > 0) {
+		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
 
-	if ([filteredArray count] > 0) {
-		resultObj = filteredArray[0];
+		if ([filteredArray count] > 0) {
+			resultObj = filteredArray[0];
+		}
 	}
 
 #if USE_loggingResultObjFiltering

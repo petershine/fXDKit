@@ -83,12 +83,7 @@
 	return fetchedObjArray;
 }
 
-- (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
-
-	if (limit == integerNotDefined) {
-		limit = limitDefaultFetch;
-	}
-	
+- (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
 
 	NSFetchRequest *fetchRequest = nil;
 
