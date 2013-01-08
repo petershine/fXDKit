@@ -19,17 +19,10 @@
 #define objkeyTwitterStatus		@"status"
 
 
-#import "FXDObject.h"
-
-@interface FXDsuperSocialManager : FXDObject <UIAlertViewDelegate> {
+@interface FXDsuperSocialManager : FXDObject {
     // Primitives
 	
 	// Instance variables
-	ACAccountStore *_accountStore;
-	ACAccountType *_accountType;
-	
-	NSArray *_twitterAccountArray;
-	ACAccount *_mainTwitterAccount;
 }
 
 // Properties
@@ -61,7 +54,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UIAlertViewDelegate
 
 
 @end

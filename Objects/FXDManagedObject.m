@@ -27,8 +27,6 @@
 		// Primitives
 
 		// Instance variables
-
-		// Properties
 	}
 
 	return self;

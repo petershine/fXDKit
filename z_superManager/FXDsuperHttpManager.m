@@ -134,15 +134,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 		NetworkStatus reachabilityStatus = [changedReachability currentReachabilityStatus];
 		
 		if (reachabilityStatus == NotReachable) {
-			/*
-			UIAlertView *alerview = [[UIAlertView alloc] initWithTitle:nil
-															   message:@"Please make sure Internet is available for your device"
-															  delegate:nil
-													 cancelButtonTitle:nil
-													 otherButtonTitles:NSLocalizedString(text_OK, nil), nil];
-			[alerview show];
-			[alerview release];
-			 */
+#warning "//TODO: alert user: @"Please make sure Internet is available for your device"
 		}
 	}
 }

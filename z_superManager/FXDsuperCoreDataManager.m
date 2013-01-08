@@ -274,7 +274,7 @@
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext withFinishedBlock:(void(^)(void))finishedBlock {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
 
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
@@ -287,38 +287,46 @@
 			&& managedObjectContext.hasChanges == NO) {
 			managedObjectContext = self.managedObjectContext.parentContext;
 		}
-	}
 
-	FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+		FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	}
 
 
 	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
 		
-		if (finishedBlock) {
-			finishedBlock();
+		if (didFinishBlock) {
+			didFinishBlock();
 		}
 
 		return;
 	}
 	
 
-	void (^_contextSavingBlock)(void) = ^{	FXDLog_DEFAULT;
+	void (^_contextSavingBlock)(void) = ^{
 
 		NSError *error = nil;
 		BOOL didSave = [managedObjectContext save:&error];
 
+		FXDLog_DEFAULT;
 		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
 
 		FXDLog_ERROR;
 
-		if (finishedBlock) {
-			finishedBlock();
+		if (didFinishBlock) {
+			didFinishBlock();
 		}
 	};
 
-	[managedObjectContext performBlockAndWait:_contextSavingBlock];
 
-	//MARK: Study about performBlock for asynchronous saving, and when to use it properly
+#warning "//TODO: Study about performBlock for asynchronous saving, and when to use it properly
+	/*
+	if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
+		[managedObjectContext performBlock:_contextSavingBlock];
+	}
+	else {
+	 */
+		[managedObjectContext performBlockAndWait:_contextSavingBlock];
+	//}
 }
 
 
@@ -328,7 +336,7 @@
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;;
-	[self saveManagedObjectContext:nil withFinishedBlock:nil];
+	[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 
 - (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;

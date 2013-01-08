@@ -41,8 +41,6 @@
 #import "DirectoryWatcher.h"
 
 
-#import "FXDObject.h"
-
 @interface FXDsuperFileManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	BOOL _didFinishFirstGathering;

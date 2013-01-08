@@ -17,7 +17,6 @@
 - (void)dealloc {
 	// Instance variables
 
-	// Properties
 }
 
 
@@ -108,16 +107,17 @@
 		else {
 #if ENVIRONMENT_newestSDK
 #else
-			[self.accountStore requestAccessToAccountsWithType:self.accountType
-										 withCompletionHandler:^(BOOL granted, NSError *error) {
-											 FXDLog(@"granted: %d", granted);
-											 
-											 FXDLog_ERROR;
-											 
-											 if (granted) {
-												 [self showAlertViewForSelectingTwitterAccount];
-											 }
-										 }];
+			[self.accountStore
+			 requestAccessToAccountsWithType:self.accountType
+			 withCompletionHandler:^(BOOL granted, NSError *error) {
+				 FXDLog(@"granted: %d", granted);
+
+				 FXDLog_ERROR;
+
+				 if (granted) {
+					 [self showAlertViewForSelectingTwitterAccount];
+				 }
+			 }];
 #endif
 		}
 	}
@@ -125,41 +125,65 @@
 
 - (void)showAlertViewForSelectingTwitterAccount {	FXDLog_DEFAULT;
 	
-	if ([self.twitterAccountArray count] > 0) {
-		
-		NSString *alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
-		NSString *alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
-		NSString *cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
-		
-		if (self.mainTwitterAccount) {
-			alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
-			alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
-			cancelButtonTitle = @"SIGN OUT";
-		}
-		
-		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
-															message:alertMessage
-														   delegate:self
-												  cancelButtonTitle:nil
-												  otherButtonTitles:nil];
-		
-		for (ACAccount *twitterAccount in self.twitterAccountArray) {
-			FXDLog(@"twitterAccount.username: %@", twitterAccount.username);
-			
-			[alertView addButtonWithTitle:[NSString stringWithFormat:@"@%@", twitterAccount.username]];
-		}
-		
-		[alertView addButtonWithTitle:cancelButtonTitle];
-		alertView.cancelButtonIndex = [self.twitterAccountArray count];
-		
-		[alertView show];
-		
-	}
-	else {
+	if ([self.twitterAccountArray count] == 0) {
 		//If no Twitter account is signed up... alert user
 		//Following is not working
 		//[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=TWITTER"]];
+		
+		return;
 	}
+
+
+	NSString *alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
+	NSString *alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
+	NSString *cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
+
+	if (self.mainTwitterAccount) {
+		alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
+		alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
+		cancelButtonTitle = NSLocalizedString(@"SIGN OUT", nil);
+	}
+
+
+	FXDAlertView *alertView =
+	[[FXDAlertView alloc]
+	 initWithTitle:alertTitle
+	 message:alertMessage
+	 clickedButtonAtIndexBlock:^(FXDAlertView *alertView, NSInteger buttonIndex) {
+		 FXDLog(@"buttonIndex: %d", buttonIndex);
+
+		 _mainTwitterAccount = nil;
+
+		 NSString *identifier = nil;
+
+		 if (buttonIndex != alertView.cancelButtonIndex) {
+
+			 _mainTwitterAccount = (self.twitterAccountArray)[buttonIndex];
+
+			 identifier = _mainTwitterAccount.identifier;
+#if ForDEVELOPER
+			 [self userLookUpWithScreenName:self.mainTwitterAccount.username];
+#endif
+		 }
+
+		 [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];
+		 [[NSUserDefaults standardUserDefaults] synchronize];
+
+		 _twitterAccountArray = nil;
+	 }
+	 cancelButtonTitle:nil
+	 otherButtonTitles:nil];
+
+	for (ACAccount *twitterAccount in self.twitterAccountArray) {
+		FXDLog(@"twitterAccount.username: %@", twitterAccount.username);
+
+		[alertView addButtonWithTitle:[NSString stringWithFormat:@"@%@", twitterAccount.username]];
+	}
+
+	[alertView addButtonWithTitle:cancelButtonTitle];
+	alertView.cancelButtonIndex = [self.twitterAccountArray count];
+
+	[alertView show];
 }
 
 - (void)userLookUpWithScreenName:(NSString*)screenName {
@@ -289,30 +313,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_DEFAULT;
-	FXDLog(@"buttonIndex: %d", buttonIndex);
-	
-	_mainTwitterAccount = nil;
-	
-	NSString *identifier = nil;
-	
-	if (buttonIndex != alertView.cancelButtonIndex) {
-
-		_mainTwitterAccount = (self.twitterAccountArray)[buttonIndex];
-		
-		identifier = _mainTwitterAccount.identifier;
-		
-#if ForDEVELOPER
-		[self userLookUpWithScreenName:self.mainTwitterAccount.username];
-#endif
-	}
-	
-	[[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];	
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-	_twitterAccountArray = nil;
-}
 
 
 @end

@@ -6,14 +6,8 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#warning "//TODO: remove unnecessary methods, not related to app launching and managing, especially those for utility providing"
 
-#import "Reachability.h"
-
-
-#import "FXDObject.h"
-
-@interface FXDsuperGlobalManager : FXDObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
+@interface FXDsuperGlobalManager : FXDObject {
     // Primitives
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
@@ -53,22 +47,30 @@
 
 
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title;
-+ (void)alertCancelAndOKwithMessage:(NSString*)message withTitle:(NSString*)title alertDelegate:(id)alertDelegate;
 
 + (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
 + (void)printoutListOfFonts;
 
-- (MFMailComposeViewController*)preparedMailComposeInterface;
-- (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
-- (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message;
-
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UIAlertViewDelegate
-#pragma mark - MFMailComposeViewControllerDelegate
 
+
+@end
+
+
+#pragma mark - Category
+
+#import "Reachability.h"
+
+@interface FXDsuperGlobalManager (MailComposing) <MFMailComposeViewControllerDelegate>
+
+- (MFMailComposeViewController*)preparedMailComposeInterface;
+- (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
+- (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message;
+
+#pragma mark - MFMailComposeViewControllerDelegate
 
 @end

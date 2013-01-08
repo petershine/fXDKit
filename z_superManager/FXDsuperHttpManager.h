@@ -6,8 +6,8 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+#import "Reachability.h"
 
-#import "FXDObject.h"
 
 @interface FXDsuperHttpManager : FXDObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
     // Primitives
