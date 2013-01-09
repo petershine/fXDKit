@@ -18,6 +18,7 @@
 #define alert_PleaseEnableiCloud			@"alert_PleaseEnableiCloud"
 #define alert_PleaseEnableCameraRollAccess	@"alert_PleaseEnableCameraRollAccess"
 #define alert_PleaseEnterDifferentFolderName @"alert_PleaseEnterDifferentFolderName"
+#define alert_WouldYouLikeToIndextYourPhotosNow @"alert_WouldYouLikeToIndextYourPhotosNow"
 
 
 // Message
@@ -34,8 +35,8 @@
 	#define message_PurposeOfAccessingPhotoAlbum @"message_PurposeOfAccessingPhotoAlbum"
 #endif
 
-#ifndef message_CurrentItemsWillBeDeletedAndImportNewItemsFromPhotoAlbumsAgain
-#define message_CurrentItemsWillBeDeletedAndImportNewItemsFromPhotoAlbumsAgain @"message_CurrentItemsWillBeDeletedAndImportNewItemsFromPhotoAlbumsAgain"
+#ifndef message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain
+#define message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain @"message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain"
 #endif
 
 
@@ -70,7 +71,7 @@
 #define text_ResetFolders @"text_ResetFolders"
 
 #define text_PhotoAlbums @"text_PhotoAlbums"
-#define text_PhotosInYourCameraRoll @"text_PhotosInYourCameraRoll"
+#define text_CurrentlyInYourDevice @"text_CurrentlyInYourDevice"
 
 
 // For Appirater
@@ -96,6 +97,7 @@
 "alert_PleaseEnableiCloud" = "<#Please Enable iCloud#>";
 "alert_PleaseEnableCameraRollAccess" = "<#Please enable Camera Roll access#>";
 "alert_PleaseEnterDifferentFolderName" = "<#Please enter different folder name#>";
+"alert_WouldYouLikeToIndextYourPhotosNow" = "<#Would you like to import your Photos?#>";
 
 
 // Message
@@ -107,7 +109,8 @@
 "message_PurposeOfUsingLocationService" = "<#This App needs your permission to use your location#>";
 
 "message_PurposeOfAccessingPhotoAlbum" = "<#This App needs your permission to access your photos.\n\nPlease enable the switch:\nSettings > Privacy > Photos > This App#>";
-"message_CurrentItemsWillBeDeletedAndImportNewItemsFromPhotoAlbumsAgain" = "<#Current items will be deleted, and import new items from Photo Albums again#>";
+
+ "message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain" = "<#Current items will be deleted, and import new items from Photo Albums again#>";
  
 "message_FolderWithTheSameNameAlreadyExists" = "<#A folder with the same name already exists#>";
 
@@ -138,7 +141,7 @@
 "text_ResetFolders" = "<#Reset Folders#>";
 
 "text_PhotoAlbums" = "<#Photo Albums#>";
-"text_PhotosInYourCameraRoll" = "<#Photos in your Camera Roll#>";
+"text_CurrentlyInYourDevice" = "<#Photos in your Camera Roll#>";
 
  
 // For Appirater

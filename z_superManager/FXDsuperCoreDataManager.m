@@ -140,7 +140,8 @@
 																	 ofType:NSSQLiteStoreType
 														 modelConfiguration:nil
 															   storeOptions:options
-																	  error:&error];FXDLog_ERROR;
+																	  error:&error];
+		FXDLog_ERROR;LOGEVENT_ERROR;
 
 		FXDLog(@"1.didConfigure: %d", didConfigure);
 		
@@ -235,7 +236,7 @@
 
 		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
-		if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType
+		if (managedObjectContext.concurrencyType != self.managedObjectContext.parentContext.concurrencyType
 			&& managedObjectContext.hasChanges == NO) {
 			managedObjectContext = self.managedObjectContext.parentContext;
 
@@ -262,7 +263,7 @@
 		FXDLog_DEFAULT;
 		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
 
-		FXDLog_ERROR;
+		FXDLog_ERROR;LOGEVENT_ERROR;
 
 		if (didFinishBlock) {
 			didFinishBlock();
@@ -272,18 +273,11 @@
 
 #warning "//TODO: Study about performBlock for asynchronous saving, and when to use it properly. Learn about what's the benefit of distinguishing them"
 	/*
-	 if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
 	 [managedObjectContext performBlock:_contextSavingBlock];
-	 }
-	 else {
+	 [managedObjectContext performBlockAndWait:_contextSavingBlock];
 	 */
 
-	if (managedObjectContext.concurrencyType != NSMainQueueConcurrencyType) {
-		[managedObjectContext performBlockAndWait:_contextSavingBlock];
-	}
-	else {
-		_contextSavingBlock();
-	}
+	[managedObjectContext performBlockAndWait:_contextSavingBlock];
 }
 
 #pragma mark -
@@ -386,13 +380,17 @@
 	if ([notification.object isEqual:self.managedObjectContext] == NO
 		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
 
-		FXDLog(@" ");
+		FXDLog_DEFAULT;
 		FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
 		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 
-		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+
+		[self.managedObjectContext performBlockAndWait:^{
+			#warning "TESTING: performBlockAndWait"
+			[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+		}];
 	}
 }
 
