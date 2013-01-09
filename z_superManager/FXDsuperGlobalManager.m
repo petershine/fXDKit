@@ -278,12 +278,13 @@
 }
 
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title {
-	FXDAlertView *alertview = [[FXDAlertView alloc] initWithTitle:title
-														message:message
-													   delegate:nil
-											  cancelButtonTitle:NSLocalizedString(text_OK, nil)
-											  otherButtonTitles:nil];
-	
+	FXDAlertView *alertview = [[FXDAlertView alloc]
+							   initWithTitle:title
+							   message:message
+							   delegate:nil
+							   cancelButtonTitle:NSLocalizedString(text_OK, nil)
+							   otherButtonTitles:nil];
+
 	[alertview show];
 }
 

@@ -387,10 +387,7 @@
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 
 
-		[self.managedObjectContext performBlockAndWait:^{
-			#warning "TESTING: performBlockAndWait"
-			[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-		}];
+		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}
 }
 

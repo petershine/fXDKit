@@ -108,4 +108,4 @@
 
 // Global control
 #import "FXDsuperGlobalManager.h"
-
+#import "FXDsuperLaunchImageController.h"
