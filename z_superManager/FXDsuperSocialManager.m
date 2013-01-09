@@ -141,7 +141,7 @@
 	if (self.mainTwitterAccount) {
 		alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
 		alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
-		cancelButtonTitle = NSLocalizedString(@"SIGN OUT", nil);
+		cancelButtonTitle = NSLocalizedString(text_SignOut, nil);
 	}
 
 

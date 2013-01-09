@@ -82,6 +82,7 @@
 								  withLimit:0];
 
 		[_mainResultsController setDelegate:self];
+
 	}
 
 	return _mainResultsController;
@@ -92,7 +93,7 @@
 
 
 #pragma mark - Public
-- (void)startObservingFileControlNotifications {	FXDLog_DEFAULT;
+- (void)startObservingFileManagerNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
 												 name:notificationFileControlDidUpdateUbiquityContainerURL
@@ -100,7 +101,7 @@
 	
 }
 
-- (void)prepareCoreDataControlWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL forFinishedHandler:(void(^)(BOOL didFinish))finishedHandler {	//FXDLog_DEFAULT;
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
@@ -153,7 +154,7 @@
 #endif
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self prepareCoredataControlObserverMethods];
+			[self startObservingCoreDataNotifications];
 
 			FXDLog(@"2.didConfigure: %d", didConfigure);
 
@@ -162,19 +163,22 @@
 				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
 				NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason]];
 
-				FXDAlertView *alertView = [[FXDAlertView alloc] initWithTitle:title
-																	  message:message
-																	 delegate:nil
-															cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
-															otherButtonTitles:nil];
+				FXDAlertView *alertView =
+				[[FXDAlertView alloc]
+				 initWithTitle:title
+				 message:message
+				 delegate:nil
+				 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+				 otherButtonTitles:nil];
+
 				[alertView show];
 			}
 #endif
-			
+
 #warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
 			
-			if (finishedHandler) {
-				finishedHandler(didConfigure);
+			if (didFinishBlock) {
+				didFinishBlock(didConfigure);
 			}
 			else {
 				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
@@ -185,7 +189,7 @@
 	}];
 }
 
-- (void)prepareCoredataControlObserverMethods {	FXDLog_DEFAULT;
+- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
 	[defaultCenter addObserver:self
@@ -221,6 +225,68 @@
 						object:nil];
 }
 
+#pragma mark -
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
+
+	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+
+	if (managedObjectContext == nil) {
+		managedObjectContext = self.managedObjectContext;
+
+		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+
+		if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType
+			&& managedObjectContext.hasChanges == NO) {
+			managedObjectContext = self.managedObjectContext.parentContext;
+
+			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+		}
+	}
+
+
+	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
+
+		if (didFinishBlock) {
+			didFinishBlock();
+		}
+
+		return;
+	}
+
+
+	void (^_contextSavingBlock)(void) = ^{
+
+		NSError *error = nil;
+		BOOL didSave = [managedObjectContext save:&error];
+
+		FXDLog_DEFAULT;
+		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
+
+		FXDLog_ERROR;
+
+		if (didFinishBlock) {
+			didFinishBlock();
+		}
+	};
+
+
+#warning "//TODO: Study about performBlock for asynchronous saving, and when to use it properly. Learn about what's the benefit of distinguishing them"
+	/*
+	 if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
+	 [managedObjectContext performBlock:_contextSavingBlock];
+	 }
+	 else {
+	 */
+
+	if (managedObjectContext.concurrencyType != NSMainQueueConcurrencyType) {
+		[managedObjectContext performBlockAndWait:_contextSavingBlock];
+	}
+	else {
+		_contextSavingBlock();
+	}
+}
+
+#pragma mark -
 - (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
 
 	if (entityName == nil) {
@@ -273,74 +339,19 @@
 	return resultObj;
 }
 
-#pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
-
-	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
-
-	if (managedObjectContext == nil) {
-		managedObjectContext = self.managedObjectContext;
-
-		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
-
-		if (managedObjectContext.concurrencyType == NSMainQueueConcurrencyType
-			&& managedObjectContext.hasChanges == NO) {
-			managedObjectContext = self.managedObjectContext.parentContext;
-
-			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
-		}
-	}
-
-
-	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
-		
-		if (didFinishBlock) {
-			didFinishBlock();
-		}
-
-		return;
-	}
-	
-
-	void (^_contextSavingBlock)(void) = ^{
-
-		NSError *error = nil;
-		BOOL didSave = [managedObjectContext save:&error];
-
-		FXDLog_DEFAULT;
-		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
-
-		FXDLog_ERROR;
-
-		if (didFinishBlock) {
-			didFinishBlock();
-		}
-	};
-
-
-#warning "//TODO: Study about performBlock for asynchronous saving, and when to use it properly
-	/*
-	if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-		[managedObjectContext performBlock:_contextSavingBlock];
-	}
-	else {
-	 */
-		[managedObjectContext performBlockAndWait:_contextSavingBlock];
-	//}
-}
-
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	
-}
-
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
+	[self saveManagedObjectContext:nil didFinishBlock:nil];
+}
+
+#pragma mark -
 - (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self prepareCoreDataControlWithUbiquityContainerURL:notification.object forFinishedHandler:nil];
+	[self prepareCoreDataManagerWithUbiquityContainerURL:notification.object didFinishBlock:nil];
 }
 
 #pragma mark -

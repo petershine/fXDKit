@@ -16,12 +16,9 @@
 #pragma mark - Memory management
 - (void)dealloc {
 	// Instance variables
-
 	if (_delegateBlock) {
 		_delegateBlock = nil;
 	}
-
-	FXDLog_DEFAULT;
 }
 
 
@@ -81,10 +78,13 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {	FXDLog_DEFAULT;
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 	if (_delegateBlock) {
 		_delegateBlock(self, buttonIndex);
+	}
+	else {
+		FXDLog(@"%@", @"ASSIGN delegeBlock");
 	}
 }
 
