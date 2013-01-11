@@ -236,8 +236,9 @@
 
 		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
-		if (managedObjectContext.concurrencyType != self.managedObjectContext.parentContext.concurrencyType
-			&& managedObjectContext.hasChanges == NO) {
+		if (managedObjectContext.hasChanges == NO
+			&& managedObjectContext.concurrencyType != self.managedObjectContext.parentContext.concurrencyType) {
+			
 			managedObjectContext = self.managedObjectContext.parentContext;
 
 			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
@@ -255,8 +256,7 @@
 	}
 
 
-	void (^_contextSavingBlock)(void) = ^{
-
+	void (^_contextSavingBlock)(void) = ^(void){
 		NSError *error = nil;
 		BOOL didSave = [managedObjectContext save:&error];
 
@@ -271,13 +271,15 @@
 	};
 
 
-#warning "//TODO: Study about performBlock for asynchronous saving, and when to use it properly. Learn about what's the benefit of distinguishing them"
-	/*
-	 [managedObjectContext performBlock:_contextSavingBlock];
-	 [managedObjectContext performBlockAndWait:_contextSavingBlock];
-	 */
-
-	[managedObjectContext performBlockAndWait:_contextSavingBlock];
+#warning "//TODO: be careful about asynchronous saving"
+	if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
+		[managedObjectContext performBlockAndWait:_contextSavingBlock];
+	}
+	else {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[managedObjectContext performBlock:_contextSavingBlock];
+		}];
+	}
 }
 
 #pragma mark -
@@ -335,7 +337,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
 	[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 

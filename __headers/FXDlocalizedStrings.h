@@ -73,6 +73,8 @@
 #define text_PhotoAlbums @"text_PhotoAlbums"
 #define text_CurrentlyInYourDevice @"text_CurrentlyInYourDevice"
 
+#define text_DoNotShowAgain @"text_DoNotShowAgain"
+
 
 // For Appirater
 #define alert_PleaseReviewThisApp @"alert_PleaseReviewThisApp"
@@ -142,6 +144,8 @@
 
 "text_PhotoAlbums" = "<#Photo Albums#>";
 "text_CurrentlyInYourDevice" = "<#Photos in your Camera Roll#>";
+ 
+"text_DoNotShowAgain" = "<#Do not show again#>";
 
  
 // For Appirater
