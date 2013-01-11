@@ -39,4 +39,6 @@
 
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
 
+- (void)fadeInImage:(UIImage*)fadedImage;
+
 @end

@@ -91,5 +91,28 @@
 		}];
 	}
 }
-	 
+
+- (void)fadeInImage:(UIImage*)fadedImage {
+	__block UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
+	fadedImageview.contentMode = self.contentMode;
+	fadedImageview.backgroundColor = [UIColor clearColor];
+
+	fadedImageview.alpha = 0.0;
+
+	fadedImageview.image = fadedImage;
+
+	[self addSubview:fadedImageview];
+
+	[UIView animateWithDuration:durationQuickAnimation
+						  delay:0.0
+						options:UIViewAnimationOptionCurveEaseIn
+					 animations:^{
+						 fadedImageview.alpha = 1.0;
+					 } completion:^(BOOL finished) {
+						 self.image = fadedImageview.image;
+
+						 fadedImageview = nil;
+					 }];
+}
+
 @end

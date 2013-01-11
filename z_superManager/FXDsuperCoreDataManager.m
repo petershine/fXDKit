@@ -7,7 +7,7 @@
 //
 
 #import "FXDsuperCoreDataManager.h"
-#import "FXDsuperCoreDataManager+CSVparser.h"
+//#import "FXDsuperCoreDataManager+CSVparser.h"
 
 
 #pragma mark - Public implementation
