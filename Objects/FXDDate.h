@@ -40,6 +40,8 @@
 - (NSInteger)yearValue;
 - (NSInteger)monthValue;
 - (NSInteger)dayValue;
+
+- (NSString*)shortMonthString;
 - (NSString*)weekdayString;
 
 - (NSInteger)hourValue;
