@@ -8,10 +8,6 @@
 
 #import "FXDsuperCoreDataManager.h"
 
-#if USE_csvParser
-	#import "FXDsuperCoreDataManager+CSVparser.h"
-#endif
-
 
 #pragma mark - Public implementation
 @implementation FXDsuperCoreDataManager

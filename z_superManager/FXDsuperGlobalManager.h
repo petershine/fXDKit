@@ -63,8 +63,6 @@
 
 #pragma mark - Category
 
-#import "Reachability.h"
-
 @interface FXDsuperGlobalManager (MailComposing) <MFMailComposeViewControllerDelegate>
 
 - (MFMailComposeViewController*)preparedMailComposeInterface;

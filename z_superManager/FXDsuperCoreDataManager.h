@@ -89,3 +89,21 @@
 
 
 @end
+
+
+#if USE_csvParser
+#pragma mark - Category
+
+#import "CHCSV.h"
+
+
+@interface FXDsuperCoreDataManager (CSVparser) <CHCSVParserDelegate>
+
+#pragma mark - Public
+- (void)parseFromCSVfileName:(NSString*)csvFileName;
+- (void)insertParsedObjForEntityName:(NSString*)entityName usingKeys:(NSArray*)keys usingValues:(NSArray*)values;
+
+#pragma mark - CHCSVParserDelegate
+
+@end
+#endif

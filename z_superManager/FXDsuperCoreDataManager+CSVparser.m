@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Ensight. All rights reserved.
 //
 
-#import "FXDsuperCoreDataManager+CSVparser.h"
+#import "FXDsuperCoreDataManager.h"
 
 
 @implementation FXDsuperCoreDataManager (CSVparser)

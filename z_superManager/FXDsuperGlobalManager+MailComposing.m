@@ -8,6 +8,9 @@
 
 #import "FXDsuperGlobalManager.h"
 
+#import "Reachability.h"
+
+
 @implementation FXDsuperGlobalManager (MailComposing)
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
