@@ -15,9 +15,6 @@
 #endif
 
 
-#import "FXDKit.h"
-
-
 @interface FXDManagedObjectContext : NSManagedObjectContext {
     // Primitives
 

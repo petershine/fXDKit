@@ -92,6 +92,7 @@
 	}
 }
 
+#warning "//TODO: find optimal way of using layer instead of extra imageView object"
 - (void)fadeInImage:(UIImage*)fadedImage {
 	__block UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
 	fadedImageview.contentMode = self.contentMode;

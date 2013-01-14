@@ -12,8 +12,6 @@
 #define notificationApplicationWindowShouldFadeOutProgressView	@"notificationApplicationWindowShouldFadeOutProgressView"
 
 
-#import "FXDKit.h"
-
 #import "FXDviewProgress.h"
 
 

@@ -6,8 +6,6 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 #import "FXDViewController+BarButton.h"
 
 

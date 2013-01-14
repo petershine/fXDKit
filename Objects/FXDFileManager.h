@@ -22,9 +22,6 @@
 #define appDirectory_Caches		[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
 
 
-#import "FXDKit.h"
-
-
 @interface FXDFileManager : NSFileManager {
     // Primitives
 	

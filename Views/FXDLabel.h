@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 
 @interface FXDLabel : UILabel {
     // Primitives

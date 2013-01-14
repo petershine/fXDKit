@@ -7,7 +7,10 @@
 //
 
 #import "FXDsuperCoreDataManager.h"
-//#import "FXDsuperCoreDataManager+CSVparser.h"
+
+#if USE_csvParser
+	#import "FXDsuperCoreDataManager+CSVparser.h"
+#endif
 
 
 #pragma mark - Public implementation
@@ -93,6 +96,7 @@
 
 
 #pragma mark - Public
+#if USE_fileManager
 - (void)startObservingFileManagerNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
@@ -100,6 +104,7 @@
 											   object:nil];
 	
 }
+#endif
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock {	//FXDLog_DEFAULT;
 	
@@ -259,9 +264,17 @@
 	void (^_contextSavingBlock)(void) = ^(void){
 		NSError *error = nil;
 		BOOL didSave = [managedObjectContext save:&error];
+#warning "//TODO: fix error when deleting folder"
+		/*
+		 *** Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '_obtainOpenChannel -- NSSQLCore 0x1ed7b810: no database channel is available'
+		 *** First throw call stack:
+		 (0x31c622a3 0x32b2097f 0x32efbec7 0x32efabf7 0x32ef3f99 0x32f8dc73 0x32f81c1b 0x32f30711 0x32f311bd 0x32f3cb89 0x32f3df6d 0x32f538a7 0x32f49b05 0x32f59733 0x32f5a0c9 0x342514b7 0x3425f90f 0x32f4a9e7 0x32f59dbb 0x32f4a2d3 0xe4c05 0x32f4dbc1 0x342514b7 0x34252dcb 0x31c35f3b 0x31ba8ebd 0x31ba8d49 0x399a62eb 0x394642f9 0xc062f 0x356b8b20)
+		 libc++abi.dylib: terminate called throwing an exception
+		 */
 
 		FXDLog_DEFAULT;
 		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
+		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 		FXDLog_ERROR;LOGEVENT_ERROR;
 
@@ -277,7 +290,7 @@
 	}
 	else {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[managedObjectContext performBlock:_contextSavingBlock];
+			[managedObjectContext performBlockAndWait:_contextSavingBlock];
 		}];
 	}
 }
@@ -364,19 +377,19 @@
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
+	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
+	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
+	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
 	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
 	if ([notification.object isEqual:self.managedObjectContext] == NO
@@ -387,7 +400,6 @@
 		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-
 
 		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}

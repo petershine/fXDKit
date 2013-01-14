@@ -17,9 +17,6 @@
 - (void)dealloc {
 	// Instance variables
 
-	// Properties
-
-	// IBOutlets
 }
 
 

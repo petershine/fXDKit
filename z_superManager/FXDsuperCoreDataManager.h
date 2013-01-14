@@ -22,9 +22,9 @@
 #define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
 
 
-#import "FXDKit.h"
-
-#import "FXDsuperFileManager.h"
+#if USE_fileManager
+	#import "FXDsuperFileManager.h"
+#endif
 
 
 @interface FXDsuperCoreDataManager : UIManagedDocument <NSFetchedResultsControllerDelegate> {
@@ -53,7 +53,9 @@
 #pragma mark - Public
 + (FXDsuperCoreDataManager*)sharedInstance;
 
+#if USE_fileManager
 - (void)startObservingFileManagerNotifications;
+#endif
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock;
 - (void)startObservingCoreDataNotifications;

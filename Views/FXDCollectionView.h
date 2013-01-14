@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 petershine. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 
 @interface FXDCollectionView : UICollectionView {
     // Primitives

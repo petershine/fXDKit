@@ -1,12 +1,10 @@
-	//
+//
 //  FXDMapView.h
 //
 //
 //  Created by petershine on 5/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
-
-#import "FXDKit.h"
 
 
 @interface FXDMapView : MKMapView {
