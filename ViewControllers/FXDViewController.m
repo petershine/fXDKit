@@ -17,15 +17,12 @@
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
 	[super didReceiveMemoryWarning];
 
-	FXDLog(@"self isViewLoaded: %d, self.view.window: %@ self.view.superview: %@", [self isViewLoaded], self.view.window, self.view.superview);
+	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
 
 #warning "//TODO: find the right way to nilify unusable view for memory management"
 	
 #if TEST_didReceiveMemoryWarningViewNilifying
-	if (([self isViewLoaded]
-		 && self.view.window == nil
-		 && self.view.superview == nil) {
-
+	if (self.view.superview == nil) {
 		self.view = nil;
 	}
 #endif

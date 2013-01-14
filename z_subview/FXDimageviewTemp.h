@@ -11,6 +11,9 @@
 #endif
 
 
+#import "FXDKit.h"
+
+
 @interface FXDimageviewTemp : FXDImageView {
     // Primitives
 

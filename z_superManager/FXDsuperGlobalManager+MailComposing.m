@@ -1,6 +1,6 @@
 //
 //  FXDsuperGlobalManager+MailComposing.m
-//  Waffle
+//
 //
 //  Created by petershine on 1/8/13.
 //  Copyright (c) 2013 petershine. All rights reserved.
@@ -23,9 +23,14 @@
 	NSString *currentLanguage = languages[0];
 	FXDLog(@"currentLanguage: %@", currentLanguage);
 
-	NSString *mailAddr = nil;
+	NSString *mailAddr = NSLocalizedString(application_ContactEmail, nil);
 
-	NSArray *toRecipients = @[mailAddr];
+	NSArray *toRecipients = nil;
+	
+	if (mailAddr) {
+		toRecipients = @[mailAddr];
+	}
+
 
 #ifdef application_DisplayedName
 	NSString *bundleName = NSLocalizedString(application_DisplayedName, nil);
@@ -38,7 +43,7 @@
 	NSString *stringLine = @"_______________________________";
 	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
 
-	NSString *machineStr = [FXDsuperGlobalManager deviceModelName];
+	NSString *machineStr = [[self class] deviceModelName];
 
 	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", machineStr, [[UIDevice currentDevice] systemVersion]];
 
@@ -104,6 +109,7 @@
 			presentingInterface = applicationWindow.rootViewController;
 		}
 	}
+
 
 	if ([MFMailComposeViewController canSendMail]) {
 		MFMailComposeViewController *emailInterface = nil;

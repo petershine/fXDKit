@@ -9,7 +9,8 @@
 #define limitConcurrentOperationCount	1
 
 
-#import "FXDViewController.h"
+#import "FXDKit.h"
+
 
 @interface FXDsuperTableController : FXDViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives

@@ -58,17 +58,10 @@
     // Instance variables
 
     // Properties
-
-    // IBOutlets
-
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
-
-	// Primitives
-
-	// Instance variables
 
 	// Properties
 	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);

@@ -22,6 +22,8 @@
 #define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
 
 
+#import "FXDKit.h"
+
 #if USE_fileManager
 	#import "FXDsuperFileManager.h"
 #endif
@@ -92,6 +94,7 @@
 
 
 #if USE_csvParser
+
 #pragma mark - Category
 
 #import "CHCSV.h"
@@ -106,4 +109,5 @@
 #pragma mark - CHCSVParserDelegate
 
 @end
+
 #endif

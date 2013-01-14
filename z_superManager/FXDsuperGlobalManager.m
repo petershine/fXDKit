@@ -59,6 +59,7 @@
 - (NSString*)mainStoryboardName {
 	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
 		//
+		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
 	}
 
 	return _mainStoryboardName;

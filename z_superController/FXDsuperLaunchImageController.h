@@ -15,7 +15,8 @@
 #endif
 
 
-#import "FXDViewController.h"
+#import "FXDKit.h"
+
 
 @interface FXDsuperLaunchImageController : FXDViewController {
     // Primitives

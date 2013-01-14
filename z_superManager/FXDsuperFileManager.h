@@ -38,6 +38,8 @@
 #endif
 
 
+#import "FXDKit.h"
+
 #import "DirectoryWatcher.h"
 
 

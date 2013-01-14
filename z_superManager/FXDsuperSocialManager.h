@@ -19,6 +19,9 @@
 #define objkeyTwitterStatus		@"status"
 
 
+#import "FXDKit.h"
+
+
 @interface FXDsuperSocialManager : FXDObject {
     // Primitives
 	
