@@ -46,6 +46,7 @@
 
 // Text
 #define text_Settings	@"text_Settings"
+#define text_Information @"text_Information"
 
 #define text_Cancel		@"text_Cancel"
 #define text_Canceling	@"text_Canceling"
@@ -57,6 +58,9 @@
 
 #define text_Delete		@"text_Delete"
 #define text_DeleteAll	@"text_DeleteAll"
+
+#define text_SelectAll		@"text_SelectAll"
+#define text_DeselectAll	@"text_DeselectAll"
 
 #define text_Twitter	@"text_Twitter"
 #define text_Facebook	@"text_Facebook"
@@ -121,6 +125,7 @@
  
 // Text
 "text_Settings" = "<#Settings#>";
+"text_Information" = "<#Information#>";
 
 "text_Cancel" = "<#Cancel#>";
 "text_OK" = "<#OK#>";
@@ -131,6 +136,9 @@
 
 "text_Delete" = "<#Delete#>";
 "text_DeleteAll" = "<#Delete All#>";
+ 
+"text_SelectAll" = "<#Select All#>";
+"text_DeselectAll" = "<#Deselect All#>";
 
 "text_Twitter" = "<#Twitter#>";
 "text_Facebook" = "<#Facebook#>";
