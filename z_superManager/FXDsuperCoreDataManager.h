@@ -93,10 +93,9 @@
 @end
 
 
-#if USE_csvParser
-
 #pragma mark - Category
 
+#if USE_csvParser
 #import "CHCSV.h"
 
 

@@ -8,7 +8,7 @@
 
 #import "FXDsuperCoreDataManager.h"
 
-
+#if USE_csvParser
 @implementation FXDsuperCoreDataManager (CSVparser)
 
 - (void)parseFromCSVfileName:(NSString*)csvFileName {	FXDLog_DEFAULT;
@@ -106,3 +106,4 @@
 
 
 @end
+#endif
