@@ -74,6 +74,8 @@
 #define text_Folders @"text_Folders"
 #define text_Files @"text_Files"
 #define text_ResetFolders @"text_ResetFolders"
+#define text_FolderName @"text_FolderName"
+#define text_CreateNewFolder	@"text_CreateNewFolder"
 
 #define text_PhotoAlbums @"text_PhotoAlbums"
 #define text_CurrentlyInYourDevice @"text_CurrentlyInYourDevice"
@@ -151,6 +153,8 @@
 "text_Folders" = "<#Folders#>";
 "text_Files" = "<#Files#>";
 "text_ResetFolders" = "<#Reset Folders#>";
+"text_FolderName" = "<#Folder Name#>";
+"text_CreateNewFolder" = "<#Create New Folder#>";
 
 "text_PhotoAlbums" = "<#Photo Albums#>";
 "text_CurrentlyInYourDevice" = "<#Photos in your Camera Roll#>";
