@@ -19,7 +19,7 @@
 #define alert_PleaseEnableiCloud			@"alert_PleaseEnableiCloud"
 #define alert_PleaseEnableCameraRollAccess	@"alert_PleaseEnableCameraRollAccess"
 #define alert_PleaseEnterDifferentFolderName @"alert_PleaseEnterDifferentFolderName"
-#define alert_WouldYouLikeToIndextYourPhotosNow @"alert_WouldYouLikeToIndextYourPhotosNow"
+#define alert_WouldYouLikeToIndexYourPhotosNow @"alert_WouldYouLikeToIndexYourPhotosNow"
 
 
 // Message
@@ -107,7 +107,7 @@
 "alert_PleaseEnableiCloud" = "<#Please Enable iCloud#>";
 "alert_PleaseEnableCameraRollAccess" = "<#Please enable Camera Roll access#>";
 "alert_PleaseEnterDifferentFolderName" = "<#Please enter different folder name#>";
-"alert_WouldYouLikeToIndextYourPhotosNow" = "<#Would you like to import your Photos?#>";
+"alert_WouldYouLikeToIndexYourPhotosNow" = "<#Would you like to import your Photos?#>";
 
 
 // Message

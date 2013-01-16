@@ -246,7 +246,9 @@
 					FXDLog_ERROR;
 				}
 
+#if ForDEVELOPER
 				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
+#endif
 			}
 		}
 		

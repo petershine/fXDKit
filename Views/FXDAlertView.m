@@ -15,18 +15,23 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	// Instance variables
-
+	FXDAlertView *sharedAlertView = [[self class] sharedInstance];
+	
 #if ForDEVELOPER
 	FXDLog_DEFAULT;
-	
+
+	if (sharedAlertView.delegateBlock) {
+		FXDLog(@"sharedAlertView.delegateBlock: %@", sharedAlertView.delegateBlock);
+	}
+
 	if (_delegateBlock) {
 		FXDLog(@"_delegateBlock: %@", _delegateBlock);
 	}
 #endif
 
-	//_delegateBlock = nil;
-	Block_release((__bridge const void *)_delegateBlock);
+	sharedAlertView.delegateBlock = nil;
+
+	// Instance variables
 	_delegateBlock = nil;
 }
 
@@ -71,7 +76,7 @@
 
 
 #pragma mark - Public
-- (id)initWithTitle:(NSString*)title message:(NSString*)message withFalseDelegate:(id<UIAlertViewDelegate>)falseDelegate clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
+- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
 
 	self = [super initWithTitle:title
 					   message:message
@@ -80,13 +85,13 @@
 			 otherButtonTitles:otherButtonTitles, nil];
 
 	if (self) {
-		if (falseDelegate == nil) {
-			falseDelegate = [[self class] sharedInstance];
-		}
-		
-		[self setDelegate:falseDelegate];
+		FXDAlertView *sharedAlertView = [[self class] sharedInstance];
 
-		self.delegateBlock = clickedButtonAtIndexBlock;
+		NSAssert1((sharedAlertView.delegateBlock == nil), @"sharedAlertView.delegateBlock: %@", sharedAlertView.delegateBlock);
+
+		[self setDelegate:sharedAlertView];
+
+		sharedAlertView.delegateBlock = clickedButtonAtIndexBlock;
 	}
 
 	return self;
@@ -98,8 +103,8 @@
 //MARK: - Delegate implementation
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-	if (alertView.delegateBlock) {
-		alertView.delegateBlock(alertView, buttonIndex);
+	if (self.delegateBlock) {
+		self.delegateBlock(alertView, buttonIndex);
 	}
 }
 
