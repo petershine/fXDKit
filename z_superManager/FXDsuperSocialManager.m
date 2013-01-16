@@ -149,6 +149,7 @@
 	[[FXDAlertView alloc]
 	 initWithTitle:alertTitle
 	 message:alertMessage
+	 withFalseDelegate:nil
 	 clickedButtonAtIndexBlock:^(FXDAlertView *alertView, NSInteger buttonIndex) {
 		 FXDLog(@"buttonIndex: %d", buttonIndex);
 
@@ -316,5 +317,5 @@
 
 //MARK: - Delegate implementation
 
-
+	
 @end

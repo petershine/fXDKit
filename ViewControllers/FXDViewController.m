@@ -19,13 +19,13 @@
 
 	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
 
+
 #warning "//TODO: find the right way to nilify unusable view for memory management"
-	
-#if TEST_didReceiveMemoryWarningViewNilifying
+//#if TEST_didReceiveMemoryWarningViewNilifying
 	if (self.view.superview == nil) {
 		self.view = nil;
 	}
-#endif
+//#endif
     
     // Release any cached data, images, etc that aren't in use.
 }
