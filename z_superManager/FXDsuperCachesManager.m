@@ -63,8 +63,12 @@
 		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
 		//[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
 
+#if ForDEVELOPER
 		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
+#else
+		[_ubiquitousCachesMetadataQuery startQuery];
+#endif
 	}
 
 	return _ubiquitousCachesMetadataQuery;
@@ -199,16 +203,21 @@
 			
 			BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERRORexcept(260);
 			
-			
+#if ForDEVELOPER
 			BOOL didStartDownloading = NO;
 			BOOL didRemove = NO;
+#endif
 			
 			if (isReachable) {
 				BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 				BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 				
 				if (isDownloaded == NO && isDownloading == NO) {
+#if ForDEVELOPER
 					didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+#else
+					[fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+#endif
 
 					if ([error code] == 512) {
 						if (alertTitle == nil) {
@@ -227,7 +236,11 @@
 				}
 			}
 			else {
+#if ForDEVELOPER
 				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
+#else
+				[fileManager removeItemAtURL:cachedURL error:&error];
+#endif
 				
 				if (error && [error code] != 4 && [error code] != 260) {
 					FXDLog_ERROR;

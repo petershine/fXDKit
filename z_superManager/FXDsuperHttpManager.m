@@ -165,11 +165,13 @@ static NSMutableSet *_staticHttpControlSet = nil;
 
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+#if ForDEVELOPER
 	NSInteger statusCode = [(NSHTTPURLResponse*)response statusCode];
 	NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
 	FXDLog(@"httpResponse: (%d) %@", statusCode, statusCodeDescription);
 	
 	//FXDLog(@"\nallHeaderFields:\n%@", [(NSHTTPURLResponse*)response allHeaderFields]);
+#endif
 	
 	self.httpContentLength = [[(NSHTTPURLResponse*)response allHeaderFields][@"Content-Length"] integerValue];
 }

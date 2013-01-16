@@ -24,9 +24,7 @@
 
 #import "FXDKit.h"
 
-#if USE_fileManager
-	#import "FXDsuperFileManager.h"
-#endif
+#import "FXDsuperFileManager.h"
 
 
 @interface FXDsuperCoreDataManager : UIManagedDocument <NSFetchedResultsControllerDelegate> {
@@ -55,9 +53,7 @@
 #pragma mark - Public
 + (FXDsuperCoreDataManager*)sharedInstance;
 
-#if USE_fileManager
 - (void)startObservingFileManagerNotifications;
-#endif
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock;
 - (void)startObservingCoreDataNotifications;

@@ -18,8 +18,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	// Instance variables
-	
-	// Properties
 }
 
 
@@ -98,8 +96,12 @@
 		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
 		//[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
 
+#if ForDEVELOPER
 		BOOL didStart = [_ubiquitousDocumentsMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
+#else
+		[_ubiquitousDocumentsMetadataQuery startQuery];
+#endif
 	}
 
 	return _ubiquitousDocumentsMetadataQuery;

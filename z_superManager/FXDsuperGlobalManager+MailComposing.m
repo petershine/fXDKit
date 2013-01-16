@@ -18,10 +18,12 @@
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 	FXDLog(@"version: %@", version);
 
+#if ForDEVELOPER
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
 	NSString *currentLanguage = languages[0];
 	FXDLog(@"currentLanguage: %@", currentLanguage);
+#endif
 
 	NSString *mailAddr = NSLocalizedString(application_ContactEmail, nil);
 

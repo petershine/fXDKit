@@ -37,9 +37,10 @@
 
 
 #define strClassSelector	[NSString stringWithFormat:@"%@%s", NSStringFromClass([self class]), __FUNCTION__]
-#define FXDLog	NSLog
 
 #if USE_FXDLog
+	#define FXDLog	NSLog
+
 	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", strClassSelector)
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", strClassSelector)
@@ -55,6 +56,8 @@
 	#define FXDLog_NOTIFIED	FXDLog(@" ");FXDLog(@"NOTIFIED: %@: %@", NSStringFromClass([self class]), note.name)
 
 #else
+	#define FXDLog(format, ...)	{}
+
 	#define FXDLog_DEFAULT
 
 	#define FXDLog_SEPARATE

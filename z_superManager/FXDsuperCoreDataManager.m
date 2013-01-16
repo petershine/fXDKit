@@ -92,7 +92,6 @@
 
 
 #pragma mark - Public
-#if USE_fileManager
 - (void)startObservingFileManagerNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
@@ -100,8 +99,8 @@
 											   object:nil];
 	
 }
-#endif
 
+#pragma mark -
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
@@ -259,6 +258,7 @@
 
 	void (^_contextSavingBlock)(void) = ^(void){
 		NSError *error = nil;
+#if ForDEVELOPER
 		BOOL didSave = [managedObjectContext save:&error];
 
 		FXDLog_DEFAULT;
@@ -266,6 +266,9 @@
 		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 		FXDLog_ERROR;LOGEVENT_ERROR;
+#else
+		[managedObjectContext save:&error];
+#endif
 
 		if (didFinishBlock) {
 			didFinishBlock();

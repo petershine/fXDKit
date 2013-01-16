@@ -96,8 +96,6 @@
 - (BOOL)shouldUseNavigationPush {
 	BOOL shouldUseNavigationPush = NO;
 
-	id presentingViewController = self.sourceViewController;
-
 	id parentViewController = [(UIViewController*)self.sourceViewController performSelector:@selector(parentViewController)];
 
 	if (parentViewController && [parentViewController isKindOfClass:[UINavigationController class]]) {
@@ -110,13 +108,10 @@
 			shouldUseNavigationPush = YES;
 		}
 	}
-	else if (parentViewController) {
-		presentingViewController = parentViewController;
-	}
 
 	FXDLog(@"shouldUseNavigationPush: %d", shouldUseNavigationPush);
 	FXDLog(@"parentViewController: %@", parentViewController);
-	FXDLog(@"presentingViewController: %@", presentingViewController);
+
 	FXDLog(@"sourceViewController: %@", self.sourceViewController);
 	FXDLog(@"destinationViewController: %@", self.destinationViewController);
 

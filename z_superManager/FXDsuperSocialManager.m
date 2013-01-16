@@ -295,6 +295,7 @@
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
 	FXDLog_ERROR;
 
+#if ForDEVELOPER
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
 		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
@@ -307,6 +308,7 @@
 
 	id parsedObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
 	FXDLog(@"parsedObject: %@\n %@", [parsedObject class], parsedObject);
+#endif
 }
 
 
