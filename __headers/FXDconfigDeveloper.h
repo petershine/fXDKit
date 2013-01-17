@@ -14,8 +14,6 @@
 		#define USE_loggingResultObjFiltering	0
 		#define USE_loggingManagedObjectActivities	0
 
-		#define TEST_didReceiveMemoryWarningViewNilifying	1
-
 		#define TEST_appirater	1
 	#else
 
