@@ -41,6 +41,4 @@
 
 - (NSString*)fileSizeString;
 
-- (double)transferPercentage;
-
 @end

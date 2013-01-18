@@ -90,11 +90,11 @@
 
 
 #pragma mark - Public
-- (void)refreshDefaultMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
+- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
 	
 }
 
-- (void)refreshDefaultMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
+- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
 	
 }
 

@@ -54,7 +54,9 @@
 - (ACAccount*)mainTwitterAccount {	FXDLog_DEFAULT;
 
 	if (_mainTwitterAccount == nil) {
-		NSString *identifier = [[NSUserDefaults standardUserDefaults] stringForKey:userdefaultObjKeyMainAccountIdentifier];
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		
+		__block NSString *identifier = [userDefaults stringForKey:userdefaultObjKeyMainAccountIdentifier];
 
 		FXDLog(@"accountIdentifier: %@", identifier);
 
@@ -68,8 +70,15 @@
 			}
 		}
 
-		[[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];
-		[[NSUserDefaults standardUserDefaults] synchronize];
+
+		if (identifier) {
+			[userDefaults setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];
+		}
+		else {
+			[userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
+		}
+
+		[userDefaults synchronize];
 	}
 
 	FXDLog(@"_mainTwitterAccount: %@", _mainTwitterAccount);
@@ -90,46 +99,25 @@
 		[self showAlertViewForSelectingTwitterAccount];
 	}
 	else {
-		if ([FXDsuperGlobalManager isSystemVersionLatest]) {
-			[self.accountStore
-			 requestAccessToAccountsWithType:self.accountType
-			 options:nil
-			 completion:^(BOOL granted, NSError *error) {
-				 FXDLog(@"granted: %d", granted);
-				 
-				 FXDLog_ERROR;
-				 
-				 if (granted) {
-					 [self showAlertViewForSelectingTwitterAccount];
-				 }
-			 }];
-		}
-		else {
-#if ENVIRONMENT_newestSDK
-#else
-			[self.accountStore
-			 requestAccessToAccountsWithType:self.accountType
-			 withCompletionHandler:^(BOOL granted, NSError *error) {
-				 FXDLog(@"granted: %d", granted);
+		[self.accountStore
+		 requestAccessToAccountsWithType:self.accountType
+		 options:nil
+		 completion:^(BOOL granted, NSError *error) {
+			 FXDLog(@"granted: %d", granted);
 
-				 FXDLog_ERROR;
+			 FXDLog_ERROR;
 
-				 if (granted) {
-					 [self showAlertViewForSelectingTwitterAccount];
-				 }
-			 }];
-#endif
-		}
+			 if (granted) {
+				 [self showAlertViewForSelectingTwitterAccount];
+			 }
+		 }];
 	}
 }
 
 - (void)showAlertViewForSelectingTwitterAccount {	FXDLog_DEFAULT;
 	
 	if ([self.twitterAccountArray count] == 0) {
-		//If no Twitter account is signed up... alert user
-		//Following is not working
-		//[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=TWITTER"]];
-		
+		//MARK: If no Twitter account is signed up... alert user		
 		return;
 	}
 
@@ -139,8 +127,6 @@
 	NSString *cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
 
 	if (self.mainTwitterAccount) {
-		alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
-		alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
 		cancelButtonTitle = NSLocalizedString(text_SignOut, nil);
 	}
 
@@ -152,27 +138,36 @@
 	 clickedButtonAtIndexBlock:^(FXDAlertView *alertView, NSInteger buttonIndex) {
 		 FXDLog(@"buttonIndex: %d", buttonIndex);
 
-		 _mainTwitterAccount = nil;
+		 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		 
+		 if (buttonIndex != alertView.cancelButtonIndex) {	FXDLog_DEFAULT;
 
-		 NSString *identifier = nil;
+			 ACAccount *selectedTwitterAccount = (self.twitterAccountArray)[buttonIndex];
+			 FXDLog(@"selectedTwitterAccount: %@", selectedTwitterAccount);
 
-		 if (buttonIndex != alertView.cancelButtonIndex) {
+			 if (selectedTwitterAccount) {
+				 [userDefaults setObject:selectedTwitterAccount.identifier forKey:userdefaultObjKeyMainAccountIdentifier];
 
-			 _mainTwitterAccount = (self.twitterAccountArray)[buttonIndex];
+				 _mainTwitterAccount = selectedTwitterAccount;
 
-			 identifier = _mainTwitterAccount.identifier;
 #if ForDEVELOPER
-			 [self userLookUpWithScreenName:self.mainTwitterAccount.username];
+				 [self userLookUpWithScreenName:_mainTwitterAccount.username];
 #endif
+			 }
+		 }
+		 else {
+			 [userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
+
+			 _mainTwitterAccount = nil;
 		 }
 
-		 [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:userdefaultObjKeyMainAccountIdentifier];
-		 [[NSUserDefaults standardUserDefaults] synchronize];
+		 [userDefaults synchronize];
 
 		 _twitterAccountArray = nil;
 	 }
 	 cancelButtonTitle:nil
 	 otherButtonTitles:nil];
+	
 
 	for (ACAccount *twitterAccount in self.twitterAccountArray) {
 		FXDLog(@"twitterAccount.username: %@", twitterAccount.username);
@@ -192,14 +187,8 @@
 	
 	NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
 
-#if ENVIRONMENT_newestSDK
 	SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
-#else
-	TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
-												parameters:parameters
-											 requestMethod:TWRequestMethodGET];
-#endif
-	
+
 	[defaultRequest
 	 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
 #if ForDEVELOPER
@@ -208,74 +197,75 @@
 	 }];
 }
 
-- (void)statusUpdateWithStatus:(NSString*)status {
+- (void)statusUpdateWithTweetText:(NSString*)tweetText {
 	
-	if (self.mainTwitterAccount) {
+	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
+
+		return;
+	}
+
+
+	void (^_requestingBlock)() = ^{
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 
-		NSDictionary *parameters = @{objkeyTwitterStatus: status};
+		NSDictionary *parameters = @{objkeyTwitterStatus: tweetText};
 
-#if ENVIRONMENT_newestSDK
 		SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:requestURL parameters:parameters];
-#else
-		TWRequest *defaultRequest = [[TWRequest alloc] initWithURL:requestURL
-													parameters:parameters
-												 requestMethod:TWRequestMethodPOST];
-#endif
-		
+
 		defaultRequest.account = self.mainTwitterAccount;
-		
+
 		[defaultRequest
 		 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
 #if ForDEVELOPER
 			 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
-#endif		 
+#endif
+		 }];
+	};
+
+	
+	if (self.mainTwitterAccount.username == nil) {
+		[self.accountStore
+		 renewCredentialsForAccount:self.mainTwitterAccount
+		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
+			 FXDLog_ERROR;LOGEVENT_ERROR;
+
+			 FXDLog(@"renewResult: %d", renewResult);
+
+			 if (renewResult == ACAccountCredentialRenewResultRenewed) {
+				 _requestingBlock();
+			 }
+			 else {
+#warning "//TODO: alert user about needing to have accessibility"
+			 }
 		 }];
 	}
-	else {	FXDLog_DEFAULT;
-		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
+	else {
+		_requestingBlock();
 	}
 }
 
-#if ENVIRONMENT_newestSDK
-- (SLComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
+- (SLComposeViewController*)socialComposeControllerWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
 
-	SLComposeViewController *socialComposeInterface = nil;
+	SLComposeViewController *socialComposeController = nil;
 
+	//TODO: Test Facebook interface
 	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
-#warning "//TODO: test facebook"
-
-		return socialComposeInterface;
+		return socialComposeController;
 	}
 
 
-	socialComposeInterface = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-
-#else
-- (TWTweetComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
-
-	TWTweetComposeViewController *socialComposeInterface = nil;
-	
-	if ([TWTweetComposeViewController canSendTweet] == NO) {
-		//TODO: notify
-
-		return socialComposeInterface;
-	}
-
-
-	socialComposeInterface = [[TWTweetComposeViewController alloc] init];
-	
-#endif
+	socialComposeController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
 
 	if (initialText) {
-		if ([socialComposeInterface setInitialText:initialText] == NO) {
+		if ([socialComposeController setInitialText:initialText] == NO) {
 			FXDLog(@"initialText: %@", initialText);
 		}
 	}
 
 	if ([imageArray count] > 0) {
 		for (UIImage *image in imageArray) {
-			if ([socialComposeInterface addImage:image] == NO) {
+			if ([socialComposeController addImage:image] == NO) {
 				FXDLog(@"image: %@", image);
 			}
 		}
@@ -283,13 +273,13 @@
 
 	if ([URLarray count] > 0) {
 		for (NSURL *url in URLarray) {
-			if ([socialComposeInterface addURL:url] == NO) {
+			if ([socialComposeController addURL:url] == NO) {
 				FXDLog(@"URL: %@", url);
 			}
 		}
 	}
 
-	return socialComposeInterface;
+	return socialComposeController;
 }
 
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {

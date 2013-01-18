@@ -23,11 +23,6 @@
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 
-#if ENVIRONMENT_newestSDK
-#else
-	#import <Twitter/Twitter.h>
-#endif
-
 
 // Headers
 #import "FXDconfigDeveloper.h"

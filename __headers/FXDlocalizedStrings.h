@@ -145,6 +145,7 @@
 "text_Twitter" = "<#Twitter#>";
 "text_Facebook" = "<#Facebook#>";
 "text_Email" = "<#Email#>";
+"text_SignOut" = "<#Sign Out#>";
 
 "text_Feedback" = "<#Feedback#>";
 

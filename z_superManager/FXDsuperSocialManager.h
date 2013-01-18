@@ -43,13 +43,9 @@
 - (void)showAlertViewForSelectingTwitterAccount;
 
 - (void)userLookUpWithScreenName:(NSString*)screenName;
-- (void)statusUpdateWithStatus:(NSString*)status;
+- (void)statusUpdateWithTweetText:(NSString*)tweetText;
 
-#if ENVIRONMENT_newestSDK
-- (SLComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
-#else
-- (TWTweetComposeViewController*)socialComposeInterfaceWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
-#endif
+- (SLComposeViewController*)socialComposeControllerWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
 
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
 

@@ -15,21 +15,14 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	FXDAlertView *sharedAlertView = [[self class] sharedInstance];
-	
+
 #if ForDEVELOPER
 	FXDLog_DEFAULT;
-
-	if (sharedAlertView.delegateBlock) {
-		FXDLog(@"sharedAlertView.delegateBlock: %@", sharedAlertView.delegateBlock);
-	}
 
 	if (_delegateBlock) {
 		FXDLog(@"_delegateBlock: %@", _delegateBlock);
 	}
 #endif
-
-	sharedAlertView.delegateBlock = nil;
 
 	// Instance variables
 	_delegateBlock = nil;
@@ -37,11 +30,6 @@
 
 
 #pragma mark - Initialization
-+ (FXDAlertView*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
-#pragma mark -
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
@@ -85,13 +73,9 @@
 			 otherButtonTitles:otherButtonTitles, nil];
 
 	if (self) {
-		FXDAlertView *sharedAlertView = [[self class] sharedInstance];
-
-		NSAssert1((sharedAlertView.delegateBlock == nil), @"sharedAlertView.delegateBlock: %@", sharedAlertView.delegateBlock);
-
-		[self setDelegate:sharedAlertView];
-
-		sharedAlertView.delegateBlock = clickedButtonAtIndexBlock;
+		self.delegateBlock = clickedButtonAtIndexBlock;
+		
+		[self setDelegate:self];
 	}
 
 	return self;
@@ -103,8 +87,8 @@
 //MARK: - Delegate implementation
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-	if (self.delegateBlock) {
-		self.delegateBlock(alertView, buttonIndex);
+	if (alertView.delegateBlock) {
+		alertView.delegateBlock(alertView, buttonIndex);
 	}
 }
 

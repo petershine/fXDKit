@@ -138,6 +138,8 @@
 
 #pragma mark - Public
 - (void)startUpdatingUbiquityContainerURL {	FXDLog_DEFAULT;
+
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
@@ -150,7 +152,7 @@
 		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
 		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);
 
-		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
+		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
 		FXDLog(@"savedTokenData: %@", updatedIdentityTokenData);
 
 		FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
@@ -163,11 +165,13 @@
 			if (updatedIdentityTokenData == nil) {
 				updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
 
-				[[NSUserDefaults standardUserDefaults] setObject:updatedIdentityTokenData forKey:userdefaultObjSavedUbiquityIdentityToken];
+				if (updatedIdentityTokenData) {
+					[userDefaults setObject:updatedIdentityTokenData forKey:userdefaultObjSavedUbiquityIdentityToken];
+				}
 			}
 		}
 		else {
-			[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjSavedUbiquityIdentityToken];
+			[userDefaults removeObjectForKey:userdefaultObjSavedUbiquityIdentityToken];
 		}
 	}
 	else {
@@ -175,45 +179,54 @@
 	}
 	
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
-	
-	if (shouldRequestUbiquityContatinerURL) {
-		
-		[self evaluateSavedUbiquityContainerURL];		
 
-		[[NSOperationQueue new] addOperationWithBlock:^{
-			NSURL *activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-			FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
+	if (shouldRequestUbiquityContatinerURL == NO) {
+		[userDefaults synchronize];
 
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-
-				if (activeUbiquityContainerURL) {					
-					if (self.ubiquityContainerURL) {
-						if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
-#warning "//TODO: find what to do when containerURL is different"
-						}
-					}
-
-					
-					_ubiquitousDocumentsURL = nil;
-					_ubiquitousCachesURL = nil;
-
-					_ubiquityContainerURL = activeUbiquityContainerURL;
-
-
-					[[NSUserDefaults standardUserDefaults] setObject:[self.ubiquityContainerURL absoluteString] forKey:userdefaultStringSavedUbiquityContainerURL];
-					[[NSUserDefaults standardUserDefaults] synchronize];
-
-					[self activatedUbiquityContainerURL];
-				}
-				else {
-					[self failedToUpdateUbiquityContainerURL];
-				}
-			}];
-		}];
-	}
-	else {
 		[self failedToUpdateUbiquityContainerURL];
+
+		return;
 	}
+
+
+	[self evaluateSavedUbiquityContainerURL];
+
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		NSURL *activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+		FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
+
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+
+			if (activeUbiquityContainerURL) {
+				if (self.ubiquityContainerURL) {
+					if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
+#warning "//TODO: find what to do when containerURL is different"
+					}
+				}
+
+
+				_ubiquitousDocumentsURL = nil;
+				_ubiquitousCachesURL = nil;
+
+				_ubiquityContainerURL = activeUbiquityContainerURL;
+
+
+				NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
+
+				if (containerURLString) {
+					[userDefaults setObject:containerURLString forKey:userdefaultStringSavedUbiquityContainerURL];
+					[userDefaults synchronize];
+				}
+
+				[self activatedUbiquityContainerURL];
+			}
+			else {
+				[userDefaults synchronize];
+
+				[self failedToUpdateUbiquityContainerURL];
+			}
+		}];
+	}];
 }
 
 - (void)evaluateSavedUbiquityContainerURL {	FXDLog_DEFAULT;

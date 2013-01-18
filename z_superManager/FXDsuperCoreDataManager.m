@@ -166,6 +166,8 @@
 
 			FXDLog(@"2.didConfigure: %d", didConfigure);
 
+#warning "//TODO: prepare what to do when Core Data is not setup"
+			
 #if ForDEVELOPER
 			if (error) {
 				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
@@ -184,14 +186,13 @@
 #endif
 
 #warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
-			
+
+			NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
+
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self userInfo:userInfo];
+
 			if (didFinishBlock) {
 				didFinishBlock(didConfigure);
-			}
-			else {
-				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
-				
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self userInfo:userInfo];
 			}
 		}];
 	}];
@@ -234,7 +235,7 @@
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)())didFinishBlock {	FXDLog_SEPARATE;
 
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 

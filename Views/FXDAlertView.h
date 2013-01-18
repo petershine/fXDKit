@@ -30,10 +30,10 @@ typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger 
 
 
 #pragma mark - Public
-+ (FXDAlertView*)sharedInstance;
 
 #warning "//TODO: find why this one is causing explosive memory allocation"
 - (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
+
 
 //MARK: - Observer implementation
 

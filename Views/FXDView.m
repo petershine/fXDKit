@@ -186,7 +186,7 @@
 					 }];
 }
 
-- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock {
+- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)())afterAddedBlock {
 	subview.alpha = 0.0;
 
 	[self addSubview:subview];
@@ -205,7 +205,7 @@
 
 }
 
-- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock {	//FXDLog_DEFAULT;
+- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)())afterRemovedBlock {	//FXDLog_DEFAULT;
 
 	[UIView animateWithDuration:durationAnimation
 					 animations:^{
