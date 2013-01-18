@@ -39,15 +39,17 @@
 #pragma mark - Public
 + (FXDsuperSocialManager*)sharedInstance;
 
-- (void)signInBySelectingTwitterAccount;
-- (void)showAlertViewForSelectingTwitterAccount;
+- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock;
+- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock;
 
 - (void)userLookUpWithScreenName:(NSString*)screenName;
 - (void)statusUpdateWithTweetText:(NSString*)tweetText;
 
 - (SLComposeViewController*)socialComposeControllerWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
 
+#if ForDEVELOPER
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
+#endif
 
 
 //MARK: - Observer implementation

@@ -91,12 +91,12 @@
 
 
 #pragma mark - Public
-- (void)signInBySelectingTwitterAccount {	FXDLog_DEFAULT;	
+- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock {	FXDLog_DEFAULT;	
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
 	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);
 	
 	if (self.accountType.accessGranted) {
-		[self showAlertViewForSelectingTwitterAccount];
+		[self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
 	}
 	else {
 		[self.accountStore
@@ -108,16 +108,20 @@
 			 FXDLog_ERROR;
 
 			 if (granted) {
-				 [self showAlertViewForSelectingTwitterAccount];
+				 [self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
 			 }
 		 }];
 	}
 }
 
-- (void)showAlertViewForSelectingTwitterAccount {	FXDLog_DEFAULT;
+- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock {	FXDLog_DEFAULT;
 	
 	if ([self.twitterAccountArray count] == 0) {
-		//MARK: If no Twitter account is signed up... alert user		
+		//MARK: If no Twitter account is signed up... alert user
+		if (didFinishBlock) {
+			didFinishBlock();
+		}
+		
 		return;
 	}
 
@@ -164,6 +168,10 @@
 		 [userDefaults synchronize];
 
 		 _twitterAccountArray = nil;
+
+		 if (didFinishBlock) {
+			 didFinishBlock();
+		 }
 	 }
 	 cancelButtonTitle:nil
 	 otherButtonTitles:nil];
@@ -282,10 +290,10 @@
 	return socialComposeController;
 }
 
+#if ForDEVELOPER
 - (void)logTwitterResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
 	FXDLog_ERROR;
 
-#if ForDEVELOPER
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
 		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
@@ -298,8 +306,8 @@
 
 	id parsedObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
 	FXDLog(@"parsedObject: %@\n %@", [parsedObject class], parsedObject);
-#endif
 }
+#endif
 
 
 //MARK: - Observer implementation

@@ -56,6 +56,7 @@
 - (void)startObservingFileManagerNotifications;
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock;
+
 - (void)startObservingCoreDataNotifications;
 
 
