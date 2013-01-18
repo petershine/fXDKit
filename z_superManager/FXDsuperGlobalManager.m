@@ -297,7 +297,7 @@
 
 	UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 	localNotifcation.repeatInterval = 0;
-	localNotifcation.soundName = UILocalNotificationDefaultSoundName;
+	//localNotifcation.soundName = UILocalNotificationDefaultSoundName;
 	localNotifcation.alertBody = alertBody;
 
 	if (delay > 0.0) {
