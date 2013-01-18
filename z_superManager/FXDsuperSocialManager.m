@@ -108,14 +108,17 @@
 			 FXDLog_ERROR;
 
 			 if (granted) {
-				 [self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+				 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+					 [self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+				 }];
 			 }
 		 }];
 	}
 }
 
 - (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock {	FXDLog_DEFAULT;
-	
+	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
+
 	if ([self.twitterAccountArray count] == 0) {
 		//MARK: If no Twitter account is signed up... alert user
 		if (didFinishBlock) {

@@ -162,12 +162,7 @@
 #endif
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self startObservingCoreDataNotifications];
-
 			FXDLog(@"2.didConfigure: %d", didConfigure);
-
-#warning "//TODO: prepare what to do when Core Data is not setup"
-			
 #if ForDEVELOPER
 			if (error) {
 				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
@@ -184,9 +179,11 @@
 				[alertView show];
 			}
 #endif
+			
+#warning "//TODO: prepare what to do when Core Data is not setup"
+			[self startObservingCoreDataNotifications];
 
 #warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
-
 			NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
 
 			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self userInfo:userInfo];
