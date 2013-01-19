@@ -112,6 +112,7 @@
 					 } completion:^(BOOL finished) {
 						 self.image = fadedImageview.image;
 
+						 [fadedImageview removeFromSuperview];
 						 fadedImageview = nil;
 					 }];
 }
