@@ -147,6 +147,7 @@
 	return _mainDataSource;
 }
 
+#pragma mark -
 - (FXDFetchedResultsController*)mainResultsController {
 
 	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
@@ -156,6 +157,7 @@
 	return _mainResultsController;
 }
 
+#pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 
 	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
@@ -216,6 +218,10 @@
 }
 
 #pragma mark -
+- (void)initializeCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
+	//MARK: for newly initialized cell.
+}
+
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 
 	[self configureSectionPostionTypeForCell:cell forIndexPath:indexPath];
@@ -269,9 +275,11 @@
 	NSString *cellText = nil;
 	
 	if (self.cellTexts) {				
-		NSString *objKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
-		
-		cellText = (self.cellTexts)[objKey];
+		NSString *objKey = [indexPath stringValue];
+
+		if (objKey) {
+			cellText = (self.cellTexts)[objKey];
+		}
 	}
 	
 	return cellText;
@@ -281,9 +289,11 @@
 	NSString *segueName = nil;
 
 	if (self.segueNames) {
-		NSString *objKey = [NSString stringWithFormat:@"%d%d", indexPath.section, indexPath.row];
+		NSString *objKey = [indexPath stringValue];
 
-		segueName = (self.segueNames)[objKey];
+		if (objKey) {
+			segueName = (self.segueNames)[objKey];
+		}
 	}
 
 	return segueName;
@@ -452,10 +462,12 @@
 	//MARK: If cell Nib is registered, this will never be nil
 	if (cell == nil) {	//FXDLog_OVERRIDE;
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
+
+		[self initializeCell:cell forIndexPath:indexPath];
 	}
-	
-	
+
 	[self configureCell:cell forIndexPath:indexPath];
+	
 	
 	return cell;
 }

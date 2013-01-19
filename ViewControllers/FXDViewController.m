@@ -19,11 +19,12 @@
 
 	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
 
-
-#warning "//TODO: find the right way to nilify unusable view for memory management"
+	//MARK: Not necessary for iOS 6: find the right way to nilify unusable view for memory management
+	/*
 	if (self.view.superview == nil) {
 		self.view = nil;
 	}
+	 */
     
     // Release any cached data, images, etc that aren't in use.
 }

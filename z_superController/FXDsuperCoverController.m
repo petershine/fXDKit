@@ -12,6 +12,7 @@
 @implementation FXDsegueTransition
 @end
 
+
 @implementation FXDsegueCovering
 - (void)perform {	FXDLog_DEFAULT;
 	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.sourceViewController navigationController];
@@ -20,6 +21,7 @@
 }
 
 @end
+
 
 @implementation FXDsegueUncovering
 - (void)perform {	FXDLog_DEFAULT;
@@ -292,7 +294,7 @@
 @implementation FXDViewController (Covering)
 
 - (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
-
+	FXDLog(@"unwindSegue fullDescription:\n%@", [unwindSegue fullDescription]);
 }
 
 - (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;

@@ -24,7 +24,6 @@
 	NSDictionary *_cellTexts;
 
 	NSMutableArray *_mainDataSource;
-	
 	FXDFetchedResultsController *_mainResultsController;
 	
 	NSOperationQueue *_cellOperationQueue;
@@ -41,7 +40,6 @@
 @property (strong, nonatomic) NSDictionary *cellTexts;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
-
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
@@ -58,6 +56,7 @@
 #pragma mark - Public
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
 
+- (void)initializeCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 - (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 
 - (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
