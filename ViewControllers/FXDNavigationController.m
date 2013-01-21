@@ -22,9 +22,7 @@
 
 - (void)dealloc {	
 	// Instance variables
-	
-	// Properties
-	
+		
 	FXDLog_DEFAULT;
 }
 

@@ -288,11 +288,11 @@
 - (NSString*)segueNameAtIndexPath:(NSIndexPath*)indexPath {
 	NSString *segueName = nil;
 
-	if (self.segueNames) {
+	if (self.segueNameDictionary) {
 		NSString *objKey = [indexPath stringValue];
 
 		if (objKey) {
-			segueName = (self.segueNames)[objKey];
+			segueName = (self.segueNameDictionary)[objKey];
 		}
 	}
 
