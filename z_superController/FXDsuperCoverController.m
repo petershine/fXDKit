@@ -293,10 +293,12 @@
 #pragma mark - Category
 @implementation FXDViewController (Covering)
 
+#pragma mark - IBActions
 - (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
 	FXDLog(@"unwindSegue fullDescription:\n%@", [unwindSegue fullDescription]);
 }
 
+#pragma mark - Public
 - (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
 	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionTop;
 

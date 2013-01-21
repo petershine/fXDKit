@@ -55,8 +55,11 @@
 
 #pragma mark - Category
 @interface FXDViewController (Covering)
+
+#pragma mark - IBActions
 - (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
 
+#pragma mark - Public
 - (COVER_DIRECTION_TYPE)coverDirectionType;
 - (BOOL)shouldSkipPushingNavigationItems;
 

@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 petershine. All rights reserved.
 //
 
+#define NSIndexPathString(section, row)	[[NSIndexPath indexPathForRow:row inSection:section] stringValue]
+
 
 @interface FXDIndexPath : NSIndexPath {
     // Primitives

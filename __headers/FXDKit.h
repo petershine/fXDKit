@@ -84,6 +84,7 @@
 #import "FXDActionSheet.h"
 
 #import "FXDScrollView.h"
+#import "FXDTableView.h"
 #import "FXDCollectionView.h"
 
 #import "FXDWindow.h"
