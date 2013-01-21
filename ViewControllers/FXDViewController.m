@@ -221,13 +221,13 @@
 
 
 #pragma mark - Property overriding
-- (NSDictionary*)segueNames {
+- (NSDictionary*)segueNameDictionary {
 
-	if (_segueNames == nil) {	FXDLog_OVERRIDE;
+	if (_segueNameDictionary == nil) {	FXDLog_OVERRIDE;
 		//
 	}
 
-	return _segueNames;
+	return _segueNameDictionary;
 }
 
 
