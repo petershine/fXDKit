@@ -43,9 +43,7 @@
 	[super viewDidLoad];
 
     // IBOutlet
-	CGSize windowSize = [[FXDWindow applicationWindow] bounds].size;
-
-	if (MAX(windowSize.width, windowSize.height) <= 480.0) {
+	if (SCREEN_SIZE_35inch) {
 		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch];
 	}
 	else {

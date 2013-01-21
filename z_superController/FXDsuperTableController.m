@@ -197,7 +197,7 @@
 		operationObjKey = [indexPath stringValue];
 	}
 	else if (rowIndex != integerNotDefined) {
-		operationObjKey = [[NSIndexPath indexPathForRow:rowIndex inSection:0] stringValue];
+		operationObjKey = NSIndexPathString(0, rowIndex);
 	}
 
 	if (operationObjKey == nil) {

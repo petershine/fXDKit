@@ -118,5 +118,10 @@
 #endif
 
 
+#ifndef SCREEN_SIZE_35inch
+	#define SCREEN_SIZE_35inch	(MAX([[FXDWindow applicationWindow] bounds].size.width, [[FXDWindow applicationWindow] bounds].size.height) <= 480.0)
+#endif
+
+
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[[self class] alloc] init];});return _sharedInstance
 
