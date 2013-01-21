@@ -15,6 +15,7 @@
 
 // Alert
 #define alert_DoYouReallyWantToDelete		@"alert_DoYouReallyWantToDelete"
+#define alert_DoYouReallyWantToReset		@"alert_DoYouReallyWantToReset"
 #define alert_SelectTwitterAccount			@"alert_SelectTwitterAccount"
 #define alert_PleaseEnableiCloud			@"alert_PleaseEnableiCloud"
 #define alert_PleaseEnableCameraRollAccess	@"alert_PleaseEnableCameraRollAccess"
@@ -103,6 +104,7 @@
 
 // Alert
 "alert_DoYouReallyWantToDelete" = "<#Do you really want to delete?#>";
+"alert_DoYouReallyWantToReset" = "<#Do you really want to reset?#>";
 "alert_SelectTwitterAccount" = "<#Select Twitter Account#>";
 "alert_PleaseEnableiCloud" = "<#Please Enable iCloud#>";
 "alert_PleaseEnableCameraRollAccess" = "<#Please enable Camera Roll access#>";
