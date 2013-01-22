@@ -19,9 +19,9 @@
 	// Instance variables
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
-	
-	NSArray *_rowCounts;
+
 	NSDictionary *_cellTexts;
+	NSArray *_rowCounts;
 
 	NSMutableArray *_mainDataSource;
 	FXDFetchedResultsController *_mainResultsController;
@@ -36,8 +36,8 @@
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
 
-@property (strong, nonatomic) NSArray *rowCounts;
 @property (strong, nonatomic) NSDictionary *cellTexts;
+@property (strong, nonatomic) NSArray *rowCounts;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
@@ -64,7 +64,6 @@
 - (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)cellTextAtIndexPath:(NSIndexPath*)indexPath;
-- (NSString*)segueNameAtIndexPath:(NSIndexPath*)indexPath;
 
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
