@@ -38,7 +38,7 @@
 #endif
 
 #ifndef message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain
-#define message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain @"message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain"
+	#define message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain @"message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain"
 #endif
 
 

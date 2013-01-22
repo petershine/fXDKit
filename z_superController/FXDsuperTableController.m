@@ -30,8 +30,6 @@
 
 	[_cellOperationDictionary removeAllObjects];
 	_cellOperationDictionary = nil;
-
-	// Properties
 }
 
 
@@ -43,34 +41,28 @@
 
     // Instance variables
 
-    // Properties
-
-    // IBOutlets
-	
+    // Properties	
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	// Primitives
-
-	// Instance variables
-
-	// Properties
-
 	// IBOutlets
-	if (self.mainTableview) {
-		if (self.mainTableview.dataSource == nil) {
-			[self.mainTableview setDataSource:self];
-		}
+	if (self.mainTableview == nil) {
+		return;
+	}
 
-		if (self.mainTableview.delegate == nil) {
-			[self.mainTableview setDelegate:self];
-		}
 
-		if (self.mainCellIdentifier || self.mainCellNib) {
-			[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
-		}
+	if (self.mainTableview.dataSource == nil) {
+		[self.mainTableview setDataSource:self];
+	}
+
+	if (self.mainTableview.delegate == nil) {
+		[self.mainTableview setDelegate:self];
+	}
+
+	if (self.mainCellIdentifier || self.mainCellNib) {
+		[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 	}
 }
 
@@ -81,22 +73,18 @@
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-	
+	[super viewDidDisappear:animated];	
 }
 
 
@@ -119,15 +107,7 @@
 	return _mainCellNib;
 }
 
-- (NSArray*)rowCounts {
-
-	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-
-	return _rowCounts;
-}
-
+#pragma mark -
 - (NSDictionary*)cellTexts {
 
 	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
@@ -135,6 +115,15 @@
 	}
 
 	return _cellTexts;
+}
+
+- (NSArray*)rowCounts {
+
+	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+
+	return _rowCounts;
 }
 
 #pragma mark -
@@ -230,7 +219,7 @@
 	UIImage *highlightedImage = [self selectedBackgroundImageForCellAtIndexPath:indexPath];
 	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
 	
-	cell.textLabel.text = [self cellTextAtIndexPath:indexPath];
+	cell.textLabel.text = (self.cellTexts)[[indexPath stringValue]];
 	
 	UIImage *mainImage = [self mainImageForCellAtIndexPath:indexPath];
 	UIImage *highlightedMainImage = [self highlightedMainImageForCellAtIndexPath:indexPath];
@@ -271,39 +260,11 @@
 	return backgroundImage;
 }
 
-- (NSString*)cellTextAtIndexPath:(NSIndexPath*)indexPath {
-	NSString *cellText = nil;
-	
-	if (self.cellTexts) {				
-		NSString *objKey = [indexPath stringValue];
-
-		if (objKey) {
-			cellText = (self.cellTexts)[objKey];
-		}
-	}
-	
-	return cellText;
-}
-
-- (NSString*)segueNameAtIndexPath:(NSIndexPath*)indexPath {
-	NSString *segueName = nil;
-
-	if (self.segueNameDictionary) {
-		NSString *objKey = [indexPath stringValue];
-
-		if (objKey) {
-			segueName = (self.segueNameDictionary)[objKey];
-		}
-	}
-
-	return segueName;
-}
-
 #pragma mark -
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *mainImage = nil;
 	
-#ifdef imagenameformatSettingsCellMainOff
+#if imagenameformatSettingsCellMainOff
 	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOff, indexPath.section, indexPath.row];
 	
 	mainImage = [UIImage bundledImageForName:imageName];
@@ -315,7 +276,7 @@
 - (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *highlightedMainImage = nil;
 	
-#ifdef imagenameformatSettingsCellMainOn	
+#if imagenameformatSettingsCellMainOn	
 	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOn, indexPath.section, indexPath.row];
 	
 	highlightedMainImage = [UIImage bundledImageForName:imageName];
@@ -327,10 +288,10 @@
 - (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath {
 	id accessoryView = nil;
 	
-#ifdef imagenameSettingsCellArrowOff
+#if imagenameSettingsCellArrowOff
 	accessoryView = [[UIImageView alloc] initWithImage:imagenameSettingsCellArrowOff];
 	
-	#ifdef imagenameSettingsCellArrowOn
+	#if imagenameSettingsCellArrowOn
 		[(UIImageView*)accessoryView setHighlightedImage:imagenameSettingsCellArrowOn];
 	#endif
 #endif

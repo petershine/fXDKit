@@ -106,6 +106,39 @@
 
 
 #pragma mark - Segues
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"sender: %@", sender);
+	FXDLog(@"identifier: %@", identifier);
+
+	[super performSegueWithIdentifier:identifier sender:sender];
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
+	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
+
+	FXDLog(@"sender: %@", sender);
+	FXDLog(@"identifier: %@", identifier);
+
+	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
+	FXDLog(@"shouldPerform: %d", shouldPerform);
+
+	return shouldPerform;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"sender: %@", sender);
+
+	if ([segue isKindOfClass:[FXDStoryboardSegue class]]) {
+		FXDLog(@"segue: %@", segue);
+	}
+	else {
+		FXDLog(@"segue:\n%@", [segue fullDescription]);
+	}
+
+	[super prepareForSegue:segue sender:sender];
+}
+
+#pragma mark -
 - (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 
@@ -127,24 +160,25 @@
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"sender: %@", sender);
 
-	__block UIViewController *viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+	__block UIViewController *viewController = nil;
 
-	FXDLog(@"1.viewController: %@", viewController);
+	//MARK: Iterate backward
+	[self.childViewControllers
+	 enumerateObjectsWithOptions:NSEnumerationReverse
+	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
 
-	if (viewController == nil) {
-		//MARK: Iterate backward
-		[self.childViewControllers
-		 enumerateObjectsWithOptions:NSEnumerationReverse
-		 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
-
-			 if (obj && viewController == nil) {
-				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-					 viewController = (UIViewController*)obj;
-				 }
+		 if (obj && viewController == nil) {
+			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
+				 viewController = (UIViewController*)obj;
+				 FXDLog(@"1.viewController: %@", viewController);
 			 }
-		 }];
-	}
+		 }
+		 else if (obj == nil && viewController == nil) {
+			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+			 FXDLog(@"1.viewController: %@", viewController);
+		 }
+	 }];
 
 	FXDLog(@"2.viewController: %@", viewController);
 
