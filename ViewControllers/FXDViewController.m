@@ -235,13 +235,6 @@
 
 
 #pragma mark - Segues
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"sender: %@", sender);
-	FXDLog(@"identifier: %@", identifier);
-
-	[super performSegueWithIdentifier:identifier sender:sender];
-}
-
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
@@ -252,6 +245,13 @@
 	FXDLog(@"shouldPerform: %d", shouldPerform);
 
 	return shouldPerform;
+}
+
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"sender: %@", sender);
+	FXDLog(@"identifier: %@", identifier);
+
+	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;

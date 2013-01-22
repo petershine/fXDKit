@@ -410,6 +410,8 @@
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
+		FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
+
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
 	else if (self.mainDataSource) {
