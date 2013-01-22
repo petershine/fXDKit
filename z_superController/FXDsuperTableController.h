@@ -47,7 +47,7 @@
 
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDTableView *mainTableview;
+@property (strong, nonatomic) IBOutlet UITableView *mainTableview;
 
 
 #pragma mark - IBActions

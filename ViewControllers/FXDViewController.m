@@ -19,7 +19,7 @@
 
 	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
 
-	//MARK: Not necessary for iOS 6: find the right way to nilify unusable view for memory management
+	//MARK: Not necessary for iOS 6: find the right way to nullify unusable view for memory management
 	/*
 	if (self.view.superview == nil) {
 		self.view = nil;
@@ -287,24 +287,25 @@
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"sender: %@", sender);
 
-	__block UIViewController *viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+	__block UIViewController *viewController = nil;
 
-	FXDLog(@"1.viewController: %@", viewController);
+	//MARK: Iterate backward
+	[self.childViewControllers
+	 enumerateObjectsWithOptions:NSEnumerationReverse
+	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
 
-	if (viewController == nil) {
-		//MARK: Iterate backward
-		[self.childViewControllers
-		 enumerateObjectsWithOptions:NSEnumerationReverse
-		 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
-
-			 if (obj && viewController == nil) {
-				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-					 viewController = (UIViewController*)obj;
-				 }
+		 if (obj && viewController == nil) {
+			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
+				 viewController = (UIViewController*)obj;
+				 FXDLog(@"1.viewController: %@", viewController);
 			 }
-		 }];
-	}
+		 }
+		 else if (obj == nil && viewController == nil) {
+			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+			 FXDLog(@"1.viewController: %@", viewController);
+		 }
+	 }];
 
 	FXDLog(@"2.viewController: %@", viewController);
 
