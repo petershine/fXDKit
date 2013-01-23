@@ -67,7 +67,7 @@
 	self = [self initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
-#if image_MapViewDefaultPin
+#ifndef image_MapViewDefaultPin
 		if (defaultImage == nil) {
 			defaultImage = image_MapViewDefaultPin;
 		}
@@ -91,28 +91,31 @@
 	[self setFrame:modifiedFrame];
 	
 	// Animate drop
-	[UIView animateWithDuration:durationAnimation
-						  delay:delay
-						options:UIViewAnimationCurveEaseOut
-					 animations:^{
-						 [self setFrame:animatedFrame];
-					 }
-					 completion:^(BOOL finished){
-						 if (finished) {
-							 [UIView animateWithDuration:0.05
-											  animations:^{
-												  self.transform = CGAffineTransformMakeScale(1.0, 0.8);
-											  }
-											  completion:^(BOOL finished){
-												  if (finished) {
-													  [UIView animateWithDuration:0.1
-																	   animations:^{
-																		   self.transform = CGAffineTransformIdentity;
-																	   }];
-												  }
-											  }];
-						 }
-					 }];
+	[UIView
+	 animateWithDuration:durationAnimation
+	 delay:delay
+	 options:UIViewAnimationCurveEaseOut
+	 animations:^{
+		 [self setFrame:animatedFrame];
+	 }
+	 completion:^(BOOL finished){
+		 if (finished) {
+			 [UIView
+			  animateWithDuration:0.05
+			  animations:^{
+				  self.transform = CGAffineTransformMakeScale(1.0, 0.8);
+			  }
+			  completion:^(BOOL finished){
+				  if (finished) {
+					  [UIView
+					   animateWithDuration:0.1
+					   animations:^{
+						   self.transform = CGAffineTransformIdentity;
+					   }];
+				  }
+			  }];
+		 }
+	 }];
 }
 
 @end
