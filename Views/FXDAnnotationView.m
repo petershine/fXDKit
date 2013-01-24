@@ -67,7 +67,7 @@
 	self = [self initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
-#ifndef image_MapViewDefaultPin
+#ifdef image_MapViewDefaultPin
 		if (defaultImage == nil) {
 			defaultImage = image_MapViewDefaultPin;
 		}
