@@ -17,14 +17,14 @@ typedef enum {
 } FILE_KIND_TYPE;
 
 
-// FXDsuperCoverController
+// FXDsuperSlideController
 typedef enum {
-	coverDirectionTop,
-	coverDirectionLeft,
-	coverDirectionBottom,
-	coverDirectionRight,
+	slideDirectionTop,
+	slideDirectionLeft,
+	slideDirectionBottom,
+	slideDirectionRight,
 
-} COVER_DIRECTION_TYPE;
+} SLIDE_DIRECTION_TYPE;
 
 
 // FXDTableViewCell

@@ -1,5 +1,5 @@
 //
-//  FXDsuperCoverController.h
+//  FXDsuperSlideController.h
 //
 //
 //  Created by petershine on 10/18/12.
@@ -19,7 +19,7 @@
 @end
 
 
-@interface FXDsuperCoverController : FXDNavigationController <UINavigationBarDelegate> {
+@interface FXDsuperSlideController : FXDNavigationController <UINavigationBarDelegate> {
     // Primitives
 
 	// Instance variables
@@ -60,7 +60,7 @@
 - (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
 
 #pragma mark - Public
-- (COVER_DIRECTION_TYPE)coverDirectionType;
+- (SLIDE_DIRECTION_TYPE)coverDirectionType;
 - (BOOL)shouldSkipPushingNavigationItems;
 
 @end

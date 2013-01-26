@@ -1,12 +1,12 @@
 //
-//  FXDsuperCoverController.m
+//  FXDsuperSlideController.m
 //
 //
 //  Created by petershine on 10/18/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCoverController.h"
+#import "FXDsuperSlideController.h"
 
 
 @implementation FXDsegueTransition
@@ -15,7 +15,7 @@
 
 @implementation FXDsegueCovering
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.sourceViewController navigationController];
+	FXDsuperSlideController *coverController = (FXDsuperSlideController*)[self.sourceViewController navigationController];
 
 	[coverController coverWithCoveringSegue:self];
 }
@@ -25,7 +25,7 @@
 
 @implementation FXDsegueUncovering
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperCoverController *coverController = (FXDsuperCoverController*)[self.sourceViewController navigationController];
+	FXDsuperSlideController *coverController = (FXDsuperSlideController*)[self.sourceViewController navigationController];
 
 	[coverController uncoverWithUncoveringSegue:self];
 }
@@ -34,7 +34,7 @@
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCoverController
+@implementation FXDsuperSlideController
 
 
 #pragma mark - Memory management
@@ -160,19 +160,19 @@
 	CGRect animatedFrame = destination.view.frame;
 
 	switch ([destination coverDirectionType]) {
-		case coverDirectionTop:
+		case slideDirectionTop:
 			modifiedFrame.origin.y = self.view.frame.size.height;
 			break;
 
-		case coverDirectionLeft:
+		case slideDirectionLeft:
 			modifiedFrame.origin.x = self.view.frame.size.width;
 			break;
 
-		case coverDirectionBottom:
+		case slideDirectionBottom:
 			modifiedFrame.origin.y = 0.0 -self.view.frame.size.height;
 			break;
 
-		case coverDirectionRight:
+		case slideDirectionRight:
 			modifiedFrame.origin.x = 0.0 -self.view.frame.size.width;
 			break;
 
@@ -220,19 +220,19 @@
 	CGRect animatedFrame = source.view.frame;
 
 	switch ([source coverDirectionType]) {
-		case coverDirectionTop:
+		case slideDirectionTop:
 			animatedFrame.origin.y = self.view.frame.size.height;
 			break;
 
-		case coverDirectionLeft:
+		case slideDirectionLeft:
 			animatedFrame.origin.x = self.view.frame.size.width;
 			break;
 
-		case coverDirectionBottom:
+		case slideDirectionBottom:
 			animatedFrame.origin.y = 0.0 -self.view.frame.size.height;
 			break;
 
-		case coverDirectionRight:
+		case slideDirectionRight:
 			animatedFrame.origin.x = 0.0 -self.view.frame.size.width;
 			break;
 
@@ -299,8 +299,8 @@
 }
 
 #pragma mark - Public
-- (COVER_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
-	COVER_DIRECTION_TYPE coverDirectionType = coverDirectionTop;
+- (SLIDE_DIRECTION_TYPE)coverDirectionType {	FXDLog_OVERRIDE;
+	SLIDE_DIRECTION_TYPE coverDirectionType = slideDirectionTop;
 
 	return coverDirectionType;
 }
