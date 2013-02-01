@@ -103,7 +103,7 @@
 		self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
 
 		//FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
-		UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
+		UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
 
 		if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
 
@@ -232,7 +232,7 @@
 
 	[UIView animateWithDuration:delayOneSecond
 						  delay:0.0
-						options:UIViewAnimationCurveEaseIn
+						options:UIViewAnimationOptionCurveEaseIn
 					 animations:^{
 						 [previousScene.view setAlpha:0.0];
 					 } completion:^(BOOL finished) {

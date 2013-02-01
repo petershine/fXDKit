@@ -161,7 +161,7 @@
 	
 	[UIView animateWithDuration:durationQuickAnimation
 						  delay:0
-						options:UIViewAnimationCurveEaseOut
+						options:UIViewAnimationOptionCurveEaseOut
 					 animations:^{
 						 self.alpha = 1.0;
 					 }
@@ -173,7 +173,7 @@
 - (void)fadeOutThenHidden {
 	[UIView animateWithDuration:durationQuickAnimation
 						  delay:0
-						options:UIViewAnimationCurveEaseOut
+						options:UIViewAnimationOptionCurveEaseOut
 					 animations:^{
 						 self.alpha = 0.0;
 					 }

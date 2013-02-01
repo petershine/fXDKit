@@ -199,7 +199,7 @@
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
-						options:UIViewAnimationCurveEaseOut
+						options:UIViewAnimationOptionCurveEaseOut
 					 animations:^{
 						 [destination.view setFrame:animatedFrame];
 					 }
@@ -249,7 +249,7 @@
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
-						options:UIViewAnimationCurveEaseOut
+						options:UIViewAnimationOptionCurveEaseOut
 					 animations:^{
 						 [source.view setFrame:animatedFrame];
 					 }

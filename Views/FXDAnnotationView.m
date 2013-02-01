@@ -94,7 +94,7 @@
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:delay
-	 options:UIViewAnimationCurveEaseOut
+	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [self setFrame:animatedFrame];
 	 }
