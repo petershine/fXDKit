@@ -124,7 +124,7 @@
 		
 		NSURL *ubiquitousContentURL = nil;
 		
-#warning "TODO: get UUID unique URL using ubiquityContainerURL instead"
+#warning "//TODO: get UUID unique URL using ubiquityContainerURL instead"
 		//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
 		
 		if (ubiquityContainerURL) {

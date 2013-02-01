@@ -298,12 +298,12 @@
 		 if (obj && viewController == nil) {
 			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
 				 viewController = (UIViewController*)obj;
-				 FXDLog(@"1.viewController: %@", viewController);
+				 FXDLog(@"1.(obj)viewController: %@", viewController);
 			 }
 		 }
 		 else if (obj == nil && viewController == nil) {
 			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-			 FXDLog(@"1.viewController: %@", viewController);
+			 FXDLog(@"1.([super])viewController: %@", viewController);
 		 }
 	 }];
 

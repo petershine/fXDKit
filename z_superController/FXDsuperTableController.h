@@ -63,7 +63,6 @@
 
 - (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
-- (NSString*)cellTextAtIndexPath:(NSIndexPath*)indexPath;
 
 - (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
