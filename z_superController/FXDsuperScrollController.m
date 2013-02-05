@@ -92,6 +92,25 @@
 }
 
 #pragma mark -
+- (NSDictionary*)cellTexts {
+	
+	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _cellTexts;
+}
+
+- (NSArray*)itemCounts {
+	
+	if (_itemCounts == nil) {	//FXDLog_OVERRIDE;
+		//
+	}
+	
+	return _itemCounts;
+}
+
+#pragma mark -
 - (NSMutableArray*)mainDataSource {
 	
 	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
@@ -171,6 +190,59 @@
 	
 	
 	return didCancel;
+}
+
+#pragma mark -
+- (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView {	//FXDLog_OVERRIDE;
+	NSInteger numberOfSections = 1;
+	
+	if (self.mainResultsController) {
+		FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
+		
+		numberOfSections = [[self.mainResultsController sections] count];
+	}
+	else if (self.mainDataSource) {
+		//MARK: Assume it's just one array
+	}
+	else if (self.itemCounts) {	//FXDLog_OVERRIDE;
+		numberOfSections = [self.itemCounts count];
+	}
+	
+	return numberOfSections;
+}
+
+- (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section {	FXDLog_DEFAULT;
+	
+	NSInteger numberOfItems = 0;
+	
+	if (self.mainResultsController) {
+		NSInteger fetchedObjectsCount = [self.mainResultsController.fetchedObjects count];
+		
+#if ForDEVELOPER
+		NSArray *sections = self.mainResultsController.sections;
+		
+		if (section < [sections count]) {
+			id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
+			
+			numberOfItems = [sectionInfo numberOfObjects];
+		}
+		
+		if (numberOfItems != fetchedObjectsCount) {
+			numberOfItems = fetchedObjectsCount;
+		}
+#else
+		numberOfRows = fetchedObjectsCount;
+#endif
+		FXDLog(@"section: %d numberOfRows: %d == fetchedObjectsCount: %d", section, numberOfItems, fetchedObjectsCount);
+	}
+	else if (self.mainDataSource) {
+		numberOfItems = [self.mainDataSource count];
+	}
+	else if (self.itemCounts) {	//FXDLog_OVERRIDE;
+		numberOfItems = [(self.itemCounts)[section] integerValue];
+	}
+	
+	return numberOfItems;
 }
 
 #pragma mark -

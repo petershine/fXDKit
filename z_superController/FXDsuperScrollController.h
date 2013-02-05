@@ -19,6 +19,9 @@
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
 	
+	NSDictionary *_cellTexts;
+	NSArray *_itemCounts;
+	
 	NSMutableArray *_mainDataSource;
 	FXDFetchedResultsController *_mainResultsController;
 	
@@ -33,6 +36,9 @@
 
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
+
+@property (strong, nonatomic) NSDictionary *cellTexts;
+@property (strong, nonatomic) NSArray *itemCounts;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
@@ -52,6 +58,9 @@
 
 #pragma mark - Public
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
+
+- (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
+- (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
 
 #warning "//TODO: Only use this when supporting for iOS version previous to 6
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath didFinishBlock:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler;

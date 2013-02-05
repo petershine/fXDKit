@@ -89,25 +89,6 @@
 	return _mainScrollView;
 }
 
-#pragma mark -
-- (NSDictionary*)cellTexts {
-
-	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-
-	return _cellTexts;
-}
-
-- (NSArray*)rowCounts {
-
-	if (_rowCounts == nil) {	//FXDLog_OVERRIDE;
-		//
-	}
-
-	return _rowCounts;
-}
-
 
 #pragma mark - Method overriding
 
@@ -139,7 +120,7 @@
 
 - (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
 
-	NSInteger rowCount = [(self.rowCounts)[indexPath.section] integerValue];
+	NSInteger rowCount = [(self.itemCounts)[indexPath.section] integerValue];
 
 	if (rowCount == 1) {
 		cell.sectionPositionType = sectionPositionOne;
@@ -228,53 +209,15 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {	//FXDLog_OVERRIDE;
-	NSInteger numberOfSections = 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	
-	if (self.mainResultsController) {
-		FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
-
-		numberOfSections = [[self.mainResultsController sections] count];
-	}
-	else if (self.mainDataSource) {
-		//MARK: Assume it's just one array
-	}
-	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
-		numberOfSections = [self.rowCounts count];
-	}
+	NSInteger numberOfSections = [self numberOfSectionsForScrollView:tableView];
 	
 	return numberOfSections;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	//FXDLog_OVERRIDE;
-	NSInteger numberOfRows = 0;
-	
-	if (self.mainResultsController) {
-		NSInteger fetchedObjectsCount = [self.mainResultsController.fetchedObjects count];
-		
-#if ForDEVELOPER
-		NSArray *sections = self.mainResultsController.sections;
-
-		if (section < [sections count]) {
-			id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
-
-			numberOfRows = [sectionInfo numberOfObjects];
-		}
-		
-		if (numberOfRows != fetchedObjectsCount) {
-			numberOfRows = fetchedObjectsCount;
-		}
-#else
-		numberOfRows = fetchedObjectsCount;
-#endif
-		FXDLog(@"section: %d numberOfRows: %d == fetchedObjectsCount: %d", section, numberOfRows, fetchedObjectsCount);
-	}
-	else if (self.mainDataSource) {
-		numberOfRows = [self.mainDataSource count];
-	}
-	else if (self.rowCounts) {	//FXDLog_OVERRIDE;
-		numberOfRows = [(self.rowCounts)[section] integerValue];
-	}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	NSInteger numberOfRows = [self numberOfItemsForScrollView:tableView atSection:section];
 	
 	return numberOfRows;
 }
@@ -304,6 +247,7 @@
 	if (self.isSystemVersionLatest) {
 		return;
 	}
+	
 	
 	if ([tableView isScrollingCurrently] == NO) {
 		return;
@@ -355,18 +299,6 @@
 	if (didCancel) {
 		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
 	}
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-
-- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-}
-
-- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-	
 }
 
 @end

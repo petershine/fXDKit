@@ -12,13 +12,9 @@
     // Primitives
 
 	// Instance variables
-	NSDictionary *_cellTexts;
-	NSArray *_rowCounts;
 }
 
 // Properties
-@property (strong, nonatomic) NSDictionary *cellTexts;
-@property (strong, nonatomic) NSArray *rowCounts;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITableView *mainTableview;
