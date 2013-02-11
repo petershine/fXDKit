@@ -8,7 +8,7 @@
 
 #define limitConcurrentOperationCount	1
 
-extern CGFloat offsetYdismissingController;
+extern CGFloat _offsetYdismissingController;
 
 
 #import "FXDKit.h"

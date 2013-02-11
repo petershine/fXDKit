@@ -12,7 +12,7 @@
 #pragma mark - Public implementation
 @implementation FXDsuperScrollController
 
-CGFloat offsetYdismissingController = (-180.0);
+CGFloat _offsetYdismissingController = (-180.0);
 
 
 #pragma mark - Memory management
@@ -40,7 +40,7 @@ CGFloat offsetYdismissingController = (-180.0);
 	[super awakeFromNib];
 	
 	if (SCREEN_SIZE_35inch) {
-		offsetYdismissingController = (-140.0);
+		_offsetYdismissingController = (-140.0);
 	}
 	
 	
@@ -71,13 +71,19 @@ CGFloat offsetYdismissingController = (-180.0);
 		[self.mainScrollView performSelector:@selector(setDataSource:) withObject:self];
 	}
 	
-	if ((self.mainCellIdentifier || self.mainCellNib)
-		&& [self.mainScrollView respondsToSelector:@selector(registerNib:forCellReuseIdentifier:)]) {
-		
-		FXDLog(@"self.mainCellIdentifier: %@, self.mainCellNib: %@", self.mainCellIdentifier, self.mainCellNib);
+	
+	FXDLog(@"self.mainCellIdentifier: %@", self.mainCellIdentifier);
+	FXDLog(@"self.mainCellNib: %@", self.mainCellNib);
+	
+	if (self.mainCellIdentifier || self.mainCellNib) {
 		FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
 		
-		[self.mainScrollView performSelector:@selector(registerNib:forCellReuseIdentifier:) withObject:self.mainCellNib withObject:self.mainCellIdentifier];
+		if ([self.mainScrollView isKindOfClass:[UITableView class]]) {
+			[(UITableView*)self.mainScrollView registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
+		}
+		else if ([self.mainScrollView isKindOfClass:[UICollectionView class]]) {
+			[(UICollectionView*)self.mainScrollView registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
+		}
 	}
 }
 
@@ -380,8 +386,8 @@ CGFloat offsetYdismissingController = (-180.0);
 	}
 	
 	
-	if (scrollView.contentOffset.y < offsetYdismissingController && self.didStartDismissingByPullingDown == NO) {
-		FXDLog(@"offsetYdismissingController: %f", offsetYdismissingController);
+	if (scrollView.contentOffset.y < _offsetYdismissingController && self.didStartDismissingByPullingDown == NO) {
+		FXDLog(@"_offsetYdismissingController: %f", _offsetYdismissingController);
 		
 		[self dismissByPullingDownScrollView:scrollView];
 	}

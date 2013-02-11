@@ -68,6 +68,7 @@
 - (UIScrollView*)mainScrollView {
 	if (_mainScrollView == nil) {
 		_mainScrollView = self.mainTableview;
+		FXDLog(@"_mainScrollView: %@", _mainScrollView);
 	}
 	
 	return _mainScrollView;
