@@ -12,6 +12,8 @@
 #pragma mark - Public implementation
 @implementation FXDsuperScrollController
 
+CGFloat offsetYdismissingController = (-180.0);
+
 
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
@@ -37,6 +39,11 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
+	if (SCREEN_SIZE_35inch) {
+		offsetYdismissingController = (-140.0);
+	}
+	
+	
 	// Primitives
 	
     // Instance variables
@@ -48,6 +55,30 @@
 	[super viewDidLoad];
 	
     // IBOutlet
+	if (self.mainScrollView == nil) {
+		return;
+	}
+	
+	
+	if (self.mainScrollView.delegate == nil) {
+		[self.mainScrollView setDelegate:self];
+	}
+	
+	
+	if ([self.mainScrollView performSelector:@selector(dataSource)] == nil
+		&& [self.mainScrollView respondsToSelector:@selector(dataSource)]) {
+		
+		[self.mainScrollView performSelector:@selector(setDataSource:) withObject:self];
+	}
+	
+	if ((self.mainCellIdentifier || self.mainCellNib)
+		&& [self.mainScrollView respondsToSelector:@selector(registerNib:forCellReuseIdentifier:)]) {
+		
+		FXDLog(@"self.mainCellIdentifier: %@, self.mainCellNib: %@", self.mainCellIdentifier, self.mainCellNib);
+		FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
+		
+		[self.mainScrollView performSelector:@selector(registerNib:forCellReuseIdentifier:) withObject:self.mainCellNib withObject:self.mainCellIdentifier];
+	}
 }
 
 
@@ -246,6 +277,29 @@
 }
 
 #pragma mark -
+- (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
+	
+	if (scrollView == nil) {
+		scrollView = self.mainScrollView;
+		
+		if (scrollView == nil) {
+			FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
+		}
+	}
+	
+	
+	FXDLog(@"contentOffset.y: %f didStartDismissingByPullingDown: %d", scrollView.contentOffset.y, self.didStartDismissingByPullingDown);
+	
+	if (self.didStartDismissingByPullingDown) {
+		return;
+	}
+	
+	
+	self.didStartDismissingByPullingDown = YES;
+}
+
+
+#pragma mark -
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath didFinishBlock:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))didFinishBlock {
 	
 	BOOL shouldContinue = NO;
@@ -308,6 +362,31 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	
+	if (self.backgroundviewSticky) {
+		CGRect modifiedFrame = self.backgroundviewSticky.frame;
+		
+		CGFloat modifiedOffsetY = (scrollView.contentOffset.y +scrollView.contentInset.top);
+		
+		if (modifiedOffsetY < 0.0) {
+			modifiedFrame.origin.y = (0.0 -modifiedOffsetY);
+		}
+		else {
+			modifiedFrame.origin.y = 0.0;
+		}
+		
+		[self.backgroundviewSticky setFrame:modifiedFrame];
+	}
+	
+	
+	if (scrollView.contentOffset.y < offsetYdismissingController && self.didStartDismissingByPullingDown == NO) {
+		FXDLog(@"offsetYdismissingController: %f", offsetYdismissingController);
+		
+		[self dismissByPullingDownScrollView:scrollView];
+	}
+}
+
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
 	FXDLog(@"scrollView.scrollsToTop: %d self.didStartAutoScrollingToTop: %d", scrollView.scrollsToTop, self.didStartAutoScrollingToTop);
 	

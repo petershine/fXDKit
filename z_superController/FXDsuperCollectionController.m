@@ -40,22 +40,6 @@
 	[super viewDidLoad];
 	
     // IBOutlet
-	if (self.mainCollectionView == nil) {
-		return;
-	}
-	
-	
-	if (self.mainCollectionView.dataSource == nil) {
-		[self.mainCollectionView setDataSource:self];
-	}
-	
-	if (self.mainCollectionView.delegate == nil) {
-		[self.mainCollectionView setDelegate:self];
-	}
-	
-	if (self.mainCellIdentifier || self.mainCellNib) {
-		[self.mainCollectionView registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
-	}
 }
 
 

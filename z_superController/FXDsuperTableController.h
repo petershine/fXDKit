@@ -24,17 +24,17 @@
 
 
 #pragma mark - Public
-- (void)initializeCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
-- (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
+- (void)initializeTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
+- (void)configureTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 
-- (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
+- (void)configureSectionPostionTypeForTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;
 
-- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
-- (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath;
+- (UIImage*)backgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath;
+- (UIImage*)selectedBackgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath;
 
-- (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
-- (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath;
-- (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath;
+- (UIImage*)mainImageForTableCellAtIndexPath:(NSIndexPath*)indexPath;
+- (UIImage*)highlightedMainImageForTableCellAtIndexPath:(NSIndexPath*)indexPath;
+- (UIView*)accessoryViewForTableCellAtIndexPath:(NSIndexPath*)indexPath;
 
 - (UIView*)sectionDividerViewForWidth:(CGFloat)width andHeight:(CGFloat)height;
 

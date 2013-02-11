@@ -8,6 +8,8 @@
 
 #define limitConcurrentOperationCount	1
 
+extern CGFloat offsetYdismissingController;
+
 
 #import "FXDKit.h"
 
@@ -33,6 +35,7 @@
 
 // Properties
 @property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
+@property (assign, nonatomic) BOOL didStartDismissingByPullingDown;
 
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
@@ -47,6 +50,8 @@
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
 // IBOutlets
+@property (strong, nonatomic) IBOutlet UIView *backgroundviewSticky;
+
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollView;
 
 
@@ -61,6 +66,8 @@
 
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
 - (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
+
+- (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView;
 
 #warning "//TODO: Only use this when supporting for iOS version previous to 6
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath didFinishBlock:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler;

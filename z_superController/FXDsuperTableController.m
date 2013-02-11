@@ -40,22 +40,6 @@
 	[super viewDidLoad];
 
 	// IBOutlets
-	if (self.mainTableview == nil) {
-		return;
-	}
-
-
-	if (self.mainTableview.dataSource == nil) {
-		[self.mainTableview setDataSource:self];
-	}
-
-	if (self.mainTableview.delegate == nil) {
-		[self.mainTableview setDelegate:self];
-	}
-
-	if (self.mainCellIdentifier || self.mainCellNib) {
-		[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
-	}
 }
 
 
@@ -97,28 +81,28 @@
 
 
 #pragma mark - Public
-- (void)initializeCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
+- (void)initializeTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 	//MARK: for newly initialized cell.
 }
 
-- (void)configureCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
+- (void)configureTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 
-	[self configureSectionPostionTypeForCell:cell forIndexPath:indexPath];
+	[self configureSectionPostionTypeForTableCell:cell forIndexPath:indexPath];
 	
-	UIImage *backgroundImage = [self backgroundImageForCellAtIndexPath:indexPath];
-	UIImage *highlightedImage = [self selectedBackgroundImageForCellAtIndexPath:indexPath];
+	UIImage *backgroundImage = [self backgroundImageForTableCellAtIndexPath:indexPath];
+	UIImage *highlightedImage = [self selectedBackgroundImageForTableCellAtIndexPath:indexPath];
 	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
 	
 	cell.textLabel.text = (self.cellTexts)[[indexPath stringValue]];
 	
-	UIImage *mainImage = [self mainImageForCellAtIndexPath:indexPath];
-	UIImage *highlightedMainImage = [self highlightedMainImageForCellAtIndexPath:indexPath];
+	UIImage *mainImage = [self mainImageForTableCellAtIndexPath:indexPath];
+	UIImage *highlightedMainImage = [self highlightedMainImageForTableCellAtIndexPath:indexPath];
 	[cell customizeWithMainImage:mainImage withHighlightedMainImage:highlightedMainImage];
 	
-	cell.accessoryView = [self accessoryViewForCellAtIndexPath:indexPath];
+	cell.accessoryView = [self accessoryViewForTableCellAtIndexPath:indexPath];
 }
 
-- (void)configureSectionPostionTypeForCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
+- (void)configureSectionPostionTypeForTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
 
 	NSInteger rowCount = [(self.itemCounts)[indexPath.section] integerValue];
 
@@ -138,20 +122,20 @@
 	}
 }
 
-- (UIImage*)backgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIImage*)backgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
 }
 
-- (UIImage*)selectedBackgroundImageForCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIImage*)selectedBackgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
 }
 
 #pragma mark -
-- (UIImage*)mainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
+- (UIImage*)mainImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *mainImage = nil;
 	
 #if imagenameformatSettingsCellMainOff
@@ -163,7 +147,7 @@
 	return mainImage;
 }
 
-- (UIImage*)highlightedMainImageForCellAtIndexPath:(NSIndexPath*)indexPath {
+- (UIImage*)highlightedMainImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *highlightedMainImage = nil;
 	
 #if imagenameformatSettingsCellMainOn	
@@ -175,7 +159,7 @@
 	return highlightedMainImage;
 }
 
-- (UIView*)accessoryViewForCellAtIndexPath:(NSIndexPath*)indexPath {
+- (UIView*)accessoryViewForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	id accessoryView = nil;
 	
 #if imagenameSettingsCellArrowOff
@@ -210,7 +194,6 @@
 //MARK: - Delegate implementation
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	
 	NSInteger numberOfSections = [self numberOfSectionsForScrollView:tableView];
 	
 	return numberOfSections;
@@ -230,10 +213,10 @@
 	if (cell == nil) {	//FXDLog_OVERRIDE;
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 
-		[self initializeCell:cell forIndexPath:indexPath];
+		[self initializeTableCell:cell forIndexPath:indexPath];
 	}
 
-	[self configureCell:cell forIndexPath:indexPath];
+	[self configureTableCell:cell forIndexPath:indexPath];
 	
 	
 	return cell;
