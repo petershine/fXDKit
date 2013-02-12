@@ -167,7 +167,7 @@
 
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)())windowLoadingBlock {	FXDLog_OVERRIDE;
+- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_OVERRIDE;
 
 	if (windowLoadingBlock) {
 		windowLoadingBlock();

@@ -12,7 +12,7 @@
 #pragma mark - Public implementation
 @implementation FXDsuperScrollController
 
-CGFloat _offsetYdismissingController = (-180.0);
+CGFloat _offsetYdismissingController = 0.0;
 
 
 #pragma mark - Memory management
@@ -38,11 +38,6 @@ CGFloat _offsetYdismissingController = (-180.0);
 #pragma mark - Initialization
 - (void)awakeFromNib {
 	[super awakeFromNib];
-	
-	if (SCREEN_SIZE_35inch) {
-		_offsetYdismissingController = (-140.0);
-	}
-	
 	
 	// Primitives
 	
@@ -84,6 +79,13 @@ CGFloat _offsetYdismissingController = (-180.0);
 		else if ([self.mainScrollView isKindOfClass:[UICollectionView class]]) {
 			[(UICollectionView*)self.mainScrollView registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
 		}
+	}
+	
+	
+	if (_offsetYdismissingController == 0.0) {
+		_offsetYdismissingController = 0.0 -(self.mainScrollView.frame.size.height/3.0);
+		FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
+		FXDLog(@"_offsetYdismissingController: %f", _offsetYdismissingController);
 	}
 }
 
@@ -367,6 +369,38 @@ CGFloat _offsetYdismissingController = (-180.0);
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
+	
+	if ([self.mainScrollView respondsToSelector:@selector(beginUpdates)]) {
+		[self.mainScrollView performSelector:@selector(beginUpdates)];
+	}
+	else {
+		FXDLog_OVERRIDE;
+	}
+}
+
+- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
+	
+}
+
+- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	FXDLog_OVERRIDE;
+	
+	FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
+	
+}
+
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
+	
+	if ([self.mainScrollView respondsToSelector:@selector(endUpdates)]) {
+		[self.mainScrollView performSelector:@selector(endUpdates)];
+	}
+	else {
+		FXDLog_OVERRIDE;
+	}
+	
+}
+
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	
@@ -404,39 +438,6 @@ CGFloat _offsetYdismissingController = (-180.0);
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	FXDLog_DEFAULT;
 	
 	self.didStartAutoScrollingToTop = NO;
-}
-
-
-#pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
-	
-	if ([self.mainScrollView respondsToSelector:@selector(beginUpdates)]) {
-		[self.mainScrollView performSelector:@selector(beginUpdates)];
-	}
-	else {
-		FXDLog_OVERRIDE;
-	}
-}
-
-- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
-	
-}
-
-- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	FXDLog_OVERRIDE;
-	
-	FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
-	
-}
-
-- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
-	
-	if ([self.mainScrollView respondsToSelector:@selector(endUpdates)]) {
-		[self.mainScrollView performSelector:@selector(endUpdates)];
-	}
-	else {
-		FXDLog_OVERRIDE;
-	}
-	
 }
 
 @end

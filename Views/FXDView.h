@@ -50,8 +50,8 @@
 - (void)fadeInFromHidden;
 - (void)fadeOutThenHidden;
 
-- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)())afterAddedBlock;
-- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)())afterRemovedBlock;
+- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock;
+- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock;
 
 - (UIImage*)renderedImageForScale:(CGFloat)scale;
 

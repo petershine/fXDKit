@@ -35,7 +35,7 @@
 #pragma mark - Public
 + (FXDsuperGlobalManager*)sharedInstance;
 
-- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)())windowLoadingBlock;
+- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
 #warning "//TODO: refactor following method to be organized into categories or subclasses"
 

@@ -91,7 +91,7 @@
 
 
 #pragma mark - Public
-- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock {	FXDLog_DEFAULT;	
+- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_DEFAULT;	
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
 	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);
 	
@@ -116,7 +116,7 @@
 	}
 }
 
-- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)())didFinishBlock {	FXDLog_DEFAULT;
+- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
 
 	if ([self.twitterAccountArray count] == 0) {
