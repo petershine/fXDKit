@@ -49,6 +49,8 @@ CGFloat _offsetYdismissingController = 0.0;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
+	
     // IBOutlet
 	if (self.mainScrollView == nil) {
 		return;
@@ -70,9 +72,7 @@ CGFloat _offsetYdismissingController = 0.0;
 	FXDLog(@"self.mainCellIdentifier: %@", self.mainCellIdentifier);
 	FXDLog(@"self.mainCellNib: %@", self.mainCellNib);
 	
-	if (self.mainCellIdentifier || self.mainCellNib) {
-		FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
-		
+	if (self.mainCellIdentifier || self.mainCellNib) {		
 		if ([self.mainScrollView isKindOfClass:[UITableView class]]) {
 			[(UITableView*)self.mainScrollView registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 		}
@@ -83,8 +83,10 @@ CGFloat _offsetYdismissingController = 0.0;
 	
 	
 	if (_offsetYdismissingController == 0.0) {
-		_offsetYdismissingController = 0.0 -(self.mainScrollView.frame.size.height/3.0);
-		FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
+		CGRect screenBounds = [[UIScreen mainScreen] bounds];
+		FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
+		
+		_offsetYdismissingController = 0.0 -(screenBounds.size.height/4.0);
 		FXDLog(@"_offsetYdismissingController: %f", _offsetYdismissingController);
 	}
 }
@@ -289,10 +291,6 @@ CGFloat _offsetYdismissingController = 0.0;
 	
 	if (scrollView == nil) {
 		scrollView = self.mainScrollView;
-		
-		if (scrollView == nil) {
-			FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
-		}
 	}
 	
 	
@@ -313,9 +311,7 @@ CGFloat _offsetYdismissingController = 0.0;
 	BOOL shouldContinue = NO;
 	
 	// Get valid index row for disappeared cell
-	if ([self.mainScrollView isKindOfClass:[UITableView class]] == NO) {
-		FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
-		
+	if ([self.mainScrollView isKindOfClass:[UITableView class]] == NO) {		
 		didFinishBlock(shouldContinue, integerNotDefined, NO);
 		return;
 	}
@@ -404,19 +400,21 @@ CGFloat _offsetYdismissingController = 0.0;
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	
-	if (self.backgroundviewSticky) {
-		CGRect modifiedFrame = self.backgroundviewSticky.frame;
+	if (self.mainScrollBackgroundView) {
+		CGRect modifiedFrame = self.mainScrollBackgroundView.frame;
 		
 		CGFloat modifiedOffsetY = (scrollView.contentOffset.y +scrollView.contentInset.top);
 		
-		if (modifiedOffsetY < 0.0) {
-			modifiedFrame.origin.y = (0.0 -modifiedOffsetY);
+		CGFloat minimumOriginY = scrollView.frame.origin.y;
+		
+		if (modifiedOffsetY < minimumOriginY) {
+			modifiedFrame.origin.y = (minimumOriginY -modifiedOffsetY);
 		}
 		else {
-			modifiedFrame.origin.y = 0.0;
+			modifiedFrame.origin.y = minimumOriginY;
 		}
 		
-		[self.backgroundviewSticky setFrame:modifiedFrame];
+		[self.mainScrollBackgroundView setFrame:modifiedFrame];
 	}
 	
 	

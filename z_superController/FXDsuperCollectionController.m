@@ -67,8 +67,13 @@
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollView {
 	if (_mainScrollView == nil) {
-		_mainScrollView = self.mainCollectionView;
-		FXDLog(@"_mainScrollView: %@", _mainScrollView);
+		
+		if (self.mainCollectionView) {
+			_mainScrollView = self.mainCollectionView;			
+		}
+		else {
+			_mainScrollView = [super mainScrollView];
+		}
 	}
 	
 	return _mainScrollView;

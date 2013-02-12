@@ -30,6 +30,9 @@ extern CGFloat _offsetYdismissingController;
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_cellOperationDictionary;
 	
+	
+	UIView *_mainScrollBackgroundView;
+	
 	UIScrollView *_mainScrollView;
 }
 
@@ -50,7 +53,7 @@ extern CGFloat _offsetYdismissingController;
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UIView *backgroundviewSticky;
+@property (strong, nonatomic) IBOutlet UIView *mainScrollBackgroundView;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollView;
 
