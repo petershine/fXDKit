@@ -86,7 +86,7 @@ CGFloat _offsetYdismissingController = 0.0;
 		CGRect screenBounds = [[UIScreen mainScreen] bounds];
 		FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
 		
-		_offsetYdismissingController = 0.0 -(screenBounds.size.height/4.0);
+		_offsetYdismissingController = 0.0 -(screenBounds.size.height/5.0);
 		FXDLog(@"_offsetYdismissingController: %f", _offsetYdismissingController);
 	}
 }
