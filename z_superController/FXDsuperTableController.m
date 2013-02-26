@@ -125,13 +125,13 @@
 	}
 }
 
-- (UIImage*)backgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIImage*)backgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
 }
 
-- (UIImage*)selectedBackgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIImage*)selectedBackgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	FXDLog_OVERRIDE;
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
