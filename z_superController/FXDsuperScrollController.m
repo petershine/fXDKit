@@ -272,7 +272,7 @@ CGFloat _offsetYdismissingController = 0.0;
 			numberOfItems = fetchedObjectsCount;
 		}
 #else
-		numberOfRows = fetchedObjectsCount;
+		numberOfItems = fetchedObjectsCount;
 #endif
 		FXDLog(@"section: %d numberOfRows: %d == fetchedObjectsCount: %d", section, numberOfItems, fetchedObjectsCount);
 	}

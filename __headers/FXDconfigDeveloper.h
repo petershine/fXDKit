@@ -80,6 +80,11 @@
 		#define testflightTeamToken	@"testflightTeamToken"
 	#endif
 
+	#ifndef testflightAppToken
+		#define testflightAppToken	@"testflightAppToken"
+	#endif
+
+
 	#define NSLog	TFLog
 
 	#define	CHECKPOINT(format, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:format, ##__VA_ARGS__]]
