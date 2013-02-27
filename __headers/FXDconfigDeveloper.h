@@ -92,7 +92,7 @@
 	#define CHECKPOINT_ERROR	if(error){CHECKPOINT(@"%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);}
 
 #else
-	#define	CHECKPOINT(format, ...)
+	#define	CHECKPOINT(format, ...)	{}
 	#define CHECKPOINT_DEFAULT
 	#define CHECKPOINT_ERROR
 
@@ -111,7 +111,7 @@
 	#define LOGEVENT_ERROR			if(error){NSException *exception=[[NSException alloc] initWithName:[error domain] reason:[error localizedDescription] userInfo:[error userInfo]];[Flurry logError:[NSString stringWithFormat:@"error code: %d", [error code]] message:[NSString stringWithFormat:@"%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]] exception:exception];}
 
 #else
-	#define	LOGEVENT(format, ...)
+	#define	LOGEVENT(format, ...)	{}
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_ERROR
 
