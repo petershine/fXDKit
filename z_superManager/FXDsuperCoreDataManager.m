@@ -396,8 +396,33 @@
 		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-
-		[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+		
+		
+		//MARK: Merge only if persistentStore is same
+		NSString *mainPersistentStoreUUID = nil;
+		
+		if ([[[self.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
+			NSPersistentStore *mainPersistentStore = [[self.managedObjectContext persistentStoreCoordinator] persistentStores][0];
+			mainPersistentStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
+			
+			FXDLog(@"mainPersistentStoreUUID: %@", mainPersistentStoreUUID);
+		}
+		
+		NSString *notifyingPersistentStoreUUID = nil;
+		
+		if ([[[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores] count] > 0) {
+			NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][0];
+			notifyingPersistentStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
+			
+			FXDLog(@"notifyingPersistentStoreUUID: %@", notifyingPersistentStoreUUID);
+		}
+		
+		FXDLog(@"[mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]: %d", [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]);
+		
+		if (mainPersistentStoreUUID && notifyingPersistentStoreUUID
+			&& [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]) {
+			[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+		}
 	}
 }
 

@@ -15,6 +15,7 @@
 		#define USE_loggingManagedObjectActivities	0
 
 		#define TEST_appirater	1
+
 	#else
 
 	#endif
