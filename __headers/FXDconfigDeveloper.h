@@ -25,12 +25,14 @@
 
 	#define USE_TestFlight	1
 	#define USE_Flurry	0
+	#define USE_GoogleAnalytics	1
 
 #else
 	#define USE_FXDLog	0
 
 	#define USE_TestFlight	0
 	#define USE_Flurry	1
+	#define USE_GoogleAnalytics	1
 
 #endif
 
@@ -119,6 +121,18 @@
 #endif
 
 
+#if USE_GoogleAnalytics
+	#import "GAI.h"
+	#import "GAITrackedViewController.h"
+
+	#ifndef googleAnalyticsTrackingID
+		#define googleAnalyticsTrackingID	@"UA-xxxxxxxx-x"
+	#endif
+#else
+
+#endif
+
+
 #ifndef ENVIRONMENT_newestSDK
 	#define ENVIRONMENT_newestSDK	(__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1)
 #endif
@@ -128,6 +142,4 @@
 	#define SCREEN_SIZE_35inch	(MAX([[FXDWindow applicationWindow] bounds].size.width, [[FXDWindow applicationWindow] bounds].size.height) <= 480.0)
 #endif
 
-
-#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[[self class] alloc] init];});return _sharedInstance
 

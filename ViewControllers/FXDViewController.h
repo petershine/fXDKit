@@ -9,7 +9,11 @@
 #import "FXDViewController+BarButton.h"
 
 
+#if USE_GoogleAnalytics
+@interface FXDViewController : GAITrackedViewController {
+#else
 @interface FXDViewController : UIViewController {
+#endif
     // Primitives
 	
 	// Instance variables

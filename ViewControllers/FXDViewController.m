@@ -85,6 +85,10 @@
 	// Instance variables
 
 	// Properties
+	
+#if USE_GoogleAnalytics
+	self.trackedViewName = NSStringFromClass([self class]);
+#endif
 }
 
 - (void)loadView {	FXDLog_DEFAULT;

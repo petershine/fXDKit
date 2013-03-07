@@ -209,26 +209,31 @@
 						object:nil];
 
 
+#warning "//MARK: TESTING observing only self.parentObject notification
+	id notifyingObject = self.managedObjectContext.parentContext;
+	FXDLog(@"notifyingObject: %@", notifyingObject);
+	
+	
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
 						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-						object:nil];
+						object:notifyingObject];
 
 
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
 						  name:NSManagedObjectContextObjectsDidChangeNotification
-						object:nil];
+						object:notifyingObject];
 
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextWillSave:)
 						  name:NSManagedObjectContextWillSaveNotification
-						object:nil];
+						object:notifyingObject];
 
 	[defaultCenter addObserver:self
 					  selector:@selector(observedNSManagedObjectContextDidSave:)
 						  name:NSManagedObjectContextDidSaveNotification
-						object:nil];
+						object:notifyingObject];
 }
 
 #pragma mark -
