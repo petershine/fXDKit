@@ -6,18 +6,15 @@
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 
-#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[[self class] alloc] init];});return _sharedInstance
-
-
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
 #import <stdarg.h>
 #import <sys/utsname.h>
+#import <TargetConditionals.h>
 
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
-#import <TargetConditionals.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
 #import <MapKit/MapKit.h>
