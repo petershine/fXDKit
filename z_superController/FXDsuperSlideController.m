@@ -148,18 +148,18 @@
 	}
 
 	
-	FXDViewController *destination = (FXDViewController*)coveringSegue.destinationViewController;
+	FXDViewController *destinationController = (FXDViewController*)coveringSegue.destinationViewController;
 
 	//MARK: Back button may not work with coverController
-	destination.navigationItem.hidesBackButton = YES;
+	destinationController.navigationItem.hidesBackButton = YES;
 
-	[self addChildViewController:destination];
+	[self addChildViewController:destinationController];
 	
 	
-	CGRect modifiedFrame = destination.view.frame;
-	CGRect animatedFrame = destination.view.frame;
+	CGRect modifiedFrame = destinationController.view.frame;
+	CGRect animatedFrame = destinationController.view.frame;
 
-	switch ([destination coverDirectionType]) {
+	switch ([destinationController coverDirectionType]) {
 		case slideDirectionTop:
 			modifiedFrame.origin.y = self.view.frame.size.height;
 			break;
@@ -180,28 +180,28 @@
 			break;
 	}
 
-	[destination.view setFrame:modifiedFrame];
+	[destinationController.view setFrame:modifiedFrame];
 
 
 	//MARK: Making toolbar push and pop much easier
-	if (destination.toolbarItems == nil) {
-		[destination setToolbarItems:[coveringSegue.sourceViewController toolbarItems]];
+	if (destinationController.toolbarItems == nil) {
+		[destinationController setToolbarItems:[coveringSegue.sourceViewController toolbarItems]];
 	}
 
-	if (destination.navigationItem && [destination shouldSkipPushingNavigationItems] == NO) {
-		[self.navigationBar pushNavigationItem:destination.navigationItem animated:YES];
+	if (destinationController.navigationItem && [destinationController shouldSkipPushingNavigationItems] == NO) {
+		[self.navigationBar pushNavigationItem:destinationController.navigationItem animated:YES];
 	}
 
 
-	[self.view insertSubview:destination.view belowSubview:self.navigationBar];
+	[self.view insertSubview:destinationController.view belowSubview:self.navigationBar];
 
-	[destination didMoveToParentViewController:self];
+	[destinationController didMoveToParentViewController:self];
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
 						options:UIViewAnimationOptionCurveEaseOut
 					 animations:^{
-						 [destination.view setFrame:animatedFrame];
+						 [destinationController.view setFrame:animatedFrame];
 					 }
 					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 						 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
@@ -214,12 +214,12 @@
 	}
 
 
-	FXDViewController *source = (FXDViewController*)uncoveringSegue.sourceViewController;
+	FXDViewController *sourceController = (FXDViewController*)uncoveringSegue.sourceViewController;
 	
 	
-	CGRect animatedFrame = source.view.frame;
+	CGRect animatedFrame = sourceController.view.frame;
 
-	switch ([source coverDirectionType]) {
+	switch ([sourceController coverDirectionType]) {
 		case slideDirectionTop:
 			animatedFrame.origin.y = self.view.frame.size.height;
 			break;
@@ -241,21 +241,21 @@
 	}
 
 
-	if ([self.navigationBar.topItem isEqual:source.navigationItem]) {
+	if ([self.navigationBar.topItem isEqual:sourceController.navigationItem]) {
 		[self.navigationBar popNavigationItemAnimated:YES];
 	}
 
-	[source willMoveToParentViewController:nil];
+	[sourceController willMoveToParentViewController:nil];
 
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
 						options:UIViewAnimationOptionCurveEaseOut
 					 animations:^{
-						 [source.view setFrame:animatedFrame];
+						 [sourceController.view setFrame:animatedFrame];
 					 }
 					 completion:^(BOOL finished) {
-						 [source.view removeFromSuperview];
-						 [source removeFromParentViewController];
+						 [sourceController.view removeFromSuperview];
+						 [sourceController removeFromParentViewController];
 
 						 FXDLog_DEFAULT;
 						 FXDLog(@"finished: %d", finished);
