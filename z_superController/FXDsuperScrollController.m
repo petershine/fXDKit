@@ -12,8 +12,6 @@
 #pragma mark - Public implementation
 @implementation FXDsuperScrollController
 
-CGFloat _offsetYdismissingController = 0.0;
-
 
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
@@ -82,12 +80,12 @@ CGFloat _offsetYdismissingController = 0.0;
 	}
 	
 	
-	if (_offsetYdismissingController == 0.0) {
+	if (self.offsetYdismissingController == 0.0) {
 		CGRect screenBounds = [[UIScreen mainScreen] bounds];
 		FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
 		
-		_offsetYdismissingController = 0.0 -(screenBounds.size.height/5.0);
-		FXDLog(@"_offsetYdismissingController: %f", _offsetYdismissingController);
+		self.offsetYdismissingController = 0.0 -(screenBounds.size.height *ratioControllerDismissingOffset);
+		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 	}
 }
 
@@ -418,8 +416,8 @@ CGFloat _offsetYdismissingController = 0.0;
 	}
 	
 	
-	if (scrollView.contentOffset.y < _offsetYdismissingController && self.didStartDismissingByPullingDown == NO) {
-		FXDLog(@"_offsetYdismissingController: %f", _offsetYdismissingController);
+	if (scrollView.contentOffset.y < self.offsetYdismissingController && self.didStartDismissingByPullingDown == NO) {
+		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 		
 		[self dismissByPullingDownScrollView:scrollView];
 	}

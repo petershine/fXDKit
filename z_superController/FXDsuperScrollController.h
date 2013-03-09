@@ -8,8 +8,7 @@
 
 #define limitConcurrentOperationCount	1
 
-extern CGFloat _offsetYdismissingController;
-
+#define ratioControllerDismissingOffset	0.25
 
 #import "FXDKit.h"
 
@@ -39,6 +38,8 @@ extern CGFloat _offsetYdismissingController;
 // Properties
 @property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
 @property (assign, nonatomic) BOOL didStartDismissingByPullingDown;
+
+@property (assign, nonatomic) CGFloat offsetYdismissingController;
 
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
