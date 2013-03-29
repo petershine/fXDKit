@@ -12,7 +12,7 @@
 		#define USE_loggingViewDrawing	0
 		#define USE_loggingBorderLine	0
 		#define USE_loggingResultObjFiltering	0
-		#define USE_loggingManagedObjectActivities	0
+		#define USE_loggingManagedObjectActivities	1
 
 		#define TEST_appirater	1
 
@@ -51,10 +51,14 @@
 
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
+	#define FXDLog_SKIPPED	FXDLog(@" ");FXDLog(@"SKIPPED: %@", strClassSelector)
+
+	#define FXDLog_NOTIFIED	FXDLog(@" ");FXDLog(@"NOTIFIED: %@: %@", NSStringFromClass([self class]), note.name)
+
+
 	#define FXDLog_ERROR	if(error){FXDLog(@" ");FXDLog(@"\n\n%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);}
 	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}}
 
-	#define FXDLog_NOTIFIED	FXDLog(@" ");FXDLog(@"NOTIFIED: %@: %@", NSStringFromClass([self class]), note.name)
 
 #else
 	#define FXDLog(format, ...)	{}
@@ -68,10 +72,12 @@
 
 	#define FXDLog_OVERRIDE
 
-	#define FXDLog_ERROR
-	#define FXDLog_ERRORexcept(v)
+	#define FXDLog_SKIPPED
 
 	#define FXDLog_NOTIFIED
+
+	#define FXDLog_ERROR
+	#define FXDLog_ERRORexcept(v)
 
 #endif
 
@@ -133,8 +139,8 @@
 #endif
 
 
-#ifndef ENVIRONMENT_newestSDK
-	#define ENVIRONMENT_newestSDK	(__IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_5_1)
+#ifndef SYSTEM_VERSION_lowerThan
+	#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] >= versionNumber)
 #endif
 
 

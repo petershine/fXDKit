@@ -12,10 +12,10 @@
 @interface FXDsegueTransition : FXDStoryboardSegue
 @end
 
-@interface FXDsegueCovering : FXDsegueTransition
+@interface FXDsegueSlidingIn : FXDsegueTransition
 @end
 
-@interface FXDsegueUncovering : FXDsegueTransition
+@interface FXDsegueSlidingOut : FXDsegueTransition
 @end
 
 
@@ -38,8 +38,8 @@
 
 
 #pragma mark - Public
-- (void)coverWithCoveringSegue:(FXDsegueCovering*)coveringSegue;
-- (void)uncoverWithUncoveringSegue:(FXDsegueUncovering*)uncoveringSegue;
+- (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue;
+- (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue;
 
 - (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue;
 
@@ -54,13 +54,17 @@
 
 
 #pragma mark - Category
-@interface FXDViewController (Covering)
+@interface FXDViewController (Sliding)
 
 #pragma mark - IBActions
 - (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
 
 #pragma mark - Public
-- (SLIDE_DIRECTION_TYPE)coverDirectionType;
-- (BOOL)shouldSkipPushingNavigationItems;
+- (SLIDE_DIRECTION_TYPE)slideDirectionType;
+
+#pragma mark -
+- (BOOL)shouldPushNavigationItems;
+- (BOOL)shouldCoverWhenSlidingIn;
+- (BOOL)shouldStayCovered;
 
 @end

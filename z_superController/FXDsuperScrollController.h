@@ -20,7 +20,8 @@
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
 	
-	NSDictionary *_cellTexts;
+	NSDictionary *_cellTitleDictionary;
+	NSDictionary *_cellSubTitleDictionary;
 	NSArray *_itemCounts;
 	
 	NSMutableArray *_mainDataSource;
@@ -44,7 +45,8 @@
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
 
-@property (strong, nonatomic) NSDictionary *cellTexts;
+@property (strong, nonatomic) NSDictionary *cellTitleDictionary;
+@property (strong, nonatomic) NSDictionary *cellSubTitleDictionary;
 @property (strong, nonatomic) NSArray *itemCounts;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;

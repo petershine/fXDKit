@@ -113,8 +113,8 @@
 
 #pragma mark - Property overriding
 - (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {	//FXDLog_OVERRIDE;
-		//
+	if (_mainCellIdentifier == nil) {
+		//FXDLog_OVERRIDE;
 	}
 	
 	return _mainCellIdentifier;
@@ -131,19 +131,26 @@
 }
 
 #pragma mark -
-- (NSDictionary*)cellTexts {
+- (NSDictionary*)cellTitleDictionary {
 	
-	if (_cellTexts == nil) {	//FXDLog_OVERRIDE;
-		//
+	if (_cellTitleDictionary == nil) {
+		//FXDLog_OVERRIDE;
 	}
 	
-	return _cellTexts;
+	return _cellTitleDictionary;
 }
 
+- (NSDictionary*)cellSubTitleDictionary {
+	if (_cellSubTitleDictionary == nil) {
+		//FXDLog_OVERRIDE;
+	}
+	
+	return _cellSubTitleDictionary;
+}
 - (NSArray*)itemCounts {
 	
-	if (_itemCounts == nil) {	//FXDLog_OVERRIDE;
-		//
+	if (_itemCounts == nil) {
+		//FXDLog_OVERRIDE;
 	}
 	
 	return _itemCounts;
@@ -152,8 +159,8 @@
 #pragma mark -
 - (NSMutableArray*)mainDataSource {
 	
-	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
-		//
+	if (_mainDataSource == nil) {
+		//FXDLog_OVERRIDE;
 	}
 	
 	return _mainDataSource;
@@ -161,8 +168,8 @@
 
 - (FXDFetchedResultsController*)mainResultsController {
 	
-	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
-		//
+	if (_mainResultsController == nil) {
+		//FXDLog_OVERRIDE;
 	}
 	
 	return _mainResultsController;
@@ -236,7 +243,7 @@
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
-		FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
+		//FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
 		
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
@@ -392,7 +399,6 @@
 	else {
 		FXDLog_OVERRIDE;
 	}
-	
 }
 
 #pragma mark - UIScrollViewDelegate

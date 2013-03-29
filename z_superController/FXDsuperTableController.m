@@ -96,7 +96,8 @@
 	UIImage *highlightedImage = [self selectedBackgroundImageForTableCellAtIndexPath:indexPath];
 	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
 	
-	cell.textLabel.text = (self.cellTexts)[[indexPath stringValue]];
+	cell.textLabel.text = (self.cellTitleDictionary)[[indexPath stringValue]];
+	cell.detailTextLabel.text = (self.cellSubTitleDictionary)[[indexPath stringValue]];
 	
 	UIImage *mainImage = [self mainImageForTableCellAtIndexPath:indexPath];
 	UIImage *highlightedMainImage = [self highlightedMainImageForTableCellAtIndexPath:indexPath];
@@ -283,7 +284,7 @@
 	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
 	if (didCancel) {
-		FXDLog(@"didCancel: %d %@", didCancel, indexPath);
+		//FXDLog(@"didCancel: %d %@", didCancel, indexPath);
 	}
 }
 
