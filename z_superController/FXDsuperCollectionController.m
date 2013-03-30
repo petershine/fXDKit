@@ -115,6 +115,8 @@
 	FXDCollectionViewCell *cell = (FXDCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:self.mainCellIdentifier forIndexPath:indexPath];
 	
 	
+	__weak typeof(self) _weakSelf = self;
+	
 	FXDBlockOperation *cellOperation = [[FXDBlockOperation alloc] init];
 	__weak FXDBlockOperation *_weakCellOperation = cellOperation;
 	
@@ -126,7 +128,7 @@
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{		
 			
-			[self.cellOperationDictionary removeObjectForKey:[indexPath stringValue]];
+			[_weakSelf.cellOperationDictionary removeObjectForKey:[indexPath stringValue]];
 		}];
 	}];
 	

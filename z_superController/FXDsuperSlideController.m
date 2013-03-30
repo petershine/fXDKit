@@ -76,22 +76,18 @@
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
-
 }
 
 
@@ -147,11 +143,9 @@
 
 	
 	FXDViewController *destinationController = (FXDViewController*)slidingInSegue.destinationViewController;
+	destinationController.navigationItem.hidesBackButton = YES;	//MARK: Back button may not work with slideController
 
-	//MARK: Back button may not work with slideController
-	destinationController.navigationItem.hidesBackButton = YES;
-
-	[self addChildViewController:destinationController];
+	[self addChildViewController:destinationController];	//MARK: Generic addChild~ is used even for navigationController
 	
 	
 	CGRect animatedFrame = destinationController.view.frame;
@@ -294,9 +288,13 @@
 	}
 
 
+	FXDLog(@"1.self.navigationBar.topItem: %@ sourceController.navigationItem: %@", self.navigationBar.topItem, sourceController.navigationItem);
+	
 	if ([self.navigationBar.topItem isEqual:sourceController.navigationItem]) {
 		[self.navigationBar popNavigationItemAnimated:YES];
 	}
+	
+	FXDLog(@"2.self.navigationBar.topItem: %@ sourceController.navigationItem: %@", self.navigationBar.topItem, sourceController.navigationItem);
 	
 	
 	FXDViewController *pushedController = nil;
@@ -360,12 +358,12 @@
 //MARK: - Delegate implementation
 #pragma mark - UINavigationBarDelegate
 #warning "//MARK: Empty implementation is needed to nullify regular Navigation push and pop
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	//FXDLog_DEFAULT;
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
 	return YES;
 }
 - (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
 }
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {	//FXDLog_DEFAULT;
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
 	return YES;
 }
 - (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;

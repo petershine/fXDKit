@@ -79,9 +79,9 @@
 
 - (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
 
-	UIView *buttonGroupview = [self buttonGroupviewWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
+	UIView *buttonGroup = [self buttonGroupWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
 
-	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroupview];
+	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroup];
 
 	[(UIViewController*)target navigationItem].leftBarButtonItem = barButtonItem;
 }
@@ -97,9 +97,9 @@
 
 - (void)customizeRightBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {
 
-	UIView *buttonGroupview = [self buttonGroupviewWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
+	UIView *buttonGroup = [self buttonGroupWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
 
-	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroupview];
+	UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroup];
 
 	[(UIViewController*)target navigationItem].rightBarButtonItem = barButtonItem;
 }
@@ -118,9 +118,9 @@
 	UIBarButtonItem *barButtonItem = nil;
 
 	if (offImage) {
-		UIView *buttonGroupview = [self buttonGroupviewWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:nil forTarget:target forAction:action];
+		UIView *buttonGroup = [self buttonGroupWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:nil forTarget:target forAction:action];
 
-		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroupview];
+		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroup];
 	}
 	else {
 		if (action == @selector(dismissInterfaceWithAnimation:)) {
@@ -131,7 +131,7 @@
 	return barButtonItem;
 }
 
-- (UIView*)buttonGroupviewWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage withOffset:(CGPoint)offset orWithText:(NSString*)text forTarget:(id)target forAction:(SEL)action {
+- (UIView*)buttonGroupWithOnImage:(UIImage*)onImage andOffImage:(UIImage*)offImage withOffset:(CGPoint)offset orWithText:(NSString*)text forTarget:(id)target forAction:(SEL)action {
 
 	CGRect buttonFrame = CGRectMake(0.0, 0.0, onImage.size.width, onImage.size.height);
 
@@ -160,10 +160,10 @@
 	}
 
 
-	UIView *buttonGroupview = nil;
+	UIView *buttonGroup = nil;
 
 	if (CGPointEqualToPoint(offset, CGPointZero) == NO) {
-		buttonGroupview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width+ABS(offset.x), onImage.size.height+ABS(offset.y))];
+		buttonGroup = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width+ABS(offset.x), onImage.size.height+ABS(offset.y))];
 
 		// Add only when they are positive numbers
 		CGRect modifiedFrame = button.frame;
@@ -172,12 +172,12 @@
 		[button setFrame:modifiedFrame];
 	}
 	else {
-		buttonGroupview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width, onImage.size.height)];
+		buttonGroup = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width, onImage.size.height)];
 	}
 
-	[buttonGroupview addSubview:button];
+	[buttonGroup addSubview:button];
 
-	return buttonGroupview;
+	return buttonGroup;
 }
 
 

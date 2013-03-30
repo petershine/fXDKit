@@ -22,11 +22,14 @@
 
 - (void)dealloc {
 	// Instance variables
-	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
+	FXDLog(@"_mainResultsController.dynamicDelegate: %@", _mainResultsController.dynamicDelegate);
+	[_mainResultsController setDynamicDelegate:nil];
+	_mainResultsController =nil;
 	
+	
+	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
 	[_cellOperationQueue cancelAllOperations];
 	_cellOperationQueue = nil;
-	
 	
 	[_cellOperationDictionary removeAllObjects];
 	_cellOperationDictionary = nil;
