@@ -150,28 +150,30 @@
 	
 	CGRect animatedFrame = destinationController.view.frame;
 	
-	CGRect modifiedFrame = destinationController.view.frame;
+	NSInteger directionHorizontal = 0;
+	NSInteger directionVertical = 0;
+	
 	CGFloat distanceHorizontal = 0.0;
 	CGFloat distanceVertical = 0.0;
 
 	switch ([destinationController slideDirectionType]) {
 		case slideDirectionTop:
-			modifiedFrame.origin.y = self.view.frame.size.height;
+			directionVertical = -1;
 			distanceVertical = 0.0 -self.view.frame.size.height;
 			break;
 
 		case slideDirectionLeft:
-			modifiedFrame.origin.x = self.view.frame.size.width;
+			directionHorizontal = -1;
 			distanceHorizontal = 0.0 -self.view.frame.size.width;
 			break;
 
 		case slideDirectionBottom:
-			modifiedFrame.origin.y = 0.0 -self.view.frame.size.height;
+			directionVertical = 1;
 			distanceVertical = self.view.frame.size.height;
 			break;
 
 		case slideDirectionRight:
-			modifiedFrame.origin.x = 0.0 -self.view.frame.size.width;
+			directionHorizontal = 1;
 			distanceHorizontal = self.view.frame.size.width;
 			break;
 
@@ -179,6 +181,9 @@
 			break;
 	}
 
+	CGRect modifiedFrame = destinationController.view.frame;
+	modifiedFrame.origin.x -= (modifiedFrame.size.width *directionHorizontal);
+	modifiedFrame.origin.y -= (modifiedFrame.size.height *directionVertical);
 	[destinationController.view setFrame:modifiedFrame];
 
 
@@ -254,9 +259,10 @@
 
 	FXDViewController *sourceController = (FXDViewController*)slidingOurSegue.sourceViewController;
 	
-	
-	CGRect animatedFrame = sourceController.view.frame;
 
+	NSInteger directionHorizontal = 0;
+	NSInteger directionVertical = 0;
+	
 	CGFloat distanceHorizontal = 0.0;
 	CGFloat distanceVertical = 0.0;
 	
@@ -264,22 +270,22 @@
 	
 	switch ([sourceController slideDirectionType]) {
 		case slideDirectionTop:
-			animatedFrame.origin.y = self.view.frame.size.height;
+			directionVertical = 1;
 			distanceVertical = self.view.frame.size.height;
 			break;
 
 		case slideDirectionLeft:
-			animatedFrame.origin.x = self.view.frame.size.width;
+			directionHorizontal = 1;
 			distanceHorizontal = self.view.frame.size.width;
 			break;
 
 		case slideDirectionBottom:
-			animatedFrame.origin.y = 0.0 -self.view.frame.size.height;
+			directionVertical = -1;
 			distanceVertical = 0.0 -self.view.frame.size.height;
 			break;
 
 		case slideDirectionRight:
-			animatedFrame.origin.x = 0.0 -self.view.frame.size.width;
+			directionHorizontal = -1;
 			distanceHorizontal = 0.0 -self.view.frame.size.width;
 			break;
 
@@ -287,6 +293,12 @@
 			break;
 	}
 
+	CGRect animatedFrame = sourceController.view.frame;
+	animatedFrame.origin.x += (animatedFrame.size.width *directionHorizontal);
+	animatedFrame.origin.y += (animatedFrame.size.height *directionVertical);
+	
+	//TODO: assign proper distance for collapsed Timeline view
+	
 
 	FXDLog(@"1.self.navigationBar.topItem: %@ sourceController.navigationItem: %@", self.navigationBar.topItem, sourceController.navigationItem);
 	
