@@ -27,3 +27,6 @@
 #define heightKeyboard_iPad	352.0
 
 #define alphaValueDefault	0.5
+
+
+#define heightStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height

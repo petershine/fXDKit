@@ -6,10 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef CGPoint SLIDING_OFFSET;
-typedef CGPoint SLIDING_DIRECTION;
-
-
 @interface FXDsegueTransition : FXDStoryboardSegue
 @end
 

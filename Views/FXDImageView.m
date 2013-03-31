@@ -110,6 +110,7 @@
 					 animations:^{
 						 fadedImageview.alpha = 1.0;
 					 } completion:^(BOOL finished) {
+						 //FXDLog(@"finished: %d fadedImageview: %@", finished, fadedImageview);
 						 self.image = fadedImageview.image;
 
 						 [fadedImageview removeFromSuperview];

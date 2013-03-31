@@ -195,7 +195,8 @@
 						 subview.alpha = 1.0;
 					 }
 					 completion:^(BOOL finished) {
-
+						 FXDLog(@"finished: %d", finished);
+						 
 						 if (afterAddedBlock) {
 							 afterAddedBlock();
 						 }
@@ -209,7 +210,8 @@
 					 animations:^{
 						 subview.alpha = 0.0;
 					 }
-					 completion:^(BOOL finished) {						 
+					 completion:^(BOOL finished) {
+						 FXDLog(@"finished: %d subview: %@", finished, subview);
 						 [subview removeFromSuperview];
 						 
 						 if (afterRemovedBlock) {

@@ -236,7 +236,8 @@
 						options:UIViewAnimationOptionCurveEaseIn
 					 animations:^{
 						 [previousScene.view setAlpha:0.0];
-					 } completion:^(BOOL finished) {
+					 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
+						 FXDLog(@"finished: %d previousScene: %@", finished, previousScene);
 						 [previousScene.view removeFromSuperview];
 
 						 if (finishedAnimationBlock) {

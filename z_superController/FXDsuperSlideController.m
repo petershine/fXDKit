@@ -147,6 +147,13 @@
 	
 	destinationController.navigationItem.hidesBackButton = YES;	//MARK: Back button may not work with slideController
 	
+	//MARK: Making toolbar push and pop much easier
+	FXDLog(@"destinationController.toolbarItems: %@", destinationController.toolbarItems);
+	
+	if (destinationController.toolbarItems == nil) {
+		[destinationController setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
+	}
+
 	
 	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:destinationController.slideDirectionType];
 	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:destinationController.slideDirectionType];
@@ -159,17 +166,6 @@
 	modifiedFrame.origin.y -= (modifiedFrame.size.height *slidingDirection.y);
 	[destinationController.view setFrame:modifiedFrame];
 
-
-	//MARK: Making toolbar push and pop much easier
-	if (destinationController.toolbarItems == nil) {
-		[destinationController setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
-	}
-
-	if (destinationController.navigationItem
-		&& [destinationController shouldPushNavigationItems]) {
-		[self.navigationBar pushNavigationItem:destinationController.navigationItem animated:YES];
-	}
-	
 	
 	FXDViewController *pushedController = nil;
 	CGRect animatedPushedFrame = CGRectZero;
@@ -206,7 +202,6 @@
 
 
 	[self.view insertSubview:destinationController.view belowSubview:self.navigationBar];
-
 	[destinationController didMoveToParentViewController:self];
 
 	[UIView animateWithDuration:durationAnimation
@@ -220,6 +215,8 @@
 						 }
 					 }
 					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+						 FXDLog(@"finished: %d", finished);
+						 
 						 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 					 }];
 }
@@ -232,20 +229,13 @@
 
 	FXDViewController *sourceController = (FXDViewController*)slidingOurSegue.sourceViewController;
 	
-
 	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:sourceController.slideDirectionType];
 	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:sourceController.slideDirectionType];
 	
 
-	//TODO: assign proper distance for collapsed Timeline view
 	CGRect animatedFrame = sourceController.view.frame;
 	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
 	animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
-	
-	
-	if ([self.navigationBar.topItem isEqual:sourceController.navigationItem]) {
-		[self.navigationBar popNavigationItemAnimated:YES];
-	}
 	
 	
 	FXDViewController *pushedController = nil;
@@ -281,9 +271,7 @@
 	
 	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
 	
-
-	[sourceController willMoveToParentViewController:nil];
-
+	
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
 						options:UIViewAnimationOptionCurveEaseOut
@@ -294,22 +282,24 @@
 							 [pushedController.view setFrame:animatedPushedFrame];
 						 }
 					 }
-					 completion:^(BOOL finished) {
+					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+						 FXDLog(@"finished: %d sourceController: %@", finished, sourceController);
+	
+						 [sourceController willMoveToParentViewController:nil];
 						 [sourceController.view removeFromSuperview];
 						 [sourceController removeFromParentViewController];
-
-						 FXDLog_DEFAULT;
-						 FXDLog(@"finished: %d", finished);
 					 }];
 }
 
 #pragma mark -
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
+#warning "//TODO: be careful if there will be statusBar confusion"
+	
 	SLIDING_OFFSET slidingOffset = {0.0, 0.0};
 	
 	switch (slideDirectionType) {
 		case slideDirectionTop:
-			slidingOffset.y = 0.0 -self.view.frame.size.height;
+			slidingOffset.y = 0.0 -(self.view.frame.size.height -heightStatusBar);
 			break;
 			
 		case slideDirectionLeft:
@@ -317,7 +307,7 @@
 			break;
 			
 		case slideDirectionBottom:
-			slidingOffset.y = self.view.frame.size.height;
+			slidingOffset.y = (self.view.frame.size.height -heightStatusBar);
 			break;
 			
 		case slideDirectionRight:

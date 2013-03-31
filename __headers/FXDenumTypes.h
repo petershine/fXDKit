@@ -18,6 +18,9 @@ typedef enum {
 
 
 // FXDsuperSlideController
+typedef CGPoint SLIDING_OFFSET;
+typedef CGPoint SLIDING_DIRECTION;
+
 typedef enum {
 	slideDirectionTop,
 	slideDirectionLeft,
