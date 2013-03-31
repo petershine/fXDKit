@@ -6,7 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
+typedef CGPoint SLIDING_OFFSET;
+typedef CGPoint SLIDING_DIRECTION;
 
 
 @interface FXDsegueTransition : FXDStoryboardSegue
@@ -38,10 +39,13 @@
 
 
 #pragma mark - Public
+- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue;
+
 - (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue;
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue;
 
-- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue;
+- (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
+- (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 
 
 //MARK: - Observer implementation

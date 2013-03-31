@@ -143,48 +143,20 @@
 
 	
 	FXDViewController *destinationController = (FXDViewController*)slidingInSegue.destinationViewController;
-	destinationController.navigationItem.hidesBackButton = YES;	//MARK: Back button may not work with slideController
-
 	[self addChildViewController:destinationController];	//MARK: Generic addChild~ is used even for navigationController
 	
+	destinationController.navigationItem.hidesBackButton = YES;	//MARK: Back button may not work with slideController
 	
-	NSInteger directionHorizontal = 0;
-	NSInteger directionVertical = 0;
 	
-	CGFloat distanceHorizontal = 0.0;
-	CGFloat distanceVertical = 0.0;
-
-	switch ([destinationController slideDirectionType]) {
-		case slideDirectionTop:
-			directionVertical = -1;
-			distanceVertical = 0.0 -self.view.frame.size.height;
-			break;
-
-		case slideDirectionLeft:
-			directionHorizontal = -1;
-			distanceHorizontal = 0.0 -self.view.frame.size.width;
-			break;
-
-		case slideDirectionBottom:
-			directionVertical = 1;
-			distanceVertical = self.view.frame.size.height;
-			break;
-
-		case slideDirectionRight:
-			directionHorizontal = 1;
-			distanceHorizontal = self.view.frame.size.width;
-			break;
-
-		default:
-			break;
-	}
+	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:destinationController.slideDirectionType];
+	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:destinationController.slideDirectionType];
 	
 	
 	CGRect animatedFrame = destinationController.view.frame;
 
 	CGRect modifiedFrame = destinationController.view.frame;
-	modifiedFrame.origin.x -= (modifiedFrame.size.width *directionHorizontal);
-	modifiedFrame.origin.y -= (modifiedFrame.size.height *directionVertical);
+	modifiedFrame.origin.x -= (modifiedFrame.size.width *slidingDirection.x);
+	modifiedFrame.origin.y -= (modifiedFrame.size.height *slidingDirection.y);
 	[destinationController.view setFrame:modifiedFrame];
 
 
@@ -216,13 +188,13 @@
 				if (childIndex == destinationIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pushedController = childController;
 					animatedPushedFrame = pushedController.view.frame;
-					animatedPushedFrame.origin.x += distanceHorizontal;
-					animatedPushedFrame.origin.y += distanceVertical;
+					animatedPushedFrame.origin.x += slidingOffset.x;
+					animatedPushedFrame.origin.y += slidingOffset.y;
 				}
 				else {
 					CGRect modifiedPushedFrame = childController.view.frame;
-					modifiedPushedFrame.origin.x += distanceHorizontal;
-					modifiedPushedFrame.origin.y += distanceVertical;
+					modifiedPushedFrame.origin.x += slidingOffset.x;
+					modifiedPushedFrame.origin.y += slidingOffset.y;
 					
 					[childController.view setFrame:modifiedPushedFrame];
 				}
@@ -261,53 +233,19 @@
 	FXDViewController *sourceController = (FXDViewController*)slidingOurSegue.sourceViewController;
 	
 
-	NSInteger directionHorizontal = 0;
-	NSInteger directionVertical = 0;
+	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:sourceController.slideDirectionType];
+	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:sourceController.slideDirectionType];
 	
-	CGFloat distanceHorizontal = 0.0;
-	CGFloat distanceVertical = 0.0;
-	
-	//TODO: generate full distance combining previously pushed viewControllers
-	
-	switch ([sourceController slideDirectionType]) {
-		case slideDirectionTop:
-			directionVertical = 1;
-			distanceVertical = self.view.frame.size.height;
-			break;
 
-		case slideDirectionLeft:
-			directionHorizontal = 1;
-			distanceHorizontal = self.view.frame.size.width;
-			break;
-
-		case slideDirectionBottom:
-			directionVertical = -1;
-			distanceVertical = 0.0 -self.view.frame.size.height;
-			break;
-
-		case slideDirectionRight:
-			directionHorizontal = -1;
-			distanceHorizontal = 0.0 -self.view.frame.size.width;
-			break;
-
-		default:
-			break;
-	}
-
-	CGRect animatedFrame = sourceController.view.frame;
-	animatedFrame.origin.x += (animatedFrame.size.width *directionHorizontal);
-	animatedFrame.origin.y += (animatedFrame.size.height *directionVertical);
-	
 	//TODO: assign proper distance for collapsed Timeline view
+	CGRect animatedFrame = sourceController.view.frame;
+	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
+	animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
 	
-
-	FXDLog(@"1.self.navigationBar.topItem: %@ sourceController.navigationItem: %@", self.navigationBar.topItem, sourceController.navigationItem);
 	
 	if ([self.navigationBar.topItem isEqual:sourceController.navigationItem]) {
 		[self.navigationBar popNavigationItemAnimated:YES];
 	}
-	
-	FXDLog(@"2.self.navigationBar.topItem: %@ sourceController.navigationItem: %@", self.navigationBar.topItem, sourceController.navigationItem);
 	
 	
 	FXDViewController *pushedController = nil;
@@ -327,13 +265,13 @@
 				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pushedController = childController;
 					animatedPushedFrame = pushedController.view.frame;
-					animatedPushedFrame.origin.x += distanceHorizontal;
-					animatedPushedFrame.origin.y += distanceVertical;
+					animatedPushedFrame.origin.x -= slidingOffset.x;
+					animatedPushedFrame.origin.y -= slidingOffset.y;
 				}
 				else {
 					CGRect modifiedPushedFrame = childController.view.frame;
-					modifiedPushedFrame.origin.x += distanceHorizontal;
-					modifiedPushedFrame.origin.y += distanceVertical;
+					modifiedPushedFrame.origin.x -= slidingOffset.x;
+					modifiedPushedFrame.origin.y -= slidingOffset.y;
 					
 					[childController.view setFrame:modifiedPushedFrame];
 				}
@@ -363,6 +301,61 @@
 						 FXDLog_DEFAULT;
 						 FXDLog(@"finished: %d", finished);
 					 }];
+}
+
+#pragma mark -
+- (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
+	SLIDING_OFFSET slidingOffset = {0.0, 0.0};
+	
+	switch (slideDirectionType) {
+		case slideDirectionTop:
+			slidingOffset.y = 0.0 -self.view.frame.size.height;
+			break;
+			
+		case slideDirectionLeft:
+			slidingOffset.x = 0.0 -self.view.frame.size.width;
+			break;
+			
+		case slideDirectionBottom:
+			slidingOffset.y = self.view.frame.size.height;
+			break;
+			
+		case slideDirectionRight:
+			slidingOffset.x = self.view.frame.size.width;
+			break;
+			
+		default:
+			break;
+	}
+	
+	return slidingOffset;
+}
+
+- (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
+	SLIDING_DIRECTION slidingDirection = {0, 0};
+	
+	switch (slideDirectionType) {
+		case slideDirectionTop:
+			slidingDirection.y = -1;
+			break;
+			
+		case slideDirectionLeft:
+			slidingDirection.x = -1;
+			break;
+			
+		case slideDirectionBottom:
+			slidingDirection.y = 1;
+			break;
+			
+		case slideDirectionRight:
+			slidingDirection.x = 1;
+			break;
+			
+		default:
+			break;
+	}
+	
+	return slidingDirection;
 }
 
 
