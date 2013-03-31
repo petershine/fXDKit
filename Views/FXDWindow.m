@@ -192,6 +192,7 @@
 
 #pragma mark -
 - (void)configureRootViewController:(UIViewController*)rootViewController withAnimation:(BOOL)withAnimation willBecomeRootViewControllerBlock:(void (^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void (^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock {	FXDLog_DEFAULT;
+	
 	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
 
 	if (withAnimation == NO) {

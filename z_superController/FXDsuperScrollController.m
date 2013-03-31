@@ -425,7 +425,7 @@
 	}
 	
 	
-	if (scrollView.contentOffset.y < self.offsetYdismissingController && self.didStartDismissingByPullingDown == NO) {
+	if (scrollView.contentOffset.y < (self.offsetYdismissingController-scrollView.contentInset.top) && self.didStartDismissingByPullingDown == NO) {
 		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 		
 		[self dismissByPullingDownScrollView:scrollView];
