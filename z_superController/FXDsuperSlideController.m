@@ -148,8 +148,6 @@
 	[self addChildViewController:destinationController];	//MARK: Generic addChild~ is used even for navigationController
 	
 	
-	CGRect animatedFrame = destinationController.view.frame;
-	
 	NSInteger directionHorizontal = 0;
 	NSInteger directionVertical = 0;
 	
@@ -180,6 +178,9 @@
 		default:
 			break;
 	}
+	
+	
+	CGRect animatedFrame = destinationController.view.frame;
 
 	CGRect modifiedFrame = destinationController.view.frame;
 	modifiedFrame.origin.x -= (modifiedFrame.size.width *directionHorizontal);

@@ -11,8 +11,6 @@
     // Primitives
 	
 	// Instance variables
-	CGRect _initialDisclaimerViewFrame;
-	CGPoint _disclaimerViewOffset;
 }
 
 // Properties

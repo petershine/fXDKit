@@ -31,8 +31,8 @@
 	[super awakeFromNib];
 
 	// Primitives
-	_initialDisclaimerViewFrame = [[self disclaimerView] frame];
-	_disclaimerViewOffset = CGPointZero;
+	self.initialDisclaimerViewFrame = [[self disclaimerView] frame];
+	self.disclaimerViewOffset = CGPointZero;
 
     // Instance variables
 
