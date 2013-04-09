@@ -67,4 +67,6 @@
 - (BOOL)shouldCoverWhenSlidingIn;
 - (BOOL)shouldStayCovered;
 
+- (NSNumber*)distanceNumberForSlidingOut;
+
 @end

@@ -235,7 +235,18 @@
 
 	CGRect animatedFrame = sourceController.view.frame;
 	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
-	animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
+	
+	
+	CGFloat slidingOutDistance = [[sourceController distanceNumberForSlidingOut] floatValue];
+	FXDLog(@"1.slidingOutDistance: %f", slidingOutDistance);
+	
+	if (slidingOutDistance > 0.0) {
+		animatedFrame.origin.y -= (slidingOutDistance *slidingDirection.y);
+	}
+	else {
+		animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
+	}
+	FXDLog(@"2.CALCULATED distance: %f - %f = %f", sourceController.view.frame.origin.y, animatedFrame.origin.y, (sourceController.view.frame.origin.y -animatedFrame.origin.y));
 	
 	
 	FXDViewController *pushedController = nil;
@@ -293,7 +304,7 @@
 
 #pragma mark -
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
-#warning "//TODO: be careful if there will be statusBar confusion"
+	//MARK: be careful if there will be statusBar confusion"
 	
 	SLIDING_OFFSET slidingOffset = {0.0, 0.0};
 	
@@ -353,7 +364,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UINavigationBarDelegate
-#warning "//MARK: Empty implementation is needed to nullify regular Navigation push and pop
+//MARK: Empty implementation is needed to nullify regular Navigation push and pop
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
 	return YES;
 }
@@ -382,16 +393,21 @@
 }
 
 #pragma mark -
-- (BOOL)shouldPushNavigationItems {	FXDLog_OVERRIDE;
+- (BOOL)shouldPushNavigationItems {
 	return NO;
 }
 
-- (BOOL)shouldCoverWhenSlidingIn {	FXDLog_OVERRIDE;
+- (BOOL)shouldCoverWhenSlidingIn {
 	return NO;
 }
 
 - (BOOL)shouldStayCovered {
 	return NO;
+}
+
+#pragma mark -
+- (NSNumber*)distanceNumberForSlidingOut {	FXDLog_OVERRIDE;
+	return nil;
 }
 
 @end

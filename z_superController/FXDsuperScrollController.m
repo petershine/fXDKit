@@ -310,8 +310,13 @@
 	
 	
 	self.didStartDismissingByPullingDown = YES;
+	
+	[self prepareScrollControllerToBeDismissed];
 }
 
+- (void)prepareScrollControllerToBeDismissed {	FXDLog_OVERRIDE;
+	
+}
 
 #pragma mark -
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath didFinishBlock:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))didFinishBlock {

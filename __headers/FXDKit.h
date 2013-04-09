@@ -94,6 +94,8 @@
 
 #import "FXDPopoverBackgroundView.h"
 
+#import "UIView+Glow.h"	//MARK: Adopted for glowing effect
+
 
 // ViewControllers
 #import "FXDViewController.h"
