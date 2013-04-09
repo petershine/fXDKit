@@ -18,12 +18,7 @@
 #import "FXDKit.h"
 
 
-@interface FXDsuperLaunchImageController : FXDViewController {
-    // Primitives
-
-	// Instance variables
-
-}
+@interface FXDsuperLaunchImageController : FXDViewController 
 
 // Properties
 
