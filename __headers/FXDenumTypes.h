@@ -7,34 +7,31 @@
 //
 
 // FXDURL
-typedef enum {
+typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindUndefined,
 	fileKindImage,
 	fileKindDocument,
 	fileKindAudio,
-	fileKindMovie,
-
-} FILE_KIND_TYPE;
+	fileKindMovie
+};
 
 
 // FXDsuperSlideController
 typedef CGPoint SLIDING_OFFSET;
 typedef CGPoint SLIDING_DIRECTION;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, SLIDE_DIRECTION_TYPE) {
 	slideDirectionTop,
 	slideDirectionLeft,
 	slideDirectionBottom,
-	slideDirectionRight,
-
-} SLIDE_DIRECTION_TYPE;
+	slideDirectionRight
+};
 
 
 // FXDTableViewCell
-typedef enum {
+typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 	sectionPositionOne,
 	sectionPositionTop,
 	sectionPositionMiddle,
 	sectionPositionBottom
-
-} SECTION_POSITION_TYPE;
+};
