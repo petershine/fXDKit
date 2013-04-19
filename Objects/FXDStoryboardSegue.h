@@ -29,3 +29,8 @@
 - (BOOL)shouldUseNavigationPush;
 
 @end
+
+
+#pragma mark - Subclass
+@interface FXDsegueTransition : FXDStoryboardSegue
+@end

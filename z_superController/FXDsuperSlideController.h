@@ -6,9 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-@interface FXDsegueTransition : FXDStoryboardSegue
-@end
-
 @interface FXDsegueSlidingIn : FXDsegueTransition
 @end
 

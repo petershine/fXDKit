@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-
 #import "FXDStoryboardSegue.h"
 
 
@@ -57,7 +56,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 
@@ -118,4 +116,9 @@
 	return shouldUseNavigationPush;
 }
 
+@end
+
+
+#pragma mark - Subclass
+@implementation FXDsegueTransition
 @end

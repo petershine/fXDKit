@@ -9,10 +9,6 @@
 #import "FXDsuperSlideController.h"
 
 
-@implementation FXDsegueTransition
-@end
-
-
 @implementation FXDsegueSlidingIn
 - (void)perform {	FXDLog_DEFAULT;
 	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController navigationController];
