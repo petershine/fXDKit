@@ -75,6 +75,10 @@
 		[self awakeFromNib];
 		
 		self.image = defaultImage;
+		
+		CGPoint modifiedOffset = self.centerOffset;
+		modifiedOffset.y -= (defaultImage.size.height/2.0);
+		[self setCenterOffset:modifiedOffset];
 	}
 	
 	return self;
@@ -87,34 +91,31 @@
 	//FXDLog(@"superview.superview: %@", NSStringFromCGRect(self.superview.superview.frame));
 	
 	CGRect modifiedFrame = self.frame;
-	modifiedFrame.origin.y -= self.superview.superview.frame.size.height *2.0;
+	modifiedFrame.origin.y -= self.superview.superview.frame.size.height;
 	[self setFrame:modifiedFrame];
 	
 	// Animate drop
 	[UIView
-	 animateWithDuration:durationAnimation
+	 animateWithDuration:durationSlowAnimation
 	 delay:delay
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [self setFrame:animatedFrame];
 	 }
 	 completion:^(BOOL finished){
-		 if (finished) {
-			 [UIView
-			  animateWithDuration:0.05
-			  animations:^{
-				  self.transform = CGAffineTransformMakeScale(1.0, 0.8);
-			  }
-			  completion:^(BOOL finished){
-				  if (finished) {
-					  [UIView
-					   animateWithDuration:0.1
-					   animations:^{
-						   self.transform = CGAffineTransformIdentity;
-					   }];
-				  }
-			  }];
-		 }
+		 
+		 [UIView
+		  animateWithDuration:delayExtremelyShort
+		  animations:^{
+			  self.transform = CGAffineTransformMakeScale(1.0, 0.8);
+		  }
+		  completion:^(BOOL finished){
+			  [UIView
+			   animateWithDuration:(delayExtremelyShort*2.0)
+			   animations:^{
+				   self.transform = CGAffineTransformIdentity;
+			   }];
+		  }];
 	 }];
 }
 
