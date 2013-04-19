@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDColor : UIColor {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDColor : UIColor
 
 // Properties
 

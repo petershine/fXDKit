@@ -11,14 +11,7 @@
 #endif
 
 
-#import "FXDKit.h"
-
-
-@interface FXDviewProgress : FXDView {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDviewProgress : FXDView
 
 // Properties
 @property (assign, nonatomic) BOOL didPressCancelButton;

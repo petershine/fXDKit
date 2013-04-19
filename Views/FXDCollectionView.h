@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDCollectionView : UICollectionView {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDCollectionView : UICollectionView
 
 // Properties
 

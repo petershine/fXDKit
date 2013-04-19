@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDNavigationController : UINavigationController {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDNavigationController : UINavigationController
 
 // Properties
 @property (assign, nonatomic) BOOL shouldUseDefaultNavigationBar;
@@ -32,8 +28,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface UINavigationController (Added)

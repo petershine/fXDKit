@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDBlockOperation : NSBlockOperation {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDBlockOperation : NSBlockOperation
 
 // Properties
 

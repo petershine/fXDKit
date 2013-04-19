@@ -15,9 +15,6 @@
 #endif
 
 
-#import "FXDKit.h"
-
-
 @interface FXDsuperLaunchImageController : FXDViewController 
 
 // Properties

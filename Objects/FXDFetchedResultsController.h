@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDFetchedResultsController : NSFetchedResultsController {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDFetchedResultsController : NSFetchedResultsController
 
 // Properties
 @property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> dynamicDelegate;

@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDImage : UIImage {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDImage : UIImage
 
 // Properties
 

@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDStoryboardSegue : UIStoryboardSegue {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDStoryboardSegue : UIStoryboardSegue
 
 // Properties
 
@@ -22,7 +18,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

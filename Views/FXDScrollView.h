@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDScrollView : UIScrollView {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDScrollView : UIScrollView
 
 // Properties
 

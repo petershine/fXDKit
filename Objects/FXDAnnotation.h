@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDAnnotation : MKPointAnnotation {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDAnnotation : MKPointAnnotation
 
 // Properties
 @property (strong, nonatomic) id addedObj;

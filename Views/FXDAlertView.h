@@ -12,11 +12,7 @@
 typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger buttonIndex);
 
 
-@interface FXDAlertView : UIAlertView <UIAlertViewDelegate> {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
 
 // Properties
 @property (strong, nonatomic) id addedObj;

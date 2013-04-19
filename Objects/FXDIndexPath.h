@@ -9,12 +9,7 @@
 #define NSIndexPathString(section, row)	[[NSIndexPath indexPathForRow:row inSection:section] stringValue]
 
 
-@interface FXDIndexPath : NSIndexPath {
-    // Primitives
-
-	// Instance variables
-
-}
+@interface FXDIndexPath : NSIndexPath
 
 // Properties
 

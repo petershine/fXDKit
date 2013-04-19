@@ -8,11 +8,7 @@
 
 #import "FXDsuperScrollController.h"
 
-@interface FXDsuperTableController : FXDsuperScrollController <UITableViewDataSource, UITableViewDelegate> {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDsuperTableController : FXDsuperScrollController <UITableViewDataSource, UITableViewDelegate>
 
 // Properties
 

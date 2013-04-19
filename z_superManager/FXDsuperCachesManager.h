@@ -11,14 +11,7 @@
 #define prefixCached	@"_cached_"
 
 
-#import "FXDKit.h"
-
-
-@interface FXDsuperCachesManager : FXDObject <NSMetadataQueryDelegate> {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDsuperCachesManager : FXDObject <NSMetadataQueryDelegate>
 
 // Properties
 @property (strong, nonatomic) NSMetadataQuery *ubiquitousCachesMetadataQuery;

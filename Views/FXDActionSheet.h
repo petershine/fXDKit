@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDActionSheet : UIActionSheet {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDActionSheet : UIActionSheet
 
 // Properties
 @property (strong, nonatomic) id addedObj;

@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDButton : UIButton {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDButton : UIButton
 
 // Properties
 @property (strong, nonatomic) id addedObj;

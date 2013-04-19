@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDDate : NSDate {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDDate : NSDate
 
 // Properties
 

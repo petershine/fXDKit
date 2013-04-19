@@ -16,12 +16,7 @@
 @end
 
 
-@interface FXDsuperSlideController : FXDNavigationController <UINavigationBarDelegate> {
-    // Primitives
-
-	// Instance variables
-
-}
+@interface FXDsuperSlideController : FXDNavigationController <UINavigationBarDelegate>
 
 // Properties
 
@@ -42,6 +37,8 @@
 
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 - (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
+
+- (void)didFinishSlidingOutForControllerClassName:(NSString*)controllerClassName;
 
 
 //MARK: - Observer implementation

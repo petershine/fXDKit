@@ -9,11 +9,7 @@
 
 #import "FXDsuperTableController.h"
 
-@interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate> {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate>
 
 // Properties
 

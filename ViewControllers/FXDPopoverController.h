@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDPopoverController : UIPopoverController {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDPopoverController : UIPopoverController
 
 // Properties
 
@@ -23,8 +19,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface UIPopoverController (Added)

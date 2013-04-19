@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDMediaItem : MPMediaItem {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDMediaItem : MPMediaItem
 
 // Properties
 

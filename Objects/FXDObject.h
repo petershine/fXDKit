@@ -7,12 +7,7 @@
 //
 
 
-@interface FXDObject : NSObject {
-    // Primitives
-
-	// Instance variables
-
-}
+@interface FXDObject : NSObject
 
 // Properties
 
@@ -26,6 +21,5 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end

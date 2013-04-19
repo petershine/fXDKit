@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDTextView : UITextView {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDTextView : UITextView
 
 // Properties
 

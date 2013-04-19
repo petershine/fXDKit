@@ -22,11 +22,7 @@
 #define appDirectory_Caches		[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
 
 
-@interface FXDFileManager : NSFileManager {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDFileManager : NSFileManager
 
 // Properties
 

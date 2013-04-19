@@ -10,8 +10,6 @@
 
 #define ratioControllerDismissingOffset	0.25
 
-#import "FXDKit.h"
-
 
 @interface FXDsuperScrollController : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives

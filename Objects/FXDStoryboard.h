@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDStoryboard : UIStoryboard {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDStoryboard : UIStoryboard
 
 // Properties
 
@@ -23,8 +19,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface UIStoryboard (Added)

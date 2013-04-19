@@ -15,11 +15,7 @@
 #endif
 
 
-@interface FXDManagedObjectContext : NSManagedObjectContext {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDManagedObjectContext : NSManagedObjectContext
 
 // Properties
 

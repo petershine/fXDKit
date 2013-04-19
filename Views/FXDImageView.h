@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDImageView : UIImageView {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDImageView : UIImageView
 
 // Properties
 

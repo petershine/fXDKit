@@ -22,8 +22,6 @@
 #define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
 
 
-#import "FXDKit.h"
-
 #import "FXDsuperFileManager.h"
 
 

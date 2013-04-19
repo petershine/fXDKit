@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDAnnotationView : MKAnnotationView {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDAnnotationView : MKAnnotationView
 
 // Properties
 

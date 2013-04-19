@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDMetadataQuery : NSMetadataQuery {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDMetadataQuery : NSMetadataQuery
 
 // Properties
 

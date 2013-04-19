@@ -15,11 +15,7 @@
 #import "FXDviewProgress.h"
 
 
-@interface FXDWindow : UIWindow {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDWindow : UIWindow
 
 // Properties
 

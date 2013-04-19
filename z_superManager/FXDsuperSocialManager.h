@@ -19,14 +19,7 @@
 #define objkeyTwitterStatus		@"status"
 
 
-#import "FXDKit.h"
-
-
-@interface FXDsuperSocialManager : FXDObject {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDsuperSocialManager : FXDObject
 
 // Properties
 @property (strong, nonatomic) ACAccountStore *accountStore;

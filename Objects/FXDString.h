@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDString : NSString {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDString : NSString
 
 // Properties
 
@@ -23,8 +19,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface NSString (Added)

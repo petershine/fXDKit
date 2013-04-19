@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDMapView : MKMapView {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDMapView : MKMapView
 
 // Properties
 @property (assign, nonatomic) CGRect initialDisclaimerViewFrame;

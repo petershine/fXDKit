@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDLabel : UILabel {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDLabel : UILabel
 
 // Properties
 

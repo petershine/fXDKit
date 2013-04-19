@@ -11,14 +11,7 @@
 #endif
 
 
-#import "FXDKit.h"
-
-
-@interface FXDimageviewTemp : FXDImageView {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDimageviewTemp : FXDImageView
 
 
 // Properties

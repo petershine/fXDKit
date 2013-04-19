@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDURL : NSURL {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDURL : NSURL
 
 // Properties
 
@@ -23,8 +19,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface NSURL (Added)

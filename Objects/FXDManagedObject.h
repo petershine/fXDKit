@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDManagedObject : NSManagedObject {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDManagedObject : NSManagedObject
 
 // Properties
 

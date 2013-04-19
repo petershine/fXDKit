@@ -24,7 +24,7 @@
 	// Instance variables
 	FXDLog(@"_mainResultsController.dynamicDelegate: %@", _mainResultsController.dynamicDelegate);
 	[_mainResultsController setDynamicDelegate:nil];
-	_mainResultsController =nil;
+	_mainResultsController = nil;
 	
 	
 	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
@@ -314,8 +314,12 @@
 	[self prepareScrollControllerToBeDismissed];
 }
 
-- (void)prepareScrollControllerToBeDismissed {	FXDLog_OVERRIDE;
-	
+- (void)prepareScrollControllerToBeDismissed {	FXDLog_DEFAULT;
+	if ([self.mainScrollView respondsToSelector:@selector(delegate)]) {
+		FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
+		
+		[self.mainScrollView performSelector:@selector(setDelegate:) withObject:nil];
+	}
 }
 
 #pragma mark -

@@ -10,20 +10,15 @@
 
 
 #if USE_GoogleAnalytics
-@interface FXDViewController : GAITrackedViewController {
+@interface FXDViewController : GAITrackedViewController
 #else
-@interface FXDViewController : UIViewController {
+@interface FXDViewController : UIViewController
 #endif
-    // Primitives
-	
-	// Instance variables
-	NSDictionary *_segueNameDictionary;
-}
-
-@property (strong, nonatomic) NSDictionary *segueNameDictionary;
 
 // Properties
 @property (assign, nonatomic) BOOL isSystemVersionLatest;
+
+@property (strong, nonatomic) NSDictionary *segueNameDictionary;
 
 // IBOutlets
 
@@ -40,7 +35,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

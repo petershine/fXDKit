@@ -6,14 +6,10 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
+
 #import "FXDsuperTableController.h"
 
-@interface FXDsuperCollectionController : FXDsuperTableController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
-    // Primitives
-	
-	// Instance variables
-	
-}
+@interface FXDsuperCollectionController : FXDsuperTableController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 // Properties
 

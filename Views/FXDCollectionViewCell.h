@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDCollectionViewCell : UICollectionViewCell {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDCollectionViewCell : UICollectionViewCell
 
 // Properties
 @property (strong, nonatomic) id addedObj;

@@ -282,6 +282,7 @@
 	
 	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
 	
+	[sourceController willMoveToParentViewController:nil];
 	
 	[UIView animateWithDuration:durationAnimation
 						  delay:0
@@ -296,9 +297,11 @@
 					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 						 FXDLog(@"finished: %d sourceController: %@", finished, sourceController);
 	
-						 [sourceController willMoveToParentViewController:nil];
 						 [sourceController.view removeFromSuperview];
 						 [sourceController removeFromParentViewController];
+						 
+#warning "//TODO: Test if this is necessary"
+						 //[self didFinishSlidingOutForControllerClassName:NSStringFromClass([sourceController class])];
 					 }];
 }
 
@@ -357,6 +360,11 @@
 	}
 	
 	return slidingDirection;
+}
+
+#pragma mark -
+- (void)didFinishSlidingOutForControllerClassName:(NSString*)controllerClassName {	FXDLog_OVERRIDE;
+	
 }
 
 

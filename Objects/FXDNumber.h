@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDNumber : NSNumber {
-    // Primitives
-
-	// Instance variables
-}
+@interface FXDNumber : NSNumber
 
 // Properties
 
@@ -23,8 +19,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface NSNumber (Added)

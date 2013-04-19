@@ -7,11 +7,7 @@
 //
 
 
-@interface FXDTableViewCell : UITableViewCell {
-    // Primitives
-	
-	// Instance variables
-}
+@interface FXDTableViewCell : UITableViewCell
 
 // Properties
 @property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
