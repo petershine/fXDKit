@@ -198,15 +198,17 @@
 - (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
-	[defaultCenter addObserver:self
-					  selector:@selector(observedUIApplicationDidEnterBackground:)
-						  name:UIApplicationDidEnterBackgroundNotification
-						object:nil];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedUIApplicationWillTerminate:)
-						  name:UIApplicationWillTerminateNotification
-						object:nil];
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillTerminate:)
+	 name:UIApplicationWillTerminateNotification
+	 object:nil];
 
 
 #warning "//MARK: TESTING observing only self.parentObject notification

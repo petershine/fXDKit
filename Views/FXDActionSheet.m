@@ -49,10 +49,11 @@
 
     // IBOutlets
 
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(observedUIApplicationDidEnterBackground:)
-												 name:UIApplicationDidEnterBackgroundNotification
-											   object:nil];
+	[[NSNotificationCenter defaultCenter]
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
 }
 
 

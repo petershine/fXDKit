@@ -16,21 +16,23 @@
 
 		#define TEST_appirater	1
 
+		#define USE_TestFlight	0
 	#else
+		#define USE_TestFlight	1
 
 	#endif
 
 
 	#define USE_FXDLog	1
 
-	#define USE_TestFlight	1
 	#define USE_Flurry	0
 	#define USE_GoogleAnalytics	0
 
 #else
+	#define USE_TestFlight	0
+
 	#define USE_FXDLog	0
 
-	#define USE_TestFlight	0
 	#define USE_Flurry	1
 	#define USE_GoogleAnalytics	0
 
