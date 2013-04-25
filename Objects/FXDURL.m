@@ -38,23 +38,24 @@
 #pragma mark - Category
 @implementation NSURL (Added)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	//FXDLog_DEFAULT;
-	NSArray *ubiquitousItemKeys = @[
-	//NSURLIsUbiquitousItemKey,
-	//NSURLUbiquitousItemHasUnresolvedConflictsKey,
-	//NSURLUbiquitousItemIsDownloadedKey,
-	//NSURLUbiquitousItemIsDownloadingKey,
-	//NSURLUbiquitousItemIsUploadedKey,
-	//NSURLUbiquitousItemIsUploadingKey,
-	
-	NSURLFileSizeKey,
-	NSURLFileAllocatedSizeKey,
-	NSURLTotalFileSizeKey,
-	NSURLTotalFileAllocatedSizeKey,
-	NSURLIsAliasFileKey,
-	
-	NSURLEffectiveIconKey,
-	
-	];
+	NSArray *ubiquitousItemKeys =
+	@[
+   NSURLIsUbiquitousItemKey,
+   NSURLUbiquitousItemHasUnresolvedConflictsKey,
+   NSURLUbiquitousItemIsDownloadedKey,
+   NSURLUbiquitousItemIsDownloadingKey,
+   NSURLUbiquitousItemIsUploadedKey,
+   NSURLUbiquitousItemIsUploadingKey,
+   
+   NSURLFileSizeKey,
+   NSURLFileAllocatedSizeKey,
+   NSURLTotalFileSizeKey,
+   NSURLTotalFileAllocatedSizeKey,
+   NSURLIsAliasFileKey,
+   
+   NSURLEffectiveIconKey,
+   
+   ];
 	
 	NSDictionary *resourceValues = [self resourceValuesForKeys:ubiquitousItemKeys error:error];
 	
@@ -90,7 +91,6 @@
 - (FILE_KIND_TYPE)fileKindType {
 	FILE_KIND_TYPE fileKindType = fileKindUndefined;
 
-	
 	NSString *typeIdentifier = nil;
 
 	NSError *error = nil;
