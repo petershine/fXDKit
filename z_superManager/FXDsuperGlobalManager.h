@@ -35,6 +35,8 @@
 
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
+- (void)startObservingApplicationNotification;
+
 #warning "//TODO: refactor following method to be organized into categories or subclasses"
 
 + (BOOL)isSystemVersionLatest;
@@ -54,9 +56,13 @@
 
 
 //MARK: - Observer implementation
+- (void)observedUIApplicationWillResignActive:(NSNotification*)notification;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
+
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
-
 
 @end
 

@@ -15,6 +15,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	// Instance variables
 
 	FXDLog_SEPARATE;
@@ -170,11 +172,41 @@
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_OVERRIDE;
 
 	if (windowLoadingBlock) {
+		[self startObservingApplicationNotification];
+		
 		windowLoadingBlock();
 	}
 }
 
+- (void)startObservingApplicationNotification {	FXDLog_DEFAULT;
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillResignActive:)
+	 name:UIApplicationWillResignActiveNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidBecomeActive:)
+	 name:UIApplicationDidBecomeActiveNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillTerminate:)
+	 name:UIApplicationWillTerminateNotification
+	 object:nil];
+}
 
+#pragma mark -
 + (BOOL)isSystemVersionLatest {
 	BOOL isSystemVersionLatest = NO;
 	
@@ -183,6 +215,7 @@
 	if ([systemVersionString floatValue] >= latestSupportedSystemVersion) {
 		isSystemVersionLatest = YES;
 	}
+	
 	
 #if ForDEVELOPER
 	FXDLog(@"isSystemVersionLatest: %d %f >= %f", isSystemVersionLatest, [systemVersionString floatValue], latestSupportedSystemVersion);
@@ -316,6 +349,18 @@
 
 
 //MARK: - Observer implementation
+- (void)observedUIApplicationWillResignActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+
+#pragma mark -
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
 
 //MARK: - Delegate implementation
 
