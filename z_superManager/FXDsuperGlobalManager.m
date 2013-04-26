@@ -207,6 +207,27 @@
 }
 
 #pragma mark -
+- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
+	if (alertBody == nil) {
+		return;
+	}
+	
+	
+	UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
+	localNotifcation.repeatInterval = 0;
+	localNotifcation.alertBody = alertBody;
+	
+	if (delay > 0.0) {
+		localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
+		
+		[[UIApplication sharedApplication] scheduleLocalNotification:localNotifcation];
+	}
+	else {
+		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
+	}
+}
+
+#pragma mark -
 + (BOOL)isSystemVersionLatest {
 	BOOL isSystemVersionLatest = NO;
 	
@@ -320,27 +341,6 @@
 							   otherButtonTitles:nil];
 
 	[alertview show];
-}
-
-+ (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {	
-	if (alertBody == nil) {
-		return;
-	}
-
-
-	UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
-	localNotifcation.repeatInterval = 0;
-	//localNotifcation.soundName = UILocalNotificationDefaultSoundName;
-	localNotifcation.alertBody = alertBody;
-
-	if (delay > 0.0) {
-		localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
-
-		[[UIApplication sharedApplication] scheduleLocalNotification:localNotifcation];
-	}
-	else {
-		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
-	}
 }
 
 + (void)printoutListOfFonts {	FXDLog_DEFAULT;

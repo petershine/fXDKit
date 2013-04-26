@@ -37,8 +37,10 @@
 
 - (void)startObservingApplicationNotification;
 
-#warning "//TODO: refactor following method to be organized into categories or subclasses"
+- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
+
+#warning "//TODO: refactor following method to be organized into categories or subclasses"
 + (BOOL)isSystemVersionLatest;
 
 + (NSString*)deviceModelName;
@@ -49,8 +51,6 @@
 
 
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title;
-
-+ (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
 + (void)printoutListOfFonts;
 
