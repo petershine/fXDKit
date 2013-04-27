@@ -60,7 +60,6 @@
 #pragma mark -
 - (NSString*)mainStoryboardName {
 	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
-		//
 		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
 	}
 
@@ -172,13 +171,13 @@
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_OVERRIDE;
 
 	if (windowLoadingBlock) {
-		[self startObservingApplicationNotification];
+		[self startObservingEssentialNotifications];
 		
 		windowLoadingBlock();
 	}
 }
 
-- (void)startObservingApplicationNotification {	FXDLog_DEFAULT;
+- (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	
 	[defaultCenter
@@ -203,6 +202,12 @@
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillTerminate:)
 	 name:UIApplicationWillTerminateNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSUserDefaultsDidChange:)
+	 name:NSUserDefaultsDidChangeNotification
 	 object:nil];
 }
 
@@ -360,6 +365,10 @@
 
 #pragma mark -
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+
+#pragma mark -
+- (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {	FXDLog_OVERRIDE;	
 }
 
 //MARK: - Delegate implementation

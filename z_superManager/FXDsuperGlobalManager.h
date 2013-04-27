@@ -35,7 +35,7 @@
 
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
-- (void)startObservingApplicationNotification;
+- (void)startObservingEssentialNotifications;
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
@@ -61,6 +61,8 @@
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
+
+- (void)observedNSUserDefaultsDidChange:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

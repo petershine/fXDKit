@@ -17,7 +17,7 @@
 #define delayOneSecond	1.0
 #define delayHalfSecond	0.5
 
-#define delayExtremelyShort	0.05
+#define delayExtremelyShort	0.01
 
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0

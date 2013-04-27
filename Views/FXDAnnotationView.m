@@ -105,13 +105,13 @@
 	 completion:^(BOOL finished){
 		 
 		 [UIView
-		  animateWithDuration:delayExtremelyShort
+		  animateWithDuration:durationQuickAnimation
 		  animations:^{
 			  self.transform = CGAffineTransformMakeScale(1.0, 0.8);
 		  }
 		  completion:^(BOOL finished){
 			  [UIView
-			   animateWithDuration:(delayExtremelyShort*2.0)
+			   animateWithDuration:durationAnimation
 			   animations:^{
 				   self.transform = CGAffineTransformIdentity;
 			   }];
