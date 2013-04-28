@@ -84,19 +84,20 @@
 	return self;
 }
 
-- (void)animateCustomDropAfterDelay:(NSTimeInterval)delay {
+- (void)animateCustomDropAfterDelay:(NSTimeInterval)delay fromOffset:(CGPoint)offset {
 	CGRect animatedFrame = self.frame;
 	
 	// Move annotation out of view
 	//FXDLog(@"superview.superview: %@", NSStringFromCGRect(self.superview.superview.frame));
 	
 	CGRect modifiedFrame = self.frame;
-	modifiedFrame.origin.y -= self.superview.superview.frame.size.height;
+	modifiedFrame.origin.x += offset.x;
+	modifiedFrame.origin.y += offset.y;
 	[self setFrame:modifiedFrame];
 	
 	// Animate drop
 	[UIView
-	 animateWithDuration:durationSlowAnimation
+	 animateWithDuration:durationAnimation
 	 delay:delay
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
@@ -111,7 +112,7 @@
 		  }
 		  completion:^(BOOL finished){
 			  [UIView
-			   animateWithDuration:durationAnimation
+			   animateWithDuration:durationQuickAnimation
 			   animations:^{
 				   self.transform = CGAffineTransformIdentity;
 			   }];

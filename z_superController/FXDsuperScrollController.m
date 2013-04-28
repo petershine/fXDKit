@@ -87,7 +87,7 @@
 		CGRect screenBounds = [[UIScreen mainScreen] bounds];
 		FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
 		
-		self.offsetYdismissingController = 0.0 -(screenBounds.size.height *ratioControllerDismissingOffset);
+		self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
 		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 	}
 }

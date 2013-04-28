@@ -8,7 +8,7 @@
 
 #define limitConcurrentOperationCount	1
 
-#define ratioControllerDismissingOffset	0.25
+#define scaleControllerDismissingOffset	0.265
 
 
 @interface FXDsuperScrollController : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {

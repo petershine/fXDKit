@@ -32,6 +32,6 @@
 @interface MKAnnotationView (Added)
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage;
 
-- (void)animateCustomDropAfterDelay:(NSTimeInterval)delay;
+- (void)animateCustomDropAfterDelay:(NSTimeInterval)delay fromOffset:(CGPoint)offset;
 
 @end
