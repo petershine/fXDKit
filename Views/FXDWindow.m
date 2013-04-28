@@ -8,7 +8,7 @@
 
 #import "FXDWindow.h"
 
-#import "FXDviewProgress.h"
+#import "FXDsuperLaunchImageController.h"
 
 
 #pragma mark - Public implementation
@@ -191,6 +191,23 @@
 }
 
 #pragma mark -
+- (void)prepareWithLaunchImageController:(FXDsuperLaunchImageController*)launchImageController {	FXDLog_DEFAULT;
+	if (launchImageController == nil) {
+		launchImageController = [[FXDsuperLaunchImageController alloc] initWithNibName:nil bundle:nil];
+	}
+	
+	CGRect modifiedFrame = launchImageController.view.frame;
+	modifiedFrame.size.height = self.frame.size.height;
+	[launchImageController.view setFrame:modifiedFrame];
+	
+	modifiedFrame = launchImageController.imageviewLaunch.frame;
+	modifiedFrame.origin.y = 0.0;
+	modifiedFrame.size.height = self.frame.size.height;
+	[launchImageController.imageviewLaunch setFrame:modifiedFrame];
+	
+	[self setRootViewController:launchImageController];
+}
+
 - (void)configureRootViewController:(UIViewController*)rootViewController withAnimation:(BOOL)withAnimation willBecomeRootViewControllerBlock:(void (^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void (^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock {	FXDLog_DEFAULT;
 	
 	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
