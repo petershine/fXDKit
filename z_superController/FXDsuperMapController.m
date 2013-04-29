@@ -98,15 +98,16 @@
 #pragma mark - MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {	//FXDLog_DEFAULT;
 	
+	if (self.shouldResumeTracking) {	//MARK: Keep canceling until scrolling is stopped
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resumeTrackingUser) object:nil];
+	}
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {	FXDLog_DEFAULT;
-	
 	if (self.shouldResumeTracking) {
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resumeTrackingUser) object:nil];
 		[self performSelector:@selector(resumeTrackingUser) withObject:nil afterDelay:delayOneSecond inModes:@[NSRunLoopCommonModes]];
 	}
-	
 }
 
 - (void)mapViewWillStartLoadingMap:(MKMapView *)mapView {	//FXDLog_DEFAULT;
@@ -173,7 +174,6 @@
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {	FXDLog_OVERRIDE;
 	FXDLog(@"mode: %d animated: %d self.initialTrackingMode: %d self.shouldResumeTracking: %d", mode, animated, self.initialTrackingMode, self.shouldResumeTracking);
-	
 }
 
 
