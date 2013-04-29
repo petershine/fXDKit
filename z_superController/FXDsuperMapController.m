@@ -22,8 +22,6 @@
 
 - (void)dealloc {
 	// Instance variables
-
-	// Properties
 }
 
 
@@ -36,22 +34,15 @@
     // Instance variables
 
     // Properties
-
-    // IBOutlets
-
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	// Primitives
-
-	// Instance variables
-
-	// Properties
-
 	// IBOutlets
 	[self.mainMapview setDelegate:self];
+	
+	[self resumeTrackingUser];
 }
 
 
@@ -61,22 +52,18 @@
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
-	
 }
 
 
@@ -98,6 +85,12 @@
 	
 }
 
+#pragma mark -
+- (void)resumeTrackingUser {	FXDLog_DEFAULT;
+	if (self.initialTrackingMode != MKUserTrackingModeNone) {
+		[self.mainMapview setUserTrackingMode:self.initialTrackingMode animated:YES];
+	}
+}
 
 //MARK: - Observer implementation
 
@@ -108,6 +101,11 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {	FXDLog_DEFAULT;
+	
+	if (self.shouldResumeTracking) {
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resumeTrackingUser) object:nil];
+		[self performSelector:@selector(resumeTrackingUser) withObject:nil afterDelay:delayOneSecond inModes:@[NSRunLoopCommonModes]];
+	}
 	
 }
 
@@ -174,8 +172,7 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {	FXDLog_OVERRIDE;
-	FXDLog(@"mode: %d animated: %d", mode, animated);
-	
+	FXDLog(@"mode: %d animated: %d self.initialTrackingMode: %d self.shouldResumeTracking: %d", mode, animated, self.initialTrackingMode, self.shouldResumeTracking);
 	
 }
 

@@ -12,6 +12,8 @@
 @interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate>
 
 // Properties
+@property (assign, nonatomic) MKUserTrackingMode initialTrackingMode;
+@property (assign, nonatomic) BOOL shouldResumeTracking;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDMapView *mainMapview;
@@ -22,8 +24,9 @@
 
 #pragma mark - Public
 - (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate;
-
 - (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray;
+
+- (void)resumeTrackingUser;
 
 
 //MARK: - Observer implementation
