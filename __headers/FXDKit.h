@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 Ensight. All rights reserved.
 //
 
+//MARK: Make sure following frameworks are imported
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
