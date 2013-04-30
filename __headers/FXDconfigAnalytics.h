@@ -30,6 +30,8 @@
 
 
 #if	USE_TestFlight
+	//import "libz.dylib"
+
 	#import "TestFlight.h"
 
 	#ifndef testflightTeamToken
