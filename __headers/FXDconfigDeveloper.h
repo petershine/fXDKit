@@ -83,4 +83,9 @@
 #endif
 
 
+#ifndef DEVICE_IDIOM_iPad
+	#define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+#endif
+
+
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[[self class] alloc] init];});return _sharedInstance
