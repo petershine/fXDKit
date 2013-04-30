@@ -233,23 +233,6 @@
 }
 
 #pragma mark -
-+ (BOOL)isSystemVersionLatest {
-	BOOL isSystemVersionLatest = NO;
-	
-	NSString *systemVersionString = [[UIDevice currentDevice] systemVersion];
-	
-	if ([systemVersionString floatValue] >= latestSupportedSystemVersion) {
-		isSystemVersionLatest = YES;
-	}
-	
-	
-#if ForDEVELOPER
-	FXDLog(@"isSystemVersionLatest: %d %f >= %f", isSystemVersionLatest, [systemVersionString floatValue], latestSupportedSystemVersion);
-#endif
-	
-	return isSystemVersionLatest;
-}
-
 + (NSString*)deviceModelName {
 
 	struct utsname systemInfo;

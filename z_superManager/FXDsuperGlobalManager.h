@@ -41,7 +41,6 @@
 
 
 #warning "//TODO: refactor following method to be organized into categories or subclasses"
-+ (BOOL)isSystemVersionLatest;
 
 + (NSString*)deviceModelName;
 

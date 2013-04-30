@@ -143,7 +143,7 @@
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
-	if ([FXDsuperGlobalManager isSystemVersionLatest]) {		
+	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(observedNSUbiquityIdentityDidChange:)
 													 name:NSUbiquityIdentityDidChangeNotification

@@ -78,7 +78,7 @@
 	FXDLog(@"self.storyboard: %@, self.nibName: %@", self.storyboard, self.nibName);
 
 	// Primitives
-	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= latestSupportedSystemVersion) {
+	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
 		_isSystemVersionLatest = YES;
 	}
 

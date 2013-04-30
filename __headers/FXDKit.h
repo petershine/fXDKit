@@ -26,8 +26,9 @@
 
 
 // Headers
-#import "FXDconfigDeveloper.h"
 #import "FXDconfigApp.h"
+#import "FXDconfigDeveloper.h"
+#import "FXDconfigAnalytics.h"
 
 
 #import "FXDenumTypes.h"
