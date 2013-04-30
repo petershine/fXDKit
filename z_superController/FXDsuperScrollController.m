@@ -63,8 +63,8 @@
 	}
 	
 	
-	if ([self.mainScrollView performSelector:@selector(dataSource)] == nil
-		&& [self.mainScrollView respondsToSelector:@selector(dataSource)]) {
+	if ([self.mainScrollView respondsToSelector:@selector(dataSource)]
+		&& [self.mainScrollView performSelector:@selector(dataSource)] == nil) {
 		
 		[self.mainScrollView performSelector:@selector(setDataSource:) withObject:self];
 	}
