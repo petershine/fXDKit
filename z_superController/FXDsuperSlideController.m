@@ -11,7 +11,7 @@
 
 @implementation FXDsegueSlidingIn
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController navigationController];
+	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController parentViewController];
 
 	[slideController slideInWithSegue:self];
 }
@@ -21,7 +21,7 @@
 
 @implementation FXDsegueSlidingOut
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController navigationController];
+	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController parentViewController];
 
 	[slideController slideOutWithSegue:self];
 }
@@ -61,8 +61,6 @@
 
     // IBOutlets
 
-#warning "//MARK: Necessary to nullify regular Navigation push and pop"
-	[self.navigationBar setDelegate:self];
 }
 
 
@@ -139,7 +137,7 @@
 
 	
 	FXDViewController *destinationController = (FXDViewController*)slidingInSegue.destinationViewController;
-	[self addChildViewController:destinationController];	//MARK: Generic addChild~ is used even for navigationController
+	[self addChildViewController:destinationController];
 	
 	destinationController.navigationItem.hidesBackButton = YES;	//MARK: Back button may not work with slideController
 	
