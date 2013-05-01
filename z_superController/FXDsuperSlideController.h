@@ -13,11 +13,12 @@
 @end
 
 
-@interface FXDsuperSlideController : FXDNavigationController <UINavigationBarDelegate>
+@interface FXDsuperSlideController : FXDNavigationController
 
 // Properties
 
 // IBOutlets
+@property (strong, nonatomic) IBOutlet FXDViewController *frontViewController;
 
 
 #pragma mark - Segues

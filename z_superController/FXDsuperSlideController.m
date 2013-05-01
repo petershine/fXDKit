@@ -108,7 +108,7 @@
 
 
 #pragma mark - Public
-- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue {	FXDLog_DEFAULT;
+- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue {
 
 	BOOL canAnimate = NO;
 
@@ -122,9 +122,9 @@
 		&& [destination isKindOfClass:[FXDViewController class]]) {
 		canAnimate = YES;
 	}
-	else {
-		FXDLog(@"WRONG CLASSES!");
-	}
+	
+	FXDLog(@"canAnimate: %d", canAnimate);
+	
 
 	return canAnimate;
 }
@@ -216,6 +216,7 @@
 }
 
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOurSegue {	FXDLog_DEFAULT;
+	
 	if ([self canAnimateWithTransitionSegue:slidingOurSegue] == NO) {
 		return;
 	}
@@ -365,18 +366,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UINavigationBarDelegate
-//MARK: Empty implementation is needed to nullify regular Navigation push and pop
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-	return YES;
-}
-- (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-}
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-	return YES;
-}
-- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {	FXDLog_DEFAULT;
-}
 
 @end
 
