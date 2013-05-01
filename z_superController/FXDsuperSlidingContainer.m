@@ -221,7 +221,7 @@
 
 	[UIView
 	 animateWithDuration:durationAnimation
-	 delay:0
+	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [destinationController.view setFrame:animatedFrame];
@@ -313,7 +313,7 @@
 	
 	[UIView
 	 animateWithDuration:durationAnimation
-	 delay:0
+	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [sourceController.view setFrame:animatedFrame];
@@ -387,6 +387,9 @@
 	
 	FXDLog(@"animatedFrameObjArray: %@", animatedFrameObjArray);
 	
+	
+	FXDViewController *rootController = [self.childViewControllers objectAtIndex:0];
+	[self.mainToolbar setItems:rootController.toolbarItems animated:YES];
 	
 	[UIView
 	 animateWithDuration:durationAnimation
