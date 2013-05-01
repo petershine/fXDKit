@@ -63,6 +63,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	[reachabilityForWifi startNotifier];
 	[reachabilityForInternet startNotifier];
 	
+	
 	[[NSNotificationCenter defaultCenter] addObserver:observerForReachability selector:@selector(observedReachabilityChanged:) name:kReachabilityChangedNotification object:reachabilityForWifi];
 	[[NSNotificationCenter defaultCenter] addObserver:observerForReachability selector:@selector(observedReachabilityChanged:) name:kReachabilityChangedNotification object:reachabilityForInternet];
 }

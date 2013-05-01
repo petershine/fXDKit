@@ -6,19 +6,26 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-@interface FXDsegueSlidingIn : FXDsegueTransition
+#define seguenameEmbeddingRoot	@"EmbeddingRoot"
+#define seguenameFrontController	@"FrontController"
+
+
+@interface FXDsegueEmbeddingFrontController : FXDsuperEmbedSegue
 @end
 
-@interface FXDsegueSlidingOut : FXDsegueTransition
+@interface FXDsegueSlidingIn : FXDsuperTransitionSegue
+@end
+
+@interface FXDsegueSlidingOut : FXDsuperTransitionSegue
 @end
 
 
-@interface FXDsuperSlideController : FXDNavigationController
+@interface FXDsuperSlideController : FXDsuperContainer
 
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDViewController *frontViewController;
+@property (strong, nonatomic) IBOutlet FXDViewController *frontController;
 
 
 #pragma mark - Segues
@@ -28,15 +35,13 @@
 
 
 #pragma mark - Public
-- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue;
+- (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue;
 
 - (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue;
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue;
 
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 - (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
-
-- (void)didFinishSlidingOutForControllerClassName:(NSString*)controllerClassName;
 
 
 //MARK: - Observer implementation
@@ -51,14 +56,10 @@
 #pragma mark - Category
 @interface FXDViewController (Sliding)
 
-#pragma mark - IBActions
-- (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;
-
 #pragma mark - Public
 - (SLIDE_DIRECTION_TYPE)slideDirectionType;
 
 #pragma mark -
-- (BOOL)shouldPushNavigationItems;
 - (BOOL)shouldCoverWhenSlidingIn;
 - (BOOL)shouldStayCovered;
 

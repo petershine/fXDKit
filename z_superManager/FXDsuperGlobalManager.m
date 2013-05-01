@@ -123,40 +123,62 @@
 }
 
 - (id)homeController {
-	if (_homeController == nil) {
+	if (_homeController == nil) {	FXDLog_DEFAULT;
+		
+		SEL respondingSelector = nil;
+		
+		if ([self.rootController respondsToSelector:@selector(viewControllers)]) {
+			respondingSelector = @selector(viewControllers);
+		}
+		else if ([self.rootController respondsToSelector:@selector(childViewControllers)]) {
+			respondingSelector = @selector(childViewControllers);
+		}
+		
+		FXDLog(@"respondingSelector: %@", NSStringFromSelector(respondingSelector));
+		
 
-		if ([self.rootController respondsToSelector:@selector(viewControllers)] == NO) {
+		if (respondingSelector == nil) {
 			_homeController = self.rootController;
-
+			
+			FXDLog(@"_homeController = self.rootController: %@", _homeController);
+			
 			return _homeController;
 		}
 
 
-		NSArray *viewControllers = [self.rootController performSelector:@selector(viewControllers)];
+		NSArray *viewControllers = [self.rootController performSelector:respondingSelector];
 
 		if ([viewControllers count] == 0) {
+			FXDLog(@"([viewControllers count] == 0) _homeController: %@", _homeController);
+			
 			return _homeController;
 		}
 
 
 		if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
 			_homeController = viewControllers[0];
+			
+			FXDLog(@"_homeController = viewControllers[0]: %@", _homeController);
 
 			return _homeController;
 		}
 
 
-		id tabbedViewController = viewControllers[0];
+		id subContainerController = viewControllers[0];
 
-		if ([tabbedViewController isKindOfClass:[UINavigationController class]]) {
-			UINavigationController *tabbedNavigationController = (UINavigationController*)tabbedViewController;
+		if ([subContainerController isKindOfClass:[UINavigationController class]]) {
+			UINavigationController *containedNavigationController = (UINavigationController*)subContainerController;
 
-			if ([tabbedNavigationController.viewControllers count] > 0) {
-				_homeController = (tabbedNavigationController.viewControllers)[0];
+			if ([containedNavigationController.viewControllers count] > 0) {
+				_homeController = (containedNavigationController.viewControllers)[0];
+				
+				FXDLog(@"_homeController = (containedNavigationController.viewControllers)[0]: %@", _homeController);
 			}
 		}
 		else {
-			_homeController = tabbedViewController;
+			_homeController = subContainerController;
+			
+			FXDLog(@"_homeController = subContainerController: %@", _homeController);
 		}
 	}
 
@@ -168,7 +190,7 @@
 
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_OVERRIDE;
+- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	//FXDLog_OVERRIDE;
 
 	if (windowLoadingBlock) {
 		[self startObservingEssentialNotifications];

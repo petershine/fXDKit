@@ -8,6 +8,18 @@
 
 #import "FXDsuperSlideController.h"
 
+@implementation FXDsegueEmbeddingFrontController
+- (void)perform {	FXDLog_DEFAULT;
+	[super perform];
+	
+	FXDsuperSlideController *slideController = (FXDsuperSlideController*)self.sourceViewController;
+	
+	slideController.frontController = (FXDViewController*)self.destinationViewController;
+	FXDLog(@"slideController.frontController: %@", slideController.frontController);
+}
+
+@end
+
 
 @implementation FXDsegueSlidingIn
 - (void)perform {	FXDLog_DEFAULT;
@@ -60,7 +72,7 @@
 	[super viewDidLoad];
 
     // IBOutlets
-
+	[self performSegueWithIdentifier:seguenameFrontController sender:self];
 }
 
 
@@ -108,7 +120,7 @@
 
 
 #pragma mark - Public
-- (BOOL)canAnimateWithTransitionSegue:(FXDsegueTransition*)transitionSegue {
+- (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue {
 
 	BOOL canAnimate = NO;
 
@@ -194,8 +206,7 @@
 	
 	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
 
-
-	[self.view insertSubview:destinationController.view belowSubview:self.navigationBar];
+	[self.view insertSubview:destinationController.view belowSubview:self.frontController.view];
 	[destinationController didMoveToParentViewController:self];
 
 	[UIView animateWithDuration:durationAnimation
@@ -294,9 +305,6 @@
 	
 						 [sourceController.view removeFromSuperview];
 						 [sourceController removeFromParentViewController];
-						 
-#warning "//TODO: Test if this is necessary"
-						 //[self didFinishSlidingOutForControllerClassName:NSStringFromClass([sourceController class])];
 					 }];
 }
 
@@ -357,11 +365,6 @@
 	return slidingDirection;
 }
 
-#pragma mark -
-- (void)didFinishSlidingOutForControllerClassName:(NSString*)controllerClassName {	FXDLog_OVERRIDE;
-	
-}
-
 
 //MARK: - Observer implementation
 
@@ -373,21 +376,12 @@
 #pragma mark - Category
 @implementation FXDViewController (Sliding)
 
-#pragma mark - IBActions
-- (IBAction)navigateBackUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
-	FXDLog(@"unwindSegue fullDescription:\n%@", [unwindSegue fullDescription]);
-}
-
 #pragma mark - Public
 - (SLIDE_DIRECTION_TYPE)slideDirectionType {	FXDLog_OVERRIDE;
 	return slideDirectionTop;
 }
 
 #pragma mark -
-- (BOOL)shouldPushNavigationItems {
-	return NO;
-}
-
 - (BOOL)shouldCoverWhenSlidingIn {
 	return NO;
 }

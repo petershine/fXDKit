@@ -62,26 +62,30 @@
 
 
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSMetadataQueryDidStartGathering:)
-							  name:NSMetadataQueryDidStartGatheringNotification
-							object:_ubiquitousDocumentsMetadataQuery];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSMetadataQueryGatheringProgress:)
-							  name:NSMetadataQueryGatheringProgressNotification
-							object:_ubiquitousDocumentsMetadataQuery];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSMetadataQueryDidFinishGathering:)
-							  name:NSMetadataQueryDidFinishGatheringNotification
-							object:_ubiquitousDocumentsMetadataQuery];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedNSMetadataQueryDidUpdate:)
-							  name:NSMetadataQueryDidUpdateNotification
-							object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter
+		 addObserver:self
+		 selector:@selector(observedNSMetadataQueryDidStartGathering:)
+		 name:NSMetadataQueryDidStartGatheringNotification
+		 object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter
+		 addObserver:self
+		 selector:@selector(observedNSMetadataQueryGatheringProgress:)
+		 name:NSMetadataQueryGatheringProgressNotification
+		 object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter
+		 addObserver:self
+		 selector:@selector(observedNSMetadataQueryDidFinishGathering:)
+		 name:NSMetadataQueryDidFinishGatheringNotification
+		 object:_ubiquitousDocumentsMetadataQuery];
+		
+		[defaultCenter
+		 addObserver:self
+		 selector:@selector(observedNSMetadataQueryDidUpdate:)
+		 name:NSMetadataQueryDidUpdateNotification
+		 object:_ubiquitousDocumentsMetadataQuery];
 
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
@@ -144,10 +148,11 @@
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
 	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(observedNSUbiquityIdentityDidChange:)
-													 name:NSUbiquityIdentityDidChangeNotification
-												   object:nil];
+		[[NSNotificationCenter defaultCenter]
+		 addObserver:self
+		 selector:@selector(observedNSUbiquityIdentityDidChange:)
+		 name:NSUbiquityIdentityDidChangeNotification
+		 object:nil];
 		
 		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
 		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);

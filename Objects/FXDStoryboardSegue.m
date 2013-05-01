@@ -120,5 +120,20 @@
 
 
 #pragma mark - Subclass
-@implementation FXDsegueTransition
+@implementation FXDsuperEmbedSegue;
+- (void)perform {	FXDLog_DEFAULT;
+	UIViewController *parentController = (UIViewController*)self.sourceViewController;
+	UIViewController *embeddedController = (UIViewController*)self.destinationViewController;
+	
+	[parentController addChildViewController:embeddedController];
+	[parentController.view addSubview:embeddedController.view];
+	[embeddedController didMoveToParentViewController:parentController];
+	
+	FXDLog(@"parentController.childViewControllers: %@", parentController.childViewControllers);
+	FXDLog(@"parentController.view.subviews: %@", parentController.view.subviews);
+}
+
+@end
+
+@implementation FXDsuperTransitionSegue
 @end

@@ -32,5 +32,8 @@
 
 
 #pragma mark - Subclass
-@interface FXDsegueTransition : FXDStoryboardSegue
+@interface FXDsuperEmbedSegue : FXDStoryboardSegue
+@end
+
+@interface FXDsuperTransitionSegue : FXDStoryboardSegue
 @end

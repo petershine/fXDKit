@@ -50,22 +50,25 @@
 	// IBOutlets
 
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedApplicationWindowShouldFadeInProgressView:)
-						  name:notificationApplicationWindowShouldFadeInProgressView
-						object:nil];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedApplicationWindowShouldFadeOutProgressView:)
-						  name:notificationApplicationWindowShouldFadeOutProgressView
-						object:nil];
-
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
-						  name:UIDeviceOrientationDidChangeNotification
-						object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedApplicationWindowShouldFadeInProgressView:)
+	 name:notificationApplicationWindowShouldFadeInProgressView
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedApplicationWindowShouldFadeOutProgressView:)
+	 name:notificationApplicationWindowShouldFadeOutProgressView
+	 object:nil];
+	
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
+	 name:UIDeviceOrientationDidChangeNotification
+	 object:nil];
 }
 
 

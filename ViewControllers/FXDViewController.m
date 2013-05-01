@@ -91,7 +91,7 @@
 #endif
 }
 
-- (void)loadView {	FXDLog_DEFAULT;
+- (void)loadView {	//FXDLog_DEFAULT;
 	[super loadView];
 
 }

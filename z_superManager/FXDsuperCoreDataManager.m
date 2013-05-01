@@ -100,10 +100,11 @@
 
 #pragma mark - Public
 - (void)startObservingFileManagerNotifications {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
-												 name:notificationFileControlDidUpdateUbiquityContainerURL
-											   object:nil];
+	[[NSNotificationCenter defaultCenter]
+	 addObserver:self
+	 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
+	 name:notificationFileControlDidUpdateUbiquityContainerURL
+	 object:nil];
 	
 }
 
@@ -211,31 +212,33 @@
 	 object:nil];
 
 
-#warning "//MARK: TESTING observing only self.parentObject notification
 	id notifyingObject = self.managedObjectContext.parentContext;
 	FXDLog(@"notifyingObject: %@", notifyingObject);
 	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+	 object:notifyingObject];
 	
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-						  name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-						object:notifyingObject];
-
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-						  name:NSManagedObjectContextObjectsDidChangeNotification
-						object:notifyingObject];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSManagedObjectContextWillSave:)
-						  name:NSManagedObjectContextWillSaveNotification
-						object:notifyingObject];
-
-	[defaultCenter addObserver:self
-					  selector:@selector(observedNSManagedObjectContextDidSave:)
-						  name:NSManagedObjectContextDidSaveNotification
-						object:notifyingObject];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+	 name:NSManagedObjectContextObjectsDidChangeNotification
+	 object:notifyingObject];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextWillSave:)
+	 name:NSManagedObjectContextWillSaveNotification
+	 object:notifyingObject];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextDidSave:)
+	 name:NSManagedObjectContextDidSaveNotification
+	 object:notifyingObject];
 }
 
 #pragma mark -
