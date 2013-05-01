@@ -47,7 +47,10 @@
 + (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
 	NSString *storyboardName = NSStringFromClass([self class]);
 	
-#warning "//TODO: distinguish based on interface idiom to select appropriate storyboard"	
+	if (DEVICE_IDIOM_iPad) {
+		storyboardName = [storyboardName stringByAppendingString:@"_iPad"];
+	}
+
 	FXDLog(@"storyboardName: %@", storyboardName);
 	
 	UIStoryboard *storyboard = [self storyboardWithName:storyboardName bundle:nil];
