@@ -21,6 +21,8 @@
 }
 
 - (void)dealloc {
+	[self.mainScrollView setDelegate:nil];
+	
 	// Instance variables
 	FXDLog(@"_mainResultsController.dynamicDelegate: %@", _mainResultsController.dynamicDelegate);
 	[_mainResultsController setDynamicDelegate:nil];
@@ -202,6 +204,17 @@
 
 
 #pragma mark - Method overriding
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	if (parent == nil) {
+		if ([self.mainScrollView respondsToSelector:@selector(delegate)]) {
+			FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
+			
+			[self.mainScrollView setDelegate:nil];
+		}
+	}
+	
+	[super willMoveToParentViewController:parent];
+}
 
 
 #pragma mark - Segues
@@ -310,16 +323,6 @@
 	
 	
 	self.didStartDismissingByPullingDown = YES;
-	
-	[self prepareScrollControllerToBeDismissed];
-}
-
-- (void)prepareScrollControllerToBeDismissed {	FXDLog_DEFAULT;
-	if ([self.mainScrollView respondsToSelector:@selector(delegate)]) {
-		FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
-		
-		[self.mainScrollView performSelector:@selector(setDelegate:) withObject:nil];
-	}
 }
 
 #pragma mark -

@@ -43,6 +43,8 @@
 - (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue;
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue;
 
+- (void)slideOutAllLateAddedController;
+
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 - (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 
@@ -50,8 +52,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - UINavigationBarDelegate
-
 
 @end
 
@@ -64,7 +64,7 @@
 
 #pragma mark -
 - (BOOL)shouldCoverWhenSlidingIn;
-- (BOOL)shouldStayCovered;
+- (BOOL)shouldStayFixed;
 
 - (NSNumber*)distanceNumberForSlidingOut;
 

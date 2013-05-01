@@ -185,16 +185,17 @@
 	CGRect animatedPushedFrame = CGRectZero;
 		
 	if ([destinationController shouldCoverWhenSlidingIn] == NO
-		&& [self.childViewControllers count] > 1) {
+		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
+		NSInteger destinationIndex = [self.childViewControllers indexOfObject:destinationController];
+		
 		for (FXDViewController *childController in self.childViewControllers) {
-			FXDLog(@"childController: %@ shouldStayCovered: %d", childController, [childController shouldStayCovered]);
+			FXDLog(@"childController: %@ shouldStayFixed: %d", childController, [childController shouldStayFixed]);
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
-			NSInteger destinationIndex = [self.childViewControllers indexOfObject:destinationController];
 			
-			if (childIndex < destinationIndex && [childController shouldStayCovered] == NO) {
+			if (childIndex < destinationIndex && [childController shouldStayFixed] == NO) {
 				
 				if (childIndex == destinationIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pushedController = childController;
@@ -218,21 +219,22 @@
 	[self.view insertSubview:destinationController.view belowSubview:self.frontController.view];
 	[destinationController didMoveToParentViewController:self];
 
-	[UIView animateWithDuration:durationAnimation
-						  delay:0
-						options:UIViewAnimationOptionCurveEaseOut
-					 animations:^{
-						 [destinationController.view setFrame:animatedFrame];
-						 
-						 if (pushedController) {
-							 [pushedController.view setFrame:animatedPushedFrame];
-						 }
-					 }
-					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-						 FXDLog(@"finished: %d", finished);
-						 
-						 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
-					 }];
+	[UIView
+	 animateWithDuration:durationAnimation
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 [destinationController.view setFrame:animatedFrame];
+		 
+		 if (pushedController) {
+			 [pushedController.view setFrame:animatedPushedFrame];
+		 }
+	 }
+	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 FXDLog(@"finished: %d", finished);
+		 
+		 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+	 }];
 }
 
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue {	FXDLog_DEFAULT;
@@ -267,17 +269,18 @@
 	FXDViewController *pushedController = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 	
-	if ([sourceController shouldCoverWhenSlidingIn] == NO && [self.childViewControllers count] > 1) {
+	if ([sourceController shouldCoverWhenSlidingIn] == NO
+		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
+		NSInteger sourceIndex = [self.childViewControllers indexOfObject:sourceController];
+		
 		for (FXDViewController *childController in self.childViewControllers) {
-			FXDLog(@"childController: %@ shouldStayCovered: %d", childController, [childController shouldStayCovered]);
+			FXDLog(@"childController: %@ shouldStayFixed: %d", childController, [childController shouldStayFixed]);
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
-			NSInteger sourceIndex = [self.childViewControllers indexOfObject:sourceController];
 			
-			if (childIndex < sourceIndex && [childController shouldStayCovered] == NO) {
-				
+			if (childIndex < sourceIndex && [childController shouldStayFixed] == NO) {		
 				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pushedController = childController;
 					animatedPushedFrame = pushedController.view.frame;
@@ -306,6 +309,8 @@
 	}
 	
 	
+	[sourceController willMoveToParentViewController:nil];
+	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0
@@ -320,9 +325,93 @@
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog(@"finished: %d pushedController: %@", finished, pushedController);
 		 
-		 [sourceController willMoveToParentViewController:nil];
 		 [sourceController.view removeFromSuperview];
 		 [sourceController removeFromParentViewController];
+	 }];
+}
+
+#pragma mark -
+- (void)slideOutAllLateAddedController {	FXDLog_DEFAULT;
+	//MARK: Assume direction is only vertical
+	
+	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
+	
+	if ([self.childViewControllers count] == 0
+		|| [self.childViewControllers lastObject] == self.frontController) {
+		return;
+	}
+	
+	
+	__block NSMutableArray *lateAddedControllerArray = [[NSMutableArray alloc] initWithCapacity:0];
+	
+	NSInteger frontIndex = [self.childViewControllers indexOfObject:self.frontController];
+	FXDLog(@"frontIndex: %d", frontIndex);
+	
+	for (FXDViewController *childController in self.childViewControllers) {
+		FXDLog(@"childController: %@ shouldStayFixed: %d", childController, [childController shouldStayFixed]);
+		
+		NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
+		
+		if (childIndex > frontIndex && [childController shouldStayFixed] == NO) {
+			[lateAddedControllerArray addObject:childController];
+		}
+	}
+	
+	FXDLog(@"lateAddedControllerArray: %@", lateAddedControllerArray);
+	
+	if ([lateAddedControllerArray count] == 0) {
+		lateAddedControllerArray = nil;
+		return;
+	}
+	
+	
+	CGFloat totalSlidingDistance = 0.0;
+	
+	for (FXDViewController *childController in lateAddedControllerArray) {
+		totalSlidingDistance += childController.view.frame.size.height;
+	}
+	
+	FXDLog(@"totalSlidingDistance: %f", totalSlidingDistance);
+	
+	
+	__block NSMutableArray *animatedFrameObjArray = [[NSMutableArray alloc] initWithCapacity:0];
+	
+	for (FXDViewController *childController in lateAddedControllerArray) {
+		CGRect animatedFrame = childController.view.frame;
+		animatedFrame.origin.y += totalSlidingDistance;
+		
+		[animatedFrameObjArray addObject:NSStringFromCGRect(animatedFrame)];
+		
+		[childController willMoveToParentViewController:nil];
+	}
+	
+	FXDLog(@"animatedFrameObjArray: %@", animatedFrameObjArray);
+	
+	
+	[UIView
+	 animateWithDuration:durationAnimation
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseInOut
+	 animations:^{
+		 
+		 for (FXDViewController *childController in lateAddedControllerArray) {
+			 NSInteger childIndex = [lateAddedControllerArray indexOfObject:childController];
+			 CGRect animatedFrame = CGRectFromString([animatedFrameObjArray objectAtIndex:childIndex]);
+			 
+			 [childController.view setFrame:animatedFrame];
+		 }
+		 
+	 } completion:^(BOOL finished) {
+		 for (FXDViewController *childController in lateAddedControllerArray) {
+			 [childController.view removeFromSuperview];
+			 [childController removeFromParentViewController];
+		 }
+		 
+		 lateAddedControllerArray = nil;
+		 animatedFrameObjArray = nil;
+		 
+		 FXDLog_DEFAULT;
+		 FXDLog(@"2.self.childViewControllers: %@", self.childViewControllers);
 	 }];
 }
 
@@ -404,7 +493,7 @@
 	return NO;
 }
 
-- (BOOL)shouldStayCovered {
+- (BOOL)shouldStayFixed {
 	return NO;
 }
 
