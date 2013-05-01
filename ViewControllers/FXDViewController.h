@@ -47,6 +47,7 @@
 
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;
 - (IBAction)popInterfaceWithAnimation:(id)sender;
-- (IBAction)dismissInterfaceWithAnimation:(id)sender;
+
+- (IBAction)dismissController:(id)sender;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  FXDsuperSlideController.h
+//  FXDsuperSlidingContainer.h
 //
 //
 //  Created by petershine on 10/18/12.
@@ -20,12 +20,15 @@
 @end
 
 
-@interface FXDsuperSlideController : FXDsuperContainer
+@interface FXDsuperSlidingContainer : FXDsuperContainer
 
 // Properties
+@property (assign, nonatomic) NSInteger minimumChildCount;
+
+@property (strong, nonatomic) FXDViewController *frontController;
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDViewController *frontController;
+@property (strong, nonatomic) IBOutlet UIToolbar *mainToolbar;	//TODO: find good way to remove this
 
 
 #pragma mark - Segues

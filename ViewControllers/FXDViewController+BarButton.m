@@ -50,7 +50,7 @@
 			// Do not show back button
 		}
 		else {
-			action = @selector(dismissInterfaceWithAnimation:);
+			action = @selector(dismissController:);
 		}
 	}
 
@@ -123,7 +123,7 @@
 		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroup];
 	}
 	else {
-		if (action == @selector(dismissInterfaceWithAnimation:)) {
+		if (action == @selector(dismissController:)) {
 			barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:target action:action];
 		}
 	}

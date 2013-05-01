@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 };
 
 
-// FXDsuperSlideController
+// FXDsuperSlidingContainer
 typedef CGPoint SLIDING_OFFSET;
 typedef CGPoint SLIDING_DIRECTION;
 

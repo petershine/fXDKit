@@ -362,7 +362,7 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)dismissInterfaceWithAnimation:(id)sender {
+- (IBAction)dismissController:(id)sender {	FXDLog_OVERRIDE;
 
 	if (self.navigationController) {
 		[self.navigationController dismissViewControllerAnimated:YES completion:nil];

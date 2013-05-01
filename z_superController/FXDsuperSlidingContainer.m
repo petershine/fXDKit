@@ -1,21 +1,20 @@
 //
-//  FXDsuperSlideController.m
+//  FXDsuperSlidingContainer.m
 //
 //
 //  Created by petershine on 10/18/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperSlideController.h"
+#import "FXDsuperSlidingContainer.h"
 
 @implementation FXDsegueEmbeddingFrontController
 - (void)perform {	FXDLog_DEFAULT;
 	[super perform];
 	
-	FXDsuperSlideController *slideController = (FXDsuperSlideController*)self.sourceViewController;
+	FXDsuperSlidingContainer *slidingContainer = (FXDsuperSlidingContainer*)self.sourceViewController;
 	
-	slideController.frontController = (FXDViewController*)self.destinationViewController;
-	FXDLog(@"slideController.frontController: %@", slideController.frontController);
+	slidingContainer.frontController = (FXDViewController*)self.destinationViewController;
 }
 
 @end
@@ -23,9 +22,9 @@
 
 @implementation FXDsegueSlidingIn
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController parentViewController];
+	FXDsuperSlidingContainer *slidingContainer = (FXDsuperSlidingContainer*)[self.sourceViewController parentViewController];
 
-	[slideController slideInWithSegue:self];
+	[slidingContainer slideInWithSegue:self];
 }
 
 @end
@@ -33,16 +32,16 @@
 
 @implementation FXDsegueSlidingOut
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlideController *slideController = (FXDsuperSlideController*)[self.sourceViewController parentViewController];
+	FXDsuperSlidingContainer *slidingContainer = (FXDsuperSlidingContainer*)[self.sourceViewController parentViewController];
 
-	[slideController slideOutWithSegue:self];
+	[slidingContainer slideOutWithSegue:self];
 }
 
 @end
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperSlideController
+@implementation FXDsuperSlidingContainer
 
 
 #pragma mark - Memory management
@@ -73,6 +72,9 @@
 
     // IBOutlets
 	[self performSegueWithIdentifier:seguenameFrontController sender:self];
+	
+	self.minimumChildCount = [self.childViewControllers count];
+	FXDLog(@"self.minimumChildCount: %d", self.minimumChildCount);
 }
 
 
@@ -151,13 +153,15 @@
 	FXDViewController *destinationController = (FXDViewController*)slidingInSegue.destinationViewController;
 	[self addChildViewController:destinationController];
 	
-	destinationController.navigationItem.hidesBackButton = YES;	//MARK: Back button may not work with slideController
 	
-	//MARK: Making toolbar push and pop much easier
 	FXDLog(@"destinationController.toolbarItems: %@", destinationController.toolbarItems);
 	
 	if (destinationController.toolbarItems == nil) {
 		[destinationController setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
+	}
+	
+	if (self.mainToolbar) {
+		[self.mainToolbar setItems:destinationController.toolbarItems animated:YES];
 	}
 
 	
@@ -166,6 +170,10 @@
 	
 	
 	CGRect animatedFrame = destinationController.view.frame;
+	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
+	//MARK: Make sure origin is properly set
+	animatedFrame.origin.y = 0.0;
+	FXDLog(@"2.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
 
 	CGRect modifiedFrame = destinationController.view.frame;
 	modifiedFrame.origin.x -= (modifiedFrame.size.width *slidingDirection.x);
@@ -176,7 +184,8 @@
 	FXDViewController *pushedController = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 		
-	if ([destinationController shouldCoverWhenSlidingIn] == NO && [self.childViewControllers count] > 1) {
+	if ([destinationController shouldCoverWhenSlidingIn] == NO
+		&& [self.childViewControllers count] > 1) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
 		for (FXDViewController *childController in self.childViewControllers) {
@@ -226,14 +235,14 @@
 					 }];
 }
 
-- (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOurSegue {	FXDLog_DEFAULT;
+- (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue {	FXDLog_DEFAULT;
 	
-	if ([self canAnimateWithTransitionSegue:slidingOurSegue] == NO) {
+	if ([self canAnimateWithTransitionSegue:slidingOutSegue] == NO) {
 		return;
 	}
 
 
-	FXDViewController *sourceController = (FXDViewController*)slidingOurSegue.sourceViewController;
+	FXDViewController *sourceController = (FXDViewController*)slidingOutSegue.sourceViewController;
 	
 	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:sourceController.slideDirectionType];
 	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:sourceController.slideDirectionType];
@@ -288,24 +297,33 @@
 	
 	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
 	
-	[sourceController willMoveToParentViewController:nil];
+	if (pushedController) {
+		[self.mainToolbar setItems:pushedController.toolbarItems animated:YES];
+	}
+	else {
+		FXDViewController *destinationController = (FXDViewController*)slidingOutSegue.destinationViewController;
+		[self.mainToolbar setItems:destinationController.toolbarItems animated:YES];
+	}
 	
-	[UIView animateWithDuration:durationAnimation
-						  delay:0
-						options:UIViewAnimationOptionCurveEaseOut
-					 animations:^{
-						 [sourceController.view setFrame:animatedFrame];
-						 
-						 if (pushedController) {
-							 [pushedController.view setFrame:animatedPushedFrame];
-						 }
-					 }
-					 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-						 FXDLog(@"finished: %d sourceController: %@", finished, sourceController);
 	
-						 [sourceController.view removeFromSuperview];
-						 [sourceController removeFromParentViewController];
-					 }];
+	[UIView
+	 animateWithDuration:durationAnimation
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 [sourceController.view setFrame:animatedFrame];
+		 
+		 if (pushedController) {
+			 [pushedController.view setFrame:animatedPushedFrame];
+		 }
+	 }
+	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 FXDLog(@"finished: %d pushedController: %@", finished, pushedController);
+		 
+		 [sourceController willMoveToParentViewController:nil];
+		 [sourceController.view removeFromSuperview];
+		 [sourceController removeFromParentViewController];
+	 }];
 }
 
 #pragma mark -
