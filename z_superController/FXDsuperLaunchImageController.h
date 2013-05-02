@@ -3,7 +3,7 @@
 //
 //
 //  Created by petershine on 12/17/12.
-//  Copyright (c) 2012 petershine. All rights reserved.
+//  Copyright (c) 2012 fXceed All rights reserved.
 //
 
 #ifndef imageDefaulLaunch

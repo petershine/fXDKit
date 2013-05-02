@@ -3,7 +3,7 @@
 //
 //
 //  Created by petershine on 12/28/12.
-//  Copyright (c) 2012 petershine. All rights reserved.
+//  Copyright (c) 2012 fXceed All rights reserved.
 //
 
 #define NSIndexPathString(section, row)	[[NSIndexPath indexPathForRow:row inSection:section] stringValue]

@@ -3,7 +3,7 @@
 //
 //
 //  Created by petershine on 1/8/13.
-//  Copyright (c) 2013 petershine. All rights reserved.
+//  Copyright (c) 2013 fXceed All rights reserved.
 //
 
 #import "FXDsuperGlobalManager.h"
