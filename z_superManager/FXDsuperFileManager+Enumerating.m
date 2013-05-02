@@ -3,7 +3,7 @@
 ///
 //
 //  Created by petershine on 8/12/12.
-//  Copyright (c) 2012 Ensight. All rights reserved.
+//  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
 #import "FXDsuperFileManager.h"

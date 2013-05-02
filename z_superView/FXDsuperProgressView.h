@@ -1,9 +1,9 @@
 //
-//  FXDviewProgress.h
+//  FXDsuperProgressView.h
 //
 //
 //  Created by petershine on 1/9/12.
-//  Copyright (c) 2012 Ensight. All rights reserved.
+//  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
 #ifndef nibnameCustomProgressView
@@ -11,7 +11,7 @@
 #endif
 
 
-@interface FXDviewProgress : FXDView
+@interface FXDsuperProgressView : FXDView
 
 // Properties
 @property (assign, nonatomic) BOOL didPressCancelButton;
@@ -36,13 +36,11 @@
 #pragma mark - IBActions
 - (IBAction)pressedCancelButton:(id)sender;
 
-
 #pragma mark - Public
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end

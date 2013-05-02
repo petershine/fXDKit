@@ -3,7 +3,7 @@
 //
 //
 //  Created by petershine on 12/28/11.
-//  Copyright (c) 2011 Ensight. All rights reserved.
+//  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
 //MARK: Make sure following frameworks are imported

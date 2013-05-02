@@ -3,7 +3,7 @@
 //
 //
 //  Created by Peter SHINe on 6/3/12.
-//  Copyright (c) 2012 Ensight. All rights reserved.
+//  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
 #import "FXDsuperCoreDataManager.h"

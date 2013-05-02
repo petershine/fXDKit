@@ -36,19 +36,15 @@
 
     // Properties
 
-    // IBOutlets
-	
+    // IBOutlets	
 }
 
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -56,7 +52,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 
@@ -116,6 +111,21 @@
 						 [fadedImageview removeFromSuperview];
 						 fadedImageview = nil;
 					 }];
+}
+
+@end
+
+
+@implementation FXDimageviewTemp
+
+#pragma mark - Initialization
+- (void)awakeFromNib {
+    [super awakeFromNib];
+		
+#if USE_tempImageview
+#else
+	self.image = nil;
+#endif
 }
 
 @end

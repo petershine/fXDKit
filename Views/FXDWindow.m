@@ -172,7 +172,7 @@
 	FXDLog(@"nibName: %@", nibName);
 
 	if (applicationWindow.progressView == nil) {
-		applicationWindow.progressView = [FXDviewProgress viewFromNibName:nibName];
+		applicationWindow.progressView = [FXDsuperProgressView viewFromNibName:nibName];
 
 		CGRect modifiedFrame = applicationWindow.progressView.frame;
 		modifiedFrame.size = applicationWindow.frame.size;

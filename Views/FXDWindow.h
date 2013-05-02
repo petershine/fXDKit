@@ -12,7 +12,7 @@
 #define notificationApplicationWindowShouldFadeOutProgressView	@"notificationApplicationWindowShouldFadeOutProgressView"
 
 
-#import "FXDviewProgress.h"
+#import "FXDsuperProgressView.h"
 
 @class FXDsuperLaunchImageController;
 
@@ -22,7 +22,7 @@
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDviewProgress *progressView;
+@property (strong, nonatomic) IBOutlet FXDsuperProgressView *progressView;
 
 
 #pragma mark - IBActions

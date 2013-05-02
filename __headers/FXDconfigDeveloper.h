@@ -2,7 +2,7 @@
 //  FXDconfigDeveloper.h
 //
 //  Created by petershine on 10/4/11.
-//  Copyright 2011 Ensight. All rights reserved.
+//  Copyright 2011 fXceed. All rights reserved.
 //
 
 #if DEBUG
@@ -16,6 +16,8 @@
 
 		#define TEST_appirater	1
 
+		#define USE_tempImageview	1
+
 	#else
 
 	#endif
@@ -25,6 +27,9 @@
 
 #else
 	#define USE_FXDLog	0
+
+	#define USE_tempImageview	0
+
 #endif
 
 
