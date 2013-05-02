@@ -31,8 +31,8 @@
 	NSMutableDictionary *keysWithValues = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
 	for (NSInteger i = 0; i < [keys count]; i++) {
-		NSString *key = [keys objectAtIndex:i];
-		NSString *value = [values objectAtIndex:i];
+		NSString *key = keys[i];
+		NSString *value = values[i];
 		
 		[keysWithValues setValue:value forKey:key];
 	}

@@ -254,6 +254,7 @@
 	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
 	
 	
+#warning "//TODO: assume only vertical direction is supported"
 	CGFloat slidingOutDistance = [[sourceController distanceNumberForSlidingOut] floatValue];
 	FXDLog(@"1.slidingOutDistance: %f", slidingOutDistance);
 	
@@ -266,8 +267,8 @@
 	FXDLog(@"2.CALCULATED distance: %f - %f = %f", sourceController.view.frame.origin.y, animatedFrame.origin.y, (sourceController.view.frame.origin.y -animatedFrame.origin.y));
 	
 	
-	FXDViewController *pushedController = nil;
-	CGRect animatedPushedFrame = CGRectZero;
+	FXDViewController *pulledController = nil;
+	CGRect animatedPulledFrame = CGRectZero;
 	
 	if ([sourceController shouldCoverWhenSlidingIn] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
@@ -282,10 +283,10 @@
 			
 			if (childIndex < sourceIndex && [childController shouldStayFixed] == NO) {		
 				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
-					pushedController = childController;
-					animatedPushedFrame = pushedController.view.frame;
-					animatedPushedFrame.origin.x -= slidingOffset.x;
-					animatedPushedFrame.origin.y -= slidingOffset.y;
+					pulledController = childController;
+					animatedPulledFrame = pulledController.view.frame;
+					animatedPulledFrame.origin.x -= slidingOffset.x;
+					animatedPulledFrame.origin.y -= slidingOffset.y;
 				}
 				else {
 					CGRect modifiedPushedFrame = childController.view.frame;
@@ -298,10 +299,10 @@
 		}
 	}
 	
-	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
+	FXDLog(@"pulledController: %@ animatedPulledFrame: %@", pulledController, NSStringFromCGRect(animatedPulledFrame));
 	
-	if (pushedController) {
-		[self.mainToolbar setItems:pushedController.toolbarItems animated:YES];
+	if (pulledController) {
+		[self.mainToolbar setItems:pulledController.toolbarItems animated:YES];
 	}
 	else {
 		FXDViewController *destinationController = (FXDViewController*)slidingOutSegue.destinationViewController;
@@ -318,12 +319,12 @@
 	 animations:^{
 		 [sourceController.view setFrame:animatedFrame];
 		 
-		 if (pushedController) {
-			 [pushedController.view setFrame:animatedPushedFrame];
+		 if (pulledController) {
+			 [pulledController.view setFrame:animatedPulledFrame];
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-		 FXDLog(@"finished: %d pushedController: %@", finished, pushedController);
+		 FXDLog(@"finished: %d pulledController: %@", finished, pulledController);
 		 
 		 [sourceController.view removeFromSuperview];
 		 [sourceController removeFromParentViewController];
@@ -388,7 +389,7 @@
 	FXDLog(@"animatedFrameObjArray: %@", animatedFrameObjArray);
 	
 	
-	FXDViewController *rootController = [self.childViewControllers objectAtIndex:0];
+	FXDViewController *rootController = self.childViewControllers[0];
 	[self.mainToolbar setItems:rootController.toolbarItems animated:YES];
 	
 	[UIView
@@ -399,7 +400,7 @@
 		 
 		 for (FXDViewController *childController in lateAddedControllerArray) {
 			 NSInteger childIndex = [lateAddedControllerArray indexOfObject:childController];
-			 CGRect animatedFrame = CGRectFromString([animatedFrameObjArray objectAtIndex:childIndex]);
+			 CGRect animatedFrame = CGRectFromString(animatedFrameObjArray[childIndex]);
 			 
 			 [childController.view setFrame:animatedFrame];
 		 }
@@ -487,7 +488,7 @@
 @implementation FXDViewController (Sliding)
 
 #pragma mark - Public
-- (SLIDE_DIRECTION_TYPE)slideDirectionType {	FXDLog_OVERRIDE;
+- (SLIDE_DIRECTION_TYPE)slideDirectionType {
 	return slideDirectionTop;
 }
 
@@ -501,7 +502,7 @@
 }
 
 #pragma mark -
-- (NSNumber*)distanceNumberForSlidingOut {	FXDLog_OVERRIDE;
+- (NSNumber*)distanceNumberForSlidingOut {
 	return nil;
 }
 

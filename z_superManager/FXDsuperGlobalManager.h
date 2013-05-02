@@ -43,14 +43,10 @@
 #warning "//TODO: refactor following method to be organized into categories or subclasses"
 
 + (NSString*)deviceModelName;
-
 + (NSString*)deviceCountryCode;
-
 + (NSString*)deviceLanguageCode;
 
-
 + (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title;
-
 + (void)printoutListOfFonts;
 
 

@@ -12,16 +12,14 @@
 #pragma mark - Public implementation
 @implementation FXDsuperGlobalManager
 
-
 #pragma mark - Memory management
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	// Instance variables
-
+	
 	FXDLog_SEPARATE;
 }
-
 
 #pragma mark - Initialization
 + (FXDsuperGlobalManager*)sharedInstance {
@@ -79,6 +77,7 @@
 	return _mainStoryboard;
 }
 
+#pragma mark -
 - (NSString*)deviceLanguageCode {
 
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
@@ -123,71 +122,61 @@
 }
 
 - (id)homeController {
-	if (_homeController == nil) {	FXDLog_DEFAULT;
+	if (_homeController) {
+		return _homeController;
+	}
+	
+	
+	FXDLog_DEFAULT;
+	
+	NSArray *addedControllers = nil;
+	
+	if ([self.rootController respondsToSelector:@selector(viewControllers)]) {
+		addedControllers = [self.rootController performSelector:@selector(viewControllers)];
+	}
+	else if ([self.rootController respondsToSelector:@selector(childViewControllers)]) {
+		addedControllers = [self.rootController performSelector:@selector(childViewControllers)];
+	}
+	
+	FXDLog(@"addedControllers count: %d", [addedControllers count]);
+	
+	if ([addedControllers count] == 0) {
+		_homeController = self.rootController;
+		FXDLog(@"_homeController = self.rootController: %@", _homeController);
 		
-		SEL respondingSelector = nil;
+		return _homeController;
+	}
+	
+	
+	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
+		_homeController = addedControllers[0];
+		FXDLog(@"_homeController = addedControllers[0]: %@", _homeController);
 		
-		if ([self.rootController respondsToSelector:@selector(viewControllers)]) {
-			respondingSelector = @selector(viewControllers);
-		}
-		else if ([self.rootController respondsToSelector:@selector(childViewControllers)]) {
-			respondingSelector = @selector(childViewControllers);
-		}
+		return _homeController;
+	}
+	
+	
+	id subContainerController = addedControllers[0];
+	
+	if ([subContainerController isKindOfClass:[UINavigationController class]]) {
+		UINavigationController *navigationController = (UINavigationController*)subContainerController;
 		
-		FXDLog(@"respondingSelector: %@", NSStringFromSelector(respondingSelector));
-		
-
-		if (respondingSelector == nil) {
-			_homeController = self.rootController;
+		if ([navigationController.viewControllers count] > 0) {
+			_homeController = (navigationController.viewControllers)[0];
 			
-			FXDLog(@"_homeController = self.rootController: %@", _homeController);
-			
-			return _homeController;
-		}
-
-
-		NSArray *viewControllers = [self.rootController performSelector:respondingSelector];
-
-		if ([viewControllers count] == 0) {
-			FXDLog(@"([viewControllers count] == 0) _homeController: %@", _homeController);
-			
-			return _homeController;
-		}
-
-
-		if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
-			_homeController = viewControllers[0];
-			
-			FXDLog(@"_homeController = viewControllers[0]: %@", _homeController);
-
-			return _homeController;
-		}
-
-
-		id subContainerController = viewControllers[0];
-
-		if ([subContainerController isKindOfClass:[UINavigationController class]]) {
-			UINavigationController *containedNavigationController = (UINavigationController*)subContainerController;
-
-			if ([containedNavigationController.viewControllers count] > 0) {
-				_homeController = (containedNavigationController.viewControllers)[0];
-				
-				FXDLog(@"_homeController = (containedNavigationController.viewControllers)[0]: %@", _homeController);
-			}
-		}
-		else {
-			_homeController = subContainerController;
-			
-			FXDLog(@"_homeController = subContainerController: %@", _homeController);
+			FXDLog(@"_homeController = (containedNavigationController.viewControllers)[0]: %@", _homeController);
 		}
 	}
-
+	else {
+		_homeController = subContainerController;
+		
+		FXDLog(@"_homeController = subContainerController: %@", _homeController);
+	}
+	
 	return _homeController;
 }
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	//FXDLog_OVERRIDE;
