@@ -101,6 +101,7 @@
 #import "FXDViewController.h"
 #import "FXDNavigationController.h"
 #import "FXDPopoverController.h"
+#import "FXDPageViewController.h"
 
 
 // Global control

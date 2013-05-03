@@ -35,3 +35,6 @@
 
 
 #define marginDefault	8.0
+
+
+#define limitConcurrentOperationCount	1

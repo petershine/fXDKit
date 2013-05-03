@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#define limitConcurrentOperationCount	1
-
 #define scaleControllerDismissingOffset	0.265
 
 

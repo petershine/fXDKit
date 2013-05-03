@@ -34,7 +34,6 @@
 #if ForDEVELOPER
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValueDefault];
 #endif
-
 		// Primitives
 
 		// Instance variables

@@ -82,12 +82,9 @@
 
 #pragma mark - Method overriding
 
-
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -106,6 +103,10 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 	
 	NSInteger numberOfItems = [self numberOfItemsForScrollView:collectionView atSection:section];
+	
+	if (numberOfItems == 0) {	FXDLog_OVERRIDE;
+		FXDLog(@"numberOfItems: %d", numberOfItems);
+	}
 	
 	return numberOfItems;
 }

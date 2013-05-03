@@ -83,28 +83,34 @@
 }
 
 #pragma mark -
-- (void)prepareSavedPhotosAssetsGroupWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
+- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withDidFinishBlock:(void(^)(NSMutableArray* groupsArray))didFinishBlock {	FXDLog_DEFAULT;
 	
 	if (self.mainAssetsLibrary == nil) {
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(nil);
 		}
 		
 		return;
 	}
 	
 	
+	__block NSMutableArray *collectedGroupsArray = nil;
+	
 	[self.mainAssetsLibrary
-	 enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
-	 usingBlock:^(ALAssetsGroup *savedPhotoAssetsGroup, BOOL *stop) {
-		 FXDLog(@"*stop: %d savedPhotoAssetsGroup: %@", *stop, savedPhotoAssetsGroup);
+	 enumerateGroupsWithTypes:types
+	 usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+		 FXDLog(@"*stop: %d group: %@", *stop, group);
 		 
-		 if (savedPhotoAssetsGroup) {
-			 self.assetsgroupSavedPhotos = savedPhotoAssetsGroup;
+		 if (group) {
+			 if (collectedGroupsArray == nil) {
+				 collectedGroupsArray = [[NSMutableArray alloc] initWithCapacity:0];
+			 }
+			 
+			 [collectedGroupsArray addObject:group];
 		 }
 		 else {
 			 if (didFinishBlock) {
-				 didFinishBlock(YES);
+				 didFinishBlock(collectedGroupsArray);
 			 }
 		 }
 	 }
@@ -128,34 +134,25 @@
 		  */
 		 
 		 if (didFinishBlock) {
-			 didFinishBlock(NO);
+			 didFinishBlock(collectedGroupsArray);
 		 }
 	 }];
 }
 
-- (void)assetsArrayForSavedPhotosWithDidFinishBlock:(void(^)(NSMutableArray *assetsArray))didFinishBlock {	FXDLog_DEFAULT;
-	
-	if (self.assetsgroupSavedPhotos == nil) {
-		if (didFinishBlock) {
-			didFinishBlock(nil);
-		}
-		
-		return;
-	}
-	
+- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withDidFinishBlock:(void(^)(NSMutableArray *assetsArray))didFinishBlock {	FXDLog_DEFAULT;
 	
 	__block NSMutableArray *collectedAssetsArray = nil;
 	
-	[self.assetsgroupSavedPhotos
-	 enumerateAssetsUsingBlock:^(ALAsset *savedPhotoAsset, NSUInteger index, BOOL *stop) {
-		 //FXDLog(@"*stop: %d index: %d savedPhotoAsset: %@", *stop, index, savedPhotoAsset);
+	[group
+	 enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop) {
+		 FXDLog(@"*stop: %d index: %d group: %@", *stop, index, asset);
 		 
-		 if (savedPhotoAsset) {
+		 if (asset) {
 			 if (collectedAssetsArray == nil) {
 				 collectedAssetsArray = [[NSMutableArray alloc] initWithCapacity:0];
 			 }
 			 
-			 [collectedAssetsArray addObject:savedPhotoAsset];
+			 [collectedAssetsArray addObject:asset];
 		 }
 		 else {
 			 if (didFinishBlock) {

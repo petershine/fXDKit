@@ -19,9 +19,7 @@
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 

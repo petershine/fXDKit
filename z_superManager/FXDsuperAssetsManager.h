@@ -18,7 +18,6 @@
 
 // Properties
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
-@property (strong, nonatomic) ALAssetsGroup *assetsgroupSavedPhotos;
 
 
 #pragma mark - Initialization
@@ -28,8 +27,8 @@
 #pragma mark - Public
 - (void)startObservingAssetsLibraryNotifications;
 
-- (void)prepareSavedPhotosAssetsGroupWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock;
-- (void)assetsArrayForSavedPhotosWithDidFinishBlock:(void(^)(NSMutableArray *assetsArray))didFinishBlock;
+- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withDidFinishBlock:(void(^)(NSMutableArray* groupsArray))didFinishBlock;
+- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withDidFinishBlock:(void(^)(NSMutableArray *assetsArray))didFinishBlock;
 
 
 //MARK: - Observer implementation
