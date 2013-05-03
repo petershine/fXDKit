@@ -28,17 +28,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_DEFAULT;
-	self = [super initWithCoder:aDecoder];
-
-	if (self) {
-		//MARK: awakeFromNib is called automatically
-	}
-
-	return self;
-}
-
-- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_SEPARATE;
+- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_DEFAULT;
 	self  = [super initWithRootViewController:rootViewController];
 
 	if (self) {

@@ -26,16 +26,6 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_DEFAULT;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		//MARK: awakeFromNib is called automatically
-	}
-	
-	return self;
-}
-
 - (id)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation options:(NSDictionary *)options {	FXDLog_DEFAULT;
 	
 	self = [super initWithTransitionStyle:style navigationOrientation:navigationOrientation options:options];
@@ -48,7 +38,7 @@
 }
 
 #pragma mark -
-- (void)awakeFromNib {
+- (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
 	// Primitives
@@ -58,7 +48,7 @@
     // Properties
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
 	
     // IBOutlet

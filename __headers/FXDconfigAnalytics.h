@@ -30,7 +30,7 @@
 
 
 #if	USE_TestFlight
-	//import "libz.dylib"
+	//TODO: import "libz.dylib"
 
 	#import "TestFlight.h"
 

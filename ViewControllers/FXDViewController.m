@@ -37,7 +37,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	FXDLog_DEFAULT;
+- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
 	self = [super initWithCoder:aDecoder];
 
 	if (self) {
