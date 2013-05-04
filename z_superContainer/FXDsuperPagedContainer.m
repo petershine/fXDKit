@@ -1,16 +1,39 @@
 //
-//  FXDsuperPageContainer.m
+//  FXDsuperPagedContainer.m
 //  PhotoAlbum
 //
 //  Created by petershine on 5/3/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#import "FXDsuperPageContainer.h"
+#import "FXDsuperPagedContainer.h"
+
+
+@implementation FXDseguePageAdding
+- (void)perform {
+	FXDsuperPagedContainer *pagedContainer = (FXDsuperPagedContainer*)self.sourceViewController;
+	
+	if ([pagedContainer isKindOfClass:[FXDsuperPagedContainer class]] == NO) {
+		pagedContainer = (FXDsuperPagedContainer*)[self.sourceViewController parentViewController];
+	}
+}
+
+@end
+
+@implementation FXDseguePageRemoving
+- (void)perform {
+	FXDsuperPagedContainer *pagedContainer = (FXDsuperPagedContainer*)self.sourceViewController;
+	
+	if ([pagedContainer isKindOfClass:[FXDsuperPagedContainer class]] == NO) {
+		pagedContainer = (FXDsuperPagedContainer*)[self.sourceViewController parentViewController];
+	}
+}
+
+@end
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperPageContainer
+@implementation FXDsuperPagedContainer
 
 
 #pragma mark - Memory management
@@ -102,7 +125,6 @@
 	FXDLog(@"AfterViewController: %@", viewController);
 	
 	return nil;
-	
 }
 
 #pragma mark - UIPageViewControllerDelegate

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define seguenameEmbeddingRoot	@"EmbeddingRoot"
+#define seguenameEmbeddingRoot		@"EmbeddingRoot"
 #define seguenameFrontController	@"FrontController"
 
 

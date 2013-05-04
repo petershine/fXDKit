@@ -116,6 +116,25 @@
 	return shouldUseNavigationPush;
 }
 
+- (id)mainContainerOfClass:(Class)class {
+	
+	id mainContainer = self.sourceViewController;
+	
+	if ([mainContainer isKindOfClass:class]) {
+		return mainContainer;
+	}
+	
+	
+	mainContainer = [(UIViewController*)mainContainer parentViewController];
+	
+	if ([mainContainer isKindOfClass:class]) {
+		return mainContainer;
+	}
+
+	
+	return nil;
+}
+
 @end
 
 

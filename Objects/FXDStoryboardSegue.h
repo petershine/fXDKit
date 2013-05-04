@@ -28,6 +28,8 @@
 
 - (BOOL)shouldUseNavigationPush;
 
+- (id)mainContainerOfClass:(Class)class;
+
 @end
 
 
