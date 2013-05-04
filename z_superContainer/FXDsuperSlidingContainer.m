@@ -12,7 +12,7 @@
 - (void)perform {	FXDLog_DEFAULT;
 	[super perform];
 	
-	FXDsuperSlidingContainer *slidingContainer = (FXDsuperSlidingContainer*)self.sourceViewController;
+	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
 	
 	slidingContainer.frontController = (FXDViewController*)self.destinationViewController;
 }
@@ -22,7 +22,7 @@
 
 @implementation FXDsegueSlidingIn
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlidingContainer *slidingContainer = (FXDsuperSlidingContainer*)[self.sourceViewController parentViewController];
+	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
 
 	[slidingContainer slideInWithSegue:self];
 }
@@ -32,7 +32,7 @@
 
 @implementation FXDsegueSlidingOut
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlidingContainer *slidingContainer = (FXDsuperSlidingContainer*)[self.sourceViewController parentViewController];
+	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
 
 	[slidingContainer slideOutWithSegue:self];
 }

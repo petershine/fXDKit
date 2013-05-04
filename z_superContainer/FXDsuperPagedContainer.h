@@ -1,24 +1,34 @@
 //
-//  FXDsuperPageContainer.h
+//  FXDsuperPagedContainer.h
 //  PhotoAlbum
 //
 //  Created by petershine on 5/3/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
+#define limitCachedPageCount	5
+
+
 #import "FXDPageViewController.h"
+
+
+@interface FXDseguePageAdding : FXDsuperTransitionSegue
+@end
+
+@interface FXDseguePageRemoving : FXDsuperTransitionSegue
+@end
 
 
 #import "FXDsuperContainer.h"
 
-@interface FXDsuperPageContainer : FXDsuperContainer <NSCacheDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
+@interface FXDsuperPagedContainer : FXDsuperContainer <NSCacheDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
 	
 	// Instance variables
 	NSMutableArray *_mainDataSource;
 	NSCache *_cachedPagesDictionary;
 	
-	NSOperationQueue *_pagingOperationQueue;
-	NSMutableDictionary *_pagingOperationDictionary;
+	NSOperationQueue *_pagedOperationQueue;
+	NSMutableDictionary *_pagedOperationDictionary;
 
 	
 	FXDPageViewController *_mainPageController;
@@ -28,8 +38,8 @@
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 @property (strong, nonatomic) NSCache *cachedPagesDictionary;
 
-@property (strong, nonatomic) NSOperationQueue *pagingOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *pagingOperationDictionary;
+@property (strong, nonatomic) NSOperationQueue *pagedOperationQueue;
+@property (strong, nonatomic) NSMutableDictionary *pagedOperationDictionary;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDPageViewController *mainPageController;
