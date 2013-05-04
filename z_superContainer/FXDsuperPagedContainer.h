@@ -1,27 +1,18 @@
 //
 //  FXDsuperPagedContainer.h
-//  PhotoAlbum
+//
 //
 //  Created by petershine on 5/3/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#define limitVisiblePageCount	5
-
-
 #import "FXDPageViewController.h"
-
-
-@interface FXDseguePageAdding : FXDsuperTransitionSegue
-@end
-
-@interface FXDseguePageRemoving : FXDsuperTransitionSegue
-@end
 
 
 #import "FXDsuperContainer.h"
 
 @interface FXDsuperPagedContainer : FXDsuperContainer <UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
+	// Primitive
 	
 	// Instance variables
 	NSMutableArray *_mainDataSource;
@@ -29,7 +20,6 @@
 	NSOperationQueue *_pagedOperationQueue;
 	NSMutableDictionary *_pagedOperationDictionary;
 
-	
 	FXDPageViewController *_mainPageController;
 }
 
@@ -48,10 +38,20 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (id)pageForPageIndex:(NSInteger)pageIndex;
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
+
+@end
+
+
+#pragma mark - Category
+@interface FXDViewController (Paged)
+
+#pragma mark - Public
+- (NSInteger)pageIndexUsingDataSource:(NSMutableArray*)dataSource;
 
 @end

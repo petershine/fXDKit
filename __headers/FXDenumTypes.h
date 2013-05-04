@@ -16,6 +16,15 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 };
 
 
+// FXDTableViewCell
+typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
+	sectionPositionOne,
+	sectionPositionTop,
+	sectionPositionMiddle,
+	sectionPositionBottom
+};
+
+
 // FXDsuperSlidingContainer
 typedef CGPoint SLIDING_OFFSET;
 typedef CGPoint SLIDING_DIRECTION;
@@ -28,10 +37,8 @@ typedef NS_ENUM(NSInteger, SLIDE_DIRECTION_TYPE) {
 };
 
 
-// FXDTableViewCell
-typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
-	sectionPositionOne,
-	sectionPositionTop,
-	sectionPositionMiddle,
-	sectionPositionBottom
+// FXDsuperAssetController
+typedef NS_ENUM(NSInteger, ITEM_VIEWER_TYPE) {
+	itemViewerPhoto,
+	itemViewerVideo,
 };

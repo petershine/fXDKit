@@ -205,6 +205,7 @@
 
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
+	
 	if (parent == nil) {
 		//MARK: If EXC_BAD_ACCESS occurs, keep this commented out
 		/*
