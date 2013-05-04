@@ -206,10 +206,18 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	if (parent == nil) {
-		if ([self.mainScrollView respondsToSelector:@selector(delegate)]) {
-			FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
-			
-			[self.mainScrollView setDelegate:nil];
+		//MARK: If EXC_BAD_ACCESS occurs, keep this commented out
+		/*
+		FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
+		FXDLog(@"mainScrollView dataSource: %@", [self.mainScrollView performSelector:@selector(dataSource)]);
+		 */
+		
+		if ([self.mainScrollView respondsToSelector:@selector(setDelegate:)]) {
+			[self.mainScrollView performSelector:@selector(setDelegate:) withObject:nil];
+		}
+		
+		if ([self.mainScrollView respondsToSelector:@selector(setDataSource:)]) {
+			[self.mainScrollView performSelector:@selector(setDataSource:) withObject:nil];
 		}
 	}
 	

@@ -95,5 +95,5 @@
 
 
 #pragma mark - Category
-@implementation UIPageViewController
+@implementation UIPageViewController (Added)
 @end
