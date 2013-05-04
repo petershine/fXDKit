@@ -63,22 +63,28 @@
 
 #pragma mark - Category
 @implementation MKAnnotationView (Added)
-- (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage {
+- (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage shouldChangeOffset:(BOOL)shouldChangeOffset {
+	
+	//MARK: Need to use self, since this is an added category
 	self = [self initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
+		[self awakeFromNib];
+		
+		
 #ifdef image_MapViewDefaultPin
 		if (defaultImage == nil) {
 			defaultImage = image_MapViewDefaultPin;
 		}
 #endif
-		[self awakeFromNib];
 		
 		self.image = defaultImage;
 		
-		CGPoint modifiedOffset = self.centerOffset;
-		modifiedOffset.y -= (defaultImage.size.height/2.0);
-		[self setCenterOffset:modifiedOffset];
+		if (defaultImage && shouldChangeOffset) {
+			CGPoint modifiedOffset = self.centerOffset;
+			modifiedOffset.y -= (defaultImage.size.height/2.0);
+			[self setCenterOffset:modifiedOffset];
+		}
 	}
 	
 	return self;

@@ -10,14 +10,13 @@
 @interface FXDMapView : MKMapView
 
 // Properties
-@property (assign, nonatomic) CGRect initialDisclaimerViewFrame;
-@property (assign, nonatomic) CGPoint disclaimerViewOffset;
+@property (assign, nonatomic) CGRect initialDisclaimerFrame;
+@property (assign, nonatomic) CGPoint disclaimerOffset;
 
 // IBOutlets
 
 
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -25,7 +24,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

@@ -18,15 +18,6 @@
 	[super didReceiveMemoryWarning];
 
 	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
-
-	//MARK: Not necessary for iOS 6: find the right way to nullify unusable view for memory management
-	/*
-	if (self.view.superview == nil) {
-		self.view = nil;
-	}
-	 */
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)dealloc {	
@@ -37,16 +28,6 @@
 
 
 #pragma mark - Initialization
-- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
-	self = [super initWithCoder:aDecoder];
-
-	if (self) {
-		//MARK: awakeFromNib is called automatically
-	}
-
-	return self;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
 
 	if (nibNameOrNil == nil) {
@@ -69,6 +50,16 @@
     }
 
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
+	self = [super initWithCoder:aDecoder];
+	
+	if (self) {
+		//MARK: awakeFromNib is called automatically
+	}
+	
+	return self;
 }
 
 #pragma mark -
@@ -157,17 +148,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidAppear:animated];
-	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewWillDisappear:animated];
-	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidDisappear:animated];
-	
 }
 
 #pragma mark -
@@ -232,7 +220,6 @@
 
 
 #pragma mark - Method overriding
-
 
 #pragma mark - Segues
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
@@ -345,7 +332,6 @@
 #pragma mark - IBActions
 - (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
 	FXDLog(@"unwindSegue: %@", unwindSegue);
-
 }
 
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender {

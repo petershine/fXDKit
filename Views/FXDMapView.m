@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -31,8 +30,8 @@
 	[super awakeFromNib];
 
 	// Primitives
-	self.initialDisclaimerViewFrame = [[self disclaimerView] frame];
-	self.disclaimerViewOffset = CGPointZero;
+	self.initialDisclaimerFrame = [[self disclaimerView] frame];
+	self.disclaimerOffset = CGPointZero;
 
     // Instance variables
 
@@ -44,7 +43,6 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 - (void)layoutSubviews {
 	[super layoutSubviews];
@@ -53,8 +51,8 @@
 	
 	if (disclaimerView) {
 		CGRect modifiedFrame = [disclaimerView frame];
-		modifiedFrame.origin.x = self.initialDisclaimerViewFrame.origin.x +self.disclaimerViewOffset.x;
-		modifiedFrame.origin.y = (self.frame.size.height -self.initialDisclaimerViewFrame.size.height) +self.disclaimerViewOffset.y;
+		modifiedFrame.origin.x = self.initialDisclaimerFrame.origin.x +self.disclaimerOffset.x;
+		modifiedFrame.origin.y = (self.frame.size.height -self.initialDisclaimerFrame.size.height) +self.disclaimerOffset.y;
 		
 		[disclaimerView setFrame:modifiedFrame];
 	}
@@ -63,14 +61,12 @@
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 
