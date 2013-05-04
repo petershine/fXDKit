@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#define limitCachedPageCount	5
+#define limitVisiblePageCount	5
 
 
 #import "FXDPageViewController.h"
@@ -21,11 +21,10 @@
 
 #import "FXDsuperContainer.h"
 
-@interface FXDsuperPagedContainer : FXDsuperContainer <NSCacheDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
+@interface FXDsuperPagedContainer : FXDsuperContainer <UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
 	
 	// Instance variables
 	NSMutableArray *_mainDataSource;
-	NSCache *_cachedPagesDictionary;
 	
 	NSOperationQueue *_pagedOperationQueue;
 	NSMutableDictionary *_pagedOperationDictionary;
@@ -36,7 +35,6 @@
 
 // Properties
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
-@property (strong, nonatomic) NSCache *cachedPagesDictionary;
 
 @property (strong, nonatomic) NSOperationQueue *pagedOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *pagedOperationDictionary;

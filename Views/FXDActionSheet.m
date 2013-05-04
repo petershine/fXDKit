@@ -59,12 +59,9 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -77,8 +74,8 @@
 	 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @implementation UIActionSheet (Added)

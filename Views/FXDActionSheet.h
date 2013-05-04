@@ -17,7 +17,6 @@
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
 
 
@@ -26,8 +25,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @interface UIActionSheet (Added)

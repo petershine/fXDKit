@@ -10,23 +10,51 @@
 
 
 @implementation FXDseguePageAdding
-- (void)perform {
-	FXDsuperPagedContainer *pagedContainer = (FXDsuperPagedContainer*)self.sourceViewController;
+- (void)perform {	FXDLog_DEFAULT;
 	
-	if ([pagedContainer isKindOfClass:[FXDsuperPagedContainer class]] == NO) {
-		pagedContainer = (FXDsuperPagedContainer*)[self.sourceViewController parentViewController];
-	}
+	__weak FXDsuperPagedContainer *pagedContainer = [self mainContainerOfClass:[FXDsuperPagedContainer class]];
+	
+	[pagedContainer.mainDataSource addObject:self.destinationViewController];
+	
+	[pagedContainer.mainPageController
+	 setViewControllers:pagedContainer.mainDataSource
+	 direction:UIPageViewControllerNavigationDirectionForward
+	 animated:YES
+	 completion:^(BOOL finished) {
+		 if ([pagedContainer.mainDataSource count] > limitVisiblePageCount) {
+			 [pagedContainer.mainDataSource removeObjectAtIndex:0];
+		 }
+		 
+		 FXDLog(@"pagedContainer.mainDataSource: %@", pagedContainer.mainDataSource);
+	 }];
 }
 
 @end
 
 @implementation FXDseguePageRemoving
 - (void)perform {
-	FXDsuperPagedContainer *pagedContainer = (FXDsuperPagedContainer*)self.sourceViewController;
 	
-	if ([pagedContainer isKindOfClass:[FXDsuperPagedContainer class]] == NO) {
-		pagedContainer = (FXDsuperPagedContainer*)[self.sourceViewController parentViewController];
+	__weak FXDsuperPagedContainer *pagedContainer = [self mainContainerOfClass:[FXDsuperPagedContainer class]];
+	
+	NSInteger lastCount = [pagedContainer.mainDataSource count];
+	
+	if ([pagedContainer.mainDataSource containsObject:self.destinationViewController]) {
+		[pagedContainer.mainDataSource removeObject:self.destinationViewController];
 	}
+	
+	if (lastCount == [pagedContainer.mainDataSource count]
+		|| [pagedContainer.mainDataSource count] == 0) {
+		return;
+	}
+	
+	
+	[pagedContainer.mainPageController
+	 setViewControllers:pagedContainer.mainDataSource
+	 direction:UIPageViewControllerNavigationDirectionReverse
+	 animated:YES
+	 completion:^(BOOL finished) {
+		 FXDLog(@"pagedContainer.mainDataSource: %@", pagedContainer.mainDataSource);
+	 }];
 }
 
 @end
@@ -42,6 +70,12 @@
 }
 
 - (void)dealloc {
+	[_pagedOperationQueue cancelAllOperations];
+	_pagedOperationQueue = nil;
+	
+	[_pagedOperationDictionary removeAllObjects];
+	_pagedOperationDictionary = nil;
+	
 	// Instance variables
 }
 
@@ -61,6 +95,17 @@
 	[super viewDidLoad];
 	
     // IBOutlet
+	if (self.mainPageController == nil) {
+		for (UIViewController *childController in self.childViewControllers) {
+			if ([childController isKindOfClass:[UIPageViewController class]]) {
+				self.mainPageController = (FXDPageViewController*)childController;
+				break;
+			}
+		}
+	}
+	
+	FXDLog(@"self.mainPageController: %@", self.mainPageController);
+	
 	if (self.mainPageController) {
 		if (self.mainPageController.dataSource == nil) {
 			[self.mainPageController setDataSource:self];
@@ -74,7 +119,6 @@
 
 
 #pragma mark - Autorotating
-
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,6 +141,16 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	
+	if (parent == nil) {
+		if ([self.mainPageController respondsToSelector:@selector(delegate)]) {			
+			[self.mainPageController setDelegate:nil];
+		}
+	}
+	
+	[super willMoveToParentViewController:parent];
+}
 
 #pragma mark - Segues
 
@@ -108,23 +162,37 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - NSCacheDelegate
-- (void)cache:(NSCache *)cache willEvictObject:(id)obj {	FXDLog_DEFAULT;
-	FXDLog(@"obj: %@", obj);
-	
-}
-
 #pragma mark - UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {	FXDLog_OVERRIDE;
-	FXDLog(@"BeforeViewController: %@", viewController);
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)beforeViewController {	FXDLog_OVERRIDE;
 	
-	return nil;
+	UIViewController *previousController = nil;
+	
+	NSInteger beforeIndex = [self.mainDataSource indexOfObject:beforeViewController];
+	
+	if (beforeIndex > 0) {
+		previousController = self.mainDataSource[beforeIndex--];
+	}
+	
+	FXDLog(@"previousController: %@", previousController);
+	FXDLog(@"BeforeViewController: %@", beforeViewController);
+	
+	return previousController;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {	FXDLog_OVERRIDE;
-	FXDLog(@"AfterViewController: %@", viewController);
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)afterViewController {	FXDLog_OVERRIDE;
 	
-	return nil;
+	UIViewController *nextController = nil;
+	
+	NSInteger afterIndex = [self.mainDataSource indexOfObject:afterViewController];
+	
+	if (afterIndex < [self.mainDataSource count]-1) {
+		nextController = self.mainDataSource[afterIndex++];
+	}
+	
+	FXDLog(@"AfterViewController: %@", afterViewController);
+	FXDLog(@"nextController: %@", nextController);
+	
+	return nextController;
 }
 
 #pragma mark - UIPageViewControllerDelegate
