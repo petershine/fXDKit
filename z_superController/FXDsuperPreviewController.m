@@ -1,12 +1,12 @@
 //
-//  FXDsuperAssetController.m
+//  FXDsuperPreviewController.m
 //
 //
 //  Created by petershine on 5/5/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#import "FXDsuperAssetController.h"
+#import "FXDsuperPreviewController.h"
 
 
 @implementation FXDviewMovieDisplay
@@ -27,7 +27,7 @@
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperAssetController
+@implementation FXDsuperPreviewController
 
 
 #pragma mark - Memory management
@@ -93,85 +93,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	//MARK: Skip if reusing this instance when changing direction
-	FXDLog(@"self.imageviewPhotoItem.image: %@", self.imageviewPhotoItem.image);
-	
-	if (self.imageviewPhotoItem.image) {
-		[self configureItemScrollviewZoomValueShouldAnimate:NO];
-		[self configureItemScrollviewContentInset];
-		
-		return;
-	}
-	
-	
-	if (self.mainMoviePlayer && self.periodicObserver == nil) {
-		[self configurePeriodicObserver];
-		
-		return;
-	}
-	
-	
-	if (self.asset == nil) {
-		return;
-	}
-	
-	
-	if ([[self.asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-		
-		self.itemViewerType = itemViewerPhoto;
-		
-		self.mainMovieDisplayView.hidden = YES;
-		self.buttonPlay.hidden = YES;
-		
-		
-		[[FXDWindow applicationWindow] showDefaultProgressView];
-		
-		[[NSOperationQueue new] addOperationWithBlock:^{
-			ALAssetRepresentation *defaultRepresentation = [self.asset defaultRepresentation];
-			
-			CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
-			CGFloat scale = [[UIScreen mainScreen] scale];
-			
-			ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
-			FXDLog(@"scale: %f assetOrientation: %d", scale, assetOrientation);
-			
-			UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
-			FXDLog(@"fullImage.imageOrientation: %d fullImage.size: %@", fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
-			
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				self.imageviewPhotoItem.image = fullImage;
-				
-				CGRect modifiedFrame = self.imageviewPhotoItem.frame;
-				modifiedFrame.origin = CGPointZero;
-				modifiedFrame.size = self.imageviewPhotoItem.image.size;
-				
-				[self.imageviewPhotoItem setFrame:modifiedFrame];
-				
-				[self.mainScrollView setContentSize:modifiedFrame.size];
-				
-				
-				[self configureItemScrollviewZoomValueShouldAnimate:NO];
-				[self configureItemScrollviewContentInset];
-				
-				[[FXDWindow applicationWindow] hideProgressView];
-			}];
-		}];
-	}
-	else if ([[self.asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
-		
-		self.itemViewerType = itemViewerVideo;
-		
-		ALAssetRepresentation *defaultRepresentation = [self.asset defaultRepresentation];
-		
-		if (self.mainMoviePlayer == nil) {
-			self.mainMoviePlayer = [AVPlayer playerWithURL:[defaultRepresentation url]];
-			
-			[self.mainMovieDisplayView setMainMoviePlayer:self.mainMoviePlayer];
-		}
-		
-		
-		[self configurePeriodicObserver];
-	}
+	[self startDisplayingAssetRepresentation];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -181,10 +103,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
 	
-	//FXDLog(@"1.self.mainMoviePlayer.observationInfo: %@", self.mainMoviePlayer.observationInfo);
-	[self.mainMoviePlayer removeTimeObserver:self.periodicObserver];
-	//FXDLog(@"2.self.mainMoviePlayer.observationInfo: %@", self.mainMoviePlayer.observationInfo);
-	
+	[self.mainMoviePlayer removeTimeObserver:self.periodicObserver];	
 	self.periodicObserver = nil;
 }
 
@@ -200,17 +119,19 @@
 
 
 #pragma mark - Property overriding
-
-#pragma mark - Method overriding
-- (NSInteger)pageIndexUsingDataSource:(NSMutableArray *)dataSource {
-	NSInteger pageIndex = 0;
-	
-	if (self.asset && [dataSource containsObject:self.asset]) {
-		pageIndex = [dataSource indexOfObject:self.asset];
+- (ALAsset*)previewedAsset {
+	if (_previewedAsset == nil) {	FXDLog_OVERRIDE;
+		//SAMPLE
+		/*
+		_previewedAsset = <#globalManager#>.pagedContainer.mainDataSource[self.previewPageIndex];
+		 */
 	}
 	
-	return pageIndex;
+	return _previewedAsset;
 }
+
+
+#pragma mark - Method overriding
 
 #pragma mark - Segues
 
@@ -235,16 +156,130 @@
 	}
 	
 	
-	[self.mainMoviePlayer seekToTime:CMTimeMakeWithSeconds(0.0, 1.0)
-				   completionHandler:^(BOOL finished) {
-					   [self.mainMoviePlayer play];
-					   
-					   [self.buttonPlay fadeOutThenHidden];
-				   }];
+	[self.mainMoviePlayer
+	 seekToTime:CMTimeMakeWithSeconds(0.0, 1.0)
+	 completionHandler:^(BOOL finished) {
+		 [self.mainMoviePlayer play];
+		 
+		 [self.buttonPlay fadeOutThenHidden];
+	 }];
 }
 
 
 #pragma mark - Public
+- (void)startDisplayingAssetRepresentation {	FXDLog_DEFAULT;
+	//MARK: Skip if reusing this instance when changing direction
+	FXDLog(@"self.imageviewPhotoItem.image: %@", self.imageviewPhotoItem.image);
+	
+	if (self.imageviewPhotoItem.image) {
+		[self configureItemScrollviewZoomValueShouldAnimate:NO];
+		[self configureItemScrollviewContentInset];
+		
+		return;
+	}
+	
+	
+	if (self.mainMoviePlayer && self.periodicObserver == nil) {
+		[self configurePeriodicObserver];
+		
+		return;
+	}
+	
+	
+	if (self.previewedAsset == nil) {
+		return;
+	}
+	
+	
+	if ([[self.previewedAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+		
+		self.itemViewerType = itemViewerVideo;
+		
+		if (self.mainMovieDisplayView == nil) {
+			self.mainMovieDisplayView = [[FXDviewMovieDisplay alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+			self.mainMovieDisplayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+			
+			[self.view addSubview:self.mainMovieDisplayView];
+		}
+		
+		if (self.buttonPlay == nil) {
+			self.buttonPlay = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 100.0)];
+			
+			[self.buttonPlay.titleLabel setFont:[UIFont boldSystemFontOfSize:25.0]];
+			self.buttonPlay.titleLabel.textAlignment = NSTextAlignmentCenter;
+			
+			[self.buttonPlay setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+			[self.buttonPlay setTitle:@"PLAY" forState:UIControlStateNormal];
+			
+			[self.buttonPlay setBackgroundColor:[UIColor blackColor]];
+			
+			self.buttonPlay.autoresizingMask = UIViewAnimationTransitionNone;
+			self.buttonPlay.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+			
+			self.buttonPlay.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0);
+			
+			[self.buttonPlay addTarget:self action:@selector(actionPlayOrPauseMovie:) forControlEvents:UIControlEventTouchUpInside];
+			
+			[self.view addSubview:self.buttonPlay];
+		}
+		
+		
+		ALAssetRepresentation *defaultRepresentation = [self.previewedAsset defaultRepresentation];
+		
+		if (self.mainMoviePlayer == nil) {
+			self.mainMoviePlayer = [AVPlayer playerWithURL:[defaultRepresentation url]];
+			
+			[self.mainMovieDisplayView setMainMoviePlayer:self.mainMoviePlayer];
+		}
+		
+		
+		[self configurePeriodicObserver];
+		
+		return;
+	}
+	
+	
+	self.itemViewerType = itemViewerPhoto;
+	
+	self.mainMovieDisplayView.hidden = YES;
+	self.buttonPlay.hidden = YES;
+	
+	
+	[[FXDWindow applicationWindow] showDefaultProgressView];
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		ALAssetRepresentation *defaultRepresentation = [self.previewedAsset defaultRepresentation];
+		
+		CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
+		CGFloat scale = [[UIScreen mainScreen] scale];
+		
+		ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
+		FXDLog(@"scale: %f assetOrientation: %d", scale, assetOrientation);
+		
+		UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
+		FXDLog(@"fullImage.imageOrientation: %d fullImage.size: %@", fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			self.imageviewPhotoItem.image = fullImage;
+			
+			CGRect modifiedFrame = self.imageviewPhotoItem.frame;
+			modifiedFrame.origin = CGPointZero;
+			modifiedFrame.size = self.imageviewPhotoItem.image.size;
+			
+			[self.imageviewPhotoItem setFrame:modifiedFrame];
+			
+			[self.mainScrollView setContentSize:modifiedFrame.size];
+			
+			
+			[self configureItemScrollviewZoomValueShouldAnimate:NO];
+			[self configureItemScrollviewContentInset];
+			
+			[[FXDWindow applicationWindow] hideProgressView];
+		});
+	});
+}
+
+#pragma mark -
 - (void)configureItemScrollviewZoomValueShouldAnimate:(BOOL)shouldAnimate {
 	
 	FXDLog(@"self.mainScrollView.bounds.size: %@", NSStringFromCGSize(self.mainScrollView.bounds.size));

@@ -145,7 +145,7 @@
 	
 	[group
 	 enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop) {
-		 FXDLog(@"*stop: %d index: %d group: %@", *stop, index, asset);
+		 //FXDLog(@"*stop: %d index: %d group: %@", *stop, index, asset);
 		 
 		 if (asset) {
 			 if (collectedAssetsArray == nil) {

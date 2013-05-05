@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, SLIDE_DIRECTION_TYPE) {
 };
 
 
-// FXDsuperAssetController
+// FXDsuperPreviewController
 typedef NS_ENUM(NSInteger, ITEM_VIEWER_TYPE) {
 	itemViewerPhoto,
 	itemViewerVideo,

@@ -121,8 +121,31 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (id)pageForPageIndex:(NSInteger)pageIndex {	FXDLog_OVERRIDE;
-	FXDLog(@"pageIndex: %d self.mainDataSource count: %d", pageIndex, [self.mainDataSource count]);
+- (void)addPreviewPageWithAddedObj:(id)addedObj {	FXDLog_DEFAULT;
+	
+	[self.mainDataSource addObject:addedObj];
+	
+	
+	FXDsuperPreviewController *previewPage = [self previewPageForModifiedPageIndex:[self.mainDataSource count]-1];
+	
+	[self.mainPageController
+	 setViewControllers:@[previewPage]
+	 direction:UIPageViewControllerNavigationDirectionForward
+	 animated:YES
+	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 FXDLog(@"finished: %d", finished);
+	 }];
+}
+
+#pragma mark -
+- (id)previewPageForModifiedPageIndex:(NSInteger)modifiedPageIndex {	FXDLog_OVERRIDE;
+	FXDLog(@"modifiedPageIndex: %d", modifiedPageIndex);
+	
+	/*
+	 FXDsuperPreviewController *photoPage = [globalManager.mainStoryboard instantiateViewControllerWithIdentifier:scenenamePhotoPage];
+	 
+	 photoPage.previewPageIndex = modifiedPageIndex;
+	 */
 	
 	return nil;
 }
@@ -132,36 +155,34 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(FXDViewController*)beforeViewController {	FXDLog_DEFAULT;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(FXDsuperPreviewController*)beforeViewController {	FXDLog_DEFAULT;
 	
 	UIViewController *previousController = nil;
 	
-	NSInteger currentPageIndex = [beforeViewController pageIndexUsingDataSource:self.mainDataSource];
+	NSInteger modifiedPageIndex = beforeViewController.previewPageIndex;
+	modifiedPageIndex--;
 	
-	if (currentPageIndex-1 >= 0) {
-		currentPageIndex--;
-		
-		previousController = [self pageForPageIndex:currentPageIndex];
+	if (modifiedPageIndex >= 0) {
+		previousController = [self previewPageForModifiedPageIndex:modifiedPageIndex];
 	}
 	
-	FXDLog(@"previousController: %@", previousController);
+	FXDLog(@"modifiedPageIndex: %d previousController: %@", modifiedPageIndex, previousController);
 	
 	return previousController;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(FXDViewController*)afterViewController {	FXDLog_DEFAULT;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(FXDsuperPreviewController*)afterViewController {	FXDLog_DEFAULT;
 	
 	UIViewController *nextController = nil;
 	
-	NSInteger currentPageIndex = [afterViewController pageIndexUsingDataSource:self.mainDataSource];
+	NSInteger modifiedPageIndex = afterViewController.previewPageIndex;
+	modifiedPageIndex++;
 	
-	if (currentPageIndex+1 < [self.mainDataSource count]) {
-		currentPageIndex++;
-		
-		nextController = [self pageForPageIndex:currentPageIndex];
+	if (modifiedPageIndex < [self.mainDataSource count]) {		
+		nextController = [self previewPageForModifiedPageIndex:modifiedPageIndex];
 	}
 	
-	FXDLog(@"nextController: %@", nextController);
+	FXDLog(@"modifiedPageIndex: %d nextController: %@", modifiedPageIndex, nextController);
 	
 	return nextController;
 }
@@ -177,19 +198,6 @@
 	FXDLog(@"finished: %d completed: %d previousViewControllers: %@", finished, completed, previousViewControllers);
 	
 	// Sent when a gesture-initiated transition ends. The 'finished' parameter indicates whether the animation finished, while the 'completed' parameter indicates whether the transition completed or bailed out (if the user let go early).
-}
-
-@end
-
-
-#pragma mark - Category
-@implementation FXDViewController (Paged)
-
-#pragma mark - Public
-- (NSInteger)pageIndexUsingDataSource:(NSMutableArray*)dataSource {	FXDLog_OVERRIDE;
-	FXDLog(@"dataSource: %@", dataSource);
-	
-	return 0;
 }
 
 @end

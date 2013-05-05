@@ -7,6 +7,7 @@
 //
 
 #import "FXDPageViewController.h"
+#import "FXDsuperPreviewController.h"
 
 
 #import "FXDsuperContainer.h"
@@ -14,7 +15,7 @@
 @interface FXDsuperPagedContainer : FXDsuperContainer <UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
 	// Primitive
 	
-	// Instance variables
+	// Instance variables	
 	NSMutableArray *_mainDataSource;
 	
 	NSOperationQueue *_pagedOperationQueue;
@@ -29,8 +30,9 @@
 @property (strong, nonatomic) NSOperationQueue *pagedOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *pagedOperationDictionary;
 
+@property (strong, nonatomic) FXDPageViewController *mainPageController;
+
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDPageViewController *mainPageController;
 
 
 #pragma mark - Segues
@@ -38,20 +40,13 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (id)pageForPageIndex:(NSInteger)pageIndex;
+- (void)addPreviewPageWithAddedObj:(id)addedObj;
+
+- (id)previewPageForModifiedPageIndex:(NSInteger)modifiedPageIndex;
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
-@end
-
-
-#pragma mark - Category
-@interface FXDViewController (Paged)
-
-#pragma mark - Public
-- (NSInteger)pageIndexUsingDataSource:(NSMutableArray*)dataSource;
 
 @end

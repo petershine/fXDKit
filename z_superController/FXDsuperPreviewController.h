@@ -1,5 +1,5 @@
 //
-//  FXDsuperAssetController.h
+//  FXDsuperPreviewController.h
 //
 //
 //  Created by petershine on 5/5/13.
@@ -17,15 +17,20 @@
 
 #import "FXDsuperScrollController.h"
 
-@interface FXDsuperAssetController : FXDsuperScrollController
+@interface FXDsuperPreviewController : FXDsuperScrollController {
+	// Instance variables
+	ALAsset *_previewedAsset;
+}
 
 // Properties
+@property (assign, nonatomic) NSInteger previewPageIndex;
+
 @property (assign, nonatomic) ITEM_VIEWER_TYPE itemViewerType;
 
 @property (strong, nonatomic) AVPlayer *mainMoviePlayer;
 @property (strong, nonatomic) id periodicObserver;
 
-@property (strong, nonatomic) ALAsset *asset;
+@property (strong, nonatomic) ALAsset *previewedAsset;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewPhotoItem;
@@ -40,6 +45,8 @@
 - (IBAction)actionPlayOrPauseMovie:(id)sender;
 
 #pragma mark - Public
+- (void)startDisplayingAssetRepresentation;
+
 - (void)configureItemScrollviewZoomValueShouldAnimate:(BOOL)shouldAnimate;
 - (void)configureItemScrollviewContentInset;
 
