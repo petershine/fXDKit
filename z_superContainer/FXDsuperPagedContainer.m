@@ -187,6 +187,24 @@
 	return nextController;
 }
 
+#pragma mark -
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
+	// A page indicator will be visible if both methods are implemented, transition style is 'UIPageViewControllerTransitionStyleScroll', and navigation orientation is 'UIPageViewControllerNavigationOrientationHorizontal'.
+	// Both methods are called in response to a 'setViewControllers:...' call, but the presentation index is updated automatically in the case of gesture-driven navigation.
+	
+	// The number of items reflected in the page indicator.
+	
+	return [self.mainDataSource count];
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
+	// The selected item reflected in the page indicator.
+	
+	FXDsuperPreviewController *previewPage = [pageViewController.viewControllers lastObject];
+	
+	return previewPage.previewPageIndex;	
+}
+
 #pragma mark - UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {	FXDLog_DEFAULT;
 	FXDLog(@"pendingViewControllers: %@", pendingViewControllers);
