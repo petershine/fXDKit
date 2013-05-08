@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
@@ -43,12 +42,9 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
