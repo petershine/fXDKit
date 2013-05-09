@@ -80,7 +80,6 @@
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
 
-
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
 
@@ -91,7 +90,6 @@
 
 #if USE_csvParser
 #import "CHCSV.h"
-
 
 @interface FXDsuperCoreDataManager (CSVparser) <CHCSVParserDelegate>
 

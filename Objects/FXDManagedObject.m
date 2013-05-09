@@ -117,7 +117,7 @@
 }
 
 // invoked automatically by the Core Data framework before receiver is converted (back) to a fault.  This method is the companion of the -didTurnIntoFault method, and may be used to (re)set state which requires access to property values (for example, observers across keypaths.)  The default implementation does nothing.
-- (void)willTurnIntoFault NS_AVAILABLE(10_5,3_0) {	FXDLog_DEFAULT;
+- (void)willTurnIntoFault {	FXDLog_DEFAULT;
 	[super willTurnIntoFault];
 }
 
@@ -171,8 +171,8 @@
 
 //MARK: - Delegate implementation
 
-
 @end
+
 
 #pragma mark - Category
 @implementation NSManagedObject (Added)

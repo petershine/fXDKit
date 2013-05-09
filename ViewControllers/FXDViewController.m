@@ -66,8 +66,6 @@
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 
-	FXDLog(@"self.storyboard: %@, self.nibName: %@", self.storyboard, self.nibName);
-
 	// Primitives
 	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
 		_isSystemVersionLatest = YES;
@@ -76,6 +74,8 @@
 	// Instance variables
 
 	// Properties
+	
+	FXDLog(@"storyboard: %@, nibName: %@ isSystemVersionLatest: %d", self.storyboard, self.nibName, self.isSystemVersionLatest);
 }
 
 - (void)loadView {	//FXDLog_DEFAULT;

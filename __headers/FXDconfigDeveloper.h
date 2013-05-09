@@ -79,7 +79,7 @@
 
 
 #ifndef SYSTEM_VERSION_lowerThan
-	#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] >= versionNumber)
+	#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
 #endif
 
 
