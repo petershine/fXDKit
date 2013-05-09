@@ -171,8 +171,10 @@
 	[super removeFromParentViewController];
 }
 
-- (void)willMoveToParentViewController:(UIViewController *)parent {	//FXDLog_DEFAULT;
-	//FXDLog(@"parent: %@", parent);
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	if (parent == nil) {
+		FXDLog_OVERRIDE;
+	}
 
 	[super willMoveToParentViewController:parent];
 }

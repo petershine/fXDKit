@@ -21,13 +21,10 @@
 }
 
 - (void)dealloc {
-	[self.mainScrollView setDelegate:nil];
+	[_mainScrollView setDelegate:nil];
 	
 	// Instance variables
-	FXDLog(@"_mainResultsController.dynamicDelegate: %@", _mainResultsController.dynamicDelegate);
-	[_mainResultsController setDynamicDelegate:nil];
-	_mainResultsController = nil;
-	
+	[_mainResultsController setDynamicDelegate:nil];	
 	
 	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
 	[_cellOperationQueue cancelAllOperations];
@@ -212,6 +209,10 @@
 		FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
 		FXDLog(@"mainScrollView dataSource: %@", [self.mainScrollView performSelector:@selector(dataSource)]);
 		 */
+		
+		if ([self.mainResultsController respondsToSelector:@selector(setDynamicDelegate:)]) {
+			[self.mainResultsController performSelector:@selector(setDynamicDelegate:) withObject:nil];
+		}
 		
 		if ([self.mainScrollView respondsToSelector:@selector(setDelegate:)]) {
 			[self.mainScrollView performSelector:@selector(setDelegate:) withObject:nil];
@@ -411,8 +412,7 @@
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	FXDLog_OVERRIDE;
 	
-	FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
-	
+	FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);	
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
@@ -443,6 +443,11 @@
 		}
 		
 		[self.mainScrollBackgroundView setFrame:modifiedFrame];
+	}
+	
+	
+	if (self.shouldSkipDismissingByPullingDown) {
+		return;
 	}
 	
 	

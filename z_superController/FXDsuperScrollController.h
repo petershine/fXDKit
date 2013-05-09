@@ -34,6 +34,8 @@
 
 // Properties
 @property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
+
+@property (assign, nonatomic) BOOL shouldSkipDismissingByPullingDown;
 @property (assign, nonatomic) BOOL didStartDismissingByPullingDown;
 
 @property (assign, nonatomic) CGFloat offsetYdismissingController;
@@ -59,9 +61,7 @@
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
