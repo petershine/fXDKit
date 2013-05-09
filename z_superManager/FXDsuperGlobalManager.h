@@ -51,10 +51,12 @@
 
 
 //MARK: - Observer implementation
+- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification;
+- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification;
+
 - (void)observedUIApplicationWillResignActive:(NSNotification*)notification;
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
-
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
 - (void)observedNSUserDefaultsDidChange:(NSNotification*)notification;

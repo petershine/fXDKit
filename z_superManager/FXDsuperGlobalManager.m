@@ -193,6 +193,19 @@
 	
 	[defaultCenter
 	 addObserver:self
+	 selector:@selector(observedUIApplicationWillChangeStatusBarFrame:)
+	 name:UIApplicationWillChangeStatusBarFrameNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidChangeStatusBarFrame:)
+	 name:UIApplicationDidChangeStatusBarFrameNotification
+	 object:nil];
+
+	
+	[defaultCenter
+	 addObserver:self
 	 selector:@selector(observedUIApplicationWillResignActive:)
 	 name:UIApplicationWillResignActiveNotification
 	 object:nil];
@@ -214,6 +227,7 @@
 	 selector:@selector(observedUIApplicationWillTerminate:)
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
+	
 	
 	[defaultCenter
 	 addObserver:self
@@ -348,16 +362,19 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationWillResignActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
-}
-
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 
 #pragma mark -
+- (void)observedUIApplicationWillResignActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 

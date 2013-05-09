@@ -21,9 +21,7 @@
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -45,5 +43,8 @@
 - (IBAction)popInterfaceWithAnimation:(id)sender;
 
 - (IBAction)dismissController:(id)sender;
+
+#pragma mark - Public
+- (void)reframeForStatusBarFrame:(CGRect)statusBarFrame;
 
 @end

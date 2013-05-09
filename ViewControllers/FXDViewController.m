@@ -352,5 +352,24 @@
 	}
 }
 
+#pragma mark - Public
+- (void)reframeForStatusBarFrame:(CGRect)statusBarFrame {
+	CGRect modifiedFrame = self.view.frame;
+	modifiedFrame.origin.y += statusBarFrame.size.height;
+	modifiedFrame.size.height -= statusBarFrame.size.height;
+	
+	[UIView
+	 animateWithDuration:durationAnimation
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseInOut
+	 animations:^{
+		 [self.view setFrame:modifiedFrame];
+	 } completion:^(BOOL finished) {
+		 FXDLog_DEFAULT;
+		 
+		 FXDLog(@"statusBarFrame: %@", NSStringFromCGRect(statusBarFrame));
+		 FXDLog(@"self.view: %@", self.view);
+	 }];
+}
 
 @end
