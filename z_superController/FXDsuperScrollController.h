@@ -29,7 +29,7 @@
 	
 	UIView *_mainScrollBackgroundView;
 	
-	UIScrollView *_mainScrollView;
+	UIScrollView *_mainScrollview;
 }
 
 // Properties
@@ -56,7 +56,7 @@
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIView *mainScrollBackgroundView;
 
-@property (strong, nonatomic) IBOutlet UIScrollView *mainScrollView;
+@property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;
 
 
 #pragma mark - Segues

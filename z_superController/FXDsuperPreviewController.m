@@ -62,30 +62,30 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	FXDLog(@"toInterfaceOrientation: %d, duration: %f frame: %@ bounds: %@", toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 	
-	FXDLog(@"self.mainScrollView.frame: %@", NSStringFromCGRect(self.mainScrollView.frame));
-	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhotoItem.frame));
+	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	FXDLog(@"interfaceOrientation: %d, duration: %f frame: %@ bounds: %@", interfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 	
-	FXDLog(@"self.mainScrollView.frame: %@", NSStringFromCGRect(self.mainScrollView.frame));
-	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhotoItem.frame));
+	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 	
-	[self configureItemScrollviewZoomValueShouldAnimate:YES];
-	[self configureItemScrollviewContentInset];
+	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
+	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {	FXDLog_DEFAULT;
 	FXDLog(@"fromInterfaceOrientation: %d frame: %@ bounds: %@", fromInterfaceOrientation, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 	
-	FXDLog(@"self.mainScrollView.frame: %@", NSStringFromCGRect(self.mainScrollView.frame));
-	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhotoItem.frame));
+	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 	
 	
 	LOGEVENT_DEFAULT;
 	
-	[self configureItemScrollviewContentInset];
+	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
 
 
@@ -123,7 +123,7 @@
 	if (_previewedAsset == nil) {	FXDLog_OVERRIDE;
 		//SAMPLE
 		/*
-		_previewedAsset = <#globalManager#>.pagedContainer.mainDataSource[self.previewPageIndex];
+		_previewedAsset = globalManager.pagedContainer.mainDataSource[self.previewPageIndex];
 		 */
 	}
 	
@@ -168,38 +168,35 @@
 
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation {	FXDLog_DEFAULT;
-	//MARK: Skip if reusing this instance when changing direction
-	FXDLog(@"self.imageviewPhotoItem.image: %@", self.imageviewPhotoItem.image);
-	
-	if (self.imageviewPhotoItem.image) {
-		[self configureItemScrollviewZoomValueShouldAnimate:NO];
-		[self configureItemScrollviewContentInset];
-		
+	FXDLog(@"self.previewedAsset: %@", self.previewedAsset);
+	if (self.previewedAsset == nil) {
 		return;
 	}
 	
 	
 	if (self.mainMoviePlayer && self.periodicObserver == nil) {
 		[self configurePeriodicObserver];
-		
+		return;
+	}
+	
+	FXDLog(@"self.imageviewPhotoItem.image: %@", self.imageviewPhoto.image);
+	if (self.imageviewPhoto.image) {	//MARK: Skip if reusing this instance when changing direction
+		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
+		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 		return;
 	}
 	
 	
-	if (self.previewedAsset == nil) {
-		return;
-	}
-	
-	
+	//MARK: For Video
 	if ([[self.previewedAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
 		
 		self.itemViewerType = itemViewerVideo;
 		
-		if (self.mainMovieDisplayView == nil) {
-			self.mainMovieDisplayView = [[FXDviewMovieDisplay alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
-			self.mainMovieDisplayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+		if (self.displayviewMovie == nil) {
+			self.displayviewMovie = [[FXDviewMovieDisplay alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+			self.displayviewMovie.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 			
-			[self.view addSubview:self.mainMovieDisplayView];
+			[self.view addSubview:self.displayviewMovie];
 		}
 		
 		if (self.buttonPlay == nil) {
@@ -229,7 +226,7 @@
 		if (self.mainMoviePlayer == nil) {
 			self.mainMoviePlayer = [AVPlayer playerWithURL:[defaultRepresentation url]];
 			
-			[self.mainMovieDisplayView setMainMoviePlayer:self.mainMoviePlayer];
+			[self.displayviewMovie setMainMoviePlayer:self.mainMoviePlayer];
 		}
 		
 		
@@ -239,9 +236,10 @@
 	}
 	
 	
+	//MARK: For Photo
 	self.itemViewerType = itemViewerPhoto;
 	
-	self.mainMovieDisplayView.hidden = YES;
+	self.displayviewMovie.hidden = YES;
 	self.buttonPlay.hidden = YES;
 	
 	
@@ -260,70 +258,11 @@
 		FXDLog(@"fullImage.imageOrientation: %d fullImage.size: %@", fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			self.imageviewPhotoItem.image = fullImage;
-			
-			CGRect modifiedFrame = self.imageviewPhotoItem.frame;
-			modifiedFrame.origin = CGPointZero;
-			modifiedFrame.size = self.imageviewPhotoItem.image.size;
-			
-			[self.imageviewPhotoItem setFrame:modifiedFrame];
-			
-			[self.mainScrollView setContentSize:modifiedFrame.size];
-			
-			
-			[self configureItemScrollviewZoomValueShouldAnimate:NO];
-			[self configureItemScrollviewContentInset];
+			[self refreshWithFullImage:fullImage];
 			
 			[[FXDWindow applicationWindow] hideProgressView];
 		});
 	});
-}
-
-#pragma mark -
-- (void)configureItemScrollviewZoomValueShouldAnimate:(BOOL)shouldAnimate {
-	
-	FXDLog(@"self.mainScrollView.bounds.size: %@", NSStringFromCGSize(self.mainScrollView.bounds.size));
-	FXDLog(@"self.imageviewPhotoItem.image.size: %@", NSStringFromCGSize(self.imageviewPhotoItem.image.size));
-	
-	// calculate min/max zoomscale
-	CGFloat xScale = self.mainScrollView.bounds.size.width  / self.imageviewPhotoItem.image.size.width;
-	CGFloat yScale = self.mainScrollView.bounds.size.height / self.imageviewPhotoItem.image.size.height;
-	FXDLog(@"xScale: %f, yScale: %f", xScale, yScale);
-	
-	
-	CGFloat minScale = MIN(xScale, yScale);
-	CGFloat maxScale = 2.0;	//MARK: if you want to limit to screen size: MAX(xScale, yScale);
-	
-	if (minScale > 1.0) {
-		minScale = 1.0;
-	}
-	
-	FXDLog(@"minScale: %f, maxScale: %f", minScale, maxScale);
-	
-	self.mainScrollView.maximumZoomScale = maxScale;
-	self.mainScrollView.minimumZoomScale = minScale;
-	
-	
-	FXDLog(@"1.self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhotoItem.frame));
-	[self.mainScrollView setZoomScale:self.mainScrollView.minimumZoomScale animated:shouldAnimate];
-	FXDLog(@"2.self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhotoItem.frame));
-}
-
-- (void)configureItemScrollviewContentInset {
-	CGFloat horizontalInset = (self.mainScrollView.frame.size.width -self.imageviewPhotoItem.frame.size.width)/2.0;
-	CGFloat verticalInset = (self.mainScrollView.frame.size.height -self.imageviewPhotoItem.frame.size.height)/2.0;
-	
-	if (horizontalInset < 0.0) {
-		horizontalInset = 0.0;
-	}
-	
-	if (verticalInset < 0.0) {
-		verticalInset = 0.0;
-	}
-	
-	UIEdgeInsets modifiedInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
-	
-	[self.mainScrollView setContentInset:modifiedInset];
 }
 
 #pragma mark -
@@ -351,17 +290,34 @@
 	 }];
 }
 
+#pragma mark -
+- (void)refreshWithFullImage:(UIImage*)fullImage {
+	self.imageviewPhoto.image = fullImage;
+	
+	CGRect modifiedFrame = self.imageviewPhoto.frame;
+	modifiedFrame.origin = CGPointZero;
+	modifiedFrame.size = self.imageviewPhoto.image.size;
+	
+	[self.imageviewPhoto setFrame:modifiedFrame];
+	
+	[self.mainScrollview setContentSize:modifiedFrame.size];
+	
+	
+	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
+	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
+}
+
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
 #pragma mark - UIScrollViewDelegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-	return self.imageviewPhotoItem;
+	return self.imageviewPhoto;
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-	[self configureItemScrollviewContentInset];
+	[scrollView configureContentInsetForSubview:self.imageviewPhoto];
 }
 
 @end

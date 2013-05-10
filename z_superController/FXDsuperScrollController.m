@@ -21,7 +21,7 @@
 }
 
 - (void)dealloc {
-	[_mainScrollView setDelegate:nil];
+	[_mainScrollview setDelegate:nil];
 	
 	// Instance variables
 	[_mainResultsController setDynamicDelegate:nil];	
@@ -49,23 +49,23 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	FXDLog(@"self.mainScrollView: %@", self.mainScrollView);
+	FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
 	
     // IBOutlet
-	if (self.mainScrollView == nil) {
+	if (self.mainScrollview == nil) {
 		return;
 	}
 	
 	
-	if (self.mainScrollView.delegate == nil) {
-		[self.mainScrollView setDelegate:self];
+	if (self.mainScrollview.delegate == nil) {
+		[self.mainScrollview setDelegate:self];
 	}
 	
 	
-	if ([self.mainScrollView respondsToSelector:@selector(dataSource)]
-		&& [self.mainScrollView performSelector:@selector(dataSource)] == nil) {
+	if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
+		&& [self.mainScrollview performSelector:@selector(dataSource)] == nil) {
 		
-		[self.mainScrollView performSelector:@selector(setDataSource:) withObject:self];
+		[self.mainScrollview performSelector:@selector(setDataSource:) withObject:self];
 	}
 	
 	
@@ -73,11 +73,11 @@
 	FXDLog(@"self.mainCellNib: %@", self.mainCellNib);
 	
 	if (self.mainCellIdentifier || self.mainCellNib) {		
-		if ([self.mainScrollView isKindOfClass:[UITableView class]]) {
-			[(UITableView*)self.mainScrollView registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
+		if ([self.mainScrollview isKindOfClass:[UITableView class]]) {
+			[(UITableView*)self.mainScrollview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 		}
-		else if ([self.mainScrollView isKindOfClass:[UICollectionView class]]) {
-			[(UICollectionView*)self.mainScrollView registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
+		else if ([self.mainScrollview isKindOfClass:[UICollectionView class]]) {
+			[(UICollectionView*)self.mainScrollview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
 		}
 	}
 	
@@ -206,20 +206,20 @@
 	if (parent == nil) {
 		//MARK: If EXC_BAD_ACCESS occurs, keep this commented out
 		/*
-		FXDLog(@"mainScrollView delegate: %@", [self.mainScrollView performSelector:@selector(delegate)]);
-		FXDLog(@"mainScrollView dataSource: %@", [self.mainScrollView performSelector:@selector(dataSource)]);
+		FXDLog(@"mainScrollview delegate: %@", [self.mainScrollview performSelector:@selector(delegate)]);
+		FXDLog(@"mainScrollview dataSource: %@", [self.mainScrollview performSelector:@selector(dataSource)]);
 		 */
 		
 		if ([self.mainResultsController respondsToSelector:@selector(setDynamicDelegate:)]) {
 			[self.mainResultsController performSelector:@selector(setDynamicDelegate:) withObject:nil];
 		}
 		
-		if ([self.mainScrollView respondsToSelector:@selector(setDelegate:)]) {
-			[self.mainScrollView performSelector:@selector(setDelegate:) withObject:nil];
+		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
+			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
 		}
 		
-		if ([self.mainScrollView respondsToSelector:@selector(setDataSource:)]) {
-			[self.mainScrollView performSelector:@selector(setDataSource:) withObject:nil];
+		if ([self.mainScrollview respondsToSelector:@selector(setDataSource:)]) {
+			[self.mainScrollview performSelector:@selector(setDataSource:) withObject:nil];
 		}
 	}
 	
@@ -321,7 +321,7 @@
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
 	
 	if (scrollView == nil) {
-		scrollView = self.mainScrollView;
+		scrollView = self.mainScrollview;
 	}
 	
 	
@@ -341,13 +341,13 @@
 	BOOL shouldContinue = NO;
 	
 	// Get valid index row for disappeared cell
-	if ([self.mainScrollView isKindOfClass:[UITableView class]] == NO) {		
+	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {		
 		didFinishBlock(shouldContinue, integerNotDefined, NO);
 		return;
 	}
 	
 	
-	NSArray *visibleIndexPaths = [(UITableView*)self.mainScrollView indexPathsForVisibleRows];
+	NSArray *visibleIndexPaths = [(UITableView*)self.mainScrollview indexPathsForVisibleRows];
 	NSInteger visibleRowCount = [visibleIndexPaths count];
 	
 	if (visibleRowCount == 0) {
@@ -398,8 +398,8 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	
-	if ([self.mainScrollView respondsToSelector:@selector(beginUpdates)]) {
-		[self.mainScrollView performSelector:@selector(beginUpdates)];
+	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
+		[self.mainScrollview performSelector:@selector(beginUpdates)];
 	}
 	else {
 		FXDLog_OVERRIDE;
@@ -417,8 +417,8 @@
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
-	if ([self.mainScrollView respondsToSelector:@selector(endUpdates)]) {
-		[self.mainScrollView performSelector:@selector(endUpdates)];
+	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
+		[self.mainScrollview performSelector:@selector(endUpdates)];
 	}
 	else {
 		FXDLog_OVERRIDE;

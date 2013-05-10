@@ -33,9 +33,9 @@
 @property (strong, nonatomic) ALAsset *previewedAsset;
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UIImageView *imageviewPhotoItem;
+@property (strong, nonatomic) IBOutlet UIImageView *imageviewPhoto;
 
-@property (strong, nonatomic) IBOutlet FXDviewMovieDisplay *mainMovieDisplayView;
+@property (strong, nonatomic) IBOutlet FXDviewMovieDisplay *displayviewMovie;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPlay;
 
 
@@ -47,10 +47,9 @@
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation;
 
-- (void)configureItemScrollviewZoomValueShouldAnimate:(BOOL)shouldAnimate;
-- (void)configureItemScrollviewContentInset;
-
 - (void)configurePeriodicObserver;
+
+- (void)refreshWithFullImage:(UIImage*)fullImage;
 
 
 //MARK: - Observer implementation

@@ -29,10 +29,16 @@
 
 #pragma mark - Category
 @interface UIScrollView (Added)
-- (void)configureContentInsetForOverlayRect:(CGRect)overlayRect;
-- (void)configureContentSizeForSubView:(UIView*)subView;
+- (void)configureZoomValueForImageView:(UIImageView*)imageView shouldAnimate:(BOOL)shouldAnimate;
+
+- (void)configureContentInsetForSubview:(UIView*)subview;
+- (void)configureContentInsetForClippingFrame:(CGRect)overlayRect;
+
+- (void)configureContentSizeForSubview:(UIView*)subview;
+
 - (void)reframeSubView:(UIView*)subView shouldModifyOffset:(BOOL)shouldModifyOffset;
-- (void)scrollToCenterToShowSubView:(UIView*)subView withAnimation:(BOOL)withAnimation;
+
+- (void)scrollToCenterToShowSubView:(UIView*)subView shouldAnimate:(BOOL)shouldAnimate;
 
 - (BOOL)isScrollingCurrently;
 

@@ -14,7 +14,7 @@
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UICollectionView *mainCollectionView;
+@property (strong, nonatomic) IBOutlet UICollectionView *mainCollectionview;
 
 
 #pragma mark - Segues

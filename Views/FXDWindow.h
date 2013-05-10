@@ -57,7 +57,7 @@
 - (void)hideProgressView;
 
 - (void)prepareWithLaunchImageController:(FXDsuperLaunchImageController*)launchImageController;
-- (void)configureRootViewController:(UIViewController*)rootViewController withAnimation:(BOOL)withAnimation willBecomeRootViewControllerBlock:(void (^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void (^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock;
+- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void (^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void (^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock;
 
 @end
 
