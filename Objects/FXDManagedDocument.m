@@ -19,6 +19,14 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+- (void)autosaveWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
+	FXDLog(@"self hasUnsavedChanges: %d", [self hasUnsavedChanges]);
+	FXDLog(@"self.managedObjectContext hasChanges: %d", [self.managedObjectContext hasChanges]);
+	FXDLog(@"self.managedObjectContext.parentContext hasChanges: %d", [self.managedObjectContext.parentContext hasChanges]);
+	
+	[super autosaveWithCompletionHandler:completionHandler];
+}
+
 
 #pragma mark - Public
 

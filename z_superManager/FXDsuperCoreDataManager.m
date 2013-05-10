@@ -56,6 +56,23 @@
 
 
 #pragma mark - Property overriding
+- (NSString*)mainSqlitePathComponent {
+	if (_mainSqlitePathComponent == nil) {
+		_mainSqlitePathComponent = applicationSqlitePathComponent;
+	}
+	
+	return _mainSqlitePathComponent;
+}
+
+- (NSString*)mainUbiquitousContentName {
+	if (_mainUbiquitousContentName == nil) {
+		_mainUbiquitousContentName = ubiquitousCoreDataContentName;
+	}
+	
+	return _mainUbiquitousContentName;
+}
+
+#pragma mark -
 - (NSString*)mainEntityName {
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
 
@@ -89,21 +106,13 @@
 
 
 #pragma mark - Method overriding
-- (void)autosaveWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
-	FXDLog(@"self hasUnsavedChanges: %d", [self hasUnsavedChanges]);
-	FXDLog(@"self.managedObjectContext hasChanges: %d", [self.managedObjectContext hasChanges]);
-	FXDLog(@"self.managedObjectContext.parentContext hasChanges: %d", [self.managedObjectContext.parentContext hasChanges]);
-
-	[super autosaveWithCompletionHandler:completionHandler];
-}
-
 
 #pragma mark - Public
 - (void)startObservingFileManagerNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self
 	 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
-	 name:notificationFileControlDidUpdateUbiquityContainerURL
+	 name:notificationFileManagerDidUpdateUbiquityContainerURL
 	 object:nil];
 	
 }
@@ -115,7 +124,7 @@
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
 		
 		NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-		NSURL *storeURL = [rootURL URLByAppendingPathComponent:applicationSqlitePathComponent];
+		NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
 		FXDLog(@"storeURL: %@", storeURL);
 		
 		
@@ -123,16 +132,13 @@
 		options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
 		options[NSInferMappingModelAutomaticallyOption] = @(YES);
 		
-		NSURL *ubiquitousContentURL = nil;
-		
 #warning "//TODO: get UUID unique URL using ubiquityContainerURL instead"
-		//ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:ubiquitousCoreDataContentName];
+		NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 		
 		if (ubiquityContainerURL) {
-
 			ubiquitousContentURL = ubiquityContainerURL;
 			
-			options[NSPersistentStoreUbiquitousContentNameKey] = ubiquitousCoreDataContentName;
+			options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
 			options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
 		}
 		else {
@@ -144,11 +150,13 @@
 		
 
 		NSError *error = nil;
-		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:storeURL
-																	 ofType:NSSQLiteStoreType
-														 modelConfiguration:nil
-															   storeOptions:options
-																	  error:&error];
+		BOOL didConfigure = [self
+							 configurePersistentStoreCoordinatorForURL:storeURL
+							 ofType:NSSQLiteStoreType
+							 modelConfiguration:nil
+							 storeOptions:options
+							 error:&error];
+
 		FXDLog_ERROR;LOGEVENT_ERROR;
 
 		FXDLog(@"1.didConfigure: %d", didConfigure);
@@ -187,7 +195,7 @@
 #warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
 			NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
 
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataControlDidPrepare object:self userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataManagerDidPrepare object:self userInfo:userInfo];
 
 			if (didFinishBlock) {
 				didFinishBlock(didConfigure);

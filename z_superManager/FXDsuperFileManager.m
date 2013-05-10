@@ -284,7 +284,7 @@
 	[self startWatchingLocalDirectoryChange];
 #endif
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileManagerDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 }
 
 - (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
@@ -299,7 +299,7 @@
 	[self startWatchingLocalDirectoryChange];
 #endif
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidUpdateUbiquityContainerURL object:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileManagerDidUpdateUbiquityContainerURL object:nil];
 }
 
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;

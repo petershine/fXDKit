@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define notificationFileControlDidUpdateUbiquityContainerURL	@"notificationFileControlDidUpdateUbiquityContainerURL"
+#define notificationFileManagerDidUpdateUbiquityContainerURL	@"notificationFileManagerDidUpdateUbiquityContainerURL"
 
 #define notificationFileControlMetadataQueryDidGatherObjects	@"notificationFileControlMetadataQueryDidGatherObjects"
 #define notificationFileControlMetadataQueryDidFinishGathering	@"notificationFileControlMetadataQueryDidFinishGathering"

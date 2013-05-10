@@ -14,12 +14,13 @@
 	#define ubiquitousCoreDataContentName @"coredata.store"
 #endif
 
+
 #ifndef documentnameManagedCoreData
 	#define documentnameManagedCoreData	@"managed.coredata.document"
 #endif
 
 
-#define notificationCoreDataControlDidPrepare	@"notificationCoreDataControlDidPrepare"
+#define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"
 
 
 #import "FXDsuperFileManager.h"
@@ -29,6 +30,11 @@
     // Primitives
 	
 	// Instance variables
+	FXDManagedDocument *_mainDocument;
+	
+	NSString *_mainSqlitePathComponent;
+	NSString *_mainUbiquitousContentName;
+
 	NSString *_mainEntityName;
 	NSArray *_mainSortDescriptors;
 	
@@ -36,6 +42,11 @@
 }
 
 // Properties
+@property (strong, nonatomic) FXDManagedDocument *mainDocument;
+
+@property (strong, nonatomic) NSString *mainSqlitePathComponent;
+@property (strong, nonatomic) NSString *mainUbiquitousContentName;
+
 @property (strong, nonatomic) NSString *mainEntityName;
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
 
