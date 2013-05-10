@@ -33,11 +33,11 @@
 
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
+#import "FXDobjkeyUserDefaults.h"
+#import "FXDnotificationNames.h"
 #import "FXDlocalizedStrings.h"
 #import "FXDimageNames.h"
 #import "FXDtextFonts.h"
-#import "FXDobjkeyUserDefaults.h"
-#import "FXDnotificationNames.h"
 
 
 // Objects
@@ -109,4 +109,4 @@
 #import "FXDsuperContainer.h"
 
 #import "FXDsuperGlobalManager.h"
-#import "FXDsuperLaunchImageController.h"
+#import "FXDsuperLaunchController.h"

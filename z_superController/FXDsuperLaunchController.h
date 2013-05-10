@@ -15,26 +15,24 @@
 #endif
 
 
-@interface FXDsuperLaunchImageController : FXDViewController 
+@interface FXDsuperLaunchController : FXDViewController 
 
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UIImageView *imageviewLaunch;
+@property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;
 
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
 
-
 #pragma mark - Public
+- (void)dismissLaunchControllerWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end

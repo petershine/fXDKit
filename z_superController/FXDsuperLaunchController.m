@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
-#import "FXDsuperLaunchImageController.h"
+#import "FXDsuperLaunchController.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperLaunchImageController
+@implementation FXDsuperLaunchController
 
 
 #pragma mark - Memory management
@@ -41,11 +41,13 @@
 	[super viewDidLoad];
 
     // IBOutlet
-	if (SCREEN_SIZE_35inch) {
-		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch];
-	}
-	else {
-		self.imageviewLaunch.image = [UIImage bundledImageForName:imageDefaulLaunch568h];
+	if (self.imageviewDefault.image == nil) {
+		if (SCREEN_SIZE_35inch) {
+			self.imageviewDefault.image = [UIImage bundledImageForName:imageDefaulLaunch];
+		}
+		else {
+			self.imageviewDefault.image = [UIImage bundledImageForName:imageDefaulLaunch568h];
+		}
 	}
 }
 
@@ -80,22 +82,31 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
 
-
 #pragma mark - Public
+- (void)dismissLaunchControllerWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
+	[UIView
+	 animateWithDuration:delayOneSecond
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseIn
+	 animations:^{
+		 [self.view setAlpha:0.0];
+	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 
+		 if (didFinishBlock) {
+			 didFinishBlock(YES);
+		 }
+	 }];
+}
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end

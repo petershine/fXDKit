@@ -8,7 +8,7 @@
 
 #import "FXDWindow.h"
 
-#import "FXDsuperLaunchImageController.h"
+#import "FXDsuperLaunchController.h"
 
 
 #pragma mark - Public implementation
@@ -194,27 +194,26 @@
 }
 
 #pragma mark -
-- (void)prepareWithLaunchImageController:(FXDsuperLaunchImageController*)launchImageController {	FXDLog_DEFAULT;
+- (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController {	FXDLog_DEFAULT;
 	if (launchImageController == nil) {
-		launchImageController = [[FXDsuperLaunchImageController alloc] initWithNibName:nil bundle:nil];
+		launchImageController = [[FXDsuperLaunchController alloc] initWithNibName:nil bundle:nil];
 	}
 	
 	CGRect modifiedFrame = launchImageController.view.frame;
 	modifiedFrame.size.height = self.frame.size.height;
 	[launchImageController.view setFrame:modifiedFrame];
 	
-	modifiedFrame = launchImageController.imageviewLaunch.frame;
+	modifiedFrame = launchImageController.imageviewDefault.frame;
 	modifiedFrame.origin.y = 0.0;
 	modifiedFrame.size.height = self.frame.size.height;
-	[launchImageController.imageviewLaunch setFrame:modifiedFrame];
+	[launchImageController.imageviewDefault setFrame:modifiedFrame];
 	
 	[self setRootViewController:launchImageController];
 }
 
-- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void (^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void (^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock {	FXDLog_DEFAULT;
+- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void(^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void(^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock {	FXDLog_DEFAULT;
 	
 	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
-
 	if (shouldAnimate == NO) {
 		if (willBecomeRootViewControllerBlock) {
 			willBecomeRootViewControllerBlock();
@@ -232,38 +231,54 @@
 
 		return;
 	}
-
-	
-	UIViewController *previousScene = self.rootViewController;
 	
 
 	if (willBecomeRootViewControllerBlock) {
 		willBecomeRootViewControllerBlock();
 	}
 
+	UIViewController *launchController = self.rootViewController;
+	
 	[self setRootViewController:rootViewController];
 
-	[self addSubview:previousScene.view];
-
-
+	[self addSubview:launchController.view];
+	
+	
 	if (didBecomeRootViewControllerBlock) {
 		didBecomeRootViewControllerBlock();
 	}
 
-
-	[UIView animateWithDuration:delayOneSecond
-						  delay:0.0
-						options:UIViewAnimationOptionCurveEaseIn
-					 animations:^{
-						 [previousScene.view setAlpha:0.0];
-					 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
-						 FXDLog(@"finished: %d previousScene: %@", finished, previousScene);
-						 [previousScene.view removeFromSuperview];
-
-						 if (finishedAnimationBlock) {
-							 finishedAnimationBlock();
-						 }
-					 }];
+	if ([launchController isKindOfClass:[FXDsuperLaunchController class]]) {
+		[(FXDsuperLaunchController*)launchController
+		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished) {
+			 FXDLog_DEFAULT;
+			 FXDLog(@"finished: %d launchController: %@", finished, launchController);
+			 [launchController.view removeFromSuperview];
+			 
+			 if (finishedAnimationBlock) {
+				 finishedAnimationBlock();
+			 }
+		 }];
+		
+		return;
+	}
+	
+	
+	[UIView
+	 animateWithDuration:delayOneSecond
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseIn
+	 animations:^{
+		 [launchController.view setAlpha:0.0];
+	 } completion:^(BOOL finished) {
+		 FXDLog_DEFAULT;
+		 FXDLog(@"finished: %d launchController: %@", finished, launchController);
+		 [launchController.view removeFromSuperview];
+		 
+		 if (finishedAnimationBlock) {
+			 finishedAnimationBlock();
+		 }
+	 }];
 }
 
 @end
