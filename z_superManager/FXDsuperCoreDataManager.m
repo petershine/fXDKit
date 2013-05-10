@@ -22,40 +22,25 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFileURL:(NSURL *)fileURL {	FXDLog_DEFAULT;
-	
-	if (fileURL == nil) {	// searchPath is NOT valid
-		fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
-	}
-	
-	FXDLog(@"fileURL: %@", fileURL);
-	
-	self = [super initWithFileURL:fileURL];
-	
-	if (self) {		
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
-	}
-	
-	return self;
-}
-
 + (FXDsuperCoreDataManager*)sharedInstance {
-	static dispatch_once_t once;
-	static id _sharedInstance = nil;
-
-	dispatch_once(&once,^{
-		_sharedInstance = [[[self class] alloc] initWithFileURL:nil];	//MARK: Cannot use default implementation because of using this different initializer
-	});
-
-	return _sharedInstance;
+	IMPLEMENTATION_sharedInstance;
 }
 
 
 #pragma mark - Property overriding
+- (FXDManagedDocument*)mainDocument {
+	if (_mainDocument == nil) {	FXDLog_DEFAULT;
+		NSURL *fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
+		FXDLog(@"fileURL: %@", fileURL);
+		
+		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:fileURL];
+		FXDLog(@"_mainDocument: %@", _mainDocument);
+	}
+	
+	return _mainDocument;
+}
+
+#pragma mark -
 - (NSString*)mainSqlitePathComponent {
 	if (_mainSqlitePathComponent == nil) {
 		_mainSqlitePathComponent = applicationSqlitePathComponent;
@@ -89,9 +74,10 @@
 	return _mainSortDescriptors;
 }
 
+#pragma mark -
 - (FXDFetchedResultsController*)mainResultsController {
 	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
-		_mainResultsController = [self.managedObjectContext
+		_mainResultsController = [self.mainDocument.managedObjectContext
 								  resultsControllerForEntityName:self.mainEntityName
 								  withSortDescriptors:self.mainSortDescriptors
 								  withPredicate:nil
@@ -150,7 +136,7 @@
 		
 
 		NSError *error = nil;
-		BOOL didConfigure = [self
+		BOOL didConfigure = [self.mainDocument
 							 configurePersistentStoreCoordinatorForURL:storeURL
 							 ofType:NSSQLiteStoreType
 							 modelConfiguration:nil
@@ -162,7 +148,7 @@
 		FXDLog(@"1.didConfigure: %d", didConfigure);
 		
 #if ForDEVELOPER
-		NSPersistentStoreCoordinator *storeCoordinator = self.managedObjectContext.persistentStoreCoordinator;
+		NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
 		
 		for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
 			FXDLog(@"persistentStore: %@", persistentStore.URL);
@@ -220,7 +206,7 @@
 	 object:nil];
 
 
-	id notifyingObject = self.managedObjectContext.parentContext;
+	id notifyingObject = self.mainDocument.managedObjectContext.parentContext;
 	FXDLog(@"notifyingObject: %@", notifyingObject);
 	
 	[defaultCenter
@@ -255,14 +241,14 @@
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 	if (managedObjectContext == nil) {
-		managedObjectContext = self.managedObjectContext;
+		managedObjectContext = self.mainDocument.managedObjectContext;
 
 		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 		if (managedObjectContext.hasChanges == NO
-			&& managedObjectContext.concurrencyType != self.managedObjectContext.parentContext.concurrencyType) {
+			&& managedObjectContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
 			
-			managedObjectContext = self.managedObjectContext.parentContext;
+			managedObjectContext = self.mainDocument.managedObjectContext.parentContext;
 
 			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 		}
@@ -323,7 +309,7 @@
 
 
 	if (managedObjectContext == nil) {
-		managedObjectContext = self.managedObjectContext;
+		managedObjectContext = self.mainDocument.managedObjectContext;
 	}
 
 	FXDFetchedResultsController *resultsController = [managedObjectContext resultsControllerForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
@@ -343,7 +329,7 @@
 
 
 	if (managedObjectContext == nil) {
-		managedObjectContext = self.managedObjectContext;
+		managedObjectContext = self.mainDocument.managedObjectContext;
 	}
 
 	NSMutableArray *fetchedObjArray = [managedObjectContext fetchedObjArrayForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
@@ -407,7 +393,7 @@
 	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
 	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
-	if ([notification.object isEqual:self.managedObjectContext] == NO
+	if ([notification.object isEqual:self.mainDocument.managedObjectContext] == NO
 		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
 
 		FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
@@ -419,8 +405,8 @@
 		//MARK: Merge only if persistentStore is same
 		NSString *mainPersistentStoreUUID = nil;
 		
-		if ([[[self.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
-			NSPersistentStore *mainPersistentStore = [[self.managedObjectContext persistentStoreCoordinator] persistentStores][0];
+		if ([[[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
+			NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][0];
 			mainPersistentStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
 			
 			FXDLog(@"mainPersistentStoreUUID: %@", mainPersistentStoreUUID);
@@ -439,7 +425,7 @@
 		
 		if (mainPersistentStoreUUID && notifyingPersistentStoreUUID
 			&& [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]) {
-			[self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 		}
 	}
 }

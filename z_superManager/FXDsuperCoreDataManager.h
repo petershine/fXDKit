@@ -26,7 +26,8 @@
 #import "FXDsuperFileManager.h"
 
 
-@interface FXDsuperCoreDataManager : FXDManagedDocument <NSFetchedResultsControllerDelegate> {
+//@interface FXDsuperCoreDataManager : FXDManagedDocument <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables
