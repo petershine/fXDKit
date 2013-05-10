@@ -5,10 +5,10 @@
 //  Created by Peter SHINe on 6/3/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
-
-#import "FXDsuperCoreDataManager.h"
-
 #if USE_csvParser
+
+#import "FXDsuperCoreDataManager+CSVparser.h"
+
 @implementation FXDsuperCoreDataManager (CSVparser)
 
 - (void)parseFromCSVfileName:(NSString*)csvFileName {	FXDLog_DEFAULT;
@@ -62,8 +62,8 @@
 - (void) parser:(CHCSVParser *)parser didReadField:(NSString *)field {	//FXDLog_DEFAULT;
 	//FXDLog(@"field: %@", field);
 	
-	if (_fieldValues == nil) {
-		_fieldValues = [[NSMutableArray alloc] initWithCapacity:0];
+	if (self.fieldValues == nil) {
+		self.fieldValues = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	
 	[self.fieldValues addObject:field];
@@ -73,8 +73,8 @@
 	//FXDLog(@"lineNumber: %u\n%@", lineNumber, self.fieldValues);
 	
 	if (lineNumber == 1) {	// Assume this is key line
-		_fieldKeys = nil;
-		_fieldKeys = [[NSMutableArray alloc] initWithArray:self.fieldValues];
+		self.fieldKeys = nil;
+		self.fieldKeys = [[NSMutableArray alloc] initWithArray:self.fieldValues];
 	}
 	else {
 		if (self.fieldKeys) {
@@ -82,12 +82,12 @@
 		}
 	}
 	
-	_fieldValues = nil;
+	self.fieldValues = nil;
 }
 
 - (void) parser:(CHCSVParser *)parser didEndDocument:(NSString *)csvFile {	FXDLog_DEFAULT;
 	
-	_fieldKeys = nil;
+	self.fieldKeys = nil;
 	
 	[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
@@ -98,12 +98,12 @@
 	}
 	
 	
-	_fieldKeys = nil;
-	_fieldValues = nil;
+	self.fieldKeys = nil;
+	self.fieldValues = nil;
 	
 	[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 
-
 @end
+
 #endif

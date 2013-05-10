@@ -25,7 +25,7 @@
 #import "FXDsuperFileManager.h"
 
 
-@interface FXDsuperCoreDataManager : UIManagedDocument <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperCoreDataManager : FXDManagedDocument <NSFetchedResultsControllerDelegate> {
     // Primitives
 	
 	// Instance variables
@@ -33,9 +33,6 @@
 	NSArray *_mainSortDescriptors;
 	
 	FXDFetchedResultsController *_mainResultsController;
-
-	NSMutableArray *_fieldValues;
-	NSMutableArray *_fieldKeys;
 }
 
 // Properties
@@ -43,9 +40,6 @@
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
 
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
-
-@property (strong, nonatomic) NSMutableArray *fieldValues;
-@property (strong, nonatomic) NSMutableArray *fieldKeys;
 
 
 #pragma mark - Public
@@ -84,21 +78,3 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 @end
-
-
-#pragma mark - Category
-
-#if USE_csvParser
-#import "CHCSV.h"
-
-@interface FXDsuperCoreDataManager (CSVparser) <CHCSVParserDelegate>
-
-#pragma mark - Public
-- (void)parseFromCSVfileName:(NSString*)csvFileName;
-- (void)insertParsedObjForEntityName:(NSString*)entityName usingKeys:(NSArray*)keys usingValues:(NSArray*)values;
-
-#pragma mark - CHCSVParserDelegate
-
-@end
-
-#endif
