@@ -16,14 +16,12 @@
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

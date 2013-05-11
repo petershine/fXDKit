@@ -29,15 +29,8 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	// Primitives
 	self.initialDisclaimerFrame = [[self disclaimerView] frame];
 	self.disclaimerOffset = CGPointZero;
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets
 }
 
 

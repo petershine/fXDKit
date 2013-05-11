@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -30,13 +29,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	// Primitives
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets	
+		
 }
 
 

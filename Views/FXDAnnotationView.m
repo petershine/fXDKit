@@ -29,14 +29,6 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	// Primitives
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets
-	
 }
 
 

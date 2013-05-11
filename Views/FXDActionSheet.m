@@ -17,12 +17,6 @@
 - (void)dealloc {	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	// Instance variables
-	
-	// Properties
-	
-	// IBOutlets
-	
 	FXDLog_DEFAULT;
 }
 
@@ -40,14 +34,6 @@
 
 - (void)awakeFromNib {
 	[super awakeFromNib];
-
-	// Primitives
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets
 
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self

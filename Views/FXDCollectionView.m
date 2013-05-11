@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
 
@@ -31,25 +30,14 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	// Primitives
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets
-
 }
 
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -57,6 +45,5 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end

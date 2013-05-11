@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-
 @class FXDAlertView;
 
 typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger buttonIndex);
@@ -23,7 +22,6 @@ typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger 
 
 
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 

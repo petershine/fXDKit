@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -30,14 +29,8 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	// Primitives
-
-    // Instance variables
-
-    // Properties
 	self.sectionPositionType = integerNotDefined;
 
-    // IBOutlets		
 	if (self.imageView) {
 		[self modifySizeOfCellSubview:self.imageView];
 		[self modifyOriginXofCellSubview:self.imageView];
@@ -60,10 +53,7 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_DEFAULT;
     [super setSelected:selected animated:animated];
 
@@ -130,7 +120,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

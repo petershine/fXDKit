@@ -18,10 +18,7 @@
 
 #if ForDEVELOPER
 	FXDLog_DEFAULT;
-
-	if (_delegateBlock) {
-		FXDLog(@"_delegateBlock: %@", _delegateBlock);
-	}
+	FXDLog(@"_delegateBlock: %@", _delegateBlock);
 #endif
 
 	// Instance variables
@@ -42,26 +39,15 @@
 
 - (void)awakeFromNib {
 	[super awakeFromNib];
-
-	// Primitives
-
-    // Instance variables
-
-    // Properties
-
-    // IBOutlets
 	
 }
 
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 - (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
