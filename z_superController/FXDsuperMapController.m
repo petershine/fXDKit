@@ -40,7 +40,9 @@
 	[super viewDidLoad];
 	
 	// IBOutlets
-	[self.mainMapview setDelegate:self];
+	if (self.mainMapview.delegate == nil) {
+		[self.mainMapview setDelegate:self];
+	}
 	
 	[self resumeTrackingUser];
 }

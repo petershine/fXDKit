@@ -283,9 +283,11 @@
 			didFinishBlock();
 		}
 	};
+	
+	
+	FXDLog(@"[NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]: %d", ([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]));
 
 
-#warning "//TODO: be careful about asynchronous saving"
 	if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
 		[managedObjectContext performBlockAndWait:_contextSavingBlock];
 	}
