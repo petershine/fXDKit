@@ -1,22 +1,18 @@
 //
-//  FXDsuperContainer.h
+//  FXDDocument.h
 //
 //
-//  Created by petershine on 5/1/13.
+//  Created by petershine on 5/13/13.
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
 
-@interface FXDsuperContainer : FXDViewController
+@interface FXDDocument : UIDocument
 
 // Properties
 
-// IBOutlets
 
-
-#pragma mark - Segues
-
-#pragma mark - IBActions
+#pragma mark - Initialization
 
 #pragma mark - Public
 

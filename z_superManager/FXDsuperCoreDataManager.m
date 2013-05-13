@@ -16,8 +16,6 @@
 #pragma mark - Memory management
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// Instance variables
 }
 
 
@@ -28,12 +26,12 @@
 
 
 #pragma mark - Property overriding
-- (FXDManagedDocument*)mainDocument {
+- (UIManagedDocument*)mainDocument {
 	if (_mainDocument == nil) {	FXDLog_DEFAULT;
 		NSURL *fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
 		FXDLog(@"fileURL: %@", fileURL);
 		
-		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:fileURL];
+		_mainDocument = [[UIManagedDocument alloc] initWithFileURL:fileURL];
 		FXDLog(@"_mainDocument: %@", _mainDocument);
 	}
 	

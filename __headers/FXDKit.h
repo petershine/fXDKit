@@ -61,10 +61,10 @@
 
 #import "FXDAnnotation.h"
 
+#import "FXDDocument.h"
 #import "FXDManagedObject.h"
 #import "FXDFetchedResultsController.h"
 #import "FXDManagedObjectContext.h"
-#import "FXDManagedDocument.h"
 
 #import "FXDFileManager.h"
 

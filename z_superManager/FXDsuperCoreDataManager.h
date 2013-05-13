@@ -31,7 +31,7 @@
     // Primitives
 	
 	// Instance variables
-	FXDManagedDocument *_mainDocument;
+	UIManagedDocument *_mainDocument;
 	
 	NSString *_mainSqlitePathComponent;
 	NSString *_mainUbiquitousContentName;
@@ -43,7 +43,7 @@
 }
 
 // Properties
-@property (strong, nonatomic) FXDManagedDocument *mainDocument;
+@property (strong, nonatomic) UIManagedDocument *mainDocument;
 
 @property (strong, nonatomic) NSString *mainSqlitePathComponent;
 @property (strong, nonatomic) NSString *mainUbiquitousContentName;
@@ -87,6 +87,5 @@
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
-#pragma mark - NSFetchedResultsControllerDelegate
 
 @end

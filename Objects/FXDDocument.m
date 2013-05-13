@@ -1,15 +1,16 @@
 //
-//  FXDManagedDocument.m
-//  PhotoAlbum
+//  FXDDocument.m
 //
-//  Created by petershine on 5/10/13.
-//  Copyright (c) 2013 Provus. All rights reserved.
 //
-#import "FXDManagedDocument.h"
+//  Created by petershine on 5/13/13.
+//  Copyright (c) 2013 fXceed. All rights reserved.
+//
+
+#import "FXDDocument.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDManagedDocument
+@implementation FXDDocument
 
 
 #pragma mark - Memory management
@@ -38,11 +39,7 @@
 }
 
 #pragma mark -
-- (void)autosaveWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
-	FXDLog(@"self hasUnsavedChanges: %d", [self hasUnsavedChanges]);
-	FXDLog(@"self.managedObjectContext hasChanges: %d", [self.managedObjectContext hasChanges]);
-	FXDLog(@"self.managedObjectContext.parentContext hasChanges: %d", [self.managedObjectContext.parentContext hasChanges]);
-	
+- (void)autosaveWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;	
 	[super autosaveWithCompletionHandler:completionHandler];
 }
 
