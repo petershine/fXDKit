@@ -16,8 +16,6 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	// Instance variables
-	
 	FXDLog_SEPARATE;
 }
 

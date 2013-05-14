@@ -11,8 +11,6 @@
 
 @interface FXDsuperScrollController : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
     // Primitives
-	
-	// Instance variables
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
 	

@@ -19,8 +19,6 @@
 
 	[[self class] sharedInstance].titleText = nil;
 	[[self class] sharedInstance].viewTitle = nil;
-	
-	// Instance variables
 
 	// Properties
 }

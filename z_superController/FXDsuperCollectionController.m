@@ -16,9 +16,7 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-	
-    // Release any cached data, images, etc that aren't in use.
-}
+	}
 
 - (void)dealloc {
 	// Instance variables

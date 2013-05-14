@@ -29,8 +29,6 @@
 //@interface FXDsuperCoreDataManager : FXDManagedDocument <NSFetchedResultsControllerDelegate> {
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
     // Primitives
-	
-	// Instance variables
 	UIManagedDocument *_mainDocument;
 	
 	NSString *_mainSqlitePathComponent;

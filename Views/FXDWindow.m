@@ -21,8 +21,6 @@
 	
 	// Primitives
 	
-	// Instance variables
-	
 	// Properties
 }
 

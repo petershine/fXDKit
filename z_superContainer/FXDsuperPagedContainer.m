@@ -24,8 +24,6 @@
 	
 	[_pagedOperationDictionary removeAllObjects];
 	_pagedOperationDictionary = nil;
-	
-	// Instance variables
 }
 
 

@@ -44,8 +44,6 @@
 @interface FXDsuperFileManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	BOOL _didFinishFirstGathering;
-	
-	// Instance variables
 	id _ubiquityIdentityToken;
 	
 	NSURL *_ubiquityContainerURL;

@@ -16,15 +16,12 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-	
-    // Release any cached data, images, etc that aren't in use.
-}
+	}
 
 - (void)dealloc {
 	[_mainScrollview setDelegate:nil];
 	
-	// Instance variables
-	[_mainResultsController setDynamicDelegate:nil];	
+	[_mainResultsController setDynamicDelegate:nil];
 	
 	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
 	[_cellOperationQueue cancelAllOperations];

@@ -20,9 +20,7 @@
 	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
 }
 
-- (void)dealloc {	
-	// Instance variables
-		
+- (void)dealloc {		
 	FXDLog_DEFAULT;
 }
 

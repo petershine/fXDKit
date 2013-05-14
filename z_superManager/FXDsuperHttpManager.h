@@ -13,8 +13,6 @@
     // Primitives
 	NSInteger _httpContentLength;
 	NSInteger _receivedDataLength;
-	
-	// Instance variables
 	NSURL *_httpURL;
 	NSMutableURLRequest *_httpRequest;
 	NSURLConnection *_httpConnection;

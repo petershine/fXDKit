@@ -18,9 +18,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)dealloc {	
-	// Instance variables
-}
+- (void)dealloc {}
 
 
 #pragma mark - Initialization
