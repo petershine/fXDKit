@@ -24,7 +24,7 @@
     if (self) {
     	// Primitives
 
-		// Instance variables
+	
 
 		// Properties
 

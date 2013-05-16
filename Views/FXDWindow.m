@@ -41,7 +41,7 @@
 
 	// Primitives
 
-	// Instance variables
+
 
 	// Properties
 

@@ -16,7 +16,8 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
     [super didReceiveMemoryWarning];
-	}
+
+}
 
 - (void)dealloc {		
 	FXDLog_DEFAULT;

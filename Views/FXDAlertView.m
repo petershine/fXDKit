@@ -21,7 +21,7 @@
 	FXDLog(@"_delegateBlock: %@", _delegateBlock);
 #endif
 
-	// Instance variables
+
 	_delegateBlock = nil;
 }
 

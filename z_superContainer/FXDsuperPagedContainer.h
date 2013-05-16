@@ -15,7 +15,7 @@
 @interface FXDsuperPagedContainer : FXDsuperContainer <UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
 	// Primitive
 	
-	// Instance variables	
+	
 	NSMutableArray *_mainDataSource;
 	
 	NSOperationQueue *_pagedOperationQueue;

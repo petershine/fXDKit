@@ -19,7 +19,7 @@
 }
 
 - (void)dealloc {
-	// Instance variables
+
 	
 	FXDLog_DEFAULT;
 }

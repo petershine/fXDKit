@@ -20,7 +20,7 @@
 
 	// Primitives
 
-	// Instance variables
+
 
 	// Properties
 

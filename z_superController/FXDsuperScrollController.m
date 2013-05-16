@@ -16,19 +16,22 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-	}
+
+}
 
 - (void)dealloc {
-	[_mainScrollview setDelegate:nil];
-	
+	[_mainResultsController setDelegate:nil];
 	[_mainResultsController setDynamicDelegate:nil];
-	
-	FXDLog(@"_cellOperationQueue operationCount: %u", [_cellOperationQueue operationCount]);
+	_mainResultsController = nil;
+
 	[_cellOperationQueue cancelAllOperations];
 	_cellOperationQueue = nil;
 	
 	[_cellOperationDictionary removeAllObjects];
 	_cellOperationDictionary = nil;
+	
+	
+	[_mainScrollview setDelegate:nil];
 }
 
 

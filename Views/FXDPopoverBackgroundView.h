@@ -12,7 +12,7 @@
 	CGFloat _arrowOffset;
 	UIPopoverArrowDirection _arrowDirection;
 
-	// Instance variables
+
 }
 
 // Properties

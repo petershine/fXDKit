@@ -25,7 +25,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	// Instance variables
+
 
 	// Properties
 }

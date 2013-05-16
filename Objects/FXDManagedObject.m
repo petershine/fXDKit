@@ -26,7 +26,7 @@
 	if (self) {
 		// Primitives
 
-		// Instance variables
+	
 	}
 
 	return self;

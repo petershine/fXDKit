@@ -69,7 +69,7 @@
 		_isSystemVersionLatest = YES;
 	}
 
-	// Instance variables
+
 
 	// Properties
 	

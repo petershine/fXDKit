@@ -50,7 +50,7 @@
 }
 
 - (void)dealloc {
-	// Instance variables
+
 }
 
 
@@ -68,7 +68,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-    // IBOutlets
+
 	[self performSegueWithIdentifier:seguenameFrontController sender:self];
 	
 	self.minimumChildCount = [self.childViewControllers count];

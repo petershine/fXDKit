@@ -16,10 +16,13 @@
 #pragma mark - Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-	}
+
+}
 
 - (void)dealloc {
-	// Instance variables
+	[_mainCollectionview setDelegate:nil];
+	[_mainCollectionview setDataSource:nil];
+	
 }
 
 

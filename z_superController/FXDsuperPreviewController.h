@@ -18,7 +18,7 @@
 #import "FXDsuperScrollController.h"
 
 @interface FXDsuperPreviewController : FXDsuperScrollController {
-	// Instance variables
+
 	ALAsset *_previewedAsset;
 }
 

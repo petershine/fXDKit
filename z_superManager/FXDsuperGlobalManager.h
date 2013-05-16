@@ -12,7 +12,7 @@
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
 
-	// Instance variables
+
 	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
 }
