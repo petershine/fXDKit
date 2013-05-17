@@ -243,10 +243,12 @@
 	self.buttonPlay.hidden = YES;
 	
 	
+	__weak typeof(self) _weakSelf = self;
+	
 	[[FXDWindow applicationWindow] showDefaultProgressView];
 	
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		ALAssetRepresentation *defaultRepresentation = [self.previewedAsset defaultRepresentation];
+		ALAssetRepresentation *defaultRepresentation = [_weakSelf.previewedAsset defaultRepresentation];
 		
 		CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
 		CGFloat scale = [[UIScreen mainScreen] scale];
@@ -258,7 +260,7 @@
 		FXDLog(@"fullImage.imageOrientation: %d fullImage.size: %@", fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[self refreshWithFullImage:fullImage];
+			[_weakSelf refreshWithFullImage:fullImage];
 			
 			[[FXDWindow applicationWindow] hideProgressView];
 		});

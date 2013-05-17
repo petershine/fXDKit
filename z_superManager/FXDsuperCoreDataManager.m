@@ -235,7 +235,8 @@
 
 #pragma mark -
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
-
+	FXDLog(@"managedObjectContext: %@", managedObjectContext);
+	
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 	if (managedObjectContext == nil) {
@@ -263,7 +264,7 @@
 	}
 
 
-	void (^_contextSavingBlock)(void) = ^(void){
+	void (^_contextSavingBlock)(void) = ^{
 		NSError *error = nil;
 #if ForDEVELOPER
 		BOOL didSave = [managedObjectContext save:&error];
@@ -283,16 +284,31 @@
 	};
 	
 	
-	FXDLog(@"[NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]: %d", ([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]));
-
-
-	if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-		[managedObjectContext performBlockAndWait:_contextSavingBlock];
+	FXDLog(@"[NSThread isMainThread]: %d managedObjectContext.concurrencyType: %d", [NSThread isMainThread], managedObjectContext.concurrencyType);
+	
+	if ([NSThread isMainThread]) {
+		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				[managedObjectContext performBlock:_contextSavingBlock];
+				
+				dispatch_async(dispatch_get_main_queue(), ^{
+					//
+				});
+			});
+		}
+		else {
+			[managedObjectContext performBlockAndWait:_contextSavingBlock];
+		}
 	}
 	else {
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[managedObjectContext performBlockAndWait:_contextSavingBlock];
-		}];
+		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
+			[managedObjectContext performBlock:_contextSavingBlock];
+		}
+		else {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[managedObjectContext  performBlockAndWait:_contextSavingBlock];
+			});
+		}
 	}
 }
 
