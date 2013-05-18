@@ -403,8 +403,8 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	
-	if (controller.dynamicDelegate) {
-		[controller.dynamicDelegate controllerWillChangeContent:controller];
+	if (controller.additionalDelegate) {
+		[controller.additionalDelegate controllerWillChangeContent:controller];
 	}
 	else {
 		FXDLog_OVERRIDE;
@@ -413,8 +413,8 @@
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 	
-	if (controller.dynamicDelegate) {
-		[controller.dynamicDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
+	if (controller.additionalDelegate) {
+		[controller.additionalDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 	}
 	else {
 		FXDLog_OVERRIDE;
@@ -423,8 +423,8 @@
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 	
-	if (controller.dynamicDelegate) {
-		[controller.dynamicDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+	if (controller.additionalDelegate) {
+		[controller.additionalDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 	}
 	else {
 		//FXDLog_OVERRIDE;
@@ -433,8 +433,8 @@
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
-	if (controller.dynamicDelegate) {
-		[controller.dynamicDelegate controllerDidChangeContent:controller];
+	if (controller.additionalDelegate) {
+		[controller.additionalDelegate controllerDidChangeContent:controller];
 	}
 	else {
 		FXDLog_OVERRIDE;

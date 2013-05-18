@@ -57,7 +57,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_DEFAULT;
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {	//FXDLog_DEFAULT;

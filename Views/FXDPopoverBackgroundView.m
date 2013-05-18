@@ -30,7 +30,7 @@
 
     if (self) {//MARK: Cannot use awakeFromNib
 #if ForDEVELOPER
-		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValueDefault];
+		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValue05];
 #endif
 		// Primitives
 
@@ -113,7 +113,7 @@
 										  self.frame.size.height -arrowHeight)];
 
 #if ForDEVELOPER
-		self.viewBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValueDefault];
+		self.viewBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue05];
 #else
 		self.viewBackground.backgroundColor = [UIColor clearColor];
 #endif
@@ -133,7 +133,7 @@
 										  arrowHeight)];
 
 #if ForDEVELOPER
-		self.imageviewArrow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValueDefault];
+		self.imageviewArrow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue05];
 #else
 		self.imageviewArrow.backgroundColor = [UIColor clearColor];
 #endif

@@ -30,6 +30,7 @@
 	
 	
 	[_mainScrollview setDelegate:nil];
+	_mainScrollview = nil;
 }
 
 
@@ -49,7 +50,6 @@
 	
 	FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
 	
-    // IBOutlet
 	if (self.mainScrollview == nil) {
 		return;
 	}
@@ -87,11 +87,14 @@
 		self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
 		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 	}
+
+	if (self.mainResultsController) {
+		[self.mainResultsController setAdditionalDelegate:self];
+	}
 }
 
 
 #pragma mark - Autorotating
-
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
@@ -202,11 +205,9 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
-		//MARK: If EXC_BAD_ACCESS occurs, keep this commented out
-		/*
-		FXDLog(@"mainScrollview delegate: %@", [self.mainScrollview performSelector:@selector(delegate)]);
-		FXDLog(@"mainScrollview dataSource: %@", [self.mainScrollview performSelector:@selector(dataSource)]);
-		 */
+		if (self.mainResultsController.additionalDelegate == self) {
+			[self.mainResultsController setAdditionalDelegate:nil];
+		}
 				
 		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
 			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
@@ -392,12 +393,14 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	
+	/*
 	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
 		[self.mainScrollview performSelector:@selector(beginUpdates)];
 	}
 	else {
+	 */
 		FXDLog_OVERRIDE;
-	}
+	//}
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
@@ -411,12 +414,14 @@
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
+	/*
 	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
 		[self.mainScrollview performSelector:@selector(endUpdates)];
 	}
 	else {
+	 */
 		FXDLog_OVERRIDE;
-	}
+	//}
 }
 
 #pragma mark - UIScrollViewDelegate

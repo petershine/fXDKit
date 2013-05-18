@@ -157,6 +157,7 @@
 }
 
 #pragma mark -
+/*
 - (void)addChildViewController:(UIViewController *)childController {	FXDLog_DEFAULT;
 	FXDLog(@"childController: %@", childController);
 
@@ -168,6 +169,7 @@
 
 	[super removeFromParentViewController];
 }
+ */
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	if (parent == nil) {

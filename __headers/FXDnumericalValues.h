@@ -26,7 +26,7 @@
 #define durationKeyboardAnimation	0.25
 #define heightKeyboard_iPad	352.0
 
-#define alphaValueDefault	0.5
+#define alphaValue05	0.5
 
 
 #define heightNavigationBar	44.0

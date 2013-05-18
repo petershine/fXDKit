@@ -23,6 +23,7 @@
 	[_mainTableview setDelegate:nil];
 	[_mainTableview setDataSource:nil];
 	
+	_mainTableview = nil;
 }
 
 
@@ -71,6 +72,9 @@
 		
 		if (self.mainTableview) {
 			_mainScrollview = self.mainTableview;
+		}
+		else {
+			_mainScrollview = [super mainScrollview];
 		}
 	}
 	

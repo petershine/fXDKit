@@ -18,7 +18,9 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)dealloc {}
+- (void)dealloc {
+	FXDLog_DEFAULT;
+}
 
 
 #pragma mark - Initialization
@@ -40,7 +42,6 @@
 
 
 #pragma mark - Autorotating
-
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
