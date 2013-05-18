@@ -21,8 +21,7 @@
 
 - (void)dealloc {
 	[_mainCollectionview setDelegate:nil];
-	[_mainCollectionview setDataSource:nil];
-	
+	[_mainCollectionview setDataSource:nil];	
 }
 
 
@@ -45,7 +44,6 @@
 
 
 #pragma mark - Autorotating
-
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {

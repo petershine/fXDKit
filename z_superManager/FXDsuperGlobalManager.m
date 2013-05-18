@@ -377,7 +377,7 @@
 }
 
 #pragma mark -
-- (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {	FXDLog_OVERRIDE;	
+- (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {	//FXDLog_OVERRIDE;
 }
 
 //MARK: - Delegate implementation

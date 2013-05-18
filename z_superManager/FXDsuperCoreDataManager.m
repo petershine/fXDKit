@@ -40,7 +40,7 @@
 
 #pragma mark -
 - (NSString*)mainSqlitePathComponent {
-	if (_mainSqlitePathComponent == nil) {
+	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
 		_mainSqlitePathComponent = applicationSqlitePathComponent;
 	}
 	
@@ -48,7 +48,7 @@
 }
 
 - (NSString*)mainUbiquitousContentName {
-	if (_mainUbiquitousContentName == nil) {
+	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
 		_mainUbiquitousContentName = ubiquitousCoreDataContentName;
 	}
 	
@@ -102,7 +102,7 @@
 }
 
 #pragma mark -
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didFinish))didFinishBlock {	//FXDLog_DEFAULT;
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didConfigure))didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
@@ -177,12 +177,13 @@
 			[self startObservingCoreDataNotifications];
 
 #warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
-			NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
-
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataManagerDidPrepare object:self userInfo:userInfo];
-
 			if (didFinishBlock) {
 				didFinishBlock(didConfigure);
+			}
+			else {
+				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataManagerDidPrepare object:self userInfo:userInfo];
 			}
 		}];
 	}];
@@ -235,7 +236,6 @@
 
 #pragma mark -
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
-	FXDLog(@"managedObjectContext: %@", managedObjectContext);
 	
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
@@ -252,7 +252,22 @@
 			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 		}
 	}
-
+	
+	
+	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
+	FXDLog(@"1.managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	
+	//TEST: thread based change
+	/*
+	if ([NSThread isMainThread]) {
+		managedObjectContext = self.mainDocument.managedObjectContext;
+	}
+	else {
+		managedObjectContext = self.mainDocument.managedObjectContext.parentContext;
+	}
+	 */
+	
+	FXDLog(@"2.managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
 
@@ -283,17 +298,11 @@
 		}
 	};
 	
-	
-	FXDLog(@"[NSThread isMainThread]: %d managedObjectContext.concurrencyType: %d", [NSThread isMainThread], managedObjectContext.concurrencyType);
-	
+		
 	if ([NSThread isMainThread]) {
 		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				[managedObjectContext performBlock:_contextSavingBlock];
-				
-				dispatch_async(dispatch_get_main_queue(), ^{
-					//
-				});
+				[managedObjectContext performBlockAndWait:_contextSavingBlock];
 			});
 		}
 		else {
@@ -302,7 +311,7 @@
 	}
 	else {
 		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-			[managedObjectContext performBlock:_contextSavingBlock];
+			[managedObjectContext performBlockAndWait:_contextSavingBlock];
 		}
 		else {
 			dispatch_async(dispatch_get_main_queue(), ^{
@@ -310,59 +319,6 @@
 			});
 		}
 	}
-}
-
-#pragma mark -
-- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {	FXDLog_DEFAULT;
-
-	if (entityName == nil) {
-		entityName = self.mainEntityName;
-	}
-
-	if (sortDescriptors == nil) {
-		sortDescriptors = self.mainSortDescriptors;
-	}
-
-
-	if (managedObjectContext == nil) {
-		managedObjectContext = self.mainDocument.managedObjectContext;
-	}
-
-	FXDFetchedResultsController *resultsController = [managedObjectContext resultsControllerForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
-
-	return resultsController;
-}
-
-- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit fromManagedObjectContext:(NSManagedObjectContext*)managedObjectContext {
-
-	if (entityName == nil) {
-		entityName = self.mainEntityName;
-	}
-
-	if (sortDescriptors == nil) {
-		sortDescriptors = self.mainSortDescriptors;
-	}
-
-
-	if (managedObjectContext == nil) {
-		managedObjectContext = self.mainDocument.managedObjectContext;
-	}
-
-	NSMutableArray *fetchedObjArray = [managedObjectContext fetchedObjArrayForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
-
-	return fetchedObjArray;
-}
-
-- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue fromResultsController:(FXDFetchedResultsController*)resultsController {	//FXDLog_DEFAULT;
-
-	if (resultsController == nil) {
-		resultsController = self.mainResultsController;
-	}
-	
-
-	FXDManagedObject *resultObj = [resultsController resultObjForAttributeKey:attributeKey andForAttributeValue:attributeValue];
-	
-	return resultObj;
 }
 
 
@@ -382,26 +338,22 @@
 
 #pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.name: %@", notification.name);
 	FXDLog(@"notification.object: %@", notification.object);
 
 	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
-
 }
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
-
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
-
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;

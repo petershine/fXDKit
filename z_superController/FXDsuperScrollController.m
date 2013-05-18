@@ -20,8 +20,6 @@
 }
 
 - (void)dealloc {
-	[_mainResultsController setDelegate:nil];
-	[_mainResultsController setDynamicDelegate:nil];
 	_mainResultsController = nil;
 
 	[_cellOperationQueue cancelAllOperations];
@@ -209,11 +207,7 @@
 		FXDLog(@"mainScrollview delegate: %@", [self.mainScrollview performSelector:@selector(delegate)]);
 		FXDLog(@"mainScrollview dataSource: %@", [self.mainScrollview performSelector:@selector(dataSource)]);
 		 */
-		
-		if ([self.mainResultsController respondsToSelector:@selector(setDynamicDelegate:)]) {
-			[self.mainResultsController performSelector:@selector(setDynamicDelegate:) withObject:nil];
-		}
-		
+				
 		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
 			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
 		}
