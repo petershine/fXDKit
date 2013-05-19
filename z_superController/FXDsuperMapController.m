@@ -173,8 +173,11 @@
 	
 }
 
-- (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {	FXDLog_OVERRIDE;
+- (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
+	/*
+	FXDLog_OVERRIDE;
 	FXDLog(@"mode: %d animated: %d self.initialTrackingMode: %d self.shouldResumeTracking: %d", mode, animated, self.initialTrackingMode, self.shouldResumeTracking);
+	 */
 }
 
 

@@ -351,6 +351,33 @@
 }
 
 #pragma mark - Public
+- (id)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
+	
+	if (nibNameOrNil == nil) {
+		nibNameOrNil = NSStringFromClass([self class]);
+	}
+	
+	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:nil];
+	
+	id controllerView = nil;
+	
+	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
+	
+	if ([viewArray count] > 0) {
+		controllerView = viewArray[0];
+	}
+	
+	FXDLog(@"controllerView: %@", controllerView);
+	
+#if ForDEVELOPER
+	if (controllerView == nil) {
+		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
+	}
+#endif
+	
+	return controllerView;
+}
+
 - (void)reframeForStatusBarFrame:(CGRect)statusBarFrame {
 	CGRect modifiedFrame = self.view.frame;
 	modifiedFrame.origin.y += statusBarFrame.size.height;
