@@ -133,14 +133,10 @@
 #if USE_loggingViewDrawing
 - (void)viewWillLayoutSubviews {	FXDLog_SEPARATE_FRAME;
 	[super viewWillLayoutSubviews];
-	
-	// Called just before the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
 
 - (void)viewDidLayoutSubviews {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLayoutSubviews];
-	
-	// Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 }
 #endif
 
@@ -148,11 +144,11 @@
 	[super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewWillDisappear:(BOOL)animated {	//FXDLog_SEPARATE_FRAME;
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidDisappear:(BOOL)animated {	//FXDLog_SEPARATE_FRAME;
 	[super viewDidDisappear:animated];
 }
 

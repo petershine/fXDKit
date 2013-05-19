@@ -78,7 +78,6 @@
 
 #pragma mark - Autorotating
 
-
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -99,9 +98,7 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - Segues
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_DEFAULT;

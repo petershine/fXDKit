@@ -107,8 +107,10 @@
 	self.periodicObserver = nil;
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidDisappear:animated];
+	
+	FXDLog(@"self.mainMoviePlayer.rate: %f", self.mainMoviePlayer.rate);
 	
 	if (self.mainMoviePlayer.rate > 0.0) {
 		[self.mainMoviePlayer pause];

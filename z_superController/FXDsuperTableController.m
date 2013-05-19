@@ -47,7 +47,6 @@
 
 #pragma mark - Autorotating
 
-
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -84,9 +83,7 @@
 
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 - (void)initializeTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
@@ -218,8 +215,8 @@
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 
-	//MARK: If cell Nib is registered, this will never be nil
 	if (cell == nil) {	//FXDLog_OVERRIDE;
+		//MARK: If cell Nib is registered, this will never be nil
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 
 		[self initializeTableCell:cell forIndexPath:indexPath];
