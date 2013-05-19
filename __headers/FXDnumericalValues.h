@@ -9,8 +9,13 @@
 #define integerNotDefined	-1
 
 
+#if TEST_withSlowAnimationDuration
+	#define durationAnimation	2.0
+#else
+	#define durationAnimation	0.3
+#endif
+
 #define durationQuickAnimation	(durationAnimation/2.0)
-#define durationAnimation	0.3
 #define durationSlowAnimation	(durationAnimation*2.0)
 
 

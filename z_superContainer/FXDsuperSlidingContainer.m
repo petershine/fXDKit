@@ -168,14 +168,13 @@
 	
 	
 	CGRect animatedFrame = destinationController.view.frame;
-	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
-	//MARK: Make sure origin is properly set
 	animatedFrame.origin.y = 0.0;
-	FXDLog(@"2.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
+	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
 
 	CGRect modifiedFrame = destinationController.view.frame;
-	modifiedFrame.origin.x -= (modifiedFrame.size.width *slidingDirection.x);
-	modifiedFrame.origin.y -= (modifiedFrame.size.height *slidingDirection.y);
+	modifiedFrame.origin.x -= slidingOffset.x;
+	modifiedFrame.origin.y -= slidingOffset.y;
+	modifiedFrame.origin.y += (heightStatusBar *slidingDirection.y);
 	[destinationController.view setFrame:modifiedFrame];
 
 	
@@ -252,7 +251,6 @@
 	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
 	
 	
-#warning "//TODO: assume only vertical direction is supported"
 	CGFloat slidingOutOffsetY = [[sourceController offsetYforSlidingOut] floatValue];
 	FXDLog(@"1.slidingOutOffsetY: %f", slidingOutOffsetY);
 	
@@ -419,27 +417,19 @@
 
 #pragma mark -
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
-	//MARK: be careful if there will be statusBar confusion"
 	
 	SLIDING_OFFSET slidingOffset = {0.0, 0.0};
 	
-	switch (slideDirectionType) {
-		case slideDirectionTop:
-			slidingOffset.y = 0.0 -(self.view.frame.size.height -heightStatusBar);
-			break;
-						
-		case slideDirectionBottom:
-			slidingOffset.y = (self.view.frame.size.height -heightStatusBar);
-			break;
-						
-		default:
-			break;
-	}
+	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:slideDirectionType];
+	
+	slidingOffset.x = (self.view.frame.size.width *(CGFloat)slidingDirection.x);
+	slidingOffset.y = (self.view.frame.size.height *(CGFloat)slidingDirection.y);
 	
 	return slidingOffset;
 }
 
 - (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
+	
 	SLIDING_DIRECTION slidingDirection = {0, 0};
 	
 	switch (slideDirectionType) {
