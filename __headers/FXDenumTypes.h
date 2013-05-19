@@ -31,9 +31,7 @@ typedef CGPoint SLIDING_DIRECTION;
 
 typedef NS_ENUM(NSInteger, SLIDE_DIRECTION_TYPE) {
 	slideDirectionTop,
-	slideDirectionLeft,
-	slideDirectionBottom,
-	slideDirectionRight
+	slideDirectionBottom
 };
 
 

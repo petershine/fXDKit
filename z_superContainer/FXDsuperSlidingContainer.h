@@ -33,9 +33,7 @@
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 - (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue;
@@ -66,6 +64,6 @@
 - (BOOL)shouldCoverWhenSlidingIn;
 - (BOOL)shouldStayFixed;
 
-- (NSNumber*)distanceNumberForSlidingOut;
+- (NSNumber*)offsetYforSlidingOut;
 
 @end

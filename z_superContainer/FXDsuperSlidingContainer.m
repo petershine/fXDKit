@@ -253,16 +253,16 @@
 	
 	
 #warning "//TODO: assume only vertical direction is supported"
-	CGFloat slidingOutDistance = [[sourceController distanceNumberForSlidingOut] floatValue];
-	FXDLog(@"1.slidingOutDistance: %f", slidingOutDistance);
+	CGFloat slidingOutOffsetY = [[sourceController offsetYforSlidingOut] floatValue];
+	FXDLog(@"1.slidingOutOffsetY: %f", slidingOutOffsetY);
 	
-	if (slidingOutDistance > 0.0) {
-		animatedFrame.origin.y -= (slidingOutDistance *slidingDirection.y);
+	if (slidingOutOffsetY > 0.0) {
+		animatedFrame.origin.y -= (slidingOutOffsetY *slidingDirection.y);
 	}
 	else {
 		animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
 	}
-	FXDLog(@"2.CALCULATED distance: %f - %f = %f", sourceController.view.frame.origin.y, animatedFrame.origin.y, (sourceController.view.frame.origin.y -animatedFrame.origin.y));
+	FXDLog(@"2.CALCULATED slidingOutOffsetY: %f - %f = %f", sourceController.view.frame.origin.y, animatedFrame.origin.y, (sourceController.view.frame.origin.y -animatedFrame.origin.y));
 	
 	
 	FXDViewController *pulledController = nil;
@@ -364,20 +364,20 @@
 	}
 	
 	
-	CGFloat totalSlidingDistance = 0.0;
+	CGFloat totalSlidingOffsetY = 0.0;
 	
 	for (FXDViewController *childController in lateAddedControllerArray) {
-		totalSlidingDistance += childController.view.frame.size.height;
+		totalSlidingOffsetY += childController.view.frame.size.height;
 	}
 	
-	FXDLog(@"totalSlidingDistance: %f", totalSlidingDistance);
+	FXDLog(@"totalSlidingOffsetY: %f", totalSlidingOffsetY);
 	
 	
 	__block NSMutableArray *animatedFrameObjArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
 	for (FXDViewController *childController in lateAddedControllerArray) {
 		CGRect animatedFrame = childController.view.frame;
-		animatedFrame.origin.y += totalSlidingDistance;
+		animatedFrame.origin.y += totalSlidingOffsetY;
 		
 		[animatedFrameObjArray addObject:NSStringFromCGRect(animatedFrame)];
 		
@@ -427,19 +427,11 @@
 		case slideDirectionTop:
 			slidingOffset.y = 0.0 -(self.view.frame.size.height -heightStatusBar);
 			break;
-			
-		case slideDirectionLeft:
-			slidingOffset.x = 0.0 -self.view.frame.size.width;
-			break;
-			
+						
 		case slideDirectionBottom:
 			slidingOffset.y = (self.view.frame.size.height -heightStatusBar);
 			break;
-			
-		case slideDirectionRight:
-			slidingOffset.x = self.view.frame.size.width;
-			break;
-			
+						
 		default:
 			break;
 	}
@@ -454,17 +446,9 @@
 		case slideDirectionTop:
 			slidingDirection.y = -1;
 			break;
-			
-		case slideDirectionLeft:
-			slidingDirection.x = -1;
-			break;
-			
+						
 		case slideDirectionBottom:
 			slidingDirection.y = 1;
-			break;
-			
-		case slideDirectionRight:
-			slidingDirection.x = 1;
 			break;
 			
 		default:
@@ -500,7 +484,7 @@
 }
 
 #pragma mark -
-- (NSNumber*)distanceNumberForSlidingOut {
+- (NSNumber*)offsetYforSlidingOut {
 	return nil;
 }
 
