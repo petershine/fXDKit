@@ -247,7 +247,7 @@
 	
 	
 	[UIView
-	 animateWithDuration:delayOneSecond
+	 animateWithDuration:durationOneSecond
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{

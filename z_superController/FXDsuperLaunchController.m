@@ -71,7 +71,7 @@
 #pragma mark - Public
 - (void)dismissLaunchControllerWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
 	[UIView
-	 animateWithDuration:delayOneSecond
+	 animateWithDuration:durationOneSecond
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{

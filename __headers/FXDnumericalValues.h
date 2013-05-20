@@ -18,11 +18,18 @@
 #define durationQuickAnimation	(durationAnimation/2.0)
 #define durationSlowAnimation	(durationAnimation*2.0)
 
+#define durationOneSecond	1.0
 
-#define delayOneSecond	1.0
-#define delayHalfSecond	0.5
 
+#define intervalOneSecond	durationOneSecond
+
+
+#define delayOneSecond		durationOneSecond
+#define delayHalfSecond		0.5
 #define delayExtremelyShort	0.01
+
+
+
 
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0
