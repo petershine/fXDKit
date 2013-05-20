@@ -11,14 +11,11 @@
 
 // Properties
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 
@@ -26,12 +23,6 @@
 @interface NSDate (Added)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;
-
-+ (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
-+ (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
-
-+ (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
-+ (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
 - (NSInteger)yearValue;
 - (NSInteger)monthValue;

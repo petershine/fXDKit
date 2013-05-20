@@ -8,10 +8,8 @@
 
 
 @interface FXDsuperGlobalManager : FXDObject {
-    // Primitives
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
-
 
 	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
@@ -25,6 +23,8 @@
 
 // Properties
 @property (strong, nonatomic) NSString *deviceLanguageCode;
+@property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
+@property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
 
 @property (strong, nonatomic) id rootController;
 @property (strong, nonatomic) id homeController;
@@ -39,9 +39,13 @@
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
+- (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
+- (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
+- (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
+- (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
+
 
 #warning "//TODO: refactor following method to be organized into categories or subclasses"
-
 + (NSString*)deviceModelName;
 + (NSString*)deviceCountryCode;
 + (NSString*)deviceLanguageCode;

@@ -103,6 +103,36 @@
 	return _deviceLanguageCode;
 }
 
+- (NSDateFormatter*)dateformatterUTC {
+	
+	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
+		_dateformatterUTC = [[NSDateFormatter alloc] init];
+		
+		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
+		[_dateformatterUTC setTimeZone:UTCtimezone];
+		[_dateformatterUTC setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+		
+		FXDLog(@"_dateformatterUTC: %@", _dateformatterUTC);
+	}
+	
+	return _dateformatterUTC;
+}
+
+- (NSDateFormatter*)dateformatterLocal {
+	
+	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT;
+		_dateformatterLocal = [[NSDateFormatter alloc] init];
+		
+		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
+		[_dateformatterLocal setTimeZone:localTimeZone];
+		[_dateformatterLocal setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+				
+		FXDLog(@"_dateformatterLocal: %@", _dateformatterLocal);
+	}
+	
+	return _dateformatterLocal;
+}
+
 #pragma mark -
 - (id)rootController {
 	if (_rootController == nil) {
@@ -254,6 +284,42 @@
 }
 
 #pragma mark -
+- (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate {
+	if (localDate == nil) {
+		localDate = [NSDate date];
+	}
+	
+    NSString *UTCdateString = [self.dateformatterUTC stringFromDate:localDate];
+	
+    return UTCdateString;
+}
+
+- (NSDate*)UTCdateForLocalDate:(NSDate*)localDate {
+	
+	NSString *UTCdateString = [self UTCdateStringForLocalDate:localDate];
+	
+	NSDate *UTCdate = [self.dateformatterUTC dateFromString:UTCdateString];
+	
+	return UTCdate;
+}
+
+- (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate {
+	
+	NSString *localDateString = [self.dateformatterLocal stringFromDate:UTCdate];
+	
+	return localDateString;
+}
+
+- (NSDate*)localDateForUTCdate:(NSDate*)UTCdate {
+	NSString *localDateString = [self localDateStringForUTCdate:UTCdate];
+	
+	NSDate *localDate = [self.dateformatterLocal dateFromString:localDateString];
+	
+	return localDate;
+}
+
+
+#warning "//TODO: refactor following method to be organized into categories or subclasses"
 + (NSString*)deviceModelName {
 
 	struct utsname systemInfo;
