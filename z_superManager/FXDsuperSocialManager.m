@@ -15,8 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-
-
+	//TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 

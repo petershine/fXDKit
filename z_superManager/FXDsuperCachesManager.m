@@ -1,6 +1,6 @@
 //
 //  FXDsuperCachesManager.m
-
+//
 //
 //  Created by petershine on 8/13/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
@@ -16,8 +16,6 @@
 #pragma mark - Memory management
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// Properties
 }
 
 
@@ -74,7 +72,6 @@
 
 
 #pragma mark - Method overriding
-
 
 #pragma mark - Public
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL {
@@ -265,15 +262,14 @@
 
 
 //MARK: - Observer implementation
-- (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {
-	//
+- (void)observedCachesMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_DEFAULT;
 }
 
 - (void)observedCachesMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self enumerateCachesMetadataQueryResults];
 }
 
-- (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	//FXDLog_DEFAULT;
+- (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];

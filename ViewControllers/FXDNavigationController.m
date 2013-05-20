@@ -14,13 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
-    [super didReceiveMemoryWarning];
-
-}
-
-- (void)dealloc {		
-	FXDLog_DEFAULT;
+- (void)dealloc {	FXDLog_DEFAULT;
+	//TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -38,20 +33,15 @@
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 
-	// Primitives
-
-    // Instance variables
-
-    // Properties
+	//TODO: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
 
-	// Properties
 	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
 
-	// IBOutlet
+
 	if (self.shouldUseDefaultNavigationBar == NO) {
 #ifdef imageNavibarBackground
 		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
@@ -65,7 +55,6 @@
 #ifdef imageToolbarBackground
 	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
 #endif
-
 }
 
 

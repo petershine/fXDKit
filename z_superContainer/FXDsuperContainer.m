@@ -14,12 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc {
-	FXDLog_DEFAULT;
+- (void)dealloc {	FXDLog_DEFAULT;
+	//TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -27,17 +23,13 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
-	// Primitives
-	
-    // Instance variables
-	
-    // Properties
+	//TODO: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	// IBOutlet
+	//TODO: Configure AFTER LOADING View
 }
 
 
@@ -50,14 +42,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
 }
 
 

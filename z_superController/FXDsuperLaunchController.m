@@ -14,12 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void)dealloc {
-
+    //TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -27,18 +23,12 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	// Primitives
-
-    // Instance variables
-
-    // Properties
-
+	//TODO: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-    // IBOutlet
 	if (self.imageviewDefault.image == nil) {
 		if (SCREEN_SIZE_35inch) {
 			self.imageviewDefault.image = [UIImage bundledImageForName:imageDefaulLaunch];
@@ -67,14 +57,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
 }
 
 

@@ -14,14 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc {
-
-	
-	FXDLog_DEFAULT;
+- (void)dealloc {	FXDLog_DEFAULT;
+	//TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -41,22 +35,17 @@
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
-	// Primitives
-	
-    // Instance variables
-	
-    // Properties
+	//TODO: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
 	
-    // IBOutlet
+	//TODO: Configure AFTER LOADING View
 }
 
 
 #pragma mark - Autorotating
-
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,14 +54,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
 }
 
 

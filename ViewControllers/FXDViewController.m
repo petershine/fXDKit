@@ -20,8 +20,8 @@
 	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
 }
 
-- (void)dealloc {		
-	FXDLog_DEFAULT;
+- (void)dealloc {	FXDLog_DEFAULT;
+    //TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -63,15 +63,10 @@
 #pragma mark -
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
-
-	// Primitives
+	
 	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
 		_isSystemVersionLatest = YES;
 	}
-
-
-
-	// Properties
 	
 	FXDLog(@"storyboard: %@, nibName: %@ isSystemVersionLatest: %d", self.storyboard, self.nibName, self.isSystemVersionLatest);
 }
@@ -85,8 +80,6 @@
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
 
-	// IBOutlets
-	
 }
 
 
@@ -103,7 +96,6 @@
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_SEPARATE_FRAME;
 	return [super preferredInterfaceOrientationForPresentation];
 }
-
 
 #warning "//MARK: For older iOS 5"
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -209,8 +201,8 @@
 #pragma mark - Property overriding
 - (NSDictionary*)segueNameDictionary {
 
-	if (_segueNameDictionary == nil) {	FXDLog_OVERRIDE;
-		//
+	if (_segueNameDictionary == nil) {
+		FXDLog_OVERRIDE;
 	}
 
 	return _segueNameDictionary;

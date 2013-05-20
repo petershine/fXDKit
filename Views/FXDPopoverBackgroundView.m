@@ -19,27 +19,18 @@
 
 	[[self class] sharedInstance].titleText = nil;
 	[[self class] sharedInstance].viewTitle = nil;
-
-	// Properties
 }
 
 
 #pragma mark - Initialization
+#warning "//MARK: Cannot use awakeFromNib"
 - (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 
-    if (self) {//MARK: Cannot use awakeFromNib
+    if (self) {
 #if ForDEVELOPER
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValue05];
 #endif
-		// Primitives
-
-	
-
-		// Properties
-
-		// IBOutlets
-
     }
 
     return self;
@@ -189,7 +180,6 @@
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
 + (CGFloat)minimumInset {	FXDLog_OVERRIDE;
 	return 0.0;
@@ -199,7 +189,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

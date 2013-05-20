@@ -18,10 +18,6 @@
 #pragma mark - Memory management
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// Primitives
-	
-	// Properties
 }
 
 
@@ -38,14 +34,6 @@
 
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
-
-	// Primitives
-
-
-
-	// Properties
-
-	// IBOutlets
 
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	
@@ -72,12 +60,9 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 
@@ -123,7 +108,6 @@
 }
 
 //MARK: - Delegate implementation
-
 
 @end
 

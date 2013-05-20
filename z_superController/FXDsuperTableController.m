@@ -14,11 +14,6 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-	
-}
-
 - (void)dealloc {
 	[_mainTableview setDelegate:nil];
 	[_mainTableview setDataSource:nil];
@@ -30,18 +25,14 @@
 #pragma mark - Initialization
 - (void)awakeFromNib {
 	[super awakeFromNib];
-
-	// Primitives
-
-    // Instance variables
-
-    // Properties	
+	
+	//TODO: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	// IBOutlets
+	//TODO: Configure AFTER LOADING View
 }
 
 
@@ -215,8 +206,8 @@
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 
-	if (cell == nil) {	//FXDLog_OVERRIDE;
-		//MARK: If cell Nib is registered, this will never be nil
+	//MARK: If cell Nib is registered, this will never be nil
+	if (cell == nil) {
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 
 		[self initializeTableCell:cell forIndexPath:indexPath];
@@ -232,7 +223,7 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	//MARK: Use iOS 6 method
+#warning "//TODO: Only use this when supporting for iOS version previous to 6
 	if (self.isSystemVersionLatest) {
 		return;
 	}
@@ -243,7 +234,6 @@
 	}
 	
 
-#warning "//TODO: Only use this when supporting for iOS version previous to 6
 	[self
 	 processWithDisappearedRowAndDirectionForIndexPath:indexPath
 	 didFinishBlock:^(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward) {

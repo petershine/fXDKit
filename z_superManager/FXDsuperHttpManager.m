@@ -24,21 +24,14 @@ static NSMutableSet *_staticHttpControlSet = nil;
 #pragma mark - Memory managment
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-
-
-	// Properties
 }
 
 
 #pragma mark - Initialization
 
-
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - Public
 + (void)prepareConnectionReachabilities {	FXDLog_DEFAULT;	

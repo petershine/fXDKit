@@ -14,31 +14,21 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-
-}
-
 - (void)dealloc {
-
+    //TODO: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
 #pragma mark - Initialization
 - (void)awakeFromNib {
 	[super awakeFromNib];
-
-	// Primitives
-
-    // Instance variables
-
-    // Properties
+	
+	//TODO: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	// IBOutlets
 	if (self.mainMapview.delegate == nil) {
 		[self.mainMapview setDelegate:self];
 	}
@@ -49,7 +39,6 @@
 
 #pragma mark - Autorotating
 
-
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -59,31 +48,20 @@
 	[super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-}
-
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
-- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
-	
+- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {
+	FXDLog_OVERRIDE;
 }
 
-- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
-	
+- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray {
+	FXDLog_OVERRIDE;
 }
 
 #pragma mark -
@@ -123,14 +101,12 @@
 	FXDLog_ERROR;
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-	FXDLog_OVERRIDE;
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {	FXDLog_OVERRIDE;
 	
 	return nil;
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {	FXDLog_OVERRIDE;
-	
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {	FXDLog_OVERRIDE;
@@ -138,18 +114,14 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {	FXDLog_OVERRIDE;
-	
 }
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {	FXDLog_OVERRIDE;
-	
 }
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {	FXDLog_OVERRIDE;
-	
 }
 
 - (void)mapViewDidStopLocatingUser:(MKMapView *)mapView {	FXDLog_OVERRIDE;
-	
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {	//FXDLog_OVERRIDE;

@@ -15,13 +15,11 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-
 #if ForDEVELOPER
 	FXDLog_DEFAULT;
 	FXDLog(@"_delegateBlock: %@", _delegateBlock);
 #endif
-
-
+	
 	_delegateBlock = nil;
 }
 
@@ -40,6 +38,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
+	//TODO: Initialize BEFORE LOADING View
 }
 
 
