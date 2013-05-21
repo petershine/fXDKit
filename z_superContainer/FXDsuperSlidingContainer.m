@@ -193,6 +193,8 @@
 	
 	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
 
+	destinationController.view.autoresizingMask = UIViewAutoresizingNone;
+	destinationController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	[self.view insertSubview:destinationController.view belowSubview:self.frontController.view];
 	[destinationController didMoveToParentViewController:self];
 

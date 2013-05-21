@@ -17,8 +17,6 @@
 - (void)dealloc {
 	[_mainCollectionview setDelegate:nil];
 	[_mainCollectionview setDataSource:nil];
-	
-	_mainCollectionview = nil;
 }
 
 

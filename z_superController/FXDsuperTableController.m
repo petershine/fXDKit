@@ -17,8 +17,6 @@
 - (void)dealloc {
 	[_mainTableview setDelegate:nil];
 	[_mainTableview setDataSource:nil];
-	
-	_mainTableview = nil;
 }
 
 

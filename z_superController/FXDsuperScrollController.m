@@ -25,7 +25,6 @@
 	
 	
 	[_mainScrollview setDelegate:nil];
-	_mainScrollview = nil;
 }
 
 
