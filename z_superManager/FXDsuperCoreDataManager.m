@@ -30,7 +30,7 @@
 	if (_mainDocument == nil) {	FXDLog_DEFAULT;
 		NSURL *fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
 		FXDLog(@"fileURL: %@", fileURL);
-		
+				
 		_mainDocument = [[UIManagedDocument alloc] initWithFileURL:fileURL];
 		FXDLog(@"_mainDocument: %@", _mainDocument);
 	}

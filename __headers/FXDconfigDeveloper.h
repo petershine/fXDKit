@@ -48,6 +48,7 @@
 
 
 	#define FXDLog_ERROR	if(error){FXDLog(@" ");FXDLog(@"\n\n%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);}
+
 	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}}
 
 
@@ -88,4 +89,9 @@
 #endif
 
 
-#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;static id _sharedInstance = nil;dispatch_once(&once,^{_sharedInstance = [[[self class] alloc] init];});return _sharedInstance
+#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
+static id _sharedInstance = nil;\
+dispatch_once(&once,^{\
+	_sharedInstance = [[[self class] alloc] init];\
+});\
+return _sharedInstance
