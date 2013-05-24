@@ -15,16 +15,18 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	_mainResultsController = nil;
-
 	[_cellOperationQueue cancelAllOperations];
-	_cellOperationQueue = nil;
-	
 	[_cellOperationDictionary removeAllObjects];
+	
+	//TEST
+	/*
+	_cellOperationQueue = nil;
 	_cellOperationDictionary = nil;
 	
-	
+	_mainResultsController = nil;
+
 	[_mainScrollview setDelegate:nil];
+	 */
 }
 
 

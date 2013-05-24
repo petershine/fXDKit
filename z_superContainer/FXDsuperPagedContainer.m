@@ -16,10 +16,13 @@
 #pragma mark - Memory management
 - (void)dealloc {
 	[_pagedOperationQueue cancelAllOperations];
-	_pagedOperationQueue = nil;
-	
 	[_pagedOperationDictionary removeAllObjects];
+	
+	//TEST
+	/*
+	_pagedOperationQueue = nil;
 	_pagedOperationDictionary = nil;
+	 */
 }
 
 
