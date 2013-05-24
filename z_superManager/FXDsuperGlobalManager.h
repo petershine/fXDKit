@@ -6,6 +6,8 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+@class FXDsuperCoreDataManager;
+
 
 @interface FXDsuperGlobalManager : FXDObject {
 	BOOL _didMakePurchase;
@@ -34,6 +36,7 @@
 + (FXDsuperGlobalManager*)sharedInstance;
 
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
 - (void)startObservingEssentialNotifications;
 

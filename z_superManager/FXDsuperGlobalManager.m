@@ -8,6 +8,8 @@
 
 #import "FXDsuperGlobalManager.h"
 
+#import "FXDsuperCoreDataManager.h"
+
 
 #pragma mark - Public implementation
 @implementation FXDsuperGlobalManager
@@ -206,12 +208,33 @@
 
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	//FXDLog_OVERRIDE;
+	[self prepareGlobalManagerWithCoreDataManager:nil withUbiquityContainerURL:nil atLaunchWithWindowLoadingBlock:windowLoadingBlock];
+}
 
-	if (windowLoadingBlock) {
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {
+	
+	void (^didPrepareBlock)(void) = ^(void){
 		[self startObservingEssentialNotifications];
 		
-		windowLoadingBlock();
+		if (windowLoadingBlock) {
+			windowLoadingBlock();
+		}
+	};
+	
+	
+	if (coreDataManager == nil) {
+		didPrepareBlock();
+		return;
 	}
+	
+	
+	[coreDataManager
+	 prepareCoreDataManagerWithUbiquityContainerURL:ubiquityContainerURL
+	 didFinishBlock:^(BOOL didFinish) {	FXDLog_DEFAULT;
+		 FXDLog(@"didFinish: %d", didFinish);
+		 
+		 didPrepareBlock();
+	 }];
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
