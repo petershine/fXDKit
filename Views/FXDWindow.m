@@ -149,9 +149,6 @@
 }
 
 - (void)showProgressViewWithNibName:(NSString*)nibName {	FXDLog_DEFAULT;
-	if (nibName == nil) {
-		nibName = NSStringFromClass([self class]);
-	}
 	
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
