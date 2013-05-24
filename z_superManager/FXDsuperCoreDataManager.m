@@ -255,19 +255,7 @@
 	
 	
 	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
-	FXDLog(@"1.managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
-	
-	//TEST: thread based change
-	/*
-	if ([NSThread isMainThread]) {
-		managedObjectContext = self.mainDocument.managedObjectContext;
-	}
-	else {
-		managedObjectContext = self.mainDocument.managedObjectContext.parentContext;
-	}
-	 */
-	
-	FXDLog(@"2.managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	FXDLog(@"managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
 
@@ -279,7 +267,7 @@
 	}
 
 
-	void (^_contextSavingBlock)(void) = ^{
+	void (^contextSavingBlock)(void) = ^{
 		NSError *error = nil;
 #if ForDEVELOPER
 		BOOL didSave = [managedObjectContext save:&error];
@@ -302,20 +290,20 @@
 	if ([NSThread isMainThread]) {
 		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				[managedObjectContext performBlockAndWait:_contextSavingBlock];
+				[managedObjectContext performBlockAndWait:contextSavingBlock];
 			});
 		}
 		else {
-			[managedObjectContext performBlockAndWait:_contextSavingBlock];
+			[managedObjectContext performBlockAndWait:contextSavingBlock];
 		}
 	}
 	else {
 		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-			[managedObjectContext performBlockAndWait:_contextSavingBlock];
+			[managedObjectContext performBlockAndWait:contextSavingBlock];
 		}
 		else {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				[managedObjectContext  performBlockAndWait:_contextSavingBlock];
+				[managedObjectContext  performBlockAndWait:contextSavingBlock];
 			});
 		}
 	}

@@ -13,3 +13,7 @@
 #ifndef latestSupportedSystemVersion
 	#define latestSupportedSystemVersion	6.0
 #endif
+
+#ifndef USE_iCloudCoreData
+	#define USE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
+#endif

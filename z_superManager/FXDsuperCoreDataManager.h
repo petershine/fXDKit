@@ -6,6 +6,13 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+//USE_iCloudCoreData
+/* SAMPLE
+ [[<#AppPrefix#>managerCoreData sharedInstance] startObservingFileManagerNotifications];
+ [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURL];
+ */
+
+
 #ifndef applicationSqlitePathComponent
 	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
@@ -25,8 +32,6 @@
 
 #import "FXDsuperFileManager.h"
 
-
-//@interface FXDsuperCoreDataManager : FXDManagedDocument <NSFetchedResultsControllerDelegate> {
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
     // Primitives
 	UIManagedDocument *_mainDocument;
