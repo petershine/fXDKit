@@ -407,25 +407,7 @@
 }
 
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	
-	if (self.mainScrollBackgroundView) {
-		CGRect modifiedFrame = self.mainScrollBackgroundView.frame;
-		
-		CGFloat modifiedOffsetY = (scrollView.contentOffset.y +scrollView.contentInset.top);
-		
-		CGFloat minimumOriginY = scrollView.frame.origin.y;
-		
-		if (modifiedOffsetY < minimumOriginY) {
-			modifiedFrame.origin.y = (minimumOriginY -modifiedOffsetY);
-		}
-		else {
-			modifiedFrame.origin.y = minimumOriginY;
-		}
-		
-		[self.mainScrollBackgroundView setFrame:modifiedFrame];
-	}
-	
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
 	
 	if (self.shouldSkipDismissingByPullingDown) {
 		return;

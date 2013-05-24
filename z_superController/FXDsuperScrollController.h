@@ -25,8 +25,6 @@
 	NSMutableDictionary *_cellOperationDictionary;
 	
 	
-	UIView *_mainScrollBackgroundView;
-	
 	UIScrollView *_mainScrollview;
 }
 
@@ -52,8 +50,6 @@
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UIView *mainScrollBackgroundView;
-
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;
 
 
