@@ -6,10 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef nibnameCustomProgressView
-	#define nibnameCustomProgressView NSStringFromClass([self class])
-#endif
-
 
 @interface FXDsuperProgressView : FXDView
 

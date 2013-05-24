@@ -15,18 +15,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-	// Primitives
-
-
-
-	// Properties
-
-	// IBOutlets
-}
-
 
 #pragma mark - Property overriding
 

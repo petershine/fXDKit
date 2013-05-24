@@ -139,7 +139,7 @@
 }
 
 - (void)showCustomProgressView {	FXDLog_DEFAULT;
-	[self showProgressViewWithNibName:nibnameCustomProgressView];
+	[self showProgressViewWithNibName:nil];
 }
 
 - (void)showDefaultProgressView {	//FXDLog_DEFAULT;
@@ -149,6 +149,10 @@
 }
 
 - (void)showProgressViewWithNibName:(NSString*)nibName {	FXDLog_DEFAULT;
+	if (nibName == nil) {
+		nibName = NSStringFromClass([self class]);
+	}
+	
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	FXDLog(@"nibName: %@", nibName);
