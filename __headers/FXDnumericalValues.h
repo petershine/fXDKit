@@ -25,6 +25,7 @@
 
 
 #define delayOneSecond		durationOneSecond
+#define delayQuarterSecond	0.25
 #define delayHalfSecond		0.5
 #define delayExtremelyShort	0.01
 
