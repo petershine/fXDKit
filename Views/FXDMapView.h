@@ -45,6 +45,6 @@
 - (CGPoint)modifiedOffsetFromSnappedRegion:(MKCoordinateRegion)snappedRegion;
 
 - (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer;
-- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer forGridDimension:(CGFloat)gridDimension;
+- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer;
 
 @end

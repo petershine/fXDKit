@@ -181,15 +181,14 @@
 	snappedFrame.origin.x -= gridLayer.contentOffset.x;
 	snappedFrame.origin.y -= gridLayer.contentOffset.y;
 	
-	CGRect convertedFrame = [self convertRect:snappedFrame fromView:self];
-	CGPoint convertedPoint = CGPointMake(convertedFrame.origin.x +(convertedFrame.size.width/2.0), convertedFrame.origin.y +(convertedFrame.size.height/2.0));
+	CGPoint frameCenter = CGPointMake(gridFrame.origin.x +gridFrame.size.width, gridFrame.origin.y +gridFrame.size.height);
 	
-	CLLocationCoordinate2D gridCoordinate = [self convertPoint:convertedPoint toCoordinateFromView:self];
+	CLLocationCoordinate2D gridCoordinate = [self convertPoint:frameCenter toCoordinateFromView:self];
 	
 	return gridCoordinate;
 }
 
-- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer forGridDimension:(CGFloat)gridDimension {
+- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer {
 	CGRect snappedFrame = gridFrame;
 	snappedFrame.origin.x -= gridLayer.contentOffset.x;
 	snappedFrame.origin.y -= gridLayer.contentOffset.y;
@@ -198,7 +197,7 @@
 	
 	MKMapPoint rectOrigin = MKMapPointForCoordinate(gridOriginCoordinate);
 	
-	MKZoomScale minimumZoomScale = gridDimension/[self minimumZoomScale];
+	MKZoomScale minimumZoomScale = [self minimumZoomScale];
 	MKMapSize rectSize = MKMapSizeMake(gridFrame.size.width/minimumZoomScale, gridFrame.size.height/minimumZoomScale);
 	
 	MKMapRect gridMapRect = MKMapRectMake(rectOrigin.x, rectOrigin.y, rectSize.width, rectSize.height);
