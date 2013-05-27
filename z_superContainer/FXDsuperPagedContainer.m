@@ -17,12 +17,6 @@
 - (void)dealloc {
 	[_pagedOperationQueue cancelAllOperations];
 	[_pagedOperationDictionary removeAllObjects];
-	
-	//TEST
-	/*
-	_pagedOperationQueue = nil;
-	_pagedOperationDictionary = nil;
-	 */
 }
 
 

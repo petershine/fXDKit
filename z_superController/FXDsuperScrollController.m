@@ -17,16 +17,6 @@
 - (void)dealloc {
 	[_cellOperationQueue cancelAllOperations];
 	[_cellOperationDictionary removeAllObjects];
-	
-	//TEST
-	/*
-	_cellOperationQueue = nil;
-	_cellOperationDictionary = nil;
-	
-	_mainResultsController = nil;
-
-	[_mainScrollview setDelegate:nil];
-	 */
 }
 
 
@@ -375,16 +365,8 @@
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
+- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
 	
-	/*
-	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
-		[self.mainScrollview performSelector:@selector(beginUpdates)];
-	}
-	else {
-	 */
-		FXDLog_OVERRIDE;
-	//}
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
@@ -396,16 +378,8 @@
 	FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);	
 }
 
-- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
 	
-	/*
-	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
-		[self.mainScrollview performSelector:@selector(endUpdates)];
-	}
-	else {
-	 */
-		FXDLog_OVERRIDE;
-	//}
 }
 
 #pragma mark - UIScrollViewDelegate

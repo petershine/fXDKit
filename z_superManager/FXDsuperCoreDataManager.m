@@ -395,7 +395,7 @@
 		[controller.additionalDelegate controllerWillChangeContent:controller];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 
@@ -405,7 +405,7 @@
 		[controller.additionalDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 
@@ -425,7 +425,7 @@
 		[controller.additionalDelegate controllerDidChangeContent:controller];
 	}
 	else {
-		FXDLog_OVERRIDE;
+		//FXDLog_OVERRIDE;
 	}
 }
 

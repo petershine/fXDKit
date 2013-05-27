@@ -56,12 +56,10 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	FXDLog_OVERRIDE;
+- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
 }
 
-- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray {
-	FXDLog_OVERRIDE;
+- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
 }
 
 #pragma mark -
