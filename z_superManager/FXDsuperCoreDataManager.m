@@ -159,7 +159,7 @@
 #if ForDEVELOPER
 			if (error) {
 				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
-				NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason]];
+				NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];
 
 				FXDAlertView *alertView =
 				[[FXDAlertView alloc]
