@@ -246,7 +246,7 @@
 				 _requestingBlock();
 			 }
 			 else {
-#warning "//TODO: alert user about needing to have accessibility"
+				 //TODO: alert user about needing to have accessibility
 			 }
 		 }];
 	}

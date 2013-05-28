@@ -23,11 +23,10 @@
 
 
 #pragma mark - Initialization
-#warning "//MARK: Cannot use awakeFromNib"
 - (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 
-    if (self) {
+    if (self) {	//MARK: Cannot use awakeFromNib
 #if ForDEVELOPER
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValue05];
 #endif
@@ -129,7 +128,7 @@
 		self.imageviewArrow.backgroundColor = [UIColor clearColor];
 #endif
 
-#warning "//TODO: Modify based on arrowDirection"		
+		//TODO: Modify based on arrowDirection
 		CGFloat modifiedCenterX = (self.frame.size.width/2.0) +self.arrowOffset;
 		self.imageviewArrow.center = CGPointMake(modifiedCenterX, self.imageviewArrow.center.y);
 

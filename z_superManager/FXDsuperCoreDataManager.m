@@ -116,7 +116,7 @@
 		options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
 		options[NSInferMappingModelAutomaticallyOption] = @(YES);
 		
-#warning "//TODO: get UUID unique URL using ubiquityContainerURL instead"
+		//TODO: get UUID unique URL using ubiquityContainerURL instead
 		NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 		
 		if (ubiquityContainerURL) {
@@ -172,11 +172,10 @@
 				[alertView show];
 			}
 #endif
-			
-#warning "//TODO: prepare what to do when Core Data is not setup"
+			//TODO: prepare what to do when Core Data is not setup
 			[self startObservingCoreDataNotifications];
 
-#warning "//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore"
+			//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
 			if (didFinishBlock) {
 				didFinishBlock(didConfigure);
 			}

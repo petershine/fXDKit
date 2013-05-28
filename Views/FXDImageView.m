@@ -80,32 +80,33 @@
 	}
 }
 
-#warning "//TODO: find optimal way of using layer instead of extra imageView object"
+//TODO: find optimal way of using layer instead of extra imageView object
 - (void)fadeInImage:(UIImage*)fadedImage {
 	
 	__block UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
 	
 	fadedImageview.contentMode = self.contentMode;
 	fadedImageview.backgroundColor = [UIColor clearColor];
-
+	
 	fadedImageview.alpha = 0.0;
-
+	
 	fadedImageview.image = fadedImage;
-
+	
 	[self addSubview:fadedImageview];
-
-	[UIView animateWithDuration:durationQuickAnimation
-						  delay:0.0
-						options:UIViewAnimationOptionCurveEaseIn
-					 animations:^{
-						 fadedImageview.alpha = 1.0;
-					 } completion:^(BOOL finished) {
-						 //FXDLog(@"finished: %d fadedImageview: %@", finished, fadedImageview);
-						 self.image = fadedImageview.image;
-
-						 [fadedImageview removeFromSuperview];
-						 fadedImageview = nil;
-					 }];
+	
+	[UIView
+	 animateWithDuration:durationQuickAnimation
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseIn
+	 animations:^{
+		 fadedImageview.alpha = 1.0;
+	 } completion:^(BOOL finished) {
+		 //FXDLog(@"finished: %d fadedImageview: %@", finished, fadedImageview);
+		 self.image = fadedImageview.image;
+		 
+		 [fadedImageview removeFromSuperview];
+		 fadedImageview = nil;
+	 }];
 }
 
 @end

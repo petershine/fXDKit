@@ -87,7 +87,7 @@
 	}
 }
 
-#warning "//MARK: Make following is properly implemented by subclasses"
+//MARK: Make following is properly implemented by subclasses
 /*
 - (void)mapViewWillStartLoadingMap:(MKMapView *)mapView {	//FXDLog_DEFAULT;
 	

@@ -221,12 +221,12 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-#warning "//TODO: Only use this when supporting for iOS version previous to 6
 	if (self.isSystemVersionLatest) {
 		return;
 	}
 	
 	
+	//TODO: Only use this when supporting for iOS version below 6
 	if ([tableView isScrollingCurrently] == NO) {
 		return;
 	}

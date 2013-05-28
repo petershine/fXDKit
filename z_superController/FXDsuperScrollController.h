@@ -65,7 +65,7 @@
 
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView;
 
-#warning "//TODO: Only use this when supporting for iOS version previous to 6
+//TODO: Only use this when supporting for iOS version below 6
 - (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath didFinishBlock:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))finishedHandler;
 
 

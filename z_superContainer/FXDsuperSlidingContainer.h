@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define seguenameEmbeddingRoot		@"EmbeddingRoot"
-#define seguenameFrontController	@"FrontController"
+#define segueIdEmbeddingRoot	@"EmbeddingRoot"
+#define segueIdFrontController	@"FrontController"
 
 
 @interface FXDsegueEmbeddingFrontController : FXDsuperEmbedSegue

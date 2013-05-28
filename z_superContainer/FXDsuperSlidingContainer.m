@@ -60,7 +60,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	[self performSegueWithIdentifier:seguenameFrontController sender:self];
+	[self performSegueWithIdentifier:segueIdFrontController sender:self];
 	
 	self.minimumChildCount = [self.childViewControllers count];
 	FXDLog(@"self.minimumChildCount: %d", self.minimumChildCount);

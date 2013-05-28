@@ -199,15 +199,6 @@
 
 
 #pragma mark - Property overriding
-- (NSDictionary*)segueNameDictionary {
-
-	if (_segueNameDictionary == nil) {
-		FXDLog_OVERRIDE;
-	}
-
-	return _segueNameDictionary;
-}
-
 
 #pragma mark - Method overriding
 
@@ -332,7 +323,7 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)dismissController:(id)sender {	FXDLog_OVERRIDE;
+- (IBAction)dismissControllerForSender:(id)sender {	FXDLog_OVERRIDE;
 
 	if (self.navigationController) {
 		[self.navigationController dismissViewControllerAnimated:YES completion:nil];

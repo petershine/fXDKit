@@ -14,8 +14,6 @@
 // Properties
 @property (assign, nonatomic) BOOL isSystemVersionLatest;
 
-@property (strong, nonatomic) NSDictionary *segueNameDictionary;
-
 // IBOutlets
 
 
@@ -42,7 +40,7 @@
 - (IBAction)popToRootInterfaceWithAnimation:(id)sender;
 - (IBAction)popInterfaceWithAnimation:(id)sender;
 
-- (IBAction)dismissController:(id)sender;
+- (IBAction)dismissControllerForSender:(id)sender;
 
 #pragma mark - Public
 - (id)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil;

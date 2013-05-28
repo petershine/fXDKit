@@ -128,7 +128,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 		NetworkStatus reachabilityStatus = [changedReachability currentReachabilityStatus];
 		
 		if (reachabilityStatus == NotReachable) {
-#warning "//TODO: alert user: @"Please make sure Internet is available for your device"
+			//TODO: alert user: @"Please make sure Internet is available for your device"
 		}
 	}
 }
@@ -142,7 +142,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	self.httpURL = [NSURL URLWithString:urlString];
 	self.httpRequest = [NSMutableURLRequest requestWithURL:self.httpURL];
 	
-#warning "//TODO: implement to use postBody and httpHeaders"
+	//TODO: implement to use postBody and httpHeaders"
 	
 	self.httpConnection = [NSURLConnection connectionWithRequest:self.httpRequest delegate:self];
 }

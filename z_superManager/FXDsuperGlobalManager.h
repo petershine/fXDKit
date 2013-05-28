@@ -48,7 +48,7 @@
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
 
-#warning "//TODO: refactor following method to be organized into categories or subclasses"
+//TODO: refactor following method to be organized into categories or subclasses
 + (NSString*)deviceModelName;
 + (NSString*)deviceCountryCode;
 + (NSString*)deviceLanguageCode;
