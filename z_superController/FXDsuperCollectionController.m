@@ -106,8 +106,11 @@
 	[cellOperation addExecutionBlock:^{
 		
 		if (_weakCellOperation && _weakCellOperation.isCancelled == NO) {
-			//TODO:
+			if (_weakSelf) {
+				FXDLog(@"_weakSelf: %@", _weakSelf);
+			}
 		}
+		
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{		
 			

@@ -74,12 +74,15 @@
 
 - (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {
 	
-	if (self.progressView) {
-		[self removeAsFadeOutSubview:self.progressView
-						afterRemovedBlock:^{	FXDLog_DEFAULT;
-							self.progressView = nil;
-						}];
+	if (self.progressView == nil) {
+		return;
 	}
+	
+	[self
+	 removeAsFadeOutSubview:self.progressView
+	 afterRemovedBlock:^{	FXDLog_DEFAULT;
+		 self.progressView = nil;
+	 }];
 }
 
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	//FXDLog_DEFAULT;

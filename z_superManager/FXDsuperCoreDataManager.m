@@ -116,20 +116,21 @@
 		options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
 		options[NSInferMappingModelAutomaticallyOption] = @(YES);
 		
-		//TODO: get UUID unique URL using ubiquityContainerURL instead
-		NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 		
 		if (ubiquityContainerURL) {
-			ubiquitousContentURL = ubiquityContainerURL;
+			//TODO: get UUID unique URL using ubiquityContainerURL instead
+			//NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
+			NSURL *ubiquitousContentURL = ubiquityContainerURL;
 			
 			options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
 			options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
+			
+			FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 		}
 		else {
 			//MARK: Not using iCloud
 		}
 		
-		FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 		FXDLog(@"options:\n%@", options);
 		
 
