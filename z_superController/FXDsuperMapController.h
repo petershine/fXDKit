@@ -21,10 +21,9 @@
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
-- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate;
-- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray;
+- (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate fromDelegate:(BOOL)isFromDelegate;
+- (void)refreshMapviewWithAnnotationArray:(NSArray*)annotationArray;
 
 - (void)resumeTrackingUser;
 
@@ -32,7 +31,5 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-#pragma mark - MKMapViewDelegate
-
 
 @end
