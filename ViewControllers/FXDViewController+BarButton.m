@@ -56,19 +56,21 @@
 
 	if (action) {
 		if (shouldUseBackTitle) {
-			[self customizeLeftBarbuttonWithText:NSLocalizedString(text_Back, nil)
-								  andWithOnImage:onImage
-								 andWithOffImage:offImage
-									  withOffset:CGPointZero
-									   forTarget:target
-									   forAction:action];
+			[self
+			 customizeLeftBarbuttonWithText:NSLocalizedString(text_Back, nil)
+			 andWithOnImage:onImage
+			 andWithOffImage:offImage
+			 withOffset:CGPointZero
+			 forTarget:target
+			 forAction:action];
 		}
 		else {
-			[self customizeLeftBarbuttonWithOnImage:onImage
-									andWithOffImage:offImage
-										 withOffset:CGPointZero
-										  forTarget:target
-										  forAction:action];
+			[self
+			 customizeLeftBarbuttonWithOnImage:onImage
+			 andWithOffImage:offImage
+			 withOffset:CGPointZero
+			 forTarget:target
+			 forAction:action];
 		}
 	}
 	else {

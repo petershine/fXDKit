@@ -15,18 +15,13 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {	FXDLog_DEFAULT;
 	
 	self = [super initWithIdentifier:identifier source:source destination:destination];
 
 	if (self) {
-		// Primitives
-		
-	
-		
-		// Properties
+		//TODO:
 	}
 
 	return self;
@@ -35,12 +30,9 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 - (NSString*)description {
-	NSString *descriptionString = [super description];
-
-	descriptionString = [descriptionString stringByAppendingFormat:@" source: %@ destination: %@", self.sourceViewController, self.destinationViewController];
+	NSString *descriptionString = [[super description] stringByAppendingFormat:@" source: %@ destination: %@", self.sourceViewController, self.destinationViewController];
 
 	return descriptionString;
 }
