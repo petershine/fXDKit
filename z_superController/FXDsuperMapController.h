@@ -22,7 +22,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate fromDelegate:(BOOL)isFromDelegate;
+- (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate;
 - (void)refreshMapviewWithAnnotationArray:(NSArray*)annotationArray;
 
 - (void)resumeTrackingUser;

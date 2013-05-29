@@ -56,7 +56,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate fromDelegate:(BOOL)isFromDelegate {	FXDLog_OVERRIDE;
+- (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
 }
 
 - (void)refreshMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
