@@ -56,10 +56,10 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)refreshMainMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
+- (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate {	FXDLog_OVERRIDE;
 }
 
-- (void)refreshMainMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
+- (void)refreshMapviewWithAnnotationArray:(NSArray*)annotationArray {	FXDLog_OVERRIDE;
 }
 
 #pragma mark -
@@ -75,7 +75,8 @@
 #pragma mark - MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {	//FXDLog_DEFAULT;
 	
-	if (self.shouldResumeTracking) {	//MARK: Keep canceling until scrolling is stopped
+	if (self.shouldResumeTracking) {
+		//MARK: Keep canceling until scrolling is stopped
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resumeTrackingUser) object:nil];
 	}
 }
@@ -149,6 +150,5 @@
 	FXDLog(@"mode: %d animated: %d self.initialTrackingMode: %d self.shouldResumeTracking: %d", mode, animated, self.initialTrackingMode, self.shouldResumeTracking);
 }
  */
-
 
 @end

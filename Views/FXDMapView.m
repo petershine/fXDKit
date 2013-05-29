@@ -120,9 +120,17 @@
 }
 
 #pragma mark -
-- (MKCoordinateRegion)snappedRegionForGridDimension:(CGFloat)gridDimension {	//FXDLog_DEFAULT;
+- (MKCoordinateRegion)snappedGridRegionForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {	//FXDLog_DEFAULT;
 	
-	MKMapPoint centerMapPoint = MKMapPointForCoordinate(self.centerCoordinate);
+	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension atCoordinate:coordinate];
+	
+	MKCoordinateRegion gridRegion = MKCoordinateRegionForMapRect(gridMapRect);
+	
+	return gridRegion;
+}
+
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
+	MKMapPoint centerMapPoint = MKMapPointForCoordinate(coordinate);
 	
 	CGFloat scaledDimension = gridDimension/[self minimumZoomScale];
 	
@@ -130,57 +138,41 @@
 	centerMapRect.origin.x = (centerMapPoint.x -(scaledDimension/2.0));
 	centerMapRect.origin.y = (centerMapPoint.y -(scaledDimension/2.0));
 	
-	//FXDLog(@"MKMapRectWorld.origin.x: %f y: %f width: %f height: %f", MKMapRectWorld.origin.x, MKMapRectWorld.origin.y, MKMapRectWorld.size.width, MKMapRectWorld.size.height);
 	
 	//MARK: Snapping the origin
 	NSInteger gridCountX = (NSInteger)(centerMapRect.origin.x/scaledDimension);
 	NSInteger gridCountY = (NSInteger)(centerMapRect.origin.y/scaledDimension);
 	
-	MKMapRect modifiedMapRect = centerMapRect;
-	modifiedMapRect.origin.x = scaledDimension *gridCountX;
-	modifiedMapRect.origin.y = scaledDimension *gridCountY;
-	//FXDLog(@"1.modifiedMapRect.origin.x: %f y: %f width: %f height: %f", modifiedMapRect.origin.x, modifiedMapRect.origin.y, modifiedMapRect.size.width, modifiedMapRect.size.height);
+	
+	MKMapRect gridMapRect = centerMapRect;
+	gridMapRect.origin.x = scaledDimension *gridCountX;
+	gridMapRect.origin.y = scaledDimension *gridCountY;
 	
 	//MARK: Use flooring or ceiling to find approximate
-	if ((centerMapRect.origin.x -modifiedMapRect.origin.x) >= (scaledDimension/2.0)) {
-		modifiedMapRect.origin.x += scaledDimension;
+	if ((centerMapRect.origin.x -gridMapRect.origin.x) >= (scaledDimension/2.0)) {
+		gridMapRect.origin.x += scaledDimension;
 	}
 	
-	if ((centerMapRect.origin.y -modifiedMapRect.origin.y) >= (scaledDimension/2.0)) {
-		modifiedMapRect.origin.y += scaledDimension;
+	if ((centerMapRect.origin.y -gridMapRect.origin.y) >= (scaledDimension/2.0)) {
+		gridMapRect.origin.y += scaledDimension;
 	}
 	//FXDLog(@"2.modifiedMapRect.origin.x: %f y: %f width: %f height: %f", modifiedMapRect.origin.x, modifiedMapRect.origin.y, modifiedMapRect.size.width, modifiedMapRect.size.height);
 	
-	MKCoordinateRegion snappedRegion = MKCoordinateRegionForMapRect(modifiedMapRect);
-	
-	return snappedRegion;
-}
-
-- (CGPoint)modifiedOffsetFromSnappedRegion:(MKCoordinateRegion)snappedRegion {
-	CGPoint oldCenter = [self convertCoordinate:snappedRegion.center toPointToView:self];
-	CGPoint newCenter = [self convertCoordinate:self.centerCoordinate toPointToView:self];
-	
-	CGPoint addedOffset = CGPointMake((newCenter.x -oldCenter.x), (newCenter.y -oldCenter.y));
-	
-	CGPoint modifiedOffset = CGPointZero;
-	modifiedOffset.x += addedOffset.x;
-	modifiedOffset.y += addedOffset.y;
-	
-#if ForDEVELOPER
-	if (MAX(fabs(addedOffset.x), fabs(addedOffset.y)) >= (gridDimensionDefault -1.0)) {
-		FXDLog(@"addedOffset: %@ modifiedOffset: %@", NSStringFromCGPoint(addedOffset), NSStringFromCGPoint(modifiedOffset));
-	}
-#endif
-	
-	return modifiedOffset;
+	return gridMapRect;
 }
 
 #pragma mark -
-- (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer {
-	CGRect snappedFrame = gridFrame;
-	snappedFrame.origin.x -= gridLayer.contentOffset.x;
-	snappedFrame.origin.y -= gridLayer.contentOffset.y;
+- (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion {
+	CGPoint oldCenter = [self convertCoordinate:lastRegion.center toPointToView:self];
+	CGPoint newCenter = [self convertCoordinate:currentRegion.center toPointToView:self];
 	
+	CGPoint offset = CGPointMake((newCenter.x -oldCenter.x), (newCenter.y -oldCenter.y));
+	
+	return offset;
+}
+
+#pragma mark -
+- (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame {
 	CGPoint frameCenter = CGPointMake(gridFrame.origin.x +gridFrame.size.width, gridFrame.origin.y +gridFrame.size.height);
 	
 	CLLocationCoordinate2D gridCoordinate = [self convertPoint:frameCenter toCoordinateFromView:self];
@@ -188,12 +180,8 @@
 	return gridCoordinate;
 }
 
-- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer {
-	CGRect snappedFrame = gridFrame;
-	snappedFrame.origin.x -= gridLayer.contentOffset.x;
-	snappedFrame.origin.y -= gridLayer.contentOffset.y;
-	
-	CLLocationCoordinate2D gridOriginCoordinate = [self convertPoint:snappedFrame.origin toCoordinateFromView:self];
+- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame {
+	CLLocationCoordinate2D gridOriginCoordinate = [self convertPoint:gridFrame.origin toCoordinateFromView:self];
 	
 	MKMapPoint rectOrigin = MKMapPointForCoordinate(gridOriginCoordinate);
 	

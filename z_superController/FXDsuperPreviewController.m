@@ -274,7 +274,6 @@
 		 NSTimeInterval currentSeconds = CMTimeGetSeconds(_weakSelf.mainMoviePlayer.currentTime);
 		 NSTimeInterval duration = CMTimeGetSeconds(_weakSelf.mainMoviePlayer.currentItem.duration);
 		 
-		 
 		 if (currentSeconds == duration) {
 			 FXDLog(@"currentSeconds: %f, duration: %f", currentSeconds, duration);
 			 //FXDLog(@"self.mainMoviePlayer.observationInfo: %@", self.mainMoviePlayer.observationInfo);

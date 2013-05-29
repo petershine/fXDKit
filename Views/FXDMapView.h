@@ -41,10 +41,11 @@
 - (CGRect)centerFrameForGridDimension:(CGFloat)gridDimension;
 - (MKZoomScale)minimumZoomScale;
 
-- (MKCoordinateRegion)snappedRegionForGridDimension:(CGFloat)gridDimension;
-- (CGPoint)modifiedOffsetFromSnappedRegion:(MKCoordinateRegion)snappedRegion;
+- (MKCoordinateRegion)snappedGridRegionForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
+- (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 
-- (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer;
-- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame fromGridLayer:(UIScrollView*)gridLayer;
+- (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame;
+- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame;
 
 @end
