@@ -101,14 +101,12 @@
 	__weak typeof(self) _weakSelf = self;
 	
 	FXDBlockOperation *cellOperation = [[FXDBlockOperation alloc] init];
-	__weak FXDBlockOperation *_weakCellOperation = cellOperation;
+	__weak FXDBlockOperation *_weakOperation = cellOperation;
 	
 	[cellOperation addExecutionBlock:^{
 		
-		if (_weakCellOperation && _weakCellOperation.isCancelled == NO) {
-			if (_weakSelf) {
-				FXDLog(@"_weakSelf: %@", _weakSelf);
-			}
+		if (_weakOperation && _weakOperation.isCancelled == NO) {
+			//TODO:
 		}
 		
 		
