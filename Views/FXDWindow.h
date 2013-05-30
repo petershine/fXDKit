@@ -13,7 +13,7 @@
 
 
 #import "FXDsuperProgressView.h"
-#import "FXDsuperNewsView.h"
+#import "FXDsuperMessageView.h"
 
 @class FXDsuperLaunchController;
 
@@ -24,7 +24,7 @@
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDsuperProgressView *progressView;
-@property (strong, nonatomic) IBOutlet FXDsuperNewsView *newsView;
+@property (strong, nonatomic) IBOutlet FXDsuperMessageView *messageView;
 
 
 #pragma mark - IBActions
@@ -47,6 +47,12 @@
 @interface UIWindow (Added)
 + (id)applicationWindow;
 
+- (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController;
+- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void(^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void(^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock;
+
+@end
+
+@interface UIWindow (Progress)
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay;
 
@@ -55,9 +61,6 @@
 - (void)showProgressViewWithNibName:(NSString*)nibName;
 
 - (void)hideProgressView;
-
-- (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController;
-- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void(^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void(^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock;
 
 @end
 

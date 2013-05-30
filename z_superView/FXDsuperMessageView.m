@@ -1,16 +1,16 @@
 //
-//  FXDsuperNewsView.m
+//  FXDsuperMessageView.m
 //
 //
 //  Created by petershine on 5/30/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#import "FXDsuperNewsView.h"
+#import "FXDsuperMessageView.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperNewsView
+@implementation FXDsuperMessageView
 
 
 #pragma mark - Memory management

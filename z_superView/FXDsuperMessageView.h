@@ -1,5 +1,5 @@
 //
-//  FXDsuperNewsView.h
+//  FXDsuperMessageView.h
 //
 //
 //  Created by petershine on 5/30/13.
@@ -9,12 +9,14 @@
 @class FXDsuperProgressView;
 
 
-@interface FXDsuperNewsView : FXDsuperProgressView
+@interface FXDsuperMessageView : FXDsuperProgressView
 
 // Properties
 @property (assign, nonatomic) BOOL didPressAcceptButton;
 
 // IBOutlets
+@property (strong, nonatomic) IBOutlet UITextView *textviewMessage;
+
 @property (strong, nonatomic) IBOutlet UIButton *buttonAccept;
 @property (strong, nonatomic) IBOutlet UILabel *labelAccepting;
 
