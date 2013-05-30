@@ -51,6 +51,7 @@
 
 #define text_Cancel		@"text_Cancel"
 #define text_Canceling	@"text_Canceling"
+#define text_Accepting	@"text_Accepting"
 #define text_OK			@"text_OK"
 
 #define text_Back		@"text_Back"

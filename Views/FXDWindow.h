@@ -13,6 +13,7 @@
 
 
 #import "FXDsuperProgressView.h"
+#import "FXDsuperNewsView.h"
 
 @class FXDsuperLaunchController;
 
@@ -23,6 +24,7 @@
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDsuperProgressView *progressView;
+@property (strong, nonatomic) IBOutlet FXDsuperNewsView *newsView;
 
 
 #pragma mark - IBActions
