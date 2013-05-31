@@ -141,12 +141,12 @@
 	[[FXDAlertView alloc]
 	 initWithTitle:alertTitle
 	 message:alertMessage
-	 clickedButtonAtIndexBlock:^(FXDAlertView *alertView, NSInteger buttonIndex) {
+	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
 		 FXDLog(@"buttonIndex: %d", buttonIndex);
 
 		 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 		 
-		 if (buttonIndex != alertView.cancelButtonIndex) {	FXDLog_DEFAULT;
+		 if (buttonIndex != [(FXDAlertView*)alertView cancelButtonIndex]) {	FXDLog_DEFAULT;
 
 			 ACAccount *selectedTwitterAccount = (self.twitterAccountArray)[buttonIndex];
 			 FXDLog(@"selectedTwitterAccount: %@", selectedTwitterAccount);
