@@ -6,9 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-@class FXDAlertView;
-
-typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger buttonIndex);
+typedef void (^FXDblockButtonAtIndexClicked)(id alertView, NSInteger buttonIndex);
 
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
@@ -16,7 +14,7 @@ typedef void (^FXDblockButtonAtIndexClicked)(FXDAlertView *alertView, NSInteger 
 // Properties
 @property (strong, nonatomic) id addedObj;
 
-@property (strong, nonatomic) FXDblockButtonAtIndexClicked delegateBlock;
+@property (strong, nonatomic) FXDblockButtonAtIndexClicked callbackBlock;
 
 // IBOutlets
 

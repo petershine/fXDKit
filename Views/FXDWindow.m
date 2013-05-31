@@ -39,14 +39,14 @@
 	
 	[defaultCenter
 	 addObserver:self
-	 selector:@selector(observedApplicationWindowShouldFadeInProgressView:)
-	 name:notificationApplicationWindowShouldFadeInProgressView
+	 selector:@selector(observedFXDWindowShouldFadeInProgressView:)
+	 name:notificationFXDWindowShouldFadeInProgressView
 	 object:nil];
 	
 	[defaultCenter
 	 addObserver:self
-	 selector:@selector(observedApplicationWindowShouldFadeOutProgressView:)
-	 name:notificationApplicationWindowShouldFadeOutProgressView
+	 selector:@selector(observedFXDWindowShouldFadeOutProgressView:)
+	 name:notificationFXDWindowShouldFadeOutProgressView
 	 object:nil];
 	
 	
@@ -68,11 +68,11 @@
 
 
 //MARK: - Observer implementation
-- (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self showProgressViewWithNibName:nil];
 }
 
-- (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification {
+- (void)observedFXDWindowShouldFadeOutProgressView:(NSNotification*)notification {
 	
 	if (self.progressView == nil) {
 		return;
@@ -88,25 +88,27 @@
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	//FXDLog(@"notification: %@", notification);
 
-	if (self.progressView.viewIndicatorGroup) {
-		self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
-
-		//FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
-		UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-
-		if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
-
-			CGAffineTransform modifiedTransform = self.progressView.viewIndicatorGroup.transform;
-
-			if (orientation == UIDeviceOrientationLandscapeLeft) {
-				modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((90)/180.0 * M_PI));
-			}
-			else if (orientation == UIDeviceOrientationLandscapeRight) {
-				modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((270)/180.0 * M_PI));
-			}
-
-			self.progressView.viewIndicatorGroup.transform = modifiedTransform;
+	if (self.progressView.viewIndicatorGroup == nil) {
+		return;
+	}
+	
+	self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
+	
+	//FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
+	UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+	
+	if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+		
+		CGAffineTransform modifiedTransform = self.progressView.viewIndicatorGroup.transform;
+		
+		if (orientation == UIDeviceOrientationLandscapeLeft) {
+			modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((90)/180.0 * M_PI));
 		}
+		else if (orientation == UIDeviceOrientationLandscapeRight) {
+			modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((270)/180.0 * M_PI));
+		}
+		
+		self.progressView.viewIndicatorGroup.transform = modifiedTransform;
 	}
 }
 
@@ -233,42 +235,85 @@
 	}];
 }
 
-- (void)showCustomProgressView {	FXDLog_DEFAULT;
-	[self showProgressViewWithNibName:nil];
-}
-
+#pragma mark -
 - (void)showDefaultProgressView {	//FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
-	[applicationWindow observedApplicationWindowShouldFadeInProgressView:nil];
+	[applicationWindow observedFXDWindowShouldFadeInProgressView:nil];
 }
 
 - (void)showProgressViewWithNibName:(NSString*)nibName {	FXDLog_DEFAULT;
 	
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
-	FXDLog(@"nibName: %@", nibName);
-	
-	if (applicationWindow.progressView == nil) {
-		applicationWindow.progressView = [FXDsuperProgressView viewFromNibName:nibName];
-		
-		CGRect modifiedFrame = applicationWindow.progressView.frame;
-		modifiedFrame.size = applicationWindow.frame.size;
-		[applicationWindow.progressView setFrame:modifiedFrame];
-		
-		[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
-		
-		[applicationWindow addSubview:applicationWindow.progressView];
-		[applicationWindow bringSubviewToFront:applicationWindow.progressView];
-		
-		[applicationWindow.progressView fadeInFromHidden];
+	if (applicationWindow.progressView) {
+		return;
 	}
+	
+	
+	Class progressViewClass = NSClassFromString(classnameProgressView);
+	FXDLog(@"progressViewClass: %@ nibName: %@", progressViewClass, nibName);
+	
+	applicationWindow.progressView = [progressViewClass viewFromNibName:nibName];
+	
+	CGRect modifiedFrame = applicationWindow.progressView.frame;
+	modifiedFrame.size = applicationWindow.frame.size;
+	[applicationWindow.progressView setFrame:modifiedFrame];
+	
+	[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
+	
+	[applicationWindow addSubview:applicationWindow.progressView];
+	[applicationWindow bringSubviewToFront:applicationWindow.progressView];
+	
+	[applicationWindow.progressView fadeInFromHidden];
 }
 
 - (void)hideProgressView {	//FXDLog_DEFAULT;
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
-	[applicationWindow observedApplicationWindowShouldFadeOutProgressView:nil];
+	[applicationWindow observedFXDWindowShouldFadeOutProgressView:nil];
+}
+
+@end
+
+@implementation UIWindow (Message)
+- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock {
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
+	
+	if (applicationWindow.messageView) {
+		return;
+	}
+	
+	
+	Class messageViewClass = NSClassFromString(classnameMessageView);
+	FXDLog(@"messageViewClass: %@ nibName: %@", messageViewClass, nibName);
+	
+	applicationWindow.messageView = [messageViewClass viewFromNibName:nibName];
+	
+	CGRect modifiedFrame = applicationWindow.messageView.frame;
+	modifiedFrame.size = applicationWindow.frame.size;
+	[applicationWindow.messageView setFrame:modifiedFrame];
+	
+	[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
+	
+	[applicationWindow addSubview:applicationWindow.messageView];
+	[applicationWindow bringSubviewToFront:applicationWindow.messageView];
+	
+	[applicationWindow.messageView fadeInFromHidden];
+}
+
+- (void)hideMessageView {
+	FXDWindow *applicationWindow = [[self class] applicationWindow];
+	
+	if (applicationWindow.messageView == nil) {
+		return;
+	}
+	
+	[applicationWindow
+	 removeAsFadeOutSubview:applicationWindow.messageView
+	 afterRemovedBlock:^{	FXDLog_DEFAULT;
+		 applicationWindow.messageView = nil;
+	 }];
 }
 
 @end

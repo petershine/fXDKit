@@ -17,10 +17,10 @@
 - (void)dealloc {
 #if ForDEVELOPER
 	FXDLog_DEFAULT;
-	FXDLog(@"_delegateBlock: %@", _delegateBlock);
+	FXDLog(@"_callbackBlock: %@", _callbackBlock);
 #endif
 	
-	_delegateBlock = nil;
+	_callbackBlock = nil;
 }
 
 
@@ -58,7 +58,7 @@
 			 otherButtonTitles:otherButtonTitles, nil];
 
 	if (self) {
-		self.delegateBlock = clickedButtonAtIndexBlock;
+		self.callbackBlock = clickedButtonAtIndexBlock;
 		
 		[self setDelegate:self];
 	}
@@ -72,13 +72,13 @@
 //MARK: - Delegate implementation
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-	if (alertView.delegateBlock) {
-		alertView.delegateBlock(alertView, buttonIndex);
+	if (alertView.callbackBlock) {
+		alertView.callbackBlock(alertView, buttonIndex);
 	}
 }
 
-
 @end
+
 
 #pragma mark - Category
 @implementation UIAlertView (Added)

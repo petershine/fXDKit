@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
+#define buttonIndexCancel	0
+#define buttonIndexAccept	1
+
+
 @class FXDsuperProgressView;
 
 
@@ -13,6 +17,8 @@
 
 // Properties
 @property (assign, nonatomic) BOOL didPressAcceptButton;
+
+@property (strong, nonatomic) FXDblockButtonAtIndexClicked callbackBlock;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITextView *textviewMessage;

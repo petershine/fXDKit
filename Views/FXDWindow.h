@@ -8,12 +8,22 @@
 
 #define delayBeforeShowOrHideProgressView	1.0
 
-#define notificationApplicationWindowShouldFadeInProgressView	@"notificationApplicationWindowShouldFadeInProgressView"
-#define notificationApplicationWindowShouldFadeOutProgressView	@"notificationApplicationWindowShouldFadeOutProgressView"
+#define notificationFXDWindowShouldFadeInProgressView	@"notificationFXDWindowShouldFadeInProgressView"
+#define notificationFXDWindowShouldFadeOutProgressView	@"notificationFXDWindowShouldFadeOutProgressView"
+
+
+#ifndef classnameProgressView
+	#define classnameProgressView	@"FXDsuperProgressView"
+#endif
+
+#ifndef classnameMessageView
+	#define classnameMessageView	@"FXDsuperMessageView"
+#endif
 
 
 #import "FXDsuperProgressView.h"
 #import "FXDsuperMessageView.h"
+
 
 @class FXDsuperLaunchController;
 
@@ -33,8 +43,8 @@
 
 
 //MARK: - Observer implementation
-- (void)observedApplicationWindowShouldFadeInProgressView:(NSNotification*)notification;
-- (void)observedApplicationWindowShouldFadeOutProgressView:(NSNotification*)notification;
+- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification;
+- (void)observedFXDWindowShouldFadeOutProgressView:(NSNotification*)notification;
 
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification;
 
@@ -56,11 +66,17 @@
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay;
 
-- (void)showCustomProgressView;
 - (void)showDefaultProgressView;
 - (void)showProgressViewWithNibName:(NSString*)nibName;
 
 - (void)hideProgressView;
+
+@end
+
+@interface UIWindow (Message)
+- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock;
+
+- (void)hideMessageView;
 
 @end
 

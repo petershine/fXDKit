@@ -14,6 +14,15 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+#if ForDEVELOPER
+	FXDLog_DEFAULT;
+	FXDLog(@"_callbackBlock: %@", _callbackBlock);
+#endif
+	
+	_callbackBlock = nil;
+}
+
 
 #pragma mark - Initialization
 
@@ -22,7 +31,19 @@
 #pragma mark - Method overriding
 
 #pragma mark - IBActions
+- (IBAction)pressedCancelButton:(id)sender {	FXDLog_DEFAULT;
+	if (self.callbackBlock) {
+		self.callbackBlock(self, buttonIndexCancel);
+	}
+	
+	[super pressedCancelButton:sender];
+}
+
 - (IBAction)pressedAcceptButton:(id)sender {	FXDLog_DEFAULT;
+	if (self.callbackBlock) {
+		self.callbackBlock(self, buttonIndexAccept);
+	}
+	
 	self.didPressAcceptButton = YES;
 	
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
