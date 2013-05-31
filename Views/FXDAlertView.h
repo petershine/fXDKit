@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef void (^FXDblockButtonAtIndexClicked)(id alertView, NSInteger buttonIndex);
+typedef void (^FXDcallbackBlockForAlert)(id alertView, NSInteger buttonIndex);
 
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
@@ -14,7 +14,7 @@ typedef void (^FXDblockButtonAtIndexClicked)(id alertView, NSInteger buttonIndex
 // Properties
 @property (strong, nonatomic) id addedObj;
 
-@property (strong, nonatomic) FXDblockButtonAtIndexClicked callbackBlock;
+@property (strong, nonatomic) FXDcallbackBlockForAlert callbackBlock;
 
 // IBOutlets
 
@@ -24,7 +24,7 @@ typedef void (^FXDblockButtonAtIndexClicked)(id alertView, NSInteger buttonIndex
 #pragma mark - Public
 
 //TODO: find why this one is causing explosive memory allocation
-- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
+- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 
 
 //MARK: - Observer implementation

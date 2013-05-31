@@ -18,7 +18,7 @@
 // Properties
 @property (assign, nonatomic) BOOL didPressAcceptButton;
 
-@property (strong, nonatomic) FXDblockButtonAtIndexClicked callbackBlock;
+@property (strong, nonatomic) FXDcallbackBlockForAlert callbackBlock;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITextView *textviewMessage;
@@ -31,6 +31,7 @@
 - (IBAction)pressedAcceptButton:(id)sender;
 
 #pragma mark - Public
+- (void)configureWithCancelButtonTitle:(NSString*)cancelButtonTitle withAcceptButtonTitle:(NSString*)acceptButtonTitle;
 
 
 //MARK: - Observer implementation

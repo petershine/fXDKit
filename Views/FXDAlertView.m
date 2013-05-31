@@ -16,11 +16,11 @@
 #pragma mark - Memory management
 - (void)dealloc {
 #if ForDEVELOPER
-	FXDLog_DEFAULT;
 	FXDLog(@"_callbackBlock: %@", _callbackBlock);
+	_callbackBlock = nil;
 #endif
 	
-	_callbackBlock = nil;
+	FXDLog_DEFAULT;
 }
 
 
@@ -49,7 +49,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
+- (id)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
 
 	self = [super initWithTitle:title
 					   message:message

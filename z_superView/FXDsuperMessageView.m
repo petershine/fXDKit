@@ -16,11 +16,11 @@
 #pragma mark - Memory management
 - (void)dealloc {
 #if ForDEVELOPER
-	FXDLog_DEFAULT;
 	FXDLog(@"_callbackBlock: %@", _callbackBlock);
+	_callbackBlock = nil;
 #endif
 	
-	_callbackBlock = nil;
+	FXDLog_DEFAULT;
 }
 
 
@@ -36,6 +36,9 @@
 		self.callbackBlock(self, buttonIndexCancel);
 	}
 	
+	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+	[applicationWindow hideMessageView];
+	
 	[super pressedCancelButton:sender];
 }
 
@@ -49,9 +52,37 @@
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		self.labelAccepting.text = NSLocalizedString(text_Accepting, nil);
 	}];
+	
+	
+	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+	[applicationWindow hideMessageView];
 }
 
 #pragma mark - Public
+- (void)configureWithCancelButtonTitle:(NSString*)cancelButtonTitle withAcceptButtonTitle:(NSString*)acceptButtonTitle {
+	
+	if (acceptButtonTitle) {
+		if (cancelButtonTitle == nil) {
+			cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
+		}
+	}
+	else {
+		self.buttonAccept.hidden = YES;
+		
+		CGPoint modifiedCenter = self.buttonCancel.center;
+		modifiedCenter.x = CGRectGetMidX(self.frame);
+		
+		[self.buttonCancel setCenter:modifiedCenter];
+		
+		if (cancelButtonTitle == nil) {
+			cancelButtonTitle = NSLocalizedString(text_OK, nil);
+		}
+	}
+	
+	
+	[self.buttonCancel setTitle:cancelButtonTitle forState:UIControlStateNormal];
+	[self.buttonAccept setTitle:acceptButtonTitle forState:UIControlStateNormal];
+}
 
 
 //MARK: - Observer implementation

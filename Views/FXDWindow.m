@@ -277,7 +277,7 @@
 @end
 
 @implementation UIWindow (Message)
-- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDblockButtonAtIndexClicked)clickedButtonAtIndexBlock {
+- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock {
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	if (applicationWindow.messageView) {
@@ -289,12 +289,20 @@
 	FXDLog(@"messageViewClass: %@ nibName: %@", messageViewClass, nibName);
 	
 	applicationWindow.messageView = [messageViewClass viewFromNibName:nibName];
+	applicationWindow.messageView.callbackBlock = clickedButtonAtIndexBlock;
 	
 	CGRect modifiedFrame = applicationWindow.messageView.frame;
 	modifiedFrame.size = applicationWindow.frame.size;
 	[applicationWindow.messageView setFrame:modifiedFrame];
 	
 	[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
+	
+	
+	applicationWindow.messageView.labelTitle.text = title;
+	applicationWindow.messageView.textviewMessage.text = message;
+	
+	[applicationWindow.messageView configureWithCancelButtonTitle:cancelButtonTitle withAcceptButtonTitle:acceptButtonTitle];
+	
 	
 	[applicationWindow addSubview:applicationWindow.messageView];
 	[applicationWindow bringSubviewToFront:applicationWindow.messageView];
@@ -308,6 +316,7 @@
 	if (applicationWindow.messageView == nil) {
 		return;
 	}
+	
 	
 	[applicationWindow
 	 removeAsFadeOutSubview:applicationWindow.messageView
