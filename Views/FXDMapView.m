@@ -172,18 +172,18 @@
 }
 
 #pragma mark -
-- (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame {
-	CGPoint frameCenter = CGPointMake(gridFrame.origin.x +gridFrame.size.width, gridFrame.origin.y +gridFrame.size.height);
+- (CLLocationCoordinate2D)gridCenterFromGridFrame:(CGRect)gridFrame {
+	CGPoint frameCenter = CGPointMake(CGRectGetMidX(gridFrame), CGRectGetMidY(gridFrame));
 	
-	CLLocationCoordinate2D gridCoordinate = [self convertPoint:frameCenter toCoordinateFromView:self];
+	CLLocationCoordinate2D gridCenter = [self convertPoint:frameCenter toCoordinateFromView:self];
 	
-	return gridCoordinate;
+	return gridCenter;
 }
 
 - (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame {
-	CLLocationCoordinate2D gridOriginCoordinate = [self convertPoint:gridFrame.origin toCoordinateFromView:self];
+	CLLocationCoordinate2D gridOrigin = [self convertPoint:gridFrame.origin toCoordinateFromView:self];
 	
-	MKMapPoint rectOrigin = MKMapPointForCoordinate(gridOriginCoordinate);
+	MKMapPoint rectOrigin = MKMapPointForCoordinate(gridOrigin);
 	
 	MKZoomScale minimumZoomScale = [self minimumZoomScale];
 	MKMapSize rectSize = MKMapSizeMake(gridFrame.size.width/minimumZoomScale, gridFrame.size.height/minimumZoomScale);
@@ -191,6 +191,22 @@
 	MKMapRect gridMapRect = MKMapRectMake(rectOrigin.x, rectOrigin.y, rectSize.width, rectSize.height);
 	
 	return gridMapRect;
+}
+
+#pragma mark -
+- (MKMapRect)visibleMapRectAtCoordinate:(CLLocationCoordinate2D)coordinate withScale:(CGFloat)scale {
+	MKMapPoint centerMapPoint = MKMapPointForCoordinate(coordinate);
+	
+	MKMapRect scaledMapRect = self.visibleMapRect;
+	FXDLog(@"1.scaledMapRect width: %f height: %f", scaledMapRect.size.width, scaledMapRect.size.height);
+	
+	scaledMapRect.size.width *= scale;
+	scaledMapRect.size.height *= scale;
+	scaledMapRect.origin.x = centerMapPoint.x -(scaledMapRect.size.width/2.0);
+	scaledMapRect.origin.y = centerMapPoint.y -(scaledMapRect.size.height/2.0);
+	FXDLog(@"2.scaledMapRect width: %f height: %f", scaledMapRect.size.width, scaledMapRect.size.height);
+	
+	return scaledMapRect;
 }
 
 @end

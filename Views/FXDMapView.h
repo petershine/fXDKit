@@ -6,10 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef gridDimensionDefault
-	#define gridDimensionDefault		44.0
-#endif
-
 
 @interface FXDMapView : MKMapView
 
@@ -45,7 +41,9 @@
 - (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 
-- (CLLocationCoordinate2D)gridCoordinateFromGridFrame:(CGRect)gridFrame;
+- (CLLocationCoordinate2D)gridCenterFromGridFrame:(CGRect)gridFrame;
 - (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame;
+
+- (MKMapRect)visibleMapRectAtCoordinate:(CLLocationCoordinate2D)coordinate withScale:(CGFloat)scale;
 
 @end
