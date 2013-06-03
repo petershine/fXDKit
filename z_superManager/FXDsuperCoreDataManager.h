@@ -6,11 +6,17 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-//USE_iCloudCoreData
+//SAMPLE:
+#define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
+#define attributekey<#AttributeName#> @"<#AttributeName#>"
+
+
+#if USE_iCloudCoreData
 /* SAMPLE
  [[<#AppPrefix#>managerCoreData sharedInstance] startObservingFileManagerNotifications];
  [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURL];
  */
+#endif
 
 
 #ifndef applicationSqlitePathComponent
@@ -65,6 +71,8 @@
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 - (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;
+
+- (id)initializedMainEntityObj;
 
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 

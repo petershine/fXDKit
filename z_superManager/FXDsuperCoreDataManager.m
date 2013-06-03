@@ -58,7 +58,8 @@
 #pragma mark -
 - (NSString*)mainEntityName {
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
-
+		//SAMPLE:
+		//_mainEntityName = entityname<#DefaultClass#>
 	}
 
 	return _mainEntityName;
@@ -66,7 +67,8 @@
 
 - (NSArray*)mainSortDescriptors {
 	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
-
+		//SAMPLE:
+		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attributekey<#AttributeName#> ascending:<#NO#>]];
 	}
 
 	return _mainSortDescriptors;
@@ -274,6 +276,26 @@
 	if (didCopy) {
 		FXDLog(@"didCopy: %d", didCopy);
 	}
+}
+
+#pragma mark -
+- (id)initializedMainEntityObj {
+	if (self.mainEntityName == nil) {	FXDLog_OVERRIDE;
+		return nil;
+	}
+	
+	//MARK: Default is to skip
+	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
+		FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
+		return nil;
+	}
+	
+	
+	NSEntityDescription *mainEntityDescription = [NSEntityDescription entityForName:self.mainEntityName inManagedObjectContext:self.mainDocument.managedObjectContext];
+	
+	id mainEntityObj = [(FXDManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntityDescription insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
+	
+	return mainEntityObj;
 }
 
 #pragma mark -
