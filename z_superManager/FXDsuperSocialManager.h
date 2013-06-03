@@ -32,8 +32,8 @@
 #pragma mark - Public
 + (FXDsuperSocialManager*)sharedInstance;
 
-- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(void))didFinishBlock;
-- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)(void))didFinishBlock;
+- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock;
+- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 
 - (void)userLookUpWithScreenName:(NSString*)screenName;
 - (void)statusUpdateWithTweetText:(NSString*)tweetText;

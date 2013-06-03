@@ -372,9 +372,7 @@
 	 options:UIViewAnimationOptionCurveEaseInOut
 	 animations:^{
 		 [self.view setFrame:modifiedFrame];
-	 } completion:^(BOOL finished) {
-		 FXDLog_DEFAULT;
-		 
+	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog(@"statusBarFrame: %@", NSStringFromCGRect(statusBarFrame));
 		 FXDLog(@"self.view: %@", self.view);
 	 }];

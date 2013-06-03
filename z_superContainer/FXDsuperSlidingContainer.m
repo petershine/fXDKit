@@ -383,7 +383,7 @@
 			 [childController.view setFrame:animatedFrame];
 		 }
 		 
-	 } completion:^(BOOL finished) {
+	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 for (FXDViewController *childController in lateAddedControllerArray) {
 			 [childController.view removeFromSuperview];
 			 [childController removeFromParentViewController];
@@ -392,7 +392,6 @@
 		 lateAddedControllerArray = nil;
 		 animatedFrameObjArray = nil;
 		 
-		 FXDLog_DEFAULT;
 		 FXDLog(@"2.self.childViewControllers: %@", self.childViewControllers);
 	 }];
 }

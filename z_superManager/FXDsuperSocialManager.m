@@ -90,7 +90,7 @@
 
 
 #pragma mark - Public
-- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_DEFAULT;	
+- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
 	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);
 	
@@ -115,13 +115,13 @@
 	}
 }
 
-- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_DEFAULT;
+- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
 
 	if ([self.twitterAccountArray count] == 0) {
 		//MARK: If no Twitter account is signed up... alert user
 		if (didFinishBlock) {
-			didFinishBlock();
+			didFinishBlock(NO);
 		}
 		
 		return;
@@ -172,7 +172,7 @@
 		 _twitterAccountArray = nil;
 
 		 if (didFinishBlock) {
-			 didFinishBlock();
+			 didFinishBlock(YES);
 		 }
 	 }
 	 cancelButtonTitle:nil

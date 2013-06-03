@@ -147,29 +147,31 @@
 		self.hidden = NO;
 	}
 	
-	[UIView animateWithDuration:durationQuickAnimation
-						  delay:0
-						options:UIViewAnimationOptionCurveEaseOut
-					 animations:^{
-						 self.alpha = 1.0;
-					 }
-					 completion:nil];
+	[UIView
+	 animateWithDuration:durationQuickAnimation
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 self.alpha = 1.0;
+	 }
+	 completion:nil];
 }
 
 - (void)fadeOutThenHidden {
-	[UIView animateWithDuration:durationQuickAnimation
-						  delay:0
-						options:UIViewAnimationOptionCurveEaseOut
-					 animations:^{
-						 self.alpha = 0.0;
-					 }
-					 completion:^(BOOL finished) {						 
-						 if (self.hidden == NO) {
-							 self.hidden = YES;
-						 }
-						 
-						 self.alpha = 1.0;
-					 }];
+	[UIView
+	 animateWithDuration:durationQuickAnimation
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 self.alpha = 0.0;
+	 }
+	 completion:^(BOOL finished) {
+		 if (self.hidden == NO) {
+			 self.hidden = YES;
+		 }
+		 
+		 self.alpha = 1.0;
+	 }];
 }
 
 - (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock {
@@ -178,34 +180,35 @@
 	[self addSubview:subview];
 	[self bringSubviewToFront:subview];
 
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 subview.alpha = 1.0;
-					 }
-					 completion:^(BOOL finished) {
-						 FXDLog(@"finished: %d", finished);
-						 
-						 if (afterAddedBlock) {
-							 afterAddedBlock();
-						 }
-					 }];
-
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 subview.alpha = 1.0;
+	 }
+	 completion:^(BOOL finished) {
+		 FXDLog(@"finished: %d", finished);
+		 
+		 if (afterAddedBlock) {
+			 afterAddedBlock();
+		 }
+	 }];
 }
 
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock {	//FXDLog_DEFAULT;
 
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 subview.alpha = 0.0;
-					 }
-					 completion:^(BOOL finished) {
-						 FXDLog(@"finished: %d subview: %@", finished, subview);
-						 [subview removeFromSuperview];
-						 
-						 if (afterRemovedBlock) {
-							 afterRemovedBlock();
-						 }
-					 }];
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 subview.alpha = 0.0;
+	 }
+	 completion:^(BOOL finished) {
+		 FXDLog(@"finished: %d subview: %@", finished, subview);
+		 [subview removeFromSuperview];
+		 
+		 if (afterRemovedBlock) {
+			 afterRemovedBlock();
+		 }
+	 }];
 }
 
 #pragma mark -

@@ -183,7 +183,6 @@
 	if ([launchController isKindOfClass:[FXDsuperLaunchController class]]) {
 		[(FXDsuperLaunchController*)launchController
 		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished) {
-			 FXDLog_DEFAULT;
 			 FXDLog(@"finished: %d launchController: %@", finished, launchController);
 			 [launchController.view removeFromSuperview];
 			 
@@ -203,7 +202,6 @@
 	 animations:^{
 		 [launchController.view setAlpha:0.0];
 	 } completion:^(BOOL finished) {
-		 FXDLog_DEFAULT;
 		 FXDLog(@"finished: %d launchController: %@", finished, launchController);
 		 [launchController.view removeFromSuperview];
 		 
