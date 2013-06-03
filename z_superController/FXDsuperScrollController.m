@@ -60,6 +60,11 @@
 			[(UICollectionView*)self.mainScrollview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
 		}
 	}
+#if DEBUG
+	else {
+		FXDLog(@"OVERRIDE: mainCellIdentifier: %@ mainCellNib: %@", self.mainCellIdentifier, self.mainCellNib);
+	}
+#endif
 	
 	
 	if (self.offsetYdismissingController == 0.0) {
