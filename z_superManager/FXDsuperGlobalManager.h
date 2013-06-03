@@ -25,6 +25,9 @@
 
 // Properties
 @property (strong, nonatomic) NSString *deviceLanguageCode;
+@property (strong, nonatomic) NSString *deviceCountryCode;
+@property (strong, nonatomic) NSString *deviceModelName;
+
 @property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
 @property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
 
@@ -48,15 +51,6 @@
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
 
-//TODO: refactor following method to be organized into categories or subclasses
-+ (NSString*)deviceModelName;
-+ (NSString*)deviceCountryCode;
-+ (NSString*)deviceLanguageCode;
-
-+ (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title;
-+ (void)printoutListOfFonts;
-
-
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification;
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification;
@@ -74,13 +68,10 @@
 
 
 #pragma mark - Category
-
 @interface FXDsuperGlobalManager (MailComposing) <MFMailComposeViewControllerDelegate>
 
 - (MFMailComposeViewController*)preparedMailComposeInterface;
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
 - (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message;
-
-#pragma mark - MFMailComposeViewControllerDelegate
 
 @end

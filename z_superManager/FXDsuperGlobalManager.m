@@ -77,21 +77,20 @@
 
 #pragma mark -
 - (NSString*)deviceLanguageCode {
-
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-
+		
 		_deviceLanguageCode = languages[0];
-
+		
 		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
 			_deviceLanguageCode = @"ch";
 		}
 		else if ([_deviceLanguageCode isEqualToString:@"zh-Hant"]) {
 			_deviceLanguageCode = @"tw";
 		}
-
-		FXDLog(@"_deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
-
+		
+		FXDLog(@"1._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
+		
 		//MARK: limit supported languages
 		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
 			&& [_deviceLanguageCode isEqualToString:@"ko"] == NO
@@ -100,11 +99,102 @@
 			&& [_deviceLanguageCode isEqualToString:@"tw"] == NO) {
 			_deviceLanguageCode = @"en";
 		}
+		FXDLog(@"2._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
 	}
 
 	return _deviceLanguageCode;
 }
 
+- (NSString*)deviceCountryCode {
+	if (_deviceCountryCode == nil) {	FXDLog_DEFAULT;
+		NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+		
+		NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
+		
+		_deviceCountryCode = components[1];
+		
+		FXDLog(@"_deviceCountryCode: %@", _deviceCountryCode);
+	}
+	
+	return _deviceCountryCode;
+}
+
+- (NSString*)deviceModelName {
+	if (_deviceModelName) {
+		return _deviceModelName;
+	}
+	
+	
+	FXDLog_DEFAULT;
+	
+	struct utsname systemInfo;
+	uname(&systemInfo);
+	
+	_deviceModelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+	
+	if([_deviceModelName isEqualToString:@"i386"]) {
+		_deviceModelName = @"iPhone Simulator";
+	}
+    else if([_deviceModelName isEqualToString:@"iPhone1,1"]) {
+		_deviceModelName = @"iPhone";
+	}
+	else if([_deviceModelName isEqualToString:@"iPhone1,2"]) {
+		_deviceModelName = @"iPhone 3G";
+	}
+	else if([_deviceModelName isEqualToString:@"iPhone2,1"]) {
+		_deviceModelName = @"iPhone 3GS";
+	}
+	else if([_deviceModelName isEqualToString:@"iPhone3,1"]) {
+		_deviceModelName = @"iPhone 4";
+	}
+	else if([_deviceModelName isEqualToString:@"iPhone4,1"]) {
+		_deviceModelName = @"iPhone 4S";
+	}
+	else if([_deviceModelName isEqualToString:@"iPhone5,1"]) {
+		_deviceModelName = @"iPhone 5";
+	}
+	
+	else if([_deviceModelName isEqualToString:@"iPod1,1"]) {
+		_deviceModelName = @"iPod 1st Gen";
+	}
+	else if([_deviceModelName isEqualToString:@"iPod2,1"]) {
+		_deviceModelName = @"iPod 2nd Gen";
+	}
+	else if([_deviceModelName isEqualToString:@"iPod3,1"]) {
+		_deviceModelName = @"iPod 3rd Gen";
+	}
+	else if([_deviceModelName isEqualToString:@"iPod4,1"]) {
+		_deviceModelName = @"iPod 4th Gen";
+	}
+	else if([_deviceModelName isEqualToString:@"iPod5,1"]) {
+		_deviceModelName = @"iPod 5th Gen";
+	}
+	
+    else if([_deviceModelName isEqualToString:@"iPad1,1"]) {
+        _deviceModelName = @"iPad";
+	}
+    else if([_deviceModelName isEqualToString:@"iPad2,1"]) {
+        _deviceModelName = @"iPad 2(WiFi)";
+	}
+    else if([_deviceModelName isEqualToString:@"iPad2,2"]) {
+        _deviceModelName = @"iPad 2(GSM)";
+	}
+    else if([_deviceModelName isEqualToString:@"iPad2,3"]) {
+        _deviceModelName = @"iPad 2(CDMA)";
+	}
+	else if([_deviceModelName isEqualToString:@"iPad3,1"]) {
+        _deviceModelName = @"New iPad (WiFi)";
+	}
+    else if([_deviceModelName isEqualToString:@"iPad3,2"]) {
+        _deviceModelName = @"New iPad (GSM)";
+	}
+    else if([_deviceModelName isEqualToString:@"iPad3,3"]) {
+        _deviceModelName = @"New iPad (CDMA)";
+	}
+	
+	return _deviceModelName;
+}
+#pragma mark -
 - (NSDateFormatter*)dateformatterUTC {
 	
 	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
@@ -137,16 +227,13 @@
 
 #pragma mark -
 - (id)rootController {
-	if (_rootController) {
-		return _rootController;
-	}
-	
-	
-	if (self.mainStoryboard) {
-		_rootController = [self.mainStoryboard instantiateInitialViewController];
-	}
-	else {
-		FXDLog_OVERRIDE;
+	if (_rootController == nil) {
+		if (self.mainStoryboard) {
+			_rootController = [self.mainStoryboard instantiateInitialViewController];
+		}
+		else {
+			FXDLog_OVERRIDE;
+		}
 	}
 
 	return _rootController;
@@ -233,8 +320,8 @@
 	
 	[coreDataManager
 	 prepareCoreDataManagerWithUbiquityContainerURL:ubiquityContainerURL
-	 didFinishBlock:^(BOOL didFinish) {	FXDLog_DEFAULT;
-		 FXDLog(@"didFinish: %d", didFinish);
+	 didFinishBlock:^(BOOL finished) {
+		 FXDLog(@"finished: %d %@", finished, strClassSelector);
 		 
 		 didPrepareBlock();
 	 }];
@@ -342,110 +429,6 @@
 	NSDate *localDate = [self.dateformatterLocal dateFromString:localDateString];
 	
 	return localDate;
-}
-
-
-//TODO: refactor following method to be organized into categories or subclasses
-+ (NSString*)deviceModelName {
-
-	struct utsname systemInfo;
-
-	uname(&systemInfo);
-
-	NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-
-	if([modelName isEqualToString:@"i386"]) {
-		modelName = @"iPhone Simulator";
-	}
-    else if([modelName isEqualToString:@"iPhone1,1"]) {
-		modelName = @"iPhone";
-	}
-	else if([modelName isEqualToString:@"iPhone1,2"]) {
-		modelName = @"iPhone 3G";
-	}
-	else if([modelName isEqualToString:@"iPhone2,1"]) {
-		modelName = @"iPhone 3GS";
-	}
-	else if([modelName isEqualToString:@"iPhone3,1"]) {
-		modelName = @"iPhone 4";
-	}
-	else if([modelName isEqualToString:@"iPhone4,1"]) {
-		modelName = @"iPhone 4S";
-	}
-	else if([modelName isEqualToString:@"iPhone5,1"]) {
-		modelName = @"iPhone 5";
-	}
-
-	else if([modelName isEqualToString:@"iPod1,1"]) {
-		modelName = @"iPod 1st Gen";
-	}
-	else if([modelName isEqualToString:@"iPod2,1"]) {
-		modelName = @"iPod 2nd Gen";
-	}
-	else if([modelName isEqualToString:@"iPod3,1"]) {
-		modelName = @"iPod 3rd Gen";
-	}
-	else if([modelName isEqualToString:@"iPod4,1"]) {
-		modelName = @"iPod 4th Gen";
-	}
-	else if([modelName isEqualToString:@"iPod5,1"]) {
-		modelName = @"iPod 5th Gen";
-	}
-
-    else if([modelName isEqualToString:@"iPad1,1"]) {
-        modelName = @"iPad";
-	}
-    else if([modelName isEqualToString:@"iPad2,1"]) {
-        modelName = @"iPad 2(WiFi)";
-	}
-    else if([modelName isEqualToString:@"iPad2,2"]) {
-        modelName = @"iPad 2(GSM)";
-	}
-    else if([modelName isEqualToString:@"iPad2,3"]) {
-        modelName = @"iPad 2(CDMA)";
-	}
-	else if([modelName isEqualToString:@"iPad3,1"]) {
-        modelName = @"New iPad (WiFi)";
-	}
-    else if([modelName isEqualToString:@"iPad3,2"]) {
-        modelName = @"New iPad (GSM)";
-	}
-    else if([modelName isEqualToString:@"iPad3,3"]) {
-        modelName = @"New iPad (CDMA)";
-	}
-
-	return modelName;
-}
-
-+ (NSString*)deviceCountryCode {
-	NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
-	
-	NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
-	
-	NSString *countryCode = components[1];
-	
-	return countryCode;
-}
-
-+ (NSString*)deviceLanguageCode {	
-	NSString *firstLanguage = [[self class] sharedInstance].deviceLanguageCode;
-	
-	return firstLanguage;
-}
-
-+ (void)alertWithMessage:(NSString*)message withTitle:(NSString*)title {
-	FXDAlertView *alertview = [[FXDAlertView alloc]
-							   initWithTitle:title
-							   message:message
-							   delegate:nil
-							   cancelButtonTitle:NSLocalizedString(text_OK, nil)
-							   otherButtonTitles:nil];
-
-	[alertview show];
-}
-
-+ (void)printoutListOfFonts {	FXDLog_DEFAULT;
-	FXDLog(@"UIFont familyNames: %@", [UIFont familyNames]);
 }
 
 
