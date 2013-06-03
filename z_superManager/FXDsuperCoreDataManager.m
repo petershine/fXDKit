@@ -269,8 +269,11 @@
 	NSError *error = nil;
 	
 	BOOL didCopy = [fileManager copyItemAtPath:bundledSqlitePath toPath:storedSqlitePath error:&error];
-	FXDLog(@"didCopy: %d", didCopy);
 	FXDLog_ERROR;
+	
+	if (didCopy) {
+		FXDLog(@"didCopy: %d", didCopy);
+	}
 }
 
 #pragma mark -
@@ -308,7 +311,7 @@
 
 	void (^contextSavingBlock)(void) = ^{
 		NSError *error = nil;
-#if ForDEVELOPER
+
 		BOOL didSave = [managedObjectContext save:&error];
 
 		FXDLog_DEFAULT;
@@ -316,9 +319,6 @@
 		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
 		FXDLog_ERROR;LOGEVENT_ERROR;
-#else
-		[managedObjectContext save:&error];
-#endif
 
 		if (didFinishBlock) {
 			didFinishBlock(didSave);
