@@ -34,14 +34,14 @@
 
 - (BOOL)isHorizontal;
 
-- (CGRect)centerFrameForGridDimension:(CGFloat)gridDimension;
 - (MKZoomScale)minimumZoomScale;
+- (CGRect)centerFrameForGridDimension:(CGFloat)gridDimension;
 
 - (MKCoordinateRegion)snappedGridRegionForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
 - (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
 
-- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atGridIndex:(NSString*)gridIndex;
+- (NSString*)snappedOverlayIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atOverlayIndex:(NSString*)overlayIndex;
 
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 

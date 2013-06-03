@@ -98,14 +98,6 @@
 }
 
 #pragma mark -
-- (CGRect)centerFrameForGridDimension:(CGFloat)gridDimension {
-	CGRect centerFrame = CGRectMake(0.0, 0.0, gridDimension, gridDimension);
-	centerFrame.origin.x = (self.frame.size.width -centerFrame.size.width)/2.0;
-	centerFrame.origin.y = (self.frame.size.height -centerFrame.size.height)/2.0;
-	
-	return centerFrame;
-}
-
 - (MKZoomScale)minimumZoomScale {
 	MKMapRect visibleRect = self.visibleMapRect;
 	//FXDLog(@"visibleRect.origin.x: %f y: %f width: %f height: %f", visibleRect.origin.x, visibleRect.origin.y, visibleRect.size.width, visibleRect.size.height);
@@ -117,6 +109,15 @@
 	//FXDLog(@"widthScale: %f, heightScale: %f minimumScale: %f", widthScale, heightScale, minimumScale);
 	
 	return minimumZoomScale;
+}
+
+#pragma mark -
+- (CGRect)centerFrameForGridDimension:(CGFloat)gridDimension {
+	CGRect centerFrame = CGRectMake(0.0, 0.0, gridDimension, gridDimension);
+	centerFrame.origin.x = (self.frame.size.width -centerFrame.size.width)/2.0;
+	centerFrame.origin.y = (self.frame.size.height -centerFrame.size.height)/2.0;
+	
+	return centerFrame;
 }
 
 #pragma mark -
@@ -162,19 +163,19 @@
 }
 
 #pragma mark -
-- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
+- (NSString*)snappedOverlayIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
 	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension atCoordinate:coordinate];
 	
 	NSInteger xIndex = gridMapRect.origin.x /gridMapRect.size.width;
 	NSInteger yIndex = gridMapRect.origin.y /gridMapRect.size.height;
 	
-	NSString *gridIndex = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
+	NSString *overlayIndex = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
 	
-	return gridIndex;
+	return overlayIndex;
 }
 
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atGridIndex:(NSString*)gridIndex {
-	NSArray *components = [gridIndex componentsSeparatedByString:@"_"];
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atOverlayIndex:(NSString*)overlayIndex {
+	NSArray *components = [overlayIndex componentsSeparatedByString:@"_"];
 	
 	NSInteger xIndex = [components[0] integerValue];
 	NSInteger yIndex = [components[1] integerValue];

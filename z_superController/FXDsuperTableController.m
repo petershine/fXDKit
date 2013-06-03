@@ -24,13 +24,13 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
-	//TODO: Initialize BEFORE LOADING View
+	//GUIDE: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	//TODO: Configure AFTER LOADING View
+	//GUIDE: Configure AFTER LOADING View
 }
 
 

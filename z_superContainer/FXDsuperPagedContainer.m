@@ -24,7 +24,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
-	//TODO: Initialize BEFORE LOADING View
+	//GUIDE: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {

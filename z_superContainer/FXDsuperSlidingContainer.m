@@ -46,7 +46,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-    //TODO: Remove observer, Deallocate timer, Nilify delegates, etc
+    //GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -54,7 +54,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	//TODO: Initialize BEFORE LOADING View
+	//GUIDE: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {

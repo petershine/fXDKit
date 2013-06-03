@@ -21,7 +21,7 @@
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;
-    //TODO: Remove observer, Deallocate timer, Nilify delegates, etc
+    //GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 

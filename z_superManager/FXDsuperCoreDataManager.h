@@ -7,8 +7,10 @@
 //
 
 //SAMPLE:
+/*
 #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
 #define attributekey<#AttributeName#> @"<#AttributeName#>"
+ */
 
 
 #if USE_iCloudCoreData

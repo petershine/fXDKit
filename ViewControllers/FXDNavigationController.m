@@ -15,7 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	//TODO: Remove observer, Deallocate timer, Nilify delegates, etc
+	//GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
 }
 
 
@@ -33,7 +33,7 @@
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 
-	//TODO: Initialize BEFORE LOADING View
+	//GUIDE: Initialize BEFORE LOADING View
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
