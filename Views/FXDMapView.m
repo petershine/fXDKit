@@ -130,10 +130,10 @@
 }
 
 - (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
-	MKMapPoint centerMapPoint = MKMapPointForCoordinate(coordinate);
 	
 	CGFloat scaledDimension = gridDimension/[self minimumZoomScale];
 	
+	MKMapPoint centerMapPoint = MKMapPointForCoordinate(coordinate);
 	MKMapRect centerMapRect = MKMapRectMake(0.0, 0.0, scaledDimension, scaledDimension);
 	centerMapRect.origin.x = (centerMapPoint.x -(scaledDimension/2.0));
 	centerMapRect.origin.y = (centerMapPoint.y -(scaledDimension/2.0));
@@ -157,6 +157,31 @@
 		gridMapRect.origin.y += scaledDimension;
 	}
 	//FXDLog(@"2.modifiedMapRect.origin.x: %f y: %f width: %f height: %f", modifiedMapRect.origin.x, modifiedMapRect.origin.y, modifiedMapRect.size.width, modifiedMapRect.size.height);
+	
+	return gridMapRect;
+}
+
+#pragma mark -
+- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
+	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension atCoordinate:coordinate];
+	
+	NSInteger xIndex = gridMapRect.origin.x /gridMapRect.size.width;
+	NSInteger yIndex = gridMapRect.origin.y /gridMapRect.size.height;
+	
+	NSString *gridIndex = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
+	
+	return gridIndex;
+}
+
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atGridIndex:(NSString*)gridIndex {
+	NSArray *components = [gridIndex componentsSeparatedByString:@"_"];
+	
+	NSInteger xIndex = [components[0] integerValue];
+	NSInteger yIndex = [components[1] integerValue];
+	
+	CGFloat scaledDimension = gridDimension/[self minimumZoomScale];
+	
+	MKMapRect gridMapRect = MKMapRectMake(scaledDimension*xIndex, scaledDimension*yIndex, scaledDimension, scaledDimension);
 	
 	return gridMapRect;
 }

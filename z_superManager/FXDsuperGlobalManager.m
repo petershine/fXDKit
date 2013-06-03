@@ -137,13 +137,16 @@
 
 #pragma mark -
 - (id)rootController {
-	if (_rootController == nil) {
-		if (self.mainStoryboard) {
-			_rootController = [self.mainStoryboard instantiateInitialViewController];
-		}
-		else {
-			FXDLog_OVERRIDE;
-		}
+	if (_rootController) {
+		return _rootController;
+	}
+	
+	
+	if (self.mainStoryboard) {
+		_rootController = [self.mainStoryboard instantiateInitialViewController];
+	}
+	else {
+		FXDLog_OVERRIDE;
 	}
 
 	return _rootController;

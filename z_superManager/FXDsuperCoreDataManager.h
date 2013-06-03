@@ -61,13 +61,12 @@
 + (FXDsuperCoreDataManager*)sharedInstance;
 
 - (void)startObservingFileManagerNotifications;
-
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didConfigure))didFinishBlock;
-
 - (void)startObservingCoreDataNotifications;
 
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
+- (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;
 
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 
 
 //MARK: - Observer implementation

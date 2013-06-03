@@ -39,6 +39,10 @@
 
 - (MKCoordinateRegion)snappedGridRegionForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
 - (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
+
+- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate;
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atGridIndex:(NSString*)gridIndex;
+
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 
 - (CLLocationCoordinate2D)gridCenterFromGridFrame:(CGRect)gridFrame;

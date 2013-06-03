@@ -101,8 +101,53 @@
 	
 }
 
+- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillTerminate:)
+	 name:UIApplicationWillTerminateNotification
+	 object:nil];
+	
+	
+	id notifyingObject = self.mainDocument.managedObjectContext.parentContext;
+	FXDLog(@"notifyingObject: %@", notifyingObject);
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+	 object:notifyingObject];
+	
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+	 name:NSManagedObjectContextObjectsDidChangeNotification
+	 object:notifyingObject];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextWillSave:)
+	 name:NSManagedObjectContextWillSaveNotification
+	 object:notifyingObject];
+	
+	[defaultCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextDidSave:)
+	 name:NSManagedObjectContextDidSaveNotification
+	 object:notifyingObject];
+}
+
 #pragma mark -
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL didConfigure))didFinishBlock {	//FXDLog_DEFAULT;
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL finished))didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
@@ -183,59 +228,55 @@
 			else {
 				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
 				
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCoreDataManagerDidPrepare object:self userInfo:userInfo];
+				[[NSNotificationCenter defaultCenter]
+				 postNotificationName:notificationCoreDataManagerDidPrepare
+				 object:self
+				 userInfo:userInfo];
 			}
 		}];
 	}];
 }
 
-- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
+- (void)initializeWithBundledCoreDataName:(NSString*)coreDataName {	FXDLog_DEFAULT;
 	
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationWillTerminate:)
-	 name:UIApplicationWillTerminateNotification
-	 object:nil];
-
-
-	id notifyingObject = self.mainDocument.managedObjectContext.parentContext;
-	FXDLog(@"notifyingObject: %@", notifyingObject);
-	
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-	 object:notifyingObject];
+	if (coreDataName == nil) {
+		coreDataName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+	}
 	
 	
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-	 name:NSManagedObjectContextObjectsDidChangeNotification
-	 object:notifyingObject];
+	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedNSManagedObjectContextWillSave:)
-	 name:NSManagedObjectContextWillSaveNotification
-	 object:notifyingObject];
+	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:coreDataName ofType:@"sqlite"];
+	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
 	
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedNSManagedObjectContextDidSave:)
-	 name:NSManagedObjectContextDidSaveNotification
-	 object:notifyingObject];
+	BOOL isBundledWithSqlite = [fileManager fileExistsAtPath:bundledSqlitePath];
+	FXDLog(@"isBundledWithSqlite: %d", isBundledWithSqlite);
+	
+	if (isBundledWithSqlite == NO) {
+		return;
+	}
+	
+	
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:applicationSqlitePathComponent];
+	FXDLog(@"storedSqlitePath: %@", storedSqlitePath);
+	
+	BOOL isSqliteAlreadyInitialized = [fileManager fileExistsAtPath:storedSqlitePath];
+	FXDLog(@"isSqliteAlreadyInitialized: %d", isSqliteAlreadyInitialized);
+	
+	if (isSqliteAlreadyInitialized) {
+		return;
+	}
+	
+	
+	NSError *error = nil;
+	
+	BOOL didCopy = [fileManager copyItemAtPath:bundledSqlitePath toPath:storedSqlitePath error:&error];
+	FXDLog(@"didCopy: %d", didCopy);
+	FXDLog_ERROR;
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(void))didFinishBlock {	FXDLog_SEPARATE;
+- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_SEPARATE;
 	
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
@@ -260,7 +301,7 @@
 	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
 
 		if (didFinishBlock) {
-			didFinishBlock();
+			didFinishBlock(NO);
 		}
 
 		return;
@@ -282,7 +323,7 @@
 #endif
 
 		if (didFinishBlock) {
-			didFinishBlock();
+			didFinishBlock(didSave);
 		}
 	};
 	
