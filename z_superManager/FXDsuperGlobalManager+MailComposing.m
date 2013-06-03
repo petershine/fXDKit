@@ -45,7 +45,7 @@
 	NSString *stringLine = @"_______________________________";
 	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
 
-	NSString *machineStr = [[self class] deviceModelName];
+	NSString *machineStr = self.deviceModelName;
 
 	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", machineStr, [[UIDevice currentDevice] systemVersion]];
 

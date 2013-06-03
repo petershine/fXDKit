@@ -143,19 +143,19 @@
 	 message:alertMessage
 	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
 		 FXDLog(@"buttonIndex: %d", buttonIndex);
-
+		 
 		 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 		 
 		 if (buttonIndex != [(FXDAlertView*)alertView cancelButtonIndex]) {	FXDLog_DEFAULT;
-
+			 
 			 ACAccount *selectedTwitterAccount = (self.twitterAccountArray)[buttonIndex];
 			 FXDLog(@"selectedTwitterAccount: %@", selectedTwitterAccount);
-
+			 
 			 if (selectedTwitterAccount) {
 				 [userDefaults setObject:selectedTwitterAccount.identifier forKey:userdefaultObjKeyMainAccountIdentifier];
-
+				 
 				 _mainTwitterAccount = selectedTwitterAccount;
-
+				 
 #if ForDEVELOPER
 				 [self userLookUpWithScreenName:_mainTwitterAccount.username];
 #endif
@@ -163,14 +163,14 @@
 		 }
 		 else {
 			 [userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
-
+			 
 			 _mainTwitterAccount = nil;
 		 }
-
+		 
 		 [userDefaults synchronize];
-
+		 
 		 _twitterAccountArray = nil;
-
+		 
 		 if (didFinishBlock) {
 			 didFinishBlock(YES);
 		 }

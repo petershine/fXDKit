@@ -207,14 +207,12 @@
 				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
 				NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];
 
-				FXDAlertView *alertView =
-				[[FXDAlertView alloc]
-				 initWithTitle:title
-				 message:message
-				 delegate:nil
-				 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
-				 otherButtonTitles:nil];
-
+				FXDAlertView *alertView = [[FXDAlertView alloc]
+										   initWithTitle:title
+										   message:message
+										   delegate:nil
+										   cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+										   otherButtonTitles:nil];
 				[alertView show];
 			}
 #endif
