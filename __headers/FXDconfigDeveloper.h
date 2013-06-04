@@ -13,7 +13,6 @@
 		#define USE_loggingBorderLine	0
 		#define USE_loggingResultObjFiltering	0
 		#define USE_loggingManagedObjectActivities	0
-		#define USE_tempImageview	0
 
 		#define TEST_withSlowAnimationDuration	0
 		#define TEST_appirater	1

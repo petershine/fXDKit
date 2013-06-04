@@ -26,15 +26,12 @@
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-}
-
 
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+
+#pragma mark - IBActions
 
 #pragma mark - Public
 

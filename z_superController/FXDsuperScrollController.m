@@ -21,12 +21,6 @@
 
 
 #pragma mark - Initialization
-- (void)awakeFromNib {
-	[super awakeFromNib];
-	
-	//GUIDE: Initialize BEFORE LOADING View
-}
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
@@ -84,14 +78,6 @@
 #pragma mark - Autorotating
 
 #pragma mark - View Appearing
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-}
-
 
 #pragma mark - Property overriding
 - (NSString*)mainCellIdentifier {
@@ -203,9 +189,7 @@
 
 #pragma mark - Segues
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {

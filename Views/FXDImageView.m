@@ -26,12 +26,6 @@
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-		
-}
-
 
 #pragma mark - Property overriding
 
@@ -107,21 +101,6 @@
 		 [fadedImageview removeFromSuperview];
 		 fadedImageview = nil;
 	 }];
-}
-
-@end
-
-
-@implementation FXDimageviewTemp
-
-#pragma mark - Initialization
-- (void)awakeFromNib {
-    [super awakeFromNib];
-		
-#if USE_tempImageview
-#else
-	self.image = nil;
-#endif
 }
 
 @end

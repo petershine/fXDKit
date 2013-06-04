@@ -74,12 +74,9 @@
 
 #pragma mark - View Appearing
 
-
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - Segues
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
@@ -184,7 +181,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

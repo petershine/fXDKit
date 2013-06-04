@@ -14,18 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-    //GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
-}
-
 
 #pragma mark - Initialization
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-	//GUIDE: Initialize BEFORE LOADING View
-}
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
@@ -51,14 +41,6 @@
 
 
 #pragma mark - View Appearing
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-}
-
 
 #pragma mark - Property overriding
 

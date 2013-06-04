@@ -35,12 +35,6 @@
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-	
-	//GUIDE: Initialize BEFORE LOADING View
-}
-
 
 #pragma mark - Property overriding
 

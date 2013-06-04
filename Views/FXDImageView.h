@@ -34,7 +34,3 @@
 - (void)fadeInImage:(UIImage*)fadedImage;
 
 @end
-
-
-@interface FXDimageviewTemp : FXDImageView
-@end

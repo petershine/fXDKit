@@ -26,11 +26,6 @@
 	return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-}
-
 
 #pragma mark - Property overriding
 
