@@ -241,12 +241,12 @@
 	return numberOfSections;
 }
 
-- (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section {	FXDLog_DEFAULT;
+- (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section {
 	
 	NSInteger numberOfItems = 0;
 	
 	if (self.mainResultsController) {
-		NSInteger fetchedObjectsCount = [self.mainResultsController.fetchedObjects count];
+		NSInteger fetchedCount = [self.mainResultsController.fetchedObjects count];
 		
 #if ForDEVELOPER
 		NSArray *sections = self.mainResultsController.sections;
@@ -257,20 +257,26 @@
 			numberOfItems = [sectionInfo numberOfObjects];
 		}
 		
-		if (numberOfItems != fetchedObjectsCount) {
-			numberOfItems = fetchedObjectsCount;
+		if (numberOfItems != fetchedCount) {
+			numberOfItems = fetchedCount;
 		}
 #else
 		numberOfItems = fetchedObjectsCount;
 #endif
-		FXDLog(@"section: %d numberOfRows: %d == fetchedObjectsCount: %d", section, numberOfItems, fetchedObjectsCount);
+		FXDLog_DEFAULT;
+		FXDLog(@"section: %d numberOfRows: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);
 	}
 	else if (self.mainDataSource) {
 		numberOfItems = [self.mainDataSource count];
 	}
-	else if (self.itemCounts) {	//FXDLog_OVERRIDE;
+	else if (self.itemCounts) {
 		numberOfItems = [(self.itemCounts)[section] integerValue];
 	}
+#if ForDEVELOPER
+	else {
+		FXDLog_OVERRIDE;
+	}
+#endif
 	
 	return numberOfItems;
 }
