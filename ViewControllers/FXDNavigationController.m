@@ -30,13 +30,7 @@
 	return self;
 }
 
-- (void)awakeFromNib {	FXDLog_DEFAULT;
-	[super awakeFromNib];
-
-	//GUIDE: Initialize BEFORE LOADING View
-}
-
-- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLoad {
 	[super viewDidLoad];
 
 	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);

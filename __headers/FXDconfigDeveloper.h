@@ -27,7 +27,8 @@
 #endif
 
 
-#define strClassSelector	[NSString stringWithFormat:@"%@%s", NSStringFromClass([self class]), __FUNCTION__]
+//#define strClassSelector	[NSString stringWithFormat:@"%@%s", NSStringFromClass([self class]), __FUNCTION__]
+#define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
 
 #if USE_FXDLog
 	#define FXDLog NSLog
@@ -40,8 +41,6 @@
 	#define FXDLog_VIEW_FRAME	FXDLog(@" ");FXDLog(@"%@: %@", strClassSelector, NSStringFromCGRect(self.frame));
 
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
-
-	#define FXDLog_SKIPPED	FXDLog(@" ");FXDLog(@"SKIPPED: %@", strClassSelector)
 
 	#define FXDLog_NOTIFIED	FXDLog(@" ");FXDLog(@"NOTIFIED: %@: %@", NSStringFromClass([self class]), note.name)
 
@@ -62,8 +61,6 @@
 	#define FXDLog_VIEW_FRAME
 
 	#define FXDLog_OVERRIDE
-
-	#define FXDLog_SKIPPED
 
 	#define FXDLog_NOTIFIED
 

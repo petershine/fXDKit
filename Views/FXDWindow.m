@@ -22,7 +22,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 	
     if (self) {
@@ -32,7 +32,7 @@
     return self;
 }
 
-- (void)awakeFromNib {	//FXDLog_DEFAULT;
+- (void)awakeFromNib {
 	[super awakeFromNib];
 
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];

@@ -31,19 +31,6 @@
 	return self;
 }
 
-#pragma mark -
-- (void)awakeFromNib {	FXDLog_DEFAULT;
-	[super awakeFromNib];
-	
-	//GUIDE: Initialize BEFORE LOADING View
-}
-
-- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
-	[super viewDidLoad];
-	
-	//GUIDE: Configure AFTER LOADING View
-}
-
 
 #pragma mark - Autorotating
 

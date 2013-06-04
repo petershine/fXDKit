@@ -61,11 +61,11 @@
 }
 
 #pragma mark -
-- (void)awakeFromNib {	FXDLog_DEFAULT;
+- (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
 	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
-		_isSystemVersionLatest = YES;
+		self.isSystemVersionLatest = YES;
 	}
 	
 	FXDLog(@"storyboard: %@, nibName: %@ isSystemVersionLatest: %d", self.storyboard, self.nibName, self.isSystemVersionLatest);
