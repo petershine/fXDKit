@@ -31,15 +31,15 @@
 #pragma mark - Method overriding
 
 #pragma mark - IBActions
-- (IBAction)pressedCancelButton:(id)sender {	FXDLog_DEFAULT;
+- (IBAction)pressedCancelButton:(id)sender {
+	[super pressedCancelButton:sender];
+	
 	if (self.callbackBlock) {
 		self.callbackBlock(self, buttonIndexCancel);
 	}
 	
 	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 	[applicationWindow hideMessageView];
-	
-	[super pressedCancelButton:sender];
 }
 
 - (IBAction)pressedAcceptButton:(id)sender {	FXDLog_DEFAULT;

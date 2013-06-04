@@ -118,29 +118,29 @@
 
 
 #pragma mark - View Appearing
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewWillAppear:animated];
 }
 
 #if USE_loggingViewDrawing
-- (void)viewWillLayoutSubviews {	FXDLog_SEPARATE_FRAME;
+- (void)viewWillLayoutSubviews {	FXDLog_FRAME;
 	[super viewWillLayoutSubviews];
 }
 
-- (void)viewDidLayoutSubviews {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLayoutSubviews {	FXDLog_FRAME;
 	[super viewDidLayoutSubviews];
 }
 #endif
 
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {	//FXDLog_SEPARATE_FRAME;
+- (void)viewWillDisappear:(BOOL)animated {	//FXDLog_FRAME;
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {	//FXDLog_SEPARATE_FRAME;
+- (void)viewDidDisappear:(BOOL)animated {	//FXDLog_FRAME;
 	[super viewDidDisappear:animated];
 }
 
