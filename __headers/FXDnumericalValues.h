@@ -30,8 +30,6 @@
 #define delayExtremelyShort	0.01
 
 
-
-
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0
 

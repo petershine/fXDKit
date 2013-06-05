@@ -15,8 +15,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_pagedOperationQueue cancelAllOperations];
 	[_pagedOperationDictionary removeAllObjects];
+	[_pagedOperationQueue cancelAllOperations];
 }
 
 

@@ -98,9 +98,7 @@
 	
 	
 	self.cellOperationDictionary[[indexPath stringValue]] = cellOperation;
-	
 	[self.cellOperationQueue addOperation:cellOperation];
-	
 	
 	return cell;
 }

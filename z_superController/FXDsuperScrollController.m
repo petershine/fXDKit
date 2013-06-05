@@ -15,8 +15,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_cellOperationQueue cancelAllOperations];
 	[_cellOperationDictionary removeAllObjects];
+	[_cellOperationQueue cancelAllOperations];
 }
 
 
@@ -261,7 +261,7 @@
 			numberOfItems = fetchedCount;
 		}
 #else
-		numberOfItems = fetchedObjectsCount;
+		numberOfItems = fetchedCount;
 #endif
 		FXDLog_DEFAULT;
 		FXDLog(@"section: %d numberOfRows: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);

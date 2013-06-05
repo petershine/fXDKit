@@ -37,7 +37,11 @@
 
 	FXDFetchedResultsController *resultsController = nil;
 
-	NSFetchRequest *fetchRequest = [self fetchRequestForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
+	NSFetchRequest *fetchRequest = [self
+									fetchRequestForEntityName:entityName
+									withSortDescriptors:sortDescriptors
+									withPredicate:predicate
+									withLimit:limit];
 
 	if (fetchRequest) {
 		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self sectionNameKeyPath:nil cacheName:entityName];
@@ -58,7 +62,11 @@
 
 	NSMutableArray *fetchedObjArray = nil;
 
-	NSFetchRequest *fetchRequest = [self fetchRequestForEntityName:entityName withSortDescriptors:sortDescriptors withPredicate:predicate withLimit:limit];
+	NSFetchRequest *fetchRequest = [self
+									fetchRequestForEntityName:entityName
+									withSortDescriptors:sortDescriptors
+									withPredicate:predicate
+									withLimit:limit];
 
 	if (fetchRequest) {
 
