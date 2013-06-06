@@ -121,18 +121,18 @@
 }
 
 #pragma mark -
-- (MKCoordinateRegion)snappedGridRegionForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {	//FXDLog_DEFAULT;
+- (MKCoordinateRegion)snappedGridRegionForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {	//FXDLog_DEFAULT;
 	
-	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension atCoordinate:coordinate];
+	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension forZoomScale:zoomScale atCoordinate:coordinate];
 	
 	MKCoordinateRegion gridRegion = MKCoordinateRegionForMapRect(gridMapRect);
 	
 	return gridRegion;
 }
 
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
 	
-	CGFloat scaledDimension = gridDimension/[self minimumZoomScale];
+	CGFloat scaledDimension = gridDimension/zoomScale;
 	
 	MKMapPoint centerMapPoint = MKMapPointForCoordinate(coordinate);
 	MKMapRect centerMapRect = MKMapRectMake(0.0, 0.0, scaledDimension, scaledDimension);
@@ -163,8 +163,8 @@
 }
 
 #pragma mark -
-- (NSString*)snappedOverlayIndexForGridDimension:(CGFloat)gridDimension atCoordinate:(CLLocationCoordinate2D)coordinate {
-	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension atCoordinate:coordinate];
+- (NSString*)snappedOverlayIndexForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
+	MKMapRect gridMapRect = [self snappedGridMapRectForGridDimension:gridDimension forZoomScale:zoomScale atCoordinate:coordinate];
 	
 	NSInteger xIndex = gridMapRect.origin.x /gridMapRect.size.width;
 	NSInteger yIndex = gridMapRect.origin.y /gridMapRect.size.height;
@@ -174,13 +174,13 @@
 	return overlayIndex;
 }
 
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension atOverlayIndex:(NSString*)overlayIndex {
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atOverlayIndex:(NSString*)overlayIndex {
 	NSArray *components = [overlayIndex componentsSeparatedByString:@"_"];
 	
 	NSInteger xIndex = [components[0] integerValue];
 	NSInteger yIndex = [components[1] integerValue];
 	
-	CGFloat scaledDimension = gridDimension/[self minimumZoomScale];
+	CGFloat scaledDimension = gridDimension/zoomScale;
 	
 	MKMapRect gridMapRect = MKMapRectMake(scaledDimension*xIndex, scaledDimension*yIndex, scaledDimension, scaledDimension);
 	
@@ -206,13 +206,12 @@
 	return gridCenter;
 }
 
-- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame {
+- (MKMapRect)gridMapRectFromGridFrame:(CGRect)gridFrame forZoomScale:(MKZoomScale)zoomScale {
 	CLLocationCoordinate2D gridOrigin = [self convertPoint:gridFrame.origin toCoordinateFromView:self];
 	
 	MKMapPoint rectOrigin = MKMapPointForCoordinate(gridOrigin);
 	
-	MKZoomScale minimumZoomScale = [self minimumZoomScale];
-	MKMapSize rectSize = MKMapSizeMake(gridFrame.size.width/minimumZoomScale, gridFrame.size.height/minimumZoomScale);
+	MKMapSize rectSize = MKMapSizeMake(gridFrame.size.width/zoomScale, gridFrame.size.height/zoomScale);
 	
 	MKMapRect gridMapRect = MKMapRectMake(rectOrigin.x, rectOrigin.y, rectSize.width, rectSize.height);
 	
@@ -224,13 +223,11 @@
 	MKMapPoint centerMapPoint = MKMapPointForCoordinate(coordinate);
 	
 	MKMapRect scaledMapRect = self.visibleMapRect;
-	FXDLog(@"1.scaledMapRect width: %f height: %f", scaledMapRect.size.width, scaledMapRect.size.height);
-	
 	scaledMapRect.size.width *= scale;
 	scaledMapRect.size.height *= scale;
 	scaledMapRect.origin.x = centerMapPoint.x -(scaledMapRect.size.width/2.0);
 	scaledMapRect.origin.y = centerMapPoint.y -(scaledMapRect.size.height/2.0);
-	FXDLog(@"2.scaledMapRect width: %f height: %f", scaledMapRect.size.width, scaledMapRect.size.height);
+	//FXDLog(@"scaledMapRect width: %f height: %f", scaledMapRect.size.width, scaledMapRect.size.height);
 	
 	return scaledMapRect;
 }

@@ -23,7 +23,7 @@
 
 #define intervalOneSecond	durationOneSecond
 
-
+#define delayFullMinute		(durationOneSecond*60.0)
 #define delayOneSecond		durationOneSecond
 #define delayQuarterSecond	0.25
 #define delayHalfSecond		0.5

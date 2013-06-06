@@ -84,7 +84,6 @@
 								  withLimit:0];
 
 		[_mainResultsController setDelegate:self];
-
 	}
 
 	return _mainResultsController;
@@ -349,23 +348,16 @@
 	
 		
 	if ([NSThread isMainThread]) {
-		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				[managedObjectContext performBlockAndWait:contextSavingBlock];
-			});
-		}
-		else {
-			[managedObjectContext performBlockAndWait:contextSavingBlock];
-		}
+		[managedObjectContext performBlockAndWait:contextSavingBlock];
 	}
 	else {
 		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
 			[managedObjectContext performBlockAndWait:contextSavingBlock];
 		}
 		else {
-			dispatch_async(dispatch_get_main_queue(), ^{
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				[managedObjectContext  performBlockAndWait:contextSavingBlock];
-			});
+			}];
 		}
 	}
 }

@@ -236,13 +236,11 @@
 	self.displayviewMovie.hidden = YES;
 	self.buttonPlay.hidden = YES;
 	
-	
-	__weak typeof(self) _weakSelf = self;
-	
+		
 	[[FXDWindow applicationWindow] showDefaultProgressView];
 	
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		ALAssetRepresentation *defaultRepresentation = [_weakSelf.previewedAsset defaultRepresentation];
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		ALAssetRepresentation *defaultRepresentation = [self.previewedAsset defaultRepresentation];
 		
 		CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
 		CGFloat scale = [[UIScreen mainScreen] scale];
@@ -253,12 +251,12 @@
 		UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
 		FXDLog(@"fullImage.imageOrientation: %d fullImage.size: %@", fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
 		
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[_weakSelf refreshWithFullImage:fullImage];
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[self refreshWithFullImage:fullImage];
 			
 			[[FXDWindow applicationWindow] hideProgressView];
-		});
-	});
+		}];
+	}];
 }
 
 #pragma mark -
