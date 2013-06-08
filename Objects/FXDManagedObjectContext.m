@@ -44,7 +44,11 @@
 									withLimit:limit];
 
 	if (fetchRequest) {
-		resultsController = [[FXDFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self sectionNameKeyPath:nil cacheName:entityName];
+		resultsController = [[FXDFetchedResultsController alloc]
+							 initWithFetchRequest:fetchRequest
+							 managedObjectContext:self
+							 sectionNameKeyPath:nil
+							 cacheName:entityName];
 
 
 		NSError *error = nil;

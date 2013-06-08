@@ -81,7 +81,7 @@
 								  resultsControllerForEntityName:self.mainEntityName
 								  withSortDescriptors:self.mainSortDescriptors
 								  withPredicate:nil
-								  withLimit:0];
+								  withLimit:limitInfiniteFetch];
 
 		[_mainResultsController setDelegate:self];
 	}

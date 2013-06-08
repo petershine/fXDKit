@@ -6,12 +6,16 @@
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
+#ifndef limitInfiniteFetch
+	#define limitInfiniteFetch	0
+#endif
+
 #ifndef limitDefaultFetch
 	#define limitDefaultFetch	1000
 #endif
 
 #ifndef sizeDefaultBatch
-	#define sizeDefaultBatch	10
+	#define sizeDefaultBatch	100
 #endif
 
 

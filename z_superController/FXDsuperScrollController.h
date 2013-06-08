@@ -10,7 +10,7 @@
 
 
 @interface FXDsuperScrollController : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
-    // Primitives
+
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
 	
