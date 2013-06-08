@@ -98,21 +98,19 @@
 }
 
 #pragma mark -
-- (MKZoomScale)minimumZoomScale {
+- (MKZoomScale)zoomScale {
 	MKMapRect visibleRect = self.visibleMapRect;
-	//FXDLog(@"visibleRect.origin.x: %f y: %f width: %f height: %f", visibleRect.origin.x, visibleRect.origin.y, visibleRect.size.width, visibleRect.size.height);
 	
 	MKZoomScale widthScale = self.frame.size.width /visibleRect.size.width;
 	MKZoomScale heightScale = self.frame.size.height /visibleRect.size.height;
 	
-	MKZoomScale minimumZoomScale = MIN(widthScale, heightScale);
-	//FXDLog(@"widthScale: %f, heightScale: %f minimumScale: %f", widthScale, heightScale, minimumScale);
+	MKZoomScale zoomScale = MIN(widthScale, heightScale);
 	
-	return minimumZoomScale;
+	return zoomScale;
 }
 
 #pragma mark -
-- (NSString*)snappedOverlayIndexForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
+- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
 	
 	CGFloat scaledDimension = gridDimension/zoomScale;
 	
@@ -140,16 +138,16 @@
 		yIndex++;
 	}
 	
-	NSString *overlayIndex = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
+	NSString *gridIndex = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
 	
-	return overlayIndex;
+	return gridIndex;
 }
 
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atOverlayIndex:(NSString*)overlayIndex {
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atGridIndex:(NSString*)gridIndex {
 	
 	CGFloat scaledDimension = gridDimension/zoomScale;
 	
-	NSArray *components = [overlayIndex componentsSeparatedByString:@"_"];
+	NSArray *components = [gridIndex componentsSeparatedByString:@"_"];
 	
 	NSInteger xIndex = [components[0] integerValue];
 	NSInteger yIndex = [components[1] integerValue];
