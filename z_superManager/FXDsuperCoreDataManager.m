@@ -283,8 +283,9 @@
 		return nil;
 	}
 	
-	//MARK: Default is to skip
+	
 	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
+		//MARK: Default is to skip
 		FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
 		return nil;
 	}

@@ -12,7 +12,6 @@
 #define attributekey<#AttributeName#> @"<#AttributeName#>"
  */
 
-
 #if USE_iCloudCoreData
 /* SAMPLE
  [[<#AppPrefix#>managerCoreData sharedInstance] startObservingFileManagerNotifications];

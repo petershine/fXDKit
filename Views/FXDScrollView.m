@@ -85,9 +85,9 @@
 		verticalInset = 0.0;
 	}
 	
-	UIEdgeInsets modifiedInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
+	UIEdgeInsets modifiedInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 	
-	[self setContentInset:modifiedInset];
+	[self setContentInset:modifiedInsets];
 }
 
 - (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;

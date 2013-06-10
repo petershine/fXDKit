@@ -301,7 +301,12 @@
 	[self prepareGlobalManagerWithCoreDataManager:nil withUbiquityContainerURL:nil atLaunchWithWindowLoadingBlock:windowLoadingBlock];
 }
 
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_DEFAULT;
+	
+#if ForDEVELOPER
+	NSUUID *deviceIdentier = [UIDevice currentDevice].identifierForVendor;
+	FXDLog(@"deviceIdentier UUIDString: %@", [deviceIdentier UUIDString]);
+#endif
 	
 	void (^didPrepareBlock)(void) = ^(void){
 		[self startObservingEssentialNotifications];
