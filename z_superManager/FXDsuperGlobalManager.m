@@ -304,8 +304,8 @@
 - (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_DEFAULT;
 	
 #if ForDEVELOPER
-	NSUUID *deviceIdentier = [UIDevice currentDevice].identifierForVendor;
-	FXDLog(@"deviceIdentier UUIDString: %@", [deviceIdentier UUIDString]);
+	NSUUID *deviceIdentifier = [UIDevice currentDevice].identifierForVendor;
+	FXDLog(@"deviceIdentifier UUIDString: %@", [deviceIdentifier UUIDString]);
 #endif
 	
 	void (^didPrepareBlock)(void) = ^(void){
@@ -450,6 +450,7 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	//MARK: Not being used at 1st launch active state
 }
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }

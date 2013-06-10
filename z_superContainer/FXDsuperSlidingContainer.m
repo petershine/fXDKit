@@ -9,7 +9,7 @@
 #import "FXDsuperSlidingContainer.h"
 
 @implementation FXDsegueEmbeddingFrontController
-- (void)perform {	FXDLog_DEFAULT;
+- (void)perform {
 	[super perform];
 	
 	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
