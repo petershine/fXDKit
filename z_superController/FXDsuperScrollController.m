@@ -173,7 +173,9 @@
 		if (self.mainResultsController.additionalDelegate == self) {
 			[self.mainResultsController setAdditionalDelegate:nil];
 		}
-				
+		
+		//TEST: DataSource & Delegate
+		/*
 		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
 			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
 		}
@@ -181,6 +183,7 @@
 		if ([self.mainScrollview respondsToSelector:@selector(setDataSource:)]) {
 			[self.mainScrollview performSelector:@selector(setDataSource:) withObject:nil];
 		}
+		 */
 	}
 	
 	[super willMoveToParentViewController:parent];

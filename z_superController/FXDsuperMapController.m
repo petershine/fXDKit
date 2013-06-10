@@ -23,7 +23,9 @@
 		[self.mainMapview setDelegate:self];
 	}
 	
-	[self resumeTrackingUser];
+	if (self.shouldResumeTracking) {
+		[self resumeTrackingUser];
+	}
 }
 
 
@@ -45,8 +47,8 @@
 }
 
 #pragma mark -
-- (void)resumeTrackingUser {	FXDLog_DEFAULT;
-	if (self.initialTrackingMode != MKUserTrackingModeNone) {
+- (void)resumeTrackingUser {
+	if (self.initialTrackingMode != MKUserTrackingModeNone) {	FXDLog_DEFAULT;
 		[self.mainMapview setUserTrackingMode:self.initialTrackingMode animated:YES];
 	}
 }
