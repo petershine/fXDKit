@@ -10,12 +10,16 @@
 
 
 @interface FXDsuperGlobalManager : FXDObject {
+	NSInteger _appLaunchCount;
+	
 	BOOL _didMakePurchase;
 	BOOL _didShareToSocialNet;
 
 	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
 }
+
+@property (assign, nonatomic, readonly) NSInteger appLaunchCount;
 
 @property (assign, nonatomic) BOOL didMakePurchase;
 @property (assign, nonatomic) BOOL didShareToSocialNet;
@@ -41,7 +45,10 @@
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 - (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
+- (void)configureUserDefaultsInfo;
 - (void)startObservingEssentialNotifications;
+
+- (void)incrementAppLaunchCount;
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 

@@ -26,6 +26,13 @@
 
 
 #pragma mark - Property overriding
+- (NSInteger)appLaunchCount {
+	_appLaunchCount = [[NSUserDefaults standardUserDefaults] integerForKey:userdefaultIntegerAppLaunchCount];
+	
+	return _appLaunchCount;
+}
+
+#pragma mark -
 - (BOOL)didMakePurchase {	//FXDLog_DEFAULT;
 	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidMakePurchase];
 
@@ -309,6 +316,7 @@
 #endif
 	
 	void (^didPrepareBlock)(void) = ^(void){
+		[self configureUserDefaultsInfo];
 		[self startObservingEssentialNotifications];
 		
 		if (windowLoadingBlock) {
@@ -330,6 +338,11 @@
 		 
 		 didPrepareBlock();
 	 }];
+}
+
+#pragma mark -
+- (void)configureUserDefaultsInfo {	FXDLog_OVERRIDE;
+	
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
@@ -378,6 +391,17 @@
 	 selector:@selector(observedNSUserDefaultsDidChange:)
 	 name:NSUserDefaultsDidChangeNotification
 	 object:nil];
+}
+
+#pragma mark -
+- (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
+	FXDLog(@"1.appLaunchCount: %d", self.appLaunchCount);
+	
+	_appLaunchCount++;
+	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	
+	FXDLog(@"2.appLaunchCount: %d", self.appLaunchCount);
 }
 
 #pragma mark -

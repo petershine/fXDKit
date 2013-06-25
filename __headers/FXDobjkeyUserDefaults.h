@@ -6,5 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#define userdefaultIntegerAppLaunchCount	@"AppLaunchCountIntegerKey"
+
 #define userdefaultBoolDidMakePurchase		@"DidMakePurchaseBoolKey"
 #define userdefaultBoolDidShareToSocialNet	@"DidShareToSocialNetBoolKey"
