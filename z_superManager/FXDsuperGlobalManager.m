@@ -305,10 +305,10 @@
 
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	//FXDLog_OVERRIDE;
-	[self prepareGlobalManagerWithCoreDataManager:nil withUbiquityContainerURL:nil atLaunchWithWindowLoadingBlock:windowLoadingBlock];
+	[self prepareGlobalManagerWithCoreDataManager:nil withUbiquityContainerURL:nil withCompleteProtection:NO  atLaunchWithWindowLoadingBlock:windowLoadingBlock];
 }
 
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_DEFAULT;
 	
 #if ForDEVELOPER
 	NSUUID *deviceIdentifier = [UIDevice currentDevice].identifierForVendor;
@@ -333,6 +333,7 @@
 	
 	[coreDataManager
 	 prepareCoreDataManagerWithUbiquityContainerURL:ubiquityContainerURL
+	 withCompleteProtection:withCompleteProtection
 	 didFinishBlock:^(BOOL finished) {
 		 FXDLog(@"finished: %d %@", finished, strClassSelector);
 		 

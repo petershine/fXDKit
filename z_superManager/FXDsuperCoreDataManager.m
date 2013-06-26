@@ -148,10 +148,11 @@
 }
 
 #pragma mark -
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL finished))didFinishBlock {	//FXDLog_DEFAULT;
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(void(^)(BOOL finished))didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
 		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
+		FXDLog(@"withCompleteProtection: %d", withCompleteProtection);
 		
 		NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 		NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
@@ -162,8 +163,7 @@
 		options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
 		options[NSInferMappingModelAutomaticallyOption] = @(YES);
 		
-		
-		if (ubiquityContainerURL) {
+		if (ubiquityContainerURL) {	//MARK: If using iCloud
 			//TODO: get UUID unique URL using ubiquityContainerURL instead
 			//NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 			NSURL *ubiquitousContentURL = ubiquityContainerURL;
@@ -173,8 +173,10 @@
 			
 			FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 		}
-		else {
-			//MARK: Not using iCloud
+		
+		//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
+		if (withCompleteProtection) {
+			options[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
 		}
 		
 		FXDLog(@"options:\n%@", options);
@@ -375,7 +377,7 @@
 
 #pragma mark -
 - (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self prepareCoreDataManagerWithUbiquityContainerURL:notification.object didFinishBlock:nil];
+	[self prepareCoreDataManagerWithUbiquityContainerURL:notification.object withCompleteProtection:NO didFinishBlock:nil];
 }
 
 #pragma mark -

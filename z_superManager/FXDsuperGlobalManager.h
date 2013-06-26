@@ -43,7 +43,7 @@
 + (FXDsuperGlobalManager*)sharedInstance;
 
 - (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
 - (void)configureUserDefaultsInfo;
 - (void)startObservingEssentialNotifications;

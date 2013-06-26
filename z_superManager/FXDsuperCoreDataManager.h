@@ -70,7 +70,7 @@
 - (void)startObservingFileManagerNotifications;
 - (void)startObservingCoreDataNotifications;
 
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 - (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;
 
 - (id)initializedMainEntityObj;
