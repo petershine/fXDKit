@@ -72,6 +72,7 @@
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 - (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;
+- (BOOL)isSqliteAlreadyInitialized;
 
 - (id)initializedMainEntityObj;
 

@@ -258,17 +258,15 @@
 	}
 	
 	
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:applicationSqlitePathComponent];
-	FXDLog(@"storedSqlitePath: %@", storedSqlitePath);
-	
-	BOOL isSqliteAlreadyInitialized = [fileManager fileExistsAtPath:storedSqlitePath];
-	FXDLog(@"isSqliteAlreadyInitialized: %d", isSqliteAlreadyInitialized);
+	BOOL isSqliteAlreadyInitialized = [self isSqliteAlreadyInitialized];
 	
 	if (isSqliteAlreadyInitialized) {
 		return;
 	}
 	
 	
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:applicationSqlitePathComponent];
+
 	NSError *error = nil;
 	
 	BOOL didCopy = [fileManager copyItemAtPath:bundledSqlitePath toPath:storedSqlitePath error:&error];
@@ -277,6 +275,16 @@
 	if (didCopy) {
 		FXDLog(@"didCopy: %d", didCopy);
 	}
+}
+
+- (BOOL)isSqliteAlreadyInitialized {
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:applicationSqlitePathComponent];
+	FXDLog(@"storedSqlitePath: %@", storedSqlitePath);
+	
+	BOOL isSqliteAlreadyInitialized = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
+	FXDLog(@"isSqliteAlreadyInitialized: %d", isSqliteAlreadyInitialized);
+	
+	return isSqliteAlreadyInitialized;
 }
 
 #pragma mark -
