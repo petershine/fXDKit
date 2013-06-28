@@ -412,41 +412,42 @@
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
 	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 
-	// Make notification from main managedObjectContext and private managedObjectContext is distinguished
-	if ([notification.object isEqual:self.mainDocument.managedObjectContext] == NO
-		|| [(NSManagedObjectContext*)notification.object concurrencyType] == NSPrivateQueueConcurrencyType) {
-
-		FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
-		FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-		FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-		FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+	// Distinguish notification from main managedObjectContext and private managedObjectContext
+	if ([notification.object isEqual:self.mainDocument.managedObjectContext]
+		&& [(NSManagedObjectContext*)notification.object concurrencyType] != NSPrivateQueueConcurrencyType) {
+		return;
+	}
+	
+	
+	FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
+	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+	
+	//MARK: Merge only if persistentStore is same
+	NSString *mainPersistentStoreUUID = nil;
+	
+	if ([[[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
+		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][0];
+		mainPersistentStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
 		
+		FXDLog(@"mainPersistentStoreUUID: %@", mainPersistentStoreUUID);
+	}
+	
+	NSString *notifyingPersistentStoreUUID = nil;
+	
+	if ([[[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores] count] > 0) {
+		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][0];
+		notifyingPersistentStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
 		
-		//MARK: Merge only if persistentStore is same
-		NSString *mainPersistentStoreUUID = nil;
-		
-		if ([[[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
-			NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][0];
-			mainPersistentStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
-			
-			FXDLog(@"mainPersistentStoreUUID: %@", mainPersistentStoreUUID);
-		}
-		
-		NSString *notifyingPersistentStoreUUID = nil;
-		
-		if ([[[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores] count] > 0) {
-			NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][0];
-			notifyingPersistentStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
-			
-			FXDLog(@"notifyingPersistentStoreUUID: %@", notifyingPersistentStoreUUID);
-		}
-		
-		FXDLog(@"[mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]: %d", [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]);
-		
-		if (mainPersistentStoreUUID && notifyingPersistentStoreUUID
-			&& [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]) {
-			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-		}
+		FXDLog(@"notifyingPersistentStoreUUID: %@", notifyingPersistentStoreUUID);
+	}
+	
+	FXDLog(@"[mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]: %d", [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]);
+	
+	if (mainPersistentStoreUUID && notifyingPersistentStoreUUID
+		&& [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]) {
+		[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 	}
 }
 
