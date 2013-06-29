@@ -309,6 +309,58 @@
 }
 
 #pragma mark -
+- (void)enumerateAllMainEntityObjsShouldUseDefaultProgressView:(BOOL)shouldUseDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
+#warning "//TODO: Prepare for background operation with identifier for staying alive"
+	
+	__block BOOL shouldBreak = NO;
+	
+	
+	FXDWindow *applicationWindow = nil;
+	
+	if (shouldUseDefaultProgressView) {
+		applicationWindow = [FXDWindow applicationWindow];
+		[applicationWindow showDefaultProgressView];
+	}
+	
+	NSManagedObjectContext *mainManagedContext = self.mainDocument.managedObjectContext;
+	
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		
+		NSManagedObjectContext *privateContext = mainManagedContext.parentContext;
+		NSArray *fetchedObjArray = [[privateContext
+									 fetchedObjArrayForEntityName:self.mainEntityName
+									 withSortDescriptors:self.mainSortDescriptors
+									 withPredicate:nil
+									 withLimit:limitInfiniteFetch] copy];
+		
+		for (PWDentityLoginItem *loginItemObj in fetchedObjArray) {
+			if (shouldBreak) {
+				break;
+			}
+			
+			if (enumerationBlock) {
+				NSManagedObject *mainEntityObj = [mainManagedContext objectWithID:[loginItemObj objectID]];
+				enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
+			}
+		}
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[self
+			 saveManagedObjectContext:mainManagedContext
+			 didFinishBlock:^(BOOL finished) {
+				 if (shouldUseDefaultProgressView) {
+					 [applicationWindow hideProgressView];
+				 }
+				 
+				 if (didFinishBlock) {
+					 didFinishBlock(!(shouldBreak));
+				 }
+			 }];
+		}];
+	}];
+}
+
+#pragma mark -
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_SEPARATE;
 	
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);

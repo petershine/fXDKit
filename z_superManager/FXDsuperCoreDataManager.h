@@ -76,6 +76,8 @@
 
 - (id)initializedMainEntityObj;
 
+- (void)enumerateAllMainEntityObjsShouldUseDefaultProgressView:(BOOL)shouldUseDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock;
+
 - (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
 
 

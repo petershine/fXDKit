@@ -261,13 +261,14 @@
 		}
 		
 		if (numberOfItems != fetchedCount) {
+			FXDLog_DEFAULT;
+			FXDLog(@"section: %d numberOfItems: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);
+			
 			numberOfItems = fetchedCount;
 		}
 #else
 		numberOfItems = fetchedCount;
 #endif
-		FXDLog_DEFAULT;
-		FXDLog(@"section: %d numberOfRows: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);
 	}
 	else if (self.mainDataSource) {
 		numberOfItems = [self.mainDataSource count];
@@ -363,21 +364,56 @@
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
+- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {	//FXDLog_OVERRIDE;
+	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
+		[self.mainScrollview performSelector:@selector(beginUpdates)];
+	}
+}
+
+- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	//FXDLog_OVERRIDE;
 	
 }
 
-- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	FXDLog_OVERRIDE;
+- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 	
+	//FXDLog_OVERRIDE;
+	//FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
+	
+	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {
+		return;
+	}
+	
+	
+	UITableView *tableView = (UITableView*)self.mainScrollview;
+	
+	if (type == NSFetchedResultsChangeInsert) {
+		
+		if (newIndexPath) {
+			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+	}
+	else if (type == NSFetchedResultsChangeDelete) {
+		if (indexPath) {
+			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+	}
+	else if (type == NSFetchedResultsChangeUpdate) {
+		if (indexPath) {
+			[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+	}
+	else if (type == NSFetchedResultsChangeMove) {
+		if (indexPath && newIndexPath) {
+			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+	}
 }
 
-- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	FXDLog_OVERRIDE;
-	
-	FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);	
-}
-
-- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	FXDLog_OVERRIDE;
-	
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	//FXDLog_OVERRIDE;
+	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
+		[self.mainScrollview performSelector:@selector(endUpdates)];
+	}
 }
 
 #pragma mark - UIScrollViewDelegate
