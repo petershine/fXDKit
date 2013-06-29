@@ -333,13 +333,13 @@
 									 withPredicate:nil
 									 withLimit:limitInfiniteFetch] copy];
 		
-		for (PWDentityLoginItem *loginItemObj in fetchedObjArray) {
+		for (NSManagedObject *fetchedObj in fetchedObjArray) {
 			if (shouldBreak) {
 				break;
 			}
 			
 			if (enumerationBlock) {
-				NSManagedObject *mainEntityObj = [mainManagedContext objectWithID:[loginItemObj objectID]];
+				NSManagedObject *mainEntityObj = [mainManagedContext objectWithID:[fetchedObj objectID]];
 				enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
 			}
 		}
