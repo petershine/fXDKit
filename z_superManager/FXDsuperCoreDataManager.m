@@ -309,7 +309,7 @@
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjsShouldUseDefaultProgressView:(BOOL)shouldUseDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
+- (void)enumerateAllMainEntityObjAsynchronously:(BOOL)asynchronously withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
 #warning "//TODO: Prepare for background operation with identifier for staying alive"
 	
 	__block BOOL shouldBreak = NO;
@@ -317,7 +317,7 @@
 	
 	FXDWindow *applicationWindow = nil;
 	
-	if (shouldUseDefaultProgressView) {
+	if (withDefaultProgressView) {
 		applicationWindow = [FXDWindow applicationWindow];
 		[applicationWindow showDefaultProgressView];
 	}
@@ -340,15 +340,23 @@
 			
 			if (enumerationBlock) {
 				NSManagedObject *mainEntityObj = [mainManagedContext objectWithID:[fetchedObj objectID]];
-				enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
+				
+				if (asynchronously) {
+					enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
+				}
+				else {
+					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+						enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
+					}];
+				}
 			}
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self
-			 saveManagedObjectContext:mainManagedContext
+			 saveManagedObjectContext:nil
 			 didFinishBlock:^(BOOL finished) {
-				 if (shouldUseDefaultProgressView) {
+				 if (withDefaultProgressView) {
 					 [applicationWindow hideProgressView];
 				 }
 				 
