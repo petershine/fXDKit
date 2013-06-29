@@ -24,7 +24,6 @@
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_cellOperationDictionary;
 	
-	
 	UIScrollView *_mainScrollview;
 }
 
@@ -58,6 +57,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (void)stopAllCellOperations;
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
 
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;

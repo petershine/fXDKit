@@ -161,7 +161,7 @@
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	if (parent == nil) {
-		FXDLog_OVERRIDE;
+		FXDLog_DEFAULT;
 	}
 
 	[super willMoveToParentViewController:parent];

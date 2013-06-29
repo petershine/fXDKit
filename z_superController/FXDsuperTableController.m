@@ -43,6 +43,15 @@
 
 
 #pragma mark - Method overriding
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	
+	if (parent == nil) {
+		[self.mainTableview setDataSource:nil];
+	}
+	
+	[super willMoveToParentViewController:parent];
+}
+
 
 #pragma mark - IBActions
 

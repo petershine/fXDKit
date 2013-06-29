@@ -43,6 +43,15 @@
 
 
 #pragma mark - Method overriding
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	
+	if (parent == nil) {
+		[self.mainCollectionview setDataSource:nil];
+	}
+	
+	[super willMoveToParentViewController:parent];
+}
+
 
 #pragma mark - Segues
 

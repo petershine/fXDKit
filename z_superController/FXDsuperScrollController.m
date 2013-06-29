@@ -15,8 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_cellOperationDictionary removeAllObjects];
-	[_cellOperationQueue cancelAllOperations];
+	[self stopAllCellOperations];
 }
 
 
@@ -170,20 +169,15 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
+		[self stopAllCellOperations];
+		
 		if (self.mainResultsController.additionalDelegate == self) {
 			[self.mainResultsController setAdditionalDelegate:nil];
 		}
 		
-		//TEST: DataSource & Delegate
-		/*
 		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
 			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
 		}
-		
-		if ([self.mainScrollview respondsToSelector:@selector(setDataSource:)]) {
-			[self.mainScrollview performSelector:@selector(setDataSource:) withObject:nil];
-		}
-		 */
 	}
 	
 	[super willMoveToParentViewController:parent];
@@ -195,6 +189,11 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (void)stopAllCellOperations {
+	[_cellOperationDictionary removeAllObjects];
+	[_cellOperationQueue cancelAllOperations];
+}
+
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
 	
 	BOOL didCancel = NO;
