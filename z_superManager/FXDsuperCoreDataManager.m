@@ -460,54 +460,55 @@
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
-	//FXDLog(@"isEqual:self.managedObjectContext: %@", [notification.object isEqual:self.managedObjectContext] ? @"YES":@"NO");
+	FXDLog(@"isEqual:self.mainDocument.managedObjectContext: %@", [notification.object isEqual:self.mainDocument.managedObjectContext] ? @"YES":@"NO");
 
 	// Distinguish notification from main managedObjectContext and private managedObjectContext
-	if ([notification.object isEqual:self.mainDocument.managedObjectContext]
-		&& [(NSManagedObjectContext*)notification.object concurrencyType] != NSPrivateQueueConcurrencyType) {
+	if ([notification.object isEqual:self.mainDocument.managedObjectContext]) {
 		return;
 	}
 	
 	
+	FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
 	FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
 	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
 	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 	
 	//MARK: Merge only if persistentStore is same
-	NSString *mainPersistentStoreUUID = nil;
+	NSString *mainStoreUUID = nil;
+	NSInteger mainStoreIndex = 0;	//MARK: Assume first one is the mainStore
 	
 	if ([[[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
-		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][0];
-		mainPersistentStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
+		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][mainStoreIndex];
+		mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
 		
-		FXDLog(@"mainPersistentStoreUUID: %@", mainPersistentStoreUUID);
+		FXDLog(@"mainStoreUUID: %@", mainStoreUUID);
 	}
 	
-	NSString *notifyingPersistentStoreUUID = nil;
+	NSString *notifyingStoreUUID = nil;
 	
 	if ([[[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores] count] > 0) {
-		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][0];
-		notifyingPersistentStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
+		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][mainStoreIndex];
+		notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
 		
-		FXDLog(@"notifyingPersistentStoreUUID: %@", notifyingPersistentStoreUUID);
+		FXDLog(@"notifyingStoreUUID: %@", notifyingStoreUUID);
 	}
 	
-	FXDLog(@"[mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]: %d", [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]);
+	FXDLog(@"[mainStoreUUID isEqualToString:notifyingStoreUUID]: %d", [mainStoreUUID isEqualToString:notifyingStoreUUID]);
 	
-	if (mainPersistentStoreUUID && notifyingPersistentStoreUUID
-		&& [mainPersistentStoreUUID isEqualToString:notifyingPersistentStoreUUID]) {
+	if (mainStoreUUID && notifyingStoreUUID
+		&& [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
 		[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+		
+		FXDLog(@"DID MERGE: self.mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);
 	}
 }
 
@@ -519,18 +520,12 @@
 	if (controller.additionalDelegate) {
 		[controller.additionalDelegate controllerWillChangeContent:controller];
 	}
-	else {
-		//FXDLog_OVERRIDE;
-	}
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 	
 	if (controller.additionalDelegate) {
 		[controller.additionalDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
-	}
-	else {
-		//FXDLog_OVERRIDE;
 	}
 }
 
@@ -539,18 +534,12 @@
 	if (controller.additionalDelegate) {
 		[controller.additionalDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 	}
-	else {
-		//FXDLog_OVERRIDE;
-	}
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
 	if (controller.additionalDelegate) {
 		[controller.additionalDelegate controllerDidChangeContent:controller];
-	}
-	else {
-		//FXDLog_OVERRIDE;
 	}
 }
 

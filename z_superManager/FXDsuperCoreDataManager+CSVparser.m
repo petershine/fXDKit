@@ -39,7 +39,7 @@
 	
 	//FXDLog(@"keysWithValues:\n%@", keysWithValues);
 	
-	NSManagedObject *insertedObj = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.managedObjectContext];
+	NSManagedObject *insertedObj = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.mainDocument.managedObjectContext];
 	
 	[insertedObj setValuesForKeysWithDictionary:keysWithValues dateFormatter:nil];
 	
