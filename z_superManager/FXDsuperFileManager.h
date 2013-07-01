@@ -53,11 +53,8 @@
 	NSMetadataQuery *_ubiquitousDocumentsMetadataQuery;
 	DirectoryWatcher *_localDirectoryWatcher;
 
-	NSOperationQueue *_fileManagingOperationQueue;
-	
-	NSOperationQueue *_mainOperationQueue;
-	NSMutableDictionary *_queuedOperationDictionary;
-	
+	NSOperationQueue *_evictingQueue;
+		
 	NSMutableArray *_collectedURLarray;
 }
 
@@ -73,10 +70,7 @@
 @property (strong, nonatomic) NSMetadataQuery *ubiquitousDocumentsMetadataQuery;
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
-@property (strong, nonatomic) NSOperationQueue *fileManagingOperationQueue;
-
-@property (strong, nonatomic) NSOperationQueue *mainOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *queuedOperationDictionary;
+@property (strong, nonatomic) NSOperationQueue *evictingQueue;
 
 @property (strong, nonatomic) NSMutableArray *collectedURLarray;
 
@@ -109,8 +103,6 @@
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
-#pragma mark - NSMetadataQueryDelegate
-#pragma mark - DirectoryWatcherDelegate
 
 @end
 

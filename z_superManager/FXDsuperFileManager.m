@@ -109,34 +109,17 @@
 	return _ubiquitousDocumentsMetadataQuery;
 }
 
-- (NSOperationQueue*)fileManagingOperationQueue {
-	if (_fileManagingOperationQueue == nil) {
-		_fileManagingOperationQueue = [[NSOperationQueue alloc] init];
-		[_fileManagingOperationQueue setMaxConcurrentOperationCount:1];
+- (NSOperationQueue*)evictingQueue {
+	if (_evictingQueue == nil) {
+		_evictingQueue = [[NSOperationQueue alloc] init];
+		[_evictingQueue setMaxConcurrentOperationCount:1];
 	}
 
-	return _fileManagingOperationQueue;
-}
-
-- (NSOperationQueue*)mainOperationQueue {
-	if (_mainOperationQueue == nil) {
-		_mainOperationQueue = [[NSOperationQueue alloc] init];
-	}
-
-	return _mainOperationQueue;
-}
-
-- (NSMutableDictionary*)queuedOperationDictionary {
-	if (_queuedOperationDictionary == nil) {
-		_queuedOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-
-	return _queuedOperationDictionary;
+	return _evictingQueue;
 }
 
 
 #pragma mark - Method overriding
-
 
 #pragma mark - Public
 - (void)startUpdatingUbiquityContainerURL {	FXDLog_DEFAULT;
@@ -444,7 +427,7 @@
 		return;
 	}
 	
-	[self.fileManagingOperationQueue addOperationWithBlock:^{	FXDLog_DEFAULT;
+	[self.evictingQueue addOperationWithBlock:^{	FXDLog_DEFAULT;
 		for (NSURL *itemURL in self.collectedURLarray) {
 			BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 			
