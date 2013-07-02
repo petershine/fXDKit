@@ -200,56 +200,6 @@
 
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	if (self.isSystemVersionLatest) {
-		return;
-	}
-	
-	
-	//TODO: Only use this when supporting for iOS version below 6
-	if ([tableView isScrollingCurrently] == NO) {
-		return;
-	}
-	
-
-	[self
-	 processWithDisappearedRowAndDirectionForIndexPath:indexPath
-	 didFinishBlock:^(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward) {
-
-		 if (shouldContinue == NO) {
-			 return;
-		 }
-
-
-		 NSInteger canceledCount = 0;
-
-		 if (shouldEvaluateBackward) {
-			 for (NSInteger evaluatedRow = disappearedRow; evaluatedRow >= 0; evaluatedRow--) {
-				 BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
-
-				 if (didCancel) {
-					 canceledCount++;
-				 }
-			 }
-		 }
-		 else {
-			 for (NSInteger evaluatedRow = disappearedRow; evaluatedRow < [self.mainDataSource count]; evaluatedRow++) {
-				 BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:nil orRowIndex:evaluatedRow];
-
-				 if (didCancel) {
-					 canceledCount++;
-				 }
-			 }
-		 }
-#if ForDEVELOPER
-		 if (canceledCount > 0) {
-			 FXDLog(@"CANCELED: %d rows operationCount: %u disappearedRow: %d", canceledCount, self.cellOperationQueue.operationCount, disappearedRow);
-		 }
-#endif
-	 }];
-}
-
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	
 	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];

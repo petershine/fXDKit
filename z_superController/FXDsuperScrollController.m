@@ -302,62 +302,6 @@
 	self.didStartDismissingByPullingDown = YES;
 }
 
-#pragma mark -
-- (void)processWithDisappearedRowAndDirectionForIndexPath:(NSIndexPath*)indexPath didFinishBlock:(void(^)(BOOL shouldContinue, NSInteger disappearedRow, BOOL shouldEvaluateBackward))didFinishBlock {
-	
-	BOOL shouldContinue = NO;
-	
-	// Get valid index row for disappeared cell
-	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {		
-		didFinishBlock(shouldContinue, integerNotDefined, NO);
-		return;
-	}
-	
-	
-	NSArray *visibleIndexPaths = [(UITableView*)self.mainScrollview indexPathsForVisibleRows];
-	NSInteger visibleRowCount = [visibleIndexPaths count];
-	
-	if (visibleRowCount == 0) {
-		FXDLog(@"visibleRowCount: %d", visibleRowCount);
-		
-		didFinishBlock(shouldContinue, integerNotDefined, NO);
-		
-		return;
-	}
-	
-	
-	NSInteger firstVisibleRow = [visibleIndexPaths[0] row];
-	NSInteger lastVisibleRow = [[visibleIndexPaths lastObject] row];
-	
-	NSInteger disappearedRow = integerNotDefined;
-	
-	if (indexPath.row == lastVisibleRow) {
-		disappearedRow = lastVisibleRow -visibleRowCount;
-	}
-	else if (indexPath.row == firstVisibleRow) {
-		disappearedRow = firstVisibleRow +visibleRowCount;
-	}
-	
-	if (disappearedRow < 0) {
-		didFinishBlock(shouldContinue, integerNotDefined, NO);
-		
-		return;
-	}
-	
-	
-	// Canceling queuedOperations
-	BOOL shouldEvaluateBackward = NO;
-	
-	if (indexPath.row == lastVisibleRow) {
-		shouldEvaluateBackward = YES;
-	}
-	
-	shouldContinue = YES;
-	
-	
-	didFinishBlock(shouldContinue, disappearedRow, shouldEvaluateBackward);
-}
-
 
 //MARK: - Observer implementation
 

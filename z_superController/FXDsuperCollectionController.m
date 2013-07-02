@@ -99,9 +99,10 @@
 		}
 		
 		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			__strong typeof(_weakSelf) _strongSelf = _weakSelf;
 			
-			[_weakSelf.cellOperationDictionary removeObjectForKey:[indexPath stringValue]];
+			[_strongSelf.cellOperationDictionary removeObjectForKey:[indexPath stringValue]];
 		}];
 	}];
 	
