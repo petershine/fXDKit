@@ -11,8 +11,6 @@
     // Primitives
 	CGFloat _arrowOffset;
 	UIPopoverArrowDirection _arrowDirection;
-
-
 }
 
 // Properties
@@ -26,9 +24,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewArrow;
 
 
-
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 + (FXDPopoverBackgroundView*)sharedInstance;
@@ -39,7 +35,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

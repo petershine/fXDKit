@@ -21,11 +21,7 @@
     self = [super initWithContentViewController:viewController];
 
     if (self) {
-    	// Primitives
-		
-		// Properties
-
-		// IBOutlets
+		//TODO:
     }
 
     return self;

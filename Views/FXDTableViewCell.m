@@ -54,12 +54,12 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_DEFAULT;
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_OVERRIDE;
     [super setSelected:selected animated:animated];
 
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {	//FXDLog_DEFAULT;
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {	//FXDLog_OVERRIDE;
 	[super setHighlighted:highlighted animated:animated];
 	
 	if (self.imageView) {

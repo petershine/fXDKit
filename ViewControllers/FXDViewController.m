@@ -145,20 +145,6 @@
 }
 
 #pragma mark -
-/*
-- (void)addChildViewController:(UIViewController *)childController {	FXDLog_DEFAULT;
-	FXDLog(@"childController: %@", childController);
-
-	[super addChildViewController:childController];
-}
-
-- (void)removeFromParentViewController {	FXDLog_DEFAULT;
-	FXDLog(@"parentViewController: %@", self.parentViewController);
-
-	[super removeFromParentViewController];
-}
- */
-
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	if (parent == nil) {
 		FXDLog_DEFAULT;
@@ -365,17 +351,15 @@
 	CGRect modifiedFrame = self.view.frame;
 	modifiedFrame.origin.y += statusBarFrame.size.height;
 	modifiedFrame.size.height -= statusBarFrame.size.height;
-	
-	__weak typeof(self) _weakSelf = self;
-	
+		
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseInOut
 	 animations:^{
-		 [_weakSelf.view setFrame:modifiedFrame];
-		 
-	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 [self.view setFrame:modifiedFrame];		 
+	 }
+	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog(@"statusBarFrame: %@", NSStringFromCGRect(statusBarFrame));
 		 FXDLog(@"self.view: %@", self.view);
 	 }];

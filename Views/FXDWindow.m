@@ -78,6 +78,7 @@
 		return;
 	}
 	
+	
 	[self
 	 removeAsFadeOutSubview:self.progressView
 	 afterRemovedBlock:^{	FXDLog_DEFAULT;
@@ -201,7 +202,8 @@
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
 		 [launchController.view setAlpha:0.0];
-	 } completion:^(BOOL finished) {
+	 }
+	 completion:^(BOOL finished) {
 		 FXDLog(@"finished: %d launchController: %@", finished, launchController);
 		 [launchController.view removeFromSuperview];
 		 
@@ -216,21 +218,23 @@
 
 @implementation UIWindow (Progress)
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-		FXDWindow *applicationWindow = [self applicationWindow];
-		
-		[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
-		[applicationWindow performSelector:@selector(showDefaultProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
-	}];
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
+		 FXDWindow *applicationWindow = [self applicationWindow];
+		 
+		 [NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
+		 [applicationWindow performSelector:@selector(showDefaultProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	 }];
 }
 
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-		FXDWindow *applicationWindow = [self applicationWindow];
-		
-		[NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];
-		[applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
-	}];
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
+		 FXDWindow *applicationWindow = [self applicationWindow];
+		 
+		 [NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];
+		 [applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+	 }];
 }
 
 #pragma mark -

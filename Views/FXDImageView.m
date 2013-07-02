@@ -65,28 +65,36 @@
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	//FXDLog_DEFAULT;
 	//FXDLog(@"capInsets: %@", NSStringFromUIEdgeInsets(capInsets));
 	
-	if (self.image) {
-		UIImage *resizeableImage = [self.image resizableImageWithCapInsets:capInsets];
+	__weak typeof(self) _weakSelf = self;
+	
+	if (_weakSelf.image) {
+		UIImage *resizeableImage = [_weakSelf.image resizableImageWithCapInsets:capInsets];
 
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			self.image = resizeableImage;
-		}];
+		if (resizeableImage) {
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				__strong typeof(_weakSelf) _strongSelf = _weakSelf;
+				
+				_strongSelf.image = resizeableImage;
+			}];
+		}
 	}
 }
 
 //TODO: find optimal way of using layer instead of extra imageView object
 - (void)fadeInImage:(UIImage*)fadedImage {
 	
-	__block UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
+	__weak typeof(self) _weakSelf = self;
 	
-	fadedImageview.contentMode = self.contentMode;
+	UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, _weakSelf.frame.size.width, _weakSelf.frame.size.height)];
+	
+	fadedImageview.contentMode = _weakSelf.contentMode;
 	fadedImageview.backgroundColor = [UIColor clearColor];
 	
 	fadedImageview.alpha = 0.0;
 	
 	fadedImageview.image = fadedImage;
 	
-	[self addSubview:fadedImageview];
+	[_weakSelf addSubview:fadedImageview];
 	
 	[UIView
 	 animateWithDuration:durationQuickAnimation
@@ -94,12 +102,13 @@
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
 		 fadedImageview.alpha = 1.0;
-	 } completion:^(BOOL finished) {
+	 }
+	 completion:^(BOOL finished) {
 		 //FXDLog(@"finished: %d fadedImageview: %@", finished, fadedImageview);
-		 self.image = fadedImageview.image;
+		 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+		 _strongSelf.image = fadedImageview.image;
 		 
 		 [fadedImageview removeFromSuperview];
-		 fadedImageview = nil;
 	 }];
 }
 

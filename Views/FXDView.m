@@ -124,17 +124,19 @@
 - (void)fadeIn {
 	self.alpha = 0.0;
 	
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 self.alpha = 1.0;
-					 }];
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 self.alpha = 1.0;
+	 }];
 }
 
 - (void)fadeOut {
-	[UIView animateWithDuration:durationAnimation
-					 animations:^{
-						 self.alpha = 0.0;
-					 }];
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 self.alpha = 0.0;
+	 }];
 }
 
 - (void)fadeInFromHidden {
