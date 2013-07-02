@@ -11,9 +11,7 @@
 
 // Properties
 
-
 #pragma mark - Initialization
-
 
 #pragma mark - Public
 

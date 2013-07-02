@@ -15,12 +15,9 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 
-
 #pragma mark - Property overriding
-
 
 #pragma mark - Method overriding
 - (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
@@ -34,11 +31,9 @@
 
 #pragma mark - Public
 
-
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

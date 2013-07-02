@@ -15,15 +15,11 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
-
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
-
 
 #pragma mark - Public
 
@@ -31,7 +27,6 @@
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 
@@ -74,6 +69,5 @@
 	
 	return alignedParagraph;
 }
-
 
 @end

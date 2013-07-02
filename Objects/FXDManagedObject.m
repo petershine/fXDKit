@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 #if USE_loggingManagedObjectActivities
 - (id)initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {	FXDLog_DEFAULT;
@@ -25,8 +24,6 @@
 
 	if (self) {
 		// Primitives
-
-	
 	}
 
 	return self;
@@ -35,7 +32,6 @@
 // invoked after a fetch or after unfaulting (commonly used for computing derived values from the persisted properties)
 - (void)awakeFromFetch {	//FXDLog_DEFAULT;
 	[super awakeFromFetch];
-
 }
 
 // invoked after an insert (commonly used for initializing special default/initial settings)
@@ -54,11 +50,10 @@
 
 #pragma mark - Property overriding
 
-
 #pragma mark - Method overriding
 #if USE_loggingManagedObjectActivities
-// lifecycle/change management (includes key-value observing methods)
 - (void)willAccessValueForKey:(NSString *)key {	//FXDLog_DEFAULT;
+	// lifecycle/change management (includes key-value observing methods)
 	// read notification
 
 	//FXDLog(@"key: %@", key);
@@ -195,6 +190,7 @@
             continue;	// EMPTY
         }
 		
+		
         NSAttributeType attributeType = [attributes[attribute] attributeType];
 		
         if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
@@ -213,6 +209,5 @@
         [self setValue:value forKey:attribute];
     }
 }
-
 
 @end

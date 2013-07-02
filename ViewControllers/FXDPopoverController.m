@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 
-
 #pragma mark - Initialization
 - (id)initWithContentViewController:(UIViewController *)viewController {	FXDLog_SEPARATE;
 
@@ -23,9 +22,7 @@
 
     if (self) {
     	// Primitives
-
-	
-
+		
 		// Properties
 
 		// IBOutlets
@@ -36,7 +33,6 @@
 
 
 #pragma mark - Property overriding
-
 
 #pragma mark - Method overriding
 - (void)presentPopoverFromRect:(CGRect)rect inView:(UIView *)view permittedArrowDirections:(UIPopoverArrowDirection)arrowDirections animated:(BOOL)animated {	FXDLog_DEFAULT;

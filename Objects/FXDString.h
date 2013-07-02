@@ -26,5 +26,4 @@
 @interface NSString (Added)
 - (NSString*)leftAlignedParagraph;
 
-
 @end

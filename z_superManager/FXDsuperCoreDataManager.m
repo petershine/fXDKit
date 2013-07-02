@@ -327,11 +327,11 @@
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		
 		NSManagedObjectContext *privateContext = mainManagedContext.parentContext;
-		NSArray *fetchedObjArray = [[privateContext
-									 fetchedObjArrayForEntityName:self.mainEntityName
-									 withSortDescriptors:self.mainSortDescriptors
-									 withPredicate:nil
-									 withLimit:limitInfiniteFetch] copy];
+		NSArray *fetchedObjArray = [privateContext
+									fetchedObjArrayForEntityName:self.mainEntityName
+									withSortDescriptors:self.mainSortDescriptors
+									withPredicate:nil
+									withLimit:limitInfiniteFetch];
 		
 		for (NSManagedObject *fetchedObj in fetchedObjArray) {
 			if (shouldBreak) {

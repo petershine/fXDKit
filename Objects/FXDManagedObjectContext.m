@@ -62,9 +62,9 @@
 	return resultsController;
 }
 
-- (NSMutableArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
-	NSMutableArray *fetchedObjArray = nil;
+	NSArray *fetchedObjArray = nil;
 
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
@@ -75,17 +75,16 @@
 	if (fetchRequest) {
 
 		NSError *error = nil;
-		NSArray *resultObjArray = [self executeFetchRequest:fetchRequest error:&error];FXDLog_ERROR;
+		fetchedObjArray = [[self executeFetchRequest:fetchRequest error:&error] copy];	FXDLog_ERROR;
 
-		if (resultObjArray == nil || [resultObjArray count] == 0) {
 #if USE_loggingResultObjFiltering
-			FXDLog(@"resultObjArray: %d concurrencyType: %d", [resultObjArray count], self.concurrencyType);
+		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
+			FXDLog(@"fetchedObjArray: %d self.concurrencyType: %d [NSThread isMainThread]: %d", [fetchedObjArray count], self.concurrencyType, [NSThread isMainThread]);
+		}
 #endif
-		}
-		else {
-			fetchedObjArray = [resultObjArray mutableCopy];
-		}
 	}
+	
+#warning "//TODO: Update other areas which uses this"
 
 	return fetchedObjArray;
 }

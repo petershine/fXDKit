@@ -11,9 +11,7 @@
 
 // Properties
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

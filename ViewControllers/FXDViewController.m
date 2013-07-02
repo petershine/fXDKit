@@ -366,12 +366,15 @@
 	modifiedFrame.origin.y += statusBarFrame.size.height;
 	modifiedFrame.size.height -= statusBarFrame.size.height;
 	
+	__weak typeof(self) _weakSelf = self;
+	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseInOut
 	 animations:^{
-		 [self.view setFrame:modifiedFrame];
+		 [_weakSelf.view setFrame:modifiedFrame];
+		 
 	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog(@"statusBarFrame: %@", NSStringFromCGRect(statusBarFrame));
 		 FXDLog(@"self.view: %@", self.view);
