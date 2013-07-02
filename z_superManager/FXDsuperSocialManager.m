@@ -88,7 +88,6 @@
 
 #pragma mark - Method overriding
 
-
 #pragma mark - Public
 - (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);

@@ -1,6 +1,6 @@
 //
 //  FXDsuperCoreDataManager+CSVparser.h
-//  PhotoAlbum
+//
 //
 //  Created by petershine on 5/10/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
