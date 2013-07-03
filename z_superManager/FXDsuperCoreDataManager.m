@@ -417,7 +417,11 @@
 		}
 	};
 	
-		
+	contextSavingBlock();
+	
+	
+	//TEST:
+	/*
 	if ([NSThread isMainThread]) {
 		[managedObjectContext performBlockAndWait:contextSavingBlock];
 	}
@@ -431,6 +435,7 @@
 			}];
 		}
 	}
+	 */
 }
 
 
