@@ -186,7 +186,7 @@
 			value = keyedValues[[attribute lowercaseString]];
 		}
 		
-        if (value == nil) {
+        if (value == nil || [value isKindOfClass:[NSNull class]]) {
             continue;	// EMPTY
         }
 		
@@ -202,7 +202,7 @@
 		else if ((attributeType == NSFloatAttributeType || attributeType == NSDoubleAttributeType) &&  ([value isKindOfClass:[NSString class]])) {
             value = @([value doubleValue]);
         }
-		else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]]) && (dateFormatter != nil)) {
+		else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]]) && dateFormatter) {
             value = [dateFormatter dateFromString:value];
         }
 		
