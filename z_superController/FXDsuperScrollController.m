@@ -313,8 +313,10 @@
 	}
 }
 
-- (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {	//FXDLog_OVERRIDE;
-	
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	//FXDLog_OVERRIDE;
+	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
+		[self.mainScrollview performSelector:@selector(endUpdates)];
+	}
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
@@ -353,11 +355,6 @@
 	}
 }
 
-- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	//FXDLog_OVERRIDE;
-	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
-		[self.mainScrollview performSelector:@selector(endUpdates)];
-	}
-}
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
