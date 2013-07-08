@@ -128,7 +128,10 @@
 	
 	BOOL shouldRequestUbiquityContatinerURL = NO;
 	
-	if (SYSTEM_VERSION_lowerThan(latestSupportedSystemVersion) == NO) {
+	if (SYSTEM_VERSION_lowerThan(iosVersion6)) {
+		shouldRequestUbiquityContatinerURL = YES;
+	}
+	else {
 		[[NSNotificationCenter defaultCenter]
 		 addObserver:self
 		 selector:@selector(observedNSUbiquityIdentityDidChange:)
@@ -137,20 +140,20 @@
 		
 		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
 		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);
-
+		
 		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
 		FXDLog(@"savedTokenData: %@", updatedIdentityTokenData);
-
+		
 		FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
-
-
+		
+		
 		//TODO: learn about how to handle ubiquityIdentityToken changed
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
-
+			
 			if (updatedIdentityTokenData == nil) {
 				updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
-
+				
 				if (updatedIdentityTokenData) {
 					[userDefaults setObject:updatedIdentityTokenData forKey:userdefaultObjSavedUbiquityIdentityToken];
 				}
@@ -159,9 +162,6 @@
 		else {
 			[userDefaults removeObjectForKey:userdefaultObjSavedUbiquityIdentityToken];
 		}
-	}
-	else {
-		shouldRequestUbiquityContatinerURL = YES;
 	}
 	
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);

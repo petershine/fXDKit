@@ -12,7 +12,6 @@
 @interface FXDViewController : UIViewController
 
 // Properties
-@property (assign, nonatomic) BOOL isSystemVersionLatest;
 
 // IBOutlets
 
