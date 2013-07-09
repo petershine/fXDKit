@@ -39,10 +39,6 @@
 #if	USE_TestFlight	//TODO: import "libz.dylib" for TestFlight
 	#import "TestFlight.h"
 
-	#ifndef testflightTeamToken
-		#define testflightTeamToken	@"testflightTeamToken"
-	#endif
-
 	#ifndef testflightAppToken
 		#define testflightAppToken	@"testflightAppToken"
 	#endif
