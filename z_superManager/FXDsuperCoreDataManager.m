@@ -309,7 +309,7 @@
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjAsynchronously:(BOOL)asynchronously withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
+- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
 #warning "//TODO: Prepare for background operation with identifier for staying alive"
 	
 	__block BOOL shouldBreak = NO;
@@ -325,9 +325,8 @@
 	NSManagedObjectContext *mainManagedContext = self.mainDocument.managedObjectContext;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-		
-		NSManagedObjectContext *privateContext = mainManagedContext.parentContext;
-		NSArray *fetchedObjArray = [privateContext
+				
+		NSArray *fetchedObjArray = [mainManagedContext
 									fetchedObjArrayForEntityName:self.mainEntityName
 									withSortDescriptors:self.mainSortDescriptors
 									withPredicate:nil
@@ -338,23 +337,19 @@
 				break;
 			}
 			
+			
 			if (enumerationBlock) {
 				NSManagedObject *mainEntityObj = [mainManagedContext objectWithID:[fetchedObj objectID]];
 				
-				if (asynchronously) {
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 					enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
-				}
-				else {
-					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-						enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
-					}];
-				}
+				}];
 			}
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self
-			 saveManagedObjectContext:nil
+			 saveManagedObjectContext:mainManagedContext
 			 didFinishBlock:^(BOOL finished) {
 				 if (withDefaultProgressView) {
 					 [applicationWindow hideProgressView];

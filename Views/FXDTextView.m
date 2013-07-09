@@ -68,7 +68,9 @@
 #endif
 		}
 		else {
+#if __IPHONE_7_0
 			sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
+#endif
 		}
 		
 		modifiedFrame.size.height = (sizeForAssignedText.height > self.contentSize.height) ? sizeForAssignedText.height : self.contentSize.height;
