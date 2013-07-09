@@ -311,8 +311,7 @@
 - (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_DEFAULT;
 	
 #if ForDEVELOPER
-	NSUUID *deviceIdentifier = [UIDevice currentDevice].identifierForVendor;
-	FXDLog(@"deviceIdentifier UUIDString: %@", [deviceIdentifier UUIDString]);
+	FXDLog(@"identifierForVendor UUIDString: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
 #endif
 	
 	void (^didPrepareBlock)(void) = ^(void){
