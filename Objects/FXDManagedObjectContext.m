@@ -59,7 +59,7 @@
 		}
 	}
 
-	return resultsController;
+	return [resultsController copy];
 }
 
 - (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
@@ -75,7 +75,7 @@
 	if (fetchRequest) {
 
 		NSError *error = nil;
-		fetchedObjArray = [[self executeFetchRequest:fetchRequest error:&error] copy];	FXDLog_ERROR;
+		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];	FXDLog_ERROR;
 
 #if USE_loggingResultObjFiltering
 		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
@@ -84,33 +84,34 @@
 #endif
 	}
 	
-#warning "//TODO: Update other areas which uses this"
-
-	return fetchedObjArray;
+	return [fetchedObjArray copy];
 }
 
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
 
 	NSFetchRequest *fetchRequest = nil;
-
-	if (entityName && sortDescriptors) {
-		fetchRequest = [[NSFetchRequest alloc] init];
-
-		NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
-
-		[fetchRequest setEntity:entityDescription];
-		[fetchRequest setSortDescriptors:sortDescriptors];
-
-		if (predicate) {
-#if USE_loggingResultObjFiltering
-			FXDLog(@"predicate: %@", predicate);
-#endif
-			[fetchRequest setPredicate:predicate];
-		}
-
-		[fetchRequest setFetchLimit:limit];
-		[fetchRequest setFetchBatchSize:sizeDefaultBatch];
+	
+	if (entityName == nil || sortDescriptors == nil) {
+		return nil;
 	}
+
+	
+	fetchRequest = [[NSFetchRequest alloc] init];
+	
+	NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
+	
+	[fetchRequest setEntity:entityDescription];
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
+	if (predicate) {
+#if USE_loggingResultObjFiltering
+		FXDLog(@"predicate: %@", predicate);
+#endif
+		[fetchRequest setPredicate:predicate];
+	}
+	
+	[fetchRequest setFetchLimit:limit];
+	[fetchRequest setFetchBatchSize:sizeDefaultBatch];
 
 	return fetchRequest;
 }

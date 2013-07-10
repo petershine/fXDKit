@@ -15,7 +15,7 @@
 #endif
 
 #ifndef sizeDefaultBatch
-	#define sizeDefaultBatch	100
+	#define sizeDefaultBatch	20
 #endif
 
 

@@ -6,11 +6,9 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-//SAMPLE:
-/*
-#define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
-#define attributekey<#AttributeName#> @"<#AttributeName#>"
- */
+#ifndef USE_iCloudCoreData
+	#define USE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
+#endif
 
 #if USE_iCloudCoreData
 /* SAMPLE
@@ -18,6 +16,17 @@
  [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURL];
  */
 #endif
+
+
+//SAMPLE: For managing attribute names
+/*
+ #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
+ #define attributekey<#AttributeName#> @"<#AttributeName#>"
+ */
+
+//MARK: Logging options
+// -com.apple.CoreData.SQLDebug 1 || 2 || 3
+// -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
 
 #ifndef applicationSqlitePathComponent

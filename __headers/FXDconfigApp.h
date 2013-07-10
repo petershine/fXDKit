@@ -10,10 +10,6 @@
 	#define application_AppStoreID	000000000
 #endif
 
-#ifndef USE_iCloudCoreData
-	#define USE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
-#endif
-
 
 #ifndef iosVersion6
 	#define iosVersion6	6.0
