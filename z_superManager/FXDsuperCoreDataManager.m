@@ -412,8 +412,8 @@
 		}
 	};
 	
+#warning "//TODO: Find the right way to use performBlockAndWait with concurrency"
 	contextSavingBlock();
-	
 	
 	//TEST:
 	/*
@@ -436,11 +436,17 @@
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
-	[self saveManagedObjectContext:nil didFinishBlock:nil];
+#warning "//TODO: Check if following error is caused at here, and can be fixed:\
+NSInternalInconsistencyException', reason: 'statement is still active'"
+	
+	//TEST:
+	//[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self saveManagedObjectContext:nil didFinishBlock:nil];
+	
+	//TEST:
+	//[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 
 #pragma mark -
@@ -517,30 +523,50 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	
-	if (controller.additionalDelegate) {
-		[controller.additionalDelegate controllerWillChangeContent:controller];
+	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	
+	if (_strongDelegate == nil) {
+		return;
 	}
+	
+	
+	[_strongDelegate controllerWillChangeContent:controller];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 	
-	if (controller.additionalDelegate) {
-		[controller.additionalDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
+	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	
+	if (_strongDelegate == nil) {
+		return;
 	}
+	
+	
+	[_strongDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 	
-	if (controller.additionalDelegate) {
-		[controller.additionalDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	
+	if (_strongDelegate == nil) {
+		return;
 	}
+	
+	
+	[_strongDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
-	if (controller.additionalDelegate) {
-		[controller.additionalDelegate controllerDidChangeContent:controller];
+	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	
+	if (_strongDelegate == nil) {
+		return;
 	}
+	
+	
+	[_strongDelegate controllerDidChangeContent:controller];
 }
 
 
