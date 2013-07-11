@@ -91,6 +91,7 @@
 
 
 //MARK: - Observer implementation
+#warning "TODO: When it's found to be following observing is not necessary, remove them out"
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
