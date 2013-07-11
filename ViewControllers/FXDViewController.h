@@ -42,7 +42,7 @@
 - (IBAction)dismissControllerForSender:(id)sender;
 
 #pragma mark - Public
-- (id)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil;
+- (instancetype)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 - (void)reframeForStatusBarFrame:(CGRect)statusBarFrame;
 
 @end

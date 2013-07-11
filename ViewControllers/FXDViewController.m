@@ -301,7 +301,7 @@
 }
 
 #pragma mark - Public
-- (id)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
+- (instancetype)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
 	
 	if (nibNameOrNil == nil) {
 		nibNameOrNil = NSStringFromClass([self class]);
