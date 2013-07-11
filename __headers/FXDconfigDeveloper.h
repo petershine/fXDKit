@@ -97,7 +97,7 @@ typedef id instancetype;
 
 
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
-static instancetype _sharedInstance = nil;\
+static id _sharedInstance = nil;\
 dispatch_once(&once,^{\
 	_sharedInstance = [[[self class] alloc] init];\
 });\

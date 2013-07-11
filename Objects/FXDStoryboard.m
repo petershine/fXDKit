@@ -23,7 +23,7 @@
 - (instancetype)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
 	FXDLog(@"identifier: %@", identifier);
 	
-	instancetype instantiatedViewController = [super instantiateViewControllerWithIdentifier:identifier];
+	id instantiatedViewController = [super instantiateViewControllerWithIdentifier:identifier];
 	
 	return instantiatedViewController;
 }
