@@ -20,7 +20,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_DEFAULT;
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_DEFAULT;
 	self  = [super initWithRootViewController:rootViewController];
 
 	if (self) {

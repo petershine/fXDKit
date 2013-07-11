@@ -17,7 +17,7 @@
 
 #pragma mark - Initialization
 #if USE_loggingManagedObjectActivities
-- (id)initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {	FXDLog_DEFAULT;
+- (instancetype)initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {	FXDLog_DEFAULT;
 	FXDLog(@"entity name: %@ context.concurrencyType: %d", [entity name], context.concurrencyType);
 	
 	self = [super initWithEntity:entity insertIntoManagedObjectContext:context];

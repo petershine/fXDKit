@@ -26,7 +26,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
 
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
@@ -50,26 +50,11 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {	//FXDLog_DEFAULT;
-	self = [super initWithCoder:aDecoder];
-	
-	if (self) {
-		//MARK: awakeFromNib is called automatically
-	}
-	
-	return self;
-}
-
 #pragma mark -
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
 	FXDLog(@"storyboard: %@, nibName: %@", self.storyboard, self.nibName);
-}
-
-- (void)loadView {	//FXDLog_DEFAULT;
-	[super loadView];
-
 }
 
 #pragma mark -

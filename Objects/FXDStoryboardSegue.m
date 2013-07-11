@@ -16,7 +16,7 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (id)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {	FXDLog_DEFAULT;
+- (instancetype)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {	FXDLog_DEFAULT;
 	
 	self = [super initWithIdentifier:identifier source:source destination:destination];
 

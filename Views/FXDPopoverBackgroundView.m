@@ -23,7 +23,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
+- (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 
     if (self) {	//MARK: Cannot use awakeFromNib

@@ -16,7 +16,7 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 	
     if (self) {
@@ -45,20 +45,20 @@
 
 #pragma mark - Category
 @implementation UIView (Added)
-+ (id)viewFromNibName:(NSString*)nibName {
++ (instancetype)viewFromNibName:(NSString*)nibName {
 	id view = [self viewFromNibName:nibName withOwner:nil];
 	
 	return view;
 }
 
-+ (id)viewFromNib:(UINib*)nib {
++ (instancetype)viewFromNib:(UINib*)nib {
 	
 	id view = [self viewFromNib:nib withOwner:nil];
 	
 	return view;
 }
 
-+ (id)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil {
++ (instancetype)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil {
 	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
 	}
@@ -70,7 +70,7 @@
 	return view;
 }
 
-+ (id)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil {
++ (instancetype)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil {
 	if (nib == nil) {
 		NSString *nibName = NSStringFromClass([self class]);
 

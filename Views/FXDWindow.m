@@ -22,7 +22,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
+- (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 	
     if (self) {
@@ -120,7 +120,7 @@
 
 #pragma mark - Category
 @implementation UIWindow (Added)
-+ (id)applicationWindow {
++ (instancetype)applicationWindow {
 	FXDWindow *applicationWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
 	
 	return applicationWindow;

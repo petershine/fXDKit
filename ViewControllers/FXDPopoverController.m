@@ -16,7 +16,7 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (id)initWithContentViewController:(UIViewController *)viewController {	FXDLog_SEPARATE;
+- (instancetype)initWithContentViewController:(UIViewController *)viewController {	FXDLog_SEPARATE;
 
     self = [super initWithContentViewController:viewController];
 

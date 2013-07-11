@@ -12,6 +12,10 @@
 // Properties
 
 #pragma mark - Initialization
+#if __IPHONE_7_0
+#warning "TODO: Later, refactor sharedInstace method to be used only in FXDObject
++ (instancetype)sharedInstance;
+#endif
 
 #pragma mark - Public
 

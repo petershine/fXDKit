@@ -16,7 +16,8 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
+	
     self = [super initWithFrame:frame];
 
     if (self) {

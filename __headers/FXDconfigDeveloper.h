@@ -63,6 +63,18 @@
 #endif
 
 
+#ifndef iosVersion6
+	#define iosVersion6	6.0
+#endif
+
+#ifndef iosVersion7
+	#define iosVersion7	7.0
+#endif
+
+#ifndef latestSupportedSystemVersion
+	#define latestSupportedSystemVersion	iosVersion7
+#endif
+
 #ifndef SYSTEM_VERSION_lowerThan
 	#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
 #endif
@@ -78,8 +90,14 @@
 #endif
 
 
+#if __IPHONE_7_0
+#else
+typedef id instancetype;
+#endif
+
+
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
-static id _sharedInstance = nil;\
+static instancetype _sharedInstance = nil;\
 dispatch_once(&once,^{\
 	_sharedInstance = [[[self class] alloc] init];\
 });\

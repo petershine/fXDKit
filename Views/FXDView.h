@@ -28,11 +28,11 @@
 
 #pragma mark - Category
 @interface UIView (Added)
-+ (id)viewFromNibName:(NSString*)nibName;
-+ (id)viewFromNib:(UINib*)nib;
++ (instancetype)viewFromNibName:(NSString*)nibName;
++ (instancetype)viewFromNib:(UINib*)nib;
 
-+ (id)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil;
-+ (id)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil;
++ (instancetype)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil;
++ (instancetype)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil;
 
 - (void)applyDefaultBorderLine;
 - (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius;

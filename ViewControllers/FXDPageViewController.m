@@ -20,7 +20,7 @@
 
 
 #pragma mark - Initialization
-- (id)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation options:(NSDictionary *)options {	FXDLog_DEFAULT;
+- (instancetype)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation options:(NSDictionary *)options {	FXDLog_DEFAULT;
 	
 	self = [super initWithTransitionStyle:style navigationOrientation:navigationOrientation options:options];
 	

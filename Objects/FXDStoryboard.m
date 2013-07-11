@@ -20,10 +20,10 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
+- (instancetype)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
 	FXDLog(@"identifier: %@", identifier);
 	
-	id instantiatedViewController = [super instantiateViewControllerWithIdentifier:identifier];
+	instancetype instantiatedViewController = [super instantiateViewControllerWithIdentifier:identifier];
 	
 	return instantiatedViewController;
 }
