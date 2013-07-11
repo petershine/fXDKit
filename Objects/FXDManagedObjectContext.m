@@ -59,7 +59,7 @@
 		}
 	}
 
-	return [resultsController copy];
+	return resultsController;
 }
 
 - (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
