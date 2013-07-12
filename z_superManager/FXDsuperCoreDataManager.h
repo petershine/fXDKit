@@ -30,7 +30,7 @@
 
 
 #ifndef applicationSqlitePathComponent
-	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+	#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
 #endif
 
 #ifndef ubiquitousCoreDataContentName
