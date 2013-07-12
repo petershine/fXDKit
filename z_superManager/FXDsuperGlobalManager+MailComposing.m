@@ -76,28 +76,28 @@
 	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n%@\n", stringLine, stringAppVersion, stringDevice, stringCountry, stringNetwork];
 	FXDLog(@"mailBodyString: %@", mailBodyString);
 
-	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailInterface setSubject:subjectString];
-	[emailInterface setToRecipients:toRecipients];
-	[emailInterface setMessageBody:mailBodyString isHTML:NO];
+	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
+	[emailController setSubject:subjectString];
+	[emailController setToRecipients:toRecipients];
+	[emailController setMessageBody:mailBodyString isHTML:NO];
 
-	return emailInterface;
+	return emailController;
 }
 
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 
-	MFMailComposeViewController *emailInterface = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailInterface setSubject:[NSString stringWithFormat:@"[%@]", NSLocalizedString(application_DisplayedName, nil)]];
+	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
+	[emailController setSubject:[NSString stringWithFormat:@"[%@]", NSLocalizedString(application_DisplayedName, nil)]];
 
 	if (image) {
-		[emailInterface addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];
+		[emailController addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];
 	}
 
 	if (message) {
-		[emailInterface setMessageBody:message isHTML:NO];
+		[emailController setMessageBody:message isHTML:NO];
 	}
 
-	return emailInterface;
+	return emailController;
 }
 
 - (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
@@ -114,22 +114,21 @@
 
 
 	if ([MFMailComposeViewController canSendMail]) {
-		MFMailComposeViewController *emailInterface = nil;
+		MFMailComposeViewController *emailController = nil;
 
 		if (image || message) {
-			emailInterface = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
+			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
 		}
 		else {
-			emailInterface = [self preparedMailComposeInterface];
+			emailController = [self preparedMailComposeInterface];
 		}
 
-		[emailInterface setMailComposeDelegate:self];
+		[emailController setMailComposeDelegate:self];
 
-		[presentingInterface presentViewController:emailInterface
-										  animated:YES
-										completion:^{
-											//OK
-										}];
+		[presentingInterface
+		 presentViewController:emailController
+		 animated:YES
+		 completion:nil];
 	}
 }
 
