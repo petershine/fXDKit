@@ -322,11 +322,11 @@
 		[applicationWindow showDefaultProgressView];
 	}
 	
-	NSManagedObjectContext *mainManagedContext = self.mainDocument.managedObjectContext;
+	NSManagedObjectContext *enumeratedContext = self.mainDocument.managedObjectContext;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 				
-		NSArray *fetchedObjArray = [mainManagedContext
+		NSArray *fetchedObjArray = [enumeratedContext
 									fetchedObjArrayForEntityName:self.mainEntityName
 									withSortDescriptors:self.mainSortDescriptors
 									withPredicate:nil
@@ -339,17 +339,17 @@
 			
 			
 			if (enumerationBlock) {
-				NSManagedObject *mainEntityObj = [mainManagedContext objectWithID:[fetchedObj objectID]];
+				NSManagedObject *mainEntityObj = [enumeratedContext objectWithID:[fetchedObj objectID]];
 				
 				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					enumerationBlock(mainManagedContext, mainEntityObj, &shouldBreak);
+					enumerationBlock(enumeratedContext, mainEntityObj, &shouldBreak);
 				}];
 			}
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self
-			 saveManagedObjectContext:mainManagedContext
+			 saveManagedObjectContext:enumeratedContext
 			 didFinishBlock:^(BOOL finished) {
 				 if (withDefaultProgressView) {
 					 [applicationWindow hideProgressView];
@@ -416,12 +416,16 @@
 #warning "//TODO: Find the right way to use performBlockAndWait with concurrency"
 	//contextSavingBlock();
 	if ([NSThread isMainThread]) {
+		[managedObjectContext performBlockAndWait:contextSavingBlock];
+		
+		/*
 		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
 			[managedObjectContext performBlock:contextSavingBlock];
 		}
 		else {
 			[managedObjectContext performBlockAndWait:contextSavingBlock];
 		}
+		 */
 	}
 	else {
 		/*

@@ -17,8 +17,8 @@
 - (void)dealloc {
 #if ForDEVELOPER
 	FXDLog(@"_callbackBlock: %@", _callbackBlock);
-	_callbackBlock = nil;
 #endif
+	_callbackBlock = nil;
 	
 	FXDLog_DEFAULT;
 }

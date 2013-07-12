@@ -12,8 +12,6 @@ typedef void (^FXDcallbackBlockForAlert)(id alertView, NSInteger buttonIndex);
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
 
 // Properties
-@property (strong, nonatomic) id addedObj;
-
 @property (strong, nonatomic) FXDcallbackBlockForAlert callbackBlock;
 
 // IBOutlets
@@ -23,7 +21,6 @@ typedef void (^FXDcallbackBlockForAlert)(id alertView, NSInteger buttonIndex);
 
 #pragma mark - Public
 
-//TODO: find why this one is causing explosive memory allocation
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 
 

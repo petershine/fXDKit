@@ -14,8 +14,15 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
+- (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+#if ForDEVELOPER
+	FXDLog(@"_callbackBlock: %@", _callbackBlock);
+#endif
+	_callbackBlock = nil;
+	
+	FXDLog_DEFAULT;
 }
 
 
@@ -48,15 +55,40 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (instancetype)initWithTitle:(NSString *)title clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {	FXDLog_DEFAULT;
+	
+	self = [super initWithTitle:title
+					   delegate:nil
+			  cancelButtonTitle:cancelButtonTitle
+		 destructiveButtonTitle:destructiveButtonTitle
+			  otherButtonTitles:otherButtonTitles, nil];
+	
+	if (self) {
+		self.callbackBlock = clickedButtonAtIndexBlock;
+		
+		[self setDelegate:self];
+	}
+	
+	return self;
+}
 
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
+	if (self.callbackBlock) {
+		self.callbackBlock(self, self.cancelButtonIndex);
+	}
 	
+	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
 }
-	 
+
 //MARK: - Delegate implementation
+- (void)actionSheet:(FXDActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	
+	if (actionSheet.callbackBlock) {
+		actionSheet.callbackBlock(actionSheet, buttonIndex);
+	}
+}
 
 @end
 

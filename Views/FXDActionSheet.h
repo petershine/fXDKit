@@ -7,10 +7,10 @@
 //
 
 
-@interface FXDActionSheet : UIActionSheet
+@interface FXDActionSheet : UIActionSheet <UIActionSheetDelegate>
 
 // Properties
-@property (strong, nonatomic) id addedObj;
+@property (strong, nonatomic) FXDcallbackBlockForAlert callbackBlock;
 
 // IBOutlets
 
@@ -18,6 +18,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (instancetype)initWithTitle:(NSString *)title clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 
 
 //MARK: - Observer implementation
