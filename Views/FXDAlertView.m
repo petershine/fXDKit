@@ -43,7 +43,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString*)otherButtonTitles, ... {
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
 
 	self = [super initWithTitle:title
 					   message:message
@@ -53,7 +53,6 @@
 
 	if (self) {
 		self.callbackBlock = clickedButtonAtIndexBlock;
-		
 		[self setDelegate:self];
 	}
 
