@@ -77,8 +77,8 @@
 #pragma mark - Category
 @interface FXDsuperGlobalManager (MailComposing) <MFMailComposeViewControllerDelegate>
 
+- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message;
 - (MFMailComposeViewController*)preparedMailComposeInterface;
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
-- (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message;
 
 @end

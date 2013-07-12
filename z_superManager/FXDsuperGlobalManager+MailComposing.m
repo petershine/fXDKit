@@ -12,6 +12,43 @@
 
 
 @implementation FXDsuperGlobalManager (MailComposing)
+- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
+	
+	
+	if ([MFMailComposeViewController canSendMail] == NO) {
+		//TODO: alert user
+		return;
+	}
+	
+	
+	if (emailController == nil) {
+		if (image || message) {
+			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
+		}
+		else {
+			emailController = [self preparedMailComposeInterface];
+		}
+	}
+	
+	if (presentingInterface == nil) {
+		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+		
+		if (applicationWindow.rootViewController) {
+			FXDLog(@"applicationWindow.rootViewController: %@", applicationWindow.rootViewController);
+			
+			presentingInterface = applicationWindow.rootViewController;
+		}
+	}
+	
+	
+	[emailController setMailComposeDelegate:self];
+	
+	[presentingInterface
+	 presentViewController:emailController
+	 animated:YES
+	 completion:nil];
+}
+
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
 	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
 
@@ -98,38 +135,6 @@
 	}
 
 	return emailController;
-}
-
-- (void)presentMailComposeInterfaceForPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
-
-	if (presentingInterface == nil) {
-		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
-
-		if (applicationWindow.rootViewController) {
-			FXDLog(@"applicationWindow.rootViewController: %@", applicationWindow.rootViewController);
-
-			presentingInterface = applicationWindow.rootViewController;
-		}
-	}
-
-
-	if ([MFMailComposeViewController canSendMail]) {
-		MFMailComposeViewController *emailController = nil;
-
-		if (image || message) {
-			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
-		}
-		else {
-			emailController = [self preparedMailComposeInterface];
-		}
-
-		[emailController setMailComposeDelegate:self];
-
-		[presentingInterface
-		 presentViewController:emailController
-		 animated:YES
-		 completion:nil];
-	}
 }
 
 
