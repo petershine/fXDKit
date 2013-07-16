@@ -520,12 +520,20 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	FXDLog(@"[mainStoreUUID isEqualToString:notifyingStoreUUID]: %d", [mainStoreUUID isEqualToString:notifyingStoreUUID]);
 	
-	if (mainStoreUUID && notifyingStoreUUID
-		&& [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
-		[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+	FXDLog(@"1.self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
+	
+	if (mainStoreUUID && notifyingStoreUUID && [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
+#warning "//MARK: Unless save is done for private context in background, it's not NECESSARY"
 		
-		FXDLog(@"DID MERGE: self.mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);
+		if (self.shouldMergeForManagedContext) {
+			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+			FXDLog(@"DID MERGE: self.mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);
+		}
+		
+		self.shouldMergeForManagedContext = NO;
 	}
+	
+	FXDLog(@"2.self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
 }
 
 

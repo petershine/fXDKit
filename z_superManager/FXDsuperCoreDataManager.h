@@ -50,6 +50,8 @@
 
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
     // Primitives
+	BOOL _shouldMergeForManagedContext;
+	
 	UIManagedDocument *_mainDocument;
 	
 	NSString *_mainSqlitePathComponent;
@@ -62,6 +64,8 @@
 }
 
 // Properties
+@property (assign, nonatomic) BOOL shouldMergeForManagedContext;
+
 @property (strong, nonatomic) UIManagedDocument *mainDocument;
 
 @property (strong, nonatomic) NSString *mainSqlitePathComponent;
