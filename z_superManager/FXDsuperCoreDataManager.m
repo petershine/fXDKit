@@ -68,7 +68,7 @@
 - (NSArray*)mainSortDescriptors {
 	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
 		//SAMPLE:
-		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attributekey<#AttributeName#> ascending:<#NO#>]];
+		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 	}
 
 	return _mainSortDescriptors;

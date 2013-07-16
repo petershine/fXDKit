@@ -209,7 +209,7 @@
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
 		[_dateformatterUTC setTimeZone:UTCtimezone];
-		[_dateformatterUTC setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+		[_dateformatterUTC setDateFormat:dateformatDefault];
 		
 		FXDLog(@"_dateformatterUTC: %@", _dateformatterUTC);
 	}
@@ -224,7 +224,7 @@
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
 		[_dateformatterLocal setTimeZone:localTimeZone];
-		[_dateformatterLocal setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+		[_dateformatterLocal setDateFormat:dateformatDefault];
 				
 		FXDLog(@"_dateformatterLocal: %@", _dateformatterLocal);
 	}

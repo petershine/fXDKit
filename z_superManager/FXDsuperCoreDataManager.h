@@ -21,7 +21,7 @@
 //SAMPLE: For managing attribute names
 /*
  #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
- #define attributekey<#AttributeName#> @"<#AttributeName#>"
+ #define attribkey<#AttributeName#> @"<#AttributeName#>"
  */
 
 //MARK: Logging options
