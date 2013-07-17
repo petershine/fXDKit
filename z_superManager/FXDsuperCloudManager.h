@@ -1,20 +1,20 @@
 //
-//  FXDsuperFileManager.h
+//  FXDsuperCloudManager.h
 //
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define notificationFileManagerDidUpdateUbiquityContainerURL	@"notificationFileManagerDidUpdateUbiquityContainerURL"
+#define notificationCloudManagerDidUpdateUbiquityContainerURL	@"notificationCloudManagerDidUpdateUbiquityContainerURL"
 
-#define notificationFileControlMetadataQueryDidGatherObjects	@"notificationFileControlMetadataQueryDidGatherObjects"
-#define notificationFileControlMetadataQueryDidFinishGathering	@"notificationFileControlMetadataQueryDidFinishGathering"
-#define notificationFileControlMetadataQueryDidUpdate	@"notificationFileControlMetadataQueryDidUpdate"
-#define notificationFileControlMetadataQueryIsTransferring	@"notificationFileControlMetadataQueryIsTransferring"
+#define notificationCloudManagerMetadataQueryDidGatherObjects	@"notificationCloudManagerMetadataQueryDidGatherObjects"
+#define notificationCloudManagerMetadataQueryDidFinishGathering	@"notificationCloudManagerMetadataQueryDidFinishGathering"
+#define notificationCloudManagerMetadataQueryDidUpdate	@"notificationCloudManagerMetadataQueryDidUpdate"
+#define notificationCloudManagerMetadataQueryIsTransferring	@"notificationCloudManagerMetadataQueryIsTransferring"
 
-#define notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL"
-#define notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL	@"notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL"
+#define notificationCloudManagerDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL	@"notificationCloudManagerDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL"
+#define notificationCloudManagerDidEnumerateUbiquitousDocumentsAtCurrentFolderURL	@"notificationCloudManagerDidEnumerateUbiquitousDocumentsAtCurrentFolderURL"
 
 
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
@@ -41,7 +41,7 @@
 #import "DirectoryWatcher.h"
 
 
-@interface FXDsuperFileManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
+@interface FXDsuperCloudManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
     // Primitives
 	BOOL _didFinishFirstGathering;
 	id _ubiquityIdentityToken;
@@ -76,7 +76,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperFileManager*)sharedInstance;
++ (FXDsuperCloudManager*)sharedInstance;
 
 - (void)startUpdatingUbiquityContainerURL;
 - (void)evaluateSavedUbiquityContainerURL;
@@ -108,7 +108,7 @@
 
 
 #pragma mark - Category
-@interface FXDsuperFileManager (Enumerating)
+@interface FXDsuperCloudManager (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;

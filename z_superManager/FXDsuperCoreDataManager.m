@@ -93,11 +93,11 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingFileManagerNotifications {	FXDLog_DEFAULT;
+- (void)startObservingCloudManagerNotifications {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self
-	 selector:@selector(observedFileControlDidUpdateUbiquityContainerURL:)
-	 name:notificationFileManagerDidUpdateUbiquityContainerURL
+	 selector:@selector(observedCloudManagerDidUpdateUbiquityContainerURL:)
+	 name:notificationCloudManagerDidUpdateUbiquityContainerURL
 	 object:nil];
 	
 }
@@ -460,7 +460,7 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 }
 
 #pragma mark -
-- (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedCloudManagerDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
 	[self prepareCoreDataManagerWithUbiquityContainerURL:notification.object withCompleteProtection:NO didFinishBlock:nil];
 }
 

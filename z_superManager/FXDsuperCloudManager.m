@@ -1,16 +1,16 @@
 //
-//  FXDsuperFileManager.m
+//  FXDsuperCloudManager.m
 //
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperFileManager.h"
+#import "FXDsuperCloudManager.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperFileManager
+@implementation FXDsuperCloudManager
 
 
 #pragma mark - Memory management
@@ -20,7 +20,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperFileManager*)sharedInstance {
++ (FXDsuperCloudManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -266,7 +266,7 @@
 	[self startWatchingLocalDirectoryChange];
 #endif
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileManagerDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 }
 
 - (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
@@ -282,7 +282,7 @@
 	[self startWatchingLocalDirectoryChange];
 #endif
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileManagerDidUpdateUbiquityContainerURL object:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:nil];
 }
 
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
@@ -513,14 +513,14 @@
 	if (self.didFinishFirstGathering == NO) {	//FXDLog_DEFAULT;
 		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
 	}
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
 	self.didFinishFirstGathering = YES;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
 
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {
@@ -535,10 +535,10 @@
 		//TODO: distinguish uploading and downloading and finished updating		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if (isTransferring) {
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
 			}
 			else {	//FXDLog_OVERRIDE;
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
 			}
 		}];
 	}];

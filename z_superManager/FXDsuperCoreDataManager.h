@@ -12,7 +12,7 @@
 
 #if USE_iCloudCoreData
 /* SAMPLE
- [[<#AppPrefix#>managerCoreData sharedInstance] startObservingFileManagerNotifications];
+ [[<#AppPrefix#>managerCoreData sharedInstance] startObservingCloudManagerNotifications];
  [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURL];
  */
 #endif
@@ -46,7 +46,8 @@
 #define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"
 
 
-#import "FXDsuperFileManager.h"
+#import "FXDsuperCloudManager.h"
+
 
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
     // Primitives
@@ -80,7 +81,7 @@
 #pragma mark - Public
 + (FXDsuperCoreDataManager*)sharedInstance;
 
-- (void)startObservingFileManagerNotifications;
+- (void)startObservingCloudManagerNotifications;
 - (void)startObservingCoreDataNotifications;
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(void(^)(BOOL finished))didFinishBlock;
@@ -99,7 +100,7 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
-- (void)observedFileControlDidUpdateUbiquityContainerURL:(NSNotification*)notification;
+- (void)observedCloudManagerDidUpdateUbiquityContainerURL:(NSNotification*)notification;
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 

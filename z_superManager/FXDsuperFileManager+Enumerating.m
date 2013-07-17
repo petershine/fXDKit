@@ -1,15 +1,15 @@
 //
-//  FXDsuperFileManager+Enumerating.m
+//  FXDsuperCloudManager+Enumerating.m
 ///
 //
 //  Created by petershine on 8/12/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperFileManager.h"
+#import "FXDsuperCloudManager.h"
 
 
-@implementation FXDsuperFileManager (Enumerating)
+@implementation FXDsuperCloudManager (Enumerating)
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
 	
@@ -88,7 +88,7 @@
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
 
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:self userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:self userInfo:userInfo];
 		}];
 	}];
 }
@@ -132,7 +132,7 @@
 		userInfo[objkeyUbiquitousFiles] = fileURLarray;
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationFileControlDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:self userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:self userInfo:userInfo];
 		}];
 	}];
 }
