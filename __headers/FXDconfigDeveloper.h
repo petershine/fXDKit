@@ -93,7 +93,7 @@
 #if __IPHONE_7_0
 #else
 typedef id instancetype;
-typedef MKOverlayView	MKOverlayRenderer
+typedef MKOverlayView	MKOverlayRenderer;
 #endif
 
 
