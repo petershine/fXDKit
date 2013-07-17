@@ -203,34 +203,7 @@
 			BOOL didRemove = NO;
 #endif
 			
-			if (isReachable) {
-				BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
-				BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-				
-				if (isDownloaded == NO && isDownloading == NO) {
-#if ForDEVELOPER
-					didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
-#else
-					[fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
-#endif
-
-					if ([error code] == 512) {
-						if (alertTitle == nil) {
-							NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
-
-							if (underlyingError) {
-								NSDictionary *userInfo = [underlyingError userInfo];
-
-								alertTitle = userInfo[@"NSDescription"];
-							}
-						}
-					}
-					else {
-						FXDLog_ERROR;
-					}
-				}
-			}
-			else {
+			if (isReachable == NO) {
 #if ForDEVELOPER
 				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
 #else
@@ -244,6 +217,34 @@
 #if ForDEVELOPER
 				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 #endif
+				continue;
+			}
+			
+			
+			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
+			
+			if (isDownloaded == NO && isDownloading == NO) {
+#if ForDEVELOPER
+				didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+#else
+				[fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+#endif
+				
+				if ([error code] == 512) {
+					if (alertTitle == nil) {
+						NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
+						
+						if (underlyingError) {
+							NSDictionary *userInfo = [underlyingError userInfo];
+							
+							alertTitle = userInfo[@"NSDescription"];
+						}
+					}
+				}
+				else {
+					FXDLog_ERROR;
+				}
 			}
 		}
 		
