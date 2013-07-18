@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef void (^FXDcallbackBlockForAlert)(id alertView, NSInteger buttonIndex);
+typedef void (^FXDblockAlertCallback)(id alertView, NSInteger buttonIndex);
 
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
 
 // Properties
-@property (strong, nonatomic) FXDcallbackBlockForAlert callbackBlock;
+@property (strong, nonatomic) FXDblockAlertCallback callbackBlock;
 
 // IBOutlets
 
@@ -20,7 +20,7 @@ typedef void (^FXDcallbackBlockForAlert)(id alertView, NSInteger buttonIndex);
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackBlockForAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 
 
 //MARK: - Observer implementation

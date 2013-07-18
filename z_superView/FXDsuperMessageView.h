@@ -18,7 +18,7 @@
 // Properties
 @property (assign, nonatomic) BOOL didPressAcceptButton;
 
-@property (strong, nonatomic) FXDcallbackBlockForAlert callbackBlock;
+@property (strong, nonatomic) FXDblockAlertCallback callbackBlock;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITextView *textviewMessage;

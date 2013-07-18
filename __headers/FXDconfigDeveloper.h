@@ -43,6 +43,8 @@
 
 	#define FXDLog_ERROR	if(error){FXDLog(@" ");FXDLog(@"\n\n%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], [error code], [error userInfo]);}
 
+	#define FXDLog_ERROR_SIMPLE	if(error){FXDLog(@" ");FXDLog(@"\n\nlocalizedDescription: %@\ndomain: %@\ncode: %d\nuserInfo:\n%@\n\n", [error localizedDescription], [error domain], [error code], [error userInfo]);}
+
 	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}}
 
 
@@ -58,6 +60,7 @@
 	#define FXDLog_OVERRIDE
 
 	#define FXDLog_ERROR
+	#define FXDLog_ERROR_SIMPLE
 	#define FXDLog_ERRORexcept(v)
 
 #endif

@@ -215,7 +215,7 @@
 	}
 
 
-	void (^_requestingBlock)() = ^{
+	void (^credentialRequestingBlock)() = ^{
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 
 		NSDictionary *parameters = @{objkeyTwitterStatus: tweetText};
@@ -242,7 +242,7 @@
 			 FXDLog(@"renewResult: %d", renewResult);
 
 			 if (renewResult == ACAccountCredentialRenewResultRenewed) {
-				 _requestingBlock();
+				 credentialRequestingBlock();
 			 }
 			 else {
 				 //TODO: alert user about needing to have accessibility
@@ -250,7 +250,7 @@
 		 }];
 	}
 	else {
-		_requestingBlock();
+		credentialRequestingBlock();
 	}
 }
 
