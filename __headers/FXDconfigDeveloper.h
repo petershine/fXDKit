@@ -5,6 +5,36 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#define iosVersion6	6.0
+#define iosVersion7	7.0
+
+#ifndef latestSupportedSystemVersion
+	#define latestSupportedSystemVersion	iosVersion7
+#endif
+
+#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
+
+
+#define SCREEN_SIZE_35inch	(MAX([[FXDWindow applicationWindow] bounds].size.width, [[FXDWindow applicationWindow] bounds].size.height) <= 480.0)
+
+
+#define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+
+
+#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
+										static id _sharedInstance = nil;\
+										dispatch_once(&once,^{\
+											_sharedInstance = [[[self class] alloc] init];\
+										});\
+										return _sharedInstance
+
+#if __IPHONE_7_0
+#else
+	typedef id instancetype;
+	typedef MKOverlayView	MKOverlayRenderer;
+#endif
+
+
 #if DEBUG
 	#if ForDEVELOPER
 		#define USE_loggingViewControllerLifeCycle	0
@@ -27,8 +57,10 @@
 #endif
 
 
-//#define strClassSelector	[NSString stringWithFormat:@"%@%s", NSStringFromClass([self class]), __FUNCTION__]
 #define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+
+#define intervalRemainingBackgroundTime	([UIApplication sharedApplication].backgroundTimeRemaining > 0.0 && [UIApplication sharedApplication].backgroundTimeRemaining != DBL_MAX) ? ([UIApplication sharedApplication].backgroundTimeRemaining):0.0
+
 
 #if USE_FXDLog
 	#define FXDLog NSLog
@@ -47,6 +79,8 @@
 
 	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}}
 
+	#define FXDLog_REMAINING	FXDLog(@"intervalRemainingBackgroundTime: %f", intervalRemainingBackgroundTime)
+
 
 #else
 	#define FXDLog(format, ...)	{}
@@ -63,46 +97,6 @@
 	#define FXDLog_ERROR_SIMPLE
 	#define FXDLog_ERRORexcept(v)
 
+	#define FXDLog_REMAINING
+
 #endif
-
-
-#ifndef iosVersion6
-	#define iosVersion6	6.0
-#endif
-
-#ifndef iosVersion7
-	#define iosVersion7	7.0
-#endif
-
-#ifndef latestSupportedSystemVersion
-	#define latestSupportedSystemVersion	iosVersion7
-#endif
-
-#ifndef SYSTEM_VERSION_lowerThan
-	#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
-#endif
-
-
-#ifndef SCREEN_SIZE_35inch
-	#define SCREEN_SIZE_35inch	(MAX([[FXDWindow applicationWindow] bounds].size.width, [[FXDWindow applicationWindow] bounds].size.height) <= 480.0)
-#endif
-
-
-#ifndef DEVICE_IDIOM_iPad
-	#define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-#endif
-
-
-#if __IPHONE_7_0
-#else
-typedef id instancetype;
-typedef MKOverlayView	MKOverlayRenderer;
-#endif
-
-
-#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
-static id _sharedInstance = nil;\
-dispatch_once(&once,^{\
-	_sharedInstance = [[[self class] alloc] init];\
-});\
-return _sharedInstance

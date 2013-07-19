@@ -50,8 +50,11 @@
 
 
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
-    // Primitives
+
 	BOOL _shouldMergeForManagedContext;
+	BOOL _didStartEnumerating;
+	
+	UIBackgroundTaskIdentifier _enumeratingTaskIdentifier;
 	
 	UIManagedDocument *_mainDocument;
 	
@@ -66,6 +69,9 @@
 
 // Properties
 @property (assign, nonatomic) BOOL shouldMergeForManagedContext;
+@property (assign, nonatomic) BOOL didStartEnumerating;
+
+@property (assign, nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
 
 @property (strong, nonatomic) UIManagedDocument *mainDocument;
 
@@ -96,7 +102,6 @@
 
 
 //MARK: - Observer implementation
-#warning "TODO: When it's found to be following observing is not necessary, remove them out"
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 

@@ -309,10 +309,27 @@
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
-#warning "//TODO: Prepare for background operation with identifier for staying alive"
+- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
 	
-	__block BOOL shouldBreak = NO;
+	FXDLog(@"0.self.didStartEnumerating: %d", self.didStartEnumerating);
+	
+	//TODO: Decide if returning is not appropriate
+	if (self.didStartEnumerating) {
+		return;
+	}
+	
+	
+	self.didStartEnumerating = YES;
+	
+	
+	UIApplication *sharedApplication = [UIApplication sharedApplication];
+	
+	self.enumeratingTaskIdentifier = [sharedApplication
+									  beginBackgroundTaskWithExpirationHandler:^{								  
+										  [sharedApplication endBackgroundTask:self.enumeratingTaskIdentifier];
+										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
+									  }];
+	FXDLog(@"self.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
 	
 	
 	FXDWindow *applicationWindow = nil;
@@ -321,12 +338,15 @@
 		applicationWindow = [FXDWindow applicationWindow];
 		[applicationWindow showDefaultProgressView];
 	}
+
 	
-	NSManagedObjectContext *enumeratedContext = self.mainDocument.managedObjectContext;
+	__block BOOL shouldBreak = NO;
+	
+	NSManagedObjectContext *managedContext = self.mainDocument.managedObjectContext;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 				
-		NSArray *fetchedObjArray = [enumeratedContext
+		NSArray *fetchedObjArray = [managedContext
 									fetchedObjArrayForEntityName:self.mainEntityName
 									withSortDescriptors:self.mainSortDescriptors
 									withPredicate:nil
@@ -339,24 +359,49 @@
 			
 			
 			if (enumerationBlock) {
-				NSManagedObject *mainEntityObj = [enumeratedContext objectWithID:[fetchedObj objectID]];
+				NSManagedObject *mainEntityObj = [managedContext objectWithID:[fetchedObj objectID]];
 				
 				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					enumerationBlock(enumeratedContext, mainEntityObj, &shouldBreak);
+					enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
 				}];
 			}
+			
+			FXDLog_REMAINING;
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			FXDLog(@"1.self.didStartEnumerating: %d", self.didStartEnumerating);
+			self.didStartEnumerating = NO;
+			FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
+			
+			
 			[self
-			 saveManagedObjectContext:enumeratedContext
+			 saveManagedObjectContext:managedContext
 			 didFinishBlock:^(BOOL finished) {
+				 FXDLog(@"saveManagedObjectContext finished: %d shouldBreak: %d", finished, shouldBreak);
+				 
 				 if (withDefaultProgressView) {
 					 [applicationWindow hideProgressView];
 				 }
 				 
+				 if (shouldBreak) {
+					 finished = NO;
+				 }
+				 
+				 
+				 FXDLog(@"1.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+				 FXDLog_REMAINING;
+				 
+				 if (self.enumeratingTaskIdentifier != UIBackgroundTaskInvalid) {
+					 
+					 [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
+					 self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
+					 
+					 FXDLog(@"2.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+				 }
+				 
 				 if (didFinishBlock) {
-					 didFinishBlock(!(shouldBreak));
+					 didFinishBlock(finished);
 				 }
 			 }];
 		}];

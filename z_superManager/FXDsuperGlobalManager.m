@@ -334,7 +334,7 @@
 	 prepareCoreDataManagerWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
 	 didFinishBlock:^(BOOL finished) {
-		 FXDLog(@"finished: %d %@", finished, strClassSelector);
+		 FXDLog(@"prepareCoreDataManagerWithUbiquityContainerURL finished: %d %@", finished, strClassSelector);
 		 
 		 didPrepareBlock();
 	 }];

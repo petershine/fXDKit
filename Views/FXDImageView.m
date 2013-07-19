@@ -106,6 +106,7 @@
 	 completion:^(BOOL finished) {
 		 //FXDLog(@"finished: %d fadedImageview: %@", finished, fadedImageview);
 		 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+		 
 		 _strongSelf.image = fadedImageview.image;
 		 
 		 [fadedImageview removeFromSuperview];
