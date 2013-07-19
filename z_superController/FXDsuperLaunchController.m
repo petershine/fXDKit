@@ -51,7 +51,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)dismissLaunchControllerWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {
+- (void)dismissLaunchControllerWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 	[UIView
 	 animateWithDuration:durationOneSecond
 	 delay:0.0

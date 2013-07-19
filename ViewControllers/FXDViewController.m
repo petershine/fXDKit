@@ -141,7 +141,7 @@
 }
 
 #pragma mark -
-- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {	//FXDLog_DEFAULT;
+- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(FXDblockDidFinish)completion {	//FXDLog_DEFAULT;
 
 	/*
 	FXDLog(@"fromViewController: %@", fromViewController);

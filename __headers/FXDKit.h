@@ -34,14 +34,13 @@
 #import "FXDconfigDeveloper.h"
 #import "FXDconfigAnalytics.h"
 
+typedef void (^FXDblockDidFinish)(BOOL finished);
 
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDobjkeyUserDefaults.h"
-#import "FXDnotificationNames.h"
 #import "FXDlocalizedStrings.h"
 #import "FXDimageNames.h"
-#import "FXDtextFonts.h"
 
 
 // Objects

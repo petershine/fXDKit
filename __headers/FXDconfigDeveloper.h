@@ -59,7 +59,7 @@
 
 #define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
 
-#define intervalRemainingBackgroundTime	([UIApplication sharedApplication].backgroundTimeRemaining > 0.0 && [UIApplication sharedApplication].backgroundTimeRemaining != DBL_MAX) ? ([UIApplication sharedApplication].backgroundTimeRemaining):0.0
+#define intervalRemainingBackground	([UIApplication sharedApplication].backgroundTimeRemaining > 0.0 && [UIApplication sharedApplication].backgroundTimeRemaining != DBL_MAX) ? ([UIApplication sharedApplication].backgroundTimeRemaining):0.0
 
 
 #if USE_FXDLog
@@ -79,7 +79,7 @@
 
 	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}}
 
-	#define FXDLog_REMAINING	FXDLog(@"intervalRemainingBackgroundTime: %f", intervalRemainingBackgroundTime)
+	#define FXDLog_REMAINING	if(intervalRemainingBackground > 0.0){if((NSInteger)(intervalRemainingBackground)%2 == 0) {FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}}
 
 
 #else

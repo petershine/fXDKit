@@ -89,7 +89,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
+- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
 	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);
 	
@@ -114,7 +114,7 @@
 	}
 }
 
-- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(void(^)(BOOL finished))didFinishBlock {	FXDLog_DEFAULT;
+- (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
 
 	if ([self.twitterAccountArray count] == 0) {
