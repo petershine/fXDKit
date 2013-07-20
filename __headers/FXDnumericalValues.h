@@ -40,6 +40,8 @@
 #define alphaValue05	0.5
 
 
+#define dimensionMinimumTouchable	44.0
+
 #define heightNavigationBar	44.0
 #define heightToolBar	heightNavigationBar	//MARK: Assume they are identical
 #define heightStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height

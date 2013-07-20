@@ -283,18 +283,24 @@
 	FXDLog(@"unwindSegue: %@", unwindSegue);
 }
 
-- (IBAction)popToRootInterfaceWithAnimation:(id)sender {
+- (IBAction)popToRootSceneWithAnimationForSender:(id)sender {
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (IBAction)popInterfaceWithAnimation:(id)sender {
+- (IBAction)popSceneWithAnimationForSender:(id)sender {
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)dismissControllerForSender:(id)sender {	FXDLog_OVERRIDE;
-
+- (IBAction)dismissSceneWithAnimationForSender:(id)sender {	FXDLog_OVERRIDE;
+	//TEST: Use parentController
+	
+	/*
 	if (self.navigationController) {
 		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
+	}
+	 */
+	if (self.parentViewController) {
+		[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 	}
 	else {
 		[self dismissViewControllerAnimated:YES completion:nil];

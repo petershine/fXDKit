@@ -259,11 +259,11 @@
 			numberOfItems = [sectionInfo numberOfObjects];
 		}
 		
-		if (numberOfItems != fetchedCount) {
-			FXDLog_DEFAULT;
+		if (numberOfItems != fetchedCount) {	//FXDLog_DEFAULT;
 			FXDLog(@"section: %d numberOfItems: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);
 			
-			numberOfItems = fetchedCount;
+			//TEST:
+			//numberOfItems = fetchedCount;
 		}
 #else
 		numberOfItems = fetchedCount;
@@ -332,7 +332,6 @@
 	UITableView *tableView = (UITableView*)self.mainScrollview;
 	
 	if (type == NSFetchedResultsChangeInsert) {
-		
 		if (newIndexPath) {
 			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 		}

@@ -36,10 +36,10 @@
 	if ([self.navigationController.viewControllers count] > 1) {	// If there is more than 1 navigated interfaces
 
 		if ([self.navigationController.viewControllers count] == 2) {
-			action = @selector(popToRootInterfaceWithAnimation:);
+			action = @selector(popToRootSceneWithAnimationForSender:);
 		}
 		else {
-			action = @selector(popInterfaceWithAnimation:);
+			action = @selector(popSceneWithAnimationForSender:);
 		}
 
 		FXDLog(@"onImage: %@, offImage: %@", onImage, offImage);
@@ -50,7 +50,7 @@
 			// Do not show back button
 		}
 		else {
-			action = @selector(dismissControllerForSender:);
+			action = @selector(dismissSceneWithAnimationForSender:);
 		}
 	}
 
@@ -125,7 +125,7 @@
 		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroup];
 	}
 	else {
-		if (action == @selector(dismissControllerForSender:)) {
+		if (action == @selector(dismissSceneWithAnimationForSender:)) {
 			barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:target action:action];
 		}
 	}
