@@ -458,32 +458,10 @@
 	};
 	
 	//TEST:
-#warning "//TODO: Find the right way to use performBlockAndWait with concurrency"
-	//contextSavingBlock();
 	if ([NSThread isMainThread]) {
 		[managedObjectContext performBlockAndWait:contextSavingBlock];
-		
-		/*
-		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-			[managedObjectContext performBlock:contextSavingBlock];
-		}
-		else {
-			[managedObjectContext performBlockAndWait:contextSavingBlock];
-		}
-		 */
 	}
 	else {
-		/*
-		if (managedObjectContext.concurrencyType == NSPrivateQueueConcurrencyType) {
-			[managedObjectContext performBlock:contextSavingBlock];
-			//[managedObjectContext performBlockAndWait:contextSavingBlock];
-		}
-		else {
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[managedObjectContext performBlockAndWait:contextSavingBlock];
-			}];
-		}
-		 */
 		contextSavingBlock();
 	}
 }

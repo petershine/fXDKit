@@ -44,10 +44,29 @@
 #if TEST_logTransferringPercentage
 		logString = @"";
 #endif
-		id isDownloaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-		id isUploaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey];
 		
-		if ([isUploaded boolValue] == NO) {
+		BOOL isDownloaded = NO;
+		BOOL isUploaded = NO;
+		
+		if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
+#if __IPHONE_7_0
+			id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+			isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
+			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];;
+#else
+			isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
+#endif
+		}
+		else {
+#if __IPHONE_7_0
+			id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+			isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
+			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];;
+#endif
+		}
+		
+		if (isUploaded == NO) {
 			id isUploading = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey];
 			
 			if ([isUploading boolValue]) {
@@ -65,7 +84,7 @@
 			}
 #endif
 		}
-		else if ([isDownloaded boolValue] == NO) {
+		else if (isDownloaded == NO) {
 			id isDownloading = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey];
 			
 			if ([isDownloading boolValue]) {

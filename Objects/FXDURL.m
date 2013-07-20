@@ -38,7 +38,13 @@
 	@[
    NSURLIsUbiquitousItemKey,
    NSURLUbiquitousItemHasUnresolvedConflictsKey,
+   
+#if __IPHONE_7_0
+   NSURLUbiquitousItemDownloadingStatusKey,
+#else
    NSURLUbiquitousItemIsDownloadedKey,
+#endif
+   
    NSURLUbiquitousItemIsDownloadingKey,
    NSURLUbiquitousItemIsUploadedKey,
    NSURLUbiquitousItemIsUploadingKey,

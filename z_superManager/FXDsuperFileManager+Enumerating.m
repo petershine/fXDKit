@@ -147,7 +147,15 @@
 		
 		NSURL *nextURL = [enumerator nextObject];
 
-		NSMutableArray *receivedURLarray = [[UIApplication sharedApplication].delegate performSelector:@selector(receivedURLarray)];
+		
+		NSMutableArray *receivedURLarray = nil;
+		
+		SEL receivedURLarraySelector = NSSelectorFromString(@"receivedURLarray");
+		
+		if (receivedURLarraySelector) {
+			receivedURLarray = [[UIApplication sharedApplication].delegate performSelector:receivedURLarraySelector];
+		}
+		
 		FXDLog(@"receivedURLarray:\n%@", receivedURLarray);
 		
 		while (nextURL) {
