@@ -177,43 +177,40 @@
 
 	[self evaluateSavedUbiquityContainerURL];
 
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		NSURL *activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-		FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
-
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-
-			if (activeUbiquityContainerURL) {
-				if (self.ubiquityContainerURL) {
-					if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
-
-						//TODO: find what to do when containerURL is different
-					}
-				}
-
-
-				_ubiquitousDocumentsURL = nil;
-				_ubiquitousCachesURL = nil;
-
-				_ubiquityContainerURL = activeUbiquityContainerURL;
-
-
-				NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
-
-				if (containerURLString) {
-					[userDefaults setObject:containerURLString forKey:userdefaultStringSavedUbiquityContainerURL];
-					[userDefaults synchronize];
-				}
-
-				[self activatedUbiquityContainerURL];
+	
+	NSURL *activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+	FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
+	
+	
+	if (activeUbiquityContainerURL) {
+		if (self.ubiquityContainerURL) {
+			if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
+				
+				//TODO: find what to do when containerURL is different
 			}
-			else {
-				[userDefaults synchronize];
-
-				[self failedToUpdateUbiquityContainerURL];
-			}
-		}];
-	}];
+		}
+		
+		
+		_ubiquitousDocumentsURL = nil;
+		_ubiquitousCachesURL = nil;
+		
+		_ubiquityContainerURL = activeUbiquityContainerURL;
+		
+		
+		NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
+		
+		if (containerURLString) {
+			[userDefaults setObject:containerURLString forKey:userdefaultStringSavedUbiquityContainerURL];
+			[userDefaults synchronize];
+		}
+		
+		[self activatedUbiquityContainerURL];
+	}
+	else {
+		[userDefaults synchronize];
+		
+		[self failedToUpdateUbiquityContainerURL];
+	}
 }
 
 - (void)evaluateSavedUbiquityContainerURL {	FXDLog_DEFAULT;
@@ -245,14 +242,12 @@
 }
 
 - (void)activatedUbiquityContainerURL {	FXDLog_DEFAULT;
-#if TEST_infoDictionaryForFolderURL
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-
+	
 	FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
 	FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
 	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
-#endif
-
+	
 
 #if shouldUseUbiquitousDocuments
 	[self startObservingUbiquityMetadataQueryNotifications];
@@ -285,10 +280,11 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:nil];
 }
 
+#pragma mark -
 - (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
 	
 	if (self.ubiquitousDocumentsMetadataQuery.isStarted) {
-		//
+		//TODO:
 	}
 }
 
@@ -297,6 +293,7 @@
 	
 }
 
+#pragma mark -
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent {	//FXDLog_DEFAULT;
 		
 	if (currentFolderURL == nil) {
@@ -321,6 +318,8 @@
 
 		NSError *error = nil;
 		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];
+		
+		FXDLog(@"didSetUbiquitous: %d %@ %@", didSetUbiquitous, itemURL, destinationURL);
 		
 		if (error || didSetUbiquitous == NO) {			
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
@@ -395,6 +394,7 @@
 	}
 }
 
+#pragma mark -
 - (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
 	BOOL isUploading  = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
 	
