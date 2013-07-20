@@ -346,47 +346,47 @@
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillChangeStatusBarFrame:)
 	 name:UIApplicationWillChangeStatusBarFrameNotification
 	 object:nil];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationDidChangeStatusBarFrame:)
 	 name:UIApplicationDidChangeStatusBarFrameNotification
 	 object:nil];
 
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillResignActive:)
 	 name:UIApplicationWillResignActiveNotification
 	 object:nil];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationDidEnterBackground:)
 	 name:UIApplicationDidEnterBackgroundNotification
 	 object:nil];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationDidBecomeActive:)
 	 name:UIApplicationDidBecomeActiveNotification
 	 object:nil];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillTerminate:)
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
 	
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSUserDefaultsDidChange:)
 	 name:NSUserDefaultsDidChangeNotification

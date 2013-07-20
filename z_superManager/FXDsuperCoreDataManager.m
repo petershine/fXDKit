@@ -103,48 +103,48 @@
 }
 
 - (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationDidEnterBackground:)
 	 name:UIApplicationDidEnterBackgroundNotification
 	 object:nil];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillTerminate:)
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
 	
 	
-	id notifyingObject = self.mainDocument.managedObjectContext.parentContext;
-	FXDLog(@"notifyingObject: %@", notifyingObject);
+	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
+	FXDLog(@"notifyingContext: %@", notifyingContext);
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
 	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-	 object:notifyingObject];
+	 object:notifyingContext];
 	
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
 	 name:NSManagedObjectContextObjectsDidChangeNotification
-	 object:notifyingObject];
+	 object:notifyingContext];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSManagedObjectContextWillSave:)
 	 name:NSManagedObjectContextWillSaveNotification
-	 object:notifyingObject];
+	 object:notifyingContext];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSManagedObjectContextDidSave:)
 	 name:NSManagedObjectContextDidSaveNotification
-	 object:notifyingObject];
+	 object:notifyingContext];
 }
 
 #pragma mark -

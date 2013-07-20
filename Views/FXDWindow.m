@@ -35,22 +35,22 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedFXDWindowShouldFadeInProgressView:)
 	 name:notificationFXDWindowShouldFadeInProgressView
 	 object:nil];
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedFXDWindowShouldFadeOutProgressView:)
 	 name:notificationFXDWindowShouldFadeOutProgressView
 	 object:nil];
 	
 	
-	[defaultCenter
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
 	 name:UIDeviceOrientationDidChangeNotification

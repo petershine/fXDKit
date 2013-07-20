@@ -31,22 +31,25 @@
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
 
 
-		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedCachesMetadataQueryGatheringProgress:)
-							  name:NSMetadataQueryGatheringProgressNotification
-							object:_ubiquitousCachesMetadataQuery];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedCachesMetadataQueryDidFinishGathering:)
-							  name:NSMetadataQueryDidFinishGatheringNotification
-							object:_ubiquitousCachesMetadataQuery];
-
-		[defaultCenter addObserver:self
-						  selector:@selector(observedCachesMetadataQueryDidUpdate:)
-							  name:NSMetadataQueryDidUpdateNotification
-							object:_ubiquitousCachesMetadataQuery];
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+		
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedCachesMetadataQueryGatheringProgress:)
+		 name:NSMetadataQueryGatheringProgressNotification
+		 object:_ubiquitousCachesMetadataQuery];
+		
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedCachesMetadataQueryDidFinishGathering:)
+		 name:NSMetadataQueryDidFinishGatheringNotification
+		 object:_ubiquitousCachesMetadataQuery];
+		
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedCachesMetadataQueryDidUpdate:)
+		 name:NSMetadataQueryDidUpdateNotification
+		 object:_ubiquitousCachesMetadataQuery];
 
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files

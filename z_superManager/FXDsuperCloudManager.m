@@ -59,27 +59,27 @@
 		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
 
 
-		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		
-		[defaultCenter
+		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryDidStartGathering:)
 		 name:NSMetadataQueryDidStartGatheringNotification
 		 object:_ubiquitousDocumentsMetadataQuery];
 		
-		[defaultCenter
+		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryGatheringProgress:)
 		 name:NSMetadataQueryGatheringProgressNotification
 		 object:_ubiquitousDocumentsMetadataQuery];
 		
-		[defaultCenter
+		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryDidFinishGathering:)
 		 name:NSMetadataQueryDidFinishGatheringNotification
 		 object:_ubiquitousDocumentsMetadataQuery];
 		
-		[defaultCenter
+		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryDidUpdate:)
 		 name:NSMetadataQueryDidUpdateNotification
