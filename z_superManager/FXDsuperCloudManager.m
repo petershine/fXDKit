@@ -23,35 +23,41 @@
 
 #pragma mark - Property overriding
 - (NSURL*)ubiquitousDocumentsURL {
-	if (_ubiquitousDocumentsURL == nil) {
+	
+	if (!_ubiquitousDocumentsURL) {	FXDLog_DEFAULT;
 		if (self.ubiquityContainerURL) {
 			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];
 		}
 	}
 
-	if (_ubiquitousDocumentsURL == nil) {	FXDLog_DEFAULT;
+#if ForDEVELOPER
+	if (!_ubiquitousDocumentsURL) {
 		FXDLog(@"_ubiquitousDocumentsURL: %@", _ubiquitousDocumentsURL);
 	}
+#endif
 
 	return _ubiquitousDocumentsURL;
 }
 
 - (NSURL*)ubiquitousCachesURL {
-	if (_ubiquitousCachesURL == nil) {
+	if (!_ubiquitousCachesURL) {	FXDLog_DEFAULT;
 		if (self.ubiquityContainerURL) {
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
 		}
 	}
 
-	if (_ubiquitousCachesURL == nil) {	FXDLog_DEFAULT;
+#if ForDEVELOPER
+	if (!_ubiquitousCachesURL) {
 		FXDLog(@"_ubiquitousCachesURL: %@", _ubiquitousCachesURL);
 	}
+#endif
 
 	return _ubiquitousCachesURL;
 }
 
 - (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
-	if (_ubiquitousDocumentsMetadataQuery == nil) {	FXDLog_DEFAULT;
+	
+	if (!_ubiquitousDocumentsMetadataQuery) {	FXDLog_DEFAULT;
 		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
 
 
@@ -106,9 +112,10 @@
 }
 
 - (NSOperationQueue*)evictingQueue {
-	if (_evictingQueue == nil) {
+	
+	if (!_evictingQueue) {	FXDLog_DEFAULT;
 		_evictingQueue = [[NSOperationQueue alloc] init];
-		[_evictingQueue setMaxConcurrentOperationCount:1];
+		[_evictingQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 	}
 
 	return _evictingQueue;

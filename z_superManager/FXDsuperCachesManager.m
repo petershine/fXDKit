@@ -23,7 +23,8 @@
 
 #pragma mark - Property overriding
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
-	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
+	
+	if (!_ubiquitousCachesMetadataQuery) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
 
 

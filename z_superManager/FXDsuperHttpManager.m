@@ -107,7 +107,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 
 + (void)addHttpControl:(FXDsuperHttpManager*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet {
 	if (httpControlSet == nil) {
-		if (_staticHttpControlSet == nil) {
+		if (!_staticHttpControlSet) {
 			_staticHttpControlSet = [[NSMutableSet alloc] initWithCapacity:0];
 		}
 		
@@ -169,7 +169,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
-	if (_receivedData == nil) {
+	if (!_receivedData) {
 		_receivedData = [[NSMutableData alloc] initWithLength:0];
 	}
 	

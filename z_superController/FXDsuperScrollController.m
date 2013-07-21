@@ -80,7 +80,7 @@
 
 #pragma mark - Property overriding
 - (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {
+	if (!_mainCellIdentifier) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -88,7 +88,7 @@
 }
 
 - (UINib*)mainCellNib {
-	if (_mainCellNib == nil) {
+	if (!_mainCellNib) {
 		if (self.mainCellIdentifier) {
 			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
 		}
@@ -100,7 +100,7 @@
 #pragma mark -
 - (NSDictionary*)cellTitleDictionary {
 	
-	if (_cellTitleDictionary == nil) {
+	if (!_cellTitleDictionary) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -108,7 +108,7 @@
 }
 
 - (NSDictionary*)cellSubTitleDictionary {
-	if (_cellSubTitleDictionary == nil) {
+	if (!_cellSubTitleDictionary) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -116,7 +116,7 @@
 }
 - (NSArray*)itemCounts {
 	
-	if (_itemCounts == nil) {
+	if (!_itemCounts) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -126,7 +126,7 @@
 #pragma mark -
 - (NSMutableArray*)mainDataSource {
 	
-	if (_mainDataSource == nil) {
+	if (!_mainDataSource) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -135,7 +135,7 @@
 
 - (FXDFetchedResultsController*)mainResultsController {
 	
-	if (_mainResultsController == nil) {
+	if (!_mainResultsController) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -145,11 +145,9 @@
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	
-	if (_cellOperationQueue == nil) {	FXDLog_OVERRIDE;
+	if (!_cellOperationQueue) {	FXDLog_DEFAULT;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
-		
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
-		FXDLog(@"maxConcurrentOperationCount: %d", [_cellOperationQueue maxConcurrentOperationCount]);
 	}
 	
 	return _cellOperationQueue;
@@ -157,7 +155,7 @@
 
 - (NSMutableDictionary*)cellOperationDictionary {
 	
-	if (_cellOperationDictionary == nil) {
+	if (!_cellOperationDictionary) {	FXDLog_DEFAULT;
 		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	

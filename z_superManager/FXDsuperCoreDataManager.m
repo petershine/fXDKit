@@ -23,7 +23,8 @@
 
 #pragma mark - Property overriding
 - (UIManagedDocument*)mainDocument {
-	if (_mainDocument == nil) {	FXDLog_DEFAULT;
+	
+	if (!_mainDocument) {	FXDLog_DEFAULT;
 		NSURL *fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
 		FXDLog(@"fileURL: %@", fileURL);
 				
@@ -36,7 +37,7 @@
 
 #pragma mark -
 - (NSString*)mainSqlitePathComponent {
-	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
+	if (!_mainSqlitePathComponent) {	FXDLog_DEFAULT;
 		_mainSqlitePathComponent = applicationSqlitePathComponent;
 	}
 	
@@ -44,7 +45,7 @@
 }
 
 - (NSString*)mainUbiquitousContentName {
-	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
+	if (!_mainUbiquitousContentName) {	FXDLog_DEFAULT;
 		_mainUbiquitousContentName = ubiquitousCoreDataContentName;
 	}
 	
@@ -53,7 +54,7 @@
 
 #pragma mark -
 - (NSString*)mainEntityName {
-	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
+	if (!_mainEntityName) {	FXDLog_OVERRIDE;
 		//SAMPLE:
 		//_mainEntityName = entityname<#DefaultClass#>
 	}
@@ -62,7 +63,7 @@
 }
 
 - (NSArray*)mainSortDescriptors {
-	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
+	if (!_mainSortDescriptors) {	FXDLog_OVERRIDE;
 		//SAMPLE:
 		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 	}
@@ -72,7 +73,7 @@
 
 #pragma mark -
 - (FXDFetchedResultsController*)mainResultsController {
-	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
+	if (!_mainResultsController) {	FXDLog_DEFAULT;
 		_mainResultsController = [self.mainDocument.managedObjectContext
 								  resultsControllerForEntityName:self.mainEntityName
 								  withSortDescriptors:self.mainSortDescriptors
@@ -562,7 +563,7 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (!_strongDelegate) {
 		return;
 	}
 	
@@ -574,7 +575,7 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (!_strongDelegate) {
 		return;
 	}
 	
@@ -586,7 +587,7 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (!_strongDelegate) {
 		return;
 	}
 	
@@ -598,7 +599,7 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (!_strongDelegate) {
 		return;
 	}
 	

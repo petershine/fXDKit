@@ -60,7 +60,7 @@
 
 #pragma mark -
 - (NSString*)mainStoryboardName {
-	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
+	if (!_mainStoryboardName) {	FXDLog_OVERRIDE;
 		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
 	}
 
@@ -68,12 +68,9 @@
 }
 
 - (FXDStoryboard*)mainStoryboard {
-	if (_mainStoryboard == nil) {
+	if (!_mainStoryboard) {	FXDLog_OVERRIDE;
 		if (self.mainStoryboardName) {
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
-		}
-		else {
-			FXDLog_OVERRIDE;
 		}
 	}
 
@@ -82,7 +79,7 @@
 
 #pragma mark -
 - (NSString*)deviceLanguageCode {
-	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
+	if (!_deviceLanguageCode) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
 		_deviceLanguageCode = languages[0];
@@ -111,7 +108,7 @@
 }
 
 - (NSString*)deviceCountryCode {
-	if (_deviceCountryCode == nil) {	FXDLog_DEFAULT;
+	if (!_deviceCountryCode) {	FXDLog_DEFAULT;
 		NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
 		
 		NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
@@ -125,84 +122,63 @@
 }
 
 - (NSString*)deviceModelName {
-	if (_deviceModelName) {
-		return _deviceModelName;
-	}
-	
-	
-	FXDLog_DEFAULT;
-	
-	struct utsname systemInfo;
-	uname(&systemInfo);
-	
-	_deviceModelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-	
-	if([_deviceModelName isEqualToString:@"i386"]) {
-		_deviceModelName = @"iPhone Simulator";
-	}
-    else if([_deviceModelName isEqualToString:@"iPhone1,1"]) {
-		_deviceModelName = @"iPhone";
-	}
-	else if([_deviceModelName isEqualToString:@"iPhone1,2"]) {
-		_deviceModelName = @"iPhone 3G";
-	}
-	else if([_deviceModelName isEqualToString:@"iPhone2,1"]) {
-		_deviceModelName = @"iPhone 3GS";
-	}
-	else if([_deviceModelName isEqualToString:@"iPhone3,1"]) {
-		_deviceModelName = @"iPhone 4";
-	}
-	else if([_deviceModelName isEqualToString:@"iPhone4,1"]) {
-		_deviceModelName = @"iPhone 4S";
-	}
-	else if([_deviceModelName isEqualToString:@"iPhone5,1"]) {
-		_deviceModelName = @"iPhone 5";
-	}
-	
-	else if([_deviceModelName isEqualToString:@"iPod1,1"]) {
-		_deviceModelName = @"iPod 1st Gen";
-	}
-	else if([_deviceModelName isEqualToString:@"iPod2,1"]) {
-		_deviceModelName = @"iPod 2nd Gen";
-	}
-	else if([_deviceModelName isEqualToString:@"iPod3,1"]) {
-		_deviceModelName = @"iPod 3rd Gen";
-	}
-	else if([_deviceModelName isEqualToString:@"iPod4,1"]) {
-		_deviceModelName = @"iPod 4th Gen";
-	}
-	else if([_deviceModelName isEqualToString:@"iPod5,1"]) {
-		_deviceModelName = @"iPod 5th Gen";
-	}
-	
-    else if([_deviceModelName isEqualToString:@"iPad1,1"]) {
-        _deviceModelName = @"iPad";
-	}
-    else if([_deviceModelName isEqualToString:@"iPad2,1"]) {
-        _deviceModelName = @"iPad 2(WiFi)";
-	}
-    else if([_deviceModelName isEqualToString:@"iPad2,2"]) {
-        _deviceModelName = @"iPad 2(GSM)";
-	}
-    else if([_deviceModelName isEqualToString:@"iPad2,3"]) {
-        _deviceModelName = @"iPad 2(CDMA)";
-	}
-	else if([_deviceModelName isEqualToString:@"iPad3,1"]) {
-        _deviceModelName = @"New iPad (WiFi)";
-	}
-    else if([_deviceModelName isEqualToString:@"iPad3,2"]) {
-        _deviceModelName = @"New iPad (GSM)";
-	}
-    else if([_deviceModelName isEqualToString:@"iPad3,3"]) {
-        _deviceModelName = @"New iPad (CDMA)";
+	if (!_deviceModelName) {	FXDLog_DEFAULT;
+		
+		struct utsname systemInfo;
+		uname(&systemInfo);
+		
+		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+		
+		NSDictionary *commonNamesDictionary = @{@"i386":     @"iPhone Simulator",
+										  @"x86_64":   @"iPad Simulator",
+										  
+										  @"iPhone1,1":    @"iPhone",
+										  @"iPhone1,2":    @"iPhone 3G",
+										  @"iPhone2,1":    @"iPhone 3GS",
+										  @"iPhone3,1":    @"iPhone 4",
+										  @"iPhone4,1":    @"iPhone 4S",
+										  @"iPhone5,1":    @"iPhone 5(GSM)",
+										  @"iPhone5,2":    @"iPhone 5(GSM+CDMA)",
+										  
+										  @"iPad1,1":  @"iPad",
+										  @"iPad2,1":  @"iPad 2(WiFi)",
+										  @"iPad2,2":  @"iPad 2(GSM)",
+										  @"iPad2,3":  @"iPad 2(CDMA)",
+										  @"iPad2,4":  @"iPad 2(WiFi Rev A)",
+										  @"iPad2,5":  @"iPad Mini(WiFi)",
+										  @"iPad2,6":  @"iPad Mini(GSM)",
+										  @"iPad2,7":  @"iPad Mini(GSM+CDMA)",
+										  @"iPad3,1":  @"iPad 3(WiFi)",
+										  @"iPad3,2":  @"iPad 3(GSM+CDMA)",
+										  @"iPad3,3":  @"iPad 3(GSM)",
+										  @"iPad3,4":  @"iPad 4(WiFi)",
+										  @"iPad3,5":  @"iPad 4(GSM)",
+										  @"iPad3,6":  @"iPad 4(GSM+CDMA)",
+										  
+										  @"iPod1,1":  @"iPod 1st Gen",
+										  @"iPod2,1":  @"iPod 2nd Gen",
+										  @"iPod3,1":  @"iPod 3rd Gen",
+										  @"iPod4,1":  @"iPod 4th Gen",
+										  @"iPod5,1":  @"iPod 5th Gen",
+										  
+										  };
+		
+		_deviceModelName = commonNamesDictionary[machineName];
+		
+		if (!_deviceModelName) {
+			_deviceModelName = machineName;
+		}
+
+		FXDLog(@"_deviceModelName: %@", _deviceModelName);
 	}
 	
 	return _deviceModelName;
 }
+
 #pragma mark -
 - (NSDateFormatter*)dateformatterUTC {
 	
-	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
+	if (!_dateformatterUTC) {	FXDLog_DEFAULT;
 		_dateformatterUTC = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -217,7 +193,7 @@
 
 - (NSDateFormatter*)dateformatterLocal {
 	
-	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT;
+	if (!_dateformatterLocal) {	FXDLog_DEFAULT;
 		_dateformatterLocal = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
@@ -232,13 +208,12 @@
 
 #pragma mark -
 - (id)rootController {
-	if (_rootController == nil) {
+	if (!_rootController) {	FXDLog_DEFAULT;
 		if (self.mainStoryboard) {
 			_rootController = [self.mainStoryboard instantiateInitialViewController];
 		}
-		else {
-			FXDLog_OVERRIDE;
-		}
+		
+		FXDLog(@"_rootController: %@", _rootController);
 	}
 
 	return _rootController;

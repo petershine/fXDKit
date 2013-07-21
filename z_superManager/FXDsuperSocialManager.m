@@ -27,7 +27,7 @@
 
 #pragma mark - Property overriding
 - (ACAccountStore*)accountStore {
-	if (_accountStore == nil) {
+	if (!_accountStore) {
 		_accountStore = [[ACAccountStore alloc] init];
 	}
 
@@ -35,7 +35,7 @@
 }
 
 - (ACAccountType*)accountType {
-	if (_accountType == nil) {
+	if (!_accountType) {
 		_accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	}
 
@@ -43,16 +43,16 @@
 }
 
 - (NSArray*)twitterAccountArray {
-	if (_twitterAccountArray == nil) {
+	if (!_twitterAccountArray) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
 	}
 
 	return _twitterAccountArray;
 }
 
-- (ACAccount*)mainTwitterAccount {	FXDLog_DEFAULT;
+- (ACAccount*)mainTwitterAccount {
 
-	if (_mainTwitterAccount == nil) {
+	if (!_mainTwitterAccount) {	FXDLog_DEFAULT;
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 		
 		__block NSString *identifier = [userDefaults stringForKey:userdefaultObjKeyMainAccountIdentifier];

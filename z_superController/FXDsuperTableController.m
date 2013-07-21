@@ -28,7 +28,7 @@
 
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
-	if (_mainScrollview == nil) {
+	if (!_mainScrollview) {
 		
 		if (self.mainTableview) {
 			_mainScrollview = self.mainTableview;
