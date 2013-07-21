@@ -14,6 +14,10 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 #pragma mark - Initialization
 #warning "TODO: Later, refactor sharedInstace method to be used only in FXDObject
