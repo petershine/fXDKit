@@ -13,8 +13,8 @@
 #define notificationCloudManagerMetadataQueryDidUpdate	@"notificationCloudManagerMetadataQueryDidUpdate"
 #define notificationCloudManagerMetadataQueryIsTransferring	@"notificationCloudManagerMetadataQueryIsTransferring"
 
-#define notificationCloudManagerDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL	@"notificationCloudManagerDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL"
-#define notificationCloudManagerDidEnumerateUbiquitousDocumentsAtCurrentFolderURL	@"notificationCloudManagerDidEnumerateUbiquitousDocumentsAtCurrentFolderURL"
+#define notificationCloudManagerDidEnumerateUbiquitousMetadataItems	@"notificationCloudManagerDidEnumerateUbiquitousMetadataItems"
+#define notificationCloudManagerDidEnumerateUbiquitousDocuments	@"notificationCloudManagerDidEnumerateUbiquitousDocuments"
 
 
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
@@ -35,6 +35,10 @@
 
 #ifndef shouldDownloadEvictedFilesInitially
 	#define shouldDownloadEvictedFilesInitially	0
+#endif
+
+#ifndef shouldLogTransferringPercentage
+	#define shouldLogTransferringPercentage	0
 #endif
 
 

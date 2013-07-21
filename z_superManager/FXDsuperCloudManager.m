@@ -251,12 +251,12 @@
 	FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
 	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 	
-
-#if shouldUseUbiquitousDocuments
 	[self startObservingUbiquityMetadataQueryNotifications];
 
-	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+	
+#if shouldUseUbiquitousDocuments
 	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
 #endif
 
 
@@ -511,29 +511,30 @@
 
 }
 
-- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 	
-	if (!self.didFinishFirstGathering) {	//FXDLog_DEFAULT;
-		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
-
+	if (!self.didFinishFirstGathering) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
 	}
 }
 
-- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLog(@"1.didFinishFirstGathering: %d", self.didFinishFirstGathering);
 	self.didFinishFirstGathering = YES;
+	FXDLog(@"2.didFinishFirstGathering: %d", self.didFinishFirstGathering);
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
 
-- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {
+- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	
 	NSMetadataQuery *metadataQuery = notification.object;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 
 		BOOL isTransferring = [metadataQuery isQueryResultsTransferringWithLogString:nil];
-		
+		FXDLog(@"isTransferring: %d", isTransferring);
 
 		//TODO: distinguish uploading and downloading and finished updating		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{

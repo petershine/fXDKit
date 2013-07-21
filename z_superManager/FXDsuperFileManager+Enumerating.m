@@ -11,7 +11,7 @@
 
 @implementation FXDsuperCloudManager (Enumerating)
 #pragma mark - Public
-- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
+- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
 	
 	if (!currentFolderURL) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
@@ -26,12 +26,10 @@
 
 		NSString *alertTitle = nil;
 
-		//for (NSMetadataItem *metadataItem in self.ubiquitousDocumentsMetadataQuery.results) {
-		for (NSUInteger i = 0; i < self.ubiquitousDocumentsMetadataQuery.resultCount; i++) {
+		for (NSUInteger i = 0; i < [self.ubiquitousDocumentsMetadataQuery resultCount]; i++) {
 			NSMetadataItem *metadataItem = [self.ubiquitousDocumentsMetadataQuery resultAtIndex:i];
 
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
-
 
 #if shouldDownloadEvictedFilesInitially
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
@@ -88,7 +86,7 @@
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
 
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousMetadataItemsAtCurrentFolderURL object:self userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousMetadataItems object:self userInfo:userInfo];
 		}];
 	}];
 }
@@ -132,7 +130,7 @@
 		userInfo[objkeyUbiquitousFiles] = fileURLarray;
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousDocumentsAtCurrentFolderURL object:self userInfo:userInfo];
+			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousDocuments object:self userInfo:userInfo];
 		}];
 	}];
 }
