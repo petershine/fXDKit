@@ -13,7 +13,7 @@
 #pragma mark - Public
 - (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	//FXDLog_DEFAULT;
 	
-	if (currentFolderURL == nil) {
+	if (!currentFolderURL) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 
@@ -37,12 +37,12 @@
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 
-			if (isDownloaded == NO && isDownloading == NO) {
+			if (!isDownloaded && !isDownloading) {
 				NSError *error = nil;
 				BOOL didStartDownloading = [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:itemURL error:&error];
 
 				if ([error code] == 512) {
-					if (alertTitle == nil) {
+					if (!alertTitle) {
 						NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
 
 						if (underlyingError) {
@@ -71,7 +71,7 @@
 				NSError *error = nil;
 				[itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERRORexcept(260);
 				
-				if ([isHidden boolValue] == NO) {
+				if (![isHidden boolValue]) {
 					metadataItemArray[[itemURL absoluteString]] = metadataItem;
 					
 					[self updateCollectedURLarrayWithMetadataItem:metadataItem];
@@ -95,7 +95,7 @@
 
 - (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
 	
-	if (currentFolderURL == nil) {
+	if (!currentFolderURL) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 
@@ -164,10 +164,10 @@
 			NSError *error = nil;
 			[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
 			
-			if ([isDirectory boolValue] == NO) {
+			if (![isDirectory boolValue]) {
 				BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:nextURL];
 				
-				if (isUbiquitousItem == NO) {
+				if (!isUbiquitousItem) {
 					
 					NSString *itemName = nil;
 
@@ -187,7 +187,7 @@
 						error = nil;
 						[nextURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERROR;
 						
-						if ([isHidden boolValue] == NO) {
+						if (![isHidden boolValue]) {
 							BOOL shouldSkip = NO;
 
 							if (receivedURLarray && [receivedURLarray count] > 0) {
@@ -201,7 +201,7 @@
 
 							FXDLog(@"shouldSkip: %d", shouldSkip);
 
-							if (shouldSkip == NO) {
+							if (!shouldSkip) {
 								[self setUbiquitousForLocalItemURLarray:@[nextURL] atCurrentFolderURL:nil withSeparatorPathComponent:pathcomponentDocuments];
 							}
 						}

@@ -94,11 +94,11 @@
 		FXDLog(@"1._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
 		
 		//MARK: limit supported languages
-		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
-			&& [_deviceLanguageCode isEqualToString:@"ko"] == NO
-			&& [_deviceLanguageCode isEqualToString:@"ja"] == NO
-			&& [_deviceLanguageCode isEqualToString:@"ch"] == NO
-			&& [_deviceLanguageCode isEqualToString:@"tw"] == NO) {
+		if (![_deviceLanguageCode isEqualToString:@"en"]
+			&& ![_deviceLanguageCode isEqualToString:@"ko"]
+			&& ![_deviceLanguageCode isEqualToString:@"ja"]
+			&& ![_deviceLanguageCode isEqualToString:@"ch"]
+			&& ![_deviceLanguageCode isEqualToString:@"tw"]) {
 			_deviceLanguageCode = @"en";
 		}
 		FXDLog(@"2._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
@@ -246,7 +246,7 @@
 	}
 	
 	
-	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
+	if (![self.rootController isKindOfClass:[UITabBarController class]]) {
 		_homeController = addedControllers[0];
 		FXDLog(@"_homeController = addedControllers[0]: %@", _homeController);
 		
@@ -298,7 +298,7 @@
 	};
 	
 	
-	if (coreDataManager == nil) {
+	if (!coreDataManager) {
 		didPrepareBlock();
 		return;
 	}
@@ -380,7 +380,7 @@
 
 #pragma mark -
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
-	if (alertBody == nil) {
+	if (!alertBody) {
 		return;
 	}
 	
@@ -401,7 +401,7 @@
 
 #pragma mark -
 - (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate {
-	if (localDate == nil) {
+	if (!localDate) {
 		localDate = [NSDate date];
 	}
 	

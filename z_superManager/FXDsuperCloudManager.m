@@ -154,7 +154,7 @@
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
 			
-			if (updatedIdentityTokenData == nil) {
+			if (!updatedIdentityTokenData) {
 				updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
 				
 				if (updatedIdentityTokenData) {
@@ -169,7 +169,7 @@
 	
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 
-	if (shouldRequestUbiquityContatinerURL == NO) {
+	if (!shouldRequestUbiquityContatinerURL) {
 		[userDefaults synchronize];
 
 		[self failedToUpdateUbiquityContainerURL];
@@ -187,7 +187,7 @@
 	
 	if (activeUbiquityContainerURL) {
 		if (self.ubiquityContainerURL) {
-			if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
+			if (![[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]]) {
 				
 				//TODO: find what to do when containerURL is different
 			}
@@ -299,7 +299,7 @@
 #pragma mark -
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent {	//FXDLog_DEFAULT;
 		
-	if (currentFolderURL == nil) {
+	if (!currentFolderURL) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
@@ -324,7 +324,7 @@
 		
 		FXDLog(@"didSetUbiquitous: %d %@ %@", didSetUbiquitous, itemURL, destinationURL);
 		
-		if (error || didSetUbiquitous == NO) {			
+		if (error || !didSetUbiquitous) {
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
 		}
 	}
@@ -401,7 +401,7 @@
 - (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
 	BOOL isUploading  = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
 	
-	if (isUploading == NO) {
+	if (!isUploading) {
 		return;
 	}
 	
@@ -409,7 +409,7 @@
 	
 	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 	
-	if (self.collectedURLarray == nil) {
+	if (!self.collectedURLarray) {
 		self.collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
 		[self.collectedURLarray addObject:itemURL];
@@ -418,7 +418,7 @@
 	}
 
 	
-	if ([self.collectedURLarray containsObject:itemURL] == NO) {
+	if (![self.collectedURLarray containsObject:itemURL]) {
 		[self.collectedURLarray addObject:itemURL];
 	}
 }
@@ -465,7 +465,7 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:itemURL];
 	
-	if (isUbiquitousItem == NO) {
+	if (!isUbiquitousItem) {
 		return didEvict;
 	}
 	
@@ -513,7 +513,7 @@
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	
-	if (self.didFinishFirstGathering == NO) {	//FXDLog_DEFAULT;
+	if (!self.didFinishFirstGathering) {	//FXDLog_DEFAULT;
 		//FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];

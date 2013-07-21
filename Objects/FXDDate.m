@@ -33,7 +33,7 @@
 #pragma mark - Category
 @implementation NSDate (Added)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate {
-	if (localDate == nil) {
+	if (!localDate) {
 		localDate = [self date];
 	}
 
@@ -49,7 +49,7 @@
 }
 
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate {
-	if (UTCdate == nil) {
+	if (!UTCdate) {
 		UTCdate = [self date];
 	}
 	

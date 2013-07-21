@@ -74,7 +74,7 @@
 
 - (void)observedFXDWindowShouldFadeOutProgressView:(NSNotification*)notification {
 	
-	if (self.progressView == nil) {
+	if (!self.progressView) {
 		return;
 	}
 	
@@ -89,9 +89,10 @@
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	//FXDLog(@"notification: %@", notification);
 
-	if (self.progressView.viewIndicatorGroup == nil) {
+	if (!self.progressView.viewIndicatorGroup) {
 		return;
 	}
+	
 	
 	self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
 	
@@ -128,7 +129,7 @@
 
 #pragma mark -
 - (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController {	FXDLog_DEFAULT;
-	if (launchImageController == nil) {
+	if (!launchImageController) {
 		launchImageController = [[FXDsuperLaunchController alloc] initWithNibName:nil bundle:nil];
 	}
 	
@@ -147,7 +148,7 @@
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void(^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void(^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock {	FXDLog_DEFAULT;
 	
 	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
-	if (shouldAnimate == NO) {
+	if (!shouldAnimate) {
 		if (willBecomeRootViewControllerBlock) {
 			willBecomeRootViewControllerBlock();
 		}
@@ -313,7 +314,7 @@
 - (void)hideMessageView {
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
-	if (applicationWindow.messageView == nil) {
+	if (!applicationWindow.messageView) {
 		return;
 	}
 	

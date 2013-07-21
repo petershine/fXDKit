@@ -37,7 +37,7 @@
 	UIImage *bundledImage = [UIImage imageNamed:imageName];
 	
 	//MARK: To load from .jpg, use specific scale value for retina
-	if (bundledImage == nil) {
+	if (!bundledImage) {
 		NSString *scaledImageName = nil;
 		
 		if ([UIScreen mainScreen].scale >= 2.0) {
@@ -53,7 +53,7 @@
 	}
 
 	//MARK: If scale value added name is not working try normal name
-	if (bundledImage == nil) {
+	if (!bundledImage) {
 		imageName = [imageName stringByAppendingString:@".jpg"];
 
 		bundledImage = [UIImage imageNamed:imageName];
@@ -61,7 +61,7 @@
 
 	
 #if ForDEVELOPER
-	if (bundledImage == nil) {
+	if (!bundledImage) {
 		FXDLog(@"imageName: %@ bundledImage: %@", imageName, bundledImage);
 	}
 #endif

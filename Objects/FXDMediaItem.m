@@ -82,7 +82,7 @@
 		id value = [self valueForProperty:property];
 		
 		if (value) {
-			if (propertiesDictionary == nil) {
+			if (!propertiesDictionary) {
 				propertiesDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 			}
 			

@@ -104,7 +104,7 @@
 
 - (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue {	FXDLog_DEFAULT;
 	
-	if ([self canAnimateWithTransitionSegue:slidingInSegue] == NO) {
+	if (![self canAnimateWithTransitionSegue:slidingInSegue]) {
 		return;
 	}
 
@@ -115,7 +115,7 @@
 	
 	FXDLog(@"destinationController.toolbarItems: %@", destinationController.toolbarItems);
 	
-	if (destinationController.toolbarItems == nil) {
+	if (!destinationController.toolbarItems) {
 		[destinationController setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
 	}
 	
@@ -142,7 +142,7 @@
 	FXDViewController *pushedController = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 		
-	if ([destinationController shouldCoverWhenSlidingIn] == NO
+	if (![destinationController shouldCoverWhenSlidingIn]
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
@@ -153,7 +153,7 @@
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
 			
-			if (childIndex < destinationIndex && [childController shouldStayFixed] == NO) {
+			if (childIndex < destinationIndex && ![childController shouldStayFixed]) {
 				
 				if (childIndex == destinationIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pushedController = childController;
@@ -199,7 +199,7 @@
 
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue {	FXDLog_DEFAULT;
 	
-	if ([self canAnimateWithTransitionSegue:slidingOutSegue] == NO) {
+	if (![self canAnimateWithTransitionSegue:slidingOutSegue]) {
 		return;
 	}
 
@@ -229,7 +229,7 @@
 	FXDViewController *pulledController = nil;
 	CGRect animatedPulledFrame = CGRectZero;
 	
-	if ([sourceController shouldCoverWhenSlidingIn] == NO
+	if (![sourceController shouldCoverWhenSlidingIn]
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
@@ -240,7 +240,7 @@
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
 			
-			if (childIndex < sourceIndex && [childController shouldStayFixed] == NO) {		
+			if (childIndex < sourceIndex && ![childController shouldStayFixed]) {
 				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pulledController = childController;
 					animatedPulledFrame = pulledController.view.frame;
@@ -312,7 +312,7 @@
 		
 		NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
 		
-		if (childIndex > frontIndex && [childController shouldStayFixed] == NO) {
+		if (childIndex > frontIndex && ![childController shouldStayFixed]) {
 			[lateAddedControllerArray addObject:childController];
 		}
 	}

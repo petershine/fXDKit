@@ -59,7 +59,7 @@
 }
 
 + (instancetype)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil {
-	if (nibName == nil) {
+	if (!nibName) {
 		nibName = NSStringFromClass([self class]);
 	}
 
@@ -71,7 +71,7 @@
 }
 
 + (instancetype)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil {
-	if (nib == nil) {
+	if (!nib) {
 		NSString *nibName = NSStringFromClass([self class]);
 
 		nib = [UINib nibWithNibName:nibName bundle:nil];
@@ -90,7 +90,7 @@
 	}
 
 #if ForDEVELOPER
-	if (view == nil) {	FXDLog_DEFAULT;
+	if (!view) {	FXDLog_DEFAULT;
 		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
 	}
 #endif
@@ -165,7 +165,7 @@
 		 self.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
-		 if (self.hidden == NO) {
+		 if (!self.hidden) {
 			 self.hidden = YES;
 		 }
 		 

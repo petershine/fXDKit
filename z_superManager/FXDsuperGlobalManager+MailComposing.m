@@ -12,16 +12,16 @@
 
 
 @implementation FXDsuperGlobalManager (MailComposing)
-- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingInterface:(UIViewController*)presentingInterface usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
+- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 	
 	
-	if ([MFMailComposeViewController canSendMail] == NO) {
+	if (![MFMailComposeViewController canSendMail]) {
 		//TODO: alert user
 		return;
 	}
 	
 	
-	if (emailController == nil) {
+	if (!emailController) {
 		if (image || message) {
 			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
 		}
@@ -30,20 +30,20 @@
 		}
 	}
 	
-	if (presentingInterface == nil) {
+	if (!presentingController) {
 		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 		
 		if (applicationWindow.rootViewController) {
 			FXDLog(@"applicationWindow.rootViewController: %@", applicationWindow.rootViewController);
 			
-			presentingInterface = applicationWindow.rootViewController;
+			presentingController = applicationWindow.rootViewController;
 		}
 	}
 	
 	
 	[emailController setMailComposeDelegate:self];
 	
-	[presentingInterface
+	[presentingController
 	 presentViewController:emailController
 	 animated:YES
 	 completion:nil];

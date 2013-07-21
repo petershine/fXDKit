@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	if (self.mainMapview.delegate == nil) {
+	if (!self.mainMapview.delegate) {
 		[self.mainMapview setDelegate:self];
 	}
 	

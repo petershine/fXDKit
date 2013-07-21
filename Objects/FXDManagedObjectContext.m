@@ -54,7 +54,7 @@
 		NSError *error = nil;
 		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 
-		if (didPerformFetch == NO) {
+		if (!didPerformFetch) {
 			FXDLog(@"didPerformFetch: %d concurrencyType: %d", didPerformFetch, self.concurrencyType);
 		}
 	}
@@ -78,7 +78,7 @@
 		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];	FXDLog_ERROR;
 
 #if USE_loggingResultObjFiltering
-		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
+		if (!fetchedObjArray || [fetchedObjArray count] == 0) {
 			FXDLog(@"fetchedObjArray: %d self.concurrencyType: %d [NSThread isMainThread]: %d", [fetchedObjArray count], self.concurrencyType, [NSThread isMainThread]);
 		}
 #endif
@@ -91,7 +91,7 @@
 
 	NSFetchRequest *fetchRequest = nil;
 	
-	if (entityName == nil || sortDescriptors == nil) {
+	if (!entityName || !sortDescriptors) {
 		return nil;
 	}
 

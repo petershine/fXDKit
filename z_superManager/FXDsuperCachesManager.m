@@ -203,7 +203,7 @@
 			BOOL didRemove = NO;
 #endif
 			
-			if (isReachable == NO) {
+			if (!isReachable) {
 #if ForDEVELOPER
 				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
 #else
@@ -242,7 +242,7 @@
 #endif
 			}
 			
-			if (isDownloaded == NO && isDownloading == NO) {
+			if (!isDownloaded && !isDownloading) {
 #if ForDEVELOPER
 				didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
 #else
@@ -250,7 +250,7 @@
 #endif
 				
 				if ([error code] == 512) {
-					if (alertTitle == nil) {
+					if (!alertTitle) {
 						NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
 						
 						if (underlyingError) {
@@ -294,7 +294,7 @@
 		BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			if (isTransferring == NO) {
+			if (!isTransferring) {
 				[self enumerateCachesMetadataQueryResults];
 			}
 		}];

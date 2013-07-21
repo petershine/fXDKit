@@ -46,7 +46,7 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
-	if (parent == nil) {
+	if (!parent) {
 		[self.mainCollectionview setDataSource:nil];
 	}
 	
@@ -95,7 +95,7 @@
 	
 	[cellOperation addExecutionBlock:^{
 		
-		if (_weakOperation && _weakOperation.isCancelled == NO) {
+		if (_weakOperation && !_weakOperation.isCancelled) {
 			//TODO:
 		}
 		

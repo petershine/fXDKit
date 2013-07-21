@@ -42,7 +42,7 @@
 - (IBAction)dismissSceneWithAnimationForSender:(id)sender;
 
 #pragma mark - Public
-- (instancetype)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil;
+- (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 - (void)reframeForStatusBarFrame:(CGRect)statusBarFrame;
 
 @end

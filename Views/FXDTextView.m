@@ -46,7 +46,7 @@
 #pragma mark -  Category
 @implementation UITextView (Added)
 - (void)modifyHeightForAssignedText:(NSString*)assignedText {
-	if (assignedText == nil) {
+	if (!assignedText) {
 		assignedText = self.text;
 	}
 	

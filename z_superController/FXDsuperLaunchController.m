@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	if (self.imageviewDefault.image == nil) {
+	if (!self.imageviewDefault.image) {
 		if (SCREEN_SIZE_35inch) {
 			self.imageviewDefault.image = [UIImage bundledImageForName:imageDefaulLaunch];
 		}

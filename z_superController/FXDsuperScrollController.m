@@ -25,12 +25,14 @@
 	
 	FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
 	
-	if (self.mainScrollview == nil) {
+	if (!self.mainScrollview) {
 		return;
 	}
 	
 	
-	if (self.mainScrollview.delegate == nil) {
+	//MARK: Following should be closely related to scroll view configuration
+	
+	if (!self.mainScrollview.delegate) {
 		[self.mainScrollview setDelegate:self];
 	}
 	
@@ -166,7 +168,7 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
-	if (parent == nil) {
+	if (!parent) {
 		[self stopAllCellOperations];
 		
 		if (self.mainResultsController.additionalDelegate == self) {
@@ -205,7 +207,7 @@
 		operationObjKey = NSIndexPathString(0, rowIndex);
 	}
 	
-	if (operationObjKey == nil) {
+	if (!operationObjKey) {
 		return didCancel;
 	}
 	
@@ -285,7 +287,7 @@
 #pragma mark -
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
 	
-	if (scrollView == nil) {
+	if (!scrollView) {
 		scrollView = self.mainScrollview;
 	}
 	
@@ -322,7 +324,7 @@
 	//FXDLog_OVERRIDE;
 	//FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
 	
-	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {
+	if (![self.mainScrollview isKindOfClass:[UITableView class]]) {
 		return;
 	}
 	

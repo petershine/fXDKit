@@ -35,8 +35,7 @@
 
 	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
 
-
-	if (self.shouldUseDefaultNavigationBar == NO) {
+	if (!self.shouldUseDefaultNavigationBar) {
 #ifdef imageNavibarBackground
 		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
 #endif
@@ -135,13 +134,13 @@
 	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
 
-		 if (obj && viewController == nil) {
+		 if (obj && !viewController) {
 			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
 				 viewController = (UIViewController*)obj;
 				 FXDLog(@"1.(obj)viewController: %@", viewController);
 			 }
 		 }
-		 else if (obj == nil && viewController == nil) {
+		 else if (!obj && !viewController) {
 			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 			 FXDLog(@"1.([super])viewController: %@", viewController);
 		 }

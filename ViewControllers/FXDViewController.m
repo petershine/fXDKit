@@ -28,7 +28,7 @@
 #pragma mark - Initialization
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
 
-	if (nibNameOrNil == nil) {
+	if (!nibNameOrNil) {
 		NSString *filename = NSStringFromClass([self class]);
 		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
@@ -127,7 +127,7 @@
 
 #pragma mark -
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-	if (parent == nil) {
+	if (!parent) {
 		FXDLog_DEFAULT;
 	}
 
@@ -230,13 +230,13 @@
 	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
 
-		 if (obj && viewController == nil) {
+		 if (obj && !viewController) {
 			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
 				 viewController = (UIViewController*)obj;
 				 FXDLog(@"1.(obj)viewController: %@", viewController);
 			 }
 		 }
-		 else if (obj == nil && viewController == nil) {
+		 else if (!obj && !viewController) {
 			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 			 FXDLog(@"1.([super])viewController: %@", viewController);
 		 }
@@ -307,31 +307,31 @@
 }
 
 #pragma mark - Public
-- (instancetype)controllerViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
+- (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
 	
-	if (nibNameOrNil == nil) {
+	if (!nibNameOrNil) {
 		nibNameOrNil = NSStringFromClass([self class]);
 	}
 	
 	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:nil];
 	
-	id controllerView = nil;
+	UIView *sceneView = nil;
 	
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
 	
 	if ([viewArray count] > 0) {
-		controllerView = viewArray[0];
+		sceneView = viewArray[0];
 	}
 	
-	FXDLog(@"controllerView: %@", controllerView);
+	FXDLog(@"sceneView: %@", sceneView);
 	
 #if ForDEVELOPER
-	if (controllerView == nil) {
+	if (!sceneView) {
 		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
 	}
 #endif
 	
-	return controllerView;
+	return sceneView;
 }
 
 - (void)reframeForStatusBarFrame:(CGRect)statusBarFrame {

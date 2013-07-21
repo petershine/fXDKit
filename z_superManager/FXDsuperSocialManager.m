@@ -208,7 +208,7 @@
 
 - (void)statusUpdateWithTweetText:(NSString*)tweetText {
 	
-	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
+	if (!self.mainTwitterAccount) {	FXDLog_DEFAULT;
 		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
 
 		return;
@@ -233,7 +233,7 @@
 	};
 
 	
-	if (self.mainTwitterAccount.username == nil) {
+	if (!self.mainTwitterAccount.username) {
 		[self.accountStore
 		 renewCredentialsForAccount:self.mainTwitterAccount
 		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
@@ -259,7 +259,7 @@
 	SLComposeViewController *socialComposeController = nil;
 
 	//TODO: Test Facebook interface
-	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
+	if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
 		return socialComposeController;
 	}
 
@@ -267,14 +267,14 @@
 	socialComposeController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
 
 	if (initialText) {
-		if ([socialComposeController setInitialText:initialText] == NO) {
+		if (![socialComposeController setInitialText:initialText]) {
 			FXDLog(@"initialText: %@", initialText);
 		}
 	}
 
 	if ([imageArray count] > 0) {
 		for (UIImage *image in imageArray) {
-			if ([socialComposeController addImage:image] == NO) {
+			if (![socialComposeController addImage:image]) {
 				FXDLog(@"image: %@", image);
 			}
 		}
@@ -282,7 +282,7 @@
 
 	if ([URLarray count] > 0) {
 		for (NSURL *url in URLarray) {
-			if ([socialComposeController addURL:url] == NO) {
+			if (![socialComposeController addURL:url]) {
 				FXDLog(@"URL: %@", url);
 			}
 		}

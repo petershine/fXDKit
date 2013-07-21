@@ -45,7 +45,7 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
-	if (parent == nil) {
+	if (!parent) {
 		[self.mainTableview setDataSource:nil];
 	}
 	
@@ -147,7 +147,7 @@
 #endif
 	
 	if (accessoryView) {
-		if ([(UIImageView*)accessoryView image] == nil) {
+		if (![(UIImageView*)accessoryView image]) {
 			accessoryView = nil;
 		}
 	}
@@ -185,8 +185,8 @@
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 
-	//MARK: If cell Nib is registered, this will never be nil
-	if (cell == nil) {
+	//MARK: If cell Nib is registered, this will NEVER be nil
+	if (!cell) {
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 
 		[self initializeTableCell:cell forIndexPath:indexPath];

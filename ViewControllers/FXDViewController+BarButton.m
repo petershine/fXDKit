@@ -164,7 +164,7 @@
 
 	UIView *buttonGroup = nil;
 
-	if (CGPointEqualToPoint(offset, CGPointZero) == NO) {
+	if (!CGPointEqualToPoint(offset, CGPointZero)) {
 		buttonGroup = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width+ABS(offset.x), onImage.size.height+ABS(offset.y))];
 
 		// Add only when they are positive numbers

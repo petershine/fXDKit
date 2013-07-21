@@ -237,7 +237,7 @@
 
 - (void)initializeWithBundledCoreDataName:(NSString*)coreDataName {	FXDLog_DEFAULT;
 	
-	if (coreDataName == nil) {
+	if (!coreDataName) {
 		coreDataName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
 	}
 	
@@ -250,7 +250,7 @@
 	BOOL isBundledWithSqlite = [fileManager fileExistsAtPath:bundledSqlitePath];
 	FXDLog(@"isBundledWithSqlite: %d", isBundledWithSqlite);
 	
-	if (isBundledWithSqlite == NO) {
+	if (!isBundledWithSqlite) {
 		return;
 	}
 	
@@ -286,12 +286,12 @@
 
 #pragma mark -
 - (id)initializedMainEntityObj {
-	if (self.mainEntityName == nil) {	FXDLog_OVERRIDE;
+	if (!self.mainEntityName) {	FXDLog_OVERRIDE;
 		return nil;
 	}
 	
 	
-	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
+	if (![NSThread isMainThread]) {	FXDLog_OVERRIDE;
 		//MARK: Default is to skip
 		FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
 		return nil;
@@ -410,12 +410,12 @@
 	
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
-	if (managedObjectContext == nil) {
+	if (!managedObjectContext) {
 		managedObjectContext = self.mainDocument.managedObjectContext;
 
 		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
-		if (managedObjectContext.hasChanges == NO
+		if (!managedObjectContext.hasChanges
 			&& managedObjectContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
 			
 			managedObjectContext = self.mainDocument.managedObjectContext.parentContext;
@@ -428,7 +428,7 @@
 	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
 	FXDLog(@"managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
 
-	if (managedObjectContext == nil || managedObjectContext.hasChanges == NO) {
+	if (!managedObjectContext || !managedObjectContext.hasChanges) {
 
 		if (didFinishBlock) {
 			didFinishBlock(NO);
