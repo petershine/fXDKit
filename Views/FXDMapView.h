@@ -43,4 +43,6 @@
 
 - (MKMapRect)visibleMapRectAtCoordinate:(CLLocationCoordinate2D)coordinate withScale:(CGFloat)scale;
 
+- (void)configureRegionForZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
+
 @end

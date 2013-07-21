@@ -181,4 +181,24 @@
 	return scaledMapRect;
 }
 
+#pragma mark -
+- (void)configureRegionForZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
+	FXDLog(@"zoomScale: %f == [self zoomScale]: %f", zoomScale, [self zoomScale]);
+	
+	double mapWidth = self.frame.size.width /zoomScale;
+	double mapHeight = self.frame.size.height /zoomScale;
+	FXDLog(@"mapWidth: %f mapHeight: %f", mapWidth, mapHeight);
+	
+	MKMapPoint mapPoint = MKMapPointForCoordinate(coordinate);
+	
+	MKMapRect mapRect = MKMapRectMake(mapPoint.x-(mapWidth/2.0),
+									  mapPoint.y-(mapHeight/2.0),
+									  mapWidth,
+									  mapHeight);
+	
+	MKCoordinateRegion mapRegion = MKCoordinateRegionForMapRect(mapRect);
+	
+	[self setRegion:mapRegion animated:animated];
+}
+
 @end
