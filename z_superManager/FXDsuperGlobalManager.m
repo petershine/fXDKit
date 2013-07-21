@@ -14,10 +14,8 @@
 #pragma mark - Public implementation
 @implementation FXDsuperGlobalManager
 
+
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_SEPARATE;
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 #pragma mark - Initialization
 + (FXDsuperGlobalManager*)sharedInstance {

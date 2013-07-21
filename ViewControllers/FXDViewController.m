@@ -21,7 +21,6 @@
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;
-    //GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
