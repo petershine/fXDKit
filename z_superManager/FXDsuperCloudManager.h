@@ -114,8 +114,8 @@
 #pragma mark - Category
 @interface FXDsuperCloudManager (Enumerating)
 #pragma mark - Public
-- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL;
-- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL;
+- (void)enumerateUbiquitousMetadataItemsAtFolderURL:(NSURL*)folderURL withDidEnumerateBlock:(void(^)(BOOL finished, NSDictionary *userInfo))didEnumerateBlock;
+- (void)enumerateUbiquitousDocumentsAtFolderURL:(NSURL*)folderURL withDidEnumerateBlock:(void(^)(BOOL finished, NSDictionary *userInfo))didEnumerateBlock;
 - (void)enumerateLocalDirectory;
 
 @end

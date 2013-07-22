@@ -11,10 +11,10 @@
 
 @implementation FXDsuperCloudManager (Enumerating)
 #pragma mark - Public
-- (void)enumerateUbiquitousMetadataItemsAtCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
+- (void)enumerateUbiquitousMetadataItemsAtFolderURL:(NSURL*)folderURL withDidEnumerateBlock:(void(^)(BOOL finished, NSDictionary *userInfo))didEnumerateBlock {	FXDLog_DEFAULT;
 	
-	if (!currentFolderURL) {
-		currentFolderURL = self.ubiquitousDocumentsURL;
+	if (!folderURL) {
+		folderURL = self.ubiquitousDocumentsURL;
 	}
 
 	[self.ubiquitousDocumentsMetadataQuery disableUpdates];
@@ -62,7 +62,7 @@
 			NSError *error = nil;
 			[itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERRORexcept(260);
 			
-			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[currentFolderURL absoluteString]]) {
+			if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[folderURL absoluteString]]) {
 				
 				id isHidden = nil;
 
@@ -86,15 +86,20 @@
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
 
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousMetadataItems object:self userInfo:userInfo];
+			if (didEnumerateBlock) {
+				didEnumerateBlock(YES, userInfo);
+			}
+			else {
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousMetadataItems object:self userInfo:userInfo];
+			}
 		}];
 	}];
 }
 
-- (void)enumerateUbiquitousDocumentsAtCurrentFolderURL:(NSURL*)currentFolderURL {	FXDLog_DEFAULT;
+- (void)enumerateUbiquitousDocumentsAtFolderURL:(NSURL*)folderURL withDidEnumerateBlock:(void(^)(BOOL finished, NSDictionary *userInfo))didEnumerateBlock {	FXDLog_DEFAULT;
 	
-	if (!currentFolderURL) {
-		currentFolderURL = self.ubiquitousDocumentsURL;
+	if (!folderURL) {
+		folderURL = self.ubiquitousDocumentsURL;
 	}
 
 	
@@ -105,12 +110,11 @@
 		NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
 		
 		
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:currentFolderURL];
+		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:folderURL];
 		
 		NSURL *nextURL = [enumerator nextObject];
 		
 		while (nextURL) {
-			
 			id isDirectory = nil;
 
 			NSError *error = nil;
@@ -130,7 +134,13 @@
 		userInfo[objkeyUbiquitousFiles] = fileURLarray;
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousDocuments object:self userInfo:userInfo];
+			
+			if (didEnumerateBlock) {
+				didEnumerateBlock(YES, userInfo);
+			}
+			else {
+				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidEnumerateUbiquitousDocuments object:self userInfo:userInfo];
+			}
 		}];
 	}];
 }

@@ -232,13 +232,6 @@
 		_ubiquitousCachesURL = nil;
 		
 		_ubiquityContainerURL = savedUbiquityContainerURL;
-
-		//[self activatedUbiquityContainerURL];
-
-		/*
-		[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
-		[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
-		 */
 	}
 
 	//FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
@@ -255,8 +248,8 @@
 
 	
 #if shouldUseUbiquitousDocuments
-	[self enumerateUbiquitousMetadataItemsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
-	[self enumerateUbiquitousDocumentsAtCurrentFolderURL:self.ubiquitousDocumentsURL];
+	[self enumerateUbiquitousMetadataItemsAtFolderURL:nil withDidEnumerateBlock:nil];
+	[self enumerateUbiquitousDocumentsAtFolderURL:nil withDidEnumerateBlock:nil];
 #endif
 
 
