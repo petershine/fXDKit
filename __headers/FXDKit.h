@@ -1,3 +1,5 @@
+#warning "//TODO: Never use assign. For objects, unsafe_unretained is synonymous and clearer (it explicitly says that it is unsafe, which it is). For non-objects (such as NSUInteger and CGFloat, leave it out—assign is the default for such values."
+
 //
 //  FXDKit.h
 //

@@ -1,6 +1,6 @@
 //
 //  FXDsuperCloudManager+Enumerating.m
-///
+//
 //
 //  Created by petershine on 8/12/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
@@ -85,6 +85,8 @@
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
+			
+			FXDLog(@"userInfo: %@", userInfo);
 
 			if (didEnumerateBlock) {
 				didEnumerateBlock(YES, userInfo);
@@ -134,6 +136,8 @@
 		userInfo[objkeyUbiquitousFiles] = fileURLarray;
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			
+			FXDLog(@"userInfo: %@", userInfo);
 			
 			if (didEnumerateBlock) {
 				didEnumerateBlock(YES, userInfo);
