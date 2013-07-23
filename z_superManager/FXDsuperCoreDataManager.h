@@ -68,10 +68,10 @@
 }
 
 // Properties
-@property (assign, nonatomic) BOOL shouldMergeForManagedContext;
-@property (assign, nonatomic) BOOL didStartEnumerating;
+@property (nonatomic) BOOL shouldMergeForManagedContext;
+@property (nonatomic) BOOL didStartEnumerating;
 
-@property (assign, nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
+@property (nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
 
 @property (strong, nonatomic) UIManagedDocument *mainDocument;
 

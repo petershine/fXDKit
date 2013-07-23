@@ -16,7 +16,7 @@
 @interface FXDsuperMessageView : FXDsuperProgressView
 
 // Properties
-@property (assign, nonatomic) BOOL didPressAcceptButton;
+@property (nonatomic) BOOL didPressAcceptButton;
 
 @property (strong, nonatomic) FXDblockAlertCallback callbackBlock;
 

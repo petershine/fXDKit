@@ -63,7 +63,7 @@
 }
 
 // Properties
-@property (assign, nonatomic) BOOL didFinishFirstGathering;
+@property (nonatomic) BOOL didFinishFirstGathering;
 
 @property (strong, nonatomic) id ubiquityIdentityToken;
 

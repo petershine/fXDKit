@@ -10,8 +10,8 @@
 @interface FXDMapView : MKMapView
 
 // Properties
-@property (assign, nonatomic) CGRect initialDisclaimerFrame;
-@property (assign, nonatomic) CGPoint disclaimerOffset;
+@property (nonatomic) CGRect initialDisclaimerFrame;
+@property (nonatomic) CGPoint disclaimerOffset;
 
 // IBOutlets
 

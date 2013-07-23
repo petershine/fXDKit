@@ -10,7 +10,7 @@
 @interface FXDsuperProgressView : FXDView
 
 // Properties
-@property (assign, nonatomic) BOOL didPressCancelButton;
+@property (nonatomic) BOOL didPressCancelButton;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIView *viewIndicatorGroup;

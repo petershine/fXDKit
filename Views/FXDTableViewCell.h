@@ -10,7 +10,7 @@
 @interface FXDTableViewCell : UITableViewCell
 
 // Properties
-@property (assign, nonatomic) SECTION_POSITION_TYPE sectionPositionType;
+@property (nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
 @property (strong, nonatomic) id addedObj;
 

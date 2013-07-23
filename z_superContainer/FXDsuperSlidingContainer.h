@@ -23,7 +23,7 @@
 @interface FXDsuperSlidingContainer : FXDsuperContainer
 
 // Properties
-@property (assign, nonatomic) NSInteger minimumChildCount;
+@property (nonatomic) NSInteger minimumChildCount;
 
 @property (strong, nonatomic) FXDViewController *frontController;
 

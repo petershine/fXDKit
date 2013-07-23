@@ -12,8 +12,8 @@
 @interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate>
 
 // Properties
-@property (assign, nonatomic) MKUserTrackingMode initialTrackingMode;
-@property (assign, nonatomic) BOOL shouldResumeTracking;
+@property (nonatomic) MKUserTrackingMode initialTrackingMode;
+@property (nonatomic) BOOL shouldResumeTracking;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDMapView *mainMapview;

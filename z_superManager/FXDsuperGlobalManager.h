@@ -22,10 +22,10 @@
 	FXDStoryboard *_mainStoryboard;
 }
 
-@property (assign, nonatomic, readonly) NSInteger appLaunchCount;
+@property (nonatomic, readonly) NSInteger appLaunchCount;
 
-@property (assign, nonatomic) BOOL didMakePurchase;
-@property (assign, nonatomic) BOOL didShareToSocialNet;
+@property (nonatomic) BOOL didMakePurchase;
+@property (nonatomic) BOOL didShareToSocialNet;
 
 @property (strong, nonatomic) NSString *mainStoryboardName;
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;

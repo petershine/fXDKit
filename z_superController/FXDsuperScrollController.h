@@ -28,12 +28,12 @@
 }
 
 // Properties
-@property (assign, nonatomic) BOOL didStartAutoScrollingToTop;
+@property (nonatomic) BOOL didStartAutoScrollingToTop;
 
-@property (assign, nonatomic) BOOL shouldSkipDismissingByPullingDown;
-@property (assign, nonatomic) BOOL didStartDismissingByPullingDown;
+@property (nonatomic) BOOL shouldSkipDismissingByPullingDown;
+@property (nonatomic) BOOL didStartDismissingByPullingDown;
 
-@property (assign, nonatomic) CGFloat offsetYdismissingController;
+@property (nonatomic) CGFloat offsetYdismissingController;
 
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
