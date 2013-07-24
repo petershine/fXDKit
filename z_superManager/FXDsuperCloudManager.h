@@ -8,10 +8,10 @@
 
 #define notificationCloudManagerDidUpdateUbiquityContainerURL	@"notificationCloudManagerDidUpdateUbiquityContainerURL"
 
-#define notificationCloudManagerMetadataQueryDidGatherObjects	@"notificationCloudManagerMetadataQueryDidGatherObjects"
-#define notificationCloudManagerMetadataQueryDidFinishGathering	@"notificationCloudManagerMetadataQueryDidFinishGathering"
-#define notificationCloudManagerMetadataQueryDidUpdate	@"notificationCloudManagerMetadataQueryDidUpdate"
-#define notificationCloudManagerMetadataQueryIsTransferring	@"notificationCloudManagerMetadataQueryIsTransferring"
+#define notificationCloudDocumentsQueryDidGatherObjects	@"notificationCloudDocumentsQueryDidGatherObjects"
+#define notificationCloudDocumentsQueryDidFinishGathering	@"notificationCloudDocumentsQueryDidFinishGathering"
+#define notificationCloudDocumentsQueryDidUpdate	@"notificationCloudDocumentsQueryDidUpdate"
+#define notificationCloudDocumentsQueryIsTransferring	@"notificationCloudDocumentsQueryIsTransferring"
 
 #define notificationCloudManagerDidEnumerateUbiquitousMetadataItems	@"notificationCloudManagerDidEnumerateUbiquitousMetadataItems"
 #define notificationCloudManagerDidEnumerateUbiquitousDocuments	@"notificationCloudManagerDidEnumerateUbiquitousDocuments"
@@ -25,20 +25,20 @@
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
-#ifndef shouldUseUbiquitousDocuments
-	#define shouldUseUbiquitousDocuments	0
+#ifndef shouldUSE_UbiquitousDocuments
+	#define shouldUSE_UbiquitousDocuments	0
 #endif
 
-#ifndef shouldUseLocalDirectoryWatcher
-	#define shouldUseLocalDirectoryWatcher	0
+#ifndef shouldUSE_LocalDirectoryWatcher
+	#define shouldUSE_LocalDirectoryWatcher	0
 #endif
 
-#ifndef shouldDownloadEvictedFilesInitially
-	#define shouldDownloadEvictedFilesInitially	0
+#ifndef shouldUSE_DownloadingEvictedFilesInitially
+	#define shouldUSE_DownloadingEvictedFilesInitially	0
 #endif
 
-#ifndef shouldLogTransferringPercentage
-	#define shouldLogTransferringPercentage	0
+#ifndef shouldUSE_LogTransferringPercentage
+	#define shouldUSE_LogTransferringPercentage	0
 #endif
 
 
@@ -54,7 +54,7 @@
 	NSURL *_ubiquitousDocumentsURL;
 	NSURL *_ubiquitousCachesURL;
 	
-	NSMetadataQuery *_ubiquitousDocumentsMetadataQuery;
+	NSMetadataQuery *_cloudDocumentsQuery;
 	DirectoryWatcher *_localDirectoryWatcher;
 
 	NSOperationQueue *_evictingQueue;
@@ -71,7 +71,7 @@
 @property (strong, nonatomic) NSURL *ubiquitousDocumentsURL;
 @property (strong, nonatomic) NSURL *ubiquitousCachesURL;
 
-@property (strong, nonatomic) NSMetadataQuery *ubiquitousDocumentsMetadataQuery;
+@property (strong, nonatomic) NSMetadataQuery *cloudDocumentsQuery;
 @property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
 @property (strong, nonatomic) NSOperationQueue *evictingQueue;
@@ -82,12 +82,11 @@
 #pragma mark - Public
 + (FXDsuperCloudManager*)sharedInstance;
 
-- (void)startUpdatingUbiquityContainerURL;
-- (void)evaluateSavedUbiquityContainerURL;
-- (void)activatedUbiquityContainerURL;
-- (void)failedToUpdateUbiquityContainerURL;
+- (void)startUpdatingUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)activatedUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)failedToUpdateUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
-- (void)startObservingUbiquityMetadataQueryNotifications;
+- (void)startObservingCloudDocumentsQueryNotifications;
 - (void)startWatchingLocalDirectoryChange;
 
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent;

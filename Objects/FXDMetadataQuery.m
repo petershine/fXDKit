@@ -36,12 +36,12 @@
 	
 	BOOL isTransferring = NO;
 
-#if shouldLogTransferringPercentage
+#if shouldUSE_LogTransferringPercentage
 	double percentage = 0.0;
 #endif
 	
 	for (NSMetadataItem *metadataItem in [self results]) {
-#if shouldLogTransferringPercentage
+#if shouldUSE_LogTransferringPercentage
 		logString = @"";
 #endif
 		
@@ -73,7 +73,7 @@
 				isTransferring = YES;
 			}
 			
-#if shouldLogTransferringPercentage
+#if shouldUSE_LogTransferringPercentage
 			logString = [logString stringByAppendingFormat:@"isUploaded: %d", isUploaded];
 			
 			if (isTransferring) {
@@ -90,7 +90,7 @@
 			if ([isDownloading boolValue]) {
 				isTransferring = YES;
 			}
-#if shouldLogTransferringPercentage
+#if shouldUSE_LogTransferringPercentage
 			logString = [logString stringByAppendingFormat:@"isDownloaded: %d", isDownloaded];
 			
 			if (isTransferring) {
@@ -102,7 +102,7 @@
 #endif
 		}
 		
-#if shouldLogTransferringPercentage
+#if shouldUSE_LogTransferringPercentage
 		if (isTransferring && percentage > 0.0 && logString.length > 0) {
 			NSString *itemName = [metadataItem valueForAttribute:NSMetadataItemFSNameKey];
 			

@@ -17,7 +17,7 @@
 		folderURL = self.ubiquitousDocumentsURL;
 	}
 
-	[self.ubiquitousDocumentsMetadataQuery disableUpdates];
+	[self.cloudDocumentsQuery disableUpdates];
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		NSMutableDictionary *metadataItemArray = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -26,12 +26,12 @@
 
 		NSString *alertTitle = nil;
 
-		for (NSUInteger i = 0; i < [self.ubiquitousDocumentsMetadataQuery resultCount]; i++) {
-			NSMetadataItem *metadataItem = [self.ubiquitousDocumentsMetadataQuery resultAtIndex:i];
+		for (NSUInteger i = 0; i < [self.cloudDocumentsQuery resultCount]; i++) {
+			NSMetadataItem *metadataItem = [self.cloudDocumentsQuery resultAtIndex:i];
 
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 
-#if shouldDownloadEvictedFilesInitially
+#if shouldUSE_DownloadingEvictedFilesInitially
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 
@@ -84,7 +84,7 @@
 		}
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self.ubiquitousDocumentsMetadataQuery enableUpdates];
+			[self.cloudDocumentsQuery enableUpdates];
 			
 			FXDLog(@"userInfo: %@", userInfo);
 

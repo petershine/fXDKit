@@ -6,15 +6,18 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef USE_iCloudCoreData
-	#define USE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
+#ifndef shouldUSE_iCloudCoreData
+	#define shouldUSE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
 #endif
 
-#if USE_iCloudCoreData
+#if shouldUSE_iCloudCoreData
 /* SAMPLE
- [[<#AppPrefix#>managerCoreData sharedInstance] startObservingCloudManagerNotifications];
- [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURL];
+ [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
  */
+
+#warning "//TODO: Add cloud DataQuery observing for transaction log updating"
+#define notificationCloudDataQuery
+
 #endif
 
 
@@ -30,18 +33,20 @@
 
 
 #ifndef applicationSqlitePathComponent
-	#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+	#if ForDEVELOPER
+		#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+	#else
+		#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+	#endif
 #endif
 
 #ifndef ubiquitousCoreDataContentName
 	#define ubiquitousCoreDataContentName @"coredata.store"
 #endif
 
-
 #ifndef documentnameManagedCoreData
 	#define documentnameManagedCoreData	@"managed.coredata.document"
 #endif
-
 
 #define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"
 
@@ -87,7 +92,6 @@
 #pragma mark - Public
 + (FXDsuperCoreDataManager*)sharedInstance;
 
-- (void)startObservingCloudManagerNotifications;
 - (void)startObservingCoreDataNotifications;
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
@@ -95,6 +99,8 @@
 - (BOOL)isSqliteAlreadyInitialized;
 
 - (id)initializedMainEntityObj;
+
+- (void)deleteAllDataWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
@@ -105,13 +111,11 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
-- (void)observedCloudManagerDidUpdateUbiquityContainerURL:(NSNotification*)notification;
-
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
-
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
+
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

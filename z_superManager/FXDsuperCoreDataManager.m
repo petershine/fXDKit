@@ -90,15 +90,6 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingCloudManagerNotifications {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter]
-	 addObserver:self
-	 selector:@selector(observedCloudManagerDidUpdateUbiquityContainerURL:)
-	 name:notificationCloudManagerDidUpdateUbiquityContainerURL
-	 object:nil];
-	
-}
-
 - (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
@@ -202,6 +193,9 @@
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			FXDLog(@"2.didConfigure: %d", didConfigure);
+			
+#warning "//TODO: If icloud connection is not working, CHECK if cellular transferring is enabled on device"
+			
 #if ForDEVELOPER
 			if (error) {
 				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
@@ -220,16 +214,15 @@
 			[self startObservingCoreDataNotifications];
 
 			//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
+			NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
+			
+			[[NSNotificationCenter defaultCenter]
+			 postNotificationName:notificationCoreDataManagerDidPrepare
+			 object:self
+			 userInfo:userInfo];
+			
 			if (didFinishBlock) {
 				didFinishBlock(didConfigure);
-			}
-			else {
-				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
-				
-				[[NSNotificationCenter defaultCenter]
-				 postNotificationName:notificationCoreDataManagerDidPrepare
-				 object:self
-				 userInfo:userInfo];
 			}
 		}];
 	}];
@@ -303,6 +296,36 @@
 	id mainEntityObj = [(FXDManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntityDescription insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
 	
 	return mainEntityObj;
+}
+
+#pragma mark -
+- (void)deleteAllDataWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+	
+	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+	
+	[applicationWindow
+	 showMessageViewWithNibName:nil
+	 withTitle:NSLocalizedString(@"Do want to delete ALL?", nil)
+	 message:NSLocalizedString(@"Please be warned. Deleted data CAN NEVER BE RESTORED!", nil)
+	 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
+	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
+		 FXDLog(@"alertView: %@, buttonIndex: %d", alertView, buttonIndex);
+		 
+		 if (buttonIndex == buttonIndexAccept) {
+			 [self
+			  enumerateAllMainEntityObjWithDefaultProgressView:YES
+			  withEnumerationBlock:^(NSManagedObjectContext *mainManagedContext,
+									 NSManagedObject *mainEntityObj,
+									 BOOL *shouldBreak) {
+				  
+				  FXDLog(@"enumerateAllMainEntityObjWithDefaultProgressView shouldBreak: %d", *shouldBreak);
+				  
+				  [mainManagedContext deleteObject:mainEntityObj];
+				  
+			  } withDidFinishBlock:didFinishBlock];
+		 }
+	 }];
 }
 
 #pragma mark -
@@ -468,29 +491,13 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
 #warning "//TODO: Check if following error is caused at here, and can be fixed:\
 NSInternalInconsistencyException', reason: 'statement is still active'"
-	
 	//TEST:
 	//[self saveManagedObjectContext:nil didFinishBlock:nil];
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
-	
 	//TEST:
 	//[self saveManagedObjectContext:nil didFinishBlock:nil];
-}
-
-#pragma mark -
-- (void)observedCloudManagerDidUpdateUbiquityContainerURL:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self prepareCoreDataManagerWithUbiquityContainerURL:notification.object withCompleteProtection:NO didFinishBlock:nil];
-}
-
-#pragma mark -
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.object: %@", notification.object);
-
-	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
 }
 
 #pragma mark -
@@ -556,6 +563,15 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	FXDLog(@"2.self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
 }
 
+#pragma mark -
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification.object: %@", notification.object);
+	
+	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+}
+
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -569,6 +585,18 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	
 	[_strongDelegate controllerWillChangeContent:controller];
+}
+
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
+	
+	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	
+	if (!_strongDelegate) {
+		return;
+	}
+	
+	
+	[_strongDelegate controllerDidChangeContent:controller];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
@@ -594,18 +622,5 @@ NSInternalInconsistencyException', reason: 'statement is still active'"
 	
 	[_strongDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 }
-
-- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
-	
-	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
-	
-	if (!_strongDelegate) {
-		return;
-	}
-	
-	
-	[_strongDelegate controllerDidChangeContent:controller];
-}
-
 
 @end

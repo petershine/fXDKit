@@ -28,13 +28,9 @@
 		if (self.ubiquityContainerURL) {
 			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];
 		}
-	}
-
-#if ForDEVELOPER
-	if (!_ubiquitousDocumentsURL) {
+		
 		FXDLog(@"_ubiquitousDocumentsURL: %@", _ubiquitousDocumentsURL);
 	}
-#endif
 
 	return _ubiquitousDocumentsURL;
 }
@@ -44,21 +40,17 @@
 		if (self.ubiquityContainerURL) {
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
 		}
-	}
-
-#if ForDEVELOPER
-	if (!_ubiquitousCachesURL) {
+		
 		FXDLog(@"_ubiquitousCachesURL: %@", _ubiquitousCachesURL);
 	}
-#endif
 
 	return _ubiquitousCachesURL;
 }
 
-- (NSMetadataQuery*)ubiquitousDocumentsMetadataQuery {
+- (NSMetadataQuery*)cloudDocumentsQuery {
 	
-	if (!_ubiquitousDocumentsMetadataQuery) {	FXDLog_DEFAULT;
-		_ubiquitousDocumentsMetadataQuery = [[NSMetadataQuery alloc] init];
+	if (!_cloudDocumentsQuery) {	FXDLog_DEFAULT;
+		_cloudDocumentsQuery = [[NSMetadataQuery alloc] init];
 
 
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -67,48 +59,48 @@
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryDidStartGathering:)
 		 name:NSMetadataQueryDidStartGatheringNotification
-		 object:_ubiquitousDocumentsMetadataQuery];
+		 object:_cloudDocumentsQuery];
 		
 		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryGatheringProgress:)
 		 name:NSMetadataQueryGatheringProgressNotification
-		 object:_ubiquitousDocumentsMetadataQuery];
+		 object:_cloudDocumentsQuery];
 		
 		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryDidFinishGathering:)
 		 name:NSMetadataQueryDidFinishGatheringNotification
-		 object:_ubiquitousDocumentsMetadataQuery];
+		 object:_cloudDocumentsQuery];
 		
 		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSMetadataQueryDidUpdate:)
 		 name:NSMetadataQueryDidUpdateNotification
-		 object:_ubiquitousDocumentsMetadataQuery];
+		 object:_cloudDocumentsQuery];
 
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
-		[_ubiquitousDocumentsMetadataQuery setPredicate:predicate];
+		[_cloudDocumentsQuery setPredicate:predicate];
 
 		/*
 		 NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
 		 //NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
-		 [_ubiquitousDocumentsMetadataQuery setSortDescriptors:@[sortDescriptor]];
+		 [_cloudDocumentsQuery setSortDescriptors:@[sortDescriptor]];
 		 */
 
-		[_ubiquitousDocumentsMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-		//[_ubiquitousDocumentsMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
+		[_cloudDocumentsQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
+		//[_cloudDocumentsQuery setNotificationBatchingInterval:delayHalfSecond];
 
 #if ForDEVELOPER
-		BOOL didStart = [_ubiquitousDocumentsMetadataQuery startQuery];
+		BOOL didStart = [_cloudDocumentsQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
 #else
-		[_ubiquitousDocumentsMetadataQuery startQuery];
+		[_cloudDocumentsQuery startQuery];
 #endif
 	}
 
-	return _ubiquitousDocumentsMetadataQuery;
+	return _cloudDocumentsQuery;
 }
 
 - (NSOperationQueue*)evictingQueue {
@@ -125,7 +117,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startUpdatingUbiquityContainerURL {	FXDLog_DEFAULT;
+- (void)startUpdatingUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
@@ -172,95 +164,101 @@
 	if (!shouldRequestUbiquityContatinerURL) {
 		[userDefaults synchronize];
 
-		[self failedToUpdateUbiquityContainerURL];
+		[self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
 
 		return;
 	}
 
 
-	[self evaluateSavedUbiquityContainerURL];
-
-	
-	NSURL *activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-	FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
-	
-	
-	if (activeUbiquityContainerURL) {
-		if (self.ubiquityContainerURL) {
-			if (![[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]]) {
-				
-				//TODO: find what to do when containerURL is different
-			}
-		}
-		
-		
-		_ubiquitousDocumentsURL = nil;
-		_ubiquitousCachesURL = nil;
-		
-		_ubiquityContainerURL = activeUbiquityContainerURL;
-		
-		
-		NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
-		
-		if (containerURLString) {
-			[userDefaults setObject:containerURLString forKey:userdefaultStringSavedUbiquityContainerURL];
-			[userDefaults synchronize];
-		}
-		
-		[self activatedUbiquityContainerURL];
-	}
-	else {
-		[userDefaults synchronize];
-		
-		[self failedToUpdateUbiquityContainerURL];
-	}
-}
-
-- (void)evaluateSavedUbiquityContainerURL {	FXDLog_DEFAULT;
 	NSURL *savedUbiquityContainerURL = nil;
-
+	
 	NSString *containerURLstring = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultStringSavedUbiquityContainerURL];
-
+	
 	if (containerURLstring) {
 		savedUbiquityContainerURL = [NSURL URLWithString:containerURLstring];
 	}
-
+	
 	FXDLog(@"savedUbiquityContainerURL: %@", savedUbiquityContainerURL);
-
+	
 	if (savedUbiquityContainerURL) {
 		_ubiquitousDocumentsURL = nil;
 		_ubiquitousCachesURL = nil;
 		
 		_ubiquityContainerURL = savedUbiquityContainerURL;
 	}
-
+	
 	//FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
+	
+	
+	__block NSURL *activeUbiquityContainerURL = nil;
+	
+	[[NSOperationQueue new] addOperationWithBlock:^{
+		
+		activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+		FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
+		
+		
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			if (activeUbiquityContainerURL) {
+				if (self.ubiquityContainerURL) {
+					if (![[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]]) {
+						
+						//TODO: find what to do when containerURL is different
+					}
+				}
+				
+				
+				_ubiquitousDocumentsURL = nil;
+				_ubiquitousCachesURL = nil;
+				
+				_ubiquityContainerURL = activeUbiquityContainerURL;
+				
+				
+				NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
+				
+				if (containerURLString) {
+					[userDefaults setObject:containerURLString forKey:userdefaultStringSavedUbiquityContainerURL];
+					[userDefaults synchronize];
+				}
+				
+				[self activatedUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
+			}
+			else {
+				[userDefaults synchronize];
+				
+				[self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
+			}
+		}];
+	}];
 }
 
-- (void)activatedUbiquityContainerURL {	FXDLog_DEFAULT;
+- (void)activatedUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
 	FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
 	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 	
-	[self startObservingUbiquityMetadataQueryNotifications];
+	[self startObservingCloudDocumentsQueryNotifications];
 
 	
-#if shouldUseUbiquitousDocuments
+#if shouldUSE_UbiquitousDocuments
 	[self enumerateUbiquitousMetadataItemsAtFolderURL:nil withDidEnumerateBlock:nil];
 	[self enumerateUbiquitousDocumentsAtFolderURL:nil withDidEnumerateBlock:nil];
 #endif
 
-
-#if shouldUseLocalDirectoryWatcher
+#if shouldUSE_LocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif
-
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+	
+	if (didFinishBlock) {
+		didFinishBlock(YES);
+	}
 }
 
-- (void)failedToUpdateUbiquityContainerURL {	FXDLog_DEFAULT;
+- (void)failedToUpdateUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	FXDAlertView *alertView = [[FXDAlertView alloc]
 							   initWithTitle:NSLocalizedString(alert_PleaseEnableiCloud, nil)
 							   message:nil
@@ -269,17 +267,22 @@
 							   otherButtonTitles:nil];
 	[alertView show];
 	
-#if shouldUseLocalDirectoryWatcher
+#if shouldUSE_LocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif
 	
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:nil];
+	
+	if (didFinishBlock) {
+		didFinishBlock(NO);
+	}
 }
 
 #pragma mark -
-- (void)startObservingUbiquityMetadataQueryNotifications {	FXDLog_DEFAULT;
+- (void)startObservingCloudDocumentsQueryNotifications {	FXDLog_DEFAULT;
 	
-	if (self.ubiquitousDocumentsMetadataQuery.isStarted) {
+	if (self.cloudDocumentsQuery.isStarted) {
 		//TODO:
 	}
 }
@@ -508,7 +511,7 @@
 	FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 	
 	if (!self.didFinishFirstGathering) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
+		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudDocumentsQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
 	}
 }
 
@@ -517,7 +520,7 @@
 	self.didFinishFirstGathering = YES;
 	FXDLog(@"2.didFinishFirstGathering: %d", self.didFinishFirstGathering);
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudDocumentsQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
 
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT;
@@ -532,10 +535,20 @@
 		//TODO: distinguish uploading and downloading and finished updating		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if (isTransferring) {
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryIsTransferring object:notification.object userInfo:notification.userInfo];
+				FXDLog(@"SHOULD OBSERVE: %@", notificationCloudDocumentsQueryIsTransferring);
+				
+				[[NSNotificationCenter defaultCenter]
+				 postNotificationName:notificationCloudDocumentsQueryIsTransferring
+				 object:notification.object
+				 userInfo:notification.userInfo];
 			}
-			else {	//FXDLog_OVERRIDE;
-				[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerMetadataQueryDidUpdate object:notification.object userInfo:notification.userInfo];
+			else {
+				FXDLog(@"SHOULD OBSERVE: %@", notificationCloudDocumentsQueryDidUpdate);
+				
+				[[NSNotificationCenter defaultCenter]
+				 postNotificationName:notificationCloudDocumentsQueryDidUpdate
+				 object:notification.object
+				 userInfo:notification.userInfo];
 			}
 		}];
 	}];
