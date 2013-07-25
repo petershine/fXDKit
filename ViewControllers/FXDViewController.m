@@ -65,7 +65,7 @@
 
 
 #pragma mark - Autorotating
-#if USE_loggingRotatingOrientation
+#if TEST_loggingRotatingOrientation
 - (BOOL)shouldAutorotate {	FXDLog_SEPARATE_FRAME;
 	return [super shouldAutorotate];
 }
@@ -103,7 +103,7 @@
 	[super viewWillAppear:animated];
 }
 
-#if USE_loggingViewDrawing
+#if TEST_loggingViewDrawing
 - (void)viewWillLayoutSubviews {	FXDLog_FRAME;
 	[super viewWillLayoutSubviews];
 }

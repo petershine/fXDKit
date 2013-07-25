@@ -37,18 +37,20 @@
 
 #if DEBUG
 	#if ForDEVELOPER
-		#define USE_loggingViewControllerLifeCycle	0
-		#define USE_loggingRotatingOrientation	0
-		#define USE_loggingViewDrawing	0
-		#define USE_loggingBorderLine	0
-		#define USE_loggingResultObjFiltering	0
-		#define USE_loggingManagedObject	0
-		#define USE_loggingManagedDocument	0
+		#define TEST_loggingRotatingOrientation	0
+		#define TEST_loggingViewDrawing	0
+		#define TEST_loggingResultObjFiltering	0
 
-		#define TEST_withSlowAnimationDuration	0
-		#define TEST_appirater	1
+		#define TEST_loggingManagedObject	0
+
+		#ifndef TEST_loggingManagedDocument
+			#define TEST_loggingManagedDocument	0
+		#endif
+
+		#define TEST_slowAnimationDuration	0
 
 		#define USE_FXDLog	1
+
 	#else
 		#define USE_FXDLog	0
 	#endif

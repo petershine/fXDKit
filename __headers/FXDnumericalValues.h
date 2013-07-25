@@ -9,7 +9,7 @@
 #define integerNotDefined	-1
 
 
-#if TEST_withSlowAnimationDuration
+#if TEST_slowAnimationDuration
 	#define durationAnimation	2.0
 #else
 	#define durationAnimation	0.3

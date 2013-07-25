@@ -15,7 +15,6 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindMovie
 };
 
-
 // FXDTableViewCell
 typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 	sectionPositionOne,
@@ -23,7 +22,6 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 	sectionPositionMiddle,
 	sectionPositionBottom
 };
-
 
 // FXDsuperSlidingContainer
 typedef CGPoint SLIDING_OFFSET;
@@ -34,9 +32,11 @@ typedef NS_ENUM(NSInteger, SLIDE_DIRECTION_TYPE) {
 	slideDirectionBottom
 };
 
-
 // FXDsuperPreviewController
 typedef NS_ENUM(NSInteger, ITEM_VIEWER_TYPE) {
 	itemViewerPhoto,
 	itemViewerVideo,
 };
+
+
+typedef void (^FXDblockDidFinish)(BOOL finished);

@@ -77,7 +77,7 @@
 		NSError *error = nil;
 		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];	FXDLog_ERROR;
 
-#if USE_loggingResultObjFiltering
+#if TEST_loggingResultObjFiltering
 		if (!fetchedObjArray || [fetchedObjArray count] == 0) {
 			FXDLog(@"fetchedObjArray: %d self.concurrencyType: %d [NSThread isMainThread]: %d", [fetchedObjArray count], self.concurrencyType, [NSThread isMainThread]);
 		}
@@ -104,7 +104,7 @@
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
 	if (predicate) {
-#if USE_loggingResultObjFiltering
+#if TEST_loggingResultObjFiltering
 		FXDLog(@"predicate: %@", predicate);
 #endif
 		[fetchRequest setPredicate:predicate];

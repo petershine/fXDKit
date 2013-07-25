@@ -31,7 +31,7 @@
 
 			NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 
-#if shouldUSE_DownloadingEvictedFilesInitially
+#if USE_DownloadingEvictedFilesInitially
 			BOOL isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			BOOL isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 

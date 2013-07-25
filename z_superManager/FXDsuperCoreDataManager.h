@@ -39,11 +39,11 @@
 #endif
 
 
-#ifndef shouldUSE_iCloudCoreData
-	#define shouldUSE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
+#ifndef USE_iCloudCoreData
+	#define USE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
 #endif
 
-#if shouldUSE_iCloudCoreData
+#if USE_iCloudCoreData
 /* SAMPLE
  [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
  */

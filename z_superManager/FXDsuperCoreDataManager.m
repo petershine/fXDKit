@@ -477,7 +477,7 @@
 
 		FXDLog_ERROR;LOGEVENT_ERROR;
 		
-#if shouldUSE_iCloudCoreData
+#if USE_iCloudCoreData
 		[self.mainDocument
 		 saveToURL:self.mainDocument.fileURL
 		 forSaveOperation:UIDocumentSaveForOverwriting

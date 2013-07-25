@@ -25,20 +25,20 @@
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
-#ifndef shouldUSE_UbiquitousDocuments
-	#define shouldUSE_UbiquitousDocuments	0
+#ifndef USE_UbiquitousDocuments
+	#define USE_UbiquitousDocuments	0
 #endif
 
-#ifndef shouldUSE_LocalDirectoryWatcher
-	#define shouldUSE_LocalDirectoryWatcher	0
+#ifndef USE_LocalDirectoryWatcher
+	#define USE_LocalDirectoryWatcher	0
 #endif
 
-#ifndef shouldUSE_DownloadingEvictedFilesInitially
-	#define shouldUSE_DownloadingEvictedFilesInitially	0
+#ifndef USE_DownloadingEvictedFilesInitially
+	#define USE_DownloadingEvictedFilesInitially	0
 #endif
 
-#ifndef shouldUSE_LogTransferringPercentage
-	#define shouldUSE_LogTransferringPercentage	0
+#ifndef TEST_loggingTransferringPercentage
+	#define TEST_loggingTransferringPercentage	0
 #endif
 
 

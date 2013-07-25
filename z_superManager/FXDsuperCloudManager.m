@@ -245,12 +245,12 @@
 	[self startObservingCloudDocumentsQueryNotifications];
 
 	
-#if shouldUSE_UbiquitousDocuments
+#if USE_UbiquitousDocuments
 	[self enumerateUbiquitousMetadataItemsAtFolderURL:nil withDidEnumerateBlock:nil];
 	[self enumerateUbiquitousDocumentsAtFolderURL:nil withDidEnumerateBlock:nil];
 #endif
 
-#if shouldUSE_LocalDirectoryWatcher
+#if USE_LocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif
 	
@@ -270,7 +270,7 @@
 							   otherButtonTitles:nil];
 	[alertView show];
 	
-#if shouldUSE_LocalDirectoryWatcher
+#if USE_LocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif
 	

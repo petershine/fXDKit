@@ -14,7 +14,7 @@
 
 
 #pragma mark - Memory management
-#if USE_loggingManagedDocument
+#if TEST_loggingManagedDocument
 - (void)dealloc {	FXDdocLog_DEFAULT;
     //TODO:
 }
@@ -26,7 +26,7 @@
 
 #pragma mark - Method overriding
 
-#if USE_loggingManagedDocument
+#if TEST_loggingManagedDocument
 - (void)openWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDdocLog_DEFAULT;
 	[super openWithCompletionHandler:completionHandler];
 }

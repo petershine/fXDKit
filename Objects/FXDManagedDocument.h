@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#if USE_loggingManagedDocument
+#if TEST_loggingManagedDocument
 	#ifndef FXDdocLog
 		#define FXDdocLog	FXDLog
 	#endif
