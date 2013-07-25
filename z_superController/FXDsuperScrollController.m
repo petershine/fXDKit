@@ -226,11 +226,11 @@
 
 #pragma mark -
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView {	//FXDLog_OVERRIDE;
+	
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
 		//FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
-		
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
 	else if (self.mainDataSource) {
@@ -261,9 +261,6 @@
 		
 		if (numberOfItems != fetchedCount) {	//FXDLog_DEFAULT;
 			FXDLog(@"section: %d numberOfItems: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);
-			
-			//TEST:
-			//numberOfItems = fetchedCount;
 		}
 #else
 		numberOfItems = fetchedCount;

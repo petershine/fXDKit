@@ -22,13 +22,12 @@
 
 
 #pragma mark - Property overriding
-- (UIManagedDocument*)mainDocument {
+- (FXDManagedDocument*)mainDocument {
 	
 	if (!_mainDocument) {	FXDLog_DEFAULT;
-		NSURL *fileURL = [appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData];
-		FXDLog(@"fileURL: %@", fileURL);
+		FXDLog(@"coreDataFileURL: %@", documentURLmanagedCoreData);
 				
-		_mainDocument = [[UIManagedDocument alloc] initWithFileURL:fileURL];
+		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURLmanagedCoreData];
 		FXDLog(@"_mainDocument: %@", _mainDocument);
 	}
 	
@@ -55,7 +54,6 @@
 #pragma mark -
 - (NSString*)mainEntityName {
 	if (!_mainEntityName) {	FXDLog_OVERRIDE;
-		//SAMPLE:
 		//_mainEntityName = entityname<#DefaultClass#>
 	}
 
@@ -64,7 +62,6 @@
 
 - (NSArray*)mainSortDescriptors {
 	if (!_mainSortDescriptors) {	FXDLog_OVERRIDE;
-		//SAMPLE:
 		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 	}
 
@@ -90,52 +87,6 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationWillTerminate:)
-	 name:UIApplicationWillTerminateNotification
-	 object:nil];
-	
-	
-	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
-	FXDLog(@"notifyingContext: %@", notifyingContext);
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
-	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-	 object:notifyingContext];
-	
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
-	 name:NSManagedObjectContextObjectsDidChangeNotification
-	 object:notifyingContext];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedNSManagedObjectContextWillSave:)
-	 name:NSManagedObjectContextWillSaveNotification
-	 object:notifyingContext];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedNSManagedObjectContextDidSave:)
-	 name:NSManagedObjectContextDidSaveNotification
-	 object:notifyingContext];
-}
-
-#pragma mark -
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
@@ -228,6 +179,60 @@
 	}];
 }
 
+- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
+	
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillTerminate:)
+	 name:UIApplicationWillTerminateNotification
+	 object:nil];
+	
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIDocumentStateChanged:)
+	 name:UIDocumentStateChangedNotification
+	 object:nil];
+	
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
+	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+	 object:nil];
+	
+	
+	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
+	FXDLog(@"notifyingContext: %@", notifyingContext);
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextObjectsDidChange:)
+	 name:NSManagedObjectContextObjectsDidChangeNotification
+	 object:notifyingContext];
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextWillSave:)
+	 name:NSManagedObjectContextWillSaveNotification
+	 object:notifyingContext];
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedNSManagedObjectContextDidSave:)
+	 name:NSManagedObjectContextDidSaveNotification
+	 object:notifyingContext];
+}
+
+#pragma mark -
 - (void)initializeWithBundledCoreDataName:(NSString*)coreDataName {	FXDLog_DEFAULT;
 	
 	if (!coreDataName) {
@@ -396,9 +401,9 @@
 			
 			
 			[self
-			 saveManagedObjectContext:managedContext
-			 didFinishBlock:^(BOOL finished) {
-				 FXDLog(@"saveManagedObjectContext finished: %d shouldBreak: %d", finished, shouldBreak);
+			 saveManagedContext:managedContext
+			 withDidFinishBlock:^(BOOL finished) {
+				 FXDLog(@"saveManagedContext finished: %d shouldBreak: %d", finished, shouldBreak);
 				 
 				 if (withDefaultProgressView) {
 					 [applicationWindow hideProgressView];
@@ -429,29 +434,29 @@
 }
 
 #pragma mark -
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
+- (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
-	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 
-	if (!managedObjectContext) {
-		managedObjectContext = self.mainDocument.managedObjectContext;
+	if (!managedContext) {
+		managedContext = self.mainDocument.managedObjectContext;
 
-		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 
-		if (!managedObjectContext.hasChanges
-			&& managedObjectContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
+		if (!managedContext.hasChanges
+			&& managedContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
 			
-			managedObjectContext = self.mainDocument.managedObjectContext.parentContext;
+			managedContext = self.mainDocument.managedObjectContext.parentContext;
 
-			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 		}
 	}
 	
 	
 	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
-	FXDLog(@"managedObjectContext: %@ hasChanges: %d concurrencyType: %d", managedObjectContext, managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+	FXDLog(@"managedContext: %@ hasChanges: %d concurrencyType: %d", managedContext, managedContext.hasChanges, managedContext.concurrencyType);
 
-	if (!managedObjectContext || !managedObjectContext.hasChanges) {
+	if (!managedContext || !managedContext.hasChanges) {
 
 		if (didFinishBlock) {
 			didFinishBlock(NO);
@@ -464,22 +469,35 @@
 	void (^contextSavingBlock)(void) = ^{
 		NSError *error = nil;
 
-		BOOL didSave = [managedObjectContext save:&error];
+		BOOL didSave = [managedContext save:&error];
 
 		FXDLog_DEFAULT;
-		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedObjectContext.concurrencyType);
-		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedObjectContext.hasChanges, managedObjectContext.concurrencyType);
+		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedContext.concurrencyType);
+		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 
 		FXDLog_ERROR;LOGEVENT_ERROR;
-
+		
+#if shouldUSE_iCloudCoreData
+		[self.mainDocument
+		 saveToURL:self.mainDocument.fileURL
+		 forSaveOperation:UIDocumentSaveForOverwriting
+		 completionHandler:^(BOOL success) {
+			 FXDLog(@"success: %d didSave: %d", success, didSave);
+			 
+			 if (didFinishBlock) {
+				 didFinishBlock((success && didSave));
+			 }
+		 }];
+#else
 		if (didFinishBlock) {
 			didFinishBlock(didSave);
 		}
+#endif
 	};
 	
 	//TEST:
 	if ([NSThread isMainThread]) {
-		[managedObjectContext performBlockAndWait:contextSavingBlock];
+		[managedContext performBlockAndWait:contextSavingBlock];
 	}
 	else {
 		contextSavingBlock();
@@ -489,15 +507,19 @@
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
-#warning "//TODO: Check if following error is caused at here, and can be fixed:\
-NSInternalInconsistencyException', reason: 'statement is still active'"
 	//TEST:
-	//[self saveManagedObjectContext:nil didFinishBlock:nil];
+	//[self saveManagedContext:nil withDidFinishBlock:nil];
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
-	//TEST:
-	//[self saveManagedObjectContext:nil didFinishBlock:nil];
+	[self saveManagedContext:nil withDidFinishBlock:nil];
+}
+
+#pragma mark -
+- (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLog(@"notification: %@", notification);
+	FXDLog(@"self.mainDocument.fileModificationDate: %@", self.mainDocument.fileModificationDate);
+	FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
 }
 
 #pragma mark -

@@ -67,6 +67,8 @@ typedef void (^FXDblockDidFinish)(BOOL finished);
 #import "FXDAnnotation.h"
 
 #import "FXDDocument.h"
+#import "FXDManagedDocument.h"
+
 #import "FXDManagedObject.h"
 #import "FXDFetchedResultsController.h"
 #import "FXDManagedObjectContext.h"

@@ -3,7 +3,7 @@
 //
 //
 //  Created by petershine on 5/30/13.
-//  Copyright (c) 2013 Provus. All rights reserved.
+//  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
 #import "FXDsuperMessageView.h"

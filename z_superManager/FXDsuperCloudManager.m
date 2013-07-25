@@ -133,11 +133,12 @@
 		 name:NSUbiquityIdentityDidChangeNotification
 		 object:nil];
 		
+		
 		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
-		FXDLog(@"ubiquityToken: %@", self.ubiquityIdentityToken);
+		FXDLog(@"ubiquityIdentityToken: %@", self.ubiquityIdentityToken);
 		
 		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
-		FXDLog(@"savedTokenData: %@", updatedIdentityTokenData);
+		FXDLog(@"updatedIdentityTokenData: %@", updatedIdentityTokenData);
 		
 		FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
 		
@@ -159,39 +160,40 @@
 		}
 	}
 	
+	[userDefaults synchronize];
+	
+	
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 
 	if (!shouldRequestUbiquityContatinerURL) {
-		[userDefaults synchronize];
-
 		[self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
 
 		return;
 	}
 
 
-	NSURL *savedUbiquityContainerURL = nil;
+	NSURL *savedContainerURL = nil;
 	
 	NSString *containerURLstring = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultStringSavedUbiquityContainerURL];
 	
 	if (containerURLstring) {
-		savedUbiquityContainerURL = [NSURL URLWithString:containerURLstring];
+		savedContainerURL = [NSURL URLWithString:containerURLstring];
 	}
 	
-	FXDLog(@"savedUbiquityContainerURL: %@", savedUbiquityContainerURL);
+	FXDLog(@"savedContainerURL: %@", savedContainerURL);
 	
-	if (savedUbiquityContainerURL) {
+	if (savedContainerURL) {
 		_ubiquitousDocumentsURL = nil;
 		_ubiquitousCachesURL = nil;
 		
-		_ubiquityContainerURL = savedUbiquityContainerURL;
+		self.ubiquityContainerURL = savedContainerURL;
 	}
 	
-	//FXDLog(@"ubiquityContainerURL: %@", self.ubiquityContainerURL);
+	FXDLog(@"self.ubiquityContainerURL: %@", self.ubiquityContainerURL);
 	
 	
 	__block NSURL *activeUbiquityContainerURL = nil;
-	
+		
 	[[NSOperationQueue new] addOperationWithBlock:^{
 		
 		activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
@@ -199,6 +201,7 @@
 		
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			
 			if (activeUbiquityContainerURL) {
 				if (self.ubiquityContainerURL) {
 					if (![[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]]) {
@@ -211,15 +214,15 @@
 				_ubiquitousDocumentsURL = nil;
 				_ubiquitousCachesURL = nil;
 				
-				_ubiquityContainerURL = activeUbiquityContainerURL;
+				self.ubiquityContainerURL = activeUbiquityContainerURL;
 				
 				
 				NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
 				
 				if (containerURLString) {
 					[userDefaults setObject:containerURLString forKey:userdefaultStringSavedUbiquityContainerURL];
-					[userDefaults synchronize];
 				}
+				[userDefaults synchronize];
 				
 				[self activatedUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
 			}

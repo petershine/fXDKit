@@ -14,17 +14,12 @@
 /* SAMPLE
  [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
  */
-
-#warning "//TODO: Add cloud DataQuery observing for transaction log updating"
-#define notificationCloudDataQuery
-
 #endif
-
 
 //SAMPLE: For managing attribute names
 /*
- #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
- #define attribkey<#AttributeName#> @"<#AttributeName#>"
+#define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
+#define attribkey<#AttributeName#> @"<#AttributeName#>"
  */
 
 //MARK: Logging options
@@ -48,6 +43,11 @@
 	#define documentnameManagedCoreData	@"managed.coredata.document"
 #endif
 
+#ifndef documentURLmanagedCoreData
+	#define documentURLmanagedCoreData	[appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData]
+#endif
+
+
 #define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"
 
 
@@ -61,7 +61,7 @@
 	
 	UIBackgroundTaskIdentifier _enumeratingTaskIdentifier;
 	
-	UIManagedDocument *_mainDocument;
+	FXDManagedDocument *_mainDocument;
 	
 	NSString *_mainSqlitePathComponent;
 	NSString *_mainUbiquitousContentName;
@@ -78,7 +78,7 @@
 
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
 
-@property (strong, nonatomic) UIManagedDocument *mainDocument;
+@property (strong, nonatomic) FXDManagedDocument *mainDocument;
 
 @property (strong, nonatomic) NSString *mainSqlitePathComponent;
 @property (strong, nonatomic) NSString *mainUbiquitousContentName;
@@ -92,11 +92,12 @@
 #pragma mark - Public
 + (FXDsuperCoreDataManager*)sharedInstance;
 
+- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)startObservingCoreDataNotifications;
 
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;
 - (BOOL)isSqliteAlreadyInitialized;
+
 
 - (id)initializedMainEntityObj;
 
@@ -104,12 +105,14 @@
 
 - (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
-- (void)saveManagedObjectContext:(NSManagedObjectContext*)managedObjectContext didFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
+
+- (void)observedUIDocumentStateChanged:(NSNotification*)notification;
 
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
