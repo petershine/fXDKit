@@ -6,15 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef shouldUSE_iCloudCoreData
-	#define shouldUSE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
-#endif
-
-#if shouldUSE_iCloudCoreData
-/* SAMPLE
- [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
- */
-#endif
 
 //SAMPLE: For managing attribute names
 /*
@@ -46,6 +37,18 @@
 #ifndef documentURLmanagedCoreData
 	#define documentURLmanagedCoreData	[appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData]
 #endif
+
+
+#ifndef shouldUSE_iCloudCoreData
+	#define shouldUSE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
+#endif
+
+#if shouldUSE_iCloudCoreData
+/* SAMPLE
+ [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
+ */
+#endif
+
 
 
 #define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"

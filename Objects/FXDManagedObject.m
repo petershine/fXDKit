@@ -16,7 +16,7 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-#if USE_loggingManagedObjectActivities
+#if USE_loggingManagedObject
 - (instancetype)initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {	FXDLog_DEFAULT;
 	FXDLog(@"entity name: %@ context.concurrencyType: %d", [entity name], context.concurrencyType);
 	
@@ -51,7 +51,7 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-#if USE_loggingManagedObjectActivities
+#if USE_loggingManagedObject
 - (void)willAccessValueForKey:(NSString *)key {	//FXDLog_DEFAULT;
 	// lifecycle/change management (includes key-value observing methods)
 	// read notification

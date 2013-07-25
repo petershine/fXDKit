@@ -1,5 +1,3 @@
-#warning "//TODO: Never use assign. For objects, unsafe_unretained is synonymous and clearer (it explicitly says that it is unsafe, which it is). For non-objects (such as NSUInteger and CGFloat, leave it out—assign is the default for such values."
-
 //
 //  FXDKit.h
 //
@@ -36,8 +34,6 @@
 #import "FXDconfigDeveloper.h"
 #import "FXDconfigAnalytics.h"
 
-typedef void (^FXDblockDidFinish)(BOOL finished);
-
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDobjkeyUserDefaults.h"
@@ -66,7 +62,6 @@ typedef void (^FXDblockDidFinish)(BOOL finished);
 
 #import "FXDAnnotation.h"
 
-#import "FXDDocument.h"
 #import "FXDManagedDocument.h"
 
 #import "FXDManagedObject.h"

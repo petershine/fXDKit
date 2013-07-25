@@ -10,3 +10,6 @@
 #ifndef application_AppStoreID
 	#define application_AppStoreID	000000000
 #endif
+
+
+typedef void (^FXDblockDidFinish)(BOOL finished);
