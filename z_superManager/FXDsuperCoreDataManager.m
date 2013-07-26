@@ -464,44 +464,49 @@
 
 		return;
 	}
+	
 
-
-	void (^contextSavingBlock)(void) = ^{
-		NSError *error = nil;
-
-		BOOL didSave = [managedContext save:&error];
-
-		FXDLog_DEFAULT;
-		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedContext.concurrencyType);
-		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
-
-		FXDLog_ERROR;LOGEVENT_ERROR;
-		
 #if USE_iCloudCoreData
+	if ([NSThread isMainThread]) {
+		self.shouldMergeForManagedContext = YES;
+		
 		[self.mainDocument
 		 saveToURL:self.mainDocument.fileURL
 		 forSaveOperation:UIDocumentSaveForOverwriting
 		 completionHandler:^(BOOL success) {
-			 FXDLog(@"success: %d didSave: %d", success, didSave);
+			 FXDLog(@"success: %d", success);
 			 
 			 if (didFinishBlock) {
-				 didFinishBlock((success && didSave));
+				 didFinishBlock((success));
 			 }
 		 }];
+	}
 #else
+	
+	void (^contextSavingBlock)(void) = ^{
+		NSError *error = nil;
+		
+		BOOL didSave = [managedContext save:&error];
+		
+		FXDLog_DEFAULT;
+		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedContext.concurrencyType);
+		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
+		
+		FXDLog_ERROR;LOGEVENT_ERROR;
+		
 		if (didFinishBlock) {
 			didFinishBlock(didSave);
 		}
-#endif
 	};
 	
-	//TEST:
+	
 	if ([NSThread isMainThread]) {
 		[managedContext performBlockAndWait:contextSavingBlock];
 	}
 	else {
 		contextSavingBlock();
 	}
+#endif
 }
 
 

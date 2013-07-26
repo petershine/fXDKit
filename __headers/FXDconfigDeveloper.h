@@ -43,8 +43,8 @@
 
 		#define TEST_loggingManagedObject	0
 
-		#ifndef TEST_loggingManagedDocument
-			#define TEST_loggingManagedDocument	0
+		#ifndef TEST_loggingManagedDocumentAutoSaving
+			#define TEST_loggingManagedDocumentAutoSaving	0
 		#endif
 
 		#define TEST_slowAnimationDuration	0

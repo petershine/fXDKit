@@ -14,27 +14,61 @@
 
 
 #pragma mark - Memory management
-#if TEST_loggingManagedDocument
-- (void)dealloc {	FXDdocLog_DEFAULT;
+- (void)dealloc {	FXDLog_DEFAULT;
     //TODO:
 }
-#endif
+
 
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-
-#if TEST_loggingManagedDocument
-- (void)openWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDdocLog_DEFAULT;
+- (void)openWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
 	[super openWithCompletionHandler:completionHandler];
 }
 
-- (void)closeWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDdocLog_DEFAULT;
+- (void)closeWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
 	[super closeWithCompletionHandler:completionHandler];
 }
 
+#pragma mark -
+- (void)disableEditing {	FXDLog_DEFAULT;
+	[super disableEditing];
+}
+
+- (void)enableEditing {	FXDLog_DEFAULT;
+	[super enableEditing];
+}
+
+#pragma mark -
+- (void)autosaveWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
+	[super autosaveWithCompletionHandler:completionHandler];
+}
+
+- (void)saveToURL:(NSURL *)url forSaveOperation:(UIDocumentSaveOperation)saveOperation completionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;;
+	FXDLog(@"url: %@, saveOperation: %d", url, saveOperation);
+	
+	[super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
+}
+
+#pragma mark -
+- (id)changeCountTokenForSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDLog_DEFAULT;
+	FXDLog(@"saveOperation: %d", saveOperation);
+	
+	id changeCountToken = [super changeCountTokenForSaveOperation:saveOperation];
+	FXDLog(@"changeCountToken: %@", changeCountToken);
+	
+	return changeCountToken;
+}
+
+- (void)updateChangeCountWithToken:(id)changeCountToken forSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDLog_DEFAULT;
+	FXDLog(@"changeCountToken: %@, saveOperation: %d", changeCountToken, saveOperation);
+	[super updateChangeCountWithToken:changeCountToken forSaveOperation:saveOperation];
+}
+
+
+#if TEST_loggingManagedDocumentAutoSaving
 #pragma mark -
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)outError {	FXDdocLog_DEFAULT;
 	FXDdocLog(@"contents: %@, typeName: %@, *outError: %@", contents, typeName, *outError);
@@ -55,15 +89,6 @@
 }
 
 #pragma mark -
-- (void)disableEditing {	FXDdocLog_DEFAULT;
-	[super disableEditing];
-}
-
-- (void)enableEditing {	FXDdocLog_DEFAULT;
-	[super enableEditing];	
-}
-
-#pragma mark -
 - (BOOL)hasUnsavedChanges {	FXDdocLog_DEFAULT;
 	BOOL hasUnsavedChanges = [super hasUnsavedChanges];
 	FXDdocLog(@"hasUnsavedChanges: %d", hasUnsavedChanges);
@@ -74,31 +99,6 @@
 - (void)updateChangeCount:(UIDocumentChangeKind)change {	FXDdocLog_DEFAULT;
 	FXDdocLog(@"change: %d", change);
 	[super updateChangeCount:change];
-}
-
-#pragma mark -
-- (id)changeCountTokenForSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDdocLog_DEFAULT;
-	FXDdocLog(@"saveOperation: %d", saveOperation);
-	
-	id changeCountToken = [super changeCountTokenForSaveOperation:saveOperation];
-	FXDdocLog(@"changeCountToken: %@", changeCountToken);
-	
-	return changeCountToken;
-}
-
-- (void)updateChangeCountWithToken:(id)changeCountToken forSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDdocLog_DEFAULT;
-	FXDdocLog(@"changeCountToken: %@, saveOperation: %d", changeCountToken, saveOperation);
-}
-
-#pragma mark -
-- (void)saveToURL:(NSURL *)url forSaveOperation:(UIDocumentSaveOperation)saveOperation completionHandler:(void (^)(BOOL success))completionHandler {	FXDdocLog_DEFAULT;
-	FXDdocLog(@"url: %@, saveOperation: %d", url, saveOperation);
-	
-	[super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
-}
-
-- (void)autosaveWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDdocLog_DEFAULT;
-	[super autosaveWithCompletionHandler:completionHandler];
 }
 
 #pragma mark -
@@ -156,7 +156,7 @@
 }
 
 #pragma mark -
-- (void)performAsynchronousFileAccessUsingBlock:(void (^)(void))block {	FXDdocLog_DEFAULT;
+- (void)performAsynchronousFileAccessUsingBlock:(void (^)(void))block {	FXDLog_DEFAULT;
 	[super performAsynchronousFileAccessUsingBlock:block];
 }
 
@@ -179,10 +179,10 @@
 #pragma mark -
 - (void)revertToContentsOfURL:(NSURL *)url completionHandler:(void (^)(BOOL success))completionHandler {	FXDdocLog_DEFAULT;
 	FXDdocLog(@"url: %@", url);
+	[super revertToContentsOfURL:url completionHandler:completionHandler];
 }
 
 #endif
-
 
 #pragma mark - Public
 

@@ -36,6 +36,7 @@
 }
 
 - (NSURL*)ubiquitousCachesURL {
+	
 	if (!_ubiquitousCachesURL) {	FXDLog_DEFAULT;
 		if (self.ubiquityContainerURL) {
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
@@ -198,7 +199,6 @@
 		
 		activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 		FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
-		
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			
