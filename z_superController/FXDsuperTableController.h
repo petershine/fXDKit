@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+
 #import "FXDsuperScrollController.h"
 
 @interface FXDsuperTableController : FXDsuperScrollController <UITableViewDataSource, UITableViewDelegate>
@@ -17,7 +18,6 @@
 
 
 #pragma mark - IBActions
-
 
 #pragma mark - Public
 - (void)initializeTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;

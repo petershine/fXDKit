@@ -23,9 +23,9 @@
 }
 
 // Properties
-@property (assign, nonatomic) NSInteger previewPageIndex;
+@property (nonatomic) NSInteger previewPageIndex;
 
-@property (assign, nonatomic) ITEM_VIEWER_TYPE itemViewerType;
+@property (nonatomic) ITEM_VIEWER_TYPE itemViewerType;
 
 @property (strong, nonatomic) AVPlayer *mainMoviePlayer;
 @property (strong, nonatomic) id periodicObserver;
