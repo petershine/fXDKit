@@ -467,22 +467,26 @@
 	
 
 #if USE_iCloudCoreData
-	if ([NSThread isMainThread]) {
+	void (^contextSavingBlock)(void) = ^{
 		self.shouldMergeForManagedContext = YES;
+		
+		FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
+		FXDLog(@"self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 		
 		[self.mainDocument
 		 saveToURL:self.mainDocument.fileURL
 		 forSaveOperation:UIDocumentSaveForOverwriting
 		 completionHandler:^(BOOL success) {
 			 FXDLog(@"success: %d", success);
+			 FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
 			 
 			 if (didFinishBlock) {
 				 didFinishBlock((success));
 			 }
 		 }];
-	}
-#else
+	};
 	
+#else
 	void (^contextSavingBlock)(void) = ^{
 		NSError *error = nil;
 		
@@ -498,6 +502,7 @@
 			didFinishBlock(didSave);
 		}
 	};
+#endif
 	
 	
 	if ([NSThread isMainThread]) {
@@ -506,7 +511,6 @@
 	else {
 		contextSavingBlock();
 	}
-#endif
 }
 
 
