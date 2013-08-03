@@ -63,6 +63,13 @@
 
 }
 
+#pragma mark - StatusBar
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
+	FXDLog(@"statusBarStyle: %d", statusBarStyle);
+	
+	return statusBarStyle;
+}
 
 #pragma mark - Autorotating
 #if TEST_loggingRotatingOrientation
@@ -78,7 +85,7 @@
 	return [super preferredInterfaceOrientationForPresentation];
 }
 
-#warning "//MARK: For older iOS 5"
+//MARK: For older iOS 5"
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }

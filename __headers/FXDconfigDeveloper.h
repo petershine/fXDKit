@@ -28,6 +28,7 @@
 										});\
 										return _sharedInstance
 
+#warning "TODO: When the new SDK is finally released, just check the device version only"
 #if __IPHONE_7_0
 #else
 	typedef id instancetype;
