@@ -92,12 +92,10 @@
 		 name:NSMetadataQueryDidUpdateNotification
 		 object:_cloudDocumentsQuery];
 
-#if ForDEVELOPER
 		BOOL didStart = [_cloudDocumentsQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);
-#else
-		[_cloudDocumentsQuery startQuery];
-#endif
+		
+		if (didStart) {}
 	}
 
 	return _cloudDocumentsQuery;
@@ -235,11 +233,12 @@
 }
 
 - (void)activatedUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+#if ForDEVELOPER
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
 	FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
 	FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
 	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
+#endif
 	
 	[self startObservingCloudDocumentsQueryNotifications];
 

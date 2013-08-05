@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
+
 #define scaleControllerDismissingOffset	0.265
 
 

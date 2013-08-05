@@ -106,11 +106,10 @@
 			//TODO: get UUID unique URL using ubiquityContainerURL instead
 			//NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 			NSURL *ubiquitousContentURL = ubiquityContainerURL;
+			FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 			
 			options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
 			options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
-			
-			FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
 		}
 		
 		//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
@@ -378,7 +377,7 @@
 									withLimit:limitInfiniteFetch];
 		
 		for (NSManagedObject *fetchedObj in fetchedObjArray) {
-			if (shouldBreak) {
+			if (shouldBreak) {	//MARK: Evaluate case for an item breaking the enumeration itself
 				break;
 			}
 			
@@ -400,35 +399,39 @@
 			FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
 			
 			
-			[self
-			 saveManagedContext:managedContext
-			 withDidFinishBlock:^(BOOL finished) {
-				 FXDLog(@"saveManagedContext finished: %d shouldBreak: %d", finished, shouldBreak);
-				 
-				 if (withDefaultProgressView) {
-					 [applicationWindow hideProgressView];
-				 }
-				 
-				 if (shouldBreak) {
-					 finished = NO;
-				 }
-				 
-				 
-				 FXDLog(@"1.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
-				 FXDLog_REMAINING;
-				 
-				 if (self.enumeratingTaskIdentifier != UIBackgroundTaskInvalid) {
-					 
-					 [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
-					 self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
-					 
-					 FXDLog(@"2.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
-				 }
-				 
-				 if (didFinishBlock) {
-					 didFinishBlock(finished);
-				 }
-			 }];
+			FXDblockDidFinish finishingBlock = ^(BOOL finished) {
+				FXDLog(@"finished: %d shouldBreak: %d", finished, shouldBreak);
+				
+				if (withDefaultProgressView) {
+					[applicationWindow hideProgressView];
+				}
+				
+				if (shouldBreak) {
+					finished = NO;
+				}
+				
+				
+				FXDLog(@"1.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+				FXDLog_REMAINING;
+				
+				if (self.enumeratingTaskIdentifier != UIBackgroundTaskInvalid) {
+					
+					[[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
+					self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
+					
+					FXDLog(@"2.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+				}
+				
+				if (didFinishBlock) {
+					didFinishBlock(finished);
+				}
+			};
+			
+			#warning "//MARK: Confirm if mainDocument saving need to be done here"
+			
+			//TEST:
+			//[self saveManagedContext:managedContext withDidFinishBlock:finishingBlock];
+			[self saveMainDocumentWithDidFinishBlock:finishingBlock];
 		}];
 	}];
 }
@@ -452,8 +455,6 @@
 		}
 	}
 	
-	
-	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
 	FXDLog(@"managedContext: %@ hasChanges: %d concurrencyType: %d", managedContext, managedContext.hasChanges, managedContext.concurrencyType);
 
 	if (!managedContext || !managedContext.hasChanges) {
@@ -464,46 +465,23 @@
 
 		return;
 	}
-	
 
-#if USE_iCloudCoreData
-	void (^contextSavingBlock)(void) = ^{
-		self.shouldMergeForManagedContext = YES;
-		
-		FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
-		FXDLog(@"self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
-		
-		[self.mainDocument
-		 saveToURL:self.mainDocument.fileURL
-		 forSaveOperation:UIDocumentSaveForOverwriting
-		 completionHandler:^(BOOL success) {
-			 FXDLog(@"success: %d", success);
-			 FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
-			 
-			 if (didFinishBlock) {
-				 didFinishBlock((success));
-			 }
-		 }];
-	};
 	
-#else
 	void (^contextSavingBlock)(void) = ^{
 		NSError *error = nil;
-		
-		BOOL didSave = [managedContext save:&error];
+		BOOL didSave = [managedContext save:&error];FXDLog_ERROR;LOGEVENT_ERROR;
 		
 		FXDLog_DEFAULT;
 		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedContext.concurrencyType);
 		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 		
-		FXDLog_ERROR;LOGEVENT_ERROR;
-		
 		if (didFinishBlock) {
 			didFinishBlock(didSave);
 		}
 	};
-#endif
+
 	
+	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
 	
 	if ([NSThread isMainThread]) {
 		[managedContext performBlockAndWait:contextSavingBlock];
@@ -513,15 +491,61 @@
 	}
 }
 
+- (void)saveMainDocumentWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
+	
+	FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
+	FXDLog(@"self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
+	
+	self.shouldMergeForManagedContext = YES;
+	
+	[self.mainDocument
+	 saveToURL:self.mainDocument.fileURL
+	 forSaveOperation:UIDocumentSaveForOverwriting
+	 completionHandler:^(BOOL success) {
+		 FXDLog(@"success: %d", success);
+		 FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
+		 
+		 if (didFinishBlock) {
+			 didFinishBlock((success));
+		 }
+	 }];
+}
+
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
-	//TEST:
-	//[self saveManagedContext:nil withDidFinishBlock:nil];
+	//MARK: Re-consider about saving context here
 }
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
-	[self saveManagedContext:nil withDidFinishBlock:nil];
+	FXDLog_REMAINING;
+	
+	UIApplication *sharedApplication = [UIApplication sharedApplication];
+	
+	self.savingTaskIdentifier = [sharedApplication
+									  beginBackgroundTaskWithExpirationHandler:^{
+										  [sharedApplication endBackgroundTask:self.savingTaskIdentifier];
+										  self.savingTaskIdentifier = UIBackgroundTaskInvalid;
+									  }];
+	FXDLog(@"1.savingTaskIdentifier: %u", self.savingTaskIdentifier);
+	
+	FXDblockDidFinish finishingBlock = ^(BOOL finished) {
+		FXDLog(@"finished: %d", finished);
+		
+		FXDLog_REMAINING;
+		
+		if (self.savingTaskIdentifier != UIBackgroundTaskInvalid) {
+			
+			[[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
+			self.savingTaskIdentifier = UIBackgroundTaskInvalid;
+			
+			FXDLog(@"2.savingTaskIdentifier: %u", self.savingTaskIdentifier);
+		}
+	};
+	
+	//TEST:
+	//[self saveManagedContext:nil withDidFinishBlock:finishingBlock];
+	[self saveMainDocumentWithDidFinishBlock:finishingBlock];
 }
 
 #pragma mark -

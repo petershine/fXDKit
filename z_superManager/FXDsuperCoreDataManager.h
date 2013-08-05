@@ -63,6 +63,7 @@
 	BOOL _didStartEnumerating;
 	
 	UIBackgroundTaskIdentifier _enumeratingTaskIdentifier;
+	UIBackgroundTaskIdentifier _savingTaskIdentifier;
 	
 	FXDManagedDocument *_mainDocument;
 	
@@ -80,6 +81,7 @@
 @property (nonatomic) BOOL didStartEnumerating;
 
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
+@property (nonatomic) UIBackgroundTaskIdentifier savingTaskIdentifier;
 
 @property (strong, nonatomic) FXDManagedDocument *mainDocument;
 
@@ -109,6 +111,7 @@
 - (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)saveMainDocumentWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 
 //MARK: - Observer implementation
