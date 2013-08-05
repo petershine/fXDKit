@@ -315,8 +315,8 @@
 }
 
 #pragma mark -
-- (void)configureUserDefaultsInfo {	FXDLog_OVERRIDE;
-	
+- (void)configureUserDefaultsInfo {	FXDLog_DEFAULT;
+	//TODO: Prepare for first launch
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;

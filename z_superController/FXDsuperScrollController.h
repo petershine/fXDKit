@@ -38,9 +38,9 @@
 @property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
 
+@property (strong, nonatomic) NSArray *itemCounts;
 @property (strong, nonatomic) NSDictionary *cellTitleDictionary;
 @property (strong, nonatomic) NSDictionary *cellSubTitleDictionary;
-@property (strong, nonatomic) NSArray *itemCounts;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;

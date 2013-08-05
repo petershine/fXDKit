@@ -53,7 +53,19 @@
 	if (!_cloudDocumentsQuery) {	FXDLog_DEFAULT;
 		_cloudDocumentsQuery = [[NSMetadataQuery alloc] init];
 
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
+		[_cloudDocumentsQuery setPredicate:predicate];
 
+		/*
+		 NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
+		 //NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		 [_cloudDocumentsQuery setSortDescriptors:@[sortDescriptor]];
+		 */
+
+		[_cloudDocumentsQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
+		//[_cloudDocumentsQuery setNotificationBatchingInterval:delayHalfSecond];
+		
+		
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		
 		[notificationCenter
@@ -79,19 +91,6 @@
 		 selector:@selector(observedNSMetadataQueryDidUpdate:)
 		 name:NSMetadataQueryDidUpdateNotification
 		 object:_cloudDocumentsQuery];
-
-
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
-		[_cloudDocumentsQuery setPredicate:predicate];
-
-		/*
-		 NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
-		 //NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
-		 [_cloudDocumentsQuery setSortDescriptors:@[sortDescriptor]];
-		 */
-
-		[_cloudDocumentsQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-		//[_cloudDocumentsQuery setNotificationBatchingInterval:delayHalfSecond];
 
 #if ForDEVELOPER
 		BOOL didStart = [_cloudDocumentsQuery startQuery];

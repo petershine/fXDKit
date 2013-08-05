@@ -27,7 +27,17 @@
 	if (!_ubiquitousCachesMetadataQuery) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
 
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
+		[_ubiquitousCachesMetadataQuery setPredicate:predicate];
 
+		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
+		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
+		[_ubiquitousCachesMetadataQuery setSortDescriptors:@[sortDescriptor]];
+
+		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
+		//[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
+
+		
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		
 		[notificationCenter
@@ -47,18 +57,7 @@
 		 selector:@selector(observedCachesMetadataQueryDidUpdate:)
 		 name:NSMetadataQueryDidUpdateNotification
 		 object:_ubiquitousCachesMetadataQuery];
-
-
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
-		[_ubiquitousCachesMetadataQuery setPredicate:predicate];
-
-		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
-		//NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSCreationDateKey ascending:NO];
-		[_ubiquitousCachesMetadataQuery setSortDescriptors:@[sortDescriptor]];
-
-		[_ubiquitousCachesMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
-		//[_ubiquitousCachesMetadataQuery setNotificationBatchingInterval:delayHalfSecond];
-
+		
 #if ForDEVELOPER
 		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
 		FXDLog(@"didStart: %d", didStart);

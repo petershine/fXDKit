@@ -5,6 +5,14 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#warning "TODO: When the new SDK is finally released, just check the device version only"
+#if __IPHONE_7_0
+#else
+	typedef id instancetype;
+	typedef MKOverlayView	MKOverlayRenderer;
+#endif
+
+
 #define iosVersion6	6.0
 #define iosVersion7	7.0
 
@@ -17,7 +25,6 @@
 
 #define SCREEN_SIZE_35inch	(MAX([[FXDWindow applicationWindow] bounds].size.width, [[FXDWindow applicationWindow] bounds].size.height) <= 480.0)
 
-
 #define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
 
 
@@ -28,12 +35,20 @@
 										});\
 										return _sharedInstance
 
-#warning "TODO: When the new SDK is finally released, just check the device version only"
-#if __IPHONE_7_0
-#else
-	typedef id instancetype;
-	typedef MKOverlayView	MKOverlayRenderer;
+
+#ifndef pathcomponentDocuments
+	#define pathcomponentDocuments @"Documents/"
 #endif
+
+#ifndef pathcomponentCaches
+	#define pathcomponentCaches	@"Caches/"
+#endif
+
+#define appSearhPath_Document	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
+#define appSearhPath_Caches		[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
+
+#define appDirectory_Document	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
+#define appDirectory_Caches		[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
 
 
 #if DEBUG

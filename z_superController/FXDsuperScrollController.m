@@ -100,6 +100,15 @@
 }
 
 #pragma mark -
+- (NSArray*)itemCounts {
+	
+	if (!_itemCounts) {
+		//FXDLog_OVERRIDE;
+	}
+	
+	return _itemCounts;
+}
+
 - (NSDictionary*)cellTitleDictionary {
 	
 	if (!_cellTitleDictionary) {
@@ -115,14 +124,6 @@
 	}
 	
 	return _cellSubTitleDictionary;
-}
-- (NSArray*)itemCounts {
-	
-	if (!_itemCounts) {
-		//FXDLog_OVERRIDE;
-	}
-	
-	return _itemCounts;
 }
 
 #pragma mark -
