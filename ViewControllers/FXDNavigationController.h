@@ -10,7 +10,6 @@
 @interface FXDNavigationController : UINavigationController
 
 // Properties
-@property (nonatomic) BOOL shouldUseDefaultNavigationBar;
 
 // IBOutlets
 

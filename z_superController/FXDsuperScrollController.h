@@ -36,8 +36,8 @@
 
 @property (nonatomic) CGFloat offsetYdismissingController;
 
-@property (strong, nonatomic) NSString *mainCellIdentifier;
 @property (strong, nonatomic) UINib *mainCellNib;
+@property (strong, nonatomic) NSString *mainCellIdentifier;
 
 @property (strong, nonatomic) NSArray *itemCounts;
 @property (strong, nonatomic) NSDictionary *cellTitleDictionary;
@@ -58,6 +58,8 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (void)registerMainCellNib;
+
 - (void)stopAllCellOperations;
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
 

@@ -44,22 +44,7 @@
 	}
 	
 	
-	FXDLog(@"self.mainCellIdentifier: %@", self.mainCellIdentifier);
-	FXDLog(@"self.mainCellNib: %@", self.mainCellNib);
-	
-	if (self.mainCellIdentifier || self.mainCellNib) {		
-		if ([self.mainScrollview isKindOfClass:[UITableView class]]) {
-			[(UITableView*)self.mainScrollview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
-		}
-		else if ([self.mainScrollview isKindOfClass:[UICollectionView class]]) {
-			[(UICollectionView*)self.mainScrollview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
-		}
-	}
-#if DEBUG
-	else {
-		FXDLog(@"OVERRIDE: mainCellIdentifier: %@ mainCellNib: %@", self.mainCellIdentifier, self.mainCellNib);
-	}
-#endif
+	[self registerMainCellNib];
 	
 	
 	if (self.offsetYdismissingController == 0.0) {
@@ -70,7 +55,7 @@
 		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 	}
 
-	if (self.mainResultsController) {
+	if (self.mainResultsController && !self.mainResultsController.additionalDelegate) {
 		[self.mainResultsController setAdditionalDelegate:self];
 	}
 }
@@ -81,22 +66,24 @@
 #pragma mark - View Appearing
 
 #pragma mark - Property overriding
+- (UINib*)mainCellNib {
+	if (!_mainCellNib) {	FXDLog_DEFAULT;
+		if (self.mainCellIdentifier) {
+			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
+		}
+		
+		FXDLog(@"_mainCellNib: %@", _mainCellNib);
+	}
+	
+	return _mainCellNib;
+}
+
 - (NSString*)mainCellIdentifier {
 	if (!_mainCellIdentifier) {
 		//FXDLog_OVERRIDE;
 	}
 	
 	return _mainCellIdentifier;
-}
-
-- (UINib*)mainCellNib {
-	if (!_mainCellNib) {
-		if (self.mainCellIdentifier) {
-			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
-		}
-	}
-	
-	return _mainCellNib;
 }
 
 #pragma mark -
@@ -190,6 +177,12 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (void)registerMainCellNib {	FXDLog_OVERRIDE;
+	FXDLog(@"self.mainCellIdentifier: %@", self.mainCellIdentifier);
+	FXDLog(@"self.mainCellNib: %@", self.mainCellNib);
+}
+
+#pragma mark -
 - (void)stopAllCellOperations {
 	[_cellOperationDictionary removeAllObjects];
 	[_cellOperationQueue cancelAllOperations];

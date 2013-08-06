@@ -53,6 +53,20 @@
 	[super willMoveToParentViewController:parent];
 }
 
+#pragma mark -
+- (void)registerMainCellNib {
+	
+	if (!self.mainCellNib && !self.mainCellIdentifier) {
+		[super registerMainCellNib];
+		return;
+	}
+	
+	
+	FXDLog_DEFAULT;
+	
+	[self.mainCollectionview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
+}
+
 
 #pragma mark - Segues
 

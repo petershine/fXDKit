@@ -52,6 +52,20 @@
 	[super willMoveToParentViewController:parent];
 }
 
+#pragma mark -
+- (void)registerMainCellNib {
+	
+	if (!self.mainCellNib && !self.mainCellIdentifier) {
+		[super registerMainCellNib];
+		return;
+	}
+	
+	
+	FXDLog_DEFAULT;
+	
+	[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
+}
+
 
 #pragma mark - IBActions
 
@@ -61,6 +75,11 @@
 }
 
 - (void)configureTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
+#if ForDEVELOPER
+	if (self.mainCellNib) {
+		FXDLog(@"%@", @"WARNING: Make sure to configure properly");
+	}
+#endif
 
 	[self configureSectionPostionTypeForTableCell:cell forIndexPath:indexPath];
 	

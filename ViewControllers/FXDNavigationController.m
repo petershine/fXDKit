@@ -14,10 +14,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
-	//GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
-}
-
 
 #pragma mark - Initialization
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {	FXDLog_DEFAULT;
@@ -33,17 +29,13 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	FXDLog(@"shouldUseDefaultNavigationBar: %d", self.shouldUseDefaultNavigationBar);
-
-	if (!self.shouldUseDefaultNavigationBar) {
 #ifdef imageNavibarBackground
-		[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
+	[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
 #endif
-
+	
 #ifdef imageNavibarShadow
-		[self.navigationBar setShadowImage:imageNavibarShadow];
+	[self.navigationBar setShadowImage:imageNavibarShadow];
 #endif
-	}
 
 #ifdef imageToolbarBackground
 	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
@@ -102,67 +94,6 @@
 	}
 
 	[super prepareForSegue:segue sender:sender];
-}
-
-#pragma mark -
-- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
-	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
-
-	FXDLog(@"action: %@", NSStringFromSelector(action));
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"sender: %@", sender);
-
-	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-
-	FXDLog(@"canPerform: %d", canPerform);
-
-	return canPerform;
-}
-
-- (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
-	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
-
-	FXDLog(@"action: %@", NSStringFromSelector(action));
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"sender: %@", sender);
-
-	__block UIViewController *viewController = nil;
-
-	//MARK: Iterate backward
-	[self.childViewControllers
-	 enumerateObjectsWithOptions:NSEnumerationReverse
-	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
-
-		 if (obj && !viewController) {
-			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-				 viewController = (UIViewController*)obj;
-				 FXDLog(@"1.(obj)viewController: %@", viewController);
-			 }
-		 }
-		 else if (!obj && !viewController) {
-			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-			 FXDLog(@"1.([super])viewController: %@", viewController);
-		 }
-	 }];
-
-	FXDLog(@"2.viewController: %@", viewController);
-
-	return viewController;
-}
-
-- (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
-	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
-
-	FXDLog(@"toViewController: %@", toViewController);
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"identifier: %@", identifier);
-
-	UIStoryboardSegue *segue = [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
-
-	FXDLog(@"segue: %@", segue);
-
-	return segue;
 }
 
 

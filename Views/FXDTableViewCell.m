@@ -79,6 +79,16 @@
 	}
 }
 
+- (void)willTransitionToState:(UITableViewCellStateMask)state {	FXDLog_DEFAULT;
+	FXDLog(@"state: %d", state);
+	[super willTransitionToState:state];
+}
+
+- (void)didTransitionToState:(UITableViewCellStateMask)state {	FXDLog_DEFAULT;
+	FXDLog(@"state: %d", state);
+	[super didTransitionToState:state];
+}
+
 
 #pragma mark - Public
 - (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage {	//FXDLog_DEFAULT;
