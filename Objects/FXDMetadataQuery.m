@@ -66,7 +66,7 @@
 #endif
 		}
 		
-		if (!isUploaded) {
+		if (isUploaded == NO) {
 			id isUploading = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey];
 			
 			if ([isUploading boolValue]) {
@@ -84,7 +84,7 @@
 			}
 #endif
 		}
-		else if (!isDownloaded) {
+		else if (isDownloaded == NO) {
 			id isDownloading = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey];
 			
 			if ([isDownloading boolValue]) {

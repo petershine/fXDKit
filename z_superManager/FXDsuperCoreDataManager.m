@@ -24,7 +24,7 @@
 #pragma mark - Property overriding
 - (FXDManagedDocument*)mainDocument {
 	
-	if (!_mainDocument) {	FXDLog_DEFAULT;
+	if (_mainDocument == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"coreDataFileURL: %@", documentURLmanagedCoreData);
 				
 		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURLmanagedCoreData];
@@ -36,7 +36,7 @@
 
 #pragma mark -
 - (NSString*)mainSqlitePathComponent {
-	if (!_mainSqlitePathComponent) {	FXDLog_DEFAULT;
+	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
 		_mainSqlitePathComponent = applicationSqlitePathComponent;
 	}
 	
@@ -44,7 +44,7 @@
 }
 
 - (NSString*)mainUbiquitousContentName {
-	if (!_mainUbiquitousContentName) {	FXDLog_DEFAULT;
+	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
 		_mainUbiquitousContentName = ubiquitousCoreDataContentName;
 	}
 	
@@ -53,7 +53,7 @@
 
 #pragma mark -
 - (NSString*)mainEntityName {
-	if (!_mainEntityName) {	FXDLog_OVERRIDE;
+	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
 		//_mainEntityName = entityname<#DefaultClass#>
 	}
 
@@ -61,7 +61,7 @@
 }
 
 - (NSArray*)mainSortDescriptors {
-	if (!_mainSortDescriptors) {	FXDLog_OVERRIDE;
+	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
 		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 	}
 
@@ -70,7 +70,7 @@
 
 #pragma mark -
 - (FXDFetchedResultsController*)mainResultsController {
-	if (!_mainResultsController) {	FXDLog_DEFAULT;
+	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
 		_mainResultsController = [self.mainDocument.managedObjectContext
 								  resultsControllerForEntityName:self.mainEntityName
 								  withSortDescriptors:self.mainSortDescriptors
@@ -234,7 +234,7 @@
 #pragma mark -
 - (void)initializeWithBundledCoreDataName:(NSString*)coreDataName {	FXDLog_DEFAULT;
 	
-	if (!coreDataName) {
+	if (coreDataName == nil) {
 		coreDataName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
 	}
 	
@@ -247,7 +247,7 @@
 	BOOL isBundledWithSqlite = [fileManager fileExistsAtPath:bundledSqlitePath];
 	FXDLog(@"isBundledWithSqlite: %d", isBundledWithSqlite);
 	
-	if (!isBundledWithSqlite) {
+	if (isBundledWithSqlite == NO) {
 		return;
 	}
 	
@@ -283,12 +283,12 @@
 
 #pragma mark -
 - (id)initializedMainEntityObj {
-	if (!self.mainEntityName) {	FXDLog_OVERRIDE;
+	if (self.mainEntityName == nil) {	FXDLog_OVERRIDE;
 		return nil;
 	}
 	
 	
-	if (![NSThread isMainThread]) {	FXDLog_OVERRIDE;
+	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
 		//MARK: Default is to skip
 		FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
 		return nil;
@@ -441,7 +441,7 @@
 	
 	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 
-	if (!managedContext) {
+	if (managedContext == nil) {
 		managedContext = self.mainDocument.managedObjectContext;
 
 		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
@@ -457,7 +457,7 @@
 	
 	FXDLog(@"managedContext: %@ hasChanges: %d concurrencyType: %d", managedContext, managedContext.hasChanges, managedContext.concurrencyType);
 
-	if (!managedContext || !managedContext.hasChanges) {
+	if (managedContext == nil || managedContext.hasChanges == NO) {
 
 		if (didFinishBlock) {
 			didFinishBlock(NO);
@@ -634,7 +634,7 @@
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (!_strongDelegate) {
+	if (_strongDelegate == nil) {
 		return;
 	}
 	
@@ -646,7 +646,7 @@
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (!_strongDelegate) {
+	if (_strongDelegate == nil) {
 		return;
 	}
 	
@@ -658,7 +658,7 @@
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (!_strongDelegate) {
+	if (_strongDelegate == nil) {
 		return;
 	}
 	
@@ -670,7 +670,7 @@
 	
 	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
 	
-	if (!_strongDelegate) {
+	if (_strongDelegate == nil) {
 		return;
 	}
 	

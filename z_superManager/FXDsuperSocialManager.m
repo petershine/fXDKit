@@ -27,7 +27,7 @@
 
 #pragma mark - Property overriding
 - (ACAccountStore*)accountStore {
-	if (!_accountStore) {
+	if (_accountStore == nil) {
 		_accountStore = [[ACAccountStore alloc] init];
 	}
 
@@ -35,7 +35,7 @@
 }
 
 - (ACAccountType*)accountType {
-	if (!_accountType) {
+	if (_accountType == nil) {
 		_accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	}
 
@@ -43,7 +43,7 @@
 }
 
 - (NSArray*)twitterAccountArray {
-	if (!_twitterAccountArray) {
+	if (_twitterAccountArray == nil) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
 	}
 
@@ -52,7 +52,7 @@
 
 - (ACAccount*)mainTwitterAccount {
 
-	if (!_mainTwitterAccount) {	FXDLog_DEFAULT;
+	if (_mainTwitterAccount == nil) {	FXDLog_DEFAULT;
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 		
 		__block NSString *identifier = [userDefaults stringForKey:userdefaultObjKeyMainAccountIdentifier];
@@ -208,7 +208,7 @@
 
 - (void)statusUpdateWithTweetText:(NSString*)tweetText {
 	
-	if (!self.mainTwitterAccount) {	FXDLog_DEFAULT;
+	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
 
 		return;
@@ -233,7 +233,7 @@
 	};
 
 	
-	if (!self.mainTwitterAccount.username) {
+	if (self.mainTwitterAccount.username == nil) {
 		[self.accountStore
 		 renewCredentialsForAccount:self.mainTwitterAccount
 		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
@@ -259,7 +259,7 @@
 	SLComposeViewController *socialComposeController = nil;
 
 	//TODO: Test Facebook interface
-	if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
 		return socialComposeController;
 	}
 
@@ -267,14 +267,14 @@
 	socialComposeController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
 
 	if (initialText) {
-		if (![socialComposeController setInitialText:initialText]) {
+		if ([socialComposeController setInitialText:initialText] == NO) {
 			FXDLog(@"initialText: %@", initialText);
 		}
 	}
 
 	if ([imageArray count] > 0) {
 		for (UIImage *image in imageArray) {
-			if (![socialComposeController addImage:image]) {
+			if ([socialComposeController addImage:image] == NO) {
 				FXDLog(@"image: %@", image);
 			}
 		}
@@ -282,7 +282,7 @@
 
 	if ([URLarray count] > 0) {
 		for (NSURL *url in URLarray) {
-			if (![socialComposeController addURL:url]) {
+			if ([socialComposeController addURL:url] == NO) {
 				FXDLog(@"URL: %@", url);
 			}
 		}

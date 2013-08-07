@@ -29,7 +29,7 @@
 #pragma mark - Initialization
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
 
-	if (!nibNameOrNil) {
+	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
 		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
 		
@@ -137,9 +137,11 @@
 
 #pragma mark -
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-	if (!parent) {
+#if ForDEVELOPER
+	if (parent == nil) {
 		FXDLog_DEFAULT;
 	}
+#endif
 
 	[super willMoveToParentViewController:parent];
 }
@@ -240,15 +242,17 @@
 	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
 
-		 if (obj && !viewController) {
-			 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-				 viewController = (UIViewController*)obj;
-				 FXDLog(@"1.(obj)viewController: %@", viewController);
+		 if (viewController == nil) {
+			 if (obj) {
+				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
+					 viewController = (UIViewController*)obj;
+					 FXDLog(@"1.(obj)viewController: %@", viewController);
+				 }
 			 }
-		 }
-		 else if (!obj && !viewController) {
-			 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-			 FXDLog(@"1.([super])viewController: %@", viewController);
+			 else {
+				 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+				 FXDLog(@"1.([super])viewController: %@", viewController);
+			 }
 		 }
 	 }];
 
@@ -319,7 +323,7 @@
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
 	
-	if (!nibNameOrNil) {
+	if (nibNameOrNil == nil) {
 		nibNameOrNil = NSStringFromClass([self class]);
 	}
 	
@@ -336,7 +340,7 @@
 	FXDLog(@"sceneView: %@", sceneView);
 	
 #if ForDEVELOPER
-	if (!sceneView) {
+	if (sceneView == nil) {
 		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
 	}
 #endif

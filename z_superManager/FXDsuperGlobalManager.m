@@ -60,7 +60,7 @@
 
 #pragma mark -
 - (NSString*)mainStoryboardName {
-	if (!_mainStoryboardName) {	FXDLog_OVERRIDE;
+	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
 		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
 	}
 
@@ -68,7 +68,7 @@
 }
 
 - (FXDStoryboard*)mainStoryboard {
-	if (!_mainStoryboard) {	FXDLog_OVERRIDE;
+	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
 		if (self.mainStoryboardName) {
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
@@ -79,7 +79,7 @@
 
 #pragma mark -
 - (NSString*)deviceLanguageCode {
-	if (!_deviceLanguageCode) {	FXDLog_DEFAULT;
+	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
 		_deviceLanguageCode = languages[0];
@@ -108,7 +108,7 @@
 }
 
 - (NSString*)deviceCountryCode {
-	if (!_deviceCountryCode) {	FXDLog_DEFAULT;
+	if (_deviceCountryCode == nil) {	FXDLog_DEFAULT;
 		NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
 		
 		NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
@@ -122,7 +122,7 @@
 }
 
 - (NSString*)deviceModelName {
-	if (!_deviceModelName) {	FXDLog_DEFAULT;
+	if (_deviceModelName == nil) {	FXDLog_DEFAULT;
 		
 		struct utsname systemInfo;
 		uname(&systemInfo);
@@ -165,7 +165,7 @@
 		
 		_deviceModelName = commonNamesDictionary[machineName];
 		
-		if (!_deviceModelName) {
+		if (_deviceModelName == nil) {
 			_deviceModelName = machineName;
 		}
 
@@ -178,7 +178,7 @@
 #pragma mark -
 - (NSDateFormatter*)dateformatterUTC {
 	
-	if (!_dateformatterUTC) {	FXDLog_DEFAULT;
+	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
 		_dateformatterUTC = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -193,7 +193,7 @@
 
 - (NSDateFormatter*)dateformatterLocal {
 	
-	if (!_dateformatterLocal) {	FXDLog_DEFAULT;
+	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT;
 		_dateformatterLocal = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
@@ -208,7 +208,7 @@
 
 #pragma mark -
 - (id)rootController {
-	if (!_rootController) {	FXDLog_DEFAULT;
+	if (_rootController == nil) {	FXDLog_DEFAULT;
 		if (self.mainStoryboard) {
 			_rootController = [self.mainStoryboard instantiateInitialViewController];
 		}
@@ -246,7 +246,7 @@
 	}
 	
 	
-	if (![self.rootController isKindOfClass:[UITabBarController class]]) {
+	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
 		_homeController = addedControllers[0];
 		FXDLog(@"_homeController = addedControllers[0]: %@", _homeController);
 		
@@ -288,7 +288,7 @@
 	FXDLog(@"identifierForVendor UUIDString: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
 #endif
 	
-	void (^didPrepareBlock)(void) = ^(void){
+	void (^ManagerPreparedBlock)(void) = ^(void){
 		[self configureUserDefaultsInfo];
 		[self startObservingEssentialNotifications];
 		
@@ -298,8 +298,9 @@
 	};
 	
 	
-	if (!coreDataManager) {
-		didPrepareBlock();
+	if (coreDataManager == nil) {
+		ManagerPreparedBlock();
+		
 		return;
 	}
 	
@@ -310,7 +311,7 @@
 	 didFinishBlock:^(BOOL finished) {
 		 FXDLog(@"prepareCoreDataManagerWithUbiquityContainerURL finished: %d", finished);
 		 
-		 didPrepareBlock();
+		 ManagerPreparedBlock();
 	 }];
 }
 
@@ -380,7 +381,7 @@
 
 #pragma mark -
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
-	if (!alertBody) {
+	if (alertBody == nil) {
 		return;
 	}
 	
@@ -401,7 +402,7 @@
 
 #pragma mark -
 - (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate {
-	if (!localDate) {
+	if (localDate == nil) {
 		localDate = [NSDate date];
 	}
 	

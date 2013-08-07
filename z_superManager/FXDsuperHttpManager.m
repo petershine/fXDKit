@@ -76,7 +76,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	NetworkStatus reachabilityStatus = [reachabilityForWifi currentReachabilityStatus];
 	
 	if (reachabilityStatus == ReachableViaWiFi) {
-		if (![reachabilityForWifi connectionRequired]) {
+		if ([reachabilityForWifi connectionRequired] == NO) {
 			isConnected = YES;
 		}
 	}
@@ -106,8 +106,8 @@ static NSMutableSet *_staticHttpControlSet = nil;
 }
 
 + (void)addHttpControl:(FXDsuperHttpManager*)httpControl toHttpControlSet:(NSMutableSet*)httpControlSet {
-	if (!httpControlSet) {
-		if (!_staticHttpControlSet) {
+	if (httpControlSet == nil) {
+		if (_staticHttpControlSet == nil) {
 			_staticHttpControlSet = [[NSMutableSet alloc] initWithCapacity:0];
 		}
 		
@@ -169,7 +169,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
-	if (!_receivedData) {
+	if (_receivedData == nil) {
 		_receivedData = [[NSMutableData alloc] initWithLength:0];
 	}
 	

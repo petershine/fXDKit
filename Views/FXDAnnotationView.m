@@ -56,7 +56,7 @@
 		
 		
 #ifdef image_MapViewDefaultPin
-		if (!defaultImage) {
+		if (defaultImage == nil) {
 			defaultImage = image_MapViewDefaultPin;
 		}
 #endif

@@ -29,7 +29,7 @@
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
 	
-	if (!_mainScrollview) {	FXDLog_DEFAULT;
+	if (_mainScrollview == nil) {	FXDLog_DEFAULT;
 		
 		if (self.mainCollectionview) {
 			_mainScrollview = self.mainCollectionview;			
@@ -46,7 +46,7 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
-	if (!parent) {
+	if (parent == nil) {
 		[self.mainCollectionview setDataSource:nil];
 	}
 	
@@ -56,7 +56,7 @@
 #pragma mark -
 - (void)registerMainCellNib {
 	
-	if (!self.mainCellNib && !self.mainCellIdentifier) {
+	if (self.mainCellNib == nil && self.mainCellIdentifier == nil) {
 		[super registerMainCellNib];
 		return;
 	}
@@ -109,7 +109,7 @@
 	
 	[cellOperation addExecutionBlock:^{
 		
-		if (_weakOperation && !_weakOperation.isCancelled) {
+		if (_weakOperation && _weakOperation.isCancelled == NO) {
 			//TODO:
 		}
 		

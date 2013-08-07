@@ -104,7 +104,7 @@
 
 - (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue {	FXDLog_DEFAULT;
 	
-	if (![self canAnimateWithTransitionSegue:slidingInSegue]) {
+	if ([self canAnimateWithTransitionSegue:slidingInSegue] == NO) {
 		return;
 	}
 
@@ -115,7 +115,7 @@
 	
 	FXDLog(@"destinationController.toolbarItems: %@", destinationController.toolbarItems);
 	
-	if (!destinationController.toolbarItems) {
+	if (destinationController.toolbarItems == nil) {
 		[destinationController setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
 	}
 	
@@ -153,7 +153,7 @@
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
 			
-			if (childIndex < destinationIndex && ![childController shouldStayFixed]) {
+			if (childIndex < destinationIndex && [childController shouldStayFixed] == NO) {
 				
 				if (childIndex == destinationIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pushedController = childController;
@@ -199,7 +199,7 @@
 
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue {	FXDLog_DEFAULT;
 	
-	if (![self canAnimateWithTransitionSegue:slidingOutSegue]) {
+	if ([self canAnimateWithTransitionSegue:slidingOutSegue] == NO) {
 		return;
 	}
 
@@ -240,7 +240,7 @@
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
 			
-			if (childIndex < sourceIndex && ![childController shouldStayFixed]) {
+			if (childIndex < sourceIndex && [childController shouldStayFixed] == NO) {
 				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
 					pulledController = childController;
 					animatedPulledFrame = pulledController.view.frame;
@@ -312,7 +312,7 @@
 		
 		NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
 		
-		if (childIndex > frontIndex && ![childController shouldStayFixed]) {
+		if (childIndex > frontIndex && [childController shouldStayFixed] == NO) {
 			[lateAddedControllerArray addObject:childController];
 		}
 	}

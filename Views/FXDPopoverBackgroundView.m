@@ -94,7 +94,7 @@
 	UIEdgeInsets contentViewInsets = [[self class] contentViewInsets];
 
 
-	if (!self.viewBackground) {
+	if (self.viewBackground == nil) {
 		self.viewBackground = [[UIView alloc] initWithFrame:
 							   CGRectMake(0,
 										  arrowHeight,
@@ -113,7 +113,7 @@
 	}
 
 
-	if (!self.imageviewArrow) {
+	if (self.imageviewArrow == nil) {
 		self.imageviewArrow = [[UIImageView alloc] initWithFrame:
 							   CGRectMake(0,
 										  0,
@@ -138,7 +138,7 @@
 	self.viewTitle = [[self class] sharedInstance].viewTitle;
 
 
-	if (!self.viewTitle && self.titleText) {
+	if (self.viewTitle == nil && self.titleText == nil) {
 		self.viewTitle = [[UILabel alloc] initWithFrame:
 						  CGRectMake(0,
 									 0,

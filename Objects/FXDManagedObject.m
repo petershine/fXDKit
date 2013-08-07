@@ -178,15 +178,15 @@
 		id value = keyedValues[attribute];
 		
 		//MARK: Check cases
-		if (!value) {
+		if (value == nil) {
 			value = keyedValues[[attribute uppercaseString]];
 		}
 		
-		if (!value) {
+		if (value == nil) {
 			value = keyedValues[[attribute lowercaseString]];
 		}
 		
-        if (!value || [value isKindOfClass:[NSNull class]]) {
+        if (value == nil || [value isKindOfClass:[NSNull class]]) {
             continue;	// EMPTY
         }
 		

@@ -24,7 +24,7 @@
 #pragma mark - Property overriding
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
 	
-	if (!_ubiquitousCachesMetadataQuery) {	FXDLog_DEFAULT;
+	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
 		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
@@ -202,7 +202,7 @@
 			BOOL didRemove = NO;
 #endif
 			
-			if (!isReachable) {
+			if (isReachable == NO) {
 #if ForDEVELOPER
 				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
 #else
@@ -241,7 +241,7 @@
 #endif
 			}
 			
-			if (!isDownloaded && !isDownloading) {
+			if (isDownloaded == NO && isDownloading == NO) {
 #if ForDEVELOPER
 				didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
 #else
@@ -249,7 +249,7 @@
 #endif
 				
 				if ([error code] == 512) {
-					if (!alertTitle) {
+					if (alertTitle == nil) {
 						NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
 						
 						if (underlyingError) {
@@ -293,7 +293,7 @@
 		BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			if (!isTransferring) {
+			if (isTransferring == NO) {
 				[self enumerateCachesMetadataQueryResults];
 			}
 		}];

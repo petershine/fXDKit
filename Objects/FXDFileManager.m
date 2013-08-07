@@ -86,7 +86,7 @@
 			NSMutableDictionary *subInfoDictionary = [self infoDictionaryForFolderURL:nextURL];
 			
 			if (subInfoDictionary && [subInfoDictionary count] > 0) {
-				if (!itemArray) {
+				if (itemArray == nil) {
 					itemArray = [[NSMutableArray alloc] initWithCapacity:0];
 				}
 				
@@ -94,7 +94,7 @@
 			}
 		}
 		else {
-			if (!itemArray) {
+			if (itemArray == nil) {
 				itemArray = [[NSMutableArray alloc] initWithCapacity:0];
 			}
 			

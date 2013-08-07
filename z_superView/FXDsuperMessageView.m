@@ -63,7 +63,7 @@
 - (void)configureWithCancelButtonTitle:(NSString*)cancelButtonTitle withAcceptButtonTitle:(NSString*)acceptButtonTitle {
 	
 	if (acceptButtonTitle) {
-		if (!cancelButtonTitle) {
+		if (cancelButtonTitle == nil) {
 			cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
 		}
 	}
@@ -75,7 +75,7 @@
 		
 		[self.buttonCancel setCenter:modifiedCenter];
 		
-		if (!cancelButtonTitle) {
+		if (cancelButtonTitle == nil) {
 			cancelButtonTitle = NSLocalizedString(text_OK, nil);
 		}
 	}

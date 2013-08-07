@@ -24,7 +24,7 @@
 #pragma mark - Property overriding
 - (NSURL*)ubiquitousDocumentsURL {
 	
-	if (!_ubiquitousDocumentsURL) {	FXDLog_DEFAULT;
+	if (_ubiquitousDocumentsURL == nil) {	FXDLog_DEFAULT;
 		if (self.ubiquityContainerURL) {
 			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];
 		}
@@ -37,7 +37,7 @@
 
 - (NSURL*)ubiquitousCachesURL {
 	
-	if (!_ubiquitousCachesURL) {	FXDLog_DEFAULT;
+	if (_ubiquitousCachesURL == nil) {	FXDLog_DEFAULT;
 		if (self.ubiquityContainerURL) {
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
 		}
@@ -50,7 +50,7 @@
 
 - (NSMetadataQuery*)cloudDocumentsQuery {
 	
-	if (!_cloudDocumentsQuery) {	FXDLog_DEFAULT;
+	if (_cloudDocumentsQuery == nil) {	FXDLog_DEFAULT;
 		_cloudDocumentsQuery = [[NSMetadataQuery alloc] init];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
@@ -103,7 +103,7 @@
 
 - (NSOperationQueue*)evictingQueue {
 	
-	if (!_evictingQueue) {	FXDLog_DEFAULT;
+	if (_evictingQueue == nil) {	FXDLog_DEFAULT;
 		_evictingQueue = [[NSOperationQueue alloc] init];
 		[_evictingQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 	}
@@ -145,7 +145,7 @@
 		if (self.ubiquityIdentityToken) {
 			shouldRequestUbiquityContatinerURL = YES;
 			
-			if (!updatedIdentityTokenData) {
+			if (updatedIdentityTokenData == nil) {
 				updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
 				
 				if (updatedIdentityTokenData) {
@@ -163,7 +163,7 @@
 	
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 
-	if (!shouldRequestUbiquityContatinerURL) {
+	if (shouldRequestUbiquityContatinerURL == NO) {
 		[self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
 
 		return;
@@ -201,7 +201,7 @@
 			
 			if (activeUbiquityContainerURL) {
 				if (self.ubiquityContainerURL) {
-					if (![[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]]) {
+					if ([[activeUbiquityContainerURL absoluteString] isEqualToString:[self.ubiquityContainerURL absoluteString]] == NO) {
 						
 						//TODO: find what to do when containerURL is different
 					}
@@ -296,7 +296,7 @@
 #pragma mark -
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent {	//FXDLog_DEFAULT;
 		
-	if (!currentFolderURL) {
+	if (currentFolderURL == nil) {
 		currentFolderURL = self.ubiquitousDocumentsURL;
 	}
 	
@@ -321,7 +321,7 @@
 		
 		FXDLog(@"didSetUbiquitous: %d %@ %@", didSetUbiquitous, itemURL, destinationURL);
 		
-		if (error || !didSetUbiquitous) {
+		if (error || didSetUbiquitous == NO) {
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
 		}
 	}
@@ -398,7 +398,7 @@
 - (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem {
 	BOOL isUploading  = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey] boolValue];
 	
-	if (!isUploading) {
+	if (isUploading == NO) {
 		return;
 	}
 	
@@ -406,7 +406,7 @@
 	
 	NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
 	
-	if (!self.collectedURLarray) {
+	if (self.collectedURLarray == nil) {
 		self.collectedURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 		
 		[self.collectedURLarray addObject:itemURL];
@@ -415,7 +415,7 @@
 	}
 
 	
-	if (![self.collectedURLarray containsObject:itemURL]) {
+	if ([self.collectedURLarray containsObject:itemURL] == NO) {
 		[self.collectedURLarray addObject:itemURL];
 	}
 }
@@ -462,7 +462,7 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	BOOL isUbiquitousItem = [fileManager isUbiquitousItemAtURL:itemURL];
 	
-	if (!isUbiquitousItem) {
+	if (isUbiquitousItem == NO) {
 		return didEvict;
 	}
 	
@@ -511,7 +511,7 @@
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
 	
-	if (!self.didFinishFirstGathering) {
+	if (self.didFinishFirstGathering == NO) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudDocumentsQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
 	}
 }

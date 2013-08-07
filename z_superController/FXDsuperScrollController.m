@@ -25,14 +25,14 @@
 	
 	FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
 	
-	if (!self.mainScrollview) {
+	if (self.mainScrollview == nil) {
 		return;
 	}
 	
 	
 	//MARK: Following should be closely related to scroll view configuration
 	
-	if (!self.mainScrollview.delegate) {
+	if (self.mainScrollview.delegate == nil) {
 		[self.mainScrollview setDelegate:self];
 	}
 	
@@ -55,7 +55,7 @@
 		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
 	}
 
-	if (self.mainResultsController && !self.mainResultsController.additionalDelegate) {
+	if (self.mainResultsController && self.mainResultsController.additionalDelegate == nil) {
 		[self.mainResultsController setAdditionalDelegate:self];
 	}
 }
@@ -67,19 +67,23 @@
 
 #pragma mark - Property overriding
 - (UINib*)mainCellNib {
-	if (!_mainCellNib) {	FXDLog_DEFAULT;
+	if (_mainCellNib == nil) {
 		if (self.mainCellIdentifier) {
 			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
 		}
 		
-		FXDLog(@"_mainCellNib: %@", _mainCellNib);
+#if ForDEVELOPER
+		if (_mainCellNib) {	FXDLog_DEFAULT;
+			FXDLog(@"_mainCellNib: %@", _mainCellNib);
+		}
+#endif
 	}
 	
 	return _mainCellNib;
 }
 
 - (NSString*)mainCellIdentifier {
-	if (!_mainCellIdentifier) {
+	if (_mainCellIdentifier == nil) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -89,7 +93,7 @@
 #pragma mark -
 - (NSArray*)itemCounts {
 	
-	if (!_itemCounts) {
+	if (_itemCounts == nil) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -98,7 +102,7 @@
 
 - (NSDictionary*)cellTitleDictionary {
 	
-	if (!_cellTitleDictionary) {
+	if (_cellTitleDictionary == nil) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -106,7 +110,7 @@
 }
 
 - (NSDictionary*)cellSubTitleDictionary {
-	if (!_cellSubTitleDictionary) {
+	if (_cellSubTitleDictionary == nil) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -116,7 +120,7 @@
 #pragma mark -
 - (NSMutableArray*)mainDataSource {
 	
-	if (!_mainDataSource) {
+	if (_mainDataSource == nil) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -125,7 +129,7 @@
 
 - (FXDFetchedResultsController*)mainResultsController {
 	
-	if (!_mainResultsController) {
+	if (_mainResultsController == nil) {
 		//FXDLog_OVERRIDE;
 	}
 	
@@ -135,7 +139,7 @@
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	
-	if (!_cellOperationQueue) {	FXDLog_DEFAULT;
+	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 	}
@@ -145,7 +149,7 @@
 
 - (NSMutableDictionary*)cellOperationDictionary {
 	
-	if (!_cellOperationDictionary) {	FXDLog_DEFAULT;
+	if (_cellOperationDictionary == nil) {	FXDLog_DEFAULT;
 		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	
@@ -156,7 +160,7 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
-	if (!parent) {
+	if (parent == nil) {
 		[self stopAllCellOperations];
 		
 		if (self.mainResultsController.additionalDelegate == self) {
@@ -201,7 +205,7 @@
 		operationObjKey = NSIndexPathString(0, rowIndex);
 	}
 	
-	if (!operationObjKey) {
+	if (operationObjKey == nil) {
 		return didCancel;
 	}
 	
@@ -278,7 +282,7 @@
 #pragma mark -
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
 	
-	if (!scrollView) {
+	if (scrollView == nil) {
 		scrollView = self.mainScrollview;
 	}
 	
@@ -315,7 +319,7 @@
 	//FXDLog_OVERRIDE;
 	//FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
 	
-	if (![self.mainScrollview isKindOfClass:[UITableView class]]) {
+	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {
 		return;
 	}
 	

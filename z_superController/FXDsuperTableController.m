@@ -28,7 +28,7 @@
 
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
-	if (!_mainScrollview) {
+	if (_mainScrollview == nil) {
 		
 		if (self.mainTableview) {
 			_mainScrollview = self.mainTableview;
@@ -45,7 +45,7 @@
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
-	if (!parent) {
+	if (parent == nil) {
 		[self.mainTableview setDataSource:nil];
 	}
 	
@@ -55,7 +55,7 @@
 #pragma mark -
 - (void)registerMainCellNib {
 	
-	if (!self.mainCellNib && !self.mainCellIdentifier) {
+	if (self.mainCellNib == nil && self.mainCellIdentifier == nil) {
 		[super registerMainCellNib];
 		return;
 	}
@@ -166,7 +166,7 @@
 #endif
 	
 	if (accessoryView) {
-		if (![(UIImageView*)accessoryView image]) {
+		if ([(UIImageView*)accessoryView image] == nil) {
 			accessoryView = nil;
 		}
 	}
@@ -204,8 +204,7 @@
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
 
-	//MARK: If cell Nib is registered, this will NEVER be nil
-	if (!cell) {
+	if (cell == nil) {
 		cell = [[FXDTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.mainCellIdentifier];
 
 		[self initializeTableCell:cell forIndexPath:indexPath];

@@ -15,13 +15,13 @@
 - (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 	
 	
-	if (![MFMailComposeViewController canSendMail]) {
+	if ([MFMailComposeViewController canSendMail] == NO) {
 		//TODO: alert user
 		return;
 	}
 	
 	
-	if (!emailController) {
+	if (emailController == nil) {
 		if (image || message) {
 			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
 		}
@@ -30,7 +30,7 @@
 		}
 	}
 	
-	if (!presentingController) {
+	if (presentingController == nil) {
 		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 		
 		if (applicationWindow.rootViewController) {

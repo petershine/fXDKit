@@ -54,7 +54,7 @@
 	}
 
 #if TEST_loggingResultObjFiltering
-	if (!resultObj || [filteredArray count] > 1) {
+	if (resultObj == nil || [filteredArray count] > 1) {
 		FXDLog(@"predicate: %@ filteredArray count: %d", predicate, [filteredArray count]);
 	}
 #endif
