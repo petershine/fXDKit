@@ -67,7 +67,7 @@
 #pragma mark - Property overriding
 - (NSMutableArray*)mainDataSource {
 	
-	if (!_mainDataSource) {	FXDLog_DEFAULT;
+	if (_mainDataSource == nil) {	FXDLog_DEFAULT;
 		_mainDataSource = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	

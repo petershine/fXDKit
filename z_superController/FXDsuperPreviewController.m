@@ -114,11 +114,8 @@
 
 #pragma mark - Property overriding
 - (ALAsset*)previewedAsset {
-	if (!_previewedAsset) {	FXDLog_OVERRIDE;
-		//SAMPLE
-		/*
-		_previewedAsset = globalManager.pagedContainer.mainDataSource[self.previewPageIndex];
-		 */
+	if (_previewedAsset == nil) {	FXDLog_OVERRIDE;
+		//_previewedAsset = globalManager.pagedContainer.mainDataSource[self.previewPageIndex];
 	}
 	
 	return _previewedAsset;

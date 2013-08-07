@@ -142,7 +142,7 @@
 	FXDViewController *pushedController = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 		
-	if (![destinationController shouldCoverWhenSlidingIn]
+	if ([destinationController shouldCoverWhenSlidingIn] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
@@ -229,7 +229,7 @@
 	FXDViewController *pulledController = nil;
 	CGRect animatedPulledFrame = CGRectZero;
 	
-	if (![sourceController shouldCoverWhenSlidingIn]
+	if ([sourceController shouldCoverWhenSlidingIn] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		

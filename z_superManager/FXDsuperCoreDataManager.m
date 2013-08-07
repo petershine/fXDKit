@@ -446,7 +446,7 @@
 
 		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
 
-		if (!managedContext.hasChanges
+		if (managedContext.hasChanges == NO
 			&& managedContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
 			
 			managedContext = self.mainDocument.managedObjectContext.parentContext;
