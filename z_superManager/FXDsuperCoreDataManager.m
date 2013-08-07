@@ -353,7 +353,7 @@
 										  [sharedApplication endBackgroundTask:self.enumeratingTaskIdentifier];
 										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 									  }];
-	FXDLog(@"self.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+	FXDLog(@"1.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
 	
 	
 	FXDWindow *applicationWindow = nil;
@@ -398,9 +398,9 @@
 			self.didStartEnumerating = NO;
 			FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
 			
-			
-			FXDblockDidFinish finishingBlock = ^(BOOL finished) {
-				FXDLog(@"finished: %d shouldBreak: %d", finished, shouldBreak);
+			[self
+			 saveMainDocumentWithDidFinishBlock:^(BOOL finished) {
+				FXDLog(@"saveMainDocumentWithDidFinishBlock finished: %d shouldBreak: %d", finished, shouldBreak);
 				
 				if (withDefaultProgressView) {
 					[applicationWindow hideProgressView];
@@ -411,27 +411,17 @@
 				}
 				
 				
-				FXDLog(@"1.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
 				FXDLog_REMAINING;
 				
-				if (self.enumeratingTaskIdentifier != UIBackgroundTaskInvalid) {
-					
-					[[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
-					self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
-					
-					FXDLog(@"2.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
-				}
+				FXDLog(@"2.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+				
+				[[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
+				self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 				
 				if (didFinishBlock) {
 					didFinishBlock(finished);
 				}
-			};
-			
-			#warning "//MARK: Confirm if mainDocument saving need to be done here"
-			
-			//TEST:
-			//[self saveManagedContext:managedContext withDidFinishBlock:finishingBlock];
-			[self saveMainDocumentWithDidFinishBlock:finishingBlock];
+			}];
 		}];
 	}];
 }
@@ -493,8 +483,9 @@
 
 - (void)saveMainDocumentWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
-	FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
-	FXDLog(@"self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
+	FXDLog(@"1.self.mainDocument.documentState: %u", self.mainDocument.documentState);
+	FXDLog(@"1.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
+	
 	
 	self.shouldMergeForManagedContext = YES;
 	
@@ -502,11 +493,13 @@
 	 saveToURL:self.mainDocument.fileURL
 	 forSaveOperation:UIDocumentSaveForOverwriting
 	 completionHandler:^(BOOL success) {
-		 FXDLog(@"success: %d", success);
-		 FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
+		 FXDLog(@"saveToURL success: %d", success);
+		 
+		 FXDLog(@"2.self.mainDocument.documentState: %u", self.mainDocument.documentState);
+		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 		 
 		 if (didFinishBlock) {
-			 didFinishBlock((success));
+			 didFinishBlock(success);
 		 }
 	 }];
 }
@@ -529,23 +522,17 @@
 									  }];
 	FXDLog(@"1.savingTaskIdentifier: %u", self.savingTaskIdentifier);
 	
-	FXDblockDidFinish finishingBlock = ^(BOOL finished) {
-		FXDLog(@"finished: %d", finished);
+	[self
+	 saveMainDocumentWithDidFinishBlock:^(BOOL finished) {
+		FXDLog(@"saveMainDocumentWithDidFinishBlock finished: %d", finished);
 		
 		FXDLog_REMAINING;
 		
-		if (self.savingTaskIdentifier != UIBackgroundTaskInvalid) {
-			
-			[[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
-			self.savingTaskIdentifier = UIBackgroundTaskInvalid;
-			
-			FXDLog(@"2.savingTaskIdentifier: %u", self.savingTaskIdentifier);
-		}
-	};
-	
-	//TEST:
-	//[self saveManagedContext:nil withDidFinishBlock:finishingBlock];
-	[self saveMainDocumentWithDidFinishBlock:finishingBlock];
+		FXDLog(@"2.savingTaskIdentifier: %u", self.savingTaskIdentifier);
+		
+		[[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
+		self.savingTaskIdentifier = UIBackgroundTaskInvalid;
+	}];
 }
 
 #pragma mark -

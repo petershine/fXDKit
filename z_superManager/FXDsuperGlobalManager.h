@@ -27,8 +27,8 @@
 @property (nonatomic) BOOL didMakePurchase;
 @property (nonatomic) BOOL didShareToSocialNet;
 
-@property (strong, nonatomic) NSString *mainStoryboardName;
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
+@property (strong, nonatomic) NSString *mainStoryboardName;
 
 // Properties
 @property (strong, nonatomic) NSString *deviceLanguageCode;
@@ -69,8 +69,12 @@
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
+- (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification;
 
 - (void)observedNSUserDefaultsDidChange:(NSNotification*)notification;
+
+- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification;
+- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

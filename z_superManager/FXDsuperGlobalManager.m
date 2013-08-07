@@ -59,22 +59,22 @@
 }
 
 #pragma mark -
-- (NSString*)mainStoryboardName {
-	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
-		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
-	}
-
-	return _mainStoryboardName;
-}
-
 - (FXDStoryboard*)mainStoryboard {
 	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
 		if (self.mainStoryboardName) {
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
 	}
-
+	
 	return _mainStoryboard;
+}
+
+- (NSString*)mainStoryboardName {
+	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
+		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
+	}
+
+	return _mainStoryboardName;
 }
 
 #pragma mark -
@@ -335,7 +335,7 @@
 	 name:UIApplicationDidChangeStatusBarFrameNotification
 	 object:nil];
 
-	
+	//
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillResignActive:)
@@ -360,11 +360,30 @@
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
 	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationSignificantTimeChange:)
+	 name:UIApplicationSignificantTimeChangeNotification
+	 object:nil];
 	
+	//
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSUserDefaultsDidChange:)
 	 name:NSUserDefaultsDidChangeNotification
+	 object:nil];
+	
+	//
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIDeviceBatteryStateDidChange:)
+	 name:UIDeviceBatteryStateDidChangeNotification
+	 object:nil];
+	
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIDeviceBatteryLevelDidChange:)
+	 name:UIDeviceBatteryLevelDidChangeNotification
 	 object:nil];
 }
 
@@ -452,9 +471,18 @@
 }
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
+- (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
 
 #pragma mark -
 - (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {	//FXDLog_OVERRIDE;
+}
+
+#pragma mark -
+- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+
+- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 
 //MARK: - Delegate implementation
