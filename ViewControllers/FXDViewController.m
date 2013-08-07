@@ -17,7 +17,8 @@
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
 	[super didReceiveMemoryWarning];
 
-	FXDLog(@"self.view.window: %@ self.view.superview: %@", self.view.window, self.view.superview);
+	FXDLog(@"self.view.window: %@", self.view.window);
+	FXDLog(@"self.view.superview: %@", self.view.superview);
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;
