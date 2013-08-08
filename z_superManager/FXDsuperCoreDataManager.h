@@ -7,7 +7,6 @@
 //
 
 
-//SAMPLE: For managing attribute names
 /*
 #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
 #define attribkey<#AttributeName#> @"<#AttributeName#>"
@@ -44,9 +43,7 @@
 #endif
 
 #if USE_iCloudCoreData
-/* SAMPLE
- [[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
- */
+//[[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
 #endif
 
 
@@ -111,7 +108,7 @@
 - (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
-- (void)saveMainDocumentWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 
 //MARK: - Observer implementation

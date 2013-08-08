@@ -57,6 +57,8 @@
 
 	if (self.mainResultsController && self.mainResultsController.additionalDelegate == nil) {
 		[self.mainResultsController setAdditionalDelegate:self];
+		
+		FXDLog(@"self.mainResultsController.additionalDelegate: %@", self.mainResultsController.additionalDelegate);
 	}
 }
 

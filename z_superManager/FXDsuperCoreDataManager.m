@@ -399,8 +399,9 @@
 			FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
 			
 			[self
-			 saveMainDocumentWithDidFinishBlock:^(BOOL finished) {
-				FXDLog(@"saveMainDocumentWithDidFinishBlock finished: %d shouldBreak: %d", finished, shouldBreak);
+			 saveMainDocumentShouldSkipMerge:NO
+			 withDidFinishBlock:^(BOOL finished) {
+				FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d shouldBreak: %d", finished, shouldBreak);
 				
 				if (withDefaultProgressView) {
 					[applicationWindow hideProgressView];
@@ -481,13 +482,21 @@
 	}
 }
 
-- (void)saveMainDocumentWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
+- (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
+	FXDLog(@"shouldSkipMerge: %d", shouldSkipMerge);
 	FXDLog(@"1.self.mainDocument.documentState: %u", self.mainDocument.documentState);
 	FXDLog(@"1.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 	
+	if (shouldSkipMerge) {
+		self.shouldMergeForManagedContext = NO;
+	}
+	else {
+		self.shouldMergeForManagedContext = YES;
+	}
 	
-	self.shouldMergeForManagedContext = YES;
+	FXDLog(@"self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
+	
 	
 	[self.mainDocument
 	 saveToURL:self.mainDocument.fileURL
@@ -523,8 +532,9 @@
 	FXDLog(@"1.savingTaskIdentifier: %u", self.savingTaskIdentifier);
 	
 	[self
-	 saveMainDocumentWithDidFinishBlock:^(BOOL finished) {
-		FXDLog(@"saveMainDocumentWithDidFinishBlock finished: %d", finished);
+	 saveMainDocumentShouldSkipMerge:NO
+	 withDidFinishBlock:^(BOOL finished) {
+		FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d", finished);
 		
 		FXDLog_REMAINING;
 		
