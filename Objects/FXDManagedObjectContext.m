@@ -92,6 +92,7 @@
 	NSFetchRequest *fetchRequest = nil;
 	
 	if (entityName == nil || sortDescriptors == nil) {
+		NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: entityName: %@, sortDescriptors: %@", entityName, sortDescriptors);
 		return nil;
 	}
 

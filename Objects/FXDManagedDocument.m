@@ -52,23 +52,23 @@
 	[super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
 }
 
+
+#if TEST_loggingManagedDocumentAutoSaving
 #pragma mark -
-- (id)changeCountTokenForSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDLog_DEFAULT;
-	FXDLog(@"saveOperation: %d", saveOperation);
+- (id)changeCountTokenForSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDdocLog_DEFAULT;
+	FXDdocLog(@"saveOperation: %d", saveOperation);
 	
 	id changeCountToken = [super changeCountTokenForSaveOperation:saveOperation];
-	FXDLog(@"changeCountToken: %@", changeCountToken);
+	FXDdocLog(@"changeCountToken: %@", changeCountToken);
 	
 	return changeCountToken;
 }
 
-- (void)updateChangeCountWithToken:(id)changeCountToken forSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDLog_DEFAULT;
-	FXDLog(@"changeCountToken: %@, saveOperation: %d", changeCountToken, saveOperation);
+- (void)updateChangeCountWithToken:(id)changeCountToken forSaveOperation:(UIDocumentSaveOperation)saveOperation {	FXDdocLog_DEFAULT;
+	FXDdocLog(@"changeCountToken: %@, saveOperation: %d", changeCountToken, saveOperation);
 	[super updateChangeCountWithToken:changeCountToken forSaveOperation:saveOperation];
 }
 
-
-#if TEST_loggingManagedDocumentAutoSaving
 #pragma mark -
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)outError {	FXDdocLog_DEFAULT;
 	FXDdocLog(@"contents: %@, typeName: %@, *outError: %@", contents, typeName, *outError);

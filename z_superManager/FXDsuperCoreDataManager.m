@@ -323,7 +323,10 @@
 									 NSManagedObject *mainEntityObj,
 									 BOOL *shouldBreak) {
 				  
-				  FXDLog(@"enumerateAllMainEntityObjWithDefaultProgressView shouldBreak: %d", *shouldBreak);
+				  //TODO: Implement shouldBreak different, making this block to return boolean
+				  if (*shouldBreak) {
+					  FXDLog(@"enumerateAllMainEntityObjWithDefaultProgressView shouldBreak: %d", *shouldBreak);
+				  }
 				  
 				  [mainManagedContext deleteObject:mainEntityObj];
 				  
