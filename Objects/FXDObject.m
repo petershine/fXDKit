@@ -20,12 +20,6 @@
 
 
 #pragma mark - Initialization
-#warning "TODO: Later, refactor sharedInstace method to be used only in FXDObject
-#if __IPHONE_7_0
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-#endif
 
 #pragma mark - Property overriding
 
