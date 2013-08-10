@@ -31,7 +31,7 @@
 // Properties
 @property (nonatomic) BOOL didStartAutoScrollingToTop;
 
-@property (nonatomic) BOOL shouldSkipDismissingByPullingDown;
+@property (nonatomic) BOOL shouldDismissingByPullingDown;
 @property (nonatomic) BOOL didStartDismissingByPullingDown;
 
 @property (nonatomic) CGFloat offsetYdismissingController;

@@ -355,7 +355,7 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
 	
-	if (self.shouldSkipDismissingByPullingDown) {
+	if (self.shouldDismissingByPullingDown == NO) {
 		return;
 	}
 	

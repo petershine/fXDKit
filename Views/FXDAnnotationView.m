@@ -55,9 +55,9 @@
 		[self awakeFromNib];
 		
 		
-#ifdef image_MapViewDefaultPin
+#ifdef imgeDefaultPinAnnotation
 		if (defaultImage == nil) {
-			defaultImage = image_MapViewDefaultPin;
+			defaultImage = imgeDefaultPinAnnotation;
 		}
 #endif
 		
