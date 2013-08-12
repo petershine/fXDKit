@@ -79,13 +79,13 @@
 	}
 }
 
-- (void)willTransitionToState:(UITableViewCellStateMask)state {	FXDLog_DEFAULT;
-	FXDLog(@"state: %d", state);
+- (void)willTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
+	//FXDLog(@"state: %d", state);
 	[super willTransitionToState:state];
 }
 
-- (void)didTransitionToState:(UITableViewCellStateMask)state {	FXDLog_DEFAULT;
-	FXDLog(@"state: %d", state);
+- (void)didTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
+	//FXDLog(@"state: %d", state);
 	[super didTransitionToState:state];
 }
 

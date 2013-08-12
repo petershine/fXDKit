@@ -140,6 +140,11 @@
 }
 
 - (void)fadeInFromHidden {
+	if (self.hidden == NO && self.alpha == 1.0) {
+		return;
+	}
+	
+	
 	self.alpha = 0.0;
 	
 	if (self.hidden) {
@@ -157,6 +162,11 @@
 }
 
 - (void)fadeOutThenHidden {
+	if (self.hidden) {
+		return;
+	}
+	
+	
 	[UIView
 	 animateWithDuration:durationQuickAnimation
 	 delay:0
