@@ -291,13 +291,18 @@
 }
 
 #pragma mark -
-- (void)slideOutAllLateAddedController {	FXDLog_DEFAULT;
+- (void)slideOutAllLaterAddedControllerWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	//MARK: Assume direction is only vertical
 	
 	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
 	
 	if ([self.childViewControllers count] == 0
 		|| [self.childViewControllers lastObject] == self.frontController) {
+		
+		if (didFinishBlock) {
+			didFinishBlock(YES);
+		}
+		
 		return;
 	}
 	
@@ -321,6 +326,11 @@
 	
 	if ([lateAddedControllerArray count] == 0) {
 		lateAddedControllerArray = nil;
+		
+		if (didFinishBlock) {
+			didFinishBlock(YES);
+		}
+		
 		return;
 	}
 	
@@ -374,6 +384,10 @@
 		 animatedFrameObjArray = nil;
 		 
 		 FXDLog(@"2.self.childViewControllers: %@", self.childViewControllers);
+		 
+		 if (didFinishBlock) {
+			 didFinishBlock(YES);
+		 }
 	 }];
 }
 

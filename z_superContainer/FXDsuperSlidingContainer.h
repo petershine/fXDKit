@@ -41,7 +41,7 @@
 - (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue;
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue;
 
-- (void)slideOutAllLateAddedController;
+- (void)slideOutAllLaterAddedControllerWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 - (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
