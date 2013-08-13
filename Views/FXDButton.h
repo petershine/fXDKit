@@ -10,18 +10,24 @@
 @interface FXDButton : UIButton
 
 // Properties
-@property (strong, nonatomic) id addedObj;
 
 // IBOutlets
+@property (strong, nonatomic) IBOutlet UILabel *labelCustom;
 
 
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (void)customizeWithTitle:(NSString*)title;
 
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
 
+@end
+
+
+@interface UIButton (Added)
+- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
 @end
