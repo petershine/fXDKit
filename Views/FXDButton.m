@@ -28,24 +28,35 @@
 
 
 #pragma mark - Property overriding
+- (UILabel*)customTitleLabel {
+	
+	if (_customTitleLabel == nil) {
+		_customTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
+		
+		_customTitleLabel.textAlignment = NSTextAlignmentCenter;
+		
+		_customTitleLabel.backgroundColor = [UIColor clearColor];
+		_customTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+		
+		[self addSubview:_customTitleLabel];
+		[self bringSubviewToFront:_customTitleLabel];
+	}
+	
+	return _customTitleLabel;
+}
+
+- (void)setCustomTitleLabel:(UILabel *)customTitleLabel {
+	[_customTitleLabel removeFromSuperview];
+	_customTitleLabel = nil;
+	
+	_customTitleLabel = customTitleLabel;
+	[self addSubview:_customTitleLabel];
+	[self bringSubviewToFront:_customTitleLabel];
+}
 
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)customizeWithTitle:(NSString*)title {
-	if (self.labelCustom == nil) {
-		self.labelCustom = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
-		
-		self.labelCustom.textAlignment = NSTextAlignmentCenter;
-		
-		self.labelCustom.backgroundColor = [UIColor clearColor];
-		self.labelCustom.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-		
-		[self addSubview:self.labelCustom];
-	}
-	
-	self.labelCustom.text = title;
-}
 
 
 //MARK: - Observer implementation
@@ -64,6 +75,22 @@
 		if (image) {
 			image = [image resizableImageWithCapInsets:capInsets];
 			[self setImage:image forState:state];
+		}
+	};
+	
+	ResizeForState(UIControlStateNormal);
+	ResizeForState(UIControlStateHighlighted);
+	ResizeForState(UIControlStateSelected);
+	ResizeForState(UIControlStateDisabled);
+}
+
+- (void)replaceBackgroundImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
+	void (^ResizeForState)(UIControlState state) = ^(UIControlState state){
+		UIImage *image = [self backgroundImageForState:state];
+		
+		if (image) {
+			image = [image resizableImageWithCapInsets:capInsets];
+			[self setBackgroundImage:image forState:state];
 		}
 	};
 	

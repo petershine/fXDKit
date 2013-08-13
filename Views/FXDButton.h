@@ -7,18 +7,19 @@
 //
 
 
-@interface FXDButton : UIButton
+@interface FXDButton : UIButton {
+	UILabel *_customTitleLabel;
+}
 
 // Properties
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet UILabel *labelCustom;
+@property (strong, nonatomic) IBOutlet UILabel *customTitleLabel;
 
 
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)customizeWithTitle:(NSString*)title;
 
 
 //MARK: - Observer implementation
@@ -30,4 +31,5 @@
 
 @interface UIButton (Added)
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
+- (void)replaceBackgroundImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
 @end
