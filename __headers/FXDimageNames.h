@@ -18,12 +18,12 @@
 	#define imageToolbarBackground	[UIImage bundledImageForName:@"toolbarBackground"]
 #endif
 
-#ifndef imageNavibarBtnBackOff
-	#define imageNavibarBtnBackOff	[UIImage bundledImageForName:@"btn_back"]
+#ifndef imageNavibarBtnBackNormal
+	#define imageNavibarBtnBackNormal	[UIImage bundledImageForName:@"btn_back"]
 #endif
 
-#ifndef imageNavibarBtnBackOn
-	#define imageNavibarBtnBackOn	[UIImage bundledImageForName:@"btn_back_on"]
+#ifndef imageNavibarBtnBackHighlighted
+	#define imageNavibarBtnBackHighlighted	[UIImage bundledImageForName:@"btn_back_on"]
 #endif
 
 #ifndef imageNavibarBtnHomeOff

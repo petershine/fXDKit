@@ -14,19 +14,19 @@
 #pragma mark - Public
 - (void)customizeBackBarbuttonWithDefaultImagesForTarget:(id)target shouldHideForRoot:(BOOL)shouldHideForRoot {	FXDLog_DEFAULT;
 
-	UIImage *offImage = nil;
-	UIImage *onImage = nil;
+	UIImage *normalImage = nil;
+	UIImage *highlightedImage = nil;
 
 	BOOL shouldUseBackTitle = NO;
 
-#ifdef imageNavibarBtnBackOff
-	offImage = imageNavibarBtnBackOff;
+#ifdef imageNavibarBtnBackNormal
+	normalImage = imageNavibarBtnBackNormal;
 #else
 	shouldUseBackTitle = YES;
 #endif
 
-#ifdef imageNavibarBtnBackOn
-	onImage = imageNavibarBtnBackOn;
+#ifdef imageNavibarBtnBackHighlighted
+	highlightedImage = imageNavibarBtnBackHighlighted;
 #endif
 
 	SEL action = nil;
@@ -35,14 +35,18 @@
 
 	if ([self.navigationController.viewControllers count] > 1) {	// If there is more than 1 navigated interfaces
 
+		//TEST:
+		/*
 		if ([self.navigationController.viewControllers count] == 2) {
 			action = @selector(popToRootSceneWithAnimationForSender:);
 		}
 		else {
 			action = @selector(popSceneWithAnimationForSender:);
 		}
+		 */
+		action = @selector(popSceneWithAnimationForSender:);
 
-		FXDLog(@"onImage: %@, offImage: %@", onImage, offImage);
+		FXDLog(@"highlightedImage: %@, normalImage: %@", highlightedImage, normalImage);
 
 	}
 	else {
@@ -58,25 +62,30 @@
 		if (shouldUseBackTitle) {
 			[self
 			 customizeLeftBarbuttonWithText:NSLocalizedString(text_Back, nil)
-			 andWithOnImage:onImage
-			 andWithOffImage:offImage
+			 andWithOnImage:highlightedImage
+			 andWithOffImage:normalImage
 			 withOffset:CGPointZero
 			 forTarget:target
 			 forAction:action];
 		}
 		else {
 			[self
-			 customizeLeftBarbuttonWithOnImage:onImage
-			 andWithOffImage:offImage
+			 customizeLeftBarbuttonWithOnImage:highlightedImage
+			 andWithOffImage:normalImage
 			 withOffset:CGPointZero
 			 forTarget:target
 			 forAction:action];
 		}
 	}
+	//TEST:
+	/*
 	else {
 		self.navigationItem.hidesBackButton = YES;
 		self.navigationItem.leftItemsSupplementBackButton = YES;
 	}
+	 */
+	self.navigationItem.hidesBackButton = YES;
+	self.navigationItem.leftItemsSupplementBackButton = YES;
 }
 
 - (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
