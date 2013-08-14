@@ -5,7 +5,7 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#warning "TODO: When the new SDK is finally released, just check the device version only"
+#warning "//TODO: When the new SDK is finally released, just check the device version only"
 #if __IPHONE_7_0
 #else
 	typedef id instancetype;

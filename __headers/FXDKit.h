@@ -74,6 +74,8 @@
 
 #import	"FXDIndexPath.h"
 
+#import "FXDBarButtonItem.h"
+
 
 // Views
 #import "FXDView.h"
