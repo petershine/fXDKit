@@ -58,7 +58,6 @@
 	FXDLog(@"storyboard: %@, nibName: %@", self.storyboard, self.nibName);
 }
 
-#pragma mark -
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
 

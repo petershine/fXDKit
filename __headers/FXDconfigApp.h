@@ -8,5 +8,5 @@
 
 
 #ifndef application_AppStoreID
-	#define application_AppStoreID	000000000
+	#define application_AppStoreID	@"000000000"
 #endif

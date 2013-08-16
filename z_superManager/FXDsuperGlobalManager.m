@@ -103,6 +103,8 @@
 		}
 		FXDLog(@"2._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
 	}
+	
+	FXDLog(@"_deviceLanguageCode: %@", _deviceLanguageCode);
 
 	return _deviceLanguageCode;
 }
