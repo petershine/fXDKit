@@ -49,10 +49,16 @@
 #define text_Settings	@"text_Settings"
 #define text_Information @"text_Information"
 
-#define text_Cancel		@"text_Cancel"
+#ifndef text_Cancel
+	#define text_Cancel		@"text_Cancel"
+#endif
+
+#ifndef text_OK
+	#define text_OK			@"text_OK"
+#endif
+
 #define text_Canceling	@"text_Canceling"
 #define text_Accepting	@"text_Accepting"
-#define text_OK			@"text_OK"
 
 #define text_Back		@"text_Back"
 #define text_Reset		@"text_Reset"

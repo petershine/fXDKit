@@ -300,7 +300,13 @@
 	
 	
 	applicationWindow.messageView.labelTitle.text = title;
-	applicationWindow.messageView.textviewMessage.text = message;
+	
+	if (applicationWindow.messageView.textviewMessage) {
+		applicationWindow.messageView.textviewMessage.text = message;
+	}
+	else {
+		applicationWindow.messageView.labelMessage_0.text = message;
+	}
 	
 	[applicationWindow.messageView configureWithCancelButtonTitle:cancelButtonTitle withAcceptButtonTitle:acceptButtonTitle];
 	
