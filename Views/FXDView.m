@@ -221,7 +221,7 @@
 }
 
 #pragma mark -
-- (UIImage*)renderedImageForDeviceScale {
+- (UIImage*)renderedImageForScreenScale {
 	return [self renderedImageForScale:[UIScreen mainScreen].scale];
 }
 
