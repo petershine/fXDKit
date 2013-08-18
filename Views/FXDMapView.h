@@ -39,6 +39,8 @@
 - (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate;
 - (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atGridIndex:(NSString*)gridIndex;
 
+- (CLLocationCoordinate2D)snappedCoordinatedForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate;
+
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 
 - (MKMapRect)visibleMapRectAtCoordinate:(CLLocationCoordinate2D)coordinate withScale:(CGFloat)scale;

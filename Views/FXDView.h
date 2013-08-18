@@ -47,6 +47,7 @@
 - (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock;
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock;
 
+- (UIImage*)renderedImageForDeviceScale:
 - (UIImage*)renderedImageForScale:(CGFloat)scale;
 
 - (id)parentViewOfClassName:(NSString*)className;

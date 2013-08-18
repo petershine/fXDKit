@@ -221,6 +221,10 @@
 }
 
 #pragma mark -
+- (UIImage*)renderedImageForDeviceScale {
+	return [self renderedImageForScale:[UIScreen mainScreen].scale];
+}
+
 - (UIImage*)renderedImageForScale:(CGFloat)scale {
 
 	UIImage *image = nil;

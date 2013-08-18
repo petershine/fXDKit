@@ -157,6 +157,18 @@
 	return gridMapRect;
 }
 
+- (CLLocationCoordinate2D)snappedCoordinatedForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
+	
+	NSString *gridIndex = [self snappedGridIndexForGridDimension:gridDimension forZoomScale:zoomScale atCoordinate:coordinate];
+	MKMapRect snappedGridMapRect = [self snappedGridMapRectForGridDimension:gridDimension forZoomScale:zoomScale atGridIndex:gridIndex];
+	
+	MKMapPoint snappedMapPoint = MKMapPointMake(MKMapRectGetMidX(snappedGridMapRect), MKMapRectGetMidY(snappedGridMapRect));
+	
+	CLLocationCoordinate2D snappedCoordinate = MKCoordinateForMapPoint(snappedMapPoint);
+	
+	return snappedCoordinate;
+}
+
 #pragma mark -
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion {
 	CGPoint oldCenter = [self convertCoordinate:lastRegion.center toPointToView:self];
