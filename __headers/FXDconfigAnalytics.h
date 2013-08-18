@@ -77,6 +77,9 @@
 #endif
 
 
+#warning "//MARK: Convenience logging. Make sure below is applicapable for both DEBUG & RELEASE
+#define FXDLog_FULL_ERROR	FXDLog_ERROR;LOGEVENT_ERROR;CHECKPOINT_ERROR;
+
 #endif
 
 
