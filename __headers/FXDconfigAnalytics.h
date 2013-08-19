@@ -15,14 +15,12 @@
 		#ifndef USE_TestFlight
 			#define USE_TestFlight	0
 		#endif
-
 	#else
 		#ifndef USE_TestFlight
 			#define USE_TestFlight	1
 		#endif
 
 	#endif
-
 #else
 	#ifndef USE_TestFlight
 		#define USE_TestFlight	0
@@ -77,8 +75,9 @@
 #endif
 
 
-#warning "//MARK: Convenience logging. Make sure below is applicapable for both DEBUG & RELEASE
-#define FXDLog_FULL_ERROR	FXDLog_ERROR;LOGEVENT_ERROR;CHECKPOINT_ERROR;
+#warning "//MARK: NOT stableConvenience logging. Make sure below is applicapable for both DEBUG & RELEASE
+//#define FXDLog_FULL_ERROR	FXDLog_ERROR;LOGEVENT_ERROR;CHECKPOINT_ERROR
+#define FXDLog_FULL_ERROR	FXDLog_ERROR
 
 #endif
 
