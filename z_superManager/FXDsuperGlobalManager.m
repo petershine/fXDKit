@@ -60,10 +60,15 @@
 
 #pragma mark -
 - (FXDStoryboard*)mainStoryboard {
-	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
+	if (_mainStoryboard == nil) {
 		if (self.mainStoryboardName) {
 			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
+#if ForDEVELOPER
+		else {
+			FXDLog_OVERRIDE;
+		}
+#endif
 	}
 	
 	return _mainStoryboard;
