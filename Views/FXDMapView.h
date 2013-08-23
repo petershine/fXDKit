@@ -35,9 +35,10 @@
 - (BOOL)isHorizontal;
 
 - (MKZoomScale)zoomScale;
+- (MKZoomScale)snappedZoomScaleForOriginalZoomScale:(MKZoomScale)originalZoomScale;
 
-- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate;
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atGridIndex:(NSString*)gridIndex;
+- (NSString*)snappedGridIndexKeyForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate;
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atGridIndexKey:(NSString*)gridIndexKey;
 
 - (CLLocationCoordinate2D)snappedCoordinatedForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate;
 

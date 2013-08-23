@@ -6,7 +6,6 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-//MARK: Make sure following frameworks are imported
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 

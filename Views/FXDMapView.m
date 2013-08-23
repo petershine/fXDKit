@@ -109,8 +109,39 @@
 	return zoomScale;
 }
 
+- (MKZoomScale)snappedZoomScaleForOriginalZoomScale:(MKZoomScale)originalZoomScale {
+	FXDLog(@"originalZoomScale: %f", originalZoomScale);
+	
+	//MARK: Factor for snapping zoomScale
+	CGFloat factor = 2.0;
+	
+	//TODO: Check if the user wants different grid size
+	
+	
+	CGFloat denominator = 1.0/originalZoomScale;
+	FXDLog(@"1.denominator: 1.0 / %f = %f", originalZoomScale, denominator);
+	
+	if (denominator >= factor) {
+		denominator = (CGFloat)((NSInteger)denominator/(NSInteger)factor) *factor;
+	}
+	else {
+		denominator = ((NSInteger)denominator)%(NSInteger)factor;
+	}
+	
+	FXDLog(@"2.denominator: %f", denominator);
+	
+	
+	MKZoomScale snappedZoomScale = 1.0/denominator;
+	
+	if (snappedZoomScale == INFINITY) {
+		snappedZoomScale = 1.0;
+	}
+	
+	return snappedZoomScale;
+}
+
 #pragma mark -
-- (NSString*)snappedGridIndexForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
+- (NSString*)snappedGridIndexKeyForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
 	
 	CGFloat scaledDimension = gridDimension/zoomScale;
 	
@@ -138,16 +169,16 @@
 		yIndex++;
 	}
 	
-	NSString *gridIndex = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
+	NSString *gridIndexKey = [NSString stringWithFormat:@"%d_%d", xIndex, yIndex];
 	
-	return gridIndex;
+	return gridIndexKey;
 }
 
-- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atGridIndex:(NSString*)gridIndex {
+- (MKMapRect)snappedGridMapRectForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atGridIndexKey:(NSString*)gridIndexKey {
 	
 	CGFloat scaledDimension = gridDimension/zoomScale;
 	
-	NSArray *components = [gridIndex componentsSeparatedByString:@"_"];
+	NSArray *components = [gridIndexKey componentsSeparatedByString:@"_"];
 	
 	NSInteger xIndex = [components[0] integerValue];
 	NSInteger yIndex = [components[1] integerValue];
@@ -159,8 +190,8 @@
 
 - (CLLocationCoordinate2D)snappedCoordinatedForGridDimension:(CGFloat)gridDimension forZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate {
 	
-	NSString *gridIndex = [self snappedGridIndexForGridDimension:gridDimension forZoomScale:zoomScale atCoordinate:coordinate];
-	MKMapRect snappedGridMapRect = [self snappedGridMapRectForGridDimension:gridDimension forZoomScale:zoomScale atGridIndex:gridIndex];
+	NSString *gridIndexKey = [self snappedGridIndexKeyForGridDimension:gridDimension forZoomScale:zoomScale atCoordinate:coordinate];
+	MKMapRect snappedGridMapRect = [self snappedGridMapRectForGridDimension:gridDimension forZoomScale:zoomScale atGridIndexKey:gridIndexKey];
 	
 	MKMapPoint snappedMapPoint = MKMapPointMake(MKMapRectGetMidX(snappedGridMapRect), MKMapRectGetMidY(snappedGridMapRect));
 	
