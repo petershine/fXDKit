@@ -319,7 +319,7 @@
 		 if (buttonIndex == buttonIndexAccept) {
 			 [self
 			  enumerateAllMainEntityObjWithDefaultProgressView:YES
-			  withEnumerationBlock:^(NSManagedObjectContext *mainManagedContext,
+			  withEnumerationBlock:^(NSManagedObjectContext *managedContext,
 									 NSManagedObject *mainEntityObj,
 									 BOOL *shouldBreak) {
 				  
@@ -328,7 +328,7 @@
 					  FXDLog(@"enumerateAllMainEntityObjWithDefaultProgressView shouldBreak: %d", *shouldBreak);
 				  }
 				  
-				  [mainManagedContext deleteObject:mainEntityObj];
+				  [managedContext deleteObject:mainEntityObj];
 				  
 			  } withDidFinishBlock:didFinishBlock];
 		 }
@@ -336,8 +336,19 @@
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *mainManagedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 	
+	[self
+	 enumerateAllMainEntityObjShouldUsePrivateContext:NO
+	 shouldSaveAtTheEnd:YES
+	 withDefaultProgressView:withDefaultProgressView
+	 withEnumerationBlock:enumerationBlock
+	 withDidFinishBlock:didFinishBlock];
+}
+
+- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+	
+	FXDLog(@"shouldUsePrivateContext: %d", shouldUsePrivateContext);
 	FXDLog(@"0.self.didStartEnumerating: %d", self.didStartEnumerating);
 	
 	//TODO: Decide if returning is not appropriate
@@ -352,7 +363,7 @@
 	UIApplication *sharedApplication = [UIApplication sharedApplication];
 	
 	self.enumeratingTaskIdentifier = [sharedApplication
-									  beginBackgroundTaskWithExpirationHandler:^{								  
+									  beginBackgroundTaskWithExpirationHandler:^{
 										  [sharedApplication endBackgroundTask:self.enumeratingTaskIdentifier];
 										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 									  }];
@@ -365,14 +376,14 @@
 		applicationWindow = [FXDWindow applicationWindow];
 		[applicationWindow showDefaultProgressView];
 	}
-
+	
 	
 	__block BOOL shouldBreak = NO;
 	
-	NSManagedObjectContext *managedContext = self.mainDocument.managedObjectContext;
+	NSManagedObjectContext *managedContext = (shouldUsePrivateContext) ? self.mainDocument.managedObjectContext.parentContext:self.mainDocument.managedObjectContext;
 	
 	[[NSOperationQueue new] addOperationWithBlock:^{
-				
+		
 		NSArray *fetchedObjArray = [managedContext
 									fetchedObjArrayForEntityName:self.mainEntityName
 									withSortDescriptors:self.mainSortDescriptors
@@ -388,9 +399,15 @@
 			if (enumerationBlock) {
 				NSManagedObject *mainEntityObj = [managedContext objectWithID:[fetchedObj objectID]];
 				
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				//TEST:
+				if (shouldUsePrivateContext) {
 					enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
-				}];
+				}
+				else {
+					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+						enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
+					}];
+				}
 			}
 			
 			FXDLog_REMAINING;
@@ -401,9 +418,8 @@
 			self.didStartEnumerating = NO;
 			FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
 			
-			[self
-			 saveMainDocumentShouldSkipMerge:NO
-			 withDidFinishBlock:^(BOOL finished) {
+			
+			FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
 				FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d shouldBreak: %d", finished, shouldBreak);
 				
 				if (withDefaultProgressView) {
@@ -413,6 +429,8 @@
 				if (shouldBreak) {
 					finished = NO;
 				}
+				
+				FXDLog(@"finished: %d, shouldBreak: %d", finished, shouldBreak);
 				
 				
 				FXDLog_REMAINING;
@@ -425,7 +443,17 @@
 				if (didFinishBlock) {
 					didFinishBlock(finished);
 				}
-			}];
+			};
+			
+			
+			if (shouldSaveAtTheEnd == NO) {
+				DidEnumerateBlock(YES);
+				
+				return;
+			}
+			
+			
+			[self saveMainDocumentShouldSkipMerge:NO withDidFinishBlock:DidEnumerateBlock];
 		}];
 	}];
 }
