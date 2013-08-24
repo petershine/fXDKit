@@ -89,29 +89,49 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)signInBySelectingTwitterAccountWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)signInBySelectingTwitterAccountWithPresentingView:(UIView*)presentingView withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	FXDLog(@"accountType.accountTypeDescription: %@", self.accountType.accountTypeDescription);
 	FXDLog(@"accountType.accessGranted: %d", self.accountType.accessGranted);
 	
 	if (self.accountType.accessGranted) {
-		[self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+		//[self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+		[self showActionSheetInPresentingView:presentingView forSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+		return;
 	}
-	else {
-		[self.accountStore
-		 requestAccessToAccountsWithType:self.accountType
-		 options:nil
-		 completion:^(BOOL granted, NSError *error) {
-			 FXDLog(@"granted: %d", granted);
-
-			 FXDLog_ERROR;
-
-			 if (granted) {
-				 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					 [self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
-				 }];
+	
+	
+	[self.accountStore
+	 requestAccessToAccountsWithType:self.accountType
+	 options:nil
+	 completion:^(BOOL granted, NSError *error) {
+		 FXDLog(@"granted: %d", granted);
+		 
+		 FXDLog_ERROR;
+		 
+		 if (granted) {
+			 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				 //[self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+				 [self showActionSheetInPresentingView:presentingView forSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+			 }];
+		 }
+		 else {
+			 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				 FXDAlertView *alertView =
+				 [[FXDAlertView alloc]
+				  initWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
+				  message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+				  clickedButtonAtIndexBlock:nil
+				  cancelButtonTitle:NSLocalizedString(text_OK, nil)
+				  otherButtonTitles:nil];
+				 
+				 [alertView show];
+			 }];
+			 
+			 if (didFinishBlock) {
+				 didFinishBlock(NO);
 			 }
-		 }];
-	}
+		 }
+	 }];
 }
 
 - (void)showAlertViewForSelectingTwitterAccountWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
@@ -127,83 +147,156 @@
 	}
 
 
-	NSString *alertTitle = NSLocalizedString(alert_SelectTwitterAccount, nil);
-	NSString *alertMessage = NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil);
-	NSString *cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
-
-	if (self.mainTwitterAccount) {
-		cancelButtonTitle = NSLocalizedString(text_SignOut, nil);
-	}
-
-
 	FXDAlertView *alertView =
 	[[FXDAlertView alloc]
-	 initWithTitle:alertTitle
-	 message:alertMessage
+	 initWithTitle:NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil)
+	 message:nil
 	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
-		 FXDLog(@"buttonIndex: %d", buttonIndex);
-		 
-		 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		 
-		 if (buttonIndex != [(FXDAlertView*)alertView cancelButtonIndex]) {	FXDLog_DEFAULT;
-			 
-			 ACAccount *selectedTwitterAccount = (self.twitterAccountArray)[buttonIndex];
-			 FXDLog(@"selectedTwitterAccount: %@", selectedTwitterAccount);
-			 
-			 if (selectedTwitterAccount) {
-				 [userDefaults setObject:selectedTwitterAccount.identifier forKey:userdefaultObjKeyMainAccountIdentifier];
-				 
-				 _mainTwitterAccount = selectedTwitterAccount;
-				 
-#if ForDEVELOPER
-				 [self userLookUpWithScreenName:_mainTwitterAccount.username];
-#endif
-			 }
-		 }
-		 else {
-			 [userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
-			 
-			 _mainTwitterAccount = nil;
-		 }
-		 
-		 [userDefaults synchronize];
-		 
-		 _twitterAccountArray = nil;
-		 
-		 if (didFinishBlock) {
-			 didFinishBlock(YES);
-		 }
+		 [self
+		  selectTwitterAccountFromAlertView:alertView
+		  forButtonIndex:buttonIndex
+		  withDidFinishBlock:didFinishBlock];
 	 }
 	 cancelButtonTitle:nil
 	 otherButtonTitles:nil];
 	
+	
+	[alertView addButtonWithTitle:NSLocalizedString(text_Cancel, nil)];
+	alertView.cancelButtonIndex = 0;
 
 	for (ACAccount *twitterAccount in self.twitterAccountArray) {
-		FXDLog(@"twitterAccount.username: %@", twitterAccount.username);
-
 		[alertView addButtonWithTitle:[NSString stringWithFormat:@"@%@", twitterAccount.username]];
 	}
 
-	[alertView addButtonWithTitle:cancelButtonTitle];
-	alertView.cancelButtonIndex = [self.twitterAccountArray count];
+	[alertView addButtonWithTitle:NSLocalizedString(text_SignOut, nil)];
 
 	[alertView show];
 }
 
+- (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingTwitterAccountWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+	FXDLog_DEFAULT;
+	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
+	
+	if ([self.twitterAccountArray count] == 0) {
+		//MARK: If no Twitter account is signed up... alert user
+		if (didFinishBlock) {
+			didFinishBlock(NO);
+		}
+		
+		return;
+	}
+	
+	
+	FXDActionSheet *actionSheet =
+	[[FXDActionSheet alloc]
+	 initWithTitle:NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil)
+	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
+		 [self
+		  selectTwitterAccountFromAlertView:alertView
+		  forButtonIndex:buttonIndex
+		  withDidFinishBlock:didFinishBlock];
+		 
+	 } withButtonTitleArray:nil
+	 cancelButtonTitle:nil
+	 destructiveButtonTitle:nil
+	 otherButtonTitles:nil];
+	
+	[actionSheet addButtonWithTitle:NSLocalizedString(text_Cancel, nil)];
+	actionSheet.cancelButtonIndex = 0;
+	
+	for (ACAccount *twitterAccount in self.twitterAccountArray) {
+		[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"@%@", twitterAccount.username]];
+	}
+	
+	[actionSheet addButtonWithTitle:NSLocalizedString(text_SignOut, nil)];
+	actionSheet.destructiveButtonIndex = [self.twitterAccountArray count]+1;
+	
+	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+	[actionSheet showInView:presentingView];
+}
+
+#pragma mark -
+- (void)selectTwitterAccountFromAlertView:(id)alertView forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+	
+#if ForDEVELOPER
+	FXDLog(@"buttonIndex: %d", buttonIndex);
+	FXDLog(@"cancelButtonIndex: %d", (NSInteger)[alertView performSelector:@selector(cancelButtonIndex)]);
+	
+	if ([alertView isKindOfClass:[UIActionSheet class]]) {
+		FXDLog(@"destructiveButtonIndex: %d", [(FXDActionSheet*)alertView destructiveButtonIndex]);
+	}
+#endif
+	
+	
+	if (buttonIndex == (NSInteger)[alertView performSelector:@selector(cancelButtonIndex)]) {
+		_twitterAccountArray = nil;
+		
+		if (didFinishBlock) {
+			didFinishBlock(YES);
+		}
+		
+		return;
+	}
+	
+	
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	
+	if ([alertView isKindOfClass:[UIActionSheet class]]
+		&& buttonIndex == [(FXDActionSheet*)alertView destructiveButtonIndex]) {
+		
+		[userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
+		_mainTwitterAccount = nil;
+	}
+	else if ([alertView isKindOfClass:[UIAlertView class]]
+		&& buttonIndex == [self.twitterAccountArray count]+1) {
+		
+		[userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
+		_mainTwitterAccount = nil;
+	}
+	else {
+		ACAccount *selectedTwitterAccount = (self.twitterAccountArray)[buttonIndex-1];
+		FXDLog(@"selectedTwitterAccount: %@", selectedTwitterAccount);
+		
+		if (selectedTwitterAccount) {
+			[userDefaults setObject:selectedTwitterAccount.identifier forKey:userdefaultObjKeyMainAccountIdentifier];
+			
+			_mainTwitterAccount = selectedTwitterAccount;
+			
+			[self userLookUpWithScreenName:_mainTwitterAccount.username];
+		}
+		
+		[userDefaults synchronize];
+	}
+	
+	_twitterAccountArray = nil;
+	
+	if (didFinishBlock) {
+		didFinishBlock(YES);
+	}
+}
+
 - (void)userLookUpWithScreenName:(NSString*)screenName {
 	
-	NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
+	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
+		
+		return;
+	}
 	
-	NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
-
-	SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
-
-	[defaultRequest
-	 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
+	[self renewTwitterCredentialWithRequestingBlock:^{
+		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
+		
+		NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
+		
+		SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
+		
+		[defaultRequest
+		 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
 #if ForDEVELOPER
-		 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
-#endif		 
-	 }];
+			 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
+#endif
+		 }];
+	}];
 }
 
 - (void)statusUpdateWithTweetText:(NSString*)tweetText {
@@ -214,35 +307,39 @@
 		return;
 	}
 
-
-	void (^credentialRequestingBlock)() = ^{
+	
+	[self renewTwitterCredentialWithRequestingBlock:^{
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
-
+		
 		NSDictionary *parameters = @{objkeyTwitterStatus: tweetText};
-
+		
 		SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:requestURL parameters:parameters];
-
+		
 		defaultRequest.account = self.mainTwitterAccount;
-
+		
 		[defaultRequest
 		 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
 #if ForDEVELOPER
 			 [self logTwitterResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif
 		 }];
-	};
+	}];
+}
 
+- (void)renewTwitterCredentialWithRequestingBlock:(void(^)(void))requestingBlock {
 	
 	if (self.mainTwitterAccount.username == nil) {
 		[self.accountStore
 		 renewCredentialsForAccount:self.mainTwitterAccount
 		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
 			 FXDLog_ERROR;LOGEVENT_ERROR;
-
+			 
 			 FXDLog(@"renewResult: %d", renewResult);
-
+			 
 			 if (renewResult == ACAccountCredentialRenewResultRenewed) {
-				 credentialRequestingBlock();
+				 if (requestingBlock) {
+					 requestingBlock();
+				 }
 			 }
 			 else {
 				 //TODO: alert user about needing to have accessibility
@@ -250,10 +347,13 @@
 		 }];
 	}
 	else {
-		credentialRequestingBlock();
+		if (requestingBlock) {
+			requestingBlock();
+		}
 	}
 }
 
+#pragma mark -
 - (SLComposeViewController*)socialComposeControllerWithInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray {	FXDLog_DEFAULT;
 
 	SLComposeViewController *socialComposeController = nil;
