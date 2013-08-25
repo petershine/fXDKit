@@ -295,7 +295,7 @@
 	FXDLog(@"identifierForVendor UUIDString: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
 #endif
 	
-	void (^ManagerPreparedBlock)(void) = ^(void){
+	void (^ManagerDidPrepareBlock)(void) = ^(void){
 		[self configureUserDefaultsInfo];
 		[self startObservingEssentialNotifications];
 		
@@ -306,7 +306,7 @@
 	
 	
 	if (coreDataManager == nil) {
-		ManagerPreparedBlock();
+		ManagerDidPrepareBlock();
 		
 		return;
 	}
@@ -318,7 +318,7 @@
 	 didFinishBlock:^(BOOL finished) {
 		 FXDLog(@"prepareCoreDataManagerWithUbiquityContainerURL finished: %d", finished);
 		 
-		 ManagerPreparedBlock();
+		 ManagerDidPrepareBlock();
 	 }];
 }
 
@@ -330,6 +330,7 @@
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
+	//UIApplicationStatusBar:
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillChangeStatusBarFrame:)
@@ -342,7 +343,7 @@
 	 name:UIApplicationDidChangeStatusBarFrameNotification
 	 object:nil];
 
-	//
+	//UIApplicationState:
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIApplicationWillResignActive:)
@@ -373,14 +374,14 @@
 	 name:UIApplicationSignificantTimeChangeNotification
 	 object:nil];
 	
-	//
+	//NSUserDefaults:
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSUserDefaultsDidChange:)
 	 name:NSUserDefaultsDidChangeNotification
 	 object:nil];
 	
-	//
+	//UIDeviceBattery:
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIDeviceBatteryStateDidChange:)

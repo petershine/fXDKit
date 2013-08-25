@@ -6,7 +6,8 @@
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
-#define NSIndexPathString(section, row)	[[NSIndexPath indexPathForRow:row inSection:section] stringValue]
+#define NSIndexPathMake(section, row)	[NSIndexPath indexPathForRow:row inSection:section]
+#define NSIndexPathString(section, row)	[NSIndexPathMake(section, row) stringValue]
 
 
 @interface FXDIndexPath : NSIndexPath

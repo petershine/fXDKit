@@ -117,12 +117,12 @@
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			__strong typeof(_weakSelf) _strongSelf = _weakSelf;
 			
-			[_strongSelf.cellOperationDictionary removeObjectForKey:[indexPath stringValue]];
+			[_strongSelf.cellOperationDictionary removeObjectForKey:indexPath];
 		}];
 	}];
 	
 	
-	self.cellOperationDictionary[[indexPath stringValue]] = cellOperation;
+	self.cellOperationDictionary[indexPath] = cellOperation;
 	[self.cellOperationQueue addOperation:cellOperation];
 	
 	return cell;

@@ -87,8 +87,8 @@
 	UIImage *highlightedImage = [self selectedBackgroundImageForTableCellAtIndexPath:indexPath];
 	[cell customizeBackgroundWithImage:backgroundImage withHighlightedImage:highlightedImage];
 	
-	cell.textLabel.text = (self.cellTitleDictionary)[[indexPath stringValue]];
-	cell.detailTextLabel.text = (self.cellSubTitleDictionary)[[indexPath stringValue]];
+	cell.textLabel.text = (self.cellTitleDictionary)[indexPath];
+	cell.detailTextLabel.text = (self.cellSubTitleDictionary)[indexPath];
 	
 	UIImage *mainImage = [self mainImageForTableCellAtIndexPath:indexPath];
 	UIImage *highlightedMainImage = [self highlightedMainImageForTableCellAtIndexPath:indexPath];

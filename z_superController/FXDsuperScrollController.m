@@ -201,10 +201,10 @@
 	id operationObjKey = nil;
 	
 	if (indexPath) {
-		operationObjKey = [indexPath stringValue];
+		operationObjKey = indexPath;
 	}
 	else if (rowIndex != integerNotDefined) {
-		operationObjKey = NSIndexPathString(0, rowIndex);
+		operationObjKey = NSIndexPathMake(0, rowIndex);
 	}
 	
 	if (operationObjKey == nil) {
