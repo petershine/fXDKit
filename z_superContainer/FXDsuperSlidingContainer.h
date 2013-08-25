@@ -6,12 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define segueidentifierEmbeddingRoot	@"EmbeddingRoot"
-#define segueidentifierFrontController	@"embedFrontController"
+#define segueidentifierRootController		@"embedRootController"
 
-
-@interface FXDsegueEmbeddingFrontController : FXDsuperEmbedSegue
-@end
 
 @interface FXDsegueSlidingIn : FXDsuperTransitionSegue
 @end
@@ -25,9 +21,9 @@
 // Properties
 @property (nonatomic) NSInteger minimumChildCount;
 
-@property (strong, nonatomic) FXDViewController *frontController;
-
 // IBOutlets
+@property (strong, nonatomic) IBOutlet FXDView *groupUpperMenu;
+
 @property (strong, nonatomic) IBOutlet UIToolbar *mainToolbar;	//TODO: find good way to remove this
 
 

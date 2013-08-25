@@ -8,17 +8,6 @@
 
 #import "FXDsuperSlidingContainer.h"
 
-@implementation FXDsegueEmbeddingFrontController
-- (void)perform {
-	[super perform];
-	
-	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
-	
-	slidingContainer.frontController = (FXDViewController*)self.destinationViewController;
-}
-
-@end
-
 
 @implementation FXDsegueSlidingIn
 - (void)perform {	FXDLog_DEFAULT;
@@ -26,9 +15,7 @@
 
 	[slidingContainer slideInWithSegue:self];
 }
-
 @end
-
 
 @implementation FXDsegueSlidingOut
 - (void)perform {	FXDLog_DEFAULT;
@@ -36,7 +23,6 @@
 
 	[slidingContainer slideOutWithSegue:self];
 }
-
 @end
 
 
@@ -49,8 +35,6 @@
 #pragma mark - Initialization
 - (void)viewDidLoad {
 	[super viewDidLoad];
-
-	[self performSegueWithIdentifier:segueidentifierFrontController sender:self];
 	
 	self.minimumChildCount = [self.childViewControllers count];
 	FXDLog(@"self.minimumChildCount: %d", self.minimumChildCount);
@@ -85,20 +69,19 @@
 
 	BOOL canAnimate = NO;
 
-	FXDViewController *destination = (FXDViewController*)transitionSegue.destinationViewController;
-	FXDViewController *source = (FXDViewController*)transitionSegue.sourceViewController;
+	FXDViewController *destinationScene = (FXDViewController*)transitionSegue.destinationViewController;
+	FXDViewController *sourceScene = (FXDViewController*)transitionSegue.sourceViewController;
 
-	FXDLog(@"destination: %@", destination);
-	FXDLog(@"source: %@", source);
+	FXDLog(@"destinationScene: %@", destinationScene);
+	FXDLog(@"sourceScene: %@", sourceScene);
 
-	if ([source isKindOfClass:[FXDViewController class]]
-		&& [destination isKindOfClass:[FXDViewController class]]) {
+	if ([sourceScene isKindOfClass:[FXDViewController class]]
+		&& [destinationScene isKindOfClass:[FXDViewController class]]) {
 		canAnimate = YES;
 	}
 	
 	FXDLog(@"canAnimate: %d", canAnimate);
 	
-
 	return canAnimate;
 }
 
@@ -109,85 +92,87 @@
 	}
 
 	
-	FXDViewController *destinationController = (FXDViewController*)slidingInSegue.destinationViewController;
-	[self addChildViewController:destinationController];
+	FXDViewController *destinationScene = (FXDViewController*)slidingInSegue.destinationViewController;
+	[self addChildViewController:destinationScene];
 	
 	
-	FXDLog(@"destinationController.toolbarItems: %@", destinationController.toolbarItems);
+	FXDLog(@"destinationController.toolbarItems: %@", destinationScene.toolbarItems);
 	
-	if (destinationController.toolbarItems == nil) {
-		[destinationController setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
+	if (destinationScene.toolbarItems == nil) {
+		[destinationScene setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
 	}
 	
 	if (self.mainToolbar) {
-		[self.mainToolbar setItems:destinationController.toolbarItems animated:YES];
+		[self.mainToolbar setItems:destinationScene.toolbarItems animated:YES];
 	}
 
 	
-	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:destinationController.slideDirectionType];
-	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:destinationController.slideDirectionType];
+	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:destinationScene.slideDirectionType];
+	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:destinationScene.slideDirectionType];
 	
 	
-	CGRect animatedFrame = destinationController.view.frame;
+	CGRect animatedFrame = destinationScene.view.frame;
 	animatedFrame.origin.y = 0.0;
 	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
 
-	CGRect modifiedFrame = destinationController.view.frame;
+	CGRect modifiedFrame = destinationScene.view.frame;
 	modifiedFrame.origin.x -= slidingOffset.x;
 	modifiedFrame.origin.y -= slidingOffset.y;
 	modifiedFrame.origin.y += (heightStatusBar *slidingDirection.y);
-	[destinationController.view setFrame:modifiedFrame];
+	[destinationScene.view setFrame:modifiedFrame];
 
 	
-	FXDViewController *pushedController = nil;
+	FXDViewController *pushedScene = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 		
-	if ([destinationController shouldCoverWhenSlidingIn] == NO
+	if ([destinationScene shouldCoverWhenSlidingIn] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
-		NSInteger destinationIndex = [self.childViewControllers indexOfObject:destinationController];
+		NSInteger destinationIndex = [self.childViewControllers indexOfObject:destinationScene];
 		
-		for (FXDViewController *childController in self.childViewControllers) {
-			FXDLog(@"childController: %@ shouldStayFixed: %d", childController, [childController shouldStayFixed]);
+		for (FXDViewController *childScene in self.childViewControllers) {
+			FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
 			
-			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
+			NSInteger childIndex = [self.childViewControllers indexOfObject:childScene];
 			
-			if (childIndex < destinationIndex && [childController shouldStayFixed] == NO) {
+			if (childIndex < destinationIndex && [childScene shouldStayFixed] == NO) {
 				
-				if (childIndex == destinationIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
-					pushedController = childController;
-					animatedPushedFrame = pushedController.view.frame;
+				if (childIndex == destinationIndex-1) {	//MARK: If the childScene is last slid one, which is in previous index
+					pushedScene = childScene;
+					animatedPushedFrame = pushedScene.view.frame;
 					animatedPushedFrame.origin.x += slidingOffset.x;
 					animatedPushedFrame.origin.y += slidingOffset.y;
 				}
 				else {
-					CGRect modifiedPushedFrame = childController.view.frame;
+					CGRect modifiedPushedFrame = childScene.view.frame;
 					modifiedPushedFrame.origin.x += slidingOffset.x;
 					modifiedPushedFrame.origin.y += slidingOffset.y;
 					
-					[childController.view setFrame:modifiedPushedFrame];
+					[childScene.view setFrame:modifiedPushedFrame];
 				}
 			}
 		}
 	}
 	
-	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedController, NSStringFromCGRect(animatedPushedFrame));
+	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedScene, NSStringFromCGRect(animatedPushedFrame));
 
-	destinationController.view.autoresizingMask = UIViewAutoresizingNone;
-	destinationController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	[self.view insertSubview:destinationController.view belowSubview:self.frontController.view];
-	[destinationController didMoveToParentViewController:self];
+	destinationScene.view.autoresizingMask = UIViewAutoresizingNone;
+	destinationScene.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	
+	
+	[self.view insertSubview:destinationScene.view belowSubview:self.groupUpperMenu];
+	[destinationScene didMoveToParentViewController:self];
 
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [destinationController.view setFrame:animatedFrame];
+		 [destinationScene.view setFrame:animatedFrame];
 		 
-		 if (pushedController) {
-			 [pushedController.view setFrame:animatedPushedFrame];
+		 if (pushedScene) {
+			 [pushedScene.view setFrame:animatedPushedFrame];
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
@@ -204,17 +189,17 @@
 	}
 
 
-	FXDViewController *sourceController = (FXDViewController*)slidingOutSegue.sourceViewController;
+	FXDViewController *sourceScene = (FXDViewController*)slidingOutSegue.sourceViewController;
 	
-	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:sourceController.slideDirectionType];
-	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:sourceController.slideDirectionType];
+	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:sourceScene.slideDirectionType];
+	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:sourceScene.slideDirectionType];
 	
 
-	CGRect animatedFrame = sourceController.view.frame;
+	CGRect animatedFrame = sourceScene.view.frame;
 	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
 	
 	
-	CGFloat slidingOutOffsetY = [[sourceController offsetYforSlidingOut] floatValue];
+	CGFloat slidingOutOffsetY = [[sourceScene offsetYforSlidingOut] floatValue];
 	FXDLog(@"1.slidingOutOffsetY: %f", slidingOutOffsetY);
 	
 	if (slidingOutOffsetY > 0.0) {
@@ -223,70 +208,70 @@
 	else {
 		animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
 	}
-	FXDLog(@"2.CALCULATED slidingOutOffsetY: %f - %f = %f", sourceController.view.frame.origin.y, animatedFrame.origin.y, (sourceController.view.frame.origin.y -animatedFrame.origin.y));
+	FXDLog(@"2.CALCULATED slidingOutOffsetY: %f - %f = %f", sourceScene.view.frame.origin.y, animatedFrame.origin.y, (sourceScene.view.frame.origin.y -animatedFrame.origin.y));
 	
 	
-	FXDViewController *pulledController = nil;
+	FXDViewController *pulledScene = nil;
 	CGRect animatedPulledFrame = CGRectZero;
 	
-	if ([sourceController shouldCoverWhenSlidingIn] == NO
+	if ([sourceScene shouldCoverWhenSlidingIn] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
-		NSInteger sourceIndex = [self.childViewControllers indexOfObject:sourceController];
+		NSInteger sourceIndex = [self.childViewControllers indexOfObject:sourceScene];
 		
-		for (FXDViewController *childController in self.childViewControllers) {
-			FXDLog(@"childController: %@ shouldStayFixed: %d", childController, [childController shouldStayFixed]);
+		for (FXDViewController *childScene in self.childViewControllers) {
+			FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
 			
-			NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
+			NSInteger childIndex = [self.childViewControllers indexOfObject:childScene];
 			
-			if (childIndex < sourceIndex && [childController shouldStayFixed] == NO) {
+			if (childIndex < sourceIndex && [childScene shouldStayFixed] == NO) {
 				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
-					pulledController = childController;
-					animatedPulledFrame = pulledController.view.frame;
+					pulledScene = childScene;
+					animatedPulledFrame = pulledScene.view.frame;
 					animatedPulledFrame.origin.x -= slidingOffset.x;
 					animatedPulledFrame.origin.y -= slidingOffset.y;
 				}
 				else {
-					CGRect modifiedPushedFrame = childController.view.frame;
+					CGRect modifiedPushedFrame = childScene.view.frame;
 					modifiedPushedFrame.origin.x -= slidingOffset.x;
 					modifiedPushedFrame.origin.y -= slidingOffset.y;
 					
-					[childController.view setFrame:modifiedPushedFrame];
+					[childScene.view setFrame:modifiedPushedFrame];
 				}
 			}
 		}
 	}
 	
-	FXDLog(@"pulledController: %@ animatedPulledFrame: %@", pulledController, NSStringFromCGRect(animatedPulledFrame));
+	FXDLog(@"pulledController: %@ animatedPulledFrame: %@", pulledScene, NSStringFromCGRect(animatedPulledFrame));
 	
-	if (pulledController) {
-		[self.mainToolbar setItems:pulledController.toolbarItems animated:YES];
+	if (pulledScene) {
+		[self.mainToolbar setItems:pulledScene.toolbarItems animated:YES];
 	}
 	else {
-		FXDViewController *destinationController = (FXDViewController*)slidingOutSegue.destinationViewController;
-		[self.mainToolbar setItems:destinationController.toolbarItems animated:YES];
+		FXDViewController *destinationScene = (FXDViewController*)slidingOutSegue.destinationViewController;
+		[self.mainToolbar setItems:destinationScene.toolbarItems animated:YES];
 	}
 	
 	
-	[sourceController willMoveToParentViewController:nil];
+	[sourceScene willMoveToParentViewController:nil];
 	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [sourceController.view setFrame:animatedFrame];
+		 [sourceScene.view setFrame:animatedFrame];
 		 
-		 if (pulledController) {
-			 [pulledController.view setFrame:animatedPulledFrame];
+		 if (pulledScene) {
+			 [pulledScene.view setFrame:animatedPulledFrame];
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-		 FXDLog(@"finished: %d pulledController: %@", finished, pulledController);
+		 FXDLog(@"finished: %d pulledController: %@", finished, pulledScene);
 		 
-		 [sourceController.view removeFromSuperview];
-		 [sourceController removeFromParentViewController];
+		 [sourceScene.view removeFromSuperview];
+		 [sourceScene removeFromParentViewController];
 	 }];
 }
 
@@ -296,8 +281,7 @@
 	
 	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
 	
-	if ([self.childViewControllers count] == 0
-		|| [self.childViewControllers lastObject] == self.frontController) {
+	if ([self.childViewControllers count] == 0) {
 		
 		if (didFinishBlock) {
 			didFinishBlock(YES);
@@ -307,25 +291,20 @@
 	}
 	
 	
-	__block NSMutableArray *lateAddedControllerArray = [[NSMutableArray alloc] initWithCapacity:0];
+	__block NSMutableArray *lateAddedSceneArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
-	NSInteger frontIndex = [self.childViewControllers indexOfObject:self.frontController];
-	FXDLog(@"frontIndex: %d", frontIndex);
-	
-	for (FXDViewController *childController in self.childViewControllers) {
-		FXDLog(@"childController: %@ shouldStayFixed: %d", childController, [childController shouldStayFixed]);
+	for (FXDViewController *childScene in self.childViewControllers) {
+		FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
 		
-		NSInteger childIndex = [self.childViewControllers indexOfObject:childController];
-		
-		if (childIndex > frontIndex && [childController shouldStayFixed] == NO) {
-			[lateAddedControllerArray addObject:childController];
+		if ([childScene shouldStayFixed] == NO) {
+			[lateAddedSceneArray addObject:childScene];
 		}
 	}
 	
-	FXDLog(@"lateAddedControllerArray: %@", lateAddedControllerArray);
+	FXDLog(@"lateAddedControllerArray: %@", lateAddedSceneArray);
 	
-	if ([lateAddedControllerArray count] == 0) {
-		lateAddedControllerArray = nil;
+	if ([lateAddedSceneArray count] == 0) {
+		lateAddedSceneArray = nil;
 		
 		if (didFinishBlock) {
 			didFinishBlock(YES);
@@ -337,8 +316,8 @@
 	
 	CGFloat totalSlidingOffsetY = 0.0;
 	
-	for (FXDViewController *childController in lateAddedControllerArray) {
-		totalSlidingOffsetY += childController.view.frame.size.height;
+	for (FXDViewController *childScene in lateAddedSceneArray) {
+		totalSlidingOffsetY += childScene.view.frame.size.height;
 	}
 	
 	FXDLog(@"totalSlidingOffsetY: %f", totalSlidingOffsetY);
@@ -346,20 +325,20 @@
 	
 	__block NSMutableArray *animatedFrameObjArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
-	for (FXDViewController *childController in lateAddedControllerArray) {
-		CGRect animatedFrame = childController.view.frame;
+	for (FXDViewController *childScene in lateAddedSceneArray) {
+		CGRect animatedFrame = childScene.view.frame;
 		animatedFrame.origin.y += totalSlidingOffsetY;
 		
 		[animatedFrameObjArray addObject:NSStringFromCGRect(animatedFrame)];
 		
-		[childController willMoveToParentViewController:nil];
+		[childScene willMoveToParentViewController:nil];
 	}
 	
 	FXDLog(@"animatedFrameObjArray: %@", animatedFrameObjArray);
 	
 	
-	FXDViewController *rootController = self.childViewControllers[0];
-	[self.mainToolbar setItems:rootController.toolbarItems animated:YES];
+	FXDViewController *rootScene = self.childViewControllers[0];
+	[self.mainToolbar setItems:rootScene.toolbarItems animated:YES];
 	
 	[UIView
 	 animateWithDuration:durationAnimation
@@ -367,20 +346,20 @@
 	 options:UIViewAnimationOptionCurveEaseInOut
 	 animations:^{
 		 
-		 for (FXDViewController *childController in lateAddedControllerArray) {
-			 NSInteger childIndex = [lateAddedControllerArray indexOfObject:childController];
+		 for (FXDViewController *childScene in lateAddedSceneArray) {
+			 NSInteger childIndex = [lateAddedSceneArray indexOfObject:childScene];
 			 CGRect animatedFrame = CGRectFromString(animatedFrameObjArray[childIndex]);
 			 
-			 [childController.view setFrame:animatedFrame];
+			 [childScene.view setFrame:animatedFrame];
 		 }
 		 
 	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
-		 for (FXDViewController *childController in lateAddedControllerArray) {
-			 [childController.view removeFromSuperview];
-			 [childController removeFromParentViewController];
+		 for (FXDViewController *childScene in lateAddedSceneArray) {
+			 [childScene.view removeFromSuperview];
+			 [childScene removeFromParentViewController];
 		 }
 		 
-		 lateAddedControllerArray = nil;
+		 lateAddedSceneArray = nil;
 		 animatedFrameObjArray = nil;
 		 
 		 FXDLog(@"2.self.childViewControllers: %@", self.childViewControllers);

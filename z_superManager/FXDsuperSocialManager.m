@@ -262,7 +262,7 @@
 			
 			_mainTwitterAccount = selectedTwitterAccount;
 			
-			[self userLookUpWithScreenName:_mainTwitterAccount.username];
+			[self userShowWithScreenName:_mainTwitterAccount.username];
 		}
 		
 		[userDefaults synchronize];
@@ -275,7 +275,7 @@
 	}
 }
 
-- (void)userLookUpWithScreenName:(NSString*)screenName {
+- (void)userShowWithScreenName:(NSString*)screenName {
 	
 	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
@@ -284,7 +284,7 @@
 	}
 	
 	[self renewTwitterCredentialWithRequestingBlock:^{
-		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserLookUp];
+		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserShow];
 		
 		NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
 		
@@ -403,10 +403,12 @@
 		FXDLog(@"allHeaderFields:\n%@", [(NSHTTPURLResponse*)urlResponse allHeaderFields]);
 	}
 
-	FXDLog(@"responseData.length: %d bytes", responseData.length);
+	FXDLog(@"responseData length: %d bytes", [responseData length]);
 
-	id parsedObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
-	FXDLog(@"parsedObject: %@\n %@", [parsedObject class], parsedObject);
+	if ([responseData length] > 0) {
+		id jsonObj = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
+		FXDLog(@"jsonObj: %@\n %@", [jsonObj class], jsonObj);
+	}
 }
 #endif
 
