@@ -95,15 +95,12 @@
 	FXDViewController *destinationScene = (FXDViewController*)slidingInSegue.destinationViewController;
 	[self addChildViewController:destinationScene];
 	
-	
-	FXDLog(@"destinationController.toolbarItems: %@", destinationScene.toolbarItems);
-	
-	if (destinationScene.toolbarItems == nil) {
-		[destinationScene setToolbarItems:[slidingInSegue.sourceViewController toolbarItems]];
+	if (self.groupUpperMenu) {
+		[self configureUpperMenuViewForCurrentScene:destinationScene];
 	}
 	
-	if (self.mainToolbar) {
-		[self.mainToolbar setItems:destinationScene.toolbarItems animated:YES];
+	if (self.groupBottomMenu) {
+		[self configureBottomMenuViewForCurrentScene:destinationScene];
 	}
 
 	
@@ -245,12 +242,24 @@
 	
 	FXDLog(@"pulledController: %@ animatedPulledFrame: %@", pulledScene, NSStringFromCGRect(animatedPulledFrame));
 	
-	if (pulledScene) {
-		[self.mainToolbar setItems:pulledScene.toolbarItems animated:YES];
+	if (self.groupUpperMenu) {
+		if (pulledScene) {
+			[self configureUpperMenuViewForCurrentScene:pulledScene];
+		}
+		else {
+			FXDViewController *destinationScene = (FXDViewController*)slidingOutSegue.destinationViewController;
+			[self configureUpperMenuViewForCurrentScene:destinationScene];
+		}
 	}
-	else {
-		FXDViewController *destinationScene = (FXDViewController*)slidingOutSegue.destinationViewController;
-		[self.mainToolbar setItems:destinationScene.toolbarItems animated:YES];
+	
+	if (self.groupBottomMenu) {
+		if (pulledScene) {
+			[self configureBottomMenuViewForCurrentScene:pulledScene];
+		}
+		else {
+			FXDViewController *destinationScene = (FXDViewController*)slidingOutSegue.destinationViewController;
+			[self configureBottomMenuViewForCurrentScene:destinationScene];
+		}
 	}
 	
 	
@@ -338,7 +347,13 @@
 	
 	
 	FXDViewController *rootScene = self.childViewControllers[0];
-	[self.mainToolbar setItems:rootScene.toolbarItems animated:YES];
+	
+	if (self.groupUpperMenu) {
+		[self configureUpperMenuViewForCurrentScene:rootScene];
+	}
+	if (self.groupBottomMenu) {
+		[self configureBottomMenuViewForCurrentScene:rootScene];
+	}
 	
 	[UIView
 	 animateWithDuration:durationAnimation
@@ -368,6 +383,13 @@
 			 didFinishBlock(YES);
 		 }
 	 }];
+}
+
+#pragma mark -
+- (void)configureUpperMenuViewForCurrentScene:(FXDViewController*)currentScene {	FXDLog_OVERRIDE;
+}
+
+- (void)configureBottomMenuViewForCurrentScene:(FXDViewController*)currentScene {	FXDLog_OVERRIDE;
 }
 
 #pragma mark -

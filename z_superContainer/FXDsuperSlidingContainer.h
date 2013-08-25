@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define segueidentifierRootController		@"embedRootController"
-
 
 @interface FXDsegueSlidingIn : FXDsuperTransitionSegue
 @end
@@ -23,8 +21,7 @@
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDView *groupUpperMenu;
-
-@property (strong, nonatomic) IBOutlet UIToolbar *mainToolbar;	//TODO: find good way to remove this
+@property (strong, nonatomic) IBOutlet FXDView *groupBottomMenu;
 
 
 #pragma mark - Segues
@@ -38,6 +35,9 @@
 - (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue;
 
 - (void)slideOutAllLaterAddedControllerWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+
+- (void)configureUpperMenuViewForCurrentScene:(FXDViewController*)currentScene;
+- (void)configureBottomMenuViewForCurrentScene:(FXDViewController*)currentScene;
 
 - (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
 - (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType;
