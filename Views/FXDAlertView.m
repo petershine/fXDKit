@@ -45,6 +45,10 @@
 
 #pragma mark - Public
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
+	
+	if (cancelButtonTitle == nil) {
+		cancelButtonTitle = NSLocalizedString(text_OK, nil);
+	}
 
 	self = [super initWithTitle:title
 					   message:message

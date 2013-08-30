@@ -323,8 +323,8 @@
 }
 
 #pragma mark -
-- (void)configureUserDefaultsInfo {	FXDLog_DEFAULT;
-	//TODO: Prepare for first launch
+- (void)configureUserDefaultsInfo {	FXDLog_OVERRIDE;
+	
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
@@ -465,9 +465,12 @@
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"UIApplication sharedApplication].statusBarFrame: %@", NSStringFromCGRect([UIApplication sharedApplication].statusBarFrame));
+	FXDLog(@"notification: %@", [notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
 }
 
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLog(@"notification: %@", notification);
 }
 
 #pragma mark -

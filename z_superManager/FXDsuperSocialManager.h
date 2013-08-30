@@ -9,6 +9,8 @@
 #define userdefaultObjKeyMainAccountIdentifier	@"MainAccountIdentifierObjKey"
 
 
+#define maximumTweetLength	140
+
 #define urlrootTwitterAPI			@"https://api.twitter.com/1.1/"
 #define urlstringTwitter(method)	[NSString stringWithFormat:@"%@%@", urlrootTwitterAPI, method]
 
@@ -16,8 +18,12 @@
 #define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
 #define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
 
-#define objkeyTwitterScreenName	@"screen_name"
-#define objkeyTwitterStatus		@"status"
+#define objkeyTwitterScreenName			@"screen_name"
+#define objkeyTwitterStatus				@"status"
+#define objkeyTwitterLat				@"lat"
+#define objkeyTwitterLong				@"long"
+#define objkeyTwitterPlaceId			@"place_id"
+#define objkeyTwitterDisplayCoordinates	@"display_coordinates"
 
 
 @interface FXDsuperSocialManager : FXDObject
@@ -40,7 +46,7 @@
 - (void)selectTwitterAccountFromAlertView:(id)alertView forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)userShowWithScreenName:(NSString*)screenName;
-- (void)statusUpdateWithTweetText:(NSString*)tweetText;
+- (void)statusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude;
 
 - (void)renewTwitterCredentialWithRequestingBlock:(void(^)(void))requestingBlock;
 

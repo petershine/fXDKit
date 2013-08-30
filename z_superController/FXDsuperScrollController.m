@@ -141,7 +141,7 @@
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	
-	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
+	if (_cellOperationQueue == nil) {	//FXDLog_DEFAULT;
 		_cellOperationQueue = [[NSOperationQueue alloc] init];
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 	}
@@ -151,7 +151,7 @@
 
 - (NSMutableDictionary*)cellOperationDictionary {
 	
-	if (_cellOperationDictionary == nil) {	FXDLog_DEFAULT;
+	if (_cellOperationDictionary == nil) {	//FXDLog_DEFAULT;
 		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	

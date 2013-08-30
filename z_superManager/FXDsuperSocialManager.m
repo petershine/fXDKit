@@ -78,9 +78,8 @@
 		}
 
 		[userDefaults synchronize];
+		FXDLog(@"_mainTwitterAccount: %@", _mainTwitterAccount);
 	}
-
-	FXDLog(@"_mainTwitterAccount: %@", _mainTwitterAccount);
 
 	return _mainTwitterAccount;
 }
@@ -290,6 +289,8 @@
 		
 		SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
 		
+		defaultRequest.account = self.mainTwitterAccount;
+		
 		[defaultRequest
 		 performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
 #if ForDEVELOPER
@@ -299,7 +300,7 @@
 	}];
 }
 
-- (void)statusUpdateWithTweetText:(NSString*)tweetText {
+- (void)statusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude {
 	
 	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
@@ -311,7 +312,13 @@
 	[self renewTwitterCredentialWithRequestingBlock:^{
 		NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 		
-		NSDictionary *parameters = @{objkeyTwitterStatus: tweetText};
+		NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText
+									 } mutableCopy];
+		if (latitude != 0.0 && longitude != 0.0) {
+			parameters[objkeyTwitterLat] = @(latitude);
+			parameters[objkeyTwitterLong] = @(longitude);
+		}
+		
 		
 		SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:requestURL parameters:parameters];
 		
@@ -360,7 +367,17 @@
 
 	//TODO: Test Facebook interface
 	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
-		return socialComposeController;
+		FXDAlertView *alertView =
+		[[FXDAlertView alloc]
+		 initWithTitle:NSLocalizedString(@"Please connect to Twitter", nil)
+		 message:NSLocalizedString(@"PopToo uses your Twitter account to share about recent geotagged item.\nPlease sign-in from the device's Settings", nil)
+		 clickedButtonAtIndexBlock:nil
+		 cancelButtonTitle:nil
+		 otherButtonTitles:nil];
+		
+		[alertView show];
+		
+		return nil;
 	}
 
 
