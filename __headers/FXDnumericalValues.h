@@ -36,7 +36,7 @@
 
 #define durationKeyboardAnimation	0.25
 #define heightKeyboard_iPhone	216.0
-#define heightKeyboard_iPad	352.0
+#define heightKeyboard_iPad		352.0
 
 #define alphaValue05	0.5
 
@@ -46,7 +46,7 @@
 #define heightNavigationBar	44.0
 #define heightToolBar	heightNavigationBar	//MARK: Assume they are identical
 #define heightStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
-
+#define height40inch	568.0
 
 #define marginDefault	8.0
 
