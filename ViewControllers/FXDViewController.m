@@ -64,14 +64,12 @@
 }
 
 #pragma mark - StatusBar
-#if __IPHONE_7_0
 - (UIStatusBarStyle)preferredStatusBarStyle {
 	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
 	FXDLog(@"statusBarStyle: %d", statusBarStyle);
 	
 	return statusBarStyle;
 }
-#endif
 
 #pragma mark - Autorotating
 #if TEST_loggingRotatingOrientation

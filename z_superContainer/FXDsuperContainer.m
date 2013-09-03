@@ -30,6 +30,9 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue {	FXDLog_OVERRIDE;
+	return YES;
+}
 
 
 //MARK: - Observer implementation

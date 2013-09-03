@@ -46,6 +46,8 @@
 #define heightNavigationBar	44.0
 #define heightToolBar	heightNavigationBar	//MARK: Assume they are identical
 #define heightStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
+
+#define height35inch	480.0
 #define height40inch	568.0
 
 #define marginDefault	8.0

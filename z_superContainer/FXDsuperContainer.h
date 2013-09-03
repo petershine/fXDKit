@@ -19,6 +19,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
+- (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue;
 
 
 //MARK: - Observer implementation

@@ -34,6 +34,9 @@
 
 - (void)awakeFromNib {
 	[super awakeFromNib];
+	
+	//MARK: Assume this is default;
+	self.backgroundColor = [UIColor clearColor];
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	

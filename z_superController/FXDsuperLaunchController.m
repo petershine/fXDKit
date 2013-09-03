@@ -45,6 +45,10 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+- (UIStatusBarStyle)preferredStatusBarStyle {	FXDLog_OVERRIDE;
+	return UIStatusBarStyleLightContent;
+}
+
 
 #pragma mark - Segues
 

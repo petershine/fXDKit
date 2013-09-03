@@ -264,7 +264,7 @@
 							   initWithTitle:NSLocalizedString(alert_PleaseEnableiCloud, nil)
 							   message:nil
 							   delegate:nil
-							   cancelButtonTitle:NSLocalizedString(text_OK, nil)
+							   cancelButtonTitle:nil
 							   otherButtonTitles:nil];
 	[alertView show];
 	

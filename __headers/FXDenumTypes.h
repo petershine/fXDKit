@@ -23,13 +23,13 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 	sectionPositionBottom
 };
 
-// FXDsuperSlidingContainer
-typedef CGPoint SLIDING_OFFSET;
-typedef CGPoint SLIDING_DIRECTION;
+// FXDsuperCoveringContainer
+typedef CGPoint COVERING_OFFSET;
+typedef CGPoint COVERING_DIRECTION;
 
-typedef NS_ENUM(NSInteger, SLIDE_DIRECTION_TYPE) {
-	slideDirectionTop,
-	slideDirectionBottom
+typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
+	coverDirectionTop,
+	coverDirectionBottom
 };
 
 // FXDsuperPreviewController

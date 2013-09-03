@@ -120,7 +120,7 @@
 				  initWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
 				  message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
 				  clickedButtonAtIndexBlock:nil
-				  cancelButtonTitle:NSLocalizedString(text_OK, nil)
+				  cancelButtonTitle:nil
 				  otherButtonTitles:nil];
 				 
 				 [alertView show];

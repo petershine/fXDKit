@@ -1,33 +1,33 @@
 //
-//  FXDsuperSlidingContainer.m
+//  FXDsuperCoveringContainer.m
 //
 //
 //  Created by petershine on 10/18/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperSlidingContainer.h"
+#import "FXDsuperCoveringContainer.h"
 
 
-@implementation FXDsegueSlidingIn
+@implementation FXDsegueCover
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
+	FXDsuperCoveringContainer *coveringContainer = [self mainContainerOfClass:[FXDsuperCoveringContainer class]];
 
-	[slidingContainer slideInWithSegue:self];
+	[coveringContainer coverWithSegue:self];
 }
 @end
 
-@implementation FXDsegueSlidingOut
+@implementation FXDsegueUncover
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperSlidingContainer *slidingContainer = [self mainContainerOfClass:[FXDsuperSlidingContainer class]];
+	FXDsuperCoveringContainer *coveringContainer = [self mainContainerOfClass:[FXDsuperCoveringContainer class]];
 
-	[slidingContainer slideOutWithSegue:self];
+	[coveringContainer uncoverWithSegue:self];
 }
 @end
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperSlidingContainer
+@implementation FXDsuperCoveringContainer
 
 
 #pragma mark - Memory management
@@ -48,6 +48,33 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+- (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue {
+	
+	BOOL canAnimate = NO;
+	
+	FXDViewController *destinationScene = (FXDViewController*)transitionSegue.destinationViewController;
+	FXDViewController *sourceScene = (FXDViewController*)transitionSegue.sourceViewController;
+	
+	FXDLog(@"destinationScene: %@", destinationScene);
+	FXDLog(@"sourceScene: %@", sourceScene);
+	
+	if ([sourceScene isKindOfClass:[FXDViewController class]]
+		&& [destinationScene isKindOfClass:[FXDViewController class]]) {
+		canAnimate = YES;
+	}
+	
+	
+	FXDLog(@"self.isCovering: %d, self.isUncovering: %d", self.isCovering, self.isUncovering);
+	
+	if (self.isCovering || self.isUncovering) {
+		canAnimate = NO;
+	}
+	
+	FXDLog(@"canAnimate: %d", canAnimate);
+	
+	return canAnimate;
+}
+
 
 #pragma mark - Segues
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_DEFAULT;
@@ -56,43 +83,23 @@
 	FXDLog(@"fromViewController: %@", fromViewController);
 	FXDLog(@"identifier: %@", identifier);
 
-	FXDsegueSlidingOut *slidingOutSegue = [[FXDsegueSlidingOut alloc] initWithIdentifier:identifier source:fromViewController destination:toViewController];
+	FXDsegueUncover *uncoveringSegue = [[FXDsegueUncover alloc] initWithIdentifier:identifier source:fromViewController destination:toViewController];
 
-	return slidingOutSegue;
+	return uncoveringSegue;
 }
 
 
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (BOOL)canAnimateWithTransitionSegue:(FXDsuperTransitionSegue*)transitionSegue {
-
-	BOOL canAnimate = NO;
-
-	FXDViewController *destinationScene = (FXDViewController*)transitionSegue.destinationViewController;
-	FXDViewController *sourceScene = (FXDViewController*)transitionSegue.sourceViewController;
-
-	FXDLog(@"destinationScene: %@", destinationScene);
-	FXDLog(@"sourceScene: %@", sourceScene);
-
-	if ([sourceScene isKindOfClass:[FXDViewController class]]
-		&& [destinationScene isKindOfClass:[FXDViewController class]]) {
-		canAnimate = YES;
-	}
+- (void)coverWithSegue:(FXDsegueCover*)coveringSegue {	FXDLog_DEFAULT;
 	
-	FXDLog(@"canAnimate: %d", canAnimate);
-	
-	return canAnimate;
-}
-
-- (void)slideInWithSegue:(FXDsegueSlidingIn*)slidingInSegue {	FXDLog_DEFAULT;
-	
-	if ([self canAnimateWithTransitionSegue:slidingInSegue] == NO) {
+	if ([self canAnimateWithTransitionSegue:coveringSegue] == NO) {
 		return;
 	}
 
 	
-	FXDViewController *destinationScene = (FXDViewController*)slidingInSegue.destinationViewController;
+	FXDViewController *destinationScene = (FXDViewController*)coveringSegue.destinationViewController;
 	[self addChildViewController:destinationScene];
 	
 	if (self.groupUpperMenu) {
@@ -104,8 +111,8 @@
 	}
 
 	
-	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:destinationScene.slideDirectionType];
-	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:destinationScene.slideDirectionType];
+	COVERING_OFFSET coveringOffset = [self coveringOffsetForDirectionType:[destinationScene coverDirectionType]];
+	COVERING_DIRECTION coveringDirection = [self coveringDirectionForDirectionType:[destinationScene coverDirectionType]];
 	
 	
 	CGRect animatedFrame = destinationScene.view.frame;
@@ -113,16 +120,16 @@
 	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
 
 	CGRect modifiedFrame = destinationScene.view.frame;
-	modifiedFrame.origin.x -= slidingOffset.x;
-	modifiedFrame.origin.y -= slidingOffset.y;
-	modifiedFrame.origin.y += (heightStatusBar *slidingDirection.y);
+	modifiedFrame.origin.x -= coveringOffset.x;
+	modifiedFrame.origin.y -= coveringOffset.y;
+	modifiedFrame.origin.y += (heightStatusBar *coveringDirection.y);
 	[destinationScene.view setFrame:modifiedFrame];
 
 	
 	FXDViewController *pushedScene = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 		
-	if ([destinationScene shouldCoverWhenSlidingIn] == NO
+	if ([destinationScene shouldCoverAbove] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
@@ -135,16 +142,17 @@
 			
 			if (childIndex < destinationIndex && [childScene shouldStayFixed] == NO) {
 				
-				if (childIndex == destinationIndex-1) {	//MARK: If the childScene is last slid one, which is in previous index
+				//MARK: If the childScene is last slid one, which is in previous index
+				if (childIndex == destinationIndex-1) {
 					pushedScene = childScene;
 					animatedPushedFrame = pushedScene.view.frame;
-					animatedPushedFrame.origin.x += slidingOffset.x;
-					animatedPushedFrame.origin.y += slidingOffset.y;
+					animatedPushedFrame.origin.x += coveringOffset.x;
+					animatedPushedFrame.origin.y += coveringOffset.y;
 				}
 				else {
 					CGRect modifiedPushedFrame = childScene.view.frame;
-					modifiedPushedFrame.origin.x += slidingOffset.x;
-					modifiedPushedFrame.origin.y += slidingOffset.y;
+					modifiedPushedFrame.origin.x += coveringOffset.x;
+					modifiedPushedFrame.origin.y += coveringOffset.y;
 					
 					[childScene.view setFrame:modifiedPushedFrame];
 				}
@@ -161,6 +169,8 @@
 	[self.view insertSubview:destinationScene.view belowSubview:self.groupUpperMenu];
 	[destinationScene didMoveToParentViewController:self];
 
+	self.isCovering = YES;
+	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
@@ -176,42 +186,44 @@
 		 FXDLog(@"finished: %d", finished);
 		 
 		 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
+		 
+		 self.isCovering = NO;
 	 }];
 }
 
-- (void)slideOutWithSegue:(FXDsegueSlidingOut*)slidingOutSegue {	FXDLog_DEFAULT;
+- (void)uncoverWithSegue:(FXDsegueUncover*)uncoveringSegue {	FXDLog_DEFAULT;
 	
-	if ([self canAnimateWithTransitionSegue:slidingOutSegue] == NO) {
+	if ([self canAnimateWithTransitionSegue:uncoveringSegue] == NO) {
 		return;
 	}
 
 
-	FXDViewController *sourceScene = (FXDViewController*)slidingOutSegue.sourceViewController;
+	FXDViewController *sourceScene = (FXDViewController*)uncoveringSegue.sourceViewController;
 	
-	SLIDING_OFFSET slidingOffset = [self slidingOffsetForSlideDirectionType:sourceScene.slideDirectionType];
-	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:sourceScene.slideDirectionType];
+	COVERING_OFFSET uncoveringOffset = [self coveringOffsetForDirectionType:[sourceScene coverDirectionType]];
+	COVERING_DIRECTION uncoveringDirection = [self coveringDirectionForDirectionType:[sourceScene coverDirectionType]];
 	
 
 	CGRect animatedFrame = sourceScene.view.frame;
-	animatedFrame.origin.x -= (animatedFrame.size.width *slidingDirection.x);
+	animatedFrame.origin.x -= (animatedFrame.size.width *uncoveringDirection.x);
 	
 	
-	CGFloat slidingOutOffsetY = [[sourceScene offsetYforSlidingOut] floatValue];
-	FXDLog(@"1.slidingOutOffsetY: %f", slidingOutOffsetY);
+	CGFloat uncoveringOffsetY = [[sourceScene offsetYforUncovering] floatValue];
+	FXDLog(@"1.uncoveringOffsetY: %f", uncoveringOffsetY);
 	
-	if (slidingOutOffsetY > 0.0) {
-		animatedFrame.origin.y -= (slidingOutOffsetY *slidingDirection.y);
+	if (uncoveringOffsetY > 0.0) {
+		animatedFrame.origin.y -= (uncoveringOffsetY *uncoveringDirection.y);
 	}
 	else {
-		animatedFrame.origin.y -= (animatedFrame.size.height *slidingDirection.y);
+		animatedFrame.origin.y -= (animatedFrame.size.height *uncoveringDirection.y);
 	}
-	FXDLog(@"2.CALCULATED slidingOutOffsetY: %f - %f = %f", sourceScene.view.frame.origin.y, animatedFrame.origin.y, (sourceScene.view.frame.origin.y -animatedFrame.origin.y));
+	FXDLog(@"2.CALCULATED uncoveringOffsetY: %f - %f = %f", sourceScene.view.frame.origin.y, animatedFrame.origin.y, (sourceScene.view.frame.origin.y -animatedFrame.origin.y));
 	
 	
 	FXDViewController *pulledScene = nil;
 	CGRect animatedPulledFrame = CGRectZero;
 	
-	if ([sourceScene shouldCoverWhenSlidingIn] == NO
+	if ([sourceScene shouldCoverAbove] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
@@ -223,16 +235,18 @@
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childScene];
 			
 			if (childIndex < sourceIndex && [childScene shouldStayFixed] == NO) {
-				if (childIndex == sourceIndex-1) {	//MARK: If the childController is last slid one, which is in previous index
+				
+				//MARK: If the childController is last slid one, which is in previous index
+				if (childIndex == sourceIndex-1) {
 					pulledScene = childScene;
 					animatedPulledFrame = pulledScene.view.frame;
-					animatedPulledFrame.origin.x -= slidingOffset.x;
-					animatedPulledFrame.origin.y -= slidingOffset.y;
+					animatedPulledFrame.origin.x -= uncoveringOffset.x;
+					animatedPulledFrame.origin.y -= uncoveringOffset.y;
 				}
 				else {
 					CGRect modifiedPushedFrame = childScene.view.frame;
-					modifiedPushedFrame.origin.x -= slidingOffset.x;
-					modifiedPushedFrame.origin.y -= slidingOffset.y;
+					modifiedPushedFrame.origin.x -= uncoveringOffset.x;
+					modifiedPushedFrame.origin.y -= uncoveringOffset.y;
 					
 					[childScene.view setFrame:modifiedPushedFrame];
 				}
@@ -247,7 +261,7 @@
 			[self configureUpperMenuViewForCurrentScene:pulledScene];
 		}
 		else {
-			FXDViewController *destinationScene = (FXDViewController*)slidingOutSegue.destinationViewController;
+			FXDViewController *destinationScene = (FXDViewController*)uncoveringSegue.destinationViewController;
 			[self configureUpperMenuViewForCurrentScene:destinationScene];
 		}
 	}
@@ -257,13 +271,15 @@
 			[self configureBottomMenuViewForCurrentScene:pulledScene];
 		}
 		else {
-			FXDViewController *destinationScene = (FXDViewController*)slidingOutSegue.destinationViewController;
+			FXDViewController *destinationScene = (FXDViewController*)uncoveringSegue.destinationViewController;
 			[self configureBottomMenuViewForCurrentScene:destinationScene];
 		}
 	}
 	
 	
 	[sourceScene willMoveToParentViewController:nil];
+	
+	self.isUncovering = YES;
 	
 	[UIView
 	 animateWithDuration:durationAnimation
@@ -281,11 +297,13 @@
 		 
 		 [sourceScene.view removeFromSuperview];
 		 [sourceScene removeFromParentViewController];
+		 
+		 self.isUncovering = NO;
 	 }];
 }
 
 #pragma mark -
-- (void)slideOutAllLaterAddedControllerWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)uncoverAllSceneWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	//MARK: Assume direction is only vertical
 	
 	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
@@ -323,20 +341,20 @@
 	}
 	
 	
-	CGFloat totalSlidingOffsetY = 0.0;
+	CGFloat totalUncoveringOffsetY = 0.0;
 	
 	for (FXDViewController *childScene in lateAddedSceneArray) {
-		totalSlidingOffsetY += childScene.view.frame.size.height;
+		totalUncoveringOffsetY += childScene.view.frame.size.height;
 	}
 	
-	FXDLog(@"totalSlidingOffsetY: %f", totalSlidingOffsetY);
+	FXDLog(@"totalUncoveringOffsetY: %f", totalUncoveringOffsetY);
 	
 	
 	__block NSMutableArray *animatedFrameObjArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
 	for (FXDViewController *childScene in lateAddedSceneArray) {
 		CGRect animatedFrame = childScene.view.frame;
-		animatedFrame.origin.y += totalSlidingOffsetY;
+		animatedFrame.origin.y += totalUncoveringOffsetY;
 		
 		[animatedFrameObjArray addObject:NSStringFromCGRect(animatedFrame)];
 		
@@ -354,6 +372,8 @@
 	if (self.groupBottomMenu) {
 		[self configureBottomMenuViewForCurrentScene:rootScene];
 	}
+	
+	self.isUncovering = YES;
 	
 	[UIView
 	 animateWithDuration:durationAnimation
@@ -379,6 +399,8 @@
 		 
 		 FXDLog(@"2.self.childViewControllers: %@", self.childViewControllers);
 		 
+		 self.isUncovering = NO;
+		 
 		 if (didFinishBlock) {
 			 didFinishBlock(YES);
 		 }
@@ -393,36 +415,36 @@
 }
 
 #pragma mark -
-- (SLIDING_OFFSET)slidingOffsetForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
+- (COVERING_OFFSET)coveringOffsetForDirectionType:(COVER_DIRECTION_TYPE)coverDirectionType {
 	
-	SLIDING_OFFSET slidingOffset = {0.0, 0.0};
+	COVERING_OFFSET coveringOffset = {0.0, 0.0};
 	
-	SLIDING_DIRECTION slidingDirection = [self slidingDirectionForSlideDirectionType:slideDirectionType];
+	COVERING_DIRECTION coveringDirection = [self coveringDirectionForDirectionType:coverDirectionType];
 	
-	slidingOffset.x = (self.view.frame.size.width *(CGFloat)slidingDirection.x);
-	slidingOffset.y = (self.view.frame.size.height *(CGFloat)slidingDirection.y);
+	coveringOffset.x = (self.view.frame.size.width *(CGFloat)coveringDirection.x);
+	coveringOffset.y = (self.view.frame.size.height *(CGFloat)coveringDirection.y);
 	
-	return slidingOffset;
+	return coveringOffset;
 }
 
-- (SLIDING_DIRECTION)slidingDirectionForSlideDirectionType:(SLIDE_DIRECTION_TYPE)slideDirectionType {
+- (COVERING_DIRECTION)coveringDirectionForDirectionType:(COVER_DIRECTION_TYPE)coverDirectionType {
 	
-	SLIDING_DIRECTION slidingDirection = {0, 0};
+	COVERING_DIRECTION coveringDirection = {0, 0};
 	
-	switch (slideDirectionType) {
-		case slideDirectionTop:
-			slidingDirection.y = -1;
+	switch (coverDirectionType) {
+		case coverDirectionTop:
+			coveringDirection.y = -1;
 			break;
 						
-		case slideDirectionBottom:
-			slidingDirection.y = 1;
+		case coverDirectionBottom:
+			coveringDirection.y = 1;
 			break;
 			
 		default:
 			break;
 	}
 	
-	return slidingDirection;
+	return coveringDirection;
 }
 
 
@@ -434,15 +456,15 @@
 
 
 #pragma mark - Category
-@implementation FXDViewController (Sliding)
+@implementation FXDViewController (Covering)
 
 #pragma mark - Public
-- (SLIDE_DIRECTION_TYPE)slideDirectionType {
-	return slideDirectionTop;
+- (COVER_DIRECTION_TYPE)coverDirectionType {
+	return coverDirectionTop;
 }
 
 #pragma mark -
-- (BOOL)shouldCoverWhenSlidingIn {
+- (BOOL)shouldCoverAbove {
 	return NO;
 }
 
@@ -451,7 +473,7 @@
 }
 
 #pragma mark -
-- (NSNumber*)offsetYforSlidingOut {
+- (NSNumber*)offsetYforUncovering {
 	return nil;
 }
 
