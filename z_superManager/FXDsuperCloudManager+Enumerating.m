@@ -158,17 +158,7 @@
 		NSDirectoryEnumerator *enumerator = [fileManager fullEnumeratorForRootURL:appDirectory_Document];
 		
 		NSURL *nextURL = [enumerator nextObject];
-
 		
-		NSMutableArray *receivedURLarray = nil;
-		
-		SEL receivedURLarraySelector = NSSelectorFromString(@"receivedURLarray");
-		
-		if (receivedURLarraySelector) {
-			receivedURLarray = [[UIApplication sharedApplication].delegate performSelector:receivedURLarraySelector];
-		}
-		
-		FXDLog(@"receivedURLarray:\n%@", receivedURLarray);
 		
 		while (nextURL) {
 			id isDirectory = nil;
@@ -201,15 +191,6 @@
 						
 						if ([isHidden boolValue] == NO) {
 							BOOL shouldSkip = NO;
-
-							if (receivedURLarray && [receivedURLarray count] > 0) {
-								for (NSURL *receivedURL in receivedURLarray) {
-									if ([[receivedURL absoluteString] isEqualToString:[nextURL absoluteString]]) {
-										FXDLog(@"SKIPPED until passcode entered: receivedURL: %@ nextURL: %@", receivedURL, nextURL);
-										shouldSkip = YES;
-									}
-								}
-							}
 
 							FXDLog(@"shouldSkip: %d", shouldSkip);
 
