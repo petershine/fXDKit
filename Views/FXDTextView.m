@@ -61,16 +61,10 @@
 		CGSize sizeForAssignedText = CGSizeZero;
 		
 		if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-#if __IPHONE_7_0
-			sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
-#else
 			sizeForAssignedText = [assignedText sizeWithFont:self.font constrainedToSize:maximumSize lineBreakMode:NSLineBreakByWordWrapping];
-#endif
 		}
 		else {
-#if __IPHONE_7_0
 			sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
-#endif
 		}
 		
 		modifiedFrame.size.height = (sizeForAssignedText.height > self.contentSize.height) ? sizeForAssignedText.height : self.contentSize.height;

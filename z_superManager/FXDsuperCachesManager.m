@@ -224,21 +224,13 @@
 			BOOL isDownloading = NO;
 			
 			if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-#if __IPHONE_7_0
-				id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-				isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
-				isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-#else
 				isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 				isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-#endif
 			}
 			else {
-#if __IPHONE_7_0
 				id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
 				isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
 				isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-#endif
 			}
 			
 			if (isDownloaded == NO && isDownloading == NO) {

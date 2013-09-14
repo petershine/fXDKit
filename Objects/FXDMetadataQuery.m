@@ -49,21 +49,13 @@
 		BOOL isUploaded = NO;
 		
 		if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-#if __IPHONE_7_0
-			id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-			isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
-			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];;
-#else
 			isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
 			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
-#endif
 		}
 		else {
-#if __IPHONE_7_0
 			id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
 			isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
 			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];;
-#endif
 		}
 		
 		if (isUploaded == NO) {
