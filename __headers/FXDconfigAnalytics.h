@@ -15,9 +15,18 @@
 		#ifndef USE_TestFlight
 			#define USE_TestFlight	0
 		#endif
+
+		#ifndef USE_Flurry
+			#define USE_Flurry	0
+		#endif
+
 	#else
 		#ifndef USE_TestFlight
 			#define USE_TestFlight	1
+		#endif
+
+		#ifndef USE_Flurry
+			#define USE_Flurry	1
 		#endif
 
 	#endif
@@ -26,11 +35,10 @@
 		#define USE_TestFlight	0
 	#endif
 
-#endif
+	#ifndef USE_Flurry
+		#define USE_Flurry	1
+	#endif
 
-
-#ifndef USE_Flurry
-	#define USE_Flurry	1
 #endif
 
 

@@ -58,7 +58,7 @@
 			}
 		}
 		
-		if (alignedParagraph.length > 0) {
+		if ([alignedParagraph length] > 0) {
 			alignedParagraph = [alignedParagraph stringByAppendingString:@"\n"];
 		}
 		

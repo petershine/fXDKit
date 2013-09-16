@@ -311,7 +311,7 @@
 		
 		NSURL *destinationURL = currentFolderURL;
 		
-		if (localItemPath.length > 0) {
+		if ([localItemPath length] > 0) {
 			destinationURL = [destinationURL URLByAppendingPathComponent:localItemPath];
 		}
 
