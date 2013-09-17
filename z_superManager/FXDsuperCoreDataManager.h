@@ -95,6 +95,8 @@
 + (FXDsuperCoreDataManager*)sharedInstance;
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
+
+- (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)startObservingCoreDataNotifications;
 
 - (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;

@@ -161,21 +161,35 @@
 			}
 #endif
 			//TODO: prepare what to do when Core Data is not setup
-			[self startObservingCoreDataNotifications];
-
-			//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
-			NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
 			
-			[[NSNotificationCenter defaultCenter]
-			 postNotificationName:notificationCoreDataManagerDidPrepare
-			 object:self
-			 userInfo:userInfo];
-			
-			if (didFinishBlock) {
-				didFinishBlock(didConfigure);
-			}
+			[self
+			 upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
+				 FXDLog(@"finished: %d", finished);
+				 
+				[self startObservingCoreDataNotifications];
+				
+				//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
+				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
+				
+				[[NSNotificationCenter defaultCenter]
+				 postNotificationName:notificationCoreDataManagerDidPrepare
+				 object:self
+				 userInfo:userInfo];
+				
+				if (didFinishBlock) {
+					didFinishBlock(didConfigure);
+				}
+			}];
 		}];
 	}];
+}
+
+#pragma mark -
+- (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_OVERRIDE;
+#warning "//TODO: Check version number for secure upgrading e.g. updatedForVersion%@"
+	if (didFinishBlock) {
+		didFinishBlock(YES);
+	}
 }
 
 - (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
