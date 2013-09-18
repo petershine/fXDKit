@@ -245,10 +245,10 @@
 
 - (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section {
 	
-	NSInteger numberOfItems = 0;
+	NSUInteger numberOfItems = 0;
 	
 	if (self.mainResultsController) {
-		NSInteger fetchedCount = [self.mainResultsController.fetchedObjects count];
+		NSUInteger fetchedCount = [self.mainResultsController.fetchedObjects count];
 		
 #if ForDEVELOPER
 		NSArray *sections = self.mainResultsController.sections;
@@ -260,7 +260,7 @@
 		}
 		
 		if (numberOfItems != fetchedCount) {	//FXDLog_DEFAULT;
-			FXDLog(@"section: %d numberOfItems: %d == fetchedCount: %d", section, numberOfItems, fetchedCount);
+			FXDLog(@"section: %ld numberOfItems: %ld == fetchedCount: %lu", (long)section, (long)numberOfItems, (unsigned long)fetchedCount);
 		}
 #else
 		numberOfItems = fetchedCount;
@@ -278,18 +278,19 @@
 	}
 #endif
 	
-	return numberOfItems;
+	return (NSInteger)numberOfItems;
 }
 
 #pragma mark -
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
 	
+#if ForDEVELOPER
 	if (scrollView == nil) {
 		scrollView = self.mainScrollview;
 	}
 	
-	
 	FXDLog(@"contentOffset.y: %f didStartDismissingByPullingDown: %d", scrollView.contentOffset.y, self.didStartDismissingByPullingDown);
+#endif
 	
 	if (self.didStartDismissingByPullingDown) {
 		return;

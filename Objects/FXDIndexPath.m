@@ -47,7 +47,7 @@
 			indexPathString = [indexPathString stringByAppendingString:@"_"];
 		}
 
-		indexPathString = [indexPathString stringByAppendingFormat:@"%u", index];
+		indexPathString = [indexPathString stringByAppendingFormat:@"%lu", (unsigned long)index];
 	}
 
 	if ([indexPathString length] == 0) {

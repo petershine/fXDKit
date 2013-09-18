@@ -218,11 +218,11 @@
 - (void)selectTwitterAccountFromAlertView:(id)alertView forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 	
 #if ForDEVELOPER
-	FXDLog(@"buttonIndex: %d", buttonIndex);
-	FXDLog(@"cancelButtonIndex: %d", (NSInteger)[alertView performSelector:@selector(cancelButtonIndex)]);
+	FXDLog(@"buttonIndex: %ld", (long)buttonIndex);
+	FXDLog(@"cancelButtonIndex: %ld", (long)[alertView performSelector:@selector(cancelButtonIndex)]);
 	
 	if ([alertView isKindOfClass:[UIActionSheet class]]) {
-		FXDLog(@"destructiveButtonIndex: %d", [(FXDActionSheet*)alertView destructiveButtonIndex]);
+		FXDLog(@"destructiveButtonIndex: %ld", (long)[(FXDActionSheet*)alertView destructiveButtonIndex]);
 	}
 #endif
 	
@@ -339,9 +339,9 @@
 		[self.accountStore
 		 renewCredentialsForAccount:self.mainTwitterAccount
 		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
-			 FXDLog_ERROR;LOGEVENT_ERROR;
+			 FXDLog_ERROR;
 			 
-			 FXDLog(@"renewResult: %d", renewResult);
+			 FXDLog(@"renewResult: %ld", (long)renewResult);
 			 
 			 if (renewResult == ACAccountCredentialRenewResultRenewed) {
 				 if (requestingBlock) {
@@ -415,12 +415,12 @@
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
 		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
-		FXDLog(@"httpResponse: %d : %@", statusCode, statusCodeDescription);
+		FXDLog(@"httpResponse: %ld : %@", (long)statusCode, statusCodeDescription);
 
 		FXDLog(@"allHeaderFields:\n%@", [(NSHTTPURLResponse*)urlResponse allHeaderFields]);
 	}
 
-	FXDLog(@"responseData length: %d bytes", [responseData length]);
+	FXDLog(@"responseData length: %lu bytes", (unsigned long)[responseData length]);
 
 	if ([responseData length] > 0) {
 		id jsonObj = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];

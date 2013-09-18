@@ -55,7 +55,7 @@
 		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 		
 		if (didPerformFetch == NO) {
-			FXDLog(@"didPerformFetch: %d concurrencyType: %d", didPerformFetch, self.concurrencyType);
+			FXDLog(@"didPerformFetch: %d concurrencyType: %lu", didPerformFetch, (unsigned long)self.concurrencyType);
 		}
 	}
 

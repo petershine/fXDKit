@@ -66,7 +66,7 @@
 #pragma mark - StatusBar
 - (UIStatusBarStyle)preferredStatusBarStyle {
 	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
-	FXDLog(@"statusBarStyle: %d", statusBarStyle);
+	FXDLog(@"statusBarStyle: %ld", (long)statusBarStyle);
 	
 	return statusBarStyle;
 }
@@ -237,7 +237,7 @@
 	[self.childViewControllers
 	 enumerateObjectsWithOptions:NSEnumerationReverse
 	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		 FXDLog(@"idx: %u obj: %@ viewController: %@", idx, obj, viewController);
+		 FXDLog(@"idx: %lu obj: %@ viewController: %@", (unsigned long)idx, obj, viewController);
 
 		 if (viewController == nil) {
 			 if (obj) {

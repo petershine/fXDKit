@@ -119,7 +119,7 @@
 
 #pragma mark -
 - (id)previewPageForModifiedPageIndex:(NSInteger)modifiedPageIndex {	FXDLog_OVERRIDE;
-	FXDLog(@"modifiedPageIndex: %d", modifiedPageIndex);
+	FXDLog(@"modifiedPageIndex: %ld", (long)modifiedPageIndex);
 	
 	/*
 	 FXDsuperPreviewController *photoPage = [globalManager.mainStoryboard instantiateViewControllerWithIdentifier:];
@@ -146,7 +146,7 @@
 		previousController = [self previewPageForModifiedPageIndex:modifiedPageIndex];
 	}
 	
-	FXDLog(@"modifiedPageIndex: %d previousController: %@", modifiedPageIndex, previousController);
+	FXDLog(@"modifiedPageIndex: %ld previousController: %@", (long)modifiedPageIndex, previousController);
 	
 	return previousController;
 }
@@ -162,7 +162,7 @@
 		nextController = [self previewPageForModifiedPageIndex:modifiedPageIndex];
 	}
 	
-	FXDLog(@"modifiedPageIndex: %d nextController: %@", modifiedPageIndex, nextController);
+	FXDLog(@"modifiedPageIndex: %ld nextController: %@", (long)modifiedPageIndex, nextController);
 	
 	return nextController;
 }

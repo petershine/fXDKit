@@ -243,7 +243,7 @@
 		addedControllers = [self.rootController performSelector:@selector(childViewControllers)];
 	}
 	
-	FXDLog(@"addedControllers count: %d", [addedControllers count]);
+	FXDLog(@"addedControllers count: %lu", (unsigned long)[addedControllers count]);
 	
 	if ([addedControllers count] == 0) {
 		_homeController = self.rootController;
@@ -397,13 +397,13 @@
 
 #pragma mark -
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
-	FXDLog(@"1.appLaunchCount: %d", self.appLaunchCount);
+	FXDLog(@"1.appLaunchCount: %ld", (long)self.appLaunchCount);
 	
 	_appLaunchCount++;
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
-	FXDLog(@"2.appLaunchCount: %d", self.appLaunchCount);
+	FXDLog(@"2.appLaunchCount: %ld", (long)self.appLaunchCount);
 }
 
 #pragma mark -

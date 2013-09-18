@@ -52,14 +52,14 @@
 
 #pragma mark - Autorotating
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-	FXDLog(@"toInterfaceOrientation: %d, duration: %f frame: %@ bounds: %@", toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
+	FXDLog(@"toInterfaceOrientation: %ld, duration: %f frame: %@ bounds: %@", (long)toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 	
 	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
 	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-	FXDLog(@"interfaceOrientation: %d, duration: %f frame: %@ bounds: %@", interfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
+	FXDLog(@"interfaceOrientation: %ld, duration: %f frame: %@ bounds: %@", (long)interfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 	
 	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
 	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
@@ -69,7 +69,7 @@
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {	FXDLog_DEFAULT;
-	FXDLog(@"fromInterfaceOrientation: %d frame: %@ bounds: %@", fromInterfaceOrientation, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
+	FXDLog(@"fromInterfaceOrientation: %ld frame: %@ bounds: %@", (long)fromInterfaceOrientation, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
 	
 	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
 	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
@@ -243,10 +243,10 @@
 		CGFloat scale = [[UIScreen mainScreen] scale];
 		
 		ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
-		FXDLog(@"scale: %f assetOrientation: %d", scale, assetOrientation);
+		FXDLog(@"scale: %f assetOrientation: %ld", scale, (long)assetOrientation);
 		
 		UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
-		FXDLog(@"fullImage.imageOrientation: %d fullImage.size: %@", fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
+		FXDLog(@"fullImage.imageOrientation: %ld fullImage.size: %@", (long)fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
 		
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self refreshWithFullImage:fullImage];

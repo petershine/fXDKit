@@ -37,7 +37,7 @@
 	[super viewDidLoad];
 	
 	self.minimumChildCount = [self.childViewControllers count];
-	FXDLog(@"self.minimumChildCount: %d", self.minimumChildCount);
+	FXDLog(@"self.minimumChildCount: %ld", (long)self.minimumChildCount);
 }
 
 

@@ -158,7 +158,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 #if ForDEVELOPER
 	NSInteger statusCode = [(NSHTTPURLResponse*)response statusCode];
 	NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
-	FXDLog(@"httpResponse: (%d) %@", statusCode, statusCodeDescription);
+	FXDLog(@"httpResponse: (%ld) %@", (long)statusCode, statusCodeDescription);
 	
 	//FXDLog(@"\nallHeaderFields:\n%@", [(NSHTTPURLResponse*)response allHeaderFields]);
 #endif
@@ -189,7 +189,7 @@ static NSMutableSet *_staticHttpControlSet = nil;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	
 	FXDLog(@"connection: %@", connection);
-	FXDLog(@"receivedData.length: %d", self.receivedData.length);
+	FXDLog(@"receivedData.length: %lu", (unsigned long)[self.receivedData length]);
 }
 
 

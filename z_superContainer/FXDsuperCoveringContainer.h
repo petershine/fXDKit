@@ -17,7 +17,7 @@
 @interface FXDsuperCoveringContainer : FXDsuperContainer
 
 // Properties
-@property (nonatomic) NSInteger minimumChildCount;
+@property (nonatomic) NSUInteger minimumChildCount;
 
 @property (nonatomic) BOOL isCovering;
 @property (nonatomic) BOOL isUncovering;

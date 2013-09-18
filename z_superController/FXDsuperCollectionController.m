@@ -91,7 +91,7 @@
 	NSInteger numberOfItems = [self numberOfItemsForScrollView:collectionView atSection:section];
 	
 	if (numberOfItems == 0) {	FXDLog_OVERRIDE;
-		FXDLog(@"numberOfItems: %d", numberOfItems);
+		FXDLog(@"numberOfItems: %ld", (long)numberOfItems);
 	}
 	
 	return numberOfItems;

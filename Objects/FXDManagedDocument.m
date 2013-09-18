@@ -47,7 +47,7 @@
 }
 
 - (void)saveToURL:(NSURL *)url forSaveOperation:(UIDocumentSaveOperation)saveOperation completionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;;
-	FXDLog(@"url: %@, saveOperation: %d", url, saveOperation);
+	FXDLog(@"url: %@, saveOperation: %ld", url, (long)saveOperation);
 	
 	[super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
 }

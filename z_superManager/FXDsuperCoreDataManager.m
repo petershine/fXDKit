@@ -128,7 +128,7 @@
 							 storeOptions:options
 							 error:&error];
 
-		FXDLog_ERROR;LOGEVENT_ERROR;
+		FXDLog_ERROR;
 
 		FXDLog(@"1.didConfigure: %d", didConfigure);
 		
@@ -328,7 +328,7 @@
 	 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
 	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
 	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
-		 FXDLog(@"alertView: %@, buttonIndex: %d", alertView, buttonIndex);
+		 FXDLog(@"alertView: %@, buttonIndex: %ld", alertView, (long)buttonIndex);
 		 
 		 if (buttonIndex == buttonIndexAccept) {
 			 [self
@@ -381,7 +381,7 @@
 										  [sharedApplication endBackgroundTask:self.enumeratingTaskIdentifier];
 										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 									  }];
-	FXDLog(@"1.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+	FXDLog(@"1.enumeratingTaskIdentifier: %lu", (unsigned long)self.enumeratingTaskIdentifier);
 	
 	
 	FXDWindow *applicationWindow = nil;
@@ -449,7 +449,7 @@
 				
 				FXDLog_REMAINING;
 				
-				FXDLog(@"2.enumeratingTaskIdentifier: %u", self.enumeratingTaskIdentifier);
+				FXDLog(@"2.enumeratingTaskIdentifier: %lu", (unsigned long)self.enumeratingTaskIdentifier);
 				
 				[[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
 				self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
@@ -475,23 +475,23 @@
 #pragma mark -
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
-	FXDLog(@"1.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
+	FXDLog(@"1.hasChanges: %d concurrencyType: %lu", managedContext.hasChanges, (unsigned long)managedContext.concurrencyType);
 
 	if (managedContext == nil) {
 		managedContext = self.mainDocument.managedObjectContext;
 
-		FXDLog(@"2.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
+		FXDLog(@"2.hasChanges: %d concurrencyType: %lu", managedContext.hasChanges, (unsigned long)managedContext.concurrencyType);
 
 		if (managedContext.hasChanges == NO
 			&& managedContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
 			
 			managedContext = self.mainDocument.managedObjectContext.parentContext;
 
-			FXDLog(@"3.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
+			FXDLog(@"3.hasChanges: %d concurrencyType: %lu", managedContext.hasChanges, (unsigned long)managedContext.concurrencyType);
 		}
 	}
 	
-	FXDLog(@"managedContext: %@ hasChanges: %d concurrencyType: %d", managedContext, managedContext.hasChanges, managedContext.concurrencyType);
+	FXDLog(@"managedContext: %@ hasChanges: %d concurrencyType: %lu", managedContext, managedContext.hasChanges, (unsigned long)managedContext.concurrencyType);
 
 	if (managedContext == nil || managedContext.hasChanges == NO) {
 
@@ -505,11 +505,11 @@
 	
 	void (^contextSavingBlock)(void) = ^{
 		NSError *error = nil;
-		BOOL didSave = [managedContext save:&error];FXDLog_ERROR;LOGEVENT_ERROR;
+		BOOL didSave = [managedContext save:&error];FXDLog_ERROR;
 		
 		FXDLog_DEFAULT;
-		FXDLog(@"didSave: %d concurrencyType: %d", didSave, managedContext.concurrencyType);
-		FXDLog(@"4.hasChanges: %d concurrencyType: %d", managedContext.hasChanges, managedContext.concurrencyType);
+		FXDLog(@"didSave: %d concurrencyType: %lu", didSave, (unsigned long)managedContext.concurrencyType);
+		FXDLog(@"4.hasChanges: %d concurrencyType: %lu", managedContext.hasChanges, (unsigned long)managedContext.concurrencyType);
 		
 		if (didFinishBlock) {
 			didFinishBlock(didSave);
@@ -530,7 +530,7 @@
 - (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
 	FXDLog(@"shouldSkipMerge: %d", shouldSkipMerge);
-	FXDLog(@"1.self.mainDocument.documentState: %u", self.mainDocument.documentState);
+	FXDLog(@"1.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
 	FXDLog(@"1.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 	
 	if (shouldSkipMerge) {
@@ -549,7 +549,7 @@
 	 completionHandler:^(BOOL success) {
 		 FXDLog(@"saveToURL success: %d", success);
 		 
-		 FXDLog(@"2.self.mainDocument.documentState: %u", self.mainDocument.documentState);
+		 FXDLog(@"2.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
 		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 		 
 		 if (didFinishBlock) {
@@ -574,7 +574,7 @@
 										  [sharedApplication endBackgroundTask:self.savingTaskIdentifier];
 										  self.savingTaskIdentifier = UIBackgroundTaskInvalid;
 									  }];
-	FXDLog(@"1.savingTaskIdentifier: %u", self.savingTaskIdentifier);
+	FXDLog(@"1.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
@@ -583,7 +583,7 @@
 		
 		FXDLog_REMAINING;
 		
-		FXDLog(@"2.savingTaskIdentifier: %u", self.savingTaskIdentifier);
+		FXDLog(@"2.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
 		
 		[[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
 		self.savingTaskIdentifier = UIBackgroundTaskInvalid;
@@ -594,20 +594,20 @@
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog(@"notification: %@", notification);
 	FXDLog(@"self.mainDocument.fileModificationDate: %@", self.mainDocument.fileModificationDate);
-	FXDLog(@"self.mainDocument.documentState: %u", self.mainDocument.documentState);
+	FXDLog(@"self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
 }
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
+	FXDLog(@"notification.object: %@ concurrencyType: %lu", notification.object, (unsigned long)[(NSManagedObjectContext*)notification.object concurrencyType]);
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
+	FXDLog(@"notification.object: %@ concurrencyType: %lu", notification.object, (unsigned long)[(NSManagedObjectContext*)notification.object concurrencyType]);
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.object: %@ concurrencyType: %d", notification.object, [(NSManagedObjectContext*)notification.object concurrencyType]);
+	FXDLog(@"notification.object: %@ concurrencyType: %lu", notification.object, (unsigned long)[(NSManagedObjectContext*)notification.object concurrencyType]);
 	FXDLog(@"isEqual:self.mainDocument.managedObjectContext: %@", [notification.object isEqual:self.mainDocument.managedObjectContext] ? @"YES":@"NO");
 
 	// Distinguish notification from main managedObjectContext and private managedObjectContext
@@ -618,9 +618,9 @@
 	
 	FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
 	FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
-	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
 	
 	//MARK: Merge only if persistentStore is same
 	NSString *mainStoreUUID = nil;
@@ -664,9 +664,9 @@
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@", notification.object);
 	
-	FXDLog(@"inserted: %d", [(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %d", [(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %d", [(notification.userInfo)[@"updated"] count]);
+	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
 }
 
 
