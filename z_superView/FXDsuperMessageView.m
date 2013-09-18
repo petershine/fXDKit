@@ -50,7 +50,8 @@
 	
 	self.didPressAcceptButton = YES;
 	
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
 		self.labelAccepting.text = NSLocalizedString(text_Accepting, nil);
 	}];
 	

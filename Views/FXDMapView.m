@@ -135,7 +135,15 @@
 
 #pragma mark -
 - (void)configureRegionForZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
-	FXDLog(@"zoomScale: %f == [self zoomScale]: %f", zoomScale, [self zoomScale]);
+	
+	if (zoomScale == 0.0) {
+		[self setCenterCoordinate:coordinate animated:animated];
+		return;
+	}
+	
+	
+	FXDLog_DEFAULT;
+	FXDLog(@"[self zoomScale]: %f zoomScale: %f", [self zoomScale], zoomScale);
 	
 	double mapWidth = self.frame.size.width /zoomScale;
 	double mapHeight = self.frame.size.height /zoomScale;

@@ -89,99 +89,102 @@
 #pragma mark - Public
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_DEFAULT;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	FXDLog_DEFAULT;
-		FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
-		FXDLog(@"withCompleteProtection: %d", withCompleteProtection);
-		
-		NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-		NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
-		FXDLog(@"storeURL: %@", storeURL);
-		
-		
-		NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
-		options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
-		options[NSInferMappingModelAutomaticallyOption] = @(YES);
-		
-		if (ubiquityContainerURL) {	//MARK: If using iCloud
-			//TODO: get UUID unique URL using ubiquityContainerURL instead
-			//NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
-			NSURL *ubiquitousContentURL = ubiquityContainerURL;
-			FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
-			
-			options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
-			options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
-		}
-		
-		//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
-		if (withCompleteProtection) {
-			options[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
-		}
-		
-		FXDLog(@"options:\n%@", options);
-		
-
-		NSError *error = nil;
-		BOOL didConfigure = [self.mainDocument
-							 configurePersistentStoreCoordinatorForURL:storeURL
-							 ofType:NSSQLiteStoreType
-							 modelConfiguration:nil
-							 storeOptions:options
-							 error:&error];
-
-		FXDLog_ERROR;
-
-		FXDLog(@"1.didConfigure: %d", didConfigure);
-		
+	[[NSOperationQueue new]
+	 addOperationWithBlock:^{	FXDLog_DEFAULT;
+		 FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
+		 FXDLog(@"withCompleteProtection: %d", withCompleteProtection);
+		 
+		 NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+		 NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
+		 FXDLog(@"storeURL: %@", storeURL);
+		 
+		 
+		 NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
+		 options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
+		 options[NSInferMappingModelAutomaticallyOption] = @(YES);
+		 
+		 if (ubiquityContainerURL) {	//MARK: If using iCloud
+			 //TODO: get UUID unique URL using ubiquityContainerURL instead
+			 //NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
+			 NSURL *ubiquitousContentURL = ubiquityContainerURL;
+			 FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
+			 
+			 options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
+			 options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
+		 }
+		 
+		 //MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
+		 if (withCompleteProtection) {
+			 options[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
+		 }
+		 
+		 FXDLog(@"options:\n%@", options);
+		 
+		 
+		 NSError *error = nil;
+		 BOOL didConfigure = [self.mainDocument
+							  configurePersistentStoreCoordinatorForURL:storeURL
+							  ofType:NSSQLiteStoreType
+							  modelConfiguration:nil
+							  storeOptions:options
+							  error:&error];
+		 
+		 FXDLog_ERROR;
+		 
+		 FXDLog(@"1.didConfigure: %d", didConfigure);
+		 
 #if ForDEVELOPER
-		NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
-		
-		for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
-			FXDLog(@"persistentStore: %@", persistentStore.URL);
-			FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
-		}
+		 NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
+		 
+		 for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
+			 FXDLog(@"persistentStore: %@", persistentStore.URL);
+			 FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
+		 }
 #endif
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			FXDLog(@"2.didConfigure: %d", didConfigure);
-			
+		 
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  FXDLog(@"2.didConfigure: %d", didConfigure);
+			  
 #warning "//TODO: If icloud connection is not working, CHECK if cellular transferring is enabled on device"
-			
+			  
 #if ForDEVELOPER
-			if (error) {
-				NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
-				NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];
-
-				FXDAlertView *alertView = [[FXDAlertView alloc]
-										   initWithTitle:title
-										   message:message
-										   delegate:nil
-										   cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
-										   otherButtonTitles:nil];
-				[alertView show];
-			}
+			  if (error) {
+				  NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
+				  NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];
+				  
+				  FXDAlertView *alertView =
+				  [[FXDAlertView alloc]
+				   initWithTitle:title
+				   message:message
+				   delegate:nil
+				   cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+				   otherButtonTitles:nil];
+				  [alertView show];
+			  }
 #endif
-			//TODO: prepare what to do when Core Data is not setup
-			
-			[self
-			 upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
-				 FXDLog(@"finished: %d", finished);
-				 
-				[self startObservingCoreDataNotifications];
-				
-				//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
-				NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
-				
-				[[NSNotificationCenter defaultCenter]
-				 postNotificationName:notificationCoreDataManagerDidPrepare
-				 object:self
-				 userInfo:userInfo];
-				
-				if (didFinishBlock) {
-					didFinishBlock(didConfigure);
-				}
-			}];
-		}];
-	}];
+			  //TODO: prepare what to do when Core Data is not setup
+			  
+			  [self
+			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
+				   FXDLog(@"finished: %d", finished);
+				   
+				   [self startObservingCoreDataNotifications];
+				   
+				   //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
+				   NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
+				   
+				   [[NSNotificationCenter defaultCenter]
+					postNotificationName:notificationCoreDataManagerDidPrepare
+					object:self
+					userInfo:userInfo];
+				   
+				   if (didFinishBlock) {
+					   didFinishBlock(didConfigure);
+				   }
+			   }];
+		  }];
+	 }];
 }
 
 #pragma mark -
@@ -396,80 +399,83 @@
 	
 	NSManagedObjectContext *managedContext = (shouldUsePrivateContext) ? self.mainDocument.managedObjectContext.parentContext:self.mainDocument.managedObjectContext;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		
-		NSArray *fetchedObjArray = [managedContext
-									fetchedObjArrayForEntityName:self.mainEntityName
-									withSortDescriptors:self.mainSortDescriptors
-									withPredicate:nil
-									withLimit:limitInfiniteFetch];
-		
-		for (NSManagedObject *fetchedObj in fetchedObjArray) {
-			if (shouldBreak) {	//MARK: Evaluate case for an item breaking the enumeration itself
-				break;
-			}
-			
-			
-			if (enumerationBlock) {
-				NSManagedObject *mainEntityObj = [managedContext objectWithID:[fetchedObj objectID]];
-				
-				//TEST:
-				if (shouldUsePrivateContext) {
-					enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
-				}
-				else {
-					[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-						enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
-					}];
-				}
-			}
-			
-			FXDLog_REMAINING;
-		}
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			FXDLog(@"1.self.didStartEnumerating: %d", self.didStartEnumerating);
-			self.didStartEnumerating = NO;
-			FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
-			
-			
-			FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
-				FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d shouldBreak: %d", finished, shouldBreak);
-				
-				if (withDefaultProgressView) {
-					[applicationWindow hideProgressView];
-				}
-				
-				if (shouldBreak) {
-					finished = NO;
-				}
-				
-				FXDLog(@"finished: %d, shouldBreak: %d", finished, shouldBreak);
-				
-				
-				FXDLog_REMAINING;
-				
-				FXDLog(@"2.enumeratingTaskIdentifier: %lu", (unsigned long)self.enumeratingTaskIdentifier);
-				
-				[[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
-				self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
-				
-				if (didFinishBlock) {
-					didFinishBlock(finished);
-				}
-			};
-			
-			
-			if (shouldSaveAtTheEnd == NO) {
-				DidEnumerateBlock(YES);
-				
-				return;
-			}
-			
-			
-			[self saveMainDocumentShouldSkipMerge:NO withDidFinishBlock:DidEnumerateBlock];
-		}];
-	}];
+	[[NSOperationQueue new]
+	 addOperationWithBlock:^{
+		 
+		 NSArray *fetchedObjArray = [managedContext
+									 fetchedObjArrayForEntityName:self.mainEntityName
+									 withSortDescriptors:self.mainSortDescriptors
+									 withPredicate:nil
+									 withLimit:limitInfiniteFetch];
+		 
+		 for (NSManagedObject *fetchedObj in fetchedObjArray) {
+			 if (shouldBreak) {	//MARK: Evaluate case for an item breaking the enumeration itself
+				 break;
+			 }
+			 
+			 
+			 if (enumerationBlock) {
+				 NSManagedObject *mainEntityObj = [managedContext objectWithID:[fetchedObj objectID]];
+				 
+				 //TEST:
+				 if (shouldUsePrivateContext) {
+					 enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
+				 }
+				 else {
+					 [[NSOperationQueue mainQueue]
+					  addOperationWithBlock:^{
+						  enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
+					  }];
+				 }
+			 }
+			 
+			 FXDLog_REMAINING;
+		 }
+		 
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  FXDLog(@"1.self.didStartEnumerating: %d", self.didStartEnumerating);
+			  self.didStartEnumerating = NO;
+			  FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
+			  
+			  
+			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
+				  FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d shouldBreak: %d", finished, shouldBreak);
+				  
+				  if (withDefaultProgressView) {
+					  [applicationWindow hideProgressView];
+				  }
+				  
+				  if (shouldBreak) {
+					  finished = NO;
+				  }
+				  
+				  FXDLog(@"finished: %d, shouldBreak: %d", finished, shouldBreak);
+				  
+				  
+				  FXDLog_REMAINING;
+				  
+				  FXDLog(@"2.enumeratingTaskIdentifier: %lu", (unsigned long)self.enumeratingTaskIdentifier);
+				  
+				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
+				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
+				  
+				  if (didFinishBlock) {
+					  didFinishBlock(finished);
+				  }
+			  };
+			  
+			  
+			  if (shouldSaveAtTheEnd == NO) {
+				  DidEnumerateBlock(YES);
+				  
+				  return;
+			  }
+			  
+			  
+			  [self saveMainDocumentShouldSkipMerge:NO withDidFinishBlock:DidEnumerateBlock];
+		  }];
+	 }];
 }
 
 #pragma mark -

@@ -180,94 +180,99 @@
 
 - (void)enumerateCachesMetadataQueryResults {
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{	//FXDLog_DEFAULT;
-		NSString *alertTitle = nil;
-
-		NSFileManager *fileManager = [NSFileManager defaultManager];
-		
-		//for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
-		for (NSUInteger i = 0; i < self.ubiquitousCachesMetadataQuery.resultCount; i++) {
-			NSMetadataItem *metadataItem = [self.ubiquitousCachesMetadataQuery resultAtIndex:i];
-			
-			NSError *error = nil;
-			
-			NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
-		
-			NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
-			
-			BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERRORexcept(260);
-			
+	[[NSOperationQueue new]
+	 addOperationWithBlock:^{	//FXDLog_DEFAULT;
+		 NSString *alertTitle = nil;
+		 
+		 NSFileManager *fileManager = [NSFileManager defaultManager];
+		 
+		 //for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
+		 for (NSUInteger i = 0; i < self.ubiquitousCachesMetadataQuery.resultCount; i++) {
+			 NSMetadataItem *metadataItem = [self.ubiquitousCachesMetadataQuery resultAtIndex:i];
+			 
+			 NSError *error = nil;
+			 
+			 NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
+			 
+			 NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
+			 
+			 BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERRORexcept(260);
+			 
 #if ForDEVELOPER
-			BOOL didStartDownloading = NO;
-			BOOL didRemove = NO;
+			 BOOL didStartDownloading = NO;
+			 BOOL didRemove = NO;
 #endif
-			
-			if (isReachable == NO) {
+			 
+			 if (isReachable == NO) {
 #if ForDEVELOPER
-				didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
+				 didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
 #else
-				[fileManager removeItemAtURL:cachedURL error:&error];
+				 [fileManager removeItemAtURL:cachedURL error:&error];
 #endif
-				
-				if (error && [error code] != 4 && [error code] != 260) {
-					FXDLog_ERROR;
-				}
-
+				 
+				 if (error && [error code] != 4 && [error code] != 260) {
+					 FXDLog_ERROR;
+				 }
+				 
 #if ForDEVELOPER
-				FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
+				 FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 #endif
-				continue;
-			}
-			
-			
-			BOOL isDownloaded = NO;
-			BOOL isDownloading = NO;
-			
-			if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-				isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
-				isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-			}
-			else {
-				id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-				isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
-				isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-			}
-			
-			if (isDownloaded == NO && isDownloading == NO) {
+				 continue;
+			 }
+			 
+			 
+			 BOOL isDownloaded = NO;
+			 BOOL isDownloading = NO;
+			 
+			 if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
+				 isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
+				 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
+			 }
+			 else {
+				 id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+				 isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
+				 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
+			 }
+			 
+			 if (isDownloaded == NO && isDownloading == NO) {
 #if ForDEVELOPER
-				didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+				 didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
 #else
-				[fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
+				 [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
 #endif
-				
-				if ([error code] == 512) {
-					if (alertTitle == nil) {
-						NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
-						
-						if (underlyingError) {
-							NSDictionary *userInfo = [underlyingError userInfo];
-							
-							alertTitle = userInfo[@"NSDescription"];
-						}
-					}
-				}
-				else {
-					FXDLog_ERROR;
-				}
-			}
-		}
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			NSMutableDictionary *userInfo = nil;
-
-			if (alertTitle) {
-				userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
-				userInfo[@"alertTitle"] = alertTitle;
-			}
-			
-			[[NSNotificationCenter defaultCenter] postNotificationName:notificationCachesControlDidEnumerateCachesMetadataQueryResults object:nil userInfo:userInfo];
-		}];
-	}];
+				 
+				 if ([error code] == 512) {
+					 if (alertTitle == nil) {
+						 NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
+						 
+						 if (underlyingError) {
+							 NSDictionary *userInfo = [underlyingError userInfo];
+							 
+							 alertTitle = userInfo[@"NSDescription"];
+						 }
+					 }
+				 }
+				 else {
+					 FXDLog_ERROR;
+				 }
+			 }
+		 }
+		 
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  NSMutableDictionary *userInfo = nil;
+			  
+			  if (alertTitle) {
+				  userInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+				  userInfo[@"alertTitle"] = alertTitle;
+			  }
+			  
+			  [[NSNotificationCenter defaultCenter]
+			   postNotificationName:notificationCachesControlDidEnumerateCachesMetadataQueryResults
+			   object:nil
+			   userInfo:userInfo];
+		  }];
+	 }];
 }
 
 
@@ -281,15 +286,17 @@
 
 - (void)observedCachesMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			if (isTransferring == NO) {
-				[self enumerateCachesMetadataQueryResults];
-			}
-		}];
-	}];
+	[[NSOperationQueue new]
+	 addOperationWithBlock:^{
+		 BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];
+		 
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  if (isTransferring == NO) {
+				  [self enumerateCachesMetadataQueryResults];
+			  }
+		  }];
+	 }];
 }
 
 //MARK: - Delegate implementation

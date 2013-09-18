@@ -236,24 +236,26 @@
 		
 	[[FXDWindow applicationWindow] showDefaultProgressView];
 	
-	[[NSOperationQueue new] addOperationWithBlock:^{
-		ALAssetRepresentation *defaultRepresentation = [self.previewedAsset defaultRepresentation];
-		
-		CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
-		CGFloat scale = [[UIScreen mainScreen] scale];
-		
-		ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
-		FXDLog(@"scale: %f assetOrientation: %ld", scale, (long)assetOrientation);
-		
-		UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
-		FXDLog(@"fullImage.imageOrientation: %ld fullImage.size: %@", (long)fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self refreshWithFullImage:fullImage];
-			
-			[[FXDWindow applicationWindow] hideProgressView];
-		}];
-	}];
+	[[NSOperationQueue new]
+	 addOperationWithBlock:^{
+		 ALAssetRepresentation *defaultRepresentation = [self.previewedAsset defaultRepresentation];
+		 
+		 CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
+		 CGFloat scale = [[UIScreen mainScreen] scale];
+		 
+		 ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
+		 FXDLog(@"scale: %f assetOrientation: %ld", scale, (long)assetOrientation);
+		 
+		 UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
+		 FXDLog(@"fullImage.imageOrientation: %ld fullImage.size: %@", (long)fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
+		 
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  [self refreshWithFullImage:fullImage];
+			  
+			  [[FXDWindow applicationWindow] hideProgressView];
+		  }];
+	 }];
 }
 
 #pragma mark -

@@ -71,11 +71,12 @@
 		UIImage *resizeableImage = [_weakSelf.image resizableImageWithCapInsets:capInsets];
 
 		if (resizeableImage) {
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				__strong typeof(_weakSelf) _strongSelf = _weakSelf;
-				
-				_strongSelf.image = resizeableImage;
-			}];
+			[[NSOperationQueue mainQueue]
+			 addOperationWithBlock:^{
+				 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+				 
+				 _strongSelf.image = resizeableImage;
+			 }];
 		}
 	}
 }

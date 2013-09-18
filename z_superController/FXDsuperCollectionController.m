@@ -114,11 +114,12 @@
 		}
 		
 		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			__strong typeof(_weakSelf) _strongSelf = _weakSelf;
-			
-			[_strongSelf.cellOperationDictionary removeObjectForKey:indexPath];
-		}];
+		[[NSOperationQueue mainQueue]
+		 addOperationWithBlock:^{
+			 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+			 
+			 [_strongSelf.cellOperationDictionary removeObjectForKey:indexPath];
+		 }];
 	}];
 	
 	

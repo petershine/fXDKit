@@ -108,23 +108,27 @@
 		 FXDLog_ERROR;
 		 
 		 if (granted) {
-			 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				 //[self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
-				 [self showActionSheetInPresentingView:presentingView forSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
-			 }];
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  //[self showAlertViewForSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+				  [self
+				   showActionSheetInPresentingView:presentingView
+				   forSelectingTwitterAccountWithDidFinishBlock:didFinishBlock];
+			  }];
 		 }
 		 else {
-			 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				 FXDAlertView *alertView =
-				 [[FXDAlertView alloc]
-				  initWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
-				  message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
-				  clickedButtonAtIndexBlock:nil
-				  cancelButtonTitle:nil
-				  otherButtonTitles:nil];
-				 
-				 [alertView show];
-			 }];
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  FXDAlertView *alertView =
+				  [[FXDAlertView alloc]
+				   initWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
+				   message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+				   clickedButtonAtIndexBlock:nil
+				   cancelButtonTitle:nil
+				   otherButtonTitles:nil];
+				  
+				  [alertView show];
+			  }];
 			 
 			 if (didFinishBlock) {
 				 didFinishBlock(NO);
@@ -365,8 +369,9 @@
 
 	SLComposeViewController *socialComposeController = nil;
 
-	//TODO: Test Facebook interface
+	//TODO: Test Facebook interface too
 	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
+		
 		FXDAlertView *alertView =
 		[[FXDAlertView alloc]
 		 initWithTitle:NSLocalizedString(@"Please connect to Twitter", nil)
