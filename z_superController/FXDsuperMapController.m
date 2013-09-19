@@ -18,7 +18,9 @@
 #pragma mark - Initialization
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+
+	//MARK: Not useful for subclass
+	/*
 	if (self.mainMapview.delegate == nil) {
 		[self.mainMapview setDelegate:self];
 	}
@@ -26,6 +28,7 @@
 	if (self.shouldResumeTracking) {
 		[self resumeTrackingUser];
 	}
+	 */
 }
 
 

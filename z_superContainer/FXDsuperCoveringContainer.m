@@ -122,7 +122,7 @@
 	CGRect modifiedFrame = destinationScene.view.frame;
 	modifiedFrame.origin.x -= coveringOffset.x;
 	modifiedFrame.origin.y -= coveringOffset.y;
-	modifiedFrame.origin.y += (heightStatusBar *coveringDirection.y);
+	modifiedFrame.origin.y += (heightDynamicStatusBar *coveringDirection.y);
 	[destinationScene.view setFrame:modifiedFrame];
 
 	

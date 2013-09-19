@@ -56,8 +56,6 @@
 			#define TEST_loggingManagedDocumentAutoSaving	0
 		#endif
 
-		#define TEST_slowAnimationDuration	0
-
 		#define USE_FXDLog	1
 
 	#else

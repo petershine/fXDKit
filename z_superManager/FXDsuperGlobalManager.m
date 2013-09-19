@@ -490,7 +490,7 @@
 }
 
 #pragma mark -
-- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification {	//FXDLog_OVERRIDE;
 }
 
 - (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;

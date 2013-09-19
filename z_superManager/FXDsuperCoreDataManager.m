@@ -473,7 +473,9 @@
 			  }
 			  
 			  
-			  [self saveMainDocumentShouldSkipMerge:NO withDidFinishBlock:DidEnumerateBlock];
+			  [self
+			   saveMainDocumentShouldSkipMerge:NO
+			   withDidFinishBlock:DidEnumerateBlock];
 		  }];
 	 }];
 }

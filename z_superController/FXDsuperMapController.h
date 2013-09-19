@@ -9,7 +9,9 @@
 
 #import "FXDsuperTableController.h"
 
-@interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate>
+@interface FXDsuperMapController : FXDsuperTableController <MKMapViewDelegate> {
+	FXDMapView *_mainMapview;
+}
 
 // Properties
 @property (nonatomic) MKUserTrackingMode initialTrackingMode;

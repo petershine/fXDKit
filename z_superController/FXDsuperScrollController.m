@@ -217,7 +217,7 @@
 	if (cellOperation) {
 		[cellOperation cancel];
 		
-		didCancel = cellOperation.isCancelled;
+		didCancel = [cellOperation isCancelled];
 	}
 	
 	
