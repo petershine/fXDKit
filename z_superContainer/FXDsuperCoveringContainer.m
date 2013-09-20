@@ -408,10 +408,10 @@
 }
 
 #pragma mark -
-- (void)configureUpperMenuViewForCurrentScene:(FXDViewController*)currentScene {	FXDLog_OVERRIDE;
+- (void)configureUpperMenuViewForCurrentScene:(FXDViewController*)currentScene {	//FXDLog_OVERRIDE;
 }
 
-- (void)configureBottomMenuViewForCurrentScene:(FXDViewController*)currentScene {	FXDLog_OVERRIDE;
+- (void)configureBottomMenuViewForCurrentScene:(FXDViewController*)currentScene {	//FXDLog_OVERRIDE;
 }
 
 #pragma mark -

@@ -67,6 +67,7 @@
 
 - (void)observedUIApplicationWillResignActive:(NSNotification*)notification;
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
+- (void)observedUIApplicationWillEnterForeground:(NSNotification*)notification;
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 - (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification;

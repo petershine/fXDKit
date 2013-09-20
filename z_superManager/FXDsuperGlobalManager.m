@@ -136,49 +136,49 @@
 		
 		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 		
-		NSDictionary *commonNamesDictionary = @{@"i386":     @"iPhone Simulator",
-										  @"x86_64":   @"iPad Simulator",
-										  
-										  @"iPhone1,1":    @"iPhone",
-										  @"iPhone1,2":    @"iPhone 3G",
-										  @"iPhone2,1":    @"iPhone 3GS",
-										  @"iPhone3,1":    @"iPhone 4",
-										  @"iPhone4,1":    @"iPhone 4S",
-										  @"iPhone5,1":    @"iPhone 5(GSM)",
-										  @"iPhone5,2":    @"iPhone 5(GSM+CDMA)",
-										  
-										  @"iPad1,1":  @"iPad",
-										  @"iPad2,1":  @"iPad 2(WiFi)",
-										  @"iPad2,2":  @"iPad 2(GSM)",
-										  @"iPad2,3":  @"iPad 2(CDMA)",
-										  @"iPad2,4":  @"iPad 2(WiFi Rev A)",
-										  @"iPad2,5":  @"iPad Mini(WiFi)",
-										  @"iPad2,6":  @"iPad Mini(GSM)",
-										  @"iPad2,7":  @"iPad Mini(GSM+CDMA)",
-										  @"iPad3,1":  @"iPad 3(WiFi)",
-										  @"iPad3,2":  @"iPad 3(GSM+CDMA)",
-										  @"iPad3,3":  @"iPad 3(GSM)",
-										  @"iPad3,4":  @"iPad 4(WiFi)",
-										  @"iPad3,5":  @"iPad 4(GSM)",
-										  @"iPad3,6":  @"iPad 4(GSM+CDMA)",
-										  
-										  @"iPod1,1":  @"iPod 1st Gen",
-										  @"iPod2,1":  @"iPod 2nd Gen",
-										  @"iPod3,1":  @"iPod 3rd Gen",
-										  @"iPod4,1":  @"iPod 4th Gen",
-										  @"iPod5,1":  @"iPod 5th Gen",
-										  
-										  };
-		
+		NSDictionary *commonNamesDictionary =
+		@{@"i386":		@"iPhone Simulator",
+		  @"x86_64":	@"iPad Simulator",
+
+		  @"iPhone1,1":	@"iPhone",
+		  @"iPhone1,2":	@"iPhone 3G",
+		  @"iPhone2,1":	@"iPhone 3GS",
+		  @"iPhone3,1":	@"iPhone 4",
+		  @"iPhone4,1":	@"iPhone 4S",
+		  @"iPhone5,1":	@"iPhone 5(GSM)",
+		  @"iPhone5,2":	@"iPhone 5(GSM+CDMA)",
+
+		  @"iPad1,1":	@"iPad",
+		  @"iPad2,1":	@"iPad 2(WiFi)",
+		  @"iPad2,2":	@"iPad 2(GSM)",
+		  @"iPad2,3":	@"iPad 2(CDMA)",
+		  @"iPad2,4":	@"iPad 2(WiFi Rev A)",
+		  @"iPad2,5":	@"iPad Mini(WiFi)",
+		  @"iPad2,6":	@"iPad Mini(GSM)",
+		  @"iPad2,7":	@"iPad Mini(GSM+CDMA)",
+		  @"iPad3,1":	@"iPad 3(WiFi)",
+		  @"iPad3,2":	@"iPad 3(GSM+CDMA)",
+		  @"iPad3,3":	@"iPad 3(GSM)",
+		  @"iPad3,4":	@"iPad 4(WiFi)",
+		  @"iPad3,5":	@"iPad 4(GSM)",
+		  @"iPad3,6":	@"iPad 4(GSM+CDMA)",
+
+		  @"iPod1,1":	@"iPod 1st Gen",
+		  @"iPod2,1":	@"iPod 2nd Gen",
+		  @"iPod3,1":	@"iPod 3rd Gen",
+		  @"iPod4,1": 	@"iPod 4th Gen",
+		  @"iPod5,1":	@"iPod 5th Gen",
+		  };
+
 		_deviceModelName = commonNamesDictionary[machineName];
-		
+
 		if (_deviceModelName == nil) {
 			_deviceModelName = machineName;
 		}
 
 		FXDLog(@"_deviceModelName: %@", _deviceModelName);
 	}
-	
+
 	return _deviceModelName;
 }
 
@@ -355,6 +355,12 @@
 	 selector:@selector(observedUIApplicationDidEnterBackground:)
 	 name:UIApplicationDidEnterBackgroundNotification
 	 object:nil];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillEnterForeground:)
+	 name:UIApplicationWillEnterForegroundNotification
+	 object:nil];
 	
 	[notificationCenter
 	 addObserver:self
@@ -474,26 +480,27 @@
 }
 
 #pragma mark -
-- (void)observedUIApplicationWillResignActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillResignActive:(NSNotification*)notification {
 }
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {
 }
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillEnterForeground:(NSNotification*)notification {
 }
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {
 }
-- (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {
 }
-
-#pragma mark -
-- (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {	//FXDLog_OVERRIDE;
+- (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification {
 }
 
 #pragma mark -
-- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification {	//FXDLog_OVERRIDE;
+- (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {
 }
 
-- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
+#pragma mark -
+- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification {
+}
+- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification {
 }
 
 //MARK: - Delegate implementation

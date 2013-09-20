@@ -34,12 +34,12 @@
 
 - (BOOL)isHorizontal;
 
-- (MKZoomScale)zoomScale;
+- (MKZoomScale)mapZoomScale;
 
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 
 - (MKMapRect)visibleMapRectAtCoordinate:(CLLocationCoordinate2D)coordinate withScale:(CGFloat)scale;
 
-- (void)configureRegionForZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
+- (void)configureRegionForMapZoomScale:(MKZoomScale)mapZoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 
 @end

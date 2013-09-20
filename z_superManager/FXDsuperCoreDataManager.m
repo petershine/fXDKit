@@ -600,6 +600,8 @@
 
 #pragma mark -
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
+	//notification: NSConcreteNotification 0x1a3746e0 {name = UIDocumentStateChangedNotification; object = <FXDManagedDocument: 0x16d94d10> fileURL: file:///var/mobile/Applications/A2651A45-6230-4225-A538-420889FD5693/Documents/managed.coredata.document documentState: [EditingDisabled | SavingError]}
+
 	FXDLog(@"notification: %@", notification);
 	FXDLog(@"self.mainDocument.fileModificationDate: %@", self.mainDocument.fileModificationDate);
 	FXDLog(@"self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);

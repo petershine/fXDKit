@@ -98,15 +98,15 @@
 }
 
 #pragma mark -
-- (MKZoomScale)zoomScale {
+- (MKZoomScale)mapZoomScale {
 	MKMapRect visibleRect = self.visibleMapRect;
 	
 	MKZoomScale widthScale = self.frame.size.width /visibleRect.size.width;
 	MKZoomScale heightScale = self.frame.size.height /visibleRect.size.height;
 	
-	MKZoomScale zoomScale = MIN(widthScale, heightScale);
+	MKZoomScale mapZoomScale = MIN(widthScale, heightScale);
 	
-	return zoomScale;
+	return mapZoomScale;
 }
 
 #pragma mark -
@@ -134,19 +134,19 @@
 }
 
 #pragma mark -
-- (void)configureRegionForZoomScale:(MKZoomScale)zoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
+- (void)configureRegionForMapZoomScale:(MKZoomScale)mapZoomScale atCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
 	
-	if (zoomScale == 0.0) {
+	if (mapZoomScale == 0.0) {
 		[self setCenterCoordinate:coordinate animated:animated];
 		return;
 	}
 	
 	
 	FXDLog_DEFAULT;
-	FXDLog(@"[self zoomScale]: %f zoomScale: %f", [self zoomScale], zoomScale);
+	FXDLog(@"[self mapZoomScale]: %f zoomScale: %f", [self mapZoomScale], mapZoomScale);
 	
-	double mapWidth = self.frame.size.width /zoomScale;
-	double mapHeight = self.frame.size.height /zoomScale;
+	double mapWidth = self.frame.size.width /mapZoomScale;
+	double mapHeight = self.frame.size.height /mapZoomScale;
 	FXDLog(@"mapWidth: %f mapHeight: %f", mapWidth, mapHeight);
 	
 	MKMapPoint mapPoint = MKMapPointForCoordinate(coordinate);
