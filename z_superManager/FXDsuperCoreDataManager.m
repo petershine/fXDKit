@@ -553,8 +553,8 @@
 	[self.mainDocument
 	 saveToURL:self.mainDocument.fileURL
 	 forSaveOperation:UIDocumentSaveForOverwriting
-	 completionHandler:^(BOOL success) {
-		 FXDLog(@"saveToURL success: %d", success);
+	 completionHandler:^(BOOL success) {	FXDLog_DEFAULT;
+		 FXDLog(@"saveToURL:forSaveOperation: success: %d", success);
 		 
 		 FXDLog(@"2.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
 		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);

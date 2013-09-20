@@ -367,6 +367,12 @@
 	 selector:@selector(observedUIApplicationDidBecomeActive:)
 	 name:UIApplicationDidBecomeActiveNotification
 	 object:nil];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidReceiveMemoryWarning:)
+	 name:UIApplicationDidReceiveMemoryWarningNotification
+	 object:nil];
 	
 	[notificationCenter
 	 addObserver:self
@@ -487,6 +493,8 @@
 - (void)observedUIApplicationWillEnterForeground:(NSNotification*)notification {
 }
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {
+}
+- (void)observedUIApplicationDidReceiveMemoryWarning:(NSNotification*)notification {
 }
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {
 }
