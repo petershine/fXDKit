@@ -34,7 +34,6 @@
 	FXDLog(@"navigationController.viewControllers count: %lu", (unsigned long)[self.navigationController.viewControllers count]);
 
 	if ([self.navigationController.viewControllers count] > 1) {	// If there is more than 1 navigated interfaces
-
 		//TEST:
 		/*
 		if ([self.navigationController.viewControllers count] == 2) {

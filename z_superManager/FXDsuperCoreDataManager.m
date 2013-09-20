@@ -417,7 +417,6 @@
 			 if (enumerationBlock) {
 				 NSManagedObject *mainEntityObj = [managedContext objectWithID:[fetchedObj objectID]];
 				 
-				 //TEST:
 				 if (shouldUsePrivateContext) {
 					 enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
 				 }

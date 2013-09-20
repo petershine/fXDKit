@@ -302,13 +302,7 @@
 }
 
 - (IBAction)dismissSceneWithAnimationForSender:(id)sender {	FXDLog_OVERRIDE;
-	//TEST: Use parentController
-	
-	/*
-	if (self.navigationController) {
-		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
-	}
-	 */
+
 	if (self.parentViewController) {
 		[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 	}
