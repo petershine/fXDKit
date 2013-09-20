@@ -38,16 +38,6 @@
 #endif
 
 
-#ifndef USE_iCloudCoreData
-	#define USE_iCloudCoreData	0	//MARK: Until safely implement iCloudCoreData"
-#endif
-
-#if USE_iCloudCoreData
-//[[<#AppPrefix#>managerFile sharedInstance] startUpdatingUbiquityContainerURLwithDidFinishBlock:<#DidFinishBlock#>];
-#endif
-
-
-
 #define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"
 
 

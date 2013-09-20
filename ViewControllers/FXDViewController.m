@@ -135,8 +135,8 @@
 #pragma mark -
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 #if ForDEVELOPER
-	if (parent == nil) {
-		FXDLog_DEFAULT;
+	if (parent == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"parent: %@", parent);
 	}
 #endif
 
