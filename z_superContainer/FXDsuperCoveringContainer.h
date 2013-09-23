@@ -34,7 +34,6 @@
 #pragma mark - Public
 - (void)coverWithSegue:(FXDsegueCover*)coveringSegue;
 - (void)uncoverWithSegue:(FXDsegueUncover*)uncoveringSegue;
-
 - (void)uncoverAllSceneWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)configureUpperMenuViewForCurrentScene:(FXDViewController*)currentScene;

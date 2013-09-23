@@ -119,15 +119,12 @@
 		 else {
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
-				  FXDAlertView *alertView =
-				  [[FXDAlertView alloc]
-				   initWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
+				  [FXDAlertView
+				   showAlertWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
 				   message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
 				   clickedButtonAtIndexBlock:nil
 				   cancelButtonTitle:nil
 				   otherButtonTitles:nil];
-				  
-				  [alertView show];
 			  }];
 			 
 			 if (didFinishBlock) {
@@ -372,15 +369,12 @@
 	//TODO: Test Facebook interface too
 	if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == NO) {
 		
-		FXDAlertView *alertView =
-		[[FXDAlertView alloc]
-		 initWithTitle:NSLocalizedString(@"Please connect to Twitter", nil)
+		[FXDAlertView
+		 showAlertWithTitle:NSLocalizedString(@"Please connect to Twitter", nil)
 		 message:NSLocalizedString(@"PopToo uses your Twitter account to share about recent geotagged item.\nPlease sign-in from the device's Settings", nil)
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil
 		 otherButtonTitles:nil];
-		
-		[alertView show];
 		
 		return nil;
 	}

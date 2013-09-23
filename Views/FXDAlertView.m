@@ -44,6 +44,22 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
++ (FXDAlertView*)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION {
+
+	FXDAlertView *alertView =
+	[[FXDAlertView alloc]
+	 initWithTitle:title
+	 message:message
+	 clickedButtonAtIndexBlock:clickedButtonAtIndexBlock
+	 cancelButtonTitle:cancelButtonTitle
+	 otherButtonTitles:otherButtonTitles, nil];
+
+	[alertView show];
+
+	return alertView;
+}
+
+#pragma mark -
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
 	
 	if (cancelButtonTitle == nil) {

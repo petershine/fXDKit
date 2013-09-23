@@ -98,6 +98,9 @@
 		return;
 	}
 
+
+	self.isCovering = YES;
+
 	
 	FXDViewController *destinationScene = (FXDViewController*)coveringSegue.destinationViewController;
 	[self addChildViewController:destinationScene];
@@ -169,11 +172,12 @@
 	[self.view insertSubview:destinationScene.view belowSubview:self.groupUpperMenu];
 	[destinationScene didMoveToParentViewController:self];
 
-	self.isCovering = YES;
-	
+
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
+	 usingSpringWithDamping:1.0
+	 initialSpringVelocity:1.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [destinationScene.view setFrame:animatedFrame];
@@ -196,6 +200,9 @@
 	if ([self canAnimateWithTransitionSegue:uncoveringSegue] == NO) {
 		return;
 	}
+
+
+	self.isUncovering = YES;
 
 
 	FXDViewController *sourceScene = (FXDViewController*)uncoveringSegue.sourceViewController;
@@ -278,12 +285,13 @@
 	
 	
 	[sourceScene willMoveToParentViewController:nil];
-	
-	self.isUncovering = YES;
+
 	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
+	 usingSpringWithDamping:1.0
+	 initialSpringVelocity:1.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [sourceScene.view setFrame:animatedFrame];
@@ -302,22 +310,18 @@
 	 }];
 }
 
-#pragma mark -
-- (void)uncoverAllSceneWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)uncoverAllSceneWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 	//MARK: Assume direction is only vertical
-	
-	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
-	
 	if ([self.childViewControllers count] == 0) {
-		
+
 		if (didFinishBlock) {
 			didFinishBlock(YES);
 		}
-		
+
 		return;
 	}
-	
-	
+
+
 	__block NSMutableArray *lateAddedSceneArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
 	for (FXDViewController *childScene in self.childViewControllers) {
@@ -328,19 +332,23 @@
 		}
 	}
 	
-	FXDLog(@"lateAddedControllerArray: %@", lateAddedSceneArray);
 	
 	if ([lateAddedSceneArray count] == 0) {
 		lateAddedSceneArray = nil;
-		
+
 		if (didFinishBlock) {
 			didFinishBlock(YES);
 		}
-		
+
 		return;
 	}
-	
-	
+
+
+	self.isUncovering = YES;
+
+	FXDLog_DEFAULT;
+	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
+	FXDLog(@"lateAddedControllerArray: %@", lateAddedSceneArray);
 	CGFloat totalUncoveringOffsetY = 0.0;
 	
 	for (FXDViewController *childScene in lateAddedSceneArray) {
@@ -372,12 +380,13 @@
 	if (self.groupBottomMenu) {
 		[self configureBottomMenuViewForCurrentScene:rootScene];
 	}
-	
-	self.isUncovering = YES;
+
 	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
+	 usingSpringWithDamping:1.0
+	 initialSpringVelocity:1.0
 	 options:UIViewAnimationOptionCurveEaseInOut
 	 animations:^{
 		 

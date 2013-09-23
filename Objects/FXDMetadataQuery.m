@@ -55,7 +55,7 @@
 		else {
 			id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
 			isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
-			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];;
+			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
 		}
 		
 		if (isUploaded == NO) {

@@ -10,14 +10,13 @@
 @interface FXDView : UIView
 
 // Properties
+@property (nonatomic) CGRect initialViewFrame;
 
 // IBOutlets
-
 
 #pragma mark - IBActions
 
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 
@@ -51,6 +50,5 @@
 - (UIImage*)renderedImageForScale:(CGFloat)scale;
 
 - (id)parentViewOfClassName:(NSString*)className;
-
 
 @end
