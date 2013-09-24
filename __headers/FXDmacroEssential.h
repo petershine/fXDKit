@@ -1,0 +1,56 @@
+//
+//  FXDmacroEssential.h
+//
+//
+//  Created by petershine on 7/18/12.
+//  Copyright (c) 2012 fXceed. All rights reserved.
+//
+
+#ifndef FXDKit_FXDmacroEssential_h
+#define FXDKit_FXDmacroEssential_h
+
+
+#ifndef application_AppStoreID
+	#define application_AppStoreID	@"000000000"
+#endif
+
+
+#define iosVersion6	6.0
+#define iosVersion7	7.0
+
+#ifndef latestSupportedSystemVersion
+	#define latestSupportedSystemVersion	MAX(iosVersion7, iosVersion6)
+#endif
+
+#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
+
+
+#define SCREEN_SIZE_35inch	(MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) <= height35inch)
+
+#define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+
+
+#define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
+										static id _sharedInstance = nil;\
+										dispatch_once(&once,^{\
+											_sharedInstance = [[[self class] alloc] init];\
+										});\
+										return _sharedInstance
+
+
+#ifndef pathcomponentDocuments
+	#define pathcomponentDocuments @"Documents/"
+#endif
+
+#ifndef pathcomponentCaches
+	#define pathcomponentCaches	@"Caches/"
+#endif
+
+#define appSearhPath_Document	[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
+#define appSearhPath_Caches		[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
+
+#define appDirectory_Document	[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
+#define appDirectory_Caches		[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
+
+
+#endif

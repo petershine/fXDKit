@@ -6,6 +6,10 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+#ifndef FXDKit_FXDKit_h
+#define FXDKit_FXDKit_h
+
+
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
@@ -29,15 +33,15 @@
 
 
 // Headers
-#import "FXDconfigApp.h"
 #import "FXDconfigDeveloper.h"
 #import "FXDconfigAnalytics.h"
 
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
-#import "FXDobjkeyUserDefaults.h"
 #import "FXDlocalizedStrings.h"
 #import "FXDimageNames.h"
+
+#import "FXDmacroEssential.h"
 
 
 // Objects
@@ -113,3 +117,6 @@
 
 #import "FXDsuperGlobalManager.h"
 #import "FXDsuperLaunchController.h"
+
+
+#endif

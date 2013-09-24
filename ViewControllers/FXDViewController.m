@@ -71,6 +71,26 @@
 	return statusBarStyle;
 }
 
+- (BOOL)prefersStatusBarHidden {
+	BOOL preference = [super prefersStatusBarHidden];
+	FXDLog(@"preference: %d", preference);
+
+	return preference;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+	UIStatusBarAnimation updateAnimation = [super preferredStatusBarUpdateAnimation];
+	FXDLog(@"updateAnimation: %d", updateAnimation);
+
+	return updateAnimation;
+}
+
+- (void)setNeedsStatusBarAppearanceUpdate {
+	FXDLog(@"%@", strClassSelector);
+	[super setNeedsStatusBarAppearanceUpdate];
+}
+
+
 #pragma mark - Autorotating
 #if TEST_loggingRotatingOrientation
 - (BOOL)shouldAutorotate {	FXDLog_SEPARATE_FRAME;
