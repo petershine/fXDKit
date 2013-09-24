@@ -89,18 +89,19 @@
 
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
 
-	NSFetchRequest *fetchRequest = nil;
-	
+	NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: entityName: %@, sortDescriptors: %@", entityName, sortDescriptors);
 	if (entityName == nil || sortDescriptors == nil) {
-		NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: entityName: %@, sortDescriptors: %@", entityName, sortDescriptors);
 		return nil;
 	}
 
-	
-	fetchRequest = [[NSFetchRequest alloc] init];
-	
 	NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
-	
+	if (entityDescription == nil) {
+		FXDLog(@"MUST NOT be nil: entityDescription: %@", entityDescription);
+		return nil;
+	}
+
+
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	[fetchRequest setEntity:entityDescription];
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
