@@ -29,6 +29,18 @@
 	}
 }
 
+#pragma mark - StatusBar
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersStatusBarHidden {
+	return YES;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+	return UIStatusBarAnimationFade;
+}
 
 #pragma mark - Autorotating
 - (BOOL)shouldAutorotate {
@@ -45,10 +57,6 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (UIStatusBarStyle)preferredStatusBarStyle {	FXDLog_OVERRIDE;
-	return UIStatusBarStyleLightContent;
-}
-
 
 #pragma mark - Segues
 
