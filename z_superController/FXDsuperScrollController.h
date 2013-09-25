@@ -7,7 +7,7 @@
 //
 
 
-#define scaleControllerDismissingOffset	0.265
+#define scaleControllerDismissingOffset	0.275
 
 
 @interface FXDsuperScrollController : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {

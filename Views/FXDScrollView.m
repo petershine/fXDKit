@@ -86,26 +86,26 @@
 		verticalInset = 0.0;
 	}
 	
-	UIEdgeInsets modifiedInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
+	UIEdgeInsets modifiedInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 	
-	[self setContentInset:modifiedInsets];
+	[self setContentInset:modifiedInset];
 }
 
 - (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;
 	FXDLog(@"self.frame: %@", NSStringFromCGRect(self.frame));
 	FXDLog(@"clippingFrame: %@", NSStringFromCGRect(clippingFrame));
 	
-	UIEdgeInsets modifiedInsets = self.contentInset;
-	FXDLog(@"1.modifiedInsets: %@", NSStringFromUIEdgeInsets(modifiedInsets));
+	UIEdgeInsets modifiedInset = self.contentInset;
+	FXDLog(@"1.modifiedInset: %@", NSStringFromUIEdgeInsets(modifiedInset));
 	
-	modifiedInsets.left = clippingFrame.origin.x -self.frame.origin.x;
-	modifiedInsets.top = clippingFrame.origin.y -self.frame.origin.y;
-	modifiedInsets.bottom = self.frame.size.height -(modifiedInsets.top +clippingFrame.size.height);
-	modifiedInsets.right = self.frame.size.width -(modifiedInsets.left +clippingFrame.size.width);
+	modifiedInset.left = clippingFrame.origin.x -self.frame.origin.x;
+	modifiedInset.top = clippingFrame.origin.y -self.frame.origin.y;
+	modifiedInset.bottom = self.frame.size.height -(modifiedInset.top +clippingFrame.size.height);
+	modifiedInset.right = self.frame.size.width -(modifiedInset.left +clippingFrame.size.width);
 	
-	FXDLog(@"2.modifiedInsets: %@", NSStringFromUIEdgeInsets(modifiedInsets));
+	FXDLog(@"2.modifiedInset: %@", NSStringFromUIEdgeInsets(modifiedInset));
 	
-	[self setContentInset:modifiedInsets];
+	[self setContentInset:modifiedInset];
 }
 
 #pragma mark -

@@ -444,7 +444,7 @@
 			  
 			  
 			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
-				  FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d shouldBreak: %d", finished, shouldBreak);
+				  FXDLog(@"finished: %d shouldBreak: %d", finished, shouldBreak);
 				  
 				  if (withDefaultProgressView) {
 					  [applicationWindow hideProgressView];
