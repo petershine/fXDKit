@@ -147,6 +147,10 @@
 		  @"iPhone4,1":	@"iPhone 4S",
 		  @"iPhone5,1":	@"iPhone 5(GSM)",
 		  @"iPhone5,2":	@"iPhone 5(GSM+CDMA)",
+		  @"iPhone5,3":	@"iPhone 5c(GSM)",
+		  @"iPhone5,4":	@"iPhone 5c(GSM+CDMA)",
+		  @"iPhone6,1":	@"iPhone 5s(GSM)",
+		  @"iPhone6,2":	@"iPhone 5s(GSM+CDMA)",
 
 		  @"iPad1,1":	@"iPad",
 		  @"iPad2,1":	@"iPad 2(WiFi)",
@@ -297,6 +301,7 @@
 	
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
 		[self configureUserDefaultsInfo];
+		[self configureGlobalAppearance];
 		[self startObservingEssentialNotifications];
 		
 		if (windowLoadingBlock) {
@@ -325,6 +330,10 @@
 #pragma mark -
 - (void)configureUserDefaultsInfo {	FXDLog_OVERRIDE;
 	
+}
+
+- (void)configureGlobalAppearance {	FXDLog_OVERRIDE;
+
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;

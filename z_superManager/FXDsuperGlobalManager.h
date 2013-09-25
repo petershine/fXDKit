@@ -53,6 +53,7 @@
 - (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
 
 - (void)configureUserDefaultsInfo;
+- (void)configureGlobalAppearance;
 - (void)startObservingEssentialNotifications;
 
 - (void)incrementAppLaunchCount;

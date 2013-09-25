@@ -176,8 +176,6 @@
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
-	 usingSpringWithDamping:1.0
-	 initialSpringVelocity:1.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [destinationScene.view setFrame:animatedFrame];
@@ -290,8 +288,6 @@
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
-	 usingSpringWithDamping:1.0
-	 initialSpringVelocity:1.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 [sourceScene.view setFrame:animatedFrame];
@@ -385,9 +381,7 @@
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0.0
-	 usingSpringWithDamping:1.0
-	 initialSpringVelocity:1.0
-	 options:UIViewAnimationOptionCurveEaseInOut
+	 options:UIViewAnimationOptionCurveLinear
 	 animations:^{
 		 
 		 for (FXDViewController *childScene in lateAddedSceneArray) {
