@@ -55,6 +55,7 @@
 
 #pragma mark - Category
 @interface UIWindow (Added)
++ (instancetype)instantiateDefaultWindow;
 + (instancetype)applicationWindow;
 
 - (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController;

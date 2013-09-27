@@ -10,8 +10,9 @@
 #define FXDKit_FXDKit_h
 
 
-#import <UIKit/UIKit.h>
+#import <Availability.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 #import <objc/runtime.h>
 #import <stdarg.h>

@@ -578,14 +578,13 @@
 
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog_REMAINING;
-	
-	UIApplication *sharedApplication = [UIApplication sharedApplication];
-	
-	self.savingTaskIdentifier = [sharedApplication
-									  beginBackgroundTaskWithExpirationHandler:^{
-										  [sharedApplication endBackgroundTask:self.savingTaskIdentifier];
-										  self.savingTaskIdentifier = UIBackgroundTaskInvalid;
-									  }];
+
+	self.savingTaskIdentifier
+	= [[UIApplication sharedApplication]
+	   beginBackgroundTaskWithExpirationHandler:^{
+		   [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
+		   self.savingTaskIdentifier = UIBackgroundTaskInvalid;
+	   }];
 	FXDLog(@"1.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
 	
 	[self

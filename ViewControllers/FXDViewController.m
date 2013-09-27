@@ -64,18 +64,10 @@
 }
 
 #pragma mark - StatusBar
-- (UIStatusBarStyle)preferredStatusBarStyle {
-	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
-	FXDLog(@"statusBarStyle: %ld", (long)statusBarStyle);
-	
-	return statusBarStyle;
-}
+- (void)setNeedsStatusBarAppearanceUpdate {	FXDLog_DEFAULT;
+	[super setNeedsStatusBarAppearanceUpdate];
 
-- (BOOL)prefersStatusBarHidden {
-	BOOL preference = [super prefersStatusBarHidden];
-	FXDLog(@"preference: %d", preference);
-
-	return preference;
+	FXDLog(@"statusBarHidden: %d statusBarStyle: %d", [UIApplication sharedApplication].statusBarHidden, [UIApplication sharedApplication].statusBarStyle);
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
@@ -85,9 +77,18 @@
 	return updateAnimation;
 }
 
-- (void)setNeedsStatusBarAppearanceUpdate {
-	FXDLog(@"%@", strClassSelector);
-	[super setNeedsStatusBarAppearanceUpdate];
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
+	FXDLog(@"statusBarStyle: %ld", (long)statusBarStyle);
+
+	return statusBarStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+	BOOL preference = [super prefersStatusBarHidden];
+	FXDLog(@"preference: %d", preference);
+
+	return preference;
 }
 
 

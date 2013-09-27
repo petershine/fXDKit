@@ -30,17 +30,14 @@
 }
 
 #pragma mark - StatusBar
-- (UIStatusBarStyle)preferredStatusBarStyle {
-	return UIStatusBarStyleLightContent;
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+	return UIStatusBarAnimationFade;
 }
 
 - (BOOL)prefersStatusBarHidden {
 	return YES;
 }
 
-- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
-	return UIStatusBarAnimationFade;
-}
 
 #pragma mark - Autorotating
 - (BOOL)shouldAutorotate {

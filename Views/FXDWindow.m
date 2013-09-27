@@ -124,6 +124,13 @@
 
 #pragma mark - Category
 @implementation UIWindow (Added)
++ (instancetype)instantiateDefaultWindow {
+	FXDWindow *defaultWindow = [[FXDWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	defaultWindow.backgroundColor = [UIColor blackColor];
+
+	return defaultWindow;
+}
+
 + (instancetype)applicationWindow {
 	FXDWindow *applicationWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
 	
