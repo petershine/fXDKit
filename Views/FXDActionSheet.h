@@ -8,9 +8,8 @@
 
 
 @interface FXDActionSheet : UIActionSheet <UIActionSheetDelegate>
-
 // Properties
-@property (strong, nonatomic) FXDblockAlertCallback callbackBlock;
+@property (copy) FXDblockAlertCallback callbackBlock;
 
 // IBOutlets
 

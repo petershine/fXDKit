@@ -6,13 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef void (^FXDblockAlertCallback)(id alertView, NSInteger buttonIndex);
-
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
-
 // Properties
-@property (strong, nonatomic) FXDblockAlertCallback callbackBlock;
+@property (copy) FXDblockAlertCallback callbackBlock;
 
 // IBOutlets
 

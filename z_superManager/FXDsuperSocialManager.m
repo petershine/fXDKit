@@ -151,9 +151,9 @@
 	[[FXDAlertView alloc]
 	 initWithTitle:NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil)
 	 message:nil
-	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
+	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
 		 [self
-		  selectTwitterAccountFromAlertView:alertView
+		  selectTwitterAccountFromAlertObj:alertObj
 		  forButtonIndex:buttonIndex
 		  withDidFinishBlock:didFinishBlock];
 	 }
@@ -190,9 +190,9 @@
 	FXDActionSheet *actionSheet =
 	[[FXDActionSheet alloc]
 	 initWithTitle:NSLocalizedString(message_PleaseSelectYourTwitterAcount, nil)
-	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
+	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
 		 [self
-		  selectTwitterAccountFromAlertView:alertView
+		  selectTwitterAccountFromAlertObj:alertObj
 		  forButtonIndex:buttonIndex
 		  withDidFinishBlock:didFinishBlock];
 		 
@@ -216,19 +216,19 @@
 }
 
 #pragma mark -
-- (void)selectTwitterAccountFromAlertView:(id)alertView forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+- (void)selectTwitterAccountFromAlertObj:(id)alertObj forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 	
 #if ForDEVELOPER
 	FXDLog(@"buttonIndex: %ld", (long)buttonIndex);
-	FXDLog(@"cancelButtonIndex: %ld", (long)[alertView performSelector:@selector(cancelButtonIndex)]);
+	FXDLog(@"cancelButtonIndex: %ld", (long)[alertObj performSelector:@selector(cancelButtonIndex)]);
 	
-	if ([alertView isKindOfClass:[UIActionSheet class]]) {
-		FXDLog(@"destructiveButtonIndex: %ld", (long)[(FXDActionSheet*)alertView destructiveButtonIndex]);
+	if ([alertObj isKindOfClass:[UIActionSheet class]]) {
+		FXDLog(@"destructiveButtonIndex: %ld", (long)[(FXDActionSheet*)alertObj destructiveButtonIndex]);
 	}
 #endif
 	
 	
-	if (buttonIndex == (NSInteger)[alertView performSelector:@selector(cancelButtonIndex)]) {
+	if (buttonIndex == (NSInteger)[alertObj performSelector:@selector(cancelButtonIndex)]) {
 		_twitterAccountArray = nil;
 		
 		if (didFinishBlock) {
@@ -241,13 +241,13 @@
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	if ([alertView isKindOfClass:[UIActionSheet class]]
-		&& buttonIndex == [(FXDActionSheet*)alertView destructiveButtonIndex]) {
+	if ([alertObj isKindOfClass:[UIActionSheet class]]
+		&& buttonIndex == [(FXDActionSheet*)alertObj destructiveButtonIndex]) {
 		
 		[userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];
 		_mainTwitterAccount = nil;
 	}
-	else if ([alertView isKindOfClass:[UIAlertView class]]
+	else if ([alertObj isKindOfClass:[UIAlertView class]]
 		&& buttonIndex == [self.twitterAccountArray count]+1) {
 		
 		[userDefaults removeObjectForKey:userdefaultObjKeyMainAccountIdentifier];

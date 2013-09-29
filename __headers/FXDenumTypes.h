@@ -40,3 +40,7 @@ typedef NS_ENUM(NSInteger, ITEM_VIEWER_TYPE) {
 
 
 typedef void (^FXDblockDidFinish)(BOOL finished);
+
+typedef void (^FXDblockAlertCallback)(id alertObj, NSInteger buttonIndex);
+
+

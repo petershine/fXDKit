@@ -43,9 +43,11 @@
 	id disclaimerView = [self disclaimerView];
 	
 	if (disclaimerView) {
-		CGRect modifiedFrame = [disclaimerView frame];
+		CGRect modifiedFrame = [disclaimerView frame];	FXDLog(@"1.disclaimerView modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
 		modifiedFrame.origin.x = self.initialDisclaimerFrame.origin.x +self.disclaimerOffset.x;
 		modifiedFrame.origin.y = (self.frame.size.height -self.initialDisclaimerFrame.size.height) +self.disclaimerOffset.y;
+
+		FXDLog(@"2.disclaimerView modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
 		
 		[disclaimerView setFrame:modifiedFrame];
 	}

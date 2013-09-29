@@ -35,7 +35,7 @@
 #define alphaValue05	0.5
 
 
-#define dimensionMinimumTouchable	44.0
+#define minimumTouchableDimension	44.0
 
 #define heightStatusBar	20.0	//MARK: Assume they are static
 #define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height

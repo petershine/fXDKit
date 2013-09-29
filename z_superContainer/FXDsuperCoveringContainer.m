@@ -105,11 +105,11 @@
 	FXDViewController *destinationScene = (FXDViewController*)coveringSegue.destinationViewController;
 	[self addChildViewController:destinationScene];
 	
-	if (self.groupUpperMenu) {
+	if (self.mainNavigationbar) {
 		[self configureUpperMenuViewForCurrentScene:destinationScene];
 	}
 	
-	if (self.groupBottomMenu) {
+	if (self.mainToolbar) {
 		[self configureBottomMenuViewForCurrentScene:destinationScene];
 	}
 
@@ -169,7 +169,7 @@
 	destinationScene.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	
 	
-	[self.view insertSubview:destinationScene.view belowSubview:self.groupUpperMenu];
+	[self.view insertSubview:destinationScene.view belowSubview:self.mainNavigationbar];
 	[destinationScene didMoveToParentViewController:self];
 
 
@@ -261,7 +261,7 @@
 	
 	FXDLog(@"pulledController: %@ animatedPulledFrame: %@", pulledScene, NSStringFromCGRect(animatedPulledFrame));
 	
-	if (self.groupUpperMenu) {
+	if (self.mainNavigationbar) {
 		if (pulledScene) {
 			[self configureUpperMenuViewForCurrentScene:pulledScene];
 		}
@@ -271,7 +271,7 @@
 		}
 	}
 	
-	if (self.groupBottomMenu) {
+	if (self.mainToolbar) {
 		if (pulledScene) {
 			[self configureBottomMenuViewForCurrentScene:pulledScene];
 		}
@@ -370,10 +370,10 @@
 	
 	FXDViewController *rootScene = self.childViewControllers[0];
 	
-	if (self.groupUpperMenu) {
+	if (self.mainNavigationbar) {
 		[self configureUpperMenuViewForCurrentScene:rootScene];
 	}
-	if (self.groupBottomMenu) {
+	if (self.mainToolbar) {
 		[self configureBottomMenuViewForCurrentScene:rootScene];
 	}
 

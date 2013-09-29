@@ -335,8 +335,8 @@
 	 message:NSLocalizedString(@"Please be warned. Deleted data CAN NEVER BE RESTORED!", nil)
 	 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
 	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
-	 clickedButtonAtIndexBlock:^(id alertView, NSInteger buttonIndex) {
-		 FXDLog(@"alertView: %@, buttonIndex: %ld", alertView, (long)buttonIndex);
+	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
+		 FXDLog(@"alertObj: %@, buttonIndex: %ld", alertObj, (long)buttonIndex);
 		 
 		 if (buttonIndex == buttonIndexAccept) {
 			 [self

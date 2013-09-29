@@ -23,8 +23,8 @@
 @property (nonatomic) BOOL isUncovering;
 
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDView *groupUpperMenu;
-@property (strong, nonatomic) IBOutlet FXDView *groupBottomMenu;
+@property (strong, nonatomic) IBOutlet FXDView *mainNavigationbar;
+@property (strong, nonatomic) IBOutlet FXDView *mainToolbar;
 
 
 #pragma mark - Segues
