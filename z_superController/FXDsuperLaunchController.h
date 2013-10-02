@@ -15,8 +15,7 @@
 #endif
 
 
-@interface FXDsuperLaunchController : FXDViewController 
-
+@interface FXDsuperLaunchController : FXDViewController
 // Properties
 
 // IBOutlets

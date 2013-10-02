@@ -49,6 +49,6 @@
 - (UIImage*)renderedImageForScreenScale;
 - (UIImage*)renderedImageForScale:(CGFloat)scale;
 
-- (id)parentViewOfClassName:(NSString*)className;
+- (id)superViewOfClassName:(NSString*)className;
 
 @end

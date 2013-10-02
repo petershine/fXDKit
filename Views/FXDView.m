@@ -247,19 +247,19 @@
 }
 
 #pragma mark -
-- (id)parentViewOfClassName:(NSString*)className {
-	id parentView = nil;
+- (id)superViewOfClassName:(NSString*)className {
+	id superView = nil;
 
 	if (self.superview) {
 		if ([self.superview isKindOfClass:NSClassFromString(className)]) {
-			parentView = self.superview;
+			superView = self.superview;
 		}
 		else {
-			parentView = [self.superview parentViewOfClassName:className];
+			superView = [self.superview superViewOfClassName:className];
 		}
 	}
 
-	return parentView;
+	return superView;
 
 }
 
