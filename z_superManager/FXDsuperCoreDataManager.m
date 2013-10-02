@@ -312,14 +312,14 @@
 	}
 	
 	
-	NSEntityDescription *mainEntityDescription = [NSEntityDescription entityForName:self.mainEntityName inManagedObjectContext:self.mainDocument.managedObjectContext];
+	NSEntityDescription *mainEntity = [NSEntityDescription entityForName:self.mainEntityName inManagedObjectContext:self.mainDocument.managedObjectContext];
 
-	if (mainEntityDescription == nil) {
+	if (mainEntity == nil) {
 		return nil;
 	}
 
 	
-	id mainEntityObj = [(FXDManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntityDescription insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
+	id mainEntityObj = [(FXDManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntity insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
 	
 	return mainEntityObj;
 }

@@ -212,7 +212,7 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
-		 [launchController.view setAlpha:0.0];
+		 launchController.view.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
 		 FXDLog(@"finished: %d launchController: %@", finished, launchController);

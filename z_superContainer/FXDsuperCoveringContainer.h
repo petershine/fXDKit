@@ -18,6 +18,7 @@
 
 // Properties
 @property (nonatomic) NSUInteger minimumChildCount;
+@property (nonatomic) BOOL shouldFadeOutUncovering;
 
 @property (nonatomic) BOOL isCovering;
 @property (nonatomic) BOOL isUncovering;

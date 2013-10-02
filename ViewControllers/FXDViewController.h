@@ -43,6 +43,5 @@
 
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
-- (void)reframeForStatusBarFrame:(CGRect)statusBarFrame;
 
 @end

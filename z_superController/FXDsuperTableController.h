@@ -10,7 +10,6 @@
 #import "FXDsuperScrollController.h"
 
 @interface FXDsuperTableController : FXDsuperScrollController <UITableViewDataSource, UITableViewDelegate>
-
 // Properties
 
 // IBOutlets

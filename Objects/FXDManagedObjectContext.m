@@ -94,15 +94,15 @@
 		return nil;
 	}
 
-	NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
-	if (entityDescription == nil) {
-		FXDLog(@"MUST NOT be nil: entityDescription: %@", entityDescription);
+	NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
+	if (entity == nil) {
+		FXDLog(@"MUST NOT be nil: entity: %@", entity);
 		return nil;
 	}
 
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity:entityDescription];
+	[fetchRequest setEntity:entity];
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
 	if (predicate) {

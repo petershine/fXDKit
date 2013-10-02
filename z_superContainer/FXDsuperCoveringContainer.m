@@ -102,41 +102,41 @@
 	self.isCovering = YES;
 
 	
-	FXDViewController *destinationScene = (FXDViewController*)coveringSegue.destinationViewController;
-	[self addChildViewController:destinationScene];
+	FXDViewController *presentedScene = (FXDViewController*)coveringSegue.destinationViewController;
+	[self addChildViewController:presentedScene];
 	
 	if (self.mainNavigationbar) {
-		[self configureUpperMenuViewForCurrentScene:destinationScene];
+		[self configureUpperMenuViewForCurrentScene:presentedScene];
 	}
 	
 	if (self.mainToolbar) {
-		[self configureBottomMenuViewForCurrentScene:destinationScene];
+		[self configureBottomMenuViewForCurrentScene:presentedScene];
 	}
 
 	
-	COVERING_OFFSET coveringOffset = [self coveringOffsetForDirectionType:[destinationScene coverDirectionType]];
-	COVERING_DIRECTION coveringDirection = [self coveringDirectionForDirectionType:[destinationScene coverDirectionType]];
+	COVERING_OFFSET coveringOffset = [self coveringOffsetForDirectionType:[presentedScene coverDirectionType]];
+	COVERING_DIRECTION coveringDirection = [self coveringDirectionForDirectionType:[presentedScene coverDirectionType]];
 	
 	
-	CGRect animatedFrame = destinationScene.view.frame;
+	CGRect animatedFrame = presentedScene.view.frame;
 	animatedFrame.origin.y = 0.0;
 	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
 
-	CGRect modifiedFrame = destinationScene.view.frame;
+	CGRect modifiedFrame = presentedScene.view.frame;
 	modifiedFrame.origin.x -= coveringOffset.x;
 	modifiedFrame.origin.y -= coveringOffset.y;
 	modifiedFrame.origin.y += (heightDynamicStatusBar *coveringDirection.y);
-	[destinationScene.view setFrame:modifiedFrame];
+	[presentedScene.view setFrame:modifiedFrame];
 
 	
 	FXDViewController *pushedScene = nil;
 	CGRect animatedPushedFrame = CGRectZero;
 		
-	if ([destinationScene shouldCoverAbove] == NO
+	if ([presentedScene shouldCoverAbove] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
-		NSInteger destinationIndex = [self.childViewControllers indexOfObject:destinationScene];
+		NSInteger destinationIndex = [self.childViewControllers indexOfObject:presentedScene];
 		
 		for (FXDViewController *childScene in self.childViewControllers) {
 			FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
@@ -163,14 +163,14 @@
 		}
 	}
 	
-	FXDLog(@"pushedController: %@ animatedPushedFrame: %@", pushedScene, NSStringFromCGRect(animatedPushedFrame));
+	FXDLog(@"pushedScene: %@ animatedPushedFrame: %@", pushedScene, NSStringFromCGRect(animatedPushedFrame));
 
-	destinationScene.view.autoresizingMask = UIViewAutoresizingNone;
-	destinationScene.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	presentedScene.view.autoresizingMask = UIViewAutoresizingNone;
+	presentedScene.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	
 	
-	[self.view insertSubview:destinationScene.view belowSubview:self.mainNavigationbar];
-	[destinationScene didMoveToParentViewController:self];
+	[self.view insertSubview:presentedScene.view belowSubview:self.mainNavigationbar];
+	[presentedScene didMoveToParentViewController:self];
 
 
 	[UIView
@@ -178,7 +178,7 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [destinationScene.view setFrame:animatedFrame];
+		 [presentedScene.view setFrame:animatedFrame];
 		 
 		 if (pushedScene) {
 			 [pushedScene.view setFrame:animatedPushedFrame];
@@ -203,17 +203,19 @@
 	self.isUncovering = YES;
 
 
-	FXDViewController *sourceScene = (FXDViewController*)uncoveringSegue.sourceViewController;
+	FXDViewController *dismissedScene = (FXDViewController*)uncoveringSegue.sourceViewController;
 	
-	COVERING_OFFSET uncoveringOffset = [self coveringOffsetForDirectionType:[sourceScene coverDirectionType]];
-	COVERING_DIRECTION uncoveringDirection = [self coveringDirectionForDirectionType:[sourceScene coverDirectionType]];
+	COVERING_OFFSET uncoveringOffset = [self coveringOffsetForDirectionType:[dismissedScene coverDirectionType]];
+	COVERING_DIRECTION uncoveringDirection = [self coveringDirectionForDirectionType:[dismissedScene coverDirectionType]];
 	
 
-	CGRect animatedFrame = sourceScene.view.frame;
+	CGRect animatedFrame = dismissedScene.view.frame;
 	animatedFrame.origin.x -= (animatedFrame.size.width *uncoveringDirection.x);
+
+	CGFloat animatedAlpha = (self.shouldFadeOutUncovering) ? 0.0:dismissedScene.view.alpha;
 	
 	
-	CGFloat uncoveringOffsetY = [[sourceScene offsetYforUncovering] floatValue];
+	CGFloat uncoveringOffsetY = [[dismissedScene offsetYforUncovering] floatValue];
 	FXDLog(@"1.uncoveringOffsetY: %f", uncoveringOffsetY);
 	
 	if (uncoveringOffsetY > 0.0) {
@@ -222,17 +224,17 @@
 	else {
 		animatedFrame.origin.y -= (animatedFrame.size.height *uncoveringDirection.y);
 	}
-	FXDLog(@"2.CALCULATED uncoveringOffsetY: %f - %f = %f", sourceScene.view.frame.origin.y, animatedFrame.origin.y, (sourceScene.view.frame.origin.y -animatedFrame.origin.y));
+	FXDLog(@"2.CALCULATED uncoveringOffsetY: %f - %f = %f", dismissedScene.view.frame.origin.y, animatedFrame.origin.y, (dismissedScene.view.frame.origin.y -animatedFrame.origin.y));
 	
 	
 	FXDViewController *pulledScene = nil;
 	CGRect animatedPulledFrame = CGRectZero;
 	
-	if ([sourceScene shouldCoverAbove] == NO
+	if ([dismissedScene shouldCoverAbove] == NO
 		&& [self.childViewControllers count] > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
-		NSInteger sourceIndex = [self.childViewControllers indexOfObject:sourceScene];
+		NSInteger sourceIndex = [self.childViewControllers indexOfObject:dismissedScene];
 		
 		for (FXDViewController *childScene in self.childViewControllers) {
 			FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
@@ -282,7 +284,7 @@
 	}
 	
 	
-	[sourceScene willMoveToParentViewController:nil];
+	[dismissedScene willMoveToParentViewController:nil];
 
 	
 	[UIView
@@ -290,7 +292,8 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [sourceScene.view setFrame:animatedFrame];
+		 [dismissedScene.view setFrame:animatedFrame];
+		 dismissedScene.view.alpha = animatedAlpha;
 		 
 		 if (pulledScene) {
 			 [pulledScene.view setFrame:animatedPulledFrame];
@@ -299,8 +302,8 @@
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog(@"finished: %d pulledController: %@", finished, pulledScene);
 		 
-		 [sourceScene.view removeFromSuperview];
-		 [sourceScene removeFromParentViewController];
+		 [dismissedScene.view removeFromSuperview];
+		 [dismissedScene removeFromParentViewController];
 		 
 		 self.isUncovering = NO;
 	 }];
