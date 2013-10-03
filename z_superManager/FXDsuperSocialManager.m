@@ -57,7 +57,7 @@
 		
 		__block NSString *identifier = [userDefaults stringForKey:userdefaultObjKeyMainAccountIdentifier];
 
-		FXDLog(@"accountIdentifier: %@", identifier);
+		FXDLog(@"identifier: %@", identifier);
 
 		if (identifier) {
 

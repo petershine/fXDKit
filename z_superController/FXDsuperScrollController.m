@@ -22,43 +22,39 @@
 #pragma mark - Initialization
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
-	FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
-	
-	if (self.mainScrollview == nil) {
-		return;
-	}
-	
-	
-	//MARK: Following should be closely related to scroll view configuration
-	
-	if (self.mainScrollview.delegate == nil) {
-		[self.mainScrollview setDelegate:self];
-	}
-	
-	
-	if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
-		&& [self.mainScrollview performSelector:@selector(dataSource)] == nil) {
-		
-		[self.mainScrollview performSelector:@selector(setDataSource:) withObject:self];
-	}
-	
-	
-	[self registerMainCellNib];
-	
-	
-	if (self.offsetYdismissingController == 0.0) {
-		CGRect screenBounds = [[UIScreen mainScreen] bounds];
-		FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
-		
-		self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
-		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
-	}
 
 	if (self.mainResultsController && self.mainResultsController.additionalDelegate == nil) {
 		[self.mainResultsController setAdditionalDelegate:self];
-		
+
 		FXDLog(@"self.mainResultsController.additionalDelegate: %@", self.mainResultsController.additionalDelegate);
+	}
+	
+	if (self.mainScrollview) {
+		//MARK: Following should be closely related to scroll view configuration
+		FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
+
+		if (self.mainScrollview.delegate == nil) {
+			[self.mainScrollview setDelegate:self];
+		}
+
+
+		if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
+			&& [self.mainScrollview performSelector:@selector(dataSource)] == nil) {
+
+			[self.mainScrollview performSelector:@selector(setDataSource:) withObject:self];
+		}
+
+
+		[self registerMainCellNib];
+
+
+		if (self.offsetYdismissingController == 0.0) {
+			CGRect screenBounds = [[UIScreen mainScreen] bounds];
+			FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
+
+			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
+			FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
+		}
 	}
 }
 

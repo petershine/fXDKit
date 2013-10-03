@@ -18,6 +18,15 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
+- (id)init {
+	self = [super init];
+	if (self) {
+		FXDLog_SEPARATE;
+	}
+
+	return self;
+}
+
 + (FXDsuperGlobalManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
@@ -28,34 +37,6 @@
 	_appLaunchCount = [[NSUserDefaults standardUserDefaults] integerForKey:userdefaultIntegerAppLaunchCount];
 	
 	return _appLaunchCount;
-}
-
-#pragma mark -
-- (BOOL)didMakePurchase {	//FXDLog_DEFAULT;
-	_didMakePurchase = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidMakePurchase];
-
-	return _didMakePurchase;
-}
-
-- (void)setDidMakePurchase:(BOOL)didMake {	FXDLog_DEFAULT;
-	_didMakePurchase = didMake;
-
-	[[NSUserDefaults standardUserDefaults] setBool:_didMakePurchase forKey:userdefaultBoolDidMakePurchase];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark -
-- (BOOL)didShareToSocialNet {	//FXDLog_DEFAULT;
-	_didShareToSocialNet = [[NSUserDefaults standardUserDefaults] boolForKey:userdefaultBoolDidShareToSocialNet];
-
-	return _didShareToSocialNet;
-}
-
-- (void)setDidShareToSocialNet:(BOOL)didShare {	FXDLog_DEFAULT;
-	_didShareToSocialNet = didShare;
-
-	[[NSUserDefaults standardUserDefaults] setBool:_didShareToSocialNet forKey:userdefaultBoolDidShareToSocialNet];
-	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark -
@@ -108,8 +89,6 @@
 		}
 		FXDLog(@"2._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
 	}
-	
-	FXDLog(@"_deviceLanguageCode: %@", _deviceLanguageCode);
 
 	return _deviceLanguageCode;
 }
@@ -180,7 +159,7 @@
 			_deviceModelName = machineName;
 		}
 
-		FXDLog(@"_deviceModelName: %@", _deviceModelName);
+		FXDLog(@"_deviceModelName: %@ machineName: %@", _deviceModelName, machineName);
 	}
 
 	return _deviceModelName;
@@ -219,11 +198,12 @@
 
 #pragma mark -
 - (id)rootController {
-	if (_rootController == nil) {	FXDLog_DEFAULT;
+	if (_rootController == nil) {
 		if (self.mainStoryboard) {
 			_rootController = [self.mainStoryboard instantiateInitialViewController];
 		}
-		
+
+		FXDLog_DEFAULT;
 		FXDLog(@"_rootController: %@", _rootController);
 	}
 
@@ -288,11 +268,15 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	//FXDLog_OVERRIDE;
-	[self prepareGlobalManagerWithCoreDataManager:nil withUbiquityContainerURL:nil withCompleteProtection:NO  atLaunchWithWindowLoadingBlock:windowLoadingBlock];
+- (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_OVERRIDE;
+	[self
+	 prepareGlobalManagerWithCoreDataManager:nil
+	 withUbiquityContainerURL:nil
+	 withCompleteProtection:NO
+	 withDidFinishBlock:didFinishBlock];
 }
 
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	
 	//MARK: UUID can be changed is the device is recovered from backup or sent backup to iCloud
 #if ForDEVELOPER
@@ -300,12 +284,14 @@
 #endif
 	
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
+		[self incrementAppLaunchCount];
+		
 		[self configureUserDefaultsInfo];
 		[self configureGlobalAppearance];
 		[self startObservingEssentialNotifications];
 		
-		if (windowLoadingBlock) {
-			windowLoadingBlock();
+		if (didFinishBlock) {
+			didFinishBlock(YES);
 		}
 	};
 	
@@ -325,6 +311,17 @@
 		 
 		 ManagerDidPrepareBlock();
 	 }];
+}
+
+#pragma mark -
+- (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
+	FXDLog(@"1.appLaunchCount: %ld", (long)self.appLaunchCount);
+
+	_appLaunchCount++;
+	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
+	FXDLog(@"2.appLaunchCount: %ld", (long)self.appLaunchCount);
 }
 
 #pragma mark -
@@ -417,17 +414,6 @@
 }
 
 #pragma mark -
-- (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
-	FXDLog(@"1.appLaunchCount: %ld", (long)self.appLaunchCount);
-	
-	_appLaunchCount++;
-	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-	FXDLog(@"2.appLaunchCount: %ld", (long)self.appLaunchCount);
-}
-
-#pragma mark -
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {
 		return;
@@ -485,12 +471,12 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog(@"UIApplication sharedApplication].statusBarFrame: %@", NSStringFromCGRect([UIApplication sharedApplication].statusBarFrame));
 	FXDLog(@"notification: %@", [notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
 }
 
-- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog(@"notification: %@", notification);
 }
 

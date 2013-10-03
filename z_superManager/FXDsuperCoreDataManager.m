@@ -16,6 +16,15 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
+- (id)init {
+	self = [super init];
+	if (self) {
+		FXDLog_SEPARATE;
+	}
+
+	return self;
+}
+
 + (FXDsuperCoreDataManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
@@ -152,15 +161,13 @@
 			  if (error) {
 				  NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
 				  NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];
-				  
-				  FXDAlertView *alertView =
-				  [[FXDAlertView alloc]
-				   initWithTitle:title
+
+				  [FXDAlertView
+				   showAlertWithTitle:title
 				   message:message
-				   delegate:nil
-				   cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
+				   clickedButtonAtIndexBlock:nil
+				   cancelButtonTitle:nil
 				   otherButtonTitles:nil];
-				  [alertView show];
 			  }
 #endif
 			  //TODO: prepare what to do when Core Data is not setup

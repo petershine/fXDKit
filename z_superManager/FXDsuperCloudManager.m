@@ -262,15 +262,13 @@
 }
 
 - (void)failedToUpdateUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
-	FXDAlertView *alertView =
-	[[FXDAlertView alloc]
-	 initWithTitle:NSLocalizedString(alert_PleaseEnableiCloud, nil)
+	[FXDAlertView
+	 showAlertWithTitle:NSLocalizedString(alert_PleaseEnableiCloud, nil)
 	 message:nil
-	 delegate:nil
+	 clickedButtonAtIndexBlock:nil
 	 cancelButtonTitle:nil
 	 otherButtonTitles:nil];
-	[alertView show];
-	
+
 #if USE_LocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];
 #endif

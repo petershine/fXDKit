@@ -7,8 +7,6 @@
 //
 
 #define userdefaultIntegerAppLaunchCount	@"AppLaunchCountIntegerKey"
-#define userdefaultBoolDidMakePurchase		@"DidMakePurchaseBoolKey"
-#define userdefaultBoolDidShareToSocialNet	@"DidShareToSocialNetBoolKey"
 
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
 
@@ -18,18 +16,12 @@
 
 @interface FXDsuperGlobalManager : FXDObject {
 	NSInteger _appLaunchCount;
-	
-	BOOL _didMakePurchase;
-	BOOL _didShareToSocialNet;
 
 	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
 }
 
 @property (nonatomic, readonly) NSInteger appLaunchCount;
-
-@property (nonatomic) BOOL didMakePurchase;
-@property (nonatomic) BOOL didShareToSocialNet;
 
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) NSString *mainStoryboardName;
@@ -49,14 +41,14 @@
 #pragma mark - Public
 + (FXDsuperGlobalManager*)sharedInstance;
 
-- (void)prepareGlobalManagerAtLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection atLaunchWithWindowLoadingBlock:(void(^)(void))windowLoadingBlock;
+- (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+
+- (void)incrementAppLaunchCount;
 
 - (void)configureUserDefaultsInfo;
 - (void)configureGlobalAppearance;
 - (void)startObservingEssentialNotifications;
-
-- (void)incrementAppLaunchCount;
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
