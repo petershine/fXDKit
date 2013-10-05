@@ -8,9 +8,7 @@
 
 
 // Application
-#define application_DisplayedName	@"application_DisplayedName"
 #define application_IconName		@"application_IconName"
-#define application_ContactEmail	@"application_ContactEmail"
 
 
 // Alert
@@ -104,9 +102,7 @@
 /*
 // FXDKit
 // Application
-"application_DisplayedName" = "<#application_DisplayedName#>";
 "application_IconName" = "<#application_IconName#>";
-"application_ContactEmail" = "<#application_ContactEmail#>";
 
 
 // Alert

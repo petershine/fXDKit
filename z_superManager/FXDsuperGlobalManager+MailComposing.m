@@ -8,8 +8,6 @@
 
 #import "FXDsuperGlobalManager.h"
 
-#import "Reachability.h"
-
 
 @implementation FXDsuperGlobalManager (MailComposing)
 - (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
@@ -71,20 +69,14 @@
 	}
 
 
-#ifdef application_DisplayedName
-	NSString *bundleName = NSLocalizedString(application_DisplayedName, nil);
-#else
-	NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-#endif
+	NSString *displayName = application_DisplayName;
 
-	NSString *subjectString = [NSString stringWithFormat:@"[%@]", bundleName];
+	NSString *subjectString = [NSString stringWithFormat:@"[%@]", displayName];
 
-	NSString *stringLine = @"_______________________________";
+	NSString *lineSeparator = @"_______________________________";
 	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
 
-	NSString *machineStr = self.deviceModelName;
-
-	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", machineStr, [[UIDevice currentDevice] systemVersion]];
+	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", self.deviceModelName, [[UIDevice currentDevice] systemVersion]];
 
 	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
 
@@ -101,16 +93,26 @@
 
 	NSString *stringCountry = [NSString stringWithFormat:@"%@", returnString];
 
-	NSString *stringNetwork = nil;
 
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWiFi) {
+	//TEST: Find the right way to use
+	/*
+	NSString *stringNetwork = [[AFNetworkReachabilityManager sharedManager] localizedNetworkReachabilityStatusString];
+	FXDLog(@"1.stringNetwork: %@", stringNetwork);
+
+	if ([[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi]) {
 		stringNetwork = @"Network : WiFi";
 	}
 	else {
 		stringNetwork = @"Network : 3G network";
 	}
+	
+	FXDLog(@"2.stringNetwork: %@", stringNetwork);
 
 	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n%@\n", stringLine, stringAppVersion, stringDevice, stringCountry, stringNetwork];
+	 */
+
+	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n", lineSeparator, stringAppVersion, stringDevice, stringCountry];
+
 	FXDLog(@"mailBodyString: %@", mailBodyString);
 
 	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
@@ -124,7 +126,7 @@
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 
 	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailController setSubject:[NSString stringWithFormat:@"[%@]", NSLocalizedString(application_DisplayedName, nil)]];
+	[emailController setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayName]];
 
 	if (image) {
 		[emailController addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];

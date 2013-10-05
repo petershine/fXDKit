@@ -14,13 +14,21 @@
 	#define application_AppStoreID	@"000000000"
 #endif
 
+#ifndef application_BundleName
+	#define application_BundleName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
+#endif
+
+#ifndef application_DisplayName
+	#define application_DisplayName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]
+#endif
+
+#ifndef application_ContactEmail
+	#define application_ContactEmail	@"app@company.com"
+#endif
+
 
 #define iosVersion6	6.0
 #define iosVersion7	7.0
-
-#ifndef latestSupportedSystemVersion
-	#define latestSupportedSystemVersion	MAX(iosVersion7, iosVersion6)
-#endif
 
 #define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
 

@@ -18,8 +18,9 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (id)init {
+- (instancetype)init {
 	self = [super init];
+
 	if (self) {
 		FXDLog_SEPARATE;
 	}

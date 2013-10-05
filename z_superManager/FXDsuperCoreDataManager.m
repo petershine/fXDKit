@@ -16,8 +16,9 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (id)init {
+- (instancetype)init {
 	self = [super init];
+
 	if (self) {
 		FXDLog_SEPARATE;
 	}
@@ -47,6 +48,7 @@
 - (NSString*)mainSqlitePathComponent {
 	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
 		_mainSqlitePathComponent = applicationSqlitePathComponent;
+		FXDLog(@"_mainSqlitePathComponent: %@", _mainSqlitePathComponent);
 	}
 	
 	return _mainSqlitePathComponent;
@@ -55,6 +57,7 @@
 - (NSString*)mainUbiquitousContentName {
 	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
 		_mainUbiquitousContentName = ubiquitousCoreDataContentName;
+		FXDLog(@"_mainSqlitePathComponent: %@", _mainUbiquitousContentName);
 	}
 	
 	return _mainUbiquitousContentName;
@@ -63,7 +66,7 @@
 #pragma mark -
 - (NSString*)mainEntityName {
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
-		//_mainEntityName = entityname<#DefaultClass#>
+		//SAMPLE: _mainEntityName = entityname<#DefaultClass#>
 	}
 
 	return _mainEntityName;
@@ -71,7 +74,7 @@
 
 - (NSArray*)mainSortDescriptors {
 	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
-		//_mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
+		//SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 	}
 
 	return _mainSortDescriptors;
@@ -259,7 +262,7 @@
 - (void)initializeWithBundledCoreDataName:(NSString*)coreDataName {	FXDLog_DEFAULT;
 	
 	if (coreDataName == nil) {
-		coreDataName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+		coreDataName = application_BundleName;
 	}
 	
 	
@@ -283,7 +286,7 @@
 	}
 	
 	
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:applicationSqlitePathComponent];
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
 
 	NSError *error = nil;
 	
@@ -296,9 +299,8 @@
 }
 
 - (BOOL)isSqliteAlreadyInitialized {
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:applicationSqlitePathComponent];
-	FXDLog(@"storedSqlitePath: %@", storedSqlitePath);
-	
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+
 	BOOL isSqliteAlreadyInitialized = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
 	FXDLog(@"isSqliteAlreadyInitialized: %d", isSqliteAlreadyInitialized);
 	

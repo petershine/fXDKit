@@ -6,22 +6,16 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-
-/*
-#define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
-#define attribkey<#AttributeName#> @"<#AttributeName#>"
- */
-
 //MARK: Logging options
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
-
+//MARK: Use different name for better controlling between developer build and release build
 #ifndef applicationSqlitePathComponent
 	#if ForDEVELOPER
-		#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+		#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", application_BundleName]
 	#else
-		#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+		#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", application_BundleName]
 	#endif
 #endif
 
@@ -43,6 +37,10 @@
 
 #import "FXDsuperCloudManager.h"
 
+/* SAMPLE:
+ #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
+ #define attribkey<#AttributeName#> @"<#AttributeName#>"
+ */
 
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
 
