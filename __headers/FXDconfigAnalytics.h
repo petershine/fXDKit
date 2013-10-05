@@ -13,7 +13,7 @@
 #if DEBUG
 	#if ForDEVELOPER
 		#ifndef USE_TestFlight
-			#define USE_TestFlight	0
+			#define USE_TestFlight	1
 		#endif
 
 		#ifndef USE_Flurry
@@ -22,7 +22,7 @@
 
 	#else
 		#ifndef USE_TestFlight
-			#define USE_TestFlight	1
+			#define USE_TestFlight	0
 		#endif
 
 		#ifndef USE_Flurry
@@ -66,10 +66,16 @@
 	#endif
 
 	#define LOGEVENT(format, ...)	[Flurry logEvent:[NSString stringWithFormat:format, ##__VA_ARGS__]]
-	#define LOGEVENT_DEFAULT		LOGEVENT(@"%@",strClassSelector)
+	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry logEvent:identifier withParameters:parameters timed:shouldTime]
+	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
+	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@",strClassSelector)
+	#define LOGEVENT_ERROR	if(error){LOGEVENT(@"\n\n%@\nfile: %s\nline: %d\n\nlocalizedDescription: %@\ndomain: %@\ncode: %ld\nuserInfo:\n%@\n\n", strClassSelector, __FILE__, __LINE__, [error localizedDescription], [error domain], (long)[error code], [error userInfo]);}
 #else
 	#define LOGEVENT(format, ...)	{}
+	#define LOGEVENT_FULL(name, parameters, shouldTime)	{}
+	#define LOGEVENT_END(name, parameters)	{}
 	#define LOGEVENT_DEFAULT
+	#define LOGEVENT_ERROR
 #endif
 
 
