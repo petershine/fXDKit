@@ -59,13 +59,8 @@
 		CGSize maximumSize = CGSizeMake(modifiedFrame.size.width, 100000000.0);
 		
 		CGSize sizeForAssignedText = CGSizeZero;
-		
-		if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-			sizeForAssignedText = [assignedText sizeWithFont:self.font constrainedToSize:maximumSize lineBreakMode:NSLineBreakByWordWrapping];
-		}
-		else {
-			sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
-		}
+
+		sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
 		
 		modifiedFrame.size.height = (sizeForAssignedText.height > self.contentSize.height) ? sizeForAssignedText.height : self.contentSize.height;
 		FXDLog(@"(after)modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));

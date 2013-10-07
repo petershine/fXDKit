@@ -9,7 +9,7 @@
 #define integerNotDefined	-1
 
 
-#define durationAnimation	0.3
+#define durationAnimation	(1.0/4.0)
 #define durationQuickAnimation	(durationAnimation/2.0)
 #define durationSlowAnimation	(durationAnimation*2.0)
 

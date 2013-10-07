@@ -62,4 +62,6 @@
 
 - (NSNumber*)offsetYforUncovering;
 
+- (void)didFinishAnimation;
+
 @end

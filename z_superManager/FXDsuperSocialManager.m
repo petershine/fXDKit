@@ -14,10 +14,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	//GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
-}
-
 
 #pragma mark - Initialization
 + (FXDsuperSocialManager*)sharedInstance {
@@ -42,6 +38,7 @@
 	return _accountType;
 }
 
+#pragma mark -
 - (NSArray*)twitterAccountArray {
 	if (_twitterAccountArray == nil) {
 		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.accountType];
@@ -138,7 +135,16 @@
 	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
 
 	if ([self.twitterAccountArray count] == 0) {
-		//MARK: If no Twitter account is signed up... alert user
+
+		[FXDAlertView
+		 showAlertWithTitle:NSLocalizedString(@"Please sign up for Twitter account", nil)
+		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+		 clickedButtonAtIndexBlock:nil
+		 cancelButtonTitle:nil
+		 otherButtonTitles:nil];
+
+		_twitterAccountArray = nil;
+
 		if (didFinishBlock) {
 			didFinishBlock(NO);
 		}
@@ -178,7 +184,16 @@
 	FXDLog(@"self.twitterAccountArray:\n%@", self.twitterAccountArray);
 	
 	if ([self.twitterAccountArray count] == 0) {
-		//MARK: If no Twitter account is signed up... alert user
+
+		[FXDAlertView
+		 showAlertWithTitle:NSLocalizedString(@"Please sign up for Twitter account", nil)
+		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+		 clickedButtonAtIndexBlock:nil
+		 cancelButtonTitle:nil
+		 otherButtonTitles:nil];
+
+		_twitterAccountArray = nil;
+
 		if (didFinishBlock) {
 			didFinishBlock(NO);
 		}
@@ -227,18 +242,19 @@
 	}
 #endif
 	
-	
 	if (buttonIndex == (NSInteger)[alertObj performSelector:@selector(cancelButtonIndex)]) {
 		_twitterAccountArray = nil;
 		
 		if (didFinishBlock) {
-			didFinishBlock(YES);
+			didFinishBlock(NO);
 		}
 		
 		return;
 	}
-	
-	
+
+
+	BOOL finishedWithAccount = NO;
+
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
 	if ([alertObj isKindOfClass:[UIActionSheet class]]
@@ -266,12 +282,14 @@
 		}
 		
 		[userDefaults synchronize];
+
+		finishedWithAccount = YES;
 	}
 	
 	_twitterAccountArray = nil;
 	
 	if (didFinishBlock) {
-		didFinishBlock(YES);
+		didFinishBlock(finishedWithAccount);
 	}
 }
 
@@ -315,6 +333,7 @@
 		
 		NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText
 									 } mutableCopy];
+
 		if (latitude != 0.0 && longitude != 0.0) {
 			parameters[objkeyTwitterLat] = @(latitude);
 			parameters[objkeyTwitterLong] = @(longitude);

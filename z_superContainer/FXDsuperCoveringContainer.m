@@ -190,6 +190,8 @@
 		 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 		 
 		 self.isCovering = NO;
+
+		 [presentedScene didFinishAnimation];
 	 }];
 }
 
@@ -306,6 +308,8 @@
 		 [dismissedScene removeFromParentViewController];
 		 
 		 self.isUncovering = NO;
+
+		 [dismissedScene didFinishAnimation];
 	 }];
 }
 
@@ -483,4 +487,8 @@
 	return nil;
 }
 
+#pragma mark -
+- (void)didFinishAnimation {	FXDLog_OVERRIDE;
+
+}
 @end

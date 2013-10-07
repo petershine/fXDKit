@@ -11,6 +11,12 @@
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
 
 
+#warning "//TODO: Find the right place to declare"
+@interface NSError (Added)
+- (NSDictionary*)essentialParameters;
+@end
+
+
 @class FXDsuperCoreDataManager;
 
 

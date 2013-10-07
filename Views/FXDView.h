@@ -51,4 +51,6 @@
 
 - (id)superViewOfClassName:(NSString*)className;
 
+- (void)blinkShadowOpacity;
+
 @end

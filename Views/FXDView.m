@@ -263,4 +263,14 @@
 
 }
 
+#pragma mark -
+- (void)blinkShadowOpacity {
+	CABasicAnimation *blinkShadow = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+	blinkShadow.fromValue = [NSNumber numberWithFloat:self.layer.shadowOpacity];
+	blinkShadow.toValue = [NSNumber numberWithFloat:0.0];
+	blinkShadow.duration = durationAnimation;
+	blinkShadow.autoreverses = YES;
+	[self.layer addAnimation:blinkShadow forKey:@"shadowOpacity"];
+}
+
 @end
