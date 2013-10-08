@@ -115,6 +115,12 @@
 #import "FXDPageViewController.h"
 
 
+// Submodules
+#import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
+#import "UAAppReviewManager.h"
+
+
 // Global control
 #import "FXDsuperContainer.h"
 

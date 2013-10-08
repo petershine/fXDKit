@@ -304,19 +304,15 @@
 @implementation UIViewController (Added)
 
 #pragma mark - IBActions
-- (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue {	FXDLog_OVERRIDE;
-	FXDLog(@"unwindSegue: %@", unwindSegue);
-}
-
-- (IBAction)popToRootSceneWithAnimationForSender:(id)sender {
+- (IBAction)popToRootSceneWithAnimation:(id)sender {
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (IBAction)popSceneWithAnimationForSender:(id)sender {
+- (IBAction)popSceneWithAnimation:(id)sender {
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)dismissSceneWithAnimationForSender:(id)sender {	FXDLog_OVERRIDE;
+- (IBAction)dismissSceneWithAnimation:(id)sender {	FXDLog_OVERRIDE;
 
 	if (self.parentViewController) {
 		[self.parentViewController dismissViewControllerAnimated:YES completion:nil];

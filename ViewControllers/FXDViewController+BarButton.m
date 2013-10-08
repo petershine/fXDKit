@@ -37,13 +37,13 @@
 		//TEST:
 		/*
 		if ([self.navigationController.viewControllers count] == 2) {
-			action = @selector(popToRootSceneWithAnimationForSender:);
+			action = @selector(popToRootSceneWithAnimation:);
 		}
 		else {
-			action = @selector(popSceneWithAnimationForSender:);
+			action = @selector(popSceneWithAnimation:);
 		}
 		 */
-		action = @selector(popSceneWithAnimationForSender:);
+		action = @selector(popSceneWithAnimation:);
 
 		FXDLog(@"highlightedImage: %@, normalImage: %@", highlightedImage, normalImage);
 
@@ -53,7 +53,7 @@
 			// Do not show back button
 		}
 		else {
-			action = @selector(dismissSceneWithAnimationForSender:);
+			action = @selector(dismissSceneWithAnimation:);
 		}
 	}
 
@@ -133,7 +133,7 @@
 		barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonGroup];
 	}
 	else {
-		if (action == @selector(dismissSceneWithAnimationForSender:)) {
+		if (action == @selector(dismissSceneWithAnimation:)) {
 			barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:target action:action];
 		}
 	}

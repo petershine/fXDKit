@@ -17,12 +17,10 @@
 @interface UIViewController (Added)
 
 #pragma mark - IBActions
-- (IBAction)exitSceneUsingUnwindSegue:(UIStoryboardSegue*)unwindSegue;	//MARK: implement this for controller which will unwind childScene (previousScene)
+- (IBAction)popToRootSceneWithAnimation:(id)sender;
+- (IBAction)popSceneWithAnimation:(id)sender;
 
-- (IBAction)popToRootSceneWithAnimationForSender:(id)sender;
-- (IBAction)popSceneWithAnimationForSender:(id)sender;
-
-- (IBAction)dismissSceneWithAnimationForSender:(id)sender;
+- (IBAction)dismissSceneWithAnimation:(id)sender;
 
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
