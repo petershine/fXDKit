@@ -266,8 +266,7 @@
 	 showAlertWithTitle:NSLocalizedString(alert_PleaseEnableiCloud, nil)
 	 message:nil
 	 clickedButtonAtIndexBlock:nil
-	 cancelButtonTitle:nil
-	 otherButtonTitles:nil];
+	 cancelButtonTitle:nil];
 
 #if USE_LocalDirectoryWatcher
 	[self startWatchingLocalDirectoryChange];

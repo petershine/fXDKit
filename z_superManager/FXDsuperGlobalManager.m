@@ -11,19 +11,6 @@
 #import "FXDsuperCoreDataManager.h"
 
 
-@implementation NSError (Added)
-- (NSDictionary*)essentialParameters {
-	NSDictionary *parameters = @{
-								 @"localizedDescription": [self localizedDescription],
-								 @"domain":	[self domain],
-								 @"code":	@([self code]),
-								 @"userInfo":	[self userInfo]
-								 };
-
-	return parameters;
-}
-@end
-
 #pragma mark - Public implementation
 @implementation FXDsuperGlobalManager
 

@@ -224,16 +224,10 @@
 			 BOOL isDownloaded = NO;
 			 BOOL isDownloading = NO;
 			 
-			 if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-				 isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
-				 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-			 }
-			 else {
-				 id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-				 isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
-				 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
-			 }
-			 
+			 id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+			 isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
+			 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
+
 			 if (isDownloaded == NO && isDownloading == NO) {
 #if ForDEVELOPER
 				 didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];

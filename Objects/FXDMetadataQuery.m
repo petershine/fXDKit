@@ -48,16 +48,10 @@
 		BOOL isDownloaded = NO;
 		BOOL isUploaded = NO;
 		
-		if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-			isDownloaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey] boolValue];
-			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
-		}
-		else {
-			id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-			isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
-			isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
-		}
-		
+		id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+		isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
+		isUploaded = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadedKey] boolValue];
+
 		if (isUploaded == NO) {
 			id isUploading = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsUploadingKey];
 			

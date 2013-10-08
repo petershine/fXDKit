@@ -158,7 +158,7 @@
 		  addOperationWithBlock:^{
 			  FXDLog(@"2.didConfigure: %d", didConfigure);
 			  
-#warning "//TODO: If icloud connection is not working, CHECK if cellular transferring is enabled on device"
+#warning "//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 			  
 #if ForDEVELOPER
 			  if (error) {
@@ -169,8 +169,7 @@
 				   showAlertWithTitle:title
 				   message:message
 				   clickedButtonAtIndexBlock:nil
-				   cancelButtonTitle:nil
-				   otherButtonTitles:nil];
+				   cancelButtonTitle:nil];
 			  }
 #endif
 			  //TODO: prepare what to do when Core Data is not setup
@@ -669,8 +668,8 @@
 	FXDLog(@"1.self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
 	
 	if (mainStoreUUID && notifyingStoreUUID && [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
-#warning "//MARK: Unless save is done for private context in background, it's not NECESSARY"
-		
+
+		//MARK: Unless save is done for private context in background, you can skip merging"
 		if (self.shouldMergeForManagedContext) {
 			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 			FXDLog(@"DID MERGE: self.mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);

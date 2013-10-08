@@ -48,6 +48,8 @@
 // Objects
 #import "FXDObject.h"
 
+#import "FXDError.h"
+
 #import "FXDString.h"
 #import "FXDDate.h"
 #import "FXDURL.h"
@@ -119,5 +121,6 @@
 #import "FXDsuperGlobalManager.h"
 #import "FXDsuperLaunchController.h"
 
+#import "FXDsuperAPIclient.h"
 
 #endif

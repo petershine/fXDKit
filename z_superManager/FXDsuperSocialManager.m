@@ -120,8 +120,7 @@
 				   showAlertWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
 				   message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
 				   clickedButtonAtIndexBlock:nil
-				   cancelButtonTitle:nil
-				   otherButtonTitles:nil];
+				   cancelButtonTitle:nil];
 			  }];
 			 
 			 if (didFinishBlock) {
@@ -140,8 +139,7 @@
 		 showAlertWithTitle:NSLocalizedString(@"Please sign up for Twitter account", nil)
 		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
 		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil
-		 otherButtonTitles:nil];
+		 cancelButtonTitle:nil];
 
 		_twitterAccountArray = nil;
 
@@ -163,8 +161,7 @@
 		  forButtonIndex:buttonIndex
 		  withDidFinishBlock:didFinishBlock];
 	 }
-	 cancelButtonTitle:nil
-	 otherButtonTitles:nil];
+	 cancelButtonTitle:nil];
 	
 	
 	[alertView addButtonWithTitle:NSLocalizedString(text_Cancel, nil)];
@@ -189,8 +186,7 @@
 		 showAlertWithTitle:NSLocalizedString(@"Please sign up for Twitter account", nil)
 		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
 		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil
-		 otherButtonTitles:nil];
+		 cancelButtonTitle:nil];
 
 		_twitterAccountArray = nil;
 
@@ -392,8 +388,7 @@
 		 showAlertWithTitle:NSLocalizedString(@"Please connect to Twitter", nil)
 		 message:NSLocalizedString(@"PopToo uses your Twitter account to share about recent geotagged item.\nPlease sign-in from the device's Settings", nil)
 		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil
-		 otherButtonTitles:nil];
+		 cancelButtonTitle:nil];
 		
 		return nil;
 	}

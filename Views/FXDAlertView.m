@@ -44,15 +44,14 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (FXDAlertView*)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION {
++ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
 
 	FXDAlertView *alertView =
 	[[FXDAlertView alloc]
 	 initWithTitle:title
 	 message:message
 	 clickedButtonAtIndexBlock:clickedButtonAtIndexBlock
-	 cancelButtonTitle:cancelButtonTitle
-	 otherButtonTitles:otherButtonTitles, nil];
+	 cancelButtonTitle:cancelButtonTitle];
 
 	[alertView show];
 
@@ -60,7 +59,7 @@
 }
 
 #pragma mark -
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
 	
 	if (cancelButtonTitle == nil) {
 		cancelButtonTitle = NSLocalizedString(text_OK, nil);
@@ -70,7 +69,7 @@
 					   message:message
 					  delegate:nil
 			 cancelButtonTitle:cancelButtonTitle
-			 otherButtonTitles:otherButtonTitles, nil];
+			 otherButtonTitles:nil];
 
 	if (self) {
 		self.callbackBlock = clickedButtonAtIndexBlock;
