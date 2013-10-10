@@ -118,7 +118,7 @@
 			  addOperationWithBlock:^{
 				  [FXDAlertView
 				   showAlertWithTitle:NSLocalizedString(@"Please grant Twitter access in Settings", nil)
-				   message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+				   message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening.\nGo to device's Settings and add your Twitter account", nil)
 				   clickedButtonAtIndexBlock:nil
 				   cancelButtonTitle:nil];
 			  }];
@@ -136,8 +136,8 @@
 	if ([self.twitterAccountArray count] == 0) {
 
 		[FXDAlertView
-		 showAlertWithTitle:NSLocalizedString(@"Please sign up for Twitter account", nil)
-		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+		 showAlertWithTitle:NSLocalizedString(@"Please sign up for a Twitter account", nil)
+		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening.\nGo to device's Settings and add your Twitter account", nil)
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil];
 
@@ -183,8 +183,8 @@
 	if ([self.twitterAccountArray count] == 0) {
 
 		[FXDAlertView
-		 showAlertWithTitle:NSLocalizedString(@"Please sign up for Twitter account", nil)
-		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening", nil)
+		 showAlertWithTitle:NSLocalizedString(@"Please sign up for a Twitter account", nil)
+		 message:NSLocalizedString(@"PopToo uses your Twitter to share about music you're listening. Go to Settings and add your Twitter account", nil)
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil];
 
