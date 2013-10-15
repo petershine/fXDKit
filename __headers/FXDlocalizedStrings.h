@@ -24,8 +24,6 @@
 // Message
 #define message_PleaseTryAgain @"message_PleaseTryAgain"
 
-#define message_PleaseSelectYourTwitterAcount @"message_PleaseSelectYourTwitterAcount"
-
 
 #ifndef message_PurposeOfUsingLocationService
 	#define message_PurposeOfUsingLocationService @"message_PurposeOfUsingLocationService"
@@ -117,8 +115,6 @@
 
 // Message
 "message_PleaseTryAgain" = "<#Please Try Again#>";
-
-"message_PleaseSelectYourTwitterAcount" = "<#Please select your Twitter Account#>";
 
  
 "message_PurposeOfUsingLocationService" = "<#This App needs your permission to use your location#>";

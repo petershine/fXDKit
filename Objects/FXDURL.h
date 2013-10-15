@@ -24,7 +24,7 @@
 
 #pragma mark - Category
 @interface NSURL (Added)
-- (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError **)error;
+- (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;
 
 - (NSString*)unicodeAbsoluteString;
