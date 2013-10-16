@@ -22,70 +22,98 @@
 
 
 #pragma mark - Property overriding
-- (NSString*)reasonForTwitterAccount {
-	if (_reasonForTwitterAccount == nil) {	FXDLog_OVERRIDE;
-		_reasonForTwitterAccount = NSLocalizedString(@"Please go to device's Settings and add your Twitter account", nil);
-	}
-
-	return _reasonForTwitterAccount;
-}
-
-- (NSString*)reasonForFacebookAccount {
-	if (_reasonForFacebookAccount == nil) {	FXDLog_OVERRIDE;
-		_reasonForFacebookAccount = NSLocalizedString(@"Please go to device's Settings and add your Facebook account", nil);
-	}
-
-	return _reasonForFacebookAccount;
-}
-
-#pragma mark -
-- (NSDictionary*)accountAccessOptions {
-	if (_accountAccessOptions == nil) {
+- (NSString*)typeIdentifier {
+	if (_typeIdentifier == nil) {
 		FXDLog_OVERRIDE;
 	}
+	return _typeIdentifier;
+}
 
-	return _accountAccessOptions;
+- (NSString*)reasonForConnecting {
+	if (_reasonForConnecting == nil) {
+		FXDLog_OVERRIDE;
+	}
+	return _reasonForConnecting;
+}
+
+- (NSDictionary*)initialAccessOptions {
+	if (_initialAccessOptions == nil) {
+		FXDLog_OVERRIDE;
+	}
+	return _initialAccessOptions;
+}
+
+- (NSDictionary*)additionalAccessOptions {
+	if (_additionalAccessOptions == nil) {
+		FXDLog_OVERRIDE;
+	}
+	return _additionalAccessOptions;
 }
 
 #pragma mark -
-- (ACAccountStore*)accountStore {
-	if (_accountStore == nil) {
-		_accountStore = [[ACAccountStore alloc] init];
+- (ACAccountStore*)mainAccountStore {
+	if (_mainAccountStore == nil) {
+		_mainAccountStore = [[ACAccountStore alloc] init];
 	}
 
-	return _accountStore;
+	return _mainAccountStore;
 }
 
 #pragma mark -
-- (ACAccountType*)twitterAccountType {
-	if (_twitterAccountType == nil) {
-		_twitterAccountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+- (ACAccountType*)mainAccountType {
+	if (_mainAccountType == nil) {
+		if (self.typeIdentifier) {
+			_mainAccountType = [self.mainAccountStore accountTypeWithAccountTypeIdentifier:self.typeIdentifier];
+		}
+#if ForDEVELOPER
+		else {
+			FXDLog_OVERRIDE;
+		}
+#endif
 	}
 
-	return _twitterAccountType;
+	return _mainAccountType;
 }
 
-- (NSArray*)twitterAccountArray {
-	if (_twitterAccountArray == nil) {
-		_twitterAccountArray = [self.accountStore accountsWithAccountType:self.twitterAccountType];
+- (NSArray*)multiAccountArray {
+	if (_multiAccountArray == nil) {
+		if (self.mainAccountType) {
+			_multiAccountArray = [self.mainAccountStore accountsWithAccountType:self.mainAccountType];
+		}
+#if ForDEVELOPER
+		else {
+			FXDLog_OVERRIDE;
+		}
+#endif
 	}
 
-	return _twitterAccountArray;
+	return _multiAccountArray;
 }
 
-- (ACAccount*)mainTwitterAccount {
+- (ACAccount*)currentMainAccount {
 
-	if (_mainTwitterAccount == nil) {	FXDLog_DEFAULT;
+	if (_currentMainAccount == nil) {	FXDLog_DEFAULT;
+
+		NSString *accountObjKey = @"";
+
+		if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+			accountObjKey = userdefaultObjKeyMainTwitterAccountIdentifier;
+		}
+		else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+			accountObjKey = userdefaultObjKeyMainFacebookAccountIdentifier;
+		}
+
+
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		
-		__block NSString *identifier = [userDefaults stringForKey:userdefaultObjKeyMainTwitterAccountIdentifier];
 
-		FXDLog(@"identifier: %@", identifier);
+		NSString *identifier = [userDefaults stringForKey:accountObjKey];
+
+		FXDLog(@"accountObjKey: %@ identifier: %@", accountObjKey, identifier);
 
 		if (identifier) {
 
-			if (self.twitterAccountType.accessGranted) {
-				_mainTwitterAccount = [self.accountStore accountWithIdentifier:identifier];
+			if (self.mainAccountType.accessGranted) {
+				_currentMainAccount = [self.mainAccountStore accountWithIdentifier:identifier];
 			}
 			else {
 				identifier = nil;
@@ -94,68 +122,17 @@
 
 
 		if (identifier) {
-			[userDefaults setObject:identifier forKey:userdefaultObjKeyMainTwitterAccountIdentifier];
+			[userDefaults setObject:identifier forKey:accountObjKey];
 		}
 		else {
-			[userDefaults removeObjectForKey:userdefaultObjKeyMainTwitterAccountIdentifier];
+			[userDefaults removeObjectForKey:accountObjKey];
 		}
 
 		[userDefaults synchronize];
-		FXDLog(@"_mainTwitterAccount: %@", _mainTwitterAccount);
+		FXDLog(@"_currentMainAccount: %@", _currentMainAccount);
 	}
 
-	return _mainTwitterAccount;
-}
-
-#pragma mark -
-- (ACAccountType*)facebookAccountType {
-	if (_facebookAccountType == nil) {
-		_facebookAccountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
-	}
-
-	return _facebookAccountType;
-}
-
-- (NSArray*)facebookAccountArray {
-	if (_facebookAccountArray == nil) {
-		_facebookAccountArray = [self.accountStore accountsWithAccountType:self.facebookAccountType];
-	}
-
-	return _facebookAccountArray;
-}
-
-- (ACAccount*)mainFacebookAccount {
-
-	if (_mainFacebookAccount == nil) {	FXDLog_DEFAULT;
-		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-		__block NSString *identifier = [userDefaults stringForKey:userdefaultObjKeyMainFacebookAccountIdentifier];
-
-		FXDLog(@"identifier: %@", identifier);
-
-		if (identifier) {
-
-			if (self.facebookAccountType.accessGranted) {
-				_mainFacebookAccount = [self.accountStore accountWithIdentifier:identifier];
-			}
-			else {
-				identifier = nil;
-			}
-		}
-
-
-		if (identifier) {
-			[userDefaults setObject:identifier forKey:userdefaultObjKeyMainFacebookAccountIdentifier];
-		}
-		else {
-			[userDefaults removeObjectForKey:userdefaultObjKeyMainFacebookAccountIdentifier];
-		}
-
-		[userDefaults synchronize];
-		FXDLog(@"_mainFacebookAccount: %@", _mainFacebookAccount);
-	}
-
-	return _mainFacebookAccount;
+	return _currentMainAccount;
 }
 
 
@@ -164,119 +141,137 @@
 #pragma mark - Public
 - (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 
+	if (typeIdentifier == nil) {
+		typeIdentifier = self.typeIdentifier;
+	}
+
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
-	ACAccountType *accountType = nil;
-
-	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		accountType = self.twitterAccountType;
+	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
+		//MARK: Not compatible:
+		if (didFinishBlock) {
+			didFinishBlock(NO);
+		}
+		return;
 	}
-	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		accountType = self.facebookAccountType;
-	}
 
 
-	FXDLog(@"accountType.accountTypeDescription: %@", accountType.accountTypeDescription);
-	FXDLog(@"accountType.accessGranted: %d", accountType.accessGranted);
-	
-	if (accountType.accessGranted) {
+	FXDLog(@"self.mainAccountType.accountTypeDescription: %@", self.mainAccountType.accountTypeDescription);
+	FXDLog(@"self.mainAccountType.accessGranted: %d", self.mainAccountType.accessGranted);
+
+	void (^GrantedAccess)(void) = ^(void){
 		[self
 		 showActionSheetInPresentingView:presentingView
 		 forSelectingAccountForTypeIdentifier:typeIdentifier
 		 withDidFinishBlock:didFinishBlock];
+	};
+
+	void (^DeniedAccess)(void) = ^(void){
+		NSString *alertTitle = nil;
+
+		if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+			alertTitle = NSLocalizedString(@"Please grant Twitter access in Settings", nil);
+		}
+		else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+			alertTitle = NSLocalizedString(@"Please grant Facebook access in Settings", nil);
+		}
+
+		[FXDAlertView
+		 showAlertWithTitle:alertTitle
+		 message:self.reasonForConnecting
+		 clickedButtonAtIndexBlock:nil
+		 cancelButtonTitle:nil];
+
+		_mainAccountType = nil;
+
+		if (didFinishBlock) {
+			didFinishBlock(NO);
+		}
+	};
+
+
+	if (self.mainAccountType.accessGranted) {
+		GrantedAccess();
 		return;
 	}
 	
 	
-	[self.accountStore
-	 requestAccessToAccountsWithType:accountType
-	 options:self.accountAccessOptions
+	[self.mainAccountStore
+	 requestAccessToAccountsWithType:self.mainAccountType
+	 options:self.initialAccessOptions
 	 completion:^(BOOL granted, NSError *error) {
-		 FXDLog(@"granted: %d", granted);
-		 
+		 FXDLog(@"1.granted: %d", granted);
 		 FXDLog_ERROR;
 		 
-		 if (granted) {
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  [self
-				   showActionSheetInPresentingView:presentingView
-				   forSelectingAccountForTypeIdentifier:typeIdentifier
-				   withDidFinishBlock:didFinishBlock];
-			  }];
-		 }
-		 else {
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  NSString *alertTitle = nil;
-				  NSString *alertMessage = nil;
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
 
-				  if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-					  alertTitle = NSLocalizedString(@"Please grant Twitter access in Settings", nil);
-					  alertMessage = self.reasonForTwitterAccount;
-				  }
-				  else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-					  alertTitle = NSLocalizedString(@"Please grant Facebook access in Settings", nil);
-					  alertMessage = self.reasonForFacebookAccount;
-				  }
+			  if (granted == NO) {
+				  DeniedAccess();
+				  return;
+			  }
 
-				  [FXDAlertView
-				   showAlertWithTitle:alertTitle
-				   message:alertMessage
-				   clickedButtonAtIndexBlock:nil
-				   cancelButtonTitle:nil];
+			  if (self.additionalAccessOptions == nil) {
+				  GrantedAccess();
+				  return;
+			  }
 
-				  if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-					  _twitterAccountType = nil;
-				  }
-				  else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-					  _facebookAccountType = nil;
-				  }
+			  [self.mainAccountStore
+			   requestAccessToAccountsWithType:self.mainAccountType
+			   options:self.additionalAccessOptions
+			   completion:^(BOOL granted, NSError *error) {
+				   FXDLog(@"2.granted: %d", granted);
+				   FXDLog_ERROR;
 
-				  if (didFinishBlock) {
-					  didFinishBlock(NO);
-				  }
-			  }];
-		 }
+				   [[NSOperationQueue mainQueue]
+					addOperationWithBlock:^{
+
+						if (granted == NO) {
+							DeniedAccess();
+							return;
+						}
+
+						GrantedAccess();
+					}];
+			   }];
+		  }];
 	 }];
 }
 
 - (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 
+	if (typeIdentifier == nil) {
+		typeIdentifier = self.typeIdentifier;
+	}
+
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
-	NSArray *accountArray = nil;
-
-	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		accountArray = self.twitterAccountArray;
+	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
+		//MARK: Not compatible:
+		if (didFinishBlock) {
+			didFinishBlock(NO);
+		}
+		return;
 	}
-	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		accountArray = self.facebookAccountArray;
-	}
 
 
-	FXDLog(@"accountArray:\n%@", accountArray);
+	FXDLog(@"self.multiAccountArray:\n%@", self.multiAccountArray);
 	
-	if ([accountArray count] == 0) {
+	if ([self.multiAccountArray count] == 0) {
+		_multiAccountArray = nil;
+
 		NSString *alertTitle = nil;
-		NSString *alertMessage = nil;
 
 		if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			_twitterAccountArray = nil;
-
 			alertTitle = NSLocalizedString(@"Please sign up for a Twitter account", nil);
-			alertMessage = self.reasonForTwitterAccount;
 		}
 		else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			_facebookAccountArray = nil;
-
 			alertTitle = NSLocalizedString(@"Please sign up for a Facebook account", nil);
-			alertMessage = self.reasonForFacebookAccount;
 		}
 
 		[FXDAlertView
 		 showAlertWithTitle:alertTitle
-		 message:alertMessage
+		 message:self.reasonForConnecting
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil];
 
@@ -290,10 +285,10 @@
 	NSString *actionsheetTitle = nil;
 
 	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		actionsheetTitle = NSLocalizedString(@"Please select your Twitter Account", nil);
+		actionsheetTitle = NSLocalizedString(@"Please select your a Twitter Account", nil);
 	}
 	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		actionsheetTitle = NSLocalizedString(@"Please select your Facebook Account", nil);
+		actionsheetTitle = NSLocalizedString(@"Please select your a Facebook Account", nil);
 	}
 
 	FXDActionSheet *actionSheet =
@@ -302,7 +297,7 @@
 	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
 		 [self
 		  selectAccountForTypeIdentifier:typeIdentifier
-		  fromAlertObj:alertObj
+		  fromActionSheet:alertObj
 		  forButtonIndex:buttonIndex
 		  withDidFinishBlock:didFinishBlock];
 		 
@@ -314,21 +309,33 @@
 	[actionSheet addButtonWithTitle:NSLocalizedString(text_Cancel, nil)];
 	actionSheet.cancelButtonIndex = 0;
 	
-	for (ACAccount *account in accountArray) {
+	for (ACAccount *account in self.multiAccountArray) {
 		[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"@%@", account.username]];
 	}
 	
 	[actionSheet addButtonWithTitle:NSLocalizedString(text_SignOut, nil)];
-	actionSheet.destructiveButtonIndex = [accountArray count]+1;
+	actionSheet.destructiveButtonIndex = [self.multiAccountArray count]+1;
 	
 	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 	[actionSheet showInView:presentingView];
 }
 
 #pragma mark -
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromAlertObj:(id)actionSheet forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+
+	if (typeIdentifier == nil) {
+		typeIdentifier = self.typeIdentifier;
+	}
 
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
+
+	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
+		//MARK: Not compatible:
+		if (didFinishBlock) {
+			didFinishBlock(NO);
+		}
+		return;
+	}
 
 #if ForDEVELOPER
 	FXDLog(@"buttonIndex: %ld", (long)buttonIndex);
@@ -340,12 +347,7 @@
 #endif
 	
 	if (buttonIndex == (NSInteger)[actionSheet performSelector:@selector(cancelButtonIndex)]) {
-		if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			_twitterAccountArray = nil;
-		}
-		else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			_facebookAccountArray = nil;
-		}
+		_multiAccountArray = nil;
 
 		if (didFinishBlock) {
 			didFinishBlock(NO);
@@ -373,43 +375,16 @@
 		
 		[userDefaults removeObjectForKey:accountObjKey];
 
-		if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			_mainTwitterAccount = nil;
-		}
-		else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			_mainFacebookAccount = nil;
-		}
+		_currentMainAccount = nil;
 	}
 	else {
-		NSArray *accountArray = nil;
-
-		if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			accountArray = self.twitterAccountArray;
-		}
-		else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			accountArray = self.facebookAccountArray;
-		}
-
-		ACAccount *selectedAccount = (accountArray)[buttonIndex-1];
+		ACAccount *selectedAccount = (self.multiAccountArray)[buttonIndex-1];
 		FXDLog(@"selectedAccount: %@", selectedAccount);
 		
 		if (selectedAccount) {
 			[userDefaults setObject:selectedAccount.identifier forKey:accountObjKey];
 
-			if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-				_mainTwitterAccount = selectedAccount;
-				
-#if ForDEVELOPER
-				[self twitterUserShowWithScreenName:_mainTwitterAccount.username];
-#endif
-			}
-			else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-				_mainFacebookAccount = selectedAccount;
-
-#if ForDEVELOPER
-				[self facebookRequestForFacebookUserId:nil];
-#endif
-			}
+			_currentMainAccount = selectedAccount;
 		}
 		
 		[userDefaults synchronize];
@@ -417,12 +392,7 @@
 		finishedWithAccount = YES;
 	}
 
-	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		_twitterAccountArray = nil;
-	}
-	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		_facebookAccountArray = nil;
-	}
+	_multiAccountArray = nil;
 
 	if (didFinishBlock) {
 		didFinishBlock(finishedWithAccount);
@@ -432,18 +402,9 @@
 #pragma mark -
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(void))requestingBlock {
 
-	ACAccount *mainAccount = nil;
-
-	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		mainAccount = self.mainTwitterAccount;
-	}
-	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		mainAccount = self.mainFacebookAccount;
-	}
-
-	if (mainAccount.username == nil) {
-		[self.accountStore
-		 renewCredentialsForAccount:mainAccount
+	if (self.currentMainAccount.username == nil) {
+		[self.mainAccountStore
+		 renewCredentialsForAccount:self.currentMainAccount
 		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
 			 FXDLog_ERROR;
 			 
@@ -474,21 +435,18 @@
 	if ([SLComposeViewController isAvailableForServiceType:serviceIdentifier] == NO) {
 
 		NSString *alertTitle = nil;
-		NSString *alertMessage = nil;
 
 		if ([serviceIdentifier isEqualToString:SLServiceTypeTwitter]) {
 			alertTitle = NSLocalizedString(@"Please connect to Twitter", nil);
-			alertMessage = self.reasonForTwitterAccount;
 		}
 		else if ([serviceIdentifier isEqualToString:SLServiceTypeFacebook]) {
 			alertTitle = NSLocalizedString(@"Please connect to Facebook", nil);
-			alertMessage = self.reasonForFacebookAccount;
 		}
 
 		
 		[FXDAlertView
 		 showAlertWithTitle:alertTitle
-		 message:alertMessage
+		 message:self.reasonForConnecting
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil];
 		
@@ -525,8 +483,18 @@
 
 
 #if ForDEVELOPER
-- (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {
+- (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {	FXDLog_DEFAULT;
 	FXDLog_ERROR;
+
+#if ForDEVELOPER
+	if (error && [[error localizedDescription] length] > 0) {
+		[FXDAlertView
+		 showAlertWithTitle:nil
+		 message:[error localizedDescription]
+		 clickedButtonAtIndexBlock:nil
+		 cancelButtonTitle:nil];
+	}
+#endif
 
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
@@ -553,11 +521,28 @@
 @end
 
 
-@implementation FXDsuperSocialManager (Twitter)
+@implementation FXDsuperTwitterManager : FXDsuperSocialManager
+- (NSString*)typeIdentifier {
+	if (_typeIdentifier == nil) {
+		_typeIdentifier = ACAccountTypeIdentifierTwitter;
+	}
+
+	return _typeIdentifier;
+}
+
+- (NSString*)reasonForConnecting {
+	if (_reasonForConnecting == nil) {	FXDLog_OVERRIDE;
+		_reasonForConnecting = NSLocalizedString(@"Please go to device's Settings and add your Twitter account", nil);
+	}
+
+	return _reasonForConnecting;
+}
+
+#pragma mark -
 - (void)twitterUserShowWithScreenName:(NSString*)screenName {
 
-	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
+	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"self.currentMainAccount: %@", self.currentMainAccount);
 		return;
 	}
 
@@ -571,7 +556,7 @@
 
 		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
 
-		 defaultRequest.account = self.mainTwitterAccount;
+		 defaultRequest.account = self.currentMainAccount;
 
 		 [defaultRequest
 		  performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
@@ -584,8 +569,8 @@
 
 - (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude {
 
-	if (self.mainTwitterAccount == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self.mainTwitterAccount: %@", self.mainTwitterAccount);
+	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"self.currentMainAccount: %@", self.currentMainAccount);
 		return;
 	}
 
@@ -606,7 +591,7 @@
 
 		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:requestURL parameters:parameters];
 
-		 defaultRequest.account = self.mainTwitterAccount;
+		 defaultRequest.account = self.currentMainAccount;
 
 		 [defaultRequest
 		  performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
@@ -620,10 +605,38 @@
 @end
 
 
-@implementation FXDsuperSocialManager (Facebook)
+@implementation FXDsuperFacebookManager : FXDsuperSocialManager
+- (NSString*)typeIdentifier {
+	if (_typeIdentifier == nil) {
+		_typeIdentifier = ACAccountTypeIdentifierFacebook;
+	}
+
+	return _typeIdentifier;
+}
+
+- (NSString*)reasonForConnecting {
+	if (_reasonForConnecting == nil) {	FXDLog_OVERRIDE;
+		_reasonForConnecting = NSLocalizedString(@"Please go to device's Settings and add your Facebook account", nil);
+	}
+
+	return _reasonForConnecting;
+}
+
+- (NSDictionary*)initialAccessOptions {
+	if (_initialAccessOptions == nil) {	FXDLog_DEFAULT;
+		_initialAccessOptions = @{ACFacebookAppIdKey:	apikeyFacebookAppId,
+						   ACFacebookPermissionsKey:	@[facebookPermissionEmail]};
+
+		FXDLog(@"_initialAccessOptions: %@", _initialAccessOptions);
+	}
+
+	return _initialAccessOptions;
+}
+
+#pragma mark -
 - (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId {
-	if (self.mainFacebookAccount == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self.mainFacebookAccount: %@", self.mainFacebookAccount);
+	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
+		FXDLog(@"self.currentMainAccount: %@", self.currentMainAccount);
 		return;
 	}
 
@@ -645,7 +658,7 @@
 
 		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
 
-		 defaultRequest.account = self.mainFacebookAccount;
+		 defaultRequest.account = self.currentMainAccount;
 
 		 [defaultRequest
 		  performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;

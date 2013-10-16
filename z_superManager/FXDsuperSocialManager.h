@@ -11,27 +11,23 @@
 
 
 @interface FXDsuperSocialManager : FXDObject {
-	NSString *_reasonForTwitterAccount;
-	NSString *_reasonForFacebookAccount;
-
-	NSDictionary *_accountAccessOptions;
+	NSString *_typeIdentifier;
+	NSString *_reasonForConnecting;
+	NSDictionary *_initialAccessOptions;
+	NSDictionary *_additionalAccessOptions;
 }
 
 // Properties
-@property (strong, nonatomic) NSString *reasonForTwitterAccount;
-@property (strong, nonatomic) NSString *reasonForFacebookAccount;
+@property (strong, nonatomic) NSString *typeIdentifier;
+@property (strong, nonatomic) NSString *reasonForConnecting;
+@property (strong, nonatomic) NSDictionary *initialAccessOptions;
+@property (strong, nonatomic) NSDictionary *additionalAccessOptions;
 
-@property (strong, nonatomic) NSDictionary *accountAccessOptions;
+@property (strong, nonatomic) ACAccountStore *mainAccountStore;
 
-@property (strong, nonatomic) ACAccountStore *accountStore;
-
-@property (strong, nonatomic) ACAccountType *twitterAccountType;
-@property (strong, nonatomic) NSArray *twitterAccountArray;
-@property (strong, nonatomic) ACAccount *mainTwitterAccount;
-
-@property (strong, nonatomic) ACAccountType *facebookAccountType;
-@property (strong, nonatomic) NSArray *facebookAccountArray;
-@property (strong, nonatomic) ACAccount *mainFacebookAccount;
+@property (strong, nonatomic) ACAccountType *mainAccountType;
+@property (strong, nonatomic) NSArray *multiAccountArray;
+@property (strong, nonatomic) ACAccount *currentMainAccount;
 
 
 #pragma mark - Public
@@ -39,7 +35,7 @@
 
 - (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromAlertObj:(id)actionSheet forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(void))requestingBlock;
 
@@ -71,11 +67,20 @@
 #define objkeyTwitterPlaceId			@"place_id"
 #define objkeyTwitterDisplayCoordinates	@"display_coordinates"
 
-@interface FXDsuperSocialManager (Twitter)
+
+@interface FXDsuperTwitterManager : FXDsuperSocialManager
 - (void)twitterUserShowWithScreenName:(NSString*)screenName;
 - (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude;
 @end
 
+
+#ifndef apikeyFacebookAppId
+	#define apikeyFacebookAppId	@"000000000000000"
+#endif
+
+#define	facebookPermissionEmail @"email"
+#define	facebookPermissionPublishActions @"publish_actions"
+#define	facebookPermissionManagePages @"manage_pages"
 
 #define urlrootFacebookAPI	@"https://graph.facebook.com/"
 #define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]
@@ -87,6 +92,7 @@
 #define objkeyFacebookLocale	@"locale"
 #define objkeyFacebookUsername	@"username"
 
-@interface FXDsuperSocialManager (Facebook)
+
+@interface FXDsuperFacebookManager : FXDsuperSocialManager
 - (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId;
 @end
