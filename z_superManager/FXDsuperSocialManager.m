@@ -310,7 +310,17 @@
 	actionSheet.cancelButtonIndex = 0;
 	
 	for (ACAccount *account in self.multiAccountArray) {
-		[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"@%@", account.username]];
+		if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+			[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"@%@", account.username]];
+		}
+		else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+			if (account.userFullName) {
+				[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", account.userFullName]];
+			}
+			else {
+				[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", account.username]];
+			}
+		}
 	}
 	
 	[actionSheet addButtonWithTitle:NSLocalizedString(text_SignOut, nil)];
