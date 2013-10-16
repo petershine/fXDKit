@@ -70,4 +70,19 @@
 	return alignedParagraph;
 }
 
+- (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator {
+	NSArray *comps = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+	NSMutableArray *nonemptyComps = [[NSMutableArray alloc] init];
+
+	// only copy non-empty entries
+	for (NSString *oneComp in comps) {
+		if (([oneComp isEqualToString:@""] == NO)) {
+			[nonemptyComps addObject:oneComp];
+		}
+
+	}
+
+	return [nonemptyComps componentsJoinedByString:seperator];  // already marked as autoreleased
+}
+
 @end

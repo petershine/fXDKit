@@ -8,12 +8,9 @@
 
 
 @interface FXDString : NSString
-
 // Properties
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 
@@ -25,5 +22,7 @@
 #pragma mark - Category
 @interface NSString (Added)
 - (NSString*)leftAlignedParagraph;
+
+- (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator;
 
 @end
