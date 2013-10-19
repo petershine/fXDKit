@@ -263,7 +263,6 @@
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		//MARK: Not compatible:
 		if (didFinishBlock) {
 			didFinishBlock(NO);
 		}
@@ -301,10 +300,10 @@
 	NSString *actionsheetTitle = nil;
 
 	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		actionsheetTitle = NSLocalizedString(@"Please select your a Twitter Account", nil);
+		actionsheetTitle = NSLocalizedString(@"Please select your Twitter Account", nil);
 	}
 	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		actionsheetTitle = NSLocalizedString(@"Please select your a Facebook Account", nil);
+		actionsheetTitle = NSLocalizedString(@"Please select your Facebook Timeline or Page", nil);
 	}
 
 	FXDActionSheet *actionSheet =
@@ -346,7 +345,6 @@
 	[actionSheet showInView:presentingView];
 }
 
-#pragma mark -
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 
 	if (typeIdentifier == nil) {
@@ -679,7 +677,7 @@
 			 requestURL = [NSURL URLWithString:urlstringFacebook(facebookUserId)];
 		 }
 		 else {
-			 requestURL = [NSURL URLWithString:urlstringFacebookUserMe];
+			 requestURL = [NSURL URLWithString:urlstringFacebook(facebookGraphMe)];
 		 }
 
 

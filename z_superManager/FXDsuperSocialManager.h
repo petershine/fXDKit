@@ -15,6 +15,8 @@
 	NSString *_reasonForConnecting;
 	NSDictionary *_initialAccessOptions;
 	NSDictionary *_additionalAccessOptions;
+
+	NSArray *_multiAccountArray;
 }
 
 // Properties
@@ -79,16 +81,17 @@
 	#define apikeyFacebookAppId	@"000000000000000"
 #endif
 
-#define facebookPermissionBasicInfo	@"basic_info"
-#define	facebookPermissionEmail @"email"
-#define	facebookPermissionPublishActions @"publish_actions"
-#define	facebookPermissionManagePages @"manage_pages"
-#define facebookPermissionPublishStream @"publish_stream"
+#define	facebookPermissionEmail		@"email"
+#define facebookPermissionBasicInfo			@"basic_info"
+#define	facebookPermissionPublishActions	@"publish_actions"
+#define	facebookPermissionManagePages		@"manage_pages"
+#define facebookPermissionPublishStream		@"publish_stream"
+
+#define facebookGraphMe			@"me"
+#define facebookGraphMeAccounts	@"me/accounts"
 
 #define urlrootFacebookAPI	@"https://graph.facebook.com/"
 #define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]
-
-#define urlstringFacebookUserMe		urlstringTwitter(@"me")
 
 #define objkeyFacebookUserId	@"id"
 #define objkeyFacebookFullName	@"name"
