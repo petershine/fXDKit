@@ -14,8 +14,24 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+		[[NSNotificationCenter defaultCenter]
+		 addObserver:self
+		 selector:@selector(observedACAccountStoreDidChange:)
+		 name:ACAccountStoreDidChangeNotification
+		 object:nil];
+	}
+
+	return self;
+}
 + (FXDsuperSocialManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
@@ -525,6 +541,9 @@
 
 
 //MARK: - Observer implementation
+- (void)observedACAccountStoreDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLog(@"notification: %@", notification);
+}
 
 //MARK: - Delegate implementation
 	

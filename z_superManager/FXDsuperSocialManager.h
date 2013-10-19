@@ -46,6 +46,7 @@
 #endif
 
 //MARK: - Observer implementation
+- (void)observedACAccountStoreDidChange:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 
@@ -78,9 +79,11 @@
 	#define apikeyFacebookAppId	@"000000000000000"
 #endif
 
+#define facebookPermissionBasicInfo	@"basic_info"
 #define	facebookPermissionEmail @"email"
 #define	facebookPermissionPublishActions @"publish_actions"
 #define	facebookPermissionManagePages @"manage_pages"
+#define facebookPermissionPublishStream @"publish_stream"
 
 #define urlrootFacebookAPI	@"https://graph.facebook.com/"
 #define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]
