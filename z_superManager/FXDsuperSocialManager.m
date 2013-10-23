@@ -232,6 +232,7 @@
 				  return;
 			  }
 
+			  
 			  [self.mainAccountStore
 			   requestAccessToAccountsWithType:self.mainAccountType
 			   options:self.additionalAccessOptions
@@ -424,7 +425,7 @@
 }
 
 #pragma mark -
-- (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(void))requestingBlock {
+- (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {
 
 	if (self.currentMainAccount.username == nil) {
 		[self.mainAccountStore
@@ -434,19 +435,16 @@
 			 
 			 FXDLog(@"renewResult: %ld", (long)renewResult);
 			 
-			 if (renewResult == ACAccountCredentialRenewResultRenewed) {
-				 if (requestingBlock) {
-					 requestingBlock();
-				 }
-			 }
-			 else {
-				 //TODO: alert user about needing to have accessibility
+			 //TODO: alert user about needing to have accessibility
+
+			 if (requestingBlock) {
+				 requestingBlock((renewResult == ACAccountCredentialRenewResultRenewed));
 			 }
 		 }];
 	}
 	else {
 		if (requestingBlock) {
-			requestingBlock();
+			requestingBlock(YES);
 		}
 	}
 }
@@ -540,7 +538,16 @@
 
 //MARK: - Observer implementation
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
+#if	ForDEVELOPER
 	FXDLog(@"notification: %@", notification);
+
+	ACAccountStore *accountStore = [notification object];
+	FXDLog(@"accountStore.accounts: %@", accountStore.accounts);
+
+	for (ACAccount *account in accountStore.accounts) {
+		FXDLog(@"accountTypeDescription: %@ accessGranted: %d", account.accountType.accountTypeDescription, account.accountType.accessGranted);
+	}
+#endif
 }
 
 //MARK: - Delegate implementation
@@ -576,7 +583,7 @@
 
 	[self
 	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierTwitter
-	 withRequestingBlock:^{
+	 withRequestingBlock:^(BOOL shouldRequest){
 		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserShow];
 
 		 NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
@@ -604,7 +611,7 @@
 
 	[self
 	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierTwitter
-	 withRequestingBlock:^{
+	 withRequestingBlock:^(BOOL shouldRequest){
 		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 
 		 NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText
@@ -670,7 +677,7 @@
 
 	[self
 	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierFacebook
-	 withRequestingBlock:^{
+	 withRequestingBlock:^(BOOL shouldRequest){
 		 NSURL *requestURL = nil;
 
 		 if ([facebookUserId length] > 0) {
