@@ -164,7 +164,6 @@
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		//MARK: Not compatible:
 		if (didFinishBlock) {
 			didFinishBlock(NO);
 		}
@@ -355,22 +354,17 @@
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		//MARK: Not compatible:
 		if (didFinishBlock) {
 			didFinishBlock(NO);
 		}
 		return;
 	}
 
-#if ForDEVELOPER
+
 	FXDLog(@"buttonIndex: %ld", (long)buttonIndex);
-	FXDLog(@"cancelButtonIndex: %ld", (long)[actionSheet performSelector:@selector(cancelButtonIndex)]);
-	
-	if ([actionSheet isKindOfClass:[UIActionSheet class]]) {
-		FXDLog(@"destructiveButtonIndex: %ld", (long)[(FXDActionSheet*)actionSheet destructiveButtonIndex]);
-	}
-#endif
-	
+	FXDLog(@"cancelButtonIndex: %ld", (long)actionSheet.cancelButtonIndex);
+	FXDLog(@"destructiveButtonIndex: %ld", (long)actionSheet.destructiveButtonIndex);
+
 	if (buttonIndex == (NSInteger)[actionSheet performSelector:@selector(cancelButtonIndex)]) {
 		_multiAccountArray = nil;
 
@@ -390,8 +384,6 @@
 		accountObjKey = userdefaultObjKeyMainFacebookAccountIdentifier;
 	}
 
-
-	BOOL finishedWithAccount = NO;
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
@@ -413,14 +405,12 @@
 		}
 		
 		[userDefaults synchronize];
-
-		finishedWithAccount = YES;
 	}
 
 	_multiAccountArray = nil;
 
 	if (didFinishBlock) {
-		didFinishBlock(finishedWithAccount);
+		didFinishBlock(YES);
 	}
 }
 

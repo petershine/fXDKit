@@ -6,9 +6,6 @@
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <AVFoundation/AVFoundation.h>
-
 
 @interface FXDviewMovieDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainMoviePlayer;

@@ -9,28 +9,31 @@
 #ifndef FXDKit_FXDKit_h
 #define FXDKit_FXDKit_h
 
-
-#import <Availability.h>
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 #import <objc/runtime.h>
 #import <stdarg.h>
 #import <sys/utsname.h>
+
+#import <Availability.h>
 #import <TargetConditionals.h>
 
-#import <SystemConfiguration/SystemConfiguration.h>
-#import <MobileCoreServices/MobileCoreServices.h>
+@import Foundation;
+@import UIKit;
 
-#import <CoreData/CoreData.h>
-#import <QuartzCore/QuartzCore.h>
-#import <ImageIO/ImageIO.h>
-#import <MessageUI/MessageUI.h>
-#import <Accounts/Accounts.h>
-#import <Social/Social.h>
+@import SystemConfiguration;
+@import MobileCoreServices;
 
-#import <MapKit/MapKit.h>
-#import <MediaPlayer/MediaPlayer.h>
+@import CoreData;
+@import QuartzCore;
+@import ImageIO;
+@import MessageUI;
+@import Accounts;
+@import Social;
+
+@import MapKit;
+@import MediaPlayer;
+
+@import AssetsLibrary;
+@import AVFoundation;
 
 
 // Headers

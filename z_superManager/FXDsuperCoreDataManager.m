@@ -197,8 +197,14 @@
 }
 
 #pragma mark -
-- (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_OVERRIDE;
+- (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+
 #warning "//TODO: Check version number for secure upgrading e.g. updatedForVersion%@"
+#warning "//TODO: Learn about NSMigrationPolicy implementation
+
+	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+	FXDLog(@"version: %@ version integerValue: %d", version, [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue]);
+
 	if (didFinishBlock) {
 		didFinishBlock(YES);
 	}
