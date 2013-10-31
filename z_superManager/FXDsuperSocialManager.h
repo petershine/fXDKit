@@ -87,14 +87,15 @@
 #define	facebookPermissionManagePages		@"manage_pages"
 #define facebookPermissionPublishStream		@"publish_stream"
 
-#define facebookGraphMe			@"me"
-#define facebookGraphMeAccounts	@"me/accounts"
+#define facebookGraphMe				@"me"
+#define facebookGraphMeAccounts		@"me/accounts"
+#define facebookGraphProfileLinks	@"%@/links"
 
 #define urlrootFacebookAPI	@"https://graph.facebook.com/"
 #define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]
 
-#define objkeyFacebookUserId	@"id"
-#define objkeyFacebookFullName	@"name"
+#define objkeyFacebookID	@"id"
+#define objkeyFacebookName	@"name"
 #define objkeyFacebookLocale	@"locale"
 #define objkeyFacebookUsername	@"username"
 
