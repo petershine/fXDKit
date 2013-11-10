@@ -89,7 +89,7 @@
 
 #define facebookGraphMe				@"me"
 #define facebookGraphMeAccounts		@"me/accounts"
-#define facebookGraphProfileLinks	@"%@/links"
+#define facebookGraphProfileFeed	@"%@/feed"
 
 #define urlrootFacebookAPI	@"https://graph.facebook.com/"
 #define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]

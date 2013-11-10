@@ -532,7 +532,7 @@
 	FXDLog(@"notification: %@", notification);
 
 	ACAccountStore *accountStore = [notification object];
-	FXDLog(@"accountStore.accounts: %@", accountStore.accounts);
+	//FXDLog(@"accountStore.accounts: %@", accountStore.accounts);
 
 	for (ACAccount *account in accountStore.accounts) {
 		FXDLog(@"accountTypeDescription: %@ accessGranted: %d", account.accountType.accountTypeDescription, account.accountType.accessGranted);

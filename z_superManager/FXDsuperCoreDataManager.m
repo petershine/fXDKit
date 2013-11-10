@@ -269,13 +269,14 @@
 	if (coreDataName == nil) {
 		coreDataName = application_BundleName;
 	}
-	
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
+
+	FXDLog(@"coreDataName: %@", coreDataName);
+
 	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:coreDataName ofType:@"sqlite"];
 	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
-	
+
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+
 	BOOL isBundledWithSqlite = [fileManager fileExistsAtPath:bundledSqlitePath];
 	FXDLog(@"isBundledWithSqlite: %d", isBundledWithSqlite);
 	
@@ -529,7 +530,7 @@
 	}
 
 	
-	void (^contextSavingBlock)(void) = ^{
+	void (^ManagedContextSavingBlock)(void) = ^{
 		NSError *error = nil;
 		BOOL didSave = [managedContext save:&error];FXDLog_ERROR;
 		
@@ -546,10 +547,10 @@
 	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
 	
 	if ([NSThread isMainThread]) {
-		[managedContext performBlockAndWait:contextSavingBlock];
+		[managedContext performBlockAndWait:ManagedContextSavingBlock];
 	}
 	else {
-		contextSavingBlock();
+		ManagedContextSavingBlock();
 	}
 }
 

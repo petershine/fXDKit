@@ -8,9 +8,9 @@
 
 #define notificationCloudManagerDidUpdateUbiquityContainerURL	@"notificationCloudManagerDidUpdateUbiquityContainerURL"
 
-#define notificationCloudDocumentsQueryDidGatherObjects	@"notificationCloudDocumentsQueryDidGatherObjects"
+#define notificationCloudDocumentsQueryDidGatherObjects		@"notificationCloudDocumentsQueryDidGatherObjects"
 #define notificationCloudDocumentsQueryDidFinishGathering	@"notificationCloudDocumentsQueryDidFinishGathering"
-#define notificationCloudDocumentsQueryDidUpdate	@"notificationCloudDocumentsQueryDidUpdate"
+#define notificationCloudDocumentsQueryDidUpdate		@"notificationCloudDocumentsQueryDidUpdate"
 #define notificationCloudDocumentsQueryIsTransferring	@"notificationCloudDocumentsQueryIsTransferring"
 
 #define notificationCloudManagerDidEnumerateUbiquitousMetadataItems	@"notificationCloudManagerDidEnumerateUbiquitousMetadataItems"
@@ -47,7 +47,6 @@
 
 
 @interface FXDsuperCloudManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
-    // Primitives
 	BOOL _didFinishFirstGathering;
 	id _ubiquityIdentityToken;
 	

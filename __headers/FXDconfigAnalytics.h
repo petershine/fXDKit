@@ -62,8 +62,8 @@
 	#define LOGEVENT_ERROR	if(error){NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];parameters[@"file"] = @(__FILE__);parameters[@"line"] = @(__LINE__);LOGEVENT_FULL(strClassSelector, parameters, NO);}
 #else
 	#define LOGEVENT(format, ...)	{}
-	#define LOGEVENT_FULL(name, parameters, shouldTime)	{}
-	#define LOGEVENT_END(name, parameters)	{}
+	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	{}
+	#define LOGEVENT_END(identifier, parameters)	{}
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_ERROR
 #endif
