@@ -10,46 +10,38 @@
 #define FXDKit_FXDconfigAnalytics_h
 
 
+#ifndef USE_Flurry
+	#define USE_Flurry	1
+#endif
+
 #if DEBUG
 	#if ForDEVELOPER
+		#ifndef USE_Appsee
+			#define USE_Appsee	0
+		#endif
+
 		#ifndef USE_TestFlight
 			#define USE_TestFlight	0
 		#endif
 
 	#else
+		#ifndef USE_Appsee
+			#define USE_Appsee	1
+		#endif
+
 		#ifndef USE_TestFlight
 			#define USE_TestFlight	1
 		#endif
 	#endif
 
 #else
+	#ifndef USE_Appsee
+		#define USE_Appsee	1
+	#endif
+
 	#ifndef USE_TestFlight
 		#define USE_TestFlight	0
 	#endif
-#endif
-
-#ifndef USE_Flurry
-	#define USE_Flurry	1
-#endif
-
-#ifndef USE_Appsee
-	#define USE_Appsee	1
-#endif
-
-
-#if	USE_TestFlight	//TODO: import "libz.dylib" for TestFlight
-	#import "TestFlight.h"
-	#ifndef testflightAppToken
-		#define testflightAppToken	@"testflightAppToken"
-	#endif
-
-	#define NSLog	TFLog
-
-	#define CHECKPOINT(format, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:format, ##__VA_ARGS__]]
-	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@",strClassSelector)
-#else
-	#define CHECKPOINT(format, ...)	{}
-	#define CHECKPOINT_DEFAULT
 #endif
 
 
@@ -80,6 +72,22 @@
 	#endif
 #else
 
+#endif
+
+
+#if	USE_TestFlight	//TODO: import "libz.dylib" for TestFlight
+	#import "TestFlight.h"
+	#ifndef testflightAppToken
+		#define testflightAppToken	@"testflightAppToken"
+	#endif
+
+	#define NSLog	TFLog
+
+	#define CHECKPOINT(format, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:format, ##__VA_ARGS__]]
+	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@",strClassSelector)
+#else
+	#define CHECKPOINT(format, ...)	{}
+	#define CHECKPOINT_DEFAULT
 #endif
 
 

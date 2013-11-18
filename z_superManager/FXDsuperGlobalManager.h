@@ -49,6 +49,8 @@
 - (void)configureUserDefaultsInfo;
 - (void)configureGlobalAppearance;
 - (void)startObservingEssentialNotifications;
+#warning "//TODO: Consider adding separate analytics manager"
+- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions;
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 

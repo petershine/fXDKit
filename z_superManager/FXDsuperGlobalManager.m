@@ -413,6 +413,35 @@
 	 object:nil];
 }
 
+- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+#if USE_Flurry
+#if ForDEVELOPER
+	[Flurry setShowErrorInLogEnabled:YES];
+	//[Flurry setDebugLogEnabled:YES];
+	[Flurry setDebugLogEnabled:NO];
+#endif
+
+	[Flurry setSecureTransportEnabled:YES];
+	[Flurry setCrashReportingEnabled:YES];
+
+	[Flurry setBackgroundSessionEnabled:YES];
+
+	[Flurry startSession:flurryApplicationKey withOptions:launchOptions];
+#endif
+
+#if USE_Appsee
+#if ForDEVELOPER
+	[Appsee setDebugToNSLog:YES];
+#endif
+
+	[Appsee start:appseeAPIkey];
+#endif
+
+#if USE_TestFlight
+	[TestFlight takeOff:testflightAppToken];
+#endif
+}
+
 #pragma mark -
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {
