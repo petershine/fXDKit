@@ -35,6 +35,8 @@
 @import AssetsLibrary;
 @import AVFoundation;
 
+@import AdSupport;
+
 
 // Headers
 #import "FXDconfigDeveloper.h"

@@ -32,6 +32,10 @@
 	#define USE_Flurry	1
 #endif
 
+#ifndef USE_Appsee
+	#define USE_Appsee	1
+#endif
+
 
 #if	USE_TestFlight	//TODO: import "libz.dylib" for TestFlight
 	#import "TestFlight.h"
@@ -66,6 +70,16 @@
 	#define LOGEVENT_END(identifier, parameters)	{}
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_ERROR
+#endif
+
+
+#if USE_Appsee
+	#import <Appsee/Appsee.h>
+	#ifndef appseeAPIkey
+		#define appseeAPIkey	@"appseeAPIkey"
+	#endif
+#else
+
 #endif
 
 

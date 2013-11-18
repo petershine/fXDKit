@@ -281,7 +281,8 @@
 	
 	//MARK: UUID can be changed is the device is recovered from backup or sent backup to iCloud
 #if ForDEVELOPER
-	FXDLog(@"identifierForVendor UUIDString: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
+	FXDLog(@"identifierForVendor: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
+	FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #endif
 	
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
@@ -326,12 +327,10 @@
 }
 
 #pragma mark -
-- (void)configureUserDefaultsInfo {	FXDLog_OVERRIDE;
-	
+- (void)configureUserDefaultsInfo {	FXDLog_DEFAULT;
 }
 
-- (void)configureGlobalAppearance {	FXDLog_OVERRIDE;
-
+- (void)configureGlobalAppearance {	FXDLog_DEFAULT;
 }
 
 - (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
