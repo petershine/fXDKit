@@ -177,8 +177,17 @@
 			  [self
 			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
 				   FXDLog(@"finished: %d", finished);
+
+				   if (finished) {
+					   NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+					   NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+
+					   [[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
+					   FXDLog(@"SAVED: userdefaultIntegerLastUpgradedAppVersion: %d", versionInteger);
+				   }
 				   
 				   [self startObservingCoreDataNotifications];
+
 				   
 				   //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
 				   NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
@@ -202,8 +211,14 @@
 #warning "//TODO: Check version number for secure upgrading e.g. updatedForVersion%@"
 #warning "//TODO: Learn about NSMigrationPolicy implementation
 
+#if ForDEVELOPER
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
-	FXDLog(@"version: %@ version integerValue: %d", version, [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue]);
+	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+	FXDLog(@"APP version: %@ versionInteger: %d", version, versionInteger);
+
+	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
+	FXDLog(@"LAST userdefaultIntegerLastUpgradedAppVersion: %@ %d", lastVersionObj, [lastVersionObj integerValue]);
+#endif
 
 	if (didFinishBlock) {
 		didFinishBlock(YES);

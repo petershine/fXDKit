@@ -61,4 +61,11 @@
 #define appDirectory_Caches		[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
 
 
+
+#define userdefaultIntegerAppLaunchCount			@"AppLaunchCountIntegerKey"
+#define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
+
+#define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
+
+
 #endif

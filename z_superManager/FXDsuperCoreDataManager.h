@@ -6,6 +6,12 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+//MARK: For subclass to define names or keys
+/* SAMPLE:
+ #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
+ #define attribkey<#AttributeName#> @"<#AttributeName#>"
+ */
+
 //MARK: Logging options
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
@@ -37,10 +43,6 @@
 
 #import "FXDsuperCloudManager.h"
 
-/* SAMPLE:
- #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
- #define attribkey<#AttributeName#> @"<#AttributeName#>"
- */
 
 @interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
 
