@@ -443,6 +443,35 @@
 }
 
 #pragma mark -
+- (BOOL)shouldUpgradeForNewAppVersion {
+	BOOL shouldUpgrade = NO;
+
+	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+	FXDLog(@"APP version: %@ versionInteger: %d", version, versionInteger);
+
+	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
+	FXDLog(@"LAST lastVersionObj: %@", lastVersionObj);
+
+	if ([lastVersionObj integerValue] < versionInteger) {
+		shouldUpgrade = YES;
+		FXDLog(@"SHOULD UPGRADE: [lastVersionObj integerValue]: %d < versionInteger: %d", [lastVersionObj integerValue], versionInteger);
+	}
+	FXDLog(@"shouldUpgrade: %d", shouldUpgrade);
+
+	return shouldUpgrade;
+}
+
+- (void)updateLastUpgradedAppVersionAfterLaunch {	FXDLog_DEFAULT;
+	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+
+	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	FXDLog(@"SAVED: userdefaultIntegerLastUpgradedAppVersion: %d", versionInteger);
+}
+
+#pragma mark -
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {
 		return;

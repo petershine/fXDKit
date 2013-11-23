@@ -48,6 +48,9 @@
 #warning "//TODO: Consider adding separate analytics manager"
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions;
 
+- (BOOL)shouldUpgradeForNewAppVersion;
+- (void)updateLastUpgradedAppVersionAfterLaunch;
+
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
 - (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
