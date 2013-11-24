@@ -89,7 +89,7 @@
 - (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)startObservingCoreDataNotifications;
 
-- (void)initializeWithBundledCoreDataName:(NSString*)bundledSqlitePathComponent;
+- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (BOOL)isSqliteAlreadyInitialized;
 
 

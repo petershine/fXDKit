@@ -261,15 +261,15 @@
 }
 
 #pragma mark -
-- (void)initializeWithBundledCoreDataName:(NSString*)coreDataName {	FXDLog_DEFAULT;
+- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
 	
-	if (coreDataName == nil) {
-		coreDataName = application_BundleName;
+	if (sqliteFile == nil) {
+		sqliteFile = application_BundleName;
 	}
 
-	FXDLog(@"coreDataName: %@", coreDataName);
+	FXDLog(@"sqliteFile: %@ | application_BundleName: %@", sqliteFile, application_BundleName);
 
-	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:coreDataName ofType:@"sqlite"];
+	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
 	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
 
 	NSFileManager *fileManager = [NSFileManager defaultManager];
