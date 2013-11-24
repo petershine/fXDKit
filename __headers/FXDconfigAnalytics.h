@@ -55,7 +55,12 @@
 	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry logEvent:identifier withParameters:parameters timed:shouldTime]
 	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
 	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@",strClassSelector)
-	#define LOGEVENT_ERROR	if(error){NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];parameters[@"file"] = @(__FILE__);parameters[@"line"] = @(__LINE__);LOGEVENT_FULL(strClassSelector, parameters, NO);}
+
+	#define LOGEVENT_ERROR	if(error){\
+								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
+								parameters[@"file"] = @(__FILE__);\
+								parameters[@"line"] = @(__LINE__);\
+								LOGEVENT_FULL(strClassSelector, parameters, NO);}
 #else
 	#define LOGEVENT(format, ...)	{}
 	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	{}

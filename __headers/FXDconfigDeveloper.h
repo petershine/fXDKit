@@ -48,11 +48,28 @@
 
 	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
 
-	#define FXDLog_ERROR	if(error){NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];parameters[@"file"] = @(__FILE__);parameters[@"line"] = @(__LINE__);FXDLog_DEFAULT;FXDLog(@"parameters: %@", parameters);}
 
-	#define FXDLog_ERRORexcept(v)	if(error){if([error code]!=v){FXDLog_ERROR;}}
+	#define FXDLog_ERROR	if(error){\
+								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
+								parameters[@"file"] = @(__FILE__);\
+								parameters[@"line"] = @(__LINE__);\
+								FXDLog_DEFAULT;\
+								FXDLog(@"parameters: %@", parameters);}
 
-	#define FXDLog_REMAINING	if(intervalRemainingBackground > 0.0){if((NSInteger)(intervalRemainingBackground)%2 == 0) {FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}}
+	#define FXDLog_ERROR_ALERT	FXDLog_ERROR;\
+								if(error){\
+									NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];\
+									NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];\
+									[FXDAlertView showAlertWithTitle:title message:message clickedButtonAtIndexBlock:nil cancelButtonTitle:nil];}
+
+	#define FXDLog_ERRORexcept(v)	if(error){\
+										if ([error code]!=v) {\
+											FXDLog_ERROR;}}
+
+
+	#define FXDLog_REMAINING	if(intervalRemainingBackground > 0.0){\
+									if((NSInteger)(intervalRemainingBackground)%2 == 0) {\
+										FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}}
 
 
 #else
@@ -67,6 +84,7 @@
 	#define FXDLog_OVERRIDE
 
 	#define FXDLog_ERROR
+	#define FXDLog_ERROR_ALERT
 	#define FXDLog_ERRORexcept(v)
 
 	#define FXDLog_REMAINING

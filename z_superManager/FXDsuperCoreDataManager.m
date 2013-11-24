@@ -159,19 +159,8 @@
 			  FXDLog(@"2.didConfigure: %d", didConfigure);
 			  
 #warning "//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+			  FXDLog_ERROR_ALERT;
 			  
-#if ForDEVELOPER
-			  if (error) {
-				  NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];
-				  NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];
-
-				  [FXDAlertView
-				   showAlertWithTitle:title
-				   message:message
-				   clickedButtonAtIndexBlock:nil
-				   cancelButtonTitle:nil];
-			  }
-#endif
 			  //TODO: prepare what to do when Core Data is not setup
 			  
 			  [self
