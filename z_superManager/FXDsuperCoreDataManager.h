@@ -19,9 +19,9 @@
 //MARK: Use different name for better controlling between developer build and release build
 #ifndef applicationSqlitePathComponent
 	#if ForDEVELOPER
-		#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", application_BundleName]
+	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", application_BundleIdentifier]
 	#else
-		#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", application_BundleName]
+	#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", application_BundleIdentifier]
 	#endif
 #endif
 
@@ -36,9 +36,6 @@
 #ifndef documentURLmanagedCoreData
 	#define documentURLmanagedCoreData	[appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData]
 #endif
-
-
-#define notificationCoreDataManagerDidPrepare	@"notificationCoreDataManagerDidPrepare"
 
 
 #import "FXDsuperCloudManager.h"
@@ -84,13 +81,15 @@
 #pragma mark - Public
 + (FXDsuperCoreDataManager*)sharedInstance;
 
+- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
+- (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
+- (BOOL)isSqliteAlreadyStored;
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath;
+
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)startObservingCoreDataNotifications;
-
-- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
-- (BOOL)isSqliteAlreadyInitialized;
 
 
 - (id)initializedMainEntityObj;

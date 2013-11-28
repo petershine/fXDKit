@@ -14,6 +14,10 @@
 	#define application_AppStoreID	@"000000000"
 #endif
 
+#ifndef application_BundleIdentifier
+	#define application_BundleIdentifier	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
+#endif
+
 #ifndef application_BundleName
 	#define application_BundleName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
 #endif

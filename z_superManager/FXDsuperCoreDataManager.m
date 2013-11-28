@@ -49,6 +49,8 @@
 	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
 		_mainSqlitePathComponent = applicationSqlitePathComponent;
 		FXDLog(@"_mainSqlitePathComponent: %@", _mainSqlitePathComponent);
+
+		LOGEVENT_FULL(@"_mainSqlitePathComponent", @{@"_mainSqlitePathComponent": _mainSqlitePathComponent}, NO);
 	}
 	
 	return _mainSqlitePathComponent;
@@ -99,6 +101,72 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
+- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
+
+	if ([self isSqliteAlreadyStored]) {
+		return;
+	}
+
+
+	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
+	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
+
+	[self storeCopiedItemFromSqlitePath:bundledSqlitePath];
+}
+
+- (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
+
+	if ([self isSqliteAlreadyStored]) {
+		return;
+	}
+
+
+	NSString *pathComponent = [NSString stringWithFormat:@".%@.sqlite", sqliteFile];
+
+#if ForDEVELOPER
+	pathComponent = [NSString stringWithFormat:@"%@.sqlite", sqliteFile];
+#endif
+
+	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
+	FXDLog(@"oldSqlitePath: %@", oldSqlitePath);
+
+	[self storeCopiedItemFromSqlitePath:oldSqlitePath];
+}
+
+- (BOOL)isSqliteAlreadyStored {
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+	FXDLog(@"storedSqlitePath: %@", storedSqlitePath);
+
+	BOOL isAlreadyStored = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
+	FXDLog(@"isAlreadyStored: %d", isAlreadyStored);
+
+	return isAlreadyStored;
+}
+
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath {
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+
+	BOOL isSqliteExists = [fileManager fileExistsAtPath:sqlitePath];
+	FXDLog(@"isSqliteExists: %d", isSqliteExists);
+
+	if (isSqliteExists == NO) {
+		return NO;
+	}
+
+
+	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+
+	NSError *error = nil;
+
+	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedSqlitePath error:&error];
+	FXDLog(@"didCopy: %d", didCopy);
+
+	FXDLog_ERROR_ALERT;
+
+	return didCopy;
+}
+
+#pragma mark -
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new]
@@ -160,24 +228,16 @@
 			  
 #warning "//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 			  FXDLog_ERROR_ALERT;
-			  
+
+			  //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
 			  //TODO: prepare what to do when Core Data is not setup
-			  
+
 			  [self
 			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
 				   FXDLog(@"finished: %d", finished);
-				   
+
 				   [self startObservingCoreDataNotifications];
 
-				   
-				   //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
-				   NSDictionary *userInfo = @{@"didConfigure" : [NSNumber numberWithBool:didConfigure]};
-				   
-				   [[NSNotificationCenter defaultCenter]
-					postNotificationName:notificationCoreDataManagerDidPrepare
-					object:self
-					userInfo:userInfo];
-				   
 				   if (didFinishBlock) {
 					   didFinishBlock(didConfigure);
 				   }
@@ -188,7 +248,6 @@
 
 #pragma mark -
 - (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
-
 #warning "//TODO: Learn about NSMigrationPolicy implementation
 
 	if (didFinishBlock) {
@@ -247,56 +306,6 @@
 	 selector:@selector(observedNSManagedObjectContextDidSave:)
 	 name:NSManagedObjectContextDidSaveNotification
 	 object:notifyingContext];
-}
-
-#pragma mark -
-- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
-	
-	if (sqliteFile == nil) {
-		sqliteFile = application_BundleName;
-	}
-
-	FXDLog(@"sqliteFile: %@ | application_BundleName: %@", sqliteFile, application_BundleName);
-
-	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
-	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
-
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-
-	BOOL isBundledWithSqlite = [fileManager fileExistsAtPath:bundledSqlitePath];
-	FXDLog(@"isBundledWithSqlite: %d", isBundledWithSqlite);
-	
-	if (isBundledWithSqlite == NO) {
-		return;
-	}
-	
-	
-	BOOL isSqliteAlreadyInitialized = [self isSqliteAlreadyInitialized];
-	
-	if (isSqliteAlreadyInitialized) {
-		return;
-	}
-	
-	
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
-
-	NSError *error = nil;
-	
-	BOOL didCopy = [fileManager copyItemAtPath:bundledSqlitePath toPath:storedSqlitePath error:&error];
-	FXDLog_ERROR;
-	
-	if (didCopy) {
-		FXDLog(@"didCopy: %d", didCopy);
-	}
-}
-
-- (BOOL)isSqliteAlreadyInitialized {
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
-
-	BOOL isSqliteAlreadyInitialized = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
-	FXDLog(@"isSqliteAlreadyInitialized: %d", isSqliteAlreadyInitialized);
-	
-	return isSqliteAlreadyInitialized;
 }
 
 #pragma mark -

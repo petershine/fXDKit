@@ -444,22 +444,28 @@
 
 #pragma mark -
 - (BOOL)shouldUpgradeForNewAppVersion {
-	BOOL shouldUpgrade = NO;
-
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
-	FXDLog(@"APP version: %@ versionInteger: %d", version, versionInteger);
+	FXDLog(@"APP versionInteger: %d", versionInteger);
 
-	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
-	FXDLog(@"LAST lastVersionObj: %@", lastVersionObj);
-
-	if ([lastVersionObj integerValue] < versionInteger) {
-		shouldUpgrade = YES;
-		FXDLog(@"SHOULD UPGRADE: [lastVersionObj integerValue]: %d < versionInteger: %d", [lastVersionObj integerValue], versionInteger);
-	}
+	BOOL shouldUpgrade = [self isLastVersionOlderThanVersionInteger:versionInteger];
 	FXDLog(@"shouldUpgrade: %d", shouldUpgrade);
 
 	return shouldUpgrade;
+}
+
+- (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger {
+	BOOL isOlder = NO;
+
+	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
+	FXDLog(@"[lastVersionObj integerValue]: %d < versionInteger: %d", [lastVersionObj integerValue], versionInteger);
+
+	if ([lastVersionObj integerValue] < versionInteger) {
+		isOlder = YES;
+	}
+	FXDLog(@"isOlder: %d", isOlder);
+
+	return isOlder;
 }
 
 - (void)updateLastUpgradedAppVersionAfterLaunch {	FXDLog_DEFAULT;

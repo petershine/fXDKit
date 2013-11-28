@@ -49,6 +49,7 @@
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions;
 
 - (BOOL)shouldUpgradeForNewAppVersion;
+- (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger;
 - (void)updateLastUpgradedAppVersionAfterLaunch;
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
