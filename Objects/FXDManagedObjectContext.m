@@ -83,8 +83,10 @@
 		}
 #endif
 	}
-	
-	return [fetchedObjArray copy];
+
+	//TEST: Without copying...
+	//return [fetchedObjArray copy];
+	return fetchedObjArray;
 }
 
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	

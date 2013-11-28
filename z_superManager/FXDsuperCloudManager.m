@@ -117,55 +117,50 @@
 #pragma mark - Public
 - (void)startUpdatingUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 
+	[[NSNotificationCenter defaultCenter]
+	 addObserver:self
+	 selector:@selector(observedNSUbiquityIdentityDidChange:)
+	 name:NSUbiquityIdentityDidChangeNotification
+	 object:nil];
+
+
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
+
+	self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
+	FXDLog(@"ubiquityIdentityToken: %@", self.ubiquityIdentityToken);
+
+	id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
+	FXDLog(@"updatedIdentityTokenData: %@", updatedIdentityTokenData);
+
+	FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
+
+
+	//TODO: learn about how to handle ubiquityIdentityToken changed
+
 	BOOL shouldRequestUbiquityContatinerURL = NO;
-	
-	if (SYSTEM_VERSION_lowerThan(iosVersion6)) {
+
+	if (self.ubiquityIdentityToken) {
 		shouldRequestUbiquityContatinerURL = YES;
-	}
-	else {
-		[[NSNotificationCenter defaultCenter]
-		 addObserver:self
-		 selector:@selector(observedNSUbiquityIdentityDidChange:)
-		 name:NSUbiquityIdentityDidChangeNotification
-		 object:nil];
-		
-		
-		self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
-		FXDLog(@"ubiquityIdentityToken: %@", self.ubiquityIdentityToken);
-		
-		id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
-		FXDLog(@"updatedIdentityTokenData: %@", updatedIdentityTokenData);
-		
-		FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
-		
-		
-		//TODO: learn about how to handle ubiquityIdentityToken changed
-		if (self.ubiquityIdentityToken) {
-			shouldRequestUbiquityContatinerURL = YES;
-			
-			if (updatedIdentityTokenData == nil) {
-				updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
-				
-				if (updatedIdentityTokenData) {
-					[userDefaults setObject:updatedIdentityTokenData forKey:userdefaultObjSavedUbiquityIdentityToken];
-				}
+
+		if (updatedIdentityTokenData == nil) {
+			updatedIdentityTokenData = [NSKeyedArchiver archivedDataWithRootObject:self.ubiquityIdentityToken];
+
+			if (updatedIdentityTokenData) {
+				[userDefaults setObject:updatedIdentityTokenData forKey:userdefaultObjSavedUbiquityIdentityToken];
 			}
 		}
-		else {
-			[userDefaults removeObjectForKey:userdefaultObjSavedUbiquityIdentityToken];
-		}
 	}
-	
+	else {
+		[userDefaults removeObjectForKey:userdefaultObjSavedUbiquityIdentityToken];
+	}
+
 	[userDefaults synchronize];
-	
-	
+
+
 	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
 
 	if (shouldRequestUbiquityContatinerURL == NO) {
 		[self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
-
 		return;
 	}
 
