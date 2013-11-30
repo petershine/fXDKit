@@ -375,7 +375,7 @@
 	FXDLog(@"animatedFrameObjArray: %@", animatedFrameObjArray);
 	
 	
-	FXDViewController *rootScene = self.childViewControllers[0];
+	FXDViewController *rootScene = [self.childViewControllers firstObject];
 	
 	if (self.mainNavigationbar) {
 		[self configureUpperMenuViewForCurrentScene:rootScene];

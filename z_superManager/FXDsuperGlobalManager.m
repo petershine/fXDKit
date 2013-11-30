@@ -69,7 +69,7 @@
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
-		_deviceLanguageCode = languages[0];
+		_deviceLanguageCode = [languages firstObject];
 		
 		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
 			_deviceLanguageCode = @"ch";
@@ -239,22 +239,22 @@
 	
 	
 	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
-		_homeController = addedControllers[0];
-		FXDLog(@"_homeController = addedControllers[0]: %@", _homeController);
+		_homeController = [addedControllers firstObject];
+		FXDLog(@"_homeController = [addedControllers firstObject]: %@", _homeController);
 		
 		return _homeController;
 	}
 	
 	
-	id subContainerController = addedControllers[0];
+	id subContainerController = [addedControllers firstObject];
 	
 	if ([subContainerController isKindOfClass:[UINavigationController class]]) {
 		UINavigationController *navigationController = (UINavigationController*)subContainerController;
 		
 		if ([navigationController.viewControllers count] > 0) {
-			_homeController = (navigationController.viewControllers)[0];
+			_homeController = [(navigationController.viewControllers) firstObject];
 			
-			FXDLog(@"_homeController = (containedNavigationController.viewControllers)[0]: %@", _homeController);
+			FXDLog(@"_homeController = [(containedNavigationController.viewControllers) firstObject]: %@", _homeController);
 		}
 	}
 	else {

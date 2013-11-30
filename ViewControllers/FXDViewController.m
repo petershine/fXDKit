@@ -336,7 +336,7 @@
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
 	
 	if ([viewArray count] > 0) {
-		sceneView = viewArray[0];
+		sceneView = [viewArray firstObject];
 	}
 	
 	FXDLog(@"sceneView: %@", sceneView);

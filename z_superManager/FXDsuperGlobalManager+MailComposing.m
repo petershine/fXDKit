@@ -56,7 +56,7 @@
 #if ForDEVELOPER
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
-	NSString *currentLanguage = languages[0];
+	NSString *currentLanguage = [languages firstObject];
 	FXDLog(@"currentLanguage: %@", currentLanguage);
 #endif
 

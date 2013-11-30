@@ -49,7 +49,7 @@
 		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
 
 		if ([filteredArray count] > 0) {
-			resultObj = filteredArray[0];
+			resultObj = [filteredArray firstObject];
 		}
 	}
 

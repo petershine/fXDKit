@@ -62,6 +62,23 @@
 	return resultsController;
 }
 
+- (id)firstFetchedObjForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+
+	NSArray *fetchedObjArray = [self
+								fetchedObjArrayForEntityName:entityName
+								withSortDescriptors:sortDescriptors
+								withPredicate:predicate
+								withLimit:limit];
+
+	NSManagedObject *firstObj = nil;
+
+	if ([fetchedObjArray count] > 0) {
+		firstObj = [fetchedObjArray firstObject];
+	}
+
+	return firstObj;
+}
+
 - (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSArray *fetchedObjArray = nil;
@@ -84,9 +101,9 @@
 #endif
 	}
 
-	//TEST: With copying...
-	//return fetchedObjArray;
-	return [fetchedObjArray copy];
+	//TEST: Without copying...
+	//return [fetchedObjArray copy];
+	return fetchedObjArray;
 }
 
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
