@@ -70,11 +70,7 @@
 								withPredicate:predicate
 								withLimit:limit];
 
-	NSManagedObject *firstObj = nil;
-
-	if ([fetchedObjArray count] > 0) {
-		firstObj = [fetchedObjArray firstObject];
-	}
+	NSManagedObject *firstObj = [fetchedObjArray firstObject];
 
 	return firstObj;
 }

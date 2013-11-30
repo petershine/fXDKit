@@ -146,10 +146,10 @@
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 
-	BOOL isSqliteExists = [fileManager fileExistsAtPath:sqlitePath];
-	FXDLog(@"isSqliteExists: %d", isSqliteExists);
+	BOOL isSqliteBundled = [fileManager fileExistsAtPath:sqlitePath];
+	FXDLog(@"isSqliteBundled: %d", isSqliteBundled);
 
-	if (isSqliteExists == NO) {
+	if (isSqliteBundled == NO) {
 		return NO;
 	}
 

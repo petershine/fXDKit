@@ -319,7 +319,8 @@
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
 	FXDLog(@"1.appLaunchCount: %ld", (long)self.appLaunchCount);
 
-	_appLaunchCount++;
+	_appLaunchCount = _appLaunchCount +1;
+	
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 

@@ -48,9 +48,7 @@
 	if ([self.fetchedObjects count] > 0) {
 		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
 
-		if ([filteredArray count] > 0) {
-			resultObj = [filteredArray firstObject];
-		}
+		resultObj = [filteredArray firstObject];
 	}
 
 #if TEST_loggingResultObjFiltering
