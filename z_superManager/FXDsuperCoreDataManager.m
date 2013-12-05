@@ -111,7 +111,7 @@
 	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
 	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
 
-	[self storeCopiedItemFromSqlitePath:bundledSqlitePath];
+	[self storeCopiedItemFromSqlitePath:bundledSqlitePath toStoredPath:nil];
 }
 
 - (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
@@ -130,7 +130,7 @@
 	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
 	FXDLog(@"oldSqlitePath: %@", oldSqlitePath);
 
-	[self storeCopiedItemFromSqlitePath:oldSqlitePath];
+	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
 }
 
 - (BOOL)isSqliteAlreadyStored {
@@ -143,22 +143,24 @@
 	return isAlreadyStored;
 }
 
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath {
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 
-	BOOL isSqliteBundled = [fileManager fileExistsAtPath:sqlitePath];
-	FXDLog(@"isSqliteBundled: %d", isSqliteBundled);
+	BOOL sqliteFileExists = [fileManager fileExistsAtPath:sqlitePath];
+	FXDLog(@"sqliteFileExists: %d", sqliteFileExists);
 
-	if (isSqliteBundled == NO) {
+	if (sqliteFileExists == NO) {
 		return NO;
 	}
 
 
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+	if (storedPath == nil) {
+		storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+	}
 
 	NSError *error = nil;
 
-	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedSqlitePath error:&error];
+	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedPath error:&error];
 	FXDLog(@"didCopy: %d", didCopy);
 
 	FXDLog_ERROR_ALERT;

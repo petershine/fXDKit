@@ -416,11 +416,11 @@
 
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
 #if USE_Flurry
-#if ForDEVELOPER
+	#if ForDEVELOPER
 	[Flurry setShowErrorInLogEnabled:YES];
 	//[Flurry setDebugLogEnabled:YES];
 	[Flurry setDebugLogEnabled:NO];
-#endif
+	#endif
 
 	[Flurry setSecureTransportEnabled:YES];
 	[Flurry setCrashReportingEnabled:YES];
@@ -431,9 +431,9 @@
 #endif
 
 #if USE_Appsee
-#if ForDEVELOPER
+	#if ForDEVELOPER
 	[Appsee setDebugToNSLog:YES];
-#endif
+	#endif
 
 	[Appsee start:appseeAPIkey];
 #endif

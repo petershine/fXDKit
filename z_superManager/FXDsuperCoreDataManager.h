@@ -84,7 +84,7 @@
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
 - (BOOL)isSqliteAlreadyStored;
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath;
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath;
 
 - (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
