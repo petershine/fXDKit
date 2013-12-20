@@ -317,14 +317,15 @@
 
 #pragma mark -
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
-	FXDLog(@"1.appLaunchCount: %ld", (long)self.appLaunchCount);
 
-	_appLaunchCount = _appLaunchCount +1;
+	NSInteger modifiedCount = self.appLaunchCount;
+	FXDLog(@"1.modifiedCount: %ld", (long)modifiedCount);
+
+	_appLaunchCount = modifiedCount +1;
+	FXDLog(@"2.modifiedCount: %ld", (long)modifiedCount);
 	
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-
-	FXDLog(@"2.appLaunchCount: %ld", (long)self.appLaunchCount);
 }
 
 #pragma mark -
