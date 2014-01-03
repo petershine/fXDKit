@@ -16,27 +16,6 @@
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
-//MARK: Use different name for better controlling between developer build and release build
-#ifndef applicationSqlitePathComponent
-	#if ForDEVELOPER
-	#define applicationSqlitePathComponent	[NSString stringWithFormat:@"%@.sqlite", application_BundleIdentifier]
-	#else
-	#define applicationSqlitePathComponent	[NSString stringWithFormat:@".%@.sqlite", application_BundleIdentifier]
-	#endif
-#endif
-
-#ifndef ubiquitousCoreDataContentName
-	#define ubiquitousCoreDataContentName @"coredata.store"
-#endif
-
-#ifndef documentnameManagedCoreData
-	#define documentnameManagedCoreData	@"managed.coredata.document"
-#endif
-
-#ifndef documentURLmanagedCoreData
-	#define documentURLmanagedCoreData	[appDirectory_Document URLByAppendingPathComponent:documentnameManagedCoreData]
-#endif
-
 
 #import "FXDsuperCloudManager.h"
 
@@ -48,7 +27,8 @@
 	
 	UIBackgroundTaskIdentifier _enumeratingTaskIdentifier;
 	UIBackgroundTaskIdentifier _savingTaskIdentifier;
-	
+
+	NSString *_mainModelName;
 	FXDManagedDocument *_mainDocument;
 	
 	NSString *_mainSqlitePathComponent;
@@ -67,6 +47,7 @@
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
 @property (nonatomic) UIBackgroundTaskIdentifier savingTaskIdentifier;
 
+@property (strong, nonatomic) NSString *mainModelName;
 @property (strong, nonatomic) FXDManagedDocument *mainDocument;
 
 @property (strong, nonatomic) NSString *mainSqlitePathComponent;

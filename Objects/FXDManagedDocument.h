@@ -6,21 +6,6 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#if TEST_loggingManagedDocumentAutoSaving
-	#ifndef FXDdocLog
-		#define FXDdocLog	FXDLog
-	#endif
-
-	#ifndef FXDdocLog_DEFAULT
-		#define FXDdocLog_DEFAULT	FXDLog_DEFAULT
-	#endif
-
-#else
-	#define FXDdocLog
-	#define FXDdocLog_DEFAULT
-
-#endif
-
 
 @interface FXDManagedDocument : UIManagedDocument
 

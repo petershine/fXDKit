@@ -32,12 +32,23 @@
 
 
 #pragma mark - Property overriding
+//MARK: Override if using extra data model
+- (NSString*)mainModelName {
+	
+	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
+		_mainModelName = application_BundleIdentifier;
+		FXDLog(@"_mainModelName: %@", _mainModelName);
+	}
+
+	return _mainModelName;
+}
+
 - (FXDManagedDocument*)mainDocument {
 	
 	if (_mainDocument == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"coreDataFileURL: %@", documentURLmanagedCoreData);
-				
-		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURLmanagedCoreData];
+		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
+
+		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
 		FXDLog(@"_mainDocument: %@", _mainDocument);
 	}
 	
@@ -46,8 +57,16 @@
 
 #pragma mark -
 - (NSString*)mainSqlitePathComponent {
+
 	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
-		_mainSqlitePathComponent = applicationSqlitePathComponent;
+		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
+
+		//MARK: Use different name for better controlling between developer build and release build
+	#if ForDEVELOPER
+	#else
+		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@", _mainSqlitePathComponent];
+	#endif
+
 		FXDLog(@"_mainSqlitePathComponent: %@", _mainSqlitePathComponent);
 
 		LOGEVENT_FULL(@"_mainSqlitePathComponent", @{@"_mainSqlitePathComponent": _mainSqlitePathComponent}, NO);
@@ -58,8 +77,10 @@
 
 - (NSString*)mainUbiquitousContentName {
 	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
-		_mainUbiquitousContentName = ubiquitousCoreDataContentName;
-		FXDLog(@"_mainSqlitePathComponent: %@", _mainUbiquitousContentName);
+		_mainUbiquitousContentName = [NSString stringWithFormat:@"ubiquitousContent.%@", self.mainModelName];
+		FXDLog(@"_mainUbiquitousContentName: %@", _mainUbiquitousContentName);
+
+		LOGEVENT_FULL(@"_mainUbiquitousContentName", @{@"_mainUbiquitousContentName": _mainUbiquitousContentName}, NO);
 	}
 	
 	return _mainUbiquitousContentName;
