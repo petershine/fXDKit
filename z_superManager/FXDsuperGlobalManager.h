@@ -7,7 +7,7 @@
 //
 
 
-@class FXDsuperCoreDataManager;
+@class FXDsuperMainCoredata;
 
 
 @interface FXDsuperGlobalManager : FXDObject {
@@ -38,7 +38,7 @@
 + (FXDsuperGlobalManager*)sharedInstance;
 
 - (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)incrementAppLaunchCount;
 

@@ -8,7 +8,7 @@
 
 #import "FXDsuperGlobalManager.h"
 
-#import "FXDsuperCoreDataManager.h"
+#import "FXDsuperMainCoredata.h"
 
 
 #pragma mark - Public implementation
@@ -271,13 +271,13 @@
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_OVERRIDE;
 	[self
-	 prepareGlobalManagerWithCoreDataManager:nil
+	 prepareGlobalManagerWithMainCoredata:nil
 	 withUbiquityContainerURL:nil
 	 withCompleteProtection:NO
 	 withDidFinishBlock:didFinishBlock];
 }
 
-- (void)prepareGlobalManagerWithCoreDataManager:(FXDsuperCoreDataManager*)coreDataManager withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	
 	//MARK: UUID can be changed is the device is recovered from backup or sent backup to iCloud
 #if ForDEVELOPER
@@ -298,18 +298,18 @@
 	};
 	
 	
-	if (coreDataManager == nil) {
+	if (mainCoredata == nil) {
 		ManagerDidPrepareBlock();
 		
 		return;
 	}
 	
 	
-	[coreDataManager
-	 prepareCoreDataManagerWithUbiquityContainerURL:ubiquityContainerURL
+	[mainCoredata
+	 prepareWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
 	 didFinishBlock:^(BOOL finished) {
-		 FXDLog(@"prepareCoreDataManagerWithUbiquityContainerURL finished: %d", finished);
+		 FXDLog(@"prepareWithUbiquityContainerURL finished: %d", finished);
 		 
 		 ManagerDidPrepareBlock();
 	 }];

@@ -1,5 +1,5 @@
 //
-//  FXDsuperCoreDataManager.h
+//  FXDsuperMainCoredata.h
 //
 //
 //  Created by petershine on 3/16/12.
@@ -20,7 +20,7 @@
 #import "FXDsuperCloudManager.h"
 
 
-@interface FXDsuperCoreDataManager : FXDObject <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperMainCoredata : FXDObject <NSFetchedResultsControllerDelegate> {
 
 	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;
@@ -60,14 +60,14 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCoreDataManager*)sharedInstance;
++ (FXDsuperMainCoredata*)sharedInstance;
 
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
 - (BOOL)isSqliteAlreadyStored;
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath;
 
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 - (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)startObservingCoreDataNotifications;

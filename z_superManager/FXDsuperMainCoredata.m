@@ -1,16 +1,16 @@
 //
-//  FXDsuperCoreDataManager.m
+//  FXDsuperMainCoredata.m
 //
 //
 //  Created by petershine on 3/16/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCoreDataManager.h"
+#import "FXDsuperMainCoredata.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCoreDataManager
+@implementation FXDsuperMainCoredata
 
 
 #pragma mark - Memory management
@@ -26,7 +26,7 @@
 	return self;
 }
 
-+ (FXDsuperCoreDataManager*)sharedInstance {
++ (FXDsuperMainCoredata*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -190,7 +190,7 @@
 }
 
 #pragma mark -
-- (void)prepareCoreDataManagerWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_DEFAULT;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
