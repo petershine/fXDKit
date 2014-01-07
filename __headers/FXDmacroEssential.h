@@ -15,7 +15,7 @@
 #endif
 
 #ifndef application_BundleIdentifier
-	#define application_BundleIdentifier	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
+	#define application_BundleIdentifier	[[NSBundle mainBundle] bundleIdentifier]
 #endif
 
 #ifndef application_BundleName
