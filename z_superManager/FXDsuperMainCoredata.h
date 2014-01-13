@@ -17,7 +17,8 @@
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
 
-#import "FXDsuperCloudManager.h"
+//FIXME: Separate... 
+//#import "FXDsuperCloudManager.h"
 
 
 @interface FXDsuperMainCoredata : FXDObject <NSFetchedResultsControllerDelegate> {
