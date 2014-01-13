@@ -25,17 +25,10 @@
 @import CoreData;
 @import QuartzCore;
 @import ImageIO;
-@import MessageUI;
-@import Accounts;
-@import Social;
 
-@import MapKit;
-@import MediaPlayer;
 
-@import AssetsLibrary;
-@import AVFoundation;
-
-@import AdSupport;
+// Adopted
+#import "FXDconfigAdopted.h"
 
 
 // Headers
@@ -68,10 +61,6 @@
 
 #import "FXDStoryboardSegue.h"
 #import "FXDStoryboard.h"
-
-#import "FXDMediaItem.h"
-
-#import "FXDAnnotation.h"
 
 #import "FXDManagedDocument.h"
 
@@ -106,10 +95,6 @@
 
 #import "FXDWindow.h"
 
-#import "FXDAnnotationView.h"
-
-#import "FXDMapView.h"
-
 #import "FXDPopoverBackgroundView.h"
 
 
@@ -118,10 +103,6 @@
 #import "FXDNavigationController.h"
 #import "FXDPopoverController.h"
 #import "FXDPageViewController.h"
-
-
-// Adopted
-#import "FXDconfigAdopted.h"
 
 
 // Global controllers

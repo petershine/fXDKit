@@ -83,10 +83,11 @@
 
 
 #pragma mark - Category
+#if USE_ExtraFrameworks
 @interface FXDsuperGlobalManager (MailComposing) <MFMailComposeViewControllerDelegate>
 
 - (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message;
 - (MFMailComposeViewController*)preparedMailComposeInterface;
 - (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
-
 @end
+#endif
