@@ -282,9 +282,13 @@
 	//MARK: UUID can be changed is the device is recovered from backup or sent backup to iCloud
 #if ForDEVELOPER
 	FXDLog(@"identifierForVendor: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
-	FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
-#endif
 	
+	#if	USE_ExtraFrameworks
+		FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
+	#endif
+#endif
+
+
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
 		[self incrementAppLaunchCount];
 		
