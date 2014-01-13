@@ -321,8 +321,8 @@
 	NSInteger modifiedCount = self.appLaunchCount;
 	FXDLog(@"1.modifiedCount: %ld", (long)modifiedCount);
 
-	_appLaunchCount = modifiedCount +1;
-	FXDLog(@"2.modifiedCount: %ld", (long)modifiedCount);
+	_appLaunchCount = modifiedCount+1;
+	FXDLog(@"2.modifiedCount: %ld", (long)_appLaunchCount);
 	
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
@@ -419,8 +419,7 @@
 #if USE_Flurry
 	#if ForDEVELOPER
 	[Flurry setShowErrorInLogEnabled:YES];
-	//[Flurry setDebugLogEnabled:YES];
-	[Flurry setDebugLogEnabled:NO];
+	[Flurry setDebugLogEnabled:YES];
 	#endif
 
 	[Flurry setSecureTransportEnabled:YES];
