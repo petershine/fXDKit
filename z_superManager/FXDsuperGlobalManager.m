@@ -286,6 +286,19 @@
 	#if	USE_ExtraFrameworks
 		FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 	#endif
+
+	
+	//TODO: Later add to FXDmacroEssential.h
+	FXDLog(@"NSUserName(): %@", NSUserName());
+	FXDLog(@"NSFullUserName(): %@", NSFullUserName());
+
+	FXDLog(@"NSHomeDirectory(): %@", NSHomeDirectory());
+	//FXDLog(@"NSHomeDirectoryForUser(NSString *userName): %@", NSHomeDirectoryForUser(NSString *userName));
+
+	FXDLog(@"NSTemporaryDirectory(): %@", NSTemporaryDirectory());
+
+	FXDLog(@"NSOpenStepRootDirectory(): %@", NSOpenStepRootDirectory());
+
 #endif
 
 

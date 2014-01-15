@@ -114,9 +114,9 @@
 		modifiedSize.width = modifiedSize.height * aspectRatio;
 	}
 	
-	UIImage *scaledImage = [self scaledImageUsingModifiedSize:modifiedSize];
+	UIImage *resizedImage = [self resizedImageUsingSize:modifiedSize];
 	
-	return scaledImage;
+	return resizedImage;
 }
 
 - (UIImage*)largerImageUsingMinimumSize:(CGSize)minimumSize {
@@ -140,25 +140,31 @@
 		modifiedSize.height = modifiedSize.width / aspectRatio;
 	}
 	
-	UIImage *scaledImage = [self scaledImageUsingModifiedSize:modifiedSize];
+	UIImage *resizedImage = [self resizedImageUsingSize:modifiedSize];
 	
-	return scaledImage;
+	return resizedImage;
 }
 
-- (UIImage*)scaledImageUsingModifiedSize:(CGSize)modifiedSize {
-	UIImage *scaledImage = nil;
+- (UIImage*)resizedImageUsingSize:(CGSize)size {
+	UIImage *resizedImage = [self resizedImageUsingSize:size forScale:[UIScreen mainScreen].scale];
 
-	UIGraphicsBeginImageContext(modifiedSize);
+	return resizedImage;
+}
+
+- (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale {
+	UIImage *resizedImage = nil;
+
+	UIGraphicsBeginImageContext(size);
 	{
-		[self drawInRect:CGRectMake(0, 0, modifiedSize.width, modifiedSize.height)];
-		
+		[self drawInRect:CGRectMake(0, 0, (size.width*scale), (size.height*scale))];
+
 		UIImage *modifiedImage = UIGraphicsGetImageFromCurrentImageContext();
-		
-		scaledImage = [[UIImage alloc] initWithCGImage:modifiedImage.CGImage];
+
+		resizedImage = [[UIImage alloc] initWithCGImage:modifiedImage.CGImage];
 	}
 	UIGraphicsEndImageContext();
-	
-	return scaledImage;
+
+	return resizedImage;
 }
 
 - (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension {

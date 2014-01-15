@@ -33,7 +33,8 @@
 
 - (UIImage*)largerImageUsingMinimumSize:(CGSize)minimumSize;
 
-- (UIImage*)scaledImageUsingModifiedSize:(CGSize)modifiedSize;
+- (UIImage*)resizedImageUsingSize:(CGSize)size;
+- (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale;
 
 - (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension;
 
