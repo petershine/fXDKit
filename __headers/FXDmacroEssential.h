@@ -45,7 +45,7 @@
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
 										static id _sharedInstance = nil;\
 										dispatch_once(&once,^{\
-											_sharedInstance = [[[self class] alloc] init];\
+											_sharedInstance = [[self class] new];\
 										});\
 										return _sharedInstance
 

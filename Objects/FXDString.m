@@ -72,7 +72,7 @@
 
 - (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator {
 	NSArray *comps = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-	NSMutableArray *nonemptyComps = [[NSMutableArray alloc] init];
+	NSMutableArray *nonemptyComps = [NSMutableArray new];
 
 	// only copy non-empty entries
 	for (NSString *oneComp in comps) {

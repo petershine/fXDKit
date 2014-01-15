@@ -138,7 +138,7 @@
 - (NSOperationQueue*)cellOperationQueue {
 	
 	if (_cellOperationQueue == nil) {	//FXDLog_DEFAULT;
-		_cellOperationQueue = [[NSOperationQueue alloc] init];
+		_cellOperationQueue = [NSOperationQueue new];
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 	}
 	

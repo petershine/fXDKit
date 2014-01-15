@@ -170,7 +170,7 @@
 - (NSDateFormatter*)dateformatterUTC {
 	
 	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
-		_dateformatterUTC = [[NSDateFormatter alloc] init];
+		_dateformatterUTC = [NSDateFormatter new];
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
 		[_dateformatterUTC setTimeZone:UTCtimezone];
@@ -185,7 +185,7 @@
 - (NSDateFormatter*)dateformatterLocal {
 	
 	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT;
-		_dateformatterLocal = [[NSDateFormatter alloc] init];
+		_dateformatterLocal = [NSDateFormatter new];
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
 		[_dateformatterLocal setTimeZone:localTimeZone];
@@ -489,7 +489,7 @@
 	}
 	
 	
-	UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
+	UILocalNotification *localNotifcation = [UILocalNotification new];
 	localNotifcation.repeatInterval = 0;
 	localNotifcation.alertBody = alertBody;
 	
