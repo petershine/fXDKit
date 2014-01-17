@@ -14,16 +14,14 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
+- (void)dealloc {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
+
 #if ForDEVELOPER
 	FXDLog(@"_callbackBlock: %@", _callbackBlock);
 #endif
-	
+
 	_callbackBlock = nil;
-	
-	FXDLog_DEFAULT;
 }
 
 

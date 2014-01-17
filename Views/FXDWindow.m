@@ -16,7 +16,7 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
+- (void)dealloc {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
