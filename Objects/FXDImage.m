@@ -154,13 +154,13 @@
 - (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale {
 	UIImage *resizedImage = nil;
 
-	UIGraphicsBeginImageContext(size);
+	UIGraphicsBeginImageContextWithOptions(size,
+										   NO,	//MARK: to allow transparency
+										   scale);
 	{
-		[self drawInRect:CGRectMake(0, 0, (size.width*scale), (size.height*scale))];
+		[self drawInRect:CGRectMake(0, 0, size.width, size.height)];
 
-		UIImage *modifiedImage = UIGraphicsGetImageFromCurrentImageContext();
-
-		resizedImage = [[UIImage alloc] initWithCGImage:modifiedImage.CGImage];
+		resizedImage = UIGraphicsGetImageFromCurrentImageContext();
 	}
 	UIGraphicsEndImageContext();
 
@@ -177,8 +177,10 @@
 	CGFloat sideFull = (widthGreaterThanHeight) ? self.size.height : self.size.width;
 	
 	CGRect clippedRect = CGRectMake(0, 0, sideFull, sideFull);	
-	
-	UIGraphicsBeginImageContext(CGSizeMake(thumbDimension, thumbDimension));
+
+	UIGraphicsBeginImageContextWithOptions(CGSizeMake(thumbDimension, thumbDimension),
+										   NO,	//MARK: to allow transparency
+										   0.0);
 	{
 		CGContextRef currentContext = UIGraphicsGetCurrentContext();
 		CGContextClipToRect( currentContext, clippedRect);
