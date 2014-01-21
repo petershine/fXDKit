@@ -464,7 +464,7 @@
 - (BOOL)shouldUpgradeForNewAppVersion {
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
-	FXDLog(@"APP versionInteger: %d", versionInteger);
+	FXDLog(@"APP versionInteger: %ld", (long)versionInteger);
 
 	BOOL shouldUpgrade = [self isLastVersionOlderThanVersionInteger:versionInteger];
 	FXDLog(@"shouldUpgrade: %d", shouldUpgrade);
@@ -476,7 +476,7 @@
 	BOOL isOlder = NO;
 
 	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
-	FXDLog(@"[lastVersionObj integerValue]: %d < versionInteger: %d", [lastVersionObj integerValue], versionInteger);
+	FXDLog(@"[lastVersionObj integerValue]: %ld < versionInteger: %ld", (long)[lastVersionObj integerValue], (long)versionInteger);
 
 	if ([lastVersionObj integerValue] < versionInteger) {
 		isOlder = YES;
@@ -492,7 +492,7 @@
 
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-	FXDLog(@"SAVED: userdefaultIntegerLastUpgradedAppVersion: %d", versionInteger);
+	FXDLog(@"SAVED: userdefaultIntegerLastUpgradedAppVersion: %ld", (long)versionInteger);
 }
 
 #pragma mark -
