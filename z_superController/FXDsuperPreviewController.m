@@ -260,7 +260,7 @@
 
 #pragma mark -
 - (void)configurePeriodicObserver {
-    __weak typeof(self) _weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     
 	self.periodicObserver =
 	[self.mainMoviePlayer
@@ -268,16 +268,16 @@
 	 queue:NULL
 	 usingBlock:^(CMTime time) {
 		 
-		 NSTimeInterval currentSeconds = CMTimeGetSeconds(_weakSelf.mainMoviePlayer.currentTime);
-		 NSTimeInterval duration = CMTimeGetSeconds(_weakSelf.mainMoviePlayer.currentItem.duration);
+		 NSTimeInterval currentSeconds = CMTimeGetSeconds(weakSelf.mainMoviePlayer.currentTime);
+		 NSTimeInterval duration = CMTimeGetSeconds(weakSelf.mainMoviePlayer.currentItem.duration);
 		 
 		 if (currentSeconds == duration) {
 			 FXDLog(@"currentSeconds: %f, duration: %f", currentSeconds, duration);
 			 //FXDLog(@"self.mainMoviePlayer.observationInfo: %@", self.mainMoviePlayer.observationInfo);
 			 
-			 [_weakSelf.mainMoviePlayer pause];
+			 [weakSelf.mainMoviePlayer pause];
 			 
-			 [_weakSelf.buttonPlay fadeInFromHidden];
+			 [weakSelf.buttonPlay fadeInFromHidden];
 		 }
 	 }];
 }
