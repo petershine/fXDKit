@@ -65,17 +65,17 @@
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	//FXDLog_DEFAULT;
 	//FXDLog(@"capInsets: %@", NSStringFromUIEdgeInsets(capInsets));
 	
-	__weak typeof(self) _weakSelf = self;
+	__weak typeof(self) weakSelf = self;
 	
-	if (_weakSelf.image) {
-		UIImage *resizeableImage = [_weakSelf.image resizableImageWithCapInsets:capInsets];
+	if (weakSelf.image) {
+		UIImage *resizeableImage = [weakSelf.image resizableImageWithCapInsets:capInsets];
 
 		if (resizeableImage) {
 			[[NSOperationQueue mainQueue]
 			 addOperationWithBlock:^{
-				 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+				 __strong typeof(weakSelf) strongSelf = weakSelf;
 				 
-				 _strongSelf.image = resizeableImage;
+				 strongSelf.image = resizeableImage;
 			 }];
 		}
 	}
@@ -84,18 +84,18 @@
 //TODO: find optimal way of using layer instead of extra imageView object
 - (void)fadeInImage:(UIImage*)fadedImage {
 	
-	__weak typeof(self) _weakSelf = self;
+	__weak typeof(self) weakSelf = self;
 	
-	UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, _weakSelf.frame.size.width, _weakSelf.frame.size.height)];
+	UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, weakSelf.frame.size.width, weakSelf.frame.size.height)];
 	
-	fadedImageview.contentMode = _weakSelf.contentMode;
+	fadedImageview.contentMode = weakSelf.contentMode;
 	fadedImageview.backgroundColor = [UIColor clearColor];
 	
 	fadedImageview.alpha = 0.0;
 	
 	fadedImageview.image = fadedImage;
 	
-	[_weakSelf addSubview:fadedImageview];
+	[weakSelf addSubview:fadedImageview];
 	
 	[UIView
 	 animateWithDuration:durationQuickAnimation
@@ -105,9 +105,9 @@
 		 fadedImageview.alpha = 1.0;
 	 }
 	 completion:^(BOOL finished) {
-		 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+		 __strong typeof(weakSelf) strongSelf = weakSelf;
 		 
-		 _strongSelf.image = fadedImageview.image;
+		 strongSelf.image = fadedImageview.image;
 		 
 		 [fadedImageview removeFromSuperview];
 	 }];

@@ -97,8 +97,6 @@
 #endif
 	}
 
-	//TEST: Without copying...
-	//return [fetchedObjArray copy];
 	return fetchedObjArray;
 }
 

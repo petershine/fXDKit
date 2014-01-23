@@ -102,23 +102,23 @@
 	FXDCollectionViewCell *cell = (FXDCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:self.mainCellIdentifier forIndexPath:indexPath];
 	
 	
-	__weak typeof(self) _weakSelf = self;
+	__weak typeof(self) weakSelf = self;
 	
 	FXDBlockOperation *cellOperation = [FXDBlockOperation new];
-	__weak FXDBlockOperation *_weakOperation = cellOperation;
+	__weak FXDBlockOperation *weakOperation = cellOperation;
 	
 	[cellOperation addExecutionBlock:^{
 		
-		if ([_weakOperation isCancelled] == NO) {
+		if ([weakOperation isCancelled] == NO) {
 			//TODO:
 		}
 		
 		
 		[[NSOperationQueue mainQueue]
 		 addOperationWithBlock:^{
-			 __strong typeof(_weakSelf) _strongSelf = _weakSelf;
+			 __strong typeof(weakSelf) strongSelf = weakSelf;
 			 
-			 [_strongSelf.cellOperationDictionary removeObjectForKey:indexPath];
+			 [strongSelf.cellOperationDictionary removeObjectForKey:indexPath];
 		 }];
 	}];
 	

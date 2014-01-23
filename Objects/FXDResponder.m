@@ -259,8 +259,8 @@
 		 POPcontainerMain *mainContainer = [POPmanagerGlobal sharedInstance].mainContainer;
 		 [mainContainer refreshForActiveItem];
 
-		 __strong POPsceneHistory *_strongHistoryScene = globalManager.mainContainer.historyScene;
-		 [_strongHistoryScene resumeRefreshingTimer];
+		 __strong POPsceneHistory *strongHistoryScene = globalManager.mainContainer.historyScene;
+		 [strongHistoryScene resumeRefreshingTimer];
 
 		 LOGEVENT_END(becomingActiveEvent, nil);
 	 }];
@@ -288,8 +288,8 @@
 	POPmanagerGlobal *globalManager = [POPmanagerGlobal sharedInstance];
 	[globalManager.mainContainer.homeScene cancelTrackingUserOnMapView];
 
-	__strong POPsceneHistory *_strongHistoryScene = globalManager.mainContainer.historyScene;
-	[_strongHistoryScene pauseRefreshingTimer];
+	__strong POPsceneHistory *strongHistoryScene = globalManager.mainContainer.historyScene;
+	[strongHistoryScene pauseRefreshingTimer];
 
 	[globalManager delayedClearingForMemory];
 	 */

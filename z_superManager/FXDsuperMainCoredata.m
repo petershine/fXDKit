@@ -720,50 +720,50 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	
-	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (strongDelegate == nil) {
 		return;
 	}
 	
 	
-	[_strongDelegate controllerWillChangeContent:controller];
+	[strongDelegate controllerWillChangeContent:controller];
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
-	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (strongDelegate == nil) {
 		return;
 	}
 	
 	
-	[_strongDelegate controllerDidChangeContent:controller];
+	[strongDelegate controllerDidChangeContent:controller];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 	
-	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (strongDelegate == nil) {
 		return;
 	}
 	
 	
-	[_strongDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
+	[strongDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 	
-	__strong typeof(controller.additionalDelegate) _strongDelegate = controller.additionalDelegate;
+	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
 	
-	if (_strongDelegate == nil) {
+	if (strongDelegate == nil) {
 		return;
 	}
 	
 	
-	[_strongDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+	[strongDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 }
 
 @end
