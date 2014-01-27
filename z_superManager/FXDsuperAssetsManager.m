@@ -58,7 +58,7 @@
 	
 	FXDLog_DEFAULT;
 	ALAuthorizationStatus authorizationStatus = [ALAssetsLibrary authorizationStatus];
-	FXDLog(@"authorizationStatus: %d", authorizationStatus);
+	FXDLog(@"authorizationStatus: %@", @(authorizationStatus));
 	
 	if (authorizationStatus != ALAuthorizationStatusRestricted
 		&& authorizationStatus != ALAuthorizationStatusDenied) {
