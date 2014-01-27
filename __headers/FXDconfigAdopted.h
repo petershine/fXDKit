@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#ifndef PopToo_FXDconfigAdopted_h
-#define PopToo_FXDconfigAdopted_h
+#ifndef FXDKit_FXDconfigAdopted_h
+#define FXDKit_FXDconfigAdopted_h
 
 
 #ifndef USE_ExtraFrameworks
@@ -46,12 +46,12 @@
 
 
 #if USE_AFNetworking
-	#import "AFNetworking.h"
-	#import "UIKit+AFNetworking.h"
+	#import <AFNetworking.h>
+	#import <UIKit+AFNetworking.h>
 #endif
 
 #if USE_UAAppReviewManager
-	#import "UAAppReviewManager.h"
+	#import <UAAppReviewManager.h>
 #endif
 
 
