@@ -39,6 +39,10 @@
 #import "FXDmacroEssential.h"
 
 
+// Adopted
+#import "FXDconfigAdopted.h"
+
+
 // Objects
 #import "FXDObject.h"
 
@@ -108,10 +112,6 @@
 #import "FXDsuperLaunchController.h"
 
 #import "FXDResponder.h"
-
-
-// Adopted
-#import "FXDconfigAdopted.h"
 
 
 #endif
