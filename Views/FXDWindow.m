@@ -255,7 +255,7 @@
 	[applicationWindow observedFXDWindowShouldFadeInProgressView:nil];
 }
 
-- (void)showProgressViewWithNibName:(NSString*)nibName {	FXDLog_DEFAULT;
+- (void)showProgressViewWithNibName:(NSString*)nibName {
 	
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
@@ -263,7 +263,9 @@
 		return;
 	}
 	
-	
+
+	FXDLog_DEFAULT;
+
 	Class progressViewClass = NSClassFromString(classnameProgressView);
 	FXDLog(@"progressViewClass: %@ nibName: %@", progressViewClass, nibName);
 	
@@ -296,7 +298,9 @@
 	if (applicationWindow.messageView) {
 		return;
 	}
-	
+
+
+	FXDLog_DEFAULT;
 	
 	Class messageViewClass = NSClassFromString(classnameMessageView);
 	FXDLog(@"messageViewClass: %@ nibName: %@", messageViewClass, nibName);
@@ -339,7 +343,7 @@
 	
 	[applicationWindow
 	 removeAsFadeOutSubview:applicationWindow.messageView
-	 afterRemovedBlock:^{	FXDLog_DEFAULT;
+	 afterRemovedBlock:^{	//FXDLog_DEFAULT;
 		 applicationWindow.messageView = nil;
 	 }];
 }
