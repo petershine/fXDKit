@@ -27,10 +27,6 @@
 @import ImageIO;
 
 
-// Adopted
-#import "FXDconfigAdopted.h"
-
-
 // Headers
 #import "FXDconfigDeveloper.h"
 #import "FXDconfigAnalytics.h"
@@ -112,6 +108,10 @@
 #import "FXDsuperLaunchController.h"
 
 #import "FXDResponder.h"
+
+
+// Adopted
+#import "FXDconfigAdopted.h"
 
 
 #endif
