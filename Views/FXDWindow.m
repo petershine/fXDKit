@@ -71,7 +71,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification {	//FXDLog_DEFAULT;
 	[self showProgressViewWithNibName:nil];
 }
 
@@ -84,7 +84,7 @@
 	
 	[self
 	 removeAsFadeOutSubview:self.progressView
-	 afterRemovedBlock:^{	FXDLog_DEFAULT;
+	 afterRemovedBlock:^{	//FXDLog_DEFAULT;
 		 self.progressView = nil;
 	 }];
 }
