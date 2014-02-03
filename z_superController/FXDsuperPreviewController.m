@@ -148,7 +148,7 @@
 	
 	
 	[self.mainMoviePlayer
-	 seekToTime:CMTimeMakeWithSeconds(0.0, 1.0)
+	 seekToTime:CMTimeMakeWithSeconds(0.0, self.mainMoviePlayer.currentTime.timescale)
 	 completionHandler:^(BOOL finished) {
 		 [self.mainMoviePlayer play];
 		 
@@ -174,6 +174,7 @@
 	if (self.imageviewPhoto.image) {	//MARK: Skip if reusing this instance when changing direction
 		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
 		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
+
 		return;
 	}
 	
