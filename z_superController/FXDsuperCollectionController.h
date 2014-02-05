@@ -10,7 +10,6 @@
 #import "FXDsuperTableController.h"
 
 @interface FXDsuperCollectionController : FXDsuperTableController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-
 // Properties
 
 // IBOutlets
