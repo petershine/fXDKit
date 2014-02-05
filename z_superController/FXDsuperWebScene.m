@@ -51,6 +51,23 @@
 #pragma mark - Segues
 
 #pragma mark - IBActions
+- (IBAction)pressedNavigateBackButton:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"mainWebview.canGoBack: %d", self.mainWebview.canGoBack);
+	[self.mainWebview goBack];
+}
+
+- (IBAction)pressedNavigateForwardButton:(id)sender {	FXDLog_DEFAULT;
+	FXDLog(@"mainWebview.canGoForward: %d", self.mainWebview.canGoForward);
+	[self.mainWebview goForward];
+}
+
+- (IBAction)pressedPageReloadButton:(id)sender {	FXDLog_DEFAULT;
+	[self.mainWebview reload];
+}
+
+- (IBAction)pressedStopLoadingButton:(id)sender {	FXDLog_DEFAULT;
+	[self.mainWebview stopLoading];
+}
 
 #pragma mark - Public
 
@@ -61,8 +78,9 @@
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 
-	FXDLog(@"request: %@", request);
 	FXDLog(@"navigationType: %ld", (long)navigationType);
+	FXDLog(@"request: %@", request);
+	FXDLog(@"allHTTPHeaderFields: %@", [request allHTTPHeaderFields]);
 
 	return YES;
 }

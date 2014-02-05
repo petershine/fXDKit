@@ -214,10 +214,11 @@
 
 					   application.idleTimerDisabled = NO;
 
-					   self.isAppLaunching = NO;
 
 					   self.didFinishLaunching = YES;
 
+						 self.isAppLaunching = NO;
+	 
 					   LOGEVENT_END(launchingEvent, nil);
 				   }];
 			  }];

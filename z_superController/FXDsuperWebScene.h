@@ -18,6 +18,11 @@
 
 
 #pragma mark - IBActions
+- (IBAction)pressedNavigateBackButton:(id)sender;
+- (IBAction)pressedNavigateForwardButton:(id)sender;
+- (IBAction)pressedPageReloadButton:(id)sender;
+- (IBAction)pressedStopLoadingButton:(id)sender;
+
 
 #pragma mark - Public
 
