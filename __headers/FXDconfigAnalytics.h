@@ -67,17 +67,18 @@
 #endif
 
 
-#if USE_Appsee
-	#import <Appsee/Appsee.h>
-	#ifndef appseeAPIkey
-		#define appseeAPIkey	@"appseeAPIkey"
-	#endif
-#else
+#warning @"//TODO: If following error occur, import "libz.dylib" for TestFlight\
+Undefined symbols for architecture armv7s:\
+"_deflate", referenced from:\
+__tf_remote_log_compress_data in libTestFlight.a(tf_remote_log_io.o)\
+"_deflateInit_", referenced from:\
+__tf_remote_log_compress_data in libTestFlight.a(tf_remote_log_io.o)\
+"_deflateEnd", referenced from:\
+__tf_remote_log_compress_data in libTestFlight.a(tf_remote_log_io.o)\
+ld: symbol(s) not found for architecture armv7s\
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
-#endif
-
-
-#if	USE_TestFlight	//TODO: import "libz.dylib" for TestFlight
+#if	USE_TestFlight
 	#import "TestFlight.h"
 	#ifndef testflightAppToken
 		#define testflightAppToken	@"testflightAppToken"
@@ -90,6 +91,16 @@
 #else
 	#define CHECKPOINT(format, ...)	{}
 	#define CHECKPOINT_DEFAULT
+#endif
+
+
+#if USE_Appsee
+	#import <Appsee/Appsee.h>
+	#ifndef appseeAPIkey
+		#define appseeAPIkey	@"appseeAPIkey"
+	#endif
+#else
+
 #endif
 
 
