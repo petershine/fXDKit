@@ -145,7 +145,7 @@
 
 	//SAMPLE:
 	/*
-	POPmanagerGlobal *globalManager = [POPmanagerGlobal sharedInstance];
+	<#APP_PREFIX#>managerGlobal *globalManager = [<#APP_PREFIX#>managerGlobal sharedInstance];
 
 	if (self.didFinishLaunching == NO) {
 		self.isAppLaunching = YES;
@@ -157,24 +157,24 @@
 		application.idleTimerDisabled = YES;
 
 
-		POPcoredataMain *mainCoredata = [POPcoredataMain sharedInstance];
+		<#APP_PREFIX#>coredataMain *mainCoredata = [<#APP_PREFIX#>coredataMain sharedInstance];
 #if TEST_BundledSqlite
-***REMOVED***
+		[mainCoredata initializeWithBundledSqliteFile:@"<#BUNDLE_IDENTIFIER#>"];
 #endif
 
-		[mainCoredata tranferFromOldSqliteFile:@"PopTooUniversal"];
+		[mainCoredata tranferFromOldSqliteFile:@"<#BUNDLED_SQLITE#>"];
 
 
-		[[POPmanagerStore sharedInstance] prepareStoreManager];
+		[[<#APP_PREFIX#>managerStore sharedInstance] prepareStoreManager];
 
 
 		[globalManager
 		 prepareGlobalManagerWithMainCoredata:mainCoredata
 		 withUbiquityContainerURL:nil
-		 withCompleteProtection:NO	//TEST: To avoid unexpected app crashing while in background
+		 withCompleteProtection:<#NO#>
 		 withDidFinishBlock:^(BOOL finished) {
 
-			 POPsceneLaunch *launchScene = (POPsceneLaunch*)self.window.rootViewController;
+			 <#APP_PREFIX#>sceneLaunch *launchScene = (<#APP_PREFIX#>sceneLaunch*)self.window.rootViewController;
 			 [globalManager.rootContainer.view addSubview:launchScene.view];
 			 [globalManager.rootContainer.view bringSubviewToFront:launchScene.view];
 
@@ -184,15 +184,15 @@
 			 [globalManager
 			  updateAllDataWithDidFinishBlock:^(BOOL finished) {
 
-				  POPmanagerGeolocation *geolocationManager = [POPmanagerGeolocation sharedInstance];
+				  <#APP_PREFIX#>managerGeolocation *geolocationManager = [<#APP_PREFIX#>managerGeolocation sharedInstance];
 				  [geolocationManager startMainLocationManager];
 				  [geolocationManager maximizeLocationAccuracy];
 
-				  POPmanagerActiveItem *activeItemManager = [POPmanagerActiveItem sharedInstance];
+				  <#APP_PREFIX#>managerActiveItem *activeItemManager = [POPmanagerActiveItem sharedInstance];
 				  [activeItemManager startObservingMediaPlayerNotifications];
 				  [activeItemManager observedMPMusicPlayerControllerNowPlayingItemDidChange:nil];
 
-				  POPsceneHome *homeScene = globalManager.mainContainer.homeScene;
+				  <#APP_PREFIX#>sceneHome *homeScene = globalManager.mainContainer.homeScene;
 				  [homeScene initializeMapview];
 
 				  [globalManager.mainContainer prepareForFrontScenePresentation];
@@ -208,7 +208,7 @@
 #endif
 
 					   [UAAppReviewManager setUseMainAppBundleForLocalizations:YES];
-					   [UAAppReviewManager setReviewTitle:NSLocalizedString(@"Please rate PopToo!", nil)];
+					   [UAAppReviewManager setReviewTitle:NSLocalizedString(@"Please rate <#APP_NAME#>!", nil)];
 					   [UAAppReviewManager setAppID:application_AppStoreID];
 #endif
 
@@ -238,10 +238,10 @@
 
 	[globalManager
 	 updateAllDataWithDidFinishBlock:^(BOOL finished) {
-		 POPmanagerGeolocation *geolocationManager = [POPmanagerGeolocation sharedInstance];
+		 <#APP_PREFIX#>managerGeolocation *geolocationManager = [POPmanagerGeolocation sharedInstance];
 		 [geolocationManager maximizeLocationAccuracy];
 
-		 POPsceneHome *homeScene = globalManager.mainContainer.homeScene;
+		 <#APP_PREFIX#>sceneHome *homeScene = globalManager.mainContainer.homeScene;
 
 		 if ([homeScene isMapviewAvailable]) {
 			 [homeScene delayedTrackingUserOnMapViewAfterDelay:delayForStartUserTracking];
@@ -251,15 +251,15 @@
 		 }
 
 		 if (finished) {
-			 POPmanagerOverlay *overlayManager = [POPmanagerOverlay sharedInstance];
+			 <#APP_PREFIX#>managerOverlay *overlayManager = [<#APP_PREFIX#>managerOverlay sharedInstance];
 			 [overlayManager startReloadingTaggedRenderer];
 		 }
 
 
-		 POPcontainerMain *mainContainer = [POPmanagerGlobal sharedInstance].mainContainer;
+		 <#APP_PREFIX#>containerMain *mainContainer = [<#APP_PREFIX#>managerGlobal sharedInstance].mainContainer;
 		 [mainContainer refreshForActiveItem];
 
-		 __strong POPsceneHistory *strongHistoryScene = globalManager.mainContainer.historyScene;
+		 __strong <#APP_PREFIX#>sceneHistory *strongHistoryScene = globalManager.mainContainer.historyScene;
 		 [strongHistoryScene resumeRefreshingTimer];
 
 		 LOGEVENT_END(becomingActiveEvent, nil);
@@ -277,18 +277,18 @@
 
 	//SAMPLE:
 	/*
-	POPmanagerGeolocation *geolocationManager = [POPmanagerGeolocation sharedInstance];
-	POPmanagerActiveItem *activeItemManager = [POPmanagerActiveItem sharedInstance];
+	<#APP_PREFIX#>managerGeolocation *geolocationManager = [<#APP_PREFIX#>managerGeolocation sharedInstance];
+	<#APP_PREFIX#>managerActiveItem *activeItemManager = [<#APP_PREFIX#>managerActiveItem sharedInstance];
 
 	if (activeItemManager.didStartGeotagging == NO) {
 		[geolocationManager minimizeLocationAccuracy];
 	}
 
 
-	POPmanagerGlobal *globalManager = [POPmanagerGlobal sharedInstance];
+	<#APP_PREFIX#>managerGlobal *globalManager = [<#APP_PREFIX#>managerGlobal sharedInstance];
 	[globalManager.mainContainer.homeScene cancelTrackingUserOnMapView];
 
-	__strong POPsceneHistory *strongHistoryScene = globalManager.mainContainer.historyScene;
+	__strong <#APP_PREFIX#>sceneHistory *strongHistoryScene = globalManager.mainContainer.historyScene;
 	[strongHistoryScene pauseRefreshingTimer];
 
 	[globalManager delayedClearingForMemory];
@@ -305,8 +305,8 @@
 
 	//SAMPLE:
 	/*
-	POPmanagerGlobal *globalManager = [POPmanagerGlobal sharedInstance];
-	POPsceneHome *homeScene = globalManager.mainContainer.homeScene;
+	<#APP_PREFIX#>managerGlobal *globalManager = [<#APP_PREFIX#>managerGlobal sharedInstance];
+	<#APP_PREFIX#>sceneHome *homeScene = globalManager.mainContainer.homeScene;
 	
 	if ([homeScene isMapviewAvailable] == NO) {
 		[homeScene initializeMapview];
