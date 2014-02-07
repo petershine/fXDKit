@@ -248,8 +248,8 @@
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 			  FXDLog(@"2.didConfigure: %d", didConfigure);
-			  
-#warning "//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+
+			  //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 			  FXDLog_ERROR_ALERT;
 
 			  //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
@@ -271,7 +271,7 @@
 
 #pragma mark -
 - (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
-#warning "//TODO: Learn about NSMigrationPolicy implementation
+	//TODO: Learn about NSMigrationPolicy implementation
 
 	if (didFinishBlock) {
 		didFinishBlock(YES);
