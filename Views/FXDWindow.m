@@ -219,7 +219,7 @@
 		 launchController.view.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
-		 FXDLog(@"finished: %d launchController: %@", finished, launchController);
+		 FXDLog(@"animateWithDuration finished: %d launchController: %@", finished, launchController);
 		 [launchController.view removeFromSuperview];
 		 
 		 if (finishedAnimationBlock) {
@@ -268,10 +268,10 @@
 	}
 	
 
-	FXDLog_DEFAULT;
+	//FXDLog_DEFAULT;
 
 	Class progressViewClass = NSClassFromString(classnameProgressView);
-	FXDLog(@"progressViewClass: %@ nibName: %@", progressViewClass, nibName);
+	//FXDLog(@"progressViewClass: %@ nibName: %@", progressViewClass, nibName);
 	
 	applicationWindow.progressView = [progressViewClass viewFromNibName:nibName];
 	
