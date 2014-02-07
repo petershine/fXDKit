@@ -15,9 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-#if ForDEVELOPER
 	FXDLog(@"_callbackBlock: %@", _callbackBlock);
-#endif
 
 	_callbackBlock = nil;
 }
@@ -44,14 +42,19 @@
 #pragma mark - Public
 + (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
 
-	FXDAlertView *alertView =
-	[[FXDAlertView alloc]
-	 initWithTitle:title
-	 message:message
-	 clickedButtonAtIndexBlock:clickedButtonAtIndexBlock
-	 cancelButtonTitle:cancelButtonTitle];
+	__block FXDAlertView *alertView = nil;
 
-	[alertView show];
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
+		 alertView =
+		 [[FXDAlertView alloc]
+		  initWithTitle:title
+		  message:message
+		  clickedButtonAtIndexBlock:clickedButtonAtIndexBlock
+		  cancelButtonTitle:cancelButtonTitle];
+
+		 [alertView show];
+	 }];
 
 	return alertView;
 }

@@ -35,7 +35,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
-	//MARK: Assume this is default;
+	//MARK: Assume this should be the default;
 	self.backgroundColor = [UIColor clearColor];
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -125,15 +125,19 @@
 #pragma mark - Category
 @implementation UIWindow (Added)
 + (instancetype)instantiateDefaultWindow {
-	FXDWindow *defaultWindow = [[FXDWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	defaultWindow.backgroundColor = [UIColor blackColor];
+	id defaultWindow = [[[self class] alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[(FXDWindow*)defaultWindow setBackgroundColor:[UIColor blackColor]];
 
 	return defaultWindow;
 }
 
 + (instancetype)applicationWindow {
-	FXDWindow *applicationWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
-	
+	id applicationWindow = nil;
+
+	if ([[UIApplication sharedApplication].delegate respondsToSelector:@selector(window)]) {
+		applicationWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
+	}
+
 	return applicationWindow;
 }
 
