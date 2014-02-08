@@ -82,6 +82,7 @@
 - (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 
 
+//MARK: Saving methods
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 - (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
 

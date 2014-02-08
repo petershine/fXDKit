@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#define delayBeforeShowOrHideProgressView	1.0
-
 #define notificationFXDWindowShouldFadeInProgressView	@"notificationFXDWindowShouldFadeInProgressView"
 #define notificationFXDWindowShouldFadeOutProgressView	@"notificationFXDWindowShouldFadeOutProgressView"
 
