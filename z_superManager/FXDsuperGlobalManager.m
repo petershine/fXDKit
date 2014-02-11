@@ -40,6 +40,29 @@
 	return _appLaunchCount;
 }
 
+- (BOOL)isDeviceOld {
+	//MARK: Test using oldDeviceArray
+	if (_oldDeviceArray == nil) {
+
+		//MARK: Update as new devices are introduced and it's harder to support old devices
+		_oldDeviceArray = @[@"iPhone 4",
+							@"iPhone 4S"];
+
+		if ([_oldDeviceArray containsObject:self.deviceModelName]) {
+			_isDeviceOld = YES;
+		}
+		else {
+			_isDeviceOld = NO;
+		}
+
+		FXDLog_DEFAULT;
+		FXDLog(@"_oldDeviceArray: %@", _oldDeviceArray);
+		FXDLog(@"_isDeviceOld: %d", _isDeviceOld);
+	}
+
+	return _isDeviceOld;
+}
+
 #pragma mark -
 - (FXDStoryboard*)mainStoryboard {
 	if (_mainStoryboard == nil) {

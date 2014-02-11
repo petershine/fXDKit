@@ -12,17 +12,23 @@
 
 @interface FXDsuperGlobalManager : FXDObject {
 	NSInteger _appLaunchCount;
+	BOOL _isDeviceOld;
 
 	NSString *_mainStoryboardName;
 	FXDStoryboard *_mainStoryboard;
+
+	NSArray *_oldDeviceArray;
 }
 
 @property (nonatomic, readonly) NSInteger appLaunchCount;
+@property (assign, nonatomic) BOOL isDeviceOld;
 
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) NSString *mainStoryboardName;
 
 // Properties
+@property (strong, nonatomic, readonly) NSArray *oldDeviceArray;
+
 @property (strong, nonatomic) NSString *deviceLanguageCode;
 @property (strong, nonatomic) NSString *deviceCountryCode;
 @property (strong, nonatomic) NSString *deviceModelName;
