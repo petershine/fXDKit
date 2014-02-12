@@ -86,7 +86,7 @@
 	tokenString = [tokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
 	tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-	FXDLog(@"deviceToken length: %u tokenString: %@", [deviceToken length], tokenString);
+	FXDLog(@"deviceToken length: %lu tokenString: %@", (unsigned long)[deviceToken length], tokenString);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {	FXDLog_SEPARATE;
