@@ -37,6 +37,8 @@
 			[self.mainScrollview setDelegate:self];
 		}
 
+		FXDLog(@"mainScrollview.delegate: %@", self.mainScrollview.delegate);
+
 
 		if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
 			&& [self.mainScrollview performSelector:@selector(dataSource)] == nil) {

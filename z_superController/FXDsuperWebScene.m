@@ -21,6 +21,12 @@
 
 
 #pragma mark - Initialization
+- (void)viewDidLoad {
+	[super viewDidLoad];
+
+	//MARK: Assume keyboard dismissal is default for WebView
+	self.mainWebview.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+}
 
 #pragma mark - StatusBar
 
@@ -90,7 +96,10 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
+	NSString *source = [webView stringByEvaluatingJavaScriptFromString:
+						@"document.getElementsByTagName('html')[0].outerHTML"];
 
+	FXDLog(@"source: %@", source);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {	FXDLog_DEFAULT;
