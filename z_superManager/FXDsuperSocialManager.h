@@ -90,14 +90,17 @@
 #define facebookGraphMe				@"me"
 #define facebookGraphMeAccounts		@"me/accounts"
 #define facebookGraphProfileFeed	@"%@/feed"
+#define facebookGraphAccessToken	@"%@?fields=access_token"
 
 #define urlrootFacebookAPI	@"https://graph.facebook.com/"
 #define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]
 
+#define objkeyFacebookAccessToken	@"access_token"
 #define objkeyFacebookID	@"id"
 #define objkeyFacebookName	@"name"
 #define objkeyFacebookLocale	@"locale"
 #define objkeyFacebookUsername	@"username"
+#define objkeyFacebookCategory	@"category"
 
 
 @interface FXDsuperFacebookManager : FXDsuperSocialManager

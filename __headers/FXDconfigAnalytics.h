@@ -14,6 +14,12 @@
 	#define USE_Flurry	1
 #endif
 
+#if USE_Flurry & ForDEVELOPER
+	#ifndef USE_FlurryWithLogging
+		#define USE_FlurryWithLogging	0
+	#endif
+#endif
+
 #if DEBUG
 	#if ForDEVELOPER
 		#ifndef USE_TestFlight
