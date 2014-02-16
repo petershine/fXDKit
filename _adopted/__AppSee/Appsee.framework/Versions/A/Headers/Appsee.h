@@ -59,7 +59,7 @@
 
 /** Add a timed application event (such as: user reached a specific level or screen) along with custom properties.
  @param eventName The name of the event (ie: "Level").
- @param properties Key-value pairs with custom properties for the event. Properties must be NSNumbers, NSStrings, NSDates, NSURL, or NSNull.
+ @param properties Key-value pairs with custom properties for the event. Properties must be NSNumbers, NSStrings, NSDates, NSURL, or NSNull. Keys must be NSStrings.
  */
 +(void)addEvent:(NSString*)eventName withProperties:(NSDictionary *)properties;
 

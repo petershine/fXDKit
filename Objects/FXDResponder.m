@@ -81,12 +81,14 @@
 #pragma mark -
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 
+#if ForDEVELOPER
 	NSString *tokenString = [deviceToken description];
 	tokenString = [tokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
 	tokenString = [tokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
 	tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
 
 	FXDLog(@"deviceToken length: %lu tokenString: %@", (unsigned long)[deviceToken length], tokenString);
+#endif
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {	FXDLog_SEPARATE;
