@@ -171,8 +171,8 @@
 	}
 
 
-	FXDLog(@"self.mainAccountType.accountTypeDescription: %@", self.mainAccountType.accountTypeDescription);
-	FXDLog(@"self.mainAccountType.accessGranted: %d", self.mainAccountType.accessGranted);
+	FXDLog(@"mainAccountType.accountTypeDescription: %@", self.mainAccountType.accountTypeDescription);
+	FXDLog(@"mainAccountType.accessGranted: %d", self.mainAccountType.accessGranted);
 
 	void (^GrantedAccess)(void) = ^(void){
 		[self
@@ -535,7 +535,7 @@
 	//FXDLog(@"accountStore.accounts: %@", accountStore.accounts);
 
 	for (ACAccount *account in accountStore.accounts) {
-		FXDLog(@"accountTypeDescription: %@ accessGranted: %d", account.accountType.accountTypeDescription, account.accountType.accessGranted);
+		FXDLog(@"accountTypeDescription: %@ username: %@ accessGranted: %d", account.accountType.accountTypeDescription, account.username, account.accountType.accessGranted);
 	}
 #endif
 }
