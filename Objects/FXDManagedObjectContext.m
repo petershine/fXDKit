@@ -92,7 +92,7 @@
 
 #if TEST_loggingResultObjFiltering
 		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
-			FXDLog(@"fetchedObjArray: %d self.concurrencyType: %d [NSThread isMainThread]: %d", [fetchedObjArray count], self.concurrencyType, [NSThread isMainThread]);
+			FXDLog(@"fetchedObjArray: %d self.concurrencyType: %d isMainThread: %d", [fetchedObjArray count], self.concurrencyType, [NSThread isMainThread]);
 		}
 #endif
 	}
