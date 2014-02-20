@@ -17,8 +17,8 @@
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
 	[super didReceiveMemoryWarning];
 
-	FXDLog(@"self.view.window: %@", self.view.window);
-	FXDLog(@"self.view.superview: %@", self.view.superview);
+	FXDLog(@"view.window: %@", self.view.window);
+	FXDLog(@"view.superview: %@", self.view.superview);
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;
@@ -123,6 +123,8 @@
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewWillAppear:animated];
+
+	FXDLog(@"didFinishInitialAppearing: %d", self.didFinishInitialAppearing);
 }
 
 #if TEST_loggingViewDrawing
@@ -137,6 +139,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewDidAppear:animated];
+
+	self.didFinishInitialAppearing = YES;
+	FXDLog(@"didFinishInitialAppearing: %d", self.didFinishInitialAppearing);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	//FXDLog_FRAME;

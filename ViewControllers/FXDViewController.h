@@ -10,6 +10,7 @@
 
 
 @interface FXDViewController : UIViewController
+@property (nonatomic) BOOL didFinishInitialAppearing;
 @end
 
 

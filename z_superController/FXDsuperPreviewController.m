@@ -148,7 +148,7 @@
 	
 	
 	[self.mainMoviePlayer
-	 seekToTime:CMTimeMakeWithSeconds(0.0, self.mainMoviePlayer.currentTime.timescale)
+	 seekToTime:kCMTimeZero
 	 completionHandler:^(BOOL finished) {
 		 [self.mainMoviePlayer play];
 		 
