@@ -33,6 +33,40 @@
 
 #pragma mark - Category
 @implementation NSURL (Added)
++ (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring {	FXDLog_DEFAULT;
+	if ([*webURLstring length] == 0) {
+		return NO;
+	}
+
+
+	BOOL isValidWebURLstring = NO;
+
+	NSString *testRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+	NSPredicate *testPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", testRegEx];
+
+	isValidWebURLstring = [testPredicate evaluateWithObject:*webURLstring];
+
+	FXDLog(@"1.isValidWebURLstring: %d *webURLstring: %@", isValidWebURLstring, *webURLstring);
+
+	if (isValidWebURLstring) {
+		return isValidWebURLstring;
+	}
+
+
+	if ([*webURLstring rangeOfString:@"http://"].length == 0
+		|| [*webURLstring rangeOfString:@"https://"].length == 0) {
+
+		*webURLstring = [@"http://" stringByAppendingString:*webURLstring];
+
+		isValidWebURLstring = [testPredicate evaluateWithObject:*webURLstring];
+	}
+
+	FXDLog(@"2.isValidWebURLstring: %d *webURLstring: %@", isValidWebURLstring, *webURLstring);
+
+	return isValidWebURLstring;
+}
+
+#pragma mark -
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	//FXDLog_DEFAULT;
 	NSArray *ubiquitousItemKeys =
 	@[

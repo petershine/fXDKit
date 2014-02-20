@@ -100,6 +100,9 @@
 						@"document.getElementsByTagName('html')[0].outerHTML"];
 
 	FXDLog(@"source: %@", source);
+
+	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
+	FXDLog(@"webviewResponse allHeaderFields: %@",[(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {	FXDLog_DEFAULT;

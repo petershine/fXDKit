@@ -11,7 +11,7 @@
 
 @interface FXDsuperWebScene : FXDsuperScrollController <UIWebViewDelegate>
 // Properties
-@property (strong, nonatomic) NSURLRequest *webRequest;
+@property (strong, nonatomic) NSURLRequest *initialWebRequest;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIWebView *mainWebview;

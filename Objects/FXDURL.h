@@ -8,7 +8,6 @@
 
 
 @interface FXDURL : NSURL
-
 // Properties
 
 
@@ -24,6 +23,8 @@
 
 #pragma mark - Category
 @interface NSURL (Added)
++ (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring;
+
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;
 
