@@ -63,7 +63,7 @@
 	if (authorizationStatus != ALAuthorizationStatusRestricted
 		&& authorizationStatus != ALAuthorizationStatusDenied) {
 		
-		_mainAssetsLibrary = [[ALAssetsLibrary alloc] init];
+		_mainAssetsLibrary = [ALAssetsLibrary new];
 	}
 	
 	return _mainAssetsLibrary;

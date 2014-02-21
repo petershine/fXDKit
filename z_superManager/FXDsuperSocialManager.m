@@ -69,7 +69,7 @@
 #pragma mark -
 - (ACAccountStore*)mainAccountStore {
 	if (_mainAccountStore == nil) {
-		_mainAccountStore = [[ACAccountStore alloc] init];
+		_mainAccountStore = [ACAccountStore new];
 	}
 
 	return _mainAccountStore;
