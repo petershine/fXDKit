@@ -11,7 +11,6 @@
 
 #if DEBUG
 	#if ForDEVELOPER
-		#define TEST_loggingRotatingOrientation	0
 		#define TEST_loggingViewDrawing	0
 		#define TEST_loggingResultObjFiltering	0
 
@@ -19,6 +18,10 @@
 
 		#ifndef TEST_loggingManagedDocumentAutoSaving
 			#define TEST_loggingManagedDocumentAutoSaving	0
+		#endif
+
+		#ifndef TEST_loggingRotatingOrientation
+			#define TEST_loggingRotatingOrientation	0
 		#endif
 
 		#define USE_FXDLog	1

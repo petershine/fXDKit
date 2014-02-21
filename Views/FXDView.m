@@ -30,6 +30,13 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+#if TEST_loggingRotatingOrientation
+- (void)layoutSubviews {	FXDLog_DEFAULT;
+	[super layoutSubviews];
+
+	FXDLog(@"self.frame: %@", NSStringFromCGRect(self.frame));
+}
+#endif
 
 #pragma mark - IBActions
 
