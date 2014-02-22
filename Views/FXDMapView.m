@@ -152,8 +152,8 @@
 	FXDLog_DEFAULT;
 	FXDLog(@"[self mapZoomScale]: %f zoomScale: %f", [self mapZoomScale], mapZoomScale);
 	
-	double mapWidth = self.frame.size.width /mapZoomScale;
-	double mapHeight = self.frame.size.height /mapZoomScale;
+	Float64 mapWidth = self.frame.size.width /mapZoomScale;
+	Float64 mapHeight = self.frame.size.height /mapZoomScale;
 	FXDLog(@"mapWidth: %f mapHeight: %f", mapWidth, mapHeight);
 	
 	MKMapPoint mapPoint = MKMapPointForCoordinate(coordinate);

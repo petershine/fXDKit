@@ -37,7 +37,7 @@
 	BOOL isTransferring = NO;
 
 #if TEST_loggingTransferringPercentage
-	double percentage = 0.0;
+	Float64 percentage = 0.0;
 #endif
 	
 	for (NSMetadataItem *metadataItem in [self results]) {
@@ -106,7 +106,7 @@
 
 @implementation NSMetadataItem (Added)
 - (double)transferPercentage {
-	double transferPercentage = 0.0;
+	Float64 transferPercentage = 0.0;
 		
 	BOOL isDownloading = NO;
 	

@@ -8,6 +8,9 @@
 
 #define integerNotDefined	-1
 
+#define doubleOneMillion	1000000.0
+#define doubleOneThousand	1000.0
+#define doubleSecondsInDay	(60.0*60.0*24.0)
 
 #define durationAnimation	(1.0/3.0)
 #define durationQuickAnimation	(durationAnimation/2.0)

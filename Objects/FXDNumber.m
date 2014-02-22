@@ -59,7 +59,7 @@
 - (NSString*)timerUnitFormatted {
 	NSString *formattedString = nil;
 
-	double timerInterval = [self doubleValue];
+	Float64 timerInterval = [self doubleValue];
 
 	NSInteger seconds = (NSInteger)timerInterval % 60;
 
