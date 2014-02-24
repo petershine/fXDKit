@@ -34,12 +34,17 @@
 #pragma mark - Category
 @implementation NSURL (Added)
 + (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring {	FXDLog_DEFAULT;
+#warning  "//TODO: Find the right regex to include port number
+	return YES;
+
+	
 	if ([*webURLstring length] == 0) {
 		return NO;
 	}
 
 
 	BOOL isValidWebURLstring = NO;
+
 
 	NSString *testRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
 	NSPredicate *testPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", testRegEx];

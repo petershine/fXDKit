@@ -11,10 +11,17 @@
 
 #if DEBUG
 	#if ForDEVELOPER
-		#define TEST_loggingViewDrawing	0
-		#define TEST_loggingResultObjFiltering	0
+		#ifndef TEST_loggingViewDrawing
+			#define TEST_loggingViewDrawing	0
+		#endif
 
-		#define TEST_loggingManagedObject	0
+		#ifndef TEST_loggingResultObjFiltering
+			#define TEST_loggingResultObjFiltering	0
+		#endif
+
+		#ifndef TEST_loggingManagedObject
+			#define TEST_loggingManagedObject	0
+		#endif
 
 		#ifndef TEST_loggingManagedDocumentAutoSaving
 			#define TEST_loggingManagedDocumentAutoSaving	0
@@ -65,14 +72,13 @@
 									NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];\
 									[FXDAlertView showAlertWithTitle:title message:message clickedButtonAtIndexBlock:nil cancelButtonTitle:nil];}
 
-	#define FXDLog_ERRORexcept(v)	if(error){\
-										if ([error code]!=v) {\
-											FXDLog_ERROR;}}
+	#define FXDLog_ERRORexcept(v)	if(error && [error code]!=v) {\
+										FXDLog_ERROR;}
 
 
-	#define FXDLog_REMAINING	if(intervalRemainingBackground > 0.0){\
-									if((NSInteger)(intervalRemainingBackground)%2 == 0) {\
-										FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}}
+#define FXDLog_REMAINING	if((NSInteger)(intervalRemainingBackground)%2 == 0){\
+								FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
+
 
 
 #else

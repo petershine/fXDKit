@@ -25,7 +25,12 @@
 	[super viewDidLoad];
 
 	//MARK: Assume keyboard dismissal is default for WebView
-	self.mainWebview.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+	if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
+
+	}
+	else {
+		self.mainWebview.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+	}
 }
 
 #pragma mark - StatusBar
