@@ -609,7 +609,7 @@
 		}
 	}
 
-	FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
+	//FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
 
 	return affineTransform;
 }
@@ -626,7 +626,7 @@
 		screenFrame.size.height = screenWidth;
 	}
 
-	FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
+	//FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
 
 	return screenFrame;
 }
