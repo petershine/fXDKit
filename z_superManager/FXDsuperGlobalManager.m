@@ -574,6 +574,66 @@
 	return localDate;
 }
 
+#pragma mark -
+- (CGAffineTransform)affineTransformForDeviceOrientation {	FXDLog_DEFAULT;
+
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+	CGAffineTransform affineTransform = CGAffineTransformIdentity;
+	FXDLog(@"1.deviceOrientation: %d affineTransform: %@", deviceOrientation, NSStringFromCGAffineTransform(affineTransform));
+
+	switch (deviceOrientation) {
+		case UIDeviceOrientationLandscapeLeft:
+			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+
+			//TEST: Front camera
+			//affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+			break;
+
+		case UIDeviceOrientationLandscapeRight:
+			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+
+			//TEST: Front camera
+			//affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+			break;
+
+		case UIDeviceOrientationPortraitUpsideDown:
+			affineTransform = CGAffineTransformMakeRotation( ( -90 * M_PI ) / 180 );
+			break;
+
+		case UIDeviceOrientationUnknown:
+		case UIDeviceOrientationFaceUp:
+		case UIDeviceOrientationFaceDown:
+		case UIDeviceOrientationPortrait:
+		default: {
+			affineTransform =  CGAffineTransformMakeRotation( ( 90 * M_PI ) / 180 );
+			break;
+		}
+	}
+
+	FXDLog(@"2.deviceOrientation: %d affineTransform: %@", deviceOrientation, NSStringFromCGAffineTransform(affineTransform));
+
+	return affineTransform;
+}
+
+- (CGRect)screenFrameForDeviceOrientation {	FXDLog_DEFAULT;
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+	CGRect screenFrame = [UIScreen mainScreen].bounds;
+
+	CGFloat screenWidth = screenFrame.size.width;
+	CGFloat screenHeight = screenFrame.size.height;
+
+	FXDLog(@"1.deviceOrientation: %d %@", deviceOrientation, NSStringFromCGRect(screenFrame));
+
+	if (UIInterfaceOrientationIsLandscape(deviceOrientation)) {
+		screenFrame.size.width = screenHeight;
+		screenFrame.size.height = screenWidth;
+	}
+
+	FXDLog(@"1.deviceOrientation: %d %@", deviceOrientation, NSStringFromCGRect(screenFrame));
+
+	return screenFrame;
+}
+
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;

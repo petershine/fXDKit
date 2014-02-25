@@ -67,6 +67,10 @@
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
 
+- (CGAffineTransform)affineTransformForDeviceOrientation;
+- (CGRect)screenFrameForDeviceOrientation;
+
+
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification;
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification;
