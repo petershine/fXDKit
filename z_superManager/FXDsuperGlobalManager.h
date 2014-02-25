@@ -69,6 +69,7 @@
 
 - (CGAffineTransform)affineTransformForDeviceOrientation;
 - (CGRect)screenFrameForDeviceOrientation;
+- (AVCaptureVideoOrientation)videoOrientationForDeviceOrientation;
 
 
 //MARK: - Observer implementation

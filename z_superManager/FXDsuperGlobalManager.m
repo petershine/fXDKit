@@ -575,11 +575,10 @@
 }
 
 #pragma mark -
-- (CGAffineTransform)affineTransformForDeviceOrientation {	FXDLog_DEFAULT;
+- (CGAffineTransform)affineTransformForDeviceOrientation {	//FXDLog_DEFAULT;
 
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;
-	FXDLog(@"1.deviceOrientation: %d affineTransform: %@", deviceOrientation, NSStringFromCGAffineTransform(affineTransform));
 
 	switch (deviceOrientation) {
 		case UIDeviceOrientationLandscapeLeft:
@@ -610,30 +609,43 @@
 		}
 	}
 
-	FXDLog(@"2.deviceOrientation: %d affineTransform: %@", deviceOrientation, NSStringFromCGAffineTransform(affineTransform));
+	FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
 
 	return affineTransform;
 }
 
-- (CGRect)screenFrameForDeviceOrientation {	FXDLog_DEFAULT;
+- (CGRect)screenFrameForDeviceOrientation {	//FXDLog_DEFAULT;
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 	CGRect screenFrame = [UIScreen mainScreen].bounds;
 
 	CGFloat screenWidth = screenFrame.size.width;
 	CGFloat screenHeight = screenFrame.size.height;
 
-	FXDLog(@"1.deviceOrientation: %d %@", deviceOrientation, NSStringFromCGRect(screenFrame));
-
 	if (UIInterfaceOrientationIsLandscape(deviceOrientation)) {
 		screenFrame.size.width = screenHeight;
 		screenFrame.size.height = screenWidth;
 	}
 
-	FXDLog(@"1.deviceOrientation: %d %@", deviceOrientation, NSStringFromCGRect(screenFrame));
+	FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
 
 	return screenFrame;
 }
 
+- (AVCaptureVideoOrientation)videoOrientationForDeviceOrientation {	//FXDLog_DEFAULT;
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+	AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
+
+	if (deviceOrientation != UIDeviceOrientationUnknown
+		&& deviceOrientation != UIDeviceOrientationFaceUp
+		&& deviceOrientation != UIDeviceOrientationFaceDown) {
+
+		videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
+	}
+
+	//FXDLog(@"videoOrientation: %d", videoOrientation);
+
+	return videoOrientation;
+}
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
