@@ -7,6 +7,17 @@
 //
 
 
+@interface UIDevice (Added)
+- (CGAffineTransform)affineTransformForOrientation;
+- (CGAffineTransform)affineTransformForOrientationAndForDirection:(UIImagePickerControllerCameraDevice)cameraDirection;
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(UIImagePickerControllerCameraDevice)cameraDirection;
+
+- (CGRect)screenFrameForOrientation;
+- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
+
+@end
+
+
 @class FXDsuperMainCoredata;
 
 
@@ -65,15 +76,6 @@
 - (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
 - (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
-
-
-- (CGAffineTransform)affineTransformForDeviceOrientation;
-- (CGAffineTransform)affineTransformForDeviceOrientationForCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection;
-- (CGAffineTransform)affineTransformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation forCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection;
-
-
-- (CGRect)screenFrameForDeviceOrientation;
-- (AVCaptureVideoOrientation)videoOrientationForDeviceOrientation;
 
 
 //MARK: - Observer implementation

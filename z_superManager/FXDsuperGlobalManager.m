@@ -8,6 +8,92 @@
 
 #import "FXDsuperGlobalManager.h"
 
+@implementation UIDevice (Added)
+- (CGAffineTransform)affineTransformForOrientation {	//FXDLog_DEFAULT;
+
+	CGAffineTransform affineTransform = [self
+										 affineTransformForOrientation:self.orientation
+										 forDirection:UIImagePickerControllerCameraDeviceRear];
+
+	return affineTransform;
+}
+
+- (CGAffineTransform)affineTransformForOrientationAndForDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
+
+	CGAffineTransform affineTransform = [self
+										 affineTransformForOrientation:self.orientation
+										 forDirection:cameraDirection];
+
+	return affineTransform;
+}
+
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
+
+	CGAffineTransform affineTransform = CGAffineTransformIdentity;
+
+	switch (deviceOrientation) {
+		case UIDeviceOrientationLandscapeLeft:
+			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+
+			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
+				affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+			}
+			break;
+
+		case UIDeviceOrientationLandscapeRight:
+			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+
+			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
+				affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+			}
+			break;
+
+		case UIDeviceOrientationPortraitUpsideDown:
+			affineTransform = CGAffineTransformMakeRotation( ( -90 * M_PI ) / 180 );
+			break;
+
+		case UIDeviceOrientationUnknown:
+		case UIDeviceOrientationFaceUp:
+		case UIDeviceOrientationFaceDown:
+		case UIDeviceOrientationPortrait:
+		default: {
+			affineTransform =  CGAffineTransformMakeRotation( ( 90 * M_PI ) / 180 );
+			break;
+		}
+	}
+
+	//FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
+	return affineTransform;
+}
+
+#pragma mark -
+- (CGRect)screenFrameForOrientation {	//FXDLog_DEFAULT;
+	
+	CGRect screenFrame = [self screenFrameForOrientation:self.orientation];
+	
+	return screenFrame;
+}
+
+- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation {
+
+	CGRect screenFrame = [UIScreen mainScreen].bounds;
+
+	CGFloat screenWidth = screenFrame.size.width;
+	CGFloat screenHeight = screenFrame.size.height;
+
+	if (UIInterfaceOrientationIsLandscape(deviceOrientation)) {
+		screenFrame.size.width = screenHeight;
+		screenFrame.size.height = screenWidth;
+	}
+
+	//FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
+
+	return screenFrame;
+}
+
+@end
+
+
 #import "FXDsuperMainCoredata.h"
 
 
@@ -574,99 +660,6 @@
 	return localDate;
 }
 
-#pragma mark -
-- (CGAffineTransform)affineTransformForDeviceOrientation {	//FXDLog_DEFAULT;
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	CGAffineTransform affineTransform = [self
-										 affineTransformForDeviceOrientation:deviceOrientation
-										 forCameraDirection:UIImagePickerControllerCameraDeviceRear];
-
-	return affineTransform;
-}
-
-- (CGAffineTransform)affineTransformForDeviceOrientationForCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	CGAffineTransform affineTransform = [self
-										 affineTransformForDeviceOrientation:deviceOrientation
-										 forCameraDirection:cameraDirection];
-
-	return affineTransform;
-}
-
-- (CGAffineTransform)affineTransformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation forCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
-
-	CGAffineTransform affineTransform = CGAffineTransformIdentity;
-
-	switch (deviceOrientation) {
-		case UIDeviceOrientationLandscapeLeft:
-			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
-
-			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
-				affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
-			}
-			break;
-
-		case UIDeviceOrientationLandscapeRight:
-			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
-
-			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
-				affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
-			}
-			break;
-
-		case UIDeviceOrientationPortraitUpsideDown:
-			affineTransform = CGAffineTransformMakeRotation( ( -90 * M_PI ) / 180 );
-			break;
-
-		case UIDeviceOrientationUnknown:
-		case UIDeviceOrientationFaceUp:
-		case UIDeviceOrientationFaceDown:
-		case UIDeviceOrientationPortrait:
-		default: {
-			affineTransform =  CGAffineTransformMakeRotation( ( 90 * M_PI ) / 180 );
-			break;
-		}
-	}
-
-	//FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
-	return affineTransform;
-}
-
-#pragma mark -
-- (CGRect)screenFrameForDeviceOrientation {	//FXDLog_DEFAULT;
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-	CGRect screenFrame = [UIScreen mainScreen].bounds;
-
-	CGFloat screenWidth = screenFrame.size.width;
-	CGFloat screenHeight = screenFrame.size.height;
-
-	if (UIInterfaceOrientationIsLandscape(deviceOrientation)) {
-		screenFrame.size.width = screenHeight;
-		screenFrame.size.height = screenWidth;
-	}
-
-	//FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
-
-	return screenFrame;
-}
-
-- (AVCaptureVideoOrientation)videoOrientationForDeviceOrientation {	//FXDLog_DEFAULT;
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-	AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
-
-	if (deviceOrientation != UIDeviceOrientationUnknown
-		&& deviceOrientation != UIDeviceOrientationFaceUp
-		&& deviceOrientation != UIDeviceOrientationFaceDown) {
-
-		videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-	}
-
-	//FXDLog(@"videoOrientation: %d", videoOrientation);
-
-	return videoOrientation;
-}
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
