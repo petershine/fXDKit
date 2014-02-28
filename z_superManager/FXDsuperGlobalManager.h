@@ -68,6 +68,10 @@
 
 
 - (CGAffineTransform)affineTransformForDeviceOrientation;
+- (CGAffineTransform)affineTransformForDeviceOrientationForCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection;
+- (CGAffineTransform)affineTransformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation forCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection;
+
+
 - (CGRect)screenFrameForDeviceOrientation;
 - (AVCaptureVideoOrientation)videoOrientationForDeviceOrientation;
 

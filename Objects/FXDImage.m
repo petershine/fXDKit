@@ -69,6 +69,42 @@
 	return bundledImage;
 }
 
++ (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle {
+	//https://gist.github.com/ConnorD/585377
+
+	CGFloat angleInRadians = angle * (M_PI / 180);
+	CGFloat width = CGImageGetWidth(imgRef);
+	CGFloat height = CGImageGetHeight(imgRef);
+
+	CGRect imgRect = CGRectMake(0, 0, width, height);
+	CGAffineTransform transform = CGAffineTransformMakeRotation(angleInRadians);
+	CGRect rotatedRect = CGRectApplyAffineTransform(imgRect, transform);
+
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef bmContext = CGBitmapContextCreate(NULL,
+												   rotatedRect.size.width,
+												   rotatedRect.size.height,
+												   8,
+												   0,
+												   colorSpace,
+												   kCGImageAlphaPremultipliedFirst);
+	CGContextSetAllowsAntialiasing(bmContext, YES);
+	CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
+	CGColorSpaceRelease(colorSpace);
+	CGContextTranslateCTM(bmContext,
+						  +(rotatedRect.size.width/2),
+						  +(rotatedRect.size.height/2));
+	CGContextRotateCTM(bmContext, angleInRadians);
+	CGContextDrawImage(bmContext, CGRectMake(-width/2, -height/2, width, height),
+					   imgRef);
+
+	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
+	CFRelease(bmContext);
+
+	return rotatedImage;
+}
+
+#pragma mark -
 - (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect {	FXDLog_DEFAULT;
 	FXDLog(@"self.size: %@", NSStringFromCGSize(self.size));
 	FXDLog(@"cropRect: %@", NSStringFromCGRect(cropRect));

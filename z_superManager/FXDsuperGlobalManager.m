@@ -576,23 +576,44 @@
 
 #pragma mark -
 - (CGAffineTransform)affineTransformForDeviceOrientation {	//FXDLog_DEFAULT;
-
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	CGAffineTransform affineTransform = [self
+										 affineTransformForDeviceOrientation:deviceOrientation
+										 forCameraDirection:UIImagePickerControllerCameraDeviceRear];
+
+	return affineTransform;
+}
+
+- (CGAffineTransform)affineTransformForDeviceOrientationForCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	CGAffineTransform affineTransform = [self
+										 affineTransformForDeviceOrientation:deviceOrientation
+										 forCameraDirection:cameraDirection];
+
+	return affineTransform;
+}
+
+- (CGAffineTransform)affineTransformForDeviceOrientation:(UIDeviceOrientation)deviceOrientation forCameraDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
+
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;
 
 	switch (deviceOrientation) {
 		case UIDeviceOrientationLandscapeLeft:
 			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
 
-			//TEST: Front camera
-			//affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
+				affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+			}
 			break;
 
 		case UIDeviceOrientationLandscapeRight:
 			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
 
-			//TEST: Front camera
-			//affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
+				affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+			}
 			break;
 
 		case UIDeviceOrientationPortraitUpsideDown:
@@ -610,10 +631,10 @@
 	}
 
 	//FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
-
 	return affineTransform;
 }
 
+#pragma mark -
 - (CGRect)screenFrameForDeviceOrientation {	//FXDLog_DEFAULT;
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 	CGRect screenFrame = [UIScreen mainScreen].bounds;
