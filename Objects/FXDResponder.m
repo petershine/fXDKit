@@ -230,7 +230,7 @@
 					   [globalManager updateLastUpgradedAppVersionAfterLaunch];
 
 
-#if USE_appReviewManager
+#if USE_UAAppReviewManager
 #if TARGET_IPHONE_SIMULATOR & ForDEVELOPER
 					   [UAAppReviewManager setDebug:YES];
 #endif
