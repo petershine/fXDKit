@@ -93,6 +93,29 @@
 
 @end
 
+@implementation UIApplication (Added)
+- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
+	if (alertBody == nil) {
+		return;
+	}
+
+
+	UILocalNotification *localNotifcation = [UILocalNotification new];
+	localNotifcation.repeatInterval = 0;
+	localNotifcation.alertBody = alertBody;
+
+	if (delay > 0.0) {
+		localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
+
+		[self scheduleLocalNotification:localNotifcation];
+	}
+	else {
+		[self presentLocalNotificationNow:localNotifcation];
+	}
+}
+
+@end
+
 
 #import "FXDsuperMainCoredata.h"
 
@@ -602,27 +625,6 @@
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	FXDLog(@"SAVED: userdefaultIntegerLastUpgradedAppVersion: %ld", (long)versionInteger);
-}
-
-#pragma mark -
-- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
-	if (alertBody == nil) {
-		return;
-	}
-	
-	
-	UILocalNotification *localNotifcation = [UILocalNotification new];
-	localNotifcation.repeatInterval = 0;
-	localNotifcation.alertBody = alertBody;
-	
-	if (delay > 0.0) {
-		localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
-		
-		[[UIApplication sharedApplication] scheduleLocalNotification:localNotifcation];
-	}
-	else {
-		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
-	}
 }
 
 #pragma mark -

@@ -14,7 +14,10 @@
 
 - (CGRect)screenFrameForOrientation;
 - (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
+@end
 
+@interface UIApplication (Added)
+- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
 
 
@@ -68,8 +71,6 @@
 - (BOOL)shouldUpgradeForNewAppVersion;
 - (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger;
 - (void)updateLastUpgradedAppVersionAfterLaunch;
-
-- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 
 
 - (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
