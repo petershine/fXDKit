@@ -13,12 +13,12 @@
 
 	CGAffineTransform affineTransform = [self
 										 affineTransformForOrientation:self.orientation
-										 forDirection:UIImagePickerControllerCameraDeviceRear];
+										 forDirection:AVCaptureDevicePositionBack];
 
 	return affineTransform;
 }
 
-- (CGAffineTransform)affineTransformForOrientationAndForDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
+- (CGAffineTransform)affineTransformForOrientationAndForDirection:(AVCaptureDevicePosition)cameraDirection {
 
 	CGAffineTransform affineTransform = [self
 										 affineTransformForOrientation:self.orientation
@@ -27,7 +27,7 @@
 	return affineTransform;
 }
 
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(UIImagePickerControllerCameraDevice)cameraDirection {
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(AVCaptureDevicePosition)cameraDirection {
 
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;
 
@@ -35,7 +35,7 @@
 		case UIDeviceOrientationLandscapeLeft:
 			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
 
-			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
+			if (cameraDirection == AVCaptureDevicePositionFront) {
 				affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
 			}
 			break;
@@ -43,7 +43,7 @@
 		case UIDeviceOrientationLandscapeRight:
 			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
 
-			if (cameraDirection == UIImagePickerControllerCameraDeviceFront) {
+			if (cameraDirection == AVCaptureDevicePositionBack) {
 				affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
 			}
 			break;
@@ -93,6 +93,7 @@
 
 @end
 
+
 @implementation UIApplication (Added)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {
@@ -112,6 +113,61 @@
 	else {
 		[self presentLocalNotificationNow:localNotifcation];
 	}
+}
+
+@end
+
+
+@implementation AVCaptureDevice (Added)
++ (AVCaptureDevice*)videoCaptureDeviceForCameraDirection:(AVCaptureDevicePosition)cameraDirection withFlashMode:(AVCaptureFlashMode)flashMode {
+
+	AVCaptureDevice *videoCaptureDevice = nil;
+
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+	for (AVCaptureDevice *device in devices) {
+
+		if ([device position] != cameraDirection) {
+			continue;
+		}
+
+
+		videoCaptureDevice = device;
+		break;
+	}
+
+	[videoCaptureDevice applyDefaultConfigurationWithFlashMode:flashMode];
+
+	return videoCaptureDevice;
+}
+
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode {
+	NSError *error = nil;
+
+	if ([self lockForConfiguration:&error]) {
+
+		if ([self isFlashModeSupported:flashMode]) {
+			self.flashMode = flashMode;
+		}
+
+		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+		}
+
+		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+		}
+
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+		}
+
+		self.subjectAreaChangeMonitoringEnabled = YES;
+
+		[self unlockForConfiguration];
+	}
+	
+	FXDLog_ERROR;
 }
 
 @end
