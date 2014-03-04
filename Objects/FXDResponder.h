@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDKit.h"
-
 
 @interface FXDResponder : UIResponder <UIApplicationDelegate>
 // Properties
