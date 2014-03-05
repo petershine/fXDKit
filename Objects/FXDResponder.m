@@ -295,6 +295,10 @@
 	 */
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {	FXDLog_SEPARATE;
+
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application	{FXDLog_SEPARATE;
 	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
