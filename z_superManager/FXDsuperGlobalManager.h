@@ -7,24 +7,8 @@
 //
 
 
-@interface UIDevice (Added)
-- (CGAffineTransform)affineTransformForOrientation;
-- (CGAffineTransform)affineTransformForOrientationAndForDirection:(AVCaptureDevicePosition)cameraDirection;
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(AVCaptureDevicePosition)cameraDirection;
-
-- (CGRect)screenFrameForOrientation;
-- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
-@end
-
-
 @interface UIApplication (Added)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
-@end
-
-
-@interface AVCaptureDevice (Added)
-+ (AVCaptureDevice*)videoCaptureDeviceForCameraDirection:(AVCaptureDevicePosition)cameraDirection withFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
 @end
 
 
