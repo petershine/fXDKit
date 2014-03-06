@@ -76,11 +76,11 @@
 										FXDLog_ERROR;}
 
 
-#define FXDLog_REMAINING	if(intervalRemainingBackground != 0.0\
-								&& (NSInteger)(intervalRemainingBackground)%2 == 0){\
-								FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
+	#define FXDLog_REMAINING	if(intervalRemainingBackground != 0.0\
+									&& (NSInteger)(intervalRemainingBackground)%2 == 0){\
+									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
-
+	#define FXDAssert_MainThread	NSAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %d", [NSThread isMainThread])
 
 #else
 	#define FXDLog(format, ...)	{}
@@ -98,6 +98,8 @@
 	#define FXDLog_ERRORexcept(v)
 
 	#define FXDLog_REMAINING
+
+	#define FXDAssert_MainThread
 
 #endif
 
