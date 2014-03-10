@@ -31,9 +31,9 @@
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) NSString *mainStoryboardName;
 
-// Properties
 @property (strong, nonatomic, readonly) NSArray *oldDeviceArray;
 
+// Properties
 @property (strong, nonatomic) NSString *deviceLanguageCode;
 @property (strong, nonatomic) NSString *deviceCountryCode;
 @property (strong, nonatomic) NSString *deviceModelName;
