@@ -265,7 +265,7 @@
     
 	self.periodicObserver =
 	[self.mainMoviePlayer
-	 addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1.0, 1.0)
+	 addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1.0, 1000000000)
 	 queue:NULL
 	 usingBlock:^(CMTime time) {
 		 

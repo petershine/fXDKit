@@ -80,7 +80,10 @@
 									&& (NSInteger)(intervalRemainingBackground)%2 == 0){\
 									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
+	#define FXDLog_MainThread	FXDLog(@"isMainThread: %d", [NSThread isMainThread])
 	#define FXDAssert_MainThread	NSAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %d", [NSThread isMainThread])
+
+	#define FXDLog_Block(blockName)	FXDLog(@"%@ isMainThread: %d", blockName, [NSThread isMainThread]);
 
 #else
 	#define FXDLog(format, ...)	{}
@@ -99,7 +102,10 @@
 
 	#define FXDLog_REMAINING
 
+	#define FXDLog_MainThread
 	#define FXDAssert_MainThread
+
+	#define FXDLog_Block(blockName)
 
 #endif
 
