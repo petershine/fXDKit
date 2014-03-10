@@ -81,7 +81,7 @@
 	CGFloat screenWidth = screenFrame.size.width;
 	CGFloat screenHeight = screenFrame.size.height;
 
-	if (UIInterfaceOrientationIsLandscape(deviceOrientation)) {
+	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
 		screenFrame.size.width = screenHeight;
 		screenFrame.size.height = screenWidth;
 	}
