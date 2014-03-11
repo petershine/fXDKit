@@ -52,7 +52,11 @@
 #if USE_FXDLog
 	#define FXDLog NSLog
 
-	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", selfClassSelector)
+	#define FXDLog_isMainThread	FXDLog(@"isMainThread: %@", ([NSThread isMainThread]) ? @"YES":@"NO")
+
+	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", selfClassSelector);\
+							if([NSThread isMainThread]==NO){FXDLog_isMainThread;}
+
 	#define FXDLog_FRAME	FXDLog(@" ");FXDLog(@"%@: %@", selfClassSelector, NSStringFromCGRect(self.view.frame))
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", selfClassSelector)
@@ -82,17 +86,17 @@
 									&& (NSInteger)(intervalRemainingBackground)%2 == 0){\
 									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
-	#define FXDLog_MainThread	FXDLog(@"isMainThread: %d", [NSThread isMainThread])
-
-	#define FXDLog_Block(instance, identifier)	FXDLog(@" ");FXDLog(@"BLOCK: %@", formattedClassSelector(instance, identifier));FXDLog_MainThread
+	#define FXDLog_Block(instance, identifier)	FXDLog(@" ");FXDLog(@"BLOCK: %@", formattedClassSelector(instance, identifier));FXDLog_isMainThread
 
 
 	#define FXDAssert1	NSAssert1
-	#define FXDAssert_MainThread	FXDAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %d", [NSThread isMainThread])
+	#define FXDAssert_MainThread	FXDAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %@", ([NSThread isMainThread]) ? @"YES":@"NO")
 
 
 #else
 	#define FXDLog(format, ...)	{}
+
+	#define FXDLog_isMainThread
 
 	#define FXDLog_DEFAULT
 	#define FXDLog_FRAME
@@ -107,8 +111,6 @@
 	#define FXDLog_ERRORexcept(v)
 
 	#define FXDLog_REMAINING
-
-	#define FXDLog_MainThread
 
 	#define FXDLog_Block(instance, block)
 
