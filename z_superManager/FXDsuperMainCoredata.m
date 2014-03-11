@@ -258,7 +258,7 @@
 			  [self
 			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
 				   FXDLog_Block(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
-				   FXDLog(@"finished: %d", finished);
+				   FXDLog_BlockFinished;
 
 				   [self startObservingCoreDataNotifications];
 
@@ -627,7 +627,7 @@
 	 saveMainDocumentShouldSkipMerge:NO
 	 withDidFinishBlock:^(BOOL finished) {
 		 FXDLog_Block(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
-		 FXDLog(@"finished: %d", finished);
+		 FXDLog_BlockFinished;
 
 		 FXDLog_REMAINING;
 

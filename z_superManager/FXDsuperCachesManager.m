@@ -80,7 +80,7 @@
 	id isDirectory = nil;
 
 	NSError *error = nil;
-	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR_ignored(260);
 
 	
 	if ([isDirectory boolValue]) {
@@ -107,7 +107,7 @@
 	id isDirectory = nil;
 
 	NSError *error = nil;
-	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
+	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR_ignored(260);
 	
 	
 	if ([isDirectory boolValue]) {
@@ -161,7 +161,7 @@
 	[fileManager createDirectoryAtURL:[cachedURL URLByDeletingLastPathComponent]
 									withIntermediateDirectories:YES
 													 attributes:nil
-														  error:&error];FXDLog_ERRORexcept(516);
+														  error:&error];FXDLog_ERROR_ignored(516);
 
 	error = nil;
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];
@@ -196,7 +196,7 @@
 			 
 			 NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
 			 
-			 BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERRORexcept(260);
+			 BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERROR_ignored(260);
 			 
 #if ForDEVELOPER
 			 BOOL didStartDownloading = NO;

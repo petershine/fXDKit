@@ -42,30 +42,62 @@
 #endif
 
 
-#define formattedClassSelector(instance, identifier)	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([instance class]), NSStringFromSelector(identifier)]
+#define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
+									componentsSeparatedByString:@":"]\
+									firstObject]
+
+#define messageCurrentError	[NSString\
+							stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@",\
+							__FILE__,\
+							__LINE__,\
+							[error localizedDescription],\
+							[error localizedFailureReason],\
+							[error userInfo]]
+
+#define boolIsMainThread	([NSThread isMainThread]?@"YES":@"NO")
+
+
+#define formattedClassSelector(instance, selector)	[NSString\
+													stringWithFormat:@"[%@ %@]",\
+													NSStringFromClass([instance class]),\
+													NSStringFromSelector(selector)]
 
 #define selfClassSelector	formattedClassSelector(self, _cmd)
 
-#define intervalRemainingBackground	(([UIApplication sharedApplication].backgroundTimeRemaining > 0.0 && [UIApplication sharedApplication].backgroundTimeRemaining != DBL_MAX) ? ([UIApplication sharedApplication].backgroundTimeRemaining):0.0)
+#define intervalRemainingBackground	[UIApplication sharedApplication].backgroundTimeRemaining
 
 
 #if USE_FXDLog
-	#define FXDLog NSLog
+	#define FXDLog	NSLog
+	#define FXDLog_EMPTY	FXDLog(@" ")
 
-	#define FXDLog_isMainThread	FXDLog(@"isMainThread: %@", ([NSThread isMainThread]) ? @"YES":@"NO")
+	#define FXDLog_IsMainThread	FXDLog(@"isMainThread: %@", boolIsMainThread)
 
-	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", selfClassSelector);\
-							if([NSThread isMainThread]==NO){FXDLog_isMainThread;}
+	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
+								&& intervalRemainingBackground != DBL_MAX\
+								&& (NSInteger)(intervalRemainingBackground)%2 == 0) {\
+									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
-	#define FXDLog_FRAME	FXDLog(@" ");FXDLog(@"%@: %@", selfClassSelector, NSStringFromCGRect(self.view.frame))
+
+	#define FXDLog_DEFAULT	FXDLog_EMPTY;\
+							if ([NSThread isMainThread]) {\
+								FXDLog(@"%@", selfClassSelector);\
+							} else {\
+								FXDLog(@"%@ isMain: %@", selfClassSelector, boolIsMainThread);}
+
+
+	#define FXDLog_FRAME	FXDLog_EMPTY;\
+							FXDLog(@"%@: %@", selfClassSelector, NSStringFromCGRect(self.view.frame))
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", selfClassSelector, NSStringFromCGRect(self.view.frame))
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", selfClassSelector,\
+									NSStringFromCGRect(self.view.frame))
 
-	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", selfClassSelector)
+	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
+							FXDLog(@"OVERRIDE: %@", selfClassSelector)
 
 
-	#define FXDLog_ERROR	if(error){\
+	#define FXDLog_ERROR	if (error) {\
 								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
 								parameters[@"file"] = @(__FILE__);\
 								parameters[@"line"] = @(__LINE__);\
@@ -73,30 +105,38 @@
 								FXDLog(@"parameters: %@", parameters);}
 
 	#define FXDLog_ERROR_ALERT	FXDLog_ERROR;\
-								if(error){\
-									NSString *title = [NSString stringWithFormat:@"%@", selfClassSelector];\
-									NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];\
-									[FXDAlertView showAlertWithTitle:title message:message clickedButtonAtIndexBlock:nil cancelButtonTitle:nil];}
+								if (error) {\
+									[FXDAlertView\
+									showAlertWithTitle:selfClassSelector\
+									message:messageCurrentError\
+									clickedButtonAtIndexBlock:nil\
+									cancelButtonTitle:nil];}
 
-	#define FXDLog_ERRORexcept(v)	if(error && [error code]!=v) {\
-										FXDLog_ERROR;}
+	#define FXDLog_ERROR_ignored(ignoredCode)	if (error\
+												&& [error code] != ignoredCode){\
+													FXDLog_ERROR;}
 
 
-	#define FXDLog_REMAINING	if(intervalRemainingBackground != 0.0\
-									&& (NSInteger)(intervalRemainingBackground)%2 == 0){\
-									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
+	#define FXDLog_Block(instance, selector)	FXDLog_EMPTY;\
+												FXDLog(@"BLOCK:isMain:%@ [%@ %@]",\
+												boolIsMainThread,\
+												[instance class],\
+												strSimpleSelector(selector))
 
-	#define FXDLog_Block(instance, identifier)	FXDLog(@" ");FXDLog(@"BLOCK: %@", formattedClassSelector(instance, identifier));FXDLog_isMainThread
+	#define FXDLog_BlockFinished	FXDLog(@"finished: %d", finished)
 
 
 	#define FXDAssert1	NSAssert1
-	#define FXDAssert_MainThread	FXDAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %@", ([NSThread isMainThread]) ? @"YES":@"NO")
+	#define FXDAssert_MainThread	FXDAssert1([NSThread isMainThread],\
+									@"[NSThread isMainThread]: %@", boolIsMainThread)
 
 
 #else
 	#define FXDLog(format, ...)	{}
+	#define FXDLog_EMPTY
 
-	#define FXDLog_isMainThread
+	#define FXDLog_IsMainThread
+	#define FXDLog_REMAINING
 
 	#define FXDLog_DEFAULT
 	#define FXDLog_FRAME
@@ -106,13 +146,14 @@
 
 	#define FXDLog_OVERRIDE
 
+
 	#define FXDLog_ERROR
 	#define FXDLog_ERROR_ALERT
-	#define FXDLog_ERRORexcept(v)
+	#define FXDLog_ERROR_ignored(ignoredCode)
 
-	#define FXDLog_REMAINING
 
-	#define FXDLog_Block(instance, block)
+	#define FXDLog_Block(instance, selector)
+	#define FXDLog_BlockFinished
 
 
 	#define FXDAssert1(condition, desc, arg1)	{}

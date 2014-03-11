@@ -135,7 +135,7 @@
 	NSString *typeIdentifier = nil;
 
 	NSError *error = nil;
-	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];FXDLog_ERRORexcept(260);
+	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];FXDLog_ERROR_ignored(260);
 	
 	if ([typeIdentifier isEqual:(NSString*)kUTTypeImage]
 		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG]

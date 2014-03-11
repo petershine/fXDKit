@@ -27,7 +27,6 @@
 
 #define intervalOneSecond	durationOneSecond
 
-
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0
 

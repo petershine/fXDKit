@@ -186,7 +186,7 @@
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog_Block(self, @selector(coverWithSegue:));
-		 FXDLog(@"finished: %d", finished);
+		 FXDLog_BlockFinished;
 		 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 		 
 		 self.isCovering = NO;
@@ -302,7 +302,7 @@
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-		 FXDLog(@"finished: %d pulledController: %@", finished, pulledScene);
+		 FXDLog(@"finished: %d pulledScene: %@", finished, pulledScene);
 		 
 		 [dismissedScene.view removeFromSuperview];
 		 [dismissedScene removeFromParentViewController];

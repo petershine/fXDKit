@@ -102,19 +102,21 @@
 
 #pragma mark - Public
 - (void)addPreviewPageWithAddedObj:(id)addedObj {	FXDLog_DEFAULT;
+
+	__weak typeof(self) weakSelf = self;
+
+	[weakSelf.mainDataSource addObject:addedObj];
 	
-	[self.mainDataSource addObject:addedObj];
 	
+	FXDsuperPreviewController *previewPage = [weakSelf previewPageForModifiedPageIndex:[weakSelf.mainDataSource count]-1];
 	
-	FXDsuperPreviewController *previewPage = [self previewPageForModifiedPageIndex:[self.mainDataSource count]-1];
-	
-	[self.mainPageController
+	[weakSelf.mainPageController
 	 setViewControllers:@[previewPage]
 	 direction:UIPageViewControllerNavigationDirectionForward
 	 animated:YES
 	 completion:^(BOOL finished) {
-		 FXDLog_Block(self.mainPageController, @selector(setViewControllers:direction:animated:completion:));
-		 FXDLog(@"finished: %d", finished);
+		 FXDLog_Block(weakSelf.mainPageController, @selector(setViewControllers:direction:animated:completion:));
+		 FXDLog_BlockFinished;
 	 }];
 }
 

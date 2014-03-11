@@ -374,7 +374,7 @@
 	 withCompleteProtection:withCompleteProtection
 	 didFinishBlock:^(BOOL finished) {
 		 FXDLog_Block(mainCoredata, @selector(prepareWithUbiquityContainerURL:withCompleteProtection:didFinishBlock:));
-		 FXDLog(@"finished: %d", finished);
+		 FXDLog_BlockFinished;
 		 
 		 ManagerDidPrepareBlock();
 	 }];
