@@ -99,17 +99,15 @@
 	
 	self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
 	
-	//FXDLog(@"[UIDevice currentDevice].orientation: %d", [UIDevice currentDevice].orientation);
-	UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-	
-	if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
-		
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
 		CGAffineTransform modifiedTransform = self.progressView.viewIndicatorGroup.transform;
 		
-		if (orientation == UIDeviceOrientationLandscapeLeft) {
+		if (deviceOrientation == UIDeviceOrientationLandscapeLeft) {
 			modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((90)/180.0 * M_PI));
 		}
-		else if (orientation == UIDeviceOrientationLandscapeRight) {
+		else if (deviceOrientation == UIDeviceOrientationLandscapeRight) {
 			modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((270)/180.0 * M_PI));
 		}
 		

@@ -405,10 +405,7 @@
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 	AVCaptureVideoOrientation videoOrientation = self.capturePreviewLayer.connection.videoOrientation;
 
-	if (deviceOrientation != UIDeviceOrientationUnknown
-		&& deviceOrientation != UIDeviceOrientationFaceUp
-		&& deviceOrientation != UIDeviceOrientationFaceDown) {
-
+	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation)) {
 		videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 	}
 
