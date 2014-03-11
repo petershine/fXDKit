@@ -81,9 +81,12 @@
 									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
 	#define FXDLog_MainThread	FXDLog(@"isMainThread: %d", [NSThread isMainThread])
-	#define FXDAssert_MainThread	NSAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %d", [NSThread isMainThread])
-
 	#define FXDLog_Block(blockName)	FXDLog(@"%@ isMainThread: %d", blockName, [NSThread isMainThread]);
+
+
+	#define FXDAssert1	NSAssert1
+	#define FXDAssert_MainThread	FXDAssert1([NSThread isMainThread], @"[NSThread isMainThread]: %d", [NSThread isMainThread])
+
 
 #else
 	#define FXDLog(format, ...)	{}
@@ -103,9 +106,12 @@
 	#define FXDLog_REMAINING
 
 	#define FXDLog_MainThread
+	#define FXDLog_Block(blockName)
+
+
+	#define FXDAssert1(condition, desc, arg1)	{}
 	#define FXDAssert_MainThread
 
-	#define FXDLog_Block(blockName)
 
 #endif
 
