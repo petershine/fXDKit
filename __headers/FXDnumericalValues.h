@@ -8,6 +8,7 @@
 
 #define integerNotDefined	-1
 
+#define doubleOneBillion	1000000000.0
 #define doubleOneMillion	1000000.0
 #define doubleOneThousand	1000.0
 #define doubleSecondsInDay	(60.0*60.0*24.0)
