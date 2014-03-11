@@ -113,6 +113,7 @@
 	 direction:UIPageViewControllerNavigationDirectionForward
 	 animated:YES
 	 completion:^(BOOL finished) {
+		 FXDLog_Block(self.mainPageController, @selector(setViewControllers:direction:animated:completion:));
 		 FXDLog(@"finished: %d", finished);
 	 }];
 }

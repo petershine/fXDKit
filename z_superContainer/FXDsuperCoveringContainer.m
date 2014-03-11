@@ -185,8 +185,8 @@
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 FXDLog_Block(self, @selector(coverWithSegue:));
 		 FXDLog(@"finished: %d", finished);
-		 
 		 FXDLog(@"childViewControllers:\n%@", self.childViewControllers);
 		 
 		 self.isCovering = NO;

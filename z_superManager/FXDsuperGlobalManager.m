@@ -373,7 +373,8 @@
 	 prepareWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
 	 didFinishBlock:^(BOOL finished) {
-		 FXDLog(@"prepareWithUbiquityContainerURL finished: %d", finished);
+		 FXDLog_Block(mainCoredata, @selector(prepareWithUbiquityContainerURL:withCompleteProtection:didFinishBlock:));
+		 FXDLog(@"finished: %d", finished);
 		 
 		 ManagerDidPrepareBlock();
 	 }];

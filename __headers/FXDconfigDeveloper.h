@@ -42,7 +42,9 @@
 #endif
 
 
-#define strClassSelector	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+#define formattedClassSelector(instance, identifier)	[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([instance class]), NSStringFromSelector(identifier)]
+
+#define selfClassSelector	formattedClassSelector(self, _cmd)
 
 #define intervalRemainingBackground	(([UIApplication sharedApplication].backgroundTimeRemaining > 0.0 && [UIApplication sharedApplication].backgroundTimeRemaining != DBL_MAX) ? ([UIApplication sharedApplication].backgroundTimeRemaining):0.0)
 
@@ -50,13 +52,13 @@
 #if USE_FXDLog
 	#define FXDLog NSLog
 
-	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", strClassSelector)
-	#define FXDLog_FRAME	FXDLog(@" ");FXDLog(@"%@: %@", strClassSelector, NSStringFromCGRect(self.view.frame))
+	#define FXDLog_DEFAULT	FXDLog(@" ");FXDLog(@"%@", selfClassSelector)
+	#define FXDLog_FRAME	FXDLog(@" ");FXDLog(@"%@: %@", selfClassSelector, NSStringFromCGRect(self.view.frame))
 
-	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", strClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", strClassSelector, NSStringFromCGRect(self.view.frame))
+	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", selfClassSelector)
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", selfClassSelector, NSStringFromCGRect(self.view.frame))
 
-	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", strClassSelector)
+	#define FXDLog_OVERRIDE	FXDLog(@" ");FXDLog(@"OVERRIDE: %@", selfClassSelector)
 
 
 	#define FXDLog_ERROR	if(error){\
@@ -68,7 +70,7 @@
 
 	#define FXDLog_ERROR_ALERT	FXDLog_ERROR;\
 								if(error){\
-									NSString *title = [NSString stringWithFormat:@"%@", strClassSelector];\
+									NSString *title = [NSString stringWithFormat:@"%@", selfClassSelector];\
 									NSString *message = [NSString stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@", __FILE__, __LINE__, [error localizedDescription], [error localizedFailureReason], [error userInfo]];\
 									[FXDAlertView showAlertWithTitle:title message:message clickedButtonAtIndexBlock:nil cancelButtonTitle:nil];}
 
@@ -81,7 +83,8 @@
 									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
 	#define FXDLog_MainThread	FXDLog(@"isMainThread: %d", [NSThread isMainThread])
-	#define FXDLog_Block(blockName)	FXDLog(@"%@ isMainThread: %d", blockName, [NSThread isMainThread]);
+
+	#define FXDLog_Block(instance, identifier)	FXDLog(@" ");FXDLog(@"BLOCK: %@ isMainThread: %d", formattedClassSelector(instance, identifier), [NSThread isMainThread]);
 
 
 	#define FXDAssert1	NSAssert1
@@ -106,7 +109,8 @@
 	#define FXDLog_REMAINING
 
 	#define FXDLog_MainThread
-	#define FXDLog_Block(blockName)
+
+	#define FXDLog_Block(instance, block)
 
 
 	#define FXDAssert1(condition, desc, arg1)	{}

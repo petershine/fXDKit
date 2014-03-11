@@ -257,6 +257,7 @@
 
 			  [self
 			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
+				   FXDLog_Block(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
 				   FXDLog(@"finished: %d", finished);
 
 				   [self startObservingCoreDataNotifications];
@@ -477,7 +478,9 @@
 			  
 			  
 			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
-				  FXDLog(@"finished: %d shouldBreak: %d", finished, shouldBreak);
+				  FXDLog_Block(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
+
+				  FXDLog(@"DidEnumerateBlock finished: %d shouldBreak: %d", finished, shouldBreak);
 				  
 				  if (withDefaultProgressView) {
 					  [applicationWindow hideProgressView];
@@ -623,15 +626,16 @@
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
 	 withDidFinishBlock:^(BOOL finished) {
-		FXDLog(@"saveMainDocumentShouldSkipMerge finished: %d", finished);
-		
-		FXDLog_REMAINING;
-		
-		FXDLog(@"2.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
-		
-		[[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
-		self.savingTaskIdentifier = UIBackgroundTaskInvalid;
-	}];
+		 FXDLog_Block(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
+		 FXDLog(@"finished: %d", finished);
+
+		 FXDLog_REMAINING;
+
+		 FXDLog(@"2.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
+
+		 [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
+		 self.savingTaskIdentifier = UIBackgroundTaskInvalid;
+	 }];
 }
 
 #pragma mark -

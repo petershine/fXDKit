@@ -195,8 +195,11 @@
 	}
 
 	if ([launchController isKindOfClass:[FXDsuperLaunchController class]]) {
+
 		[(FXDsuperLaunchController*)launchController
 		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished) {
+			 FXDLog_Block(launchController, @selector(dismissLaunchControllerWithDidFinishBlock:));
+
 			 FXDLog(@"finished: %d launchController: %@", finished, launchController);
 			 [launchController.view removeFromSuperview];
 			 

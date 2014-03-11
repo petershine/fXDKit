@@ -68,7 +68,7 @@
 #if ForDEVELOPER
 	if (launchOptions) {
 		[FXDAlertView
-		 showAlertWithTitle:strClassSelector
+		 showAlertWithTitle:selfClassSelector
 		 message:[launchOptions description]
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil];
@@ -101,7 +101,7 @@
 
 #if ForDEVELOPER
 	[FXDAlertView
-	 showAlertWithTitle:strClassSelector
+	 showAlertWithTitle:selfClassSelector
 	 message:[userInfo description]
 	 clickedButtonAtIndexBlock:nil
 	 cancelButtonTitle:nil];
@@ -123,7 +123,7 @@
 	FXDLog(@"parameters: %@", parameters);
 
 	[FXDAlertView
-	 showAlertWithTitle:strClassSelector
+	 showAlertWithTitle:selfClassSelector
 	 message:[parameters description]
 	 clickedButtonAtIndexBlock:nil
 	 cancelButtonTitle:nil];
