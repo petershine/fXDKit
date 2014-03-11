@@ -84,7 +84,7 @@
 
 	#define FXDLog_MainThread	FXDLog(@"isMainThread: %d", [NSThread isMainThread])
 
-	#define FXDLog_Block(instance, identifier)	FXDLog(@" ");FXDLog(@"BLOCK: %@ isMainThread: %d", formattedClassSelector(instance, identifier), [NSThread isMainThread]);
+	#define FXDLog_Block(instance, identifier)	FXDLog(@" ");FXDLog(@"BLOCK: %@", formattedClassSelector(instance, identifier));FXDLog_MainThread
 
 
 	#define FXDAssert1	NSAssert1
