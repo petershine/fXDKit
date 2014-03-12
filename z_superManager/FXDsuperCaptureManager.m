@@ -204,7 +204,7 @@
 	}
 
 
-	[self configureSessionWithCameraDirection:self.cameraDirection];
+	[self configureSessionWithCameraPosition:self.cameraPosition];
 
 
 	//TODO: When taking a phone call, this error appear
@@ -337,7 +337,7 @@
 
 #pragma mark - Public
 - (void)prepareCaptureManager {	FXDLog_DEFAULT;
-	self.cameraDirection = AVCaptureDevicePositionBack;
+	self.cameraPosition = AVCaptureDevicePositionBack;
 	self.captureFlashMode = AVCaptureFlashModeAuto;
 	self.capturedVideoOrientation = AVCaptureVideoOrientationPortrait;
 
@@ -358,9 +358,9 @@
 }
 
 #pragma mark -
-- (void)configureSessionWithCameraDirection:(AVCaptureDevicePosition)cameraDirection {	FXDLog_DEFAULT;
+- (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPosition {	FXDLog_DEFAULT;
 
-	self.cameraDirection = cameraDirection;
+	self.cameraPosition = cameraPosition;
 
 	BOOL shouldRemoveBeforeAdd = _captureSession.isRunning;
 	FXDLog(@"shouldRemoveBeforeAdd: %d", shouldRemoveBeforeAdd);
@@ -380,7 +380,7 @@
 		FXDLog(@"2._captureSession.inputs: %@", _captureSession.inputs);
 	}
 
-	if (self.cameraDirection == AVCaptureDevicePositionBack) {
+	if (self.cameraPosition == AVCaptureDevicePositionBack) {
 		FXDLog(@"canAddInput:self.captureInputBack: %d", [_captureSession canAddInput:self.captureInputBack]);
 
 		if ([_captureSession canAddInput:self.captureInputBack]) {

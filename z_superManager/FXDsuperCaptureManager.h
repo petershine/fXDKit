@@ -27,7 +27,7 @@
 }
 
 // Properties
-@property (nonatomic) AVCaptureDevicePosition cameraDirection;
+@property (nonatomic) AVCaptureDevicePosition cameraPosition;
 @property (nonatomic) AVCaptureFlashMode captureFlashMode;
 @property (nonatomic) AVCaptureVideoOrientation capturedVideoOrientation;
 
@@ -50,7 +50,7 @@
 #pragma mark - Public
 - (void)prepareCaptureManager;
 
-- (void)configureSessionWithCameraDirection:(AVCaptureDevicePosition)cameraDirection;
+- (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
 
 
 //MARK: - Observer implementation
