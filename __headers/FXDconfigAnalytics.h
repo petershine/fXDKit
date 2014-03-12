@@ -75,7 +75,7 @@
 
 
 #if	USE_TestFlight
-	#warning @"//TODO: Should import "libz.dylib" for TestFlight
+	#warning @"//TODO: Should import libz.dylib for TestFlight
 
 	#import "TestFlight.h"
 	#ifndef testflightAppToken
@@ -85,10 +85,17 @@
 	#define NSLog	TFLog
 
 	#define CHECKPOINT(format, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:format, ##__VA_ARGS__]]
+
 	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@",selfClassSelector)
+	#define CHECKPOINT_ERROR	if(error){\
+									CHECKPOINT(@"error: %@", messageCurrentError);}
+
 #else
 	#define CHECKPOINT(format, ...)	{}
+
 	#define CHECKPOINT_DEFAULT
+	#define CHECKPOINT_ERROR
+
 #endif
 
 
