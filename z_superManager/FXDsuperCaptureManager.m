@@ -11,23 +11,25 @@
 @implementation UIDevice (Added)
 - (CGAffineTransform)affineTransformForOrientation {	//FXDLog_DEFAULT;
 
-	CGAffineTransform affineTransform = [self
-										 affineTransformForOrientation:self.orientation
-										 forDirection:AVCaptureDevicePositionBack];
+	CGAffineTransform affineTransform =
+	[self
+	 affineTransformForOrientation:self.orientation
+	 forPosition:AVCaptureDevicePositionBack];
 
 	return affineTransform;
 }
 
-- (CGAffineTransform)affineTransformForOrientationAndForDirection:(AVCaptureDevicePosition)cameraDirection {
+- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition {
 
-	CGAffineTransform affineTransform = [self
-										 affineTransformForOrientation:self.orientation
-										 forDirection:cameraDirection];
+	CGAffineTransform affineTransform =
+	[self
+	 affineTransformForOrientation:self.orientation
+	 forPosition:cameraPosition];
 
 	return affineTransform;
 }
 
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(AVCaptureDevicePosition)cameraDirection {
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition {
 
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;
 
@@ -35,7 +37,7 @@
 		case UIDeviceOrientationLandscapeLeft:
 			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
 
-			if (cameraDirection == AVCaptureDevicePositionFront) {
+			if (cameraPosition == AVCaptureDevicePositionFront) {
 				affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
 			}
 			break;
@@ -43,7 +45,7 @@
 		case UIDeviceOrientationLandscapeRight:
 			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
 
-			if (cameraDirection == AVCaptureDevicePositionBack) {
+			if (cameraPosition == AVCaptureDevicePositionFront) {
 				affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
 			}
 			break;
@@ -95,7 +97,7 @@
 
 #pragma mark -
 @implementation AVCaptureDevice (Added)
-+ (AVCaptureDevice*)videoCaptureDeviceForCameraDirection:(AVCaptureDevicePosition)cameraDirection withFlashMode:(AVCaptureFlashMode)flashMode {
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode {
 
 	AVCaptureDevice *videoCaptureDevice = nil;
 
@@ -103,7 +105,7 @@
 
 	for (AVCaptureDevice *device in devices) {
 
-		if ([device position] != cameraDirection) {
+		if ([device position] != cameraPosition) {
 			continue;
 		}
 
@@ -258,7 +260,7 @@
 	if (_captureInputBack == nil) {	//FXDLog_DEFAULT;
 
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
-											 videoCaptureDeviceForCameraDirection:AVCaptureDevicePositionBack
+											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
 											 withFlashMode:self.captureFlashMode];
 
 		NSError *error = nil;
@@ -274,7 +276,7 @@
 	if (_captureInputFront == nil) {	//FXDLog_DEFAULT;
 
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
-											  videoCaptureDeviceForCameraDirection:AVCaptureDevicePositionFront
+											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
 											  withFlashMode:self.captureFlashMode];
 
 		NSError *error = nil;

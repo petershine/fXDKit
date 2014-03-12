@@ -8,8 +8,8 @@
 
 @interface UIDevice (Added)
 - (CGAffineTransform)affineTransformForOrientation;
-- (CGAffineTransform)affineTransformForOrientationAndForDirection:(AVCaptureDevicePosition)cameraDirection;
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forDirection:(AVCaptureDevicePosition)cameraDirection;
+- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
 
 - (CGRect)screenFrameForOrientation;
 - (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
@@ -17,7 +17,7 @@
 
 
 @interface AVCaptureDevice (Added)
-+ (AVCaptureDevice*)videoCaptureDeviceForCameraDirection:(AVCaptureDevicePosition)cameraDirection withFlashMode:(AVCaptureFlashMode)flashMode;
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
 - (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
 @end
 
