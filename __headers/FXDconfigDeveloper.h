@@ -118,10 +118,10 @@
 
 
 	#define FXDLog_Block(instance, selector)	FXDLog_EMPTY;\
-												FXDLog(@"BLOCK:isMain:%@ [%@ %@]",\
-												boolIsMainThread,\
+												FXDLog(@"BLOCK: [%@ %@] isMain: %@",\
 												[instance class],\
-												strSimpleSelector(selector))
+												strSimpleSelector(selector),\
+												boolIsMainThread)
 
 	#define FXDLog_BlockFinished	FXDLog(@"finished: %d", finished)
 
