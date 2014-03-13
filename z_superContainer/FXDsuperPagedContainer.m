@@ -115,8 +115,8 @@
 	 direction:UIPageViewControllerNavigationDirectionForward
 	 animated:YES
 	 completion:^(BOOL finished) {
-		 FXDLog_Block(weakSelf.mainPageController, @selector(setViewControllers:direction:animated:completion:));
-		 FXDLog_BlockFinished;
+		 FXDLog_BLOCK(weakSelf.mainPageController, @selector(setViewControllers:direction:animated:completion:));
+		 FXDLog_FINISHED;
 	 }];
 }
 

@@ -257,8 +257,8 @@
 
 			  [self
 			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
-				   FXDLog_Block(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
-				   FXDLog_BlockFinished;
+				   FXDLog_BLOCK(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
+				   FXDLog_FINISHED;
 
 				   [self startObservingCoreDataNotifications];
 
@@ -478,7 +478,7 @@
 			  
 			  
 			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
-				  FXDLog_Block(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
+				  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
 
 				  FXDLog(@"DidEnumerateBlock finished: %d shouldBreak: %d", finished, shouldBreak);
 				  
@@ -626,8 +626,8 @@
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
 	 withDidFinishBlock:^(BOOL finished) {
-		 FXDLog_Block(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
-		 FXDLog_BlockFinished;
+		 FXDLog_BLOCK(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
+		 FXDLog_FINISHED;
 
 		 FXDLog_REMAINING;
 

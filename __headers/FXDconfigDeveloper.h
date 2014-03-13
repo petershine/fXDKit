@@ -54,7 +54,12 @@
 							[error localizedFailureReason],\
 							[error userInfo]]
 
-#define boolIsMainThread	([NSThread isMainThread]?@"YES":@"NO")
+
+#define boolIsMainThread	([NSThread isMainThread] ? @"YES":@"NO")
+
+#define strIsMainThread	[NSString\
+						stringWithFormat:@"isMain: %@",\
+						boolIsMainThread]
 
 
 #define formattedClassSelector(instance, selector)	[NSString\
@@ -71,7 +76,7 @@
 	#define FXDLog	NSLog
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
-	#define FXDLog_IsMainThread	FXDLog(@"isMainThread: %@", boolIsMainThread)
+	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
 	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
 								&& intervalRemainingBackground != DBL_MAX\
@@ -83,7 +88,7 @@
 							if ([NSThread isMainThread]) {\
 								FXDLog(@"%@", selfClassSelector);\
 							} else {\
-								FXDLog(@"%@ isMain: %@", selfClassSelector, boolIsMainThread);}
+								FXDLog(@"%@ %@", selfClassSelector, strIsMainThread);}
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
@@ -117,18 +122,25 @@
 													FXDLog_ERROR;}
 
 
-	#define FXDLog_Block(instance, selector)	FXDLog_EMPTY;\
-												FXDLog(@"BLOCK: [%@ %@] isMain: %@",\
+	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
+												FXDLog(@"BLOCK: [%@ %@] %@",\
 												[instance class],\
 												strSimpleSelector(selector),\
-												boolIsMainThread)
+												strIsMainThread)
 
-	#define FXDLog_BlockFinished	FXDLog(@"finished: %d", finished)
+	#define FXDLog_FINISHED	FXDLog(@"finished: %@", (finished ? @"YES":@"NO"))
+
+	#define FXDLog_REACT(target, property, value)	FXDLog_EMPTY;\
+													FXDLog(@"REACT: %@.%@: %@ %@",\
+													[target class],\
+													strSimpleSelector(property),\
+													value,\
+													strIsMainThread)
 
 
 	#define FXDAssert1	NSAssert1
-	#define FXDAssert_MainThread	FXDAssert1([NSThread isMainThread],\
-									@"[NSThread isMainThread]: %@", boolIsMainThread)
+	#define FXDAssert_IsMainThread	FXDAssert1([NSThread isMainThread],\
+									@"THREAD %@", strIsMainThread)
 
 
 #else
@@ -152,12 +164,13 @@
 	#define FXDLog_ERROR_ignored(ignoredCode)
 
 
-	#define FXDLog_Block(instance, selector)
-	#define FXDLog_BlockFinished
+	#define FXDLog_BLOCK(instance, selector)
+	#define FXDLog_FINISHED
 
+	#define FXDLog_REACT(target, property, value)
 
 	#define FXDAssert1(condition, desc, arg1)	{}
-	#define FXDAssert_MainThread
+	#define FXDAssert_IsMainThread
 
 
 #endif
