@@ -10,6 +10,10 @@
 #define FXDKit_FXDconfigAdopted_h
 
 
+#ifndef USE_ReactiveCocoa
+	#define	USE_ReactiveCocoa	1
+#endif
+
 #ifndef USE_AFNetworking
 	#define USE_AFNetworking	1
 #endif
@@ -24,6 +28,11 @@
 	#define	USE_UAAppReviewManager	0
 #endif
 
+
+#if USE_ReactiveCocoa
+	//http://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1
+	#import <ReactiveCocoa.h>
+#endif
 
 #if USE_AFNetworking
 	#import <AFNetworking.h>
