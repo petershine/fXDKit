@@ -33,6 +33,7 @@
 	//https://github.com/ReactiveCocoa/ReactiveCocoa
 	//http://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1
 	#import <ReactiveCocoa.h>
+	#import <RACEXTScope.h>
 #endif
 
 #if USE_AFNetworking
