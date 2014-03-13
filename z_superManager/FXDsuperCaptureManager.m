@@ -151,6 +151,13 @@
 @end
 
 
+@implementation AVPlayerItem (Added)
+- (Float64)progressValue {
+	return (CMTimeGetSeconds([self currentTime])/CMTimeGetSeconds(self.duration));
+}
+@end
+
+
 #pragma mark - Public implementation
 @implementation FXDsuperCaptureManager
 

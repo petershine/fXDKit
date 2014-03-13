@@ -82,5 +82,6 @@
 
 #define CMTimeForMediaSeconds(mediaSeconds)	CMTimeMakeWithSeconds(mediaSeconds, doubleOneBillion)
 
+#define BOOLString(boolValue)	(boolValue ? @"YES":@"NO")
 
 #endif

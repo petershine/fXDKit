@@ -22,6 +22,11 @@
 @end
 
 
+@interface AVPlayerItem (Added)
+- (Float64)progressValue;
+@end
+
+
 @interface FXDsuperCaptureManager : FXDObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_captureSession;
 }

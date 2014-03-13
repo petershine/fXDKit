@@ -55,7 +55,7 @@
 							[error userInfo]]
 
 
-#define boolIsMainThread	([NSThread isMainThread] ? @"YES":@"NO")
+#define boolIsMainThread	BOOLString([NSThread isMainThread])
 
 #define strIsMainThread	[NSString\
 						stringWithFormat:@"isMain: %@",\
@@ -92,11 +92,10 @@
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@", selfClassSelector, NSStringFromCGRect(self.view.frame))
+							FXDLog(@"%@: %@", selfClassSelector, self.view)
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", selfClassSelector,\
-									NSStringFromCGRect(self.view.frame))
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", selfClassSelector, self.view)
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", selfClassSelector)
@@ -106,8 +105,7 @@
 								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
 								parameters[@"file"] = @(__FILE__);\
 								parameters[@"line"] = @(__LINE__);\
-								FXDLog_DEFAULT;\
-								FXDLog(@"parameters: %@", parameters);}
+								FXDLog(@"ERROR: %@\n%@", selfClassSelector, parameters);}
 
 	#define FXDLog_ERROR_ALERT	FXDLog_ERROR;\
 								if (error) {\
@@ -122,7 +120,7 @@
 													FXDLog_ERROR;}
 
 
-	#define FXDLog_FINISHED	FXDLog(@"finished: %@", (finished ? @"YES":@"NO"))
+	#define FXDLog_FINISHED	FXDLog(@"finished: %@", BOOLString(finished))
 
 	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
 												FXDLog(@"BLOCK: [%@ %@] %@",\

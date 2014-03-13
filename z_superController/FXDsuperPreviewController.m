@@ -138,7 +138,7 @@
 	}
 	
 	
-	if (CMTimeGetSeconds(self.mainMoviePlayer.currentTime) != CMTimeGetSeconds(self.mainMoviePlayer.currentItem.duration)) {
+	if ([self.mainMoviePlayer.currentItem progressValue] < 1.0) {
 		[self.mainMoviePlayer play];
 		
 		[self.buttonPlay fadeOutThenHidden];
@@ -263,19 +263,13 @@
 - (void)configurePeriodicObserver {
     __weak typeof(self) weakSelf = self;
     
-	self.periodicObserver =
-	[self.mainMoviePlayer
+	weakSelf.periodicObserver =
+	[weakSelf.mainMoviePlayer
 	 addPeriodicTimeObserverForInterval:CMTimeForMediaSeconds(1.0)
 	 queue:NULL
 	 usingBlock:^(CMTime time) {
-		 
-		 NSTimeInterval currentSeconds = CMTimeGetSeconds(weakSelf.mainMoviePlayer.currentTime);
-		 NSTimeInterval duration = CMTimeGetSeconds(weakSelf.mainMoviePlayer.currentItem.duration);
-		 
-		 if (currentSeconds == duration) {
-			 FXDLog(@"currentSeconds: %f, duration: %f", currentSeconds, duration);
-			 //FXDLog(@"self.mainMoviePlayer.observationInfo: %@", self.mainMoviePlayer.observationInfo);
-			 
+
+		 if ([weakSelf.mainMoviePlayer.currentItem progressValue] == 1.0) {
 			 [weakSelf.mainMoviePlayer pause];
 			 
 			 [weakSelf.buttonPlay fadeInFromHidden];
