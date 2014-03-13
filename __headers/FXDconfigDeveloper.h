@@ -122,20 +122,21 @@
 													FXDLog_ERROR;}
 
 
+	#define FXDLog_FINISHED	FXDLog(@"finished: %@", (finished ? @"YES":@"NO"))
+
 	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
 												FXDLog(@"BLOCK: [%@ %@] %@",\
 												[instance class],\
 												strSimpleSelector(selector),\
 												strIsMainThread)
 
-	#define FXDLog_FINISHED	FXDLog(@"finished: %@", (finished ? @"YES":@"NO"))
-
-	#define FXDLog_REACT(target, property, value)	FXDLog_EMPTY;\
-													FXDLog(@"REACT: %@.%@: %@ %@",\
+	#define FXDLog_REACT(target, keypath, value)	FXDLog_EMPTY;\
+													FXDLog(@"REACT: %@ %@ %@.%@: %@",\
+													selfClassSelector,\
+													strIsMainThread,\
 													[target class],\
-													strSimpleSelector(property),\
-													value,\
-													strIsMainThread)
+													strSimpleSelector(keypath),\
+													value)
 
 
 	#define FXDAssert1	NSAssert1
@@ -167,7 +168,7 @@
 	#define FXDLog_BLOCK(instance, selector)
 	#define FXDLog_FINISHED
 
-	#define FXDLog_REACT(target, property, value)
+	#define FXDLog_REACT(target, keypath, value)
 
 	#define FXDAssert1(condition, desc, arg1)	{}
 	#define FXDAssert_IsMainThread
