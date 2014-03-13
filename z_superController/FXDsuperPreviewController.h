@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
+#import "FXDsuperCaptureManager.h"
+
 
 @interface FXDviewMovieDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainMoviePlayer;
@@ -15,7 +17,6 @@
 #import "FXDsuperScrollController.h"
 
 @interface FXDsuperPreviewController : FXDsuperScrollController {
-
 	ALAsset *_previewedAsset;
 }
 
