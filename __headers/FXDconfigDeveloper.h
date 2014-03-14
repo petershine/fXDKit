@@ -93,8 +93,8 @@
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
 							FXDLog(@"%@: %@", selfClassSelector, self.view)
 
-	#define FXDLog_SEPARATE			FXDLog(@"\n\n		%@\n", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n		%@: %@\n", selfClassSelector, self.view)
+	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", selfClassSelector)
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@", selfClassSelector, self.view)
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", selfClassSelector)
@@ -128,8 +128,9 @@
 												strIsMainThread)
 
 	#define FXDLog_REACT(target, keypath, value)	FXDLog_EMPTY;\
-													FXDLog(@"REACT: %@ %@ %@.%@: %@",\
-													selfClassSelector,\
+													FXDLog(@"REACT: [%@ %@] %@ %@.%@: %@",\
+													NSStringFromClass([self class]),\
+													strSimpleSelector(_cmd),\
 													strIsMainThread,\
 													[target class],\
 													strSimpleSelector(keypath),\

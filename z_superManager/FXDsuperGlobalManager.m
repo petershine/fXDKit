@@ -590,6 +590,7 @@
 }
 
 #pragma mark -
+//MARK: Override to implement accordingly
 - (void)observedUIApplicationWillResignActive:(NSNotification*)notification {
 }
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {

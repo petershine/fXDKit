@@ -14,6 +14,8 @@
 @end
 
 
+#import "FXDsuperContainer.h"
+
 @interface FXDsuperCoveringContainer : FXDsuperContainer
 
 // Properties

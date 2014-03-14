@@ -55,10 +55,11 @@
 	#endif
 
 	#define LOGEVENT(__FORMAT__, ...)	[Flurry logEvent:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
+
 	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry logEvent:identifier withParameters:parameters timed:shouldTime]
 	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
 
-	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@",selfClassSelector)
+	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@", selfClassSelector)
 	#define LOGEVENT_ERROR	if(error){\
 								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
 								parameters[@"file"] = @(__FILE__);\
@@ -84,7 +85,8 @@
 
 	#define NSLog	TFLog
 
-	#define CHECKPOINT(__FORMAT__, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
+	#define CHECKPOINT(__FORMAT__, ...)	dispatch_async(dispatch_get_main_queue(), ^{\
+											[TestFlight passCheckpoint:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]];})
 
 	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@", selfClassSelector)
 	#define CHECKPOINT_ERROR	if(error){\
