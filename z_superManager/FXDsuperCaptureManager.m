@@ -409,19 +409,21 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
 
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-	AVCaptureVideoOrientation videoOrientation = self.capturePreviewLayer.connection.videoOrientation;
 
-	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation)) {
-		videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
+	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
+		return;
 	}
 
 
-	[self.capturePreviewLayer.connection setVideoOrientation:videoOrientation];
+	FXDLog_DEFAULT;
+	FXDLog(@"deviceOrientation: %d", deviceOrientation);
 
-	self.capturedVideoOrientation = videoOrientation;
+	[self.capturePreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)deviceOrientation];
+
+	self.capturedVideoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 }
 
 
