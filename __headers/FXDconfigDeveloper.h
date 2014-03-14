@@ -54,13 +54,11 @@
 							[error localizedFailureReason],\
 							[error userInfo]]
 
-
 #define boolIsMainThread	BOOLString([NSThread isMainThread])
 
 #define strIsMainThread	[NSString\
 						stringWithFormat:@"isMain: %@",\
 						boolIsMainThread]
-
 
 #define formattedClassSelector(instance, selector)	[NSString\
 													stringWithFormat:@"[%@ %@]",\
@@ -74,6 +72,7 @@
 
 #if USE_FXDLog
 	#define FXDLog	NSLog
+
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
@@ -94,8 +93,8 @@
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
 							FXDLog(@"%@: %@", selfClassSelector, self.view)
 
-	#define FXDLog_SEPARATE			FXDLog(@"\n\n__  %@  __", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n__  %@: %@ __", selfClassSelector, self.view)
+	#define FXDLog_SEPARATE			FXDLog(@"\n\n			%@", selfClassSelector)
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n			%@: %@", selfClassSelector, self.view)
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", selfClassSelector)
@@ -143,7 +142,8 @@
 
 
 #else
-	#define FXDLog(format, ...)	{}
+	#define FXDLog(__FORMAT__, ...)	{}
+
 	#define FXDLog_EMPTY
 
 	#define FXDLog_IsMainThread

@@ -54,7 +54,7 @@
 		#define flurryApplicationKey	@"flurryApplicationKey"
 	#endif
 
-	#define LOGEVENT(format, ...)	[Flurry logEvent:[NSString stringWithFormat:format, ##__VA_ARGS__]]
+	#define LOGEVENT(__FORMAT__, ...)	[Flurry logEvent:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
 	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry logEvent:identifier withParameters:parameters timed:shouldTime]
 	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
 
@@ -65,7 +65,7 @@
 								parameters[@"line"] = @(__LINE__);\
 								LOGEVENT_FULL(selfClassSelector, parameters, NO);}
 #else
-	#define LOGEVENT(format, ...)	{}
+	#define LOGEVENT(__FORMAT__, ...)	{}
 	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	{}
 	#define LOGEVENT_END(identifier, parameters)	{}
 
@@ -84,14 +84,14 @@
 
 	#define NSLog	TFLog
 
-	#define CHECKPOINT(format, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:format, ##__VA_ARGS__]]
+	#define CHECKPOINT(__FORMAT__, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
 
 	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@",selfClassSelector)
 	#define CHECKPOINT_ERROR	if(error){\
 									CHECKPOINT(@"error: %@", messageCurrentError);}
 
 #else
-	#define CHECKPOINT(format, ...)	{}
+	#define CHECKPOINT(__FORMAT__, ...)	{}
 
 	#define CHECKPOINT_DEFAULT
 	#define CHECKPOINT_ERROR

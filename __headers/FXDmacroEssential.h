@@ -36,7 +36,6 @@
 
 #define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
 
-
 #define SCREEN_SIZE_35inch	(MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) <= height35inch)
 
 #define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
@@ -83,5 +82,6 @@
 #define CMTimeForMediaSeconds(mediaSeconds)	CMTimeMakeWithSeconds(mediaSeconds, doubleOneBillion)
 
 #define BOOLString(boolValue)	(boolValue ? @"YES":@"NO")
+
 
 #endif

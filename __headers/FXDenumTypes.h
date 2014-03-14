@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#ifndef FXDKit_FXDenumTypes_h
+#define FXDKit_FXDenumTypes_h
+
+
 // FXDURL
 typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindUndefined,
@@ -44,3 +48,4 @@ typedef void (^FXDblockDidFinish)(BOOL finished);
 typedef void (^FXDblockAlertCallback)(id alertObj, NSInteger buttonIndex);
 
 
+#endif

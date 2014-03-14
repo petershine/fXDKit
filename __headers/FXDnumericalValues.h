@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#ifndef FXDKit_FXDnumericalValues_h
+#define FXDKit_FXDnumericalValues_h
+
+
 #define integerNotDefined	-1
 
 #define doubleOneBillion	1000000000.0
@@ -41,8 +45,9 @@
 
 #define minimumTouchableDimension	44.0
 
-#define heightStatusBar	20.0	//MARK: Assume they are static
-#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
+#define heightStatusBar	20.0
+#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height	//MARK: They can be changed dynamically
+
 #define heightNavigationBar	44.0
 #define heightToolBar	heightNavigationBar	//MARK: Assume they are identical
 
@@ -53,3 +58,5 @@
 
 #define limitConcurrentOperationCount	1
 
+
+#endif

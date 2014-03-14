@@ -125,7 +125,11 @@
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewWillAppear:animated];
 
-	FXDLog(@"didFinishInitialAppearing: %d", self.didFinishInitialAppearing);
+#if	ForDEVELOPER
+	if (self.didFinishInitialAppearing) {
+		FXDLog(@"didFinishInitialAppearing: %@", BOOLString(self.didFinishInitialAppearing));
+	}
+#endif
 }
 
 #if TEST_loggingViewDrawing
@@ -141,8 +145,13 @@
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewDidAppear:animated];
 
+#if ForDEVELOPER
+	if (self.didFinishInitialAppearing == NO) {
+		FXDLog(@"didFinishInitialAppearing: %@", BOOLString(YES));
+	}
+#endif
+
 	self.didFinishInitialAppearing = YES;
-	FXDLog(@"didFinishInitialAppearing: %d", self.didFinishInitialAppearing);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {	//FXDLog_FRAME;

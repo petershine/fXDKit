@@ -6,43 +6,49 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#ifndef FXDKit_FXDimageNames_h
+#define FXDKit_FXDimageNames_h
+
+
 #ifndef imageNavibarBackground
-	#define imageNavibarBackground	[UIImage bundledImageForName:@"navibarBackground"]
+	#define imageNavibarBackground	@"navibarBackground"
 #endif
 
 #ifndef imageNavibarShadow
-	#define imageNavibarShadow		[UIImage bundledImageForName:@"navibarBackground_shadow"]
+	#define imageNavibarShadow	@"navibarBackground_shadow"
 #endif
 
 #ifndef imageToolbarBackground
-	#define imageToolbarBackground	[UIImage bundledImageForName:@"toolbarBackground"]
+	#define imageToolbarBackground	@"toolbarBackground"
 #endif
 
 #ifndef imageNavibarBtnBackNormal
-	#define imageNavibarBtnBackNormal	[UIImage bundledImageForName:@"btn_back"]
+	#define imageNavibarBtnBackNormal	@"btn_back"
 #endif
 
 #ifndef imageNavibarBtnBackHighlighted
-	#define imageNavibarBtnBackHighlighted	[UIImage bundledImageForName:@"btn_back_on"]
+	#define imageNavibarBtnBackHighlighted	@"btn_back_on"
 #endif
 
 #ifndef imageNavibarBtnHomeOff
-	#define imageNavibarBtnHomeOff	[UIImage bundledImageForName:@"btn_home"]
+	#define imageNavibarBtnHomeOff	@"btn_home"
 #endif
 
 #ifndef imageNavibarBtnHomeOn
-	#define imageNavibarBtnHomeOn	[UIImage bundledImageForName:@"btn_home_on"]
+	#define imageNavibarBtnHomeOn	@"btn_home_on"
 #endif
 
 #ifndef imageNavibarBtnCloseOff
-	#define imageNavibarBtnCloseOff	[UIImage bundledImageForName:@"btn_close"]
+	#define imageNavibarBtnCloseOff	@"btn_close"
 #endif
 
 #ifndef imageNavibarBtnCloseOn
-	#define imageNavibarBtnCloseOn	[UIImage bundledImageForName:@"btn_close_on"]
+	#define imageNavibarBtnCloseOn	@"btn_close_on"
 #endif
 
 #ifndef imageDefaultBackground
-	#define imageDefaultBackground	[UIImage bundledImageForName:@"bg_default"]
+	#define imageDefaultBackground	@"bg_default"
 #endif
 
+
+#endif
