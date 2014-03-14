@@ -30,15 +30,15 @@
 	[super viewDidLoad];
 
 #ifdef imageNavibarBackground
-	[self.navigationBar setBackgroundImage:imageNavibarBackground forBarMetrics:UIBarMetricsDefault];
+	[self.navigationBar setBackgroundImage:[UIImage bundledImageForName:imageNavibarBackground] forBarMetrics:UIBarMetricsDefault];
 #endif
 	
 #ifdef imageNavibarShadow
-	[self.navigationBar setShadowImage:imageNavibarShadow];
+	[self.navigationBar setShadowImage:[UIImage bundledImageForName:imageNavibarShadow]];
 #endif
 
 #ifdef imageToolbarBackground
-	[self.toolbar setBackgroundImage:imageToolbarBackground forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+	[self.toolbar setBackgroundImage:[UIImage bundledImageForName:imageToolbarBackground] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
 #endif
 }
 

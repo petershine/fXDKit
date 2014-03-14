@@ -86,7 +86,7 @@
 
 	#define CHECKPOINT(__FORMAT__, ...)	[TestFlight passCheckpoint:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
 
-	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@",selfClassSelector)
+	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@", selfClassSelector)
 	#define CHECKPOINT_ERROR	if(error){\
 									CHECKPOINT(@"error: %@", messageCurrentError);}
 

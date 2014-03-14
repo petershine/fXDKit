@@ -20,13 +20,13 @@
 	BOOL shouldUseBackTitle = NO;
 
 #ifdef imageNavibarBtnBackNormal
-	normalImage = imageNavibarBtnBackNormal;
+	normalImage = [UIImage bundledImageForName:imageNavibarBtnBackNormal];
 #else
 	shouldUseBackTitle = YES;
 #endif
 
 #ifdef imageNavibarBtnBackHighlighted
-	highlightedImage = imageNavibarBtnBackHighlighted;
+	highlightedImage = [UIImage bundledImageForName:imageNavibarBtnBackHighlighted];
 #endif
 
 	SEL action = nil;
