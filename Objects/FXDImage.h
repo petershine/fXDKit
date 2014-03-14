@@ -25,7 +25,7 @@
 
 + (UIImage*)bundledImageForName:(NSString*)imagename;
 
-+ (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle;
++ (void)CGImageRotatedByAngle:(CGImageRef)originalImageRef rotatedImageRef:(CGImageRef*)rotatedImageRef byAngle:(CGFloat)angle;
 
 // Use snippets from this link: http://iphoneincubator.com/blog/windows-views/image-processing-tricks
 - (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect;

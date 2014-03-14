@@ -69,12 +69,12 @@
 	return bundledImage;
 }
 
-+ (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle {
++ (void)CGImageRotatedByAngle:(CGImageRef)originalImageRef rotatedImageRef:(CGImageRef*)rotatedImageRef byAngle:(CGFloat)angle {
 	//https://gist.github.com/ConnorD/585377
 
 	CGFloat angleInRadians = angle * (M_PI / 180);
-	CGFloat width = CGImageGetWidth(imgRef);
-	CGFloat height = CGImageGetHeight(imgRef);
+	CGFloat width = CGImageGetWidth(originalImageRef);
+	CGFloat height = CGImageGetHeight(originalImageRef);
 
 	CGRect imgRect = CGRectMake(0, 0, width, height);
 	CGAffineTransform transform = CGAffineTransformMakeRotation(angleInRadians);
@@ -96,12 +96,12 @@
 						  +(rotatedRect.size.height/2));
 	CGContextRotateCTM(bmContext, angleInRadians);
 	CGContextDrawImage(bmContext, CGRectMake(-width/2, -height/2, width, height),
-					   imgRef);
+					   originalImageRef);
 
 	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
 	CFRelease(bmContext);
 
-	return rotatedImage;
+	*rotatedImageRef = rotatedImage;
 }
 
 #pragma mark -
