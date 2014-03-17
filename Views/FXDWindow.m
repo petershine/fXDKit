@@ -89,7 +89,11 @@
 	 }];
 }
 
-- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {	//FXDLog_DEFAULT;
+- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
+#if	TEST_loggingRotatingOrientation
+	FXDLog_DEFAULT;
+#endif
+
 	//FXDLog(@"notification: %@", notification);
 
 	if (self.progressView.viewIndicatorGroup == nil) {

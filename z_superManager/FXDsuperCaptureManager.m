@@ -164,12 +164,12 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	[_captureSession stopRunning];
+	[_mainCaptureSession stopRunning];
 
 	[_previewLayer removeFromSuperlayer];
 
-	for (AVCaptureDeviceInput *deviceInput in _captureSession.inputs) {
-		[_captureSession removeInput:deviceInput];
+	for (AVCaptureDeviceInput *deviceInput in _mainCaptureSession.inputs) {
+		[_mainCaptureSession removeInput:deviceInput];
 	}
 }
 
@@ -192,22 +192,22 @@
 
 
 #pragma mark - Property overriding
-- (AVCaptureSession*)captureSession {
-	if (_captureSession) {
-		return _captureSession;
+- (AVCaptureSession*)mainCaptureSession {
+	if (_mainCaptureSession) {
+		return _mainCaptureSession;
 	}
 
 
 	FXDLog_DEFAULT;
-	_captureSession = [AVCaptureSession new];
+	_mainCaptureSession = [AVCaptureSession new];
 
 	NSString *captureSessionPreset = AVCaptureSessionPresetHigh;
 
 
-	[_captureSession beginConfiguration];
+	[_mainCaptureSession beginConfiguration];
 
-	if ([_captureSession canSetSessionPreset:captureSessionPreset]) {
-		[_captureSession setSessionPreset:captureSessionPreset];
+	if ([_mainCaptureSession canSetSessionPreset:captureSessionPreset]) {
+		[_mainCaptureSession setSessionPreset:captureSessionPreset];
 	}
 
 
@@ -216,8 +216,8 @@
 
 	//TODO: When taking a phone call, this error appear
 	//ERROR: [0x2bdb000] AVAudioSessionPortImpl.mm:50: ValidateRequiredFields: Unknown selected data source for Port iPhone Microphone (type: MicrophoneBuiltIn)
-	if ([_captureSession canAddInput:self.deviceInputAudio]) {
-		[_captureSession addInput:self.deviceInputAudio];
+	if ([_mainCaptureSession canAddInput:self.deviceInputAudio]) {
+		[_mainCaptureSession addInput:self.deviceInputAudio];
 	}
 
 	//FXDLog(@"_captureSession inputs: %@", [_captureSession inputs]);
@@ -227,7 +227,7 @@
 	dispatch_queue_t sampleCapturingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 	FXDLog(@"sampleCapturingQueue: %@", sampleCapturingQueue);
 
-	if ([_captureSession canAddOutput:self.dataOutputVideo]) {
+	if ([_mainCaptureSession canAddOutput:self.dataOutputVideo]) {
 
 		NSDictionary *outputSettings = @{(NSString*)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
 		[self.dataOutputVideo setVideoSettings:outputSettings];
@@ -238,10 +238,10 @@
 		 setSampleBufferDelegate:self
 		 queue:sampleCapturingQueue];
 
-		[_captureSession addOutput:self.dataOutputVideo];
+		[_mainCaptureSession addOutput:self.dataOutputVideo];
 	}
 
-	if ([_captureSession canAddOutput:self.dataOutputAudio]) {
+	if ([_mainCaptureSession canAddOutput:self.dataOutputAudio]) {
 
 		// for audio, we want the channels and sample rate, but we can't get those from audioout.audiosettings on ios, so
         // we need to wait for the first sample
@@ -250,19 +250,19 @@
 		 setSampleBufferDelegate:self
 		 queue:sampleCapturingQueue];
 
-		[_captureSession addOutput:self.dataOutputAudio];
+		[_mainCaptureSession addOutput:self.dataOutputAudio];
 	}
 
-	[_captureSession commitConfiguration];
+	[_mainCaptureSession commitConfiguration];
 
 
-	return _captureSession;
+	return _mainCaptureSession;
 }
 
 #pragma mark -
 - (AVCaptureVideoPreviewLayer*)previewLayer {
 	if (_previewLayer == nil) {	FXDLog_DEFAULT;
-		_previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
+		_previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
 
 		[_previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
 	}
@@ -323,7 +323,6 @@
 #pragma mark -
 - (AVCaptureVideoDataOutput*)dataOutputVideo {
 	if (_dataOutputVideo == nil) {	//FXDLog_DEFAULT;
-
 		_dataOutputVideo = [AVCaptureVideoDataOutput new];
 	}
 
@@ -332,7 +331,6 @@
 
 - (AVCaptureAudioDataOutput*)dataOutputAudio {
 	if (_dataOutputAudio == nil) {	//FXDLog_DEFAULT;
-
 		_dataOutputAudio = [AVCaptureAudioDataOutput new];
 	}
 
@@ -344,13 +342,14 @@
 
 #pragma mark - Public
 - (void)prepareCaptureManager {	FXDLog_DEFAULT;
+	self.didStartCapturing = NO;
+	self.shouldAppendSampleBuffer = NO;
+
+	self.shouldUseMirroredFront = NO;
+
 	self.cameraPosition = AVCaptureDevicePositionBack;
 	self.flashMode = AVCaptureFlashModeAuto;
 	self.videoOrientation = AVCaptureVideoOrientationPortrait;
-
-	self.previewLayer.connection.automaticallyAdjustsVideoMirroring = NO;
-	self.previewLayer.connection.videoMirrored = NO;
-
 
 	[self observedUIDeviceOrientationDidChangeNotification:nil];
 
@@ -361,7 +360,10 @@
 	 object:nil];
 
 
-	[self.captureSession startRunning];
+	self.previewLayer.connection.automaticallyAdjustsVideoMirroring = NO;
+	self.previewLayer.connection.videoMirrored = NO;
+
+	[self.mainCaptureSession startRunning];
 }
 
 #pragma mark -
@@ -373,43 +375,47 @@
 	FXDLog(@"shouldRemoveBeforeAdd: %d", shouldRemoveBeforeAdd);
 
 
-	[_captureSession beginConfiguration];
+	[_mainCaptureSession beginConfiguration];
 
 	if (shouldRemoveBeforeAdd) {
-		FXDLog(@"1._captureSession.inputs: %@", _captureSession.inputs);
+		FXDLog(@"1._captureSession.inputs: %@", _mainCaptureSession.inputs);
 
-		for (AVCaptureDeviceInput *deviceInput in _captureSession.inputs) {
+		for (AVCaptureDeviceInput *deviceInput in _mainCaptureSession.inputs) {
 			if (deviceInput != self.deviceInputAudio) {
-				[_captureSession removeInput:deviceInput];
+				[_mainCaptureSession removeInput:deviceInput];
 			}
 		}
 
-		FXDLog(@"2._captureSession.inputs: %@", _captureSession.inputs);
+		FXDLog(@"2._captureSession.inputs: %@", _mainCaptureSession.inputs);
 	}
 
 	if (self.cameraPosition == AVCaptureDevicePositionBack) {
-		FXDLog(@"canAddInput:self.captureInputBack: %d", [_captureSession canAddInput:self.deviceInputBack]);
+		FXDLog(@"canAddInput:self.captureInputBack: %d", [_mainCaptureSession canAddInput:self.deviceInputBack]);
 
-		if ([_captureSession canAddInput:self.deviceInputBack]) {
-			[_captureSession addInput:self.deviceInputBack];
+		if ([_mainCaptureSession canAddInput:self.deviceInputBack]) {
+			[_mainCaptureSession addInput:self.deviceInputBack];
 		}
 	}
 	else {
-		FXDLog(@"canAddInput:self.captureInputFront: %d", [_captureSession canAddInput:self.deviceInputFront]);
+		FXDLog(@"canAddInput:self.captureInputFront: %d", [_mainCaptureSession canAddInput:self.deviceInputFront]);
 
-		if ([_captureSession canAddInput:self.deviceInputFront]) {
-			[_captureSession addInput:self.deviceInputFront];
+		if ([_mainCaptureSession canAddInput:self.deviceInputFront]) {
+			[_mainCaptureSession addInput:self.deviceInputFront];
 		}
 	}
 
-	[_captureSession commitConfiguration];
+	[_mainCaptureSession commitConfiguration];
 
-	FXDLog(@"3._captureSession.inputs: %@", _captureSession.inputs);
+	FXDLog(@"3._captureSession.inputs: %@", _mainCaptureSession.inputs);
 }
 
 
 //MARK: - Observer implementation
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
+	if (self.didStartCapturing) {
+		return;
+	}
+
 
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 
@@ -419,15 +425,24 @@
 
 
 	FXDLog_DEFAULT;
-	FXDLog(@"deviceOrientation: %ld", deviceOrientation);
-
-	[self.previewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)deviceOrientation];
-
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
+	FXDLog(@"videoOrientation: %d", self.videoOrientation);
+
+	[self.previewLayer.connection setVideoOrientation:self.videoOrientation];
 }
 
 
 //MARK: - Delegate implementation
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
+//TEST:
+/*
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didDropSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+
+}
+ */
 
 @end
