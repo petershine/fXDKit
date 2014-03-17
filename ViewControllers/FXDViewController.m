@@ -96,23 +96,24 @@
 #if TEST_loggingRotatingOrientation
 - (BOOL)shouldAutorotate {
 	BOOL shouldAutorotate = [super shouldAutorotate];
-	FXDLog(@"%@: %@", selfClassSelector, BOOLStr(shouldAutorotate));
 
-	return [super shouldAutorotate];
+	//FXDLog(@"%@: %@", selfClassSelector, BOOLStr(shouldAutorotate));
+
+	return shouldAutorotate;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
 	FXDLog(@"%@: supportedInterface: %u", selfClassSelector, supportedInterface);
 
-	return [super supportedInterfaceOrientations];
+	return supportedInterface;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
 	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
 	FXDLog(@"%@: preferredInterfaceOrientation: %u", selfClassSelector, preferredInterfaceOrientation);
 
-	return [super preferredInterfaceOrientationForPresentation];
+	return preferredInterfaceOrientation;
 }
 
 #pragma mark -

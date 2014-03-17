@@ -166,7 +166,7 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 	[_mainCaptureSession stopRunning];
 
-	[_previewLayer removeFromSuperlayer];
+	[_mainPreviewLayer removeFromSuperlayer];
 
 	for (AVCaptureDeviceInput *deviceInput in _mainCaptureSession.inputs) {
 		[_mainCaptureSession removeInput:deviceInput];
@@ -211,16 +211,13 @@
 	}
 
 
-	[self configureSessionWithCameraPosition:self.cameraPosition];
-
-
 	//TODO: When taking a phone call, this error appear
 	//ERROR: [0x2bdb000] AVAudioSessionPortImpl.mm:50: ValidateRequiredFields: Unknown selected data source for Port iPhone Microphone (type: MicrophoneBuiltIn)
 	if ([_mainCaptureSession canAddInput:self.deviceInputAudio]) {
 		[_mainCaptureSession addInput:self.deviceInputAudio];
 	}
 
-	//FXDLog(@"_captureSession inputs: %@", [_captureSession inputs]);
+	//FXDLog(@"_mainCaptureSession inputs: %@", [_mainCaptureSession inputs]);
 
 
 	//TODO: Try using separate two queues like GPUImage did"
@@ -260,14 +257,16 @@
 }
 
 #pragma mark -
-- (AVCaptureVideoPreviewLayer*)previewLayer {
-	if (_previewLayer == nil) {	FXDLog_DEFAULT;
-		_previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
-
-		[_previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+- (AVCaptureVideoPreviewLayer*)mainPreviewLayer {
+	if (_mainPreviewLayer) {
+		return _mainPreviewLayer;
 	}
 
-	return _previewLayer;
+	FXDLog_DEFAULT;
+	_mainPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
+	[_mainPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+
+	return _mainPreviewLayer;
 }
 
 #pragma mark -
@@ -351,6 +350,10 @@
 	self.flashMode = AVCaptureFlashModeAuto;
 	self.videoOrientation = AVCaptureVideoOrientationPortrait;
 
+
+	[self configureSessionWithCameraPosition:self.cameraPosition];
+
+
 	[self observedUIDeviceOrientationDidChangeNotification:nil];
 
 	[[NSNotificationCenter defaultCenter]
@@ -360,8 +363,8 @@
 	 object:nil];
 
 
-	self.previewLayer.connection.automaticallyAdjustsVideoMirroring = NO;
-	self.previewLayer.connection.videoMirrored = NO;
+	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroredFront;
+	self.mainPreviewLayer.connection.videoMirrored = self.shouldUseMirroredFront;
 
 	[self.mainCaptureSession startRunning];
 }
@@ -371,42 +374,42 @@
 
 	self.cameraPosition = cameraPosition;
 
-	BOOL shouldRemoveBeforeAdd = _captureSession.isRunning;
+	BOOL shouldRemoveBeforeAdd = self.mainCaptureSession.isRunning;
 	FXDLog(@"shouldRemoveBeforeAdd: %d", shouldRemoveBeforeAdd);
 
 
-	[_mainCaptureSession beginConfiguration];
+	[self.mainCaptureSession beginConfiguration];
 
 	if (shouldRemoveBeforeAdd) {
-		FXDLog(@"1._captureSession.inputs: %@", _mainCaptureSession.inputs);
+		FXDLog(@"1.mainCaptureSession.inputs: %@", self.mainCaptureSession.inputs);
 
-		for (AVCaptureDeviceInput *deviceInput in _mainCaptureSession.inputs) {
+		for (AVCaptureDeviceInput *deviceInput in self.mainCaptureSession.inputs) {
 			if (deviceInput != self.deviceInputAudio) {
-				[_mainCaptureSession removeInput:deviceInput];
+				[self.mainCaptureSession removeInput:deviceInput];
 			}
 		}
 
-		FXDLog(@"2._captureSession.inputs: %@", _mainCaptureSession.inputs);
+		FXDLog(@"2.mainCaptureSession.inputs: %@", self.mainCaptureSession.inputs);
 	}
 
 	if (self.cameraPosition == AVCaptureDevicePositionBack) {
-		FXDLog(@"canAddInput:self.captureInputBack: %d", [_mainCaptureSession canAddInput:self.deviceInputBack]);
+		FXDLog(@"canAddInput:self.deviceInputBack: %d", [self.mainCaptureSession canAddInput:self.deviceInputBack]);
 
-		if ([_mainCaptureSession canAddInput:self.deviceInputBack]) {
-			[_mainCaptureSession addInput:self.deviceInputBack];
+		if ([self.mainCaptureSession canAddInput:self.deviceInputBack]) {
+			[self.mainCaptureSession addInput:self.deviceInputBack];
 		}
 	}
 	else {
-		FXDLog(@"canAddInput:self.captureInputFront: %d", [_mainCaptureSession canAddInput:self.deviceInputFront]);
+		FXDLog(@"canAddInput:self.deviceInputFront: %d", [self.mainCaptureSession canAddInput:self.deviceInputFront]);
 
-		if ([_mainCaptureSession canAddInput:self.deviceInputFront]) {
-			[_mainCaptureSession addInput:self.deviceInputFront];
+		if ([self.mainCaptureSession canAddInput:self.deviceInputFront]) {
+			[self.mainCaptureSession addInput:self.deviceInputFront];
 		}
 	}
 
-	[_mainCaptureSession commitConfiguration];
+	[self.mainCaptureSession commitConfiguration];
 
-	FXDLog(@"3._captureSession.inputs: %@", _mainCaptureSession.inputs);
+	FXDLog(@"3.mainCaptureSession.inputs: %@", self.mainCaptureSession.inputs);
 }
 
 
@@ -428,7 +431,7 @@
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 	FXDLog(@"videoOrientation: %d", self.videoOrientation);
 
-	[self.previewLayer.connection setVideoOrientation:self.videoOrientation];
+	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
 }
 
 
