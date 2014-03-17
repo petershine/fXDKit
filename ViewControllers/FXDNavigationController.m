@@ -44,18 +44,6 @@
 
 
 #pragma mark - Autorotating
-- (BOOL)shouldAutorotate {	//FXDLog_OVERRIDE;
-	return [super shouldAutorotate];
-}
-
-- (NSUInteger)supportedInterfaceOrientations {	//FXDLog_OVERRIDE;
-	return [super supportedInterfaceOrientations];
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_OVERRIDE;
-	return [super preferredInterfaceOrientationForPresentation];
-}
-
 
 #pragma mark - View Appearing
 

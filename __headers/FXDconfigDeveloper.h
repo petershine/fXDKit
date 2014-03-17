@@ -54,7 +54,7 @@
 							[error localizedFailureReason],\
 							[error userInfo]]
 
-#define boolIsMainThread	BOOLString([NSThread isMainThread])
+#define boolIsMainThread	BOOLStr([NSThread isMainThread])
 
 #define strIsMainThread	[NSString\
 						stringWithFormat:@"isMain: %@",\
@@ -119,7 +119,7 @@
 													FXDLog_ERROR;}
 
 
-	#define FXDLog_FINISHED	FXDLog(@"finished: %@", BOOLString(finished))
+	#define FXDLog_FINISHED	FXDLog(@"finished: %@", BOOLStr(finished))
 
 	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
 												FXDLog(@"BLOCK: [%@ %@] %@",\

@@ -34,7 +34,7 @@
 - (void)layoutSubviews {	FXDLog_DEFAULT;
 	[super layoutSubviews];
 
-	FXDLog(@"self.frame: %@", NSStringFromCGRect(self.frame));
+	FXDLog(@"%@", [self describeFrameAndBounds]);
 }
 #endif
 
@@ -282,6 +282,36 @@
 
 #pragma mark -
 - (NSString*)describeFrameAndBounds {
-	return [NSString stringWithFormat:@"%@ (%@)", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds)];
+	return [NSString stringWithFormat:@"frame: %@ bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds)];
 }
+
+#pragma mark -
+- (void)updateLayerForDeviceOrientation {
+	CGAffineTransform affineTransform = [[UIDevice currentDevice] affineTransformForOrientation];
+	CGRect screenFrame = [[UIDevice currentDevice] screenFrameForOrientation];
+
+	[self updateLayerForDeviceOrientationWithAffineTransform:affineTransform andWithScreenFrame:screenFrame];
+}
+
+- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame {	FXDLog_DEFAULT;
+#if TEST_loggingRotatingOrientation
+	FXDLog(@"1.frame: %@ layer: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.layer.frame));
+#endif
+
+	[self.layer setAffineTransform:affineTransform];
+	[self.layer setFrame:screenFrame];
+
+	for (CALayer *sublayer in self.layer.sublayers) {
+		FXDLog(@"1.sublayer.frame: %@", NSStringFromCGRect(sublayer.frame));
+		[sublayer setFrame:sublayer.superlayer.bounds];
+		FXDLog(@"2.sublayer.frame: %@", NSStringFromCGRect(sublayer.frame));
+	}
+
+	[self setNeedsLayout];
+
+#if TEST_loggingRotatingOrientation
+	FXDLog(@"2.frame: %@ layer: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.layer.frame));
+#endif
+}
+
 @end

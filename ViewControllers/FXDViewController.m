@@ -31,7 +31,7 @@
 
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
-		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	// Should use nib instead of xib for file type
+		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
 		
 		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
 			nibNameOrNil = filename;
@@ -67,7 +67,7 @@
 - (void)setNeedsStatusBarAppearanceUpdate {	FXDLog_DEFAULT;
 	[super setNeedsStatusBarAppearanceUpdate];
 
-	FXDLog(@"statusBarHidden: %@ statusBarStyle: %@", @([UIApplication sharedApplication].statusBarHidden), @([UIApplication sharedApplication].statusBarStyle));
+	FXDLog(@"statusBarHidden: %@ statusBarStyle: %@", BOOLStr([UIApplication sharedApplication].statusBarHidden), @([UIApplication sharedApplication].statusBarStyle));
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
@@ -85,24 +85,33 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-	BOOL preference = [super prefersStatusBarHidden];
-	FXDLog(@"preference: %d", preference);
+	BOOL prefers = [super prefersStatusBarHidden];
+	FXDLog(@"prefers: %@", BOOLStr(prefers));
 
-	return preference;
+	return prefers;
 }
 
 
 #pragma mark - Autorotating
 #if TEST_loggingRotatingOrientation
-- (BOOL)shouldAutorotate {	FXDLog_SEPARATE_FRAME;
+- (BOOL)shouldAutorotate {
+	BOOL shouldAutorotate = [super shouldAutorotate];
+	FXDLog(@"%@: %@", selfClassSelector, BOOLStr(shouldAutorotate));
+
 	return [super shouldAutorotate];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {	FXDLog_SEPARATE_FRAME;
+- (NSUInteger)supportedInterfaceOrientations {
+	BOOL supportedInterface = [super supportedInterfaceOrientations];
+	FXDLog(@"%@: supportedInterface: %u", selfClassSelector, supportedInterface);
+
 	return [super supportedInterfaceOrientations];
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_SEPARATE_FRAME;
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
+	FXDLog(@"%@: preferredInterfaceOrientation: %u", selfClassSelector, preferredInterfaceOrientation);
+
 	return [super preferredInterfaceOrientationForPresentation];
 }
 
@@ -127,7 +136,7 @@
 
 #if	ForDEVELOPER
 	if (self.didFinishInitialAppearing) {
-		FXDLog(@"didFinishInitialAppearing: %@", BOOLString(self.didFinishInitialAppearing));
+		FXDLog(@"didFinishInitialAppearing: %@", BOOLStr(self.didFinishInitialAppearing));
 	}
 #endif
 }
@@ -147,7 +156,7 @@
 
 #if ForDEVELOPER
 	if (self.didFinishInitialAppearing == NO) {
-		FXDLog(@"didFinishInitialAppearing: %@", BOOLString(YES));
+		FXDLog(@"didFinishInitialAppearing: %@", BOOLStr(YES));
 	}
 #endif
 
@@ -216,7 +225,7 @@
 	FXDLog(@"identifier: %@", identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
-	FXDLog(@"shouldPerform: %d", shouldPerform);
+	FXDLog(@"shouldPerform: %@", BOOLStr(shouldPerform));
 
 	return shouldPerform;
 }
@@ -249,7 +258,7 @@
 	FXDLog(@"sender: %@", sender);
 
 	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-	FXDLog(@"canPerform: %d", canPerform);
+	FXDLog(@"canPerform: %@", BOOLStr(canPerform));
 
 	return canPerform;
 }
