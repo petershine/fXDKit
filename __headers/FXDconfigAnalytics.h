@@ -20,16 +20,18 @@
 	#endif
 #endif
 
-#if DEBUG
-	#if ForDEVELOPER
-		#ifndef USE_TestFlight
-			#define USE_TestFlight	0
-		#endif
+#if DEBUG &	ForDEVELOPER
+	#ifndef USE_TestFlight
+		#define USE_TestFlight	0
+	#endif
 
-	#else
-		#ifndef USE_TestFlight
-			#define USE_TestFlight	1
-		#endif
+	#ifndef USE_Appsee
+		#define USE_Appsee	0
+	#endif
+
+#elif DEBUG
+	#ifndef USE_TestFlight
+		#define USE_TestFlight	1
 	#endif
 
 	#ifndef USE_Appsee

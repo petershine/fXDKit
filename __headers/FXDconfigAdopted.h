@@ -10,20 +10,22 @@
 #define FXDKit_FXDconfigAdopted_h
 
 
-#ifndef USE_AdvertisementFrameworks
-	#define USE_AdvertisementFrameworks	0
+#ifndef USE_ReactiveCocoa
+	#define	USE_ReactiveCocoa	1
 #endif
 
-#ifndef USE_SocialFrameworks
-	#define USE_SocialFrameworks	0
+#ifndef USE_AFNetworking
+	#define USE_AFNetworking	1
 #endif
 
-#ifndef USE_LocationFrameworks
-	#define USE_LocationFrameworks	0
+#if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
+	#import <ReactiveCocoa.h>
+	#import <RACEXTScope.h>
 #endif
 
-#ifndef USE_MultimediaFrameworks
-	#define USE_MultimediaFrameworks	0
+#if USE_AFNetworking	//https://github.com/AFNetworking/AFNetworking
+	#import <AFNetworking.h>
+	#import <UIKit+AFNetworking.h>
 #endif
 
 
@@ -62,29 +64,6 @@
 	#import "FXDMediaItem.h"
 #endif
 
-
-#ifndef USE_ReactiveCocoa
-	#define	USE_ReactiveCocoa	1
-#endif
-
-#ifndef USE_AFNetworking
-	#define USE_AFNetworking	1
-#endif
-
-#ifndef USE_UAAppReviewManager
-	#define	USE_UAAppReviewManager	0
-#endif
-
-
-#if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
-	#import <ReactiveCocoa.h>
-	#import <RACEXTScope.h>
-#endif
-
-#if USE_AFNetworking	//https://github.com/AFNetworking/AFNetworking
-	#import <AFNetworking.h>
-	#import <UIKit+AFNetworking.h>
-#endif
 
 #if USE_UAAppReviewManager	//https://github.com/UrbanApps/UAAppReviewManager
 	#import <UAAppReviewManager.h>

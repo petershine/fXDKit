@@ -9,33 +9,31 @@
 #define FXDKit_FXDconfigDeveloper_h
 
 
-#if DEBUG
-	#if ForDEVELOPER
-		#ifndef TEST_loggingViewDrawing
-			#define TEST_loggingViewDrawing	0
-		#endif
-
-		#ifndef TEST_loggingResultObjFiltering
-			#define TEST_loggingResultObjFiltering	0
-		#endif
-
-		#ifndef TEST_loggingManagedObject
-			#define TEST_loggingManagedObject	0
-		#endif
-
-		#ifndef TEST_loggingManagedDocumentAutoSaving
-			#define TEST_loggingManagedDocumentAutoSaving	0
-		#endif
-
-		#ifndef TEST_loggingRotatingOrientation
-			#define TEST_loggingRotatingOrientation	0
-		#endif
-
-		#define USE_FXDLog	1
-
-	#else
-		#define USE_FXDLog	0
+#if DEBUG & ForDEVELOPER
+	#ifndef TEST_loggingViewDrawing
+		#define TEST_loggingViewDrawing	0
 	#endif
+
+	#ifndef TEST_loggingResultObjFiltering
+		#define TEST_loggingResultObjFiltering	0
+	#endif
+
+	#ifndef TEST_loggingManagedObject
+		#define TEST_loggingManagedObject	0
+	#endif
+
+	#ifndef TEST_loggingManagedDocumentAutoSaving
+		#define TEST_loggingManagedDocumentAutoSaving	0
+	#endif
+
+	#ifndef TEST_loggingRotatingOrientation
+		#define TEST_loggingRotatingOrientation	0
+	#endif
+
+	#define USE_FXDLog	1
+
+#elif DEBUG
+	#define USE_FXDLog	0
 
 #else
 	#define USE_FXDLog	0
