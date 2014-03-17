@@ -53,4 +53,6 @@
 
 - (void)blinkShadowOpacity;
 
+- (NSString*)describeFrameAndBounds;
+
 @end

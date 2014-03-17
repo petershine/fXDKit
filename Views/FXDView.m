@@ -280,4 +280,8 @@
 	[self.layer addAnimation:blinkShadow forKey:@"shadowOpacity"];
 }
 
+#pragma mark -
+- (NSString*)describeFrameAndBounds {
+	return [NSString stringWithFormat:@"%@ (%@)", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds)];
+}
 @end

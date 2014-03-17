@@ -68,8 +68,6 @@
 	#endif
 
 		FXDLog(@"_mainSqlitePathComponent: %@", _mainSqlitePathComponent);
-
-		LOGEVENT_FULL(@"_mainSqlitePathComponent", @{@"_mainSqlitePathComponent": _mainSqlitePathComponent}, NO);
 	}
 	
 	return _mainSqlitePathComponent;
@@ -79,8 +77,6 @@
 	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
 		_mainUbiquitousContentName = [NSString stringWithFormat:@"ubiquitousContent.%@", self.mainModelName];
 		FXDLog(@"_mainUbiquitousContentName: %@", _mainUbiquitousContentName);
-
-		LOGEVENT_FULL(@"_mainUbiquitousContentName", @{@"_mainUbiquitousContentName": _mainUbiquitousContentName}, NO);
 	}
 	
 	return _mainUbiquitousContentName;

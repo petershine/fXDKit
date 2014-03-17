@@ -52,30 +52,27 @@
 
 #pragma mark - Autorotating
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-	FXDLog(@"toInterfaceOrientation: %ld, duration: %f frame: %@ bounds: %@", (long)toInterfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
+	FXDLog(@"%@: %d, duration: %f %@", selfClassSelector, toInterfaceOrientation, duration, [self.view describeFrameAndBounds]);
 	
-	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLog(@"mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLog(@"imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-	FXDLog(@"interfaceOrientation: %ld, duration: %f frame: %@ bounds: %@", (long)interfaceOrientation, duration, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
+	FXDLog(@"%@: %d, duration: %f %@", selfClassSelector, interfaceOrientation, duration, [self.view describeFrameAndBounds]);
 	
-	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLog(@"mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLog(@"imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 	
 	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {	FXDLog_DEFAULT;
-	FXDLog(@"fromInterfaceOrientation: %ld frame: %@ bounds: %@", (long)fromInterfaceOrientation, NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
-	
-	FXDLog(@"self.mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLog(@"self.imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
-	
-	
-	LOGEVENT_DEFAULT;
+	FXDLog(@"%@: %d, %@", selfClassSelector, fromInterfaceOrientation, [self.view describeFrameAndBounds]);
+
+	FXDLog(@"mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLog(@"imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
 	
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
