@@ -179,7 +179,14 @@
 	self = [super init];
 
 	if (self) {
-        //TODO:
+		_didStartCapturing = NO;
+		_shouldAppendSampleBuffer = NO;
+
+		_shouldUseMirroredFront = NO;
+
+		_cameraPosition = AVCaptureDevicePositionBack;
+		_flashMode = AVCaptureFlashModeAuto;
+		_videoOrientation = AVCaptureVideoOrientationPortrait;
 	}
 
 	return self;
@@ -341,15 +348,6 @@
 
 #pragma mark - Public
 - (void)prepareCaptureManager {	FXDLog_DEFAULT;
-	self.didStartCapturing = NO;
-	self.shouldAppendSampleBuffer = NO;
-
-	self.shouldUseMirroredFront = NO;
-
-	self.cameraPosition = AVCaptureDevicePositionBack;
-	self.flashMode = AVCaptureFlashModeAuto;
-	self.videoOrientation = AVCaptureVideoOrientationPortrait;
-
 
 	[self configureSessionWithCameraPosition:self.cameraPosition];
 
