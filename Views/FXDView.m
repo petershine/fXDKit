@@ -285,6 +285,7 @@
 	return [NSString stringWithFormat:@"frame: %@ bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds)];
 }
 
+#if USE_ExtraFrameworks
 #pragma mark -
 - (void)updateLayerForDeviceOrientation {
 	CGAffineTransform affineTransform = [[UIDevice currentDevice] affineTransformForOrientation];
@@ -313,5 +314,6 @@
 	FXDLog(@"2.frame: %@ layer: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.layer.frame));
 #endif
 }
+#endif
 
 @end

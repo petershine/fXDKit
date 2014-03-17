@@ -11,6 +11,26 @@
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
 
+#if USE_ExtraFrameworks
+@interface UIDevice (Added)
+- (CGAffineTransform)affineTransformForOrientation;
+- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
+
+- (CGRect)screenFrameForOrientation;
+- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
+@end
+
+@interface AVCaptureDevice (Added)
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
+@end
+
+@interface AVPlayerItem (Added)
+- (Float64)progressValue;
+@end
+#endif
+
 
 @class FXDsuperMainCoredata;
 

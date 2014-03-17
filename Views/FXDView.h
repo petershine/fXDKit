@@ -55,7 +55,9 @@
 
 - (NSString*)describeFrameAndBounds;
 
+#if USE_ExtraFrameworks
 - (void)updateLayerForDeviceOrientation;
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame;
+#endif
 
 @end

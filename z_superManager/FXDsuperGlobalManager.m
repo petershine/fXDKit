@@ -31,6 +31,158 @@
 
 @end
 
+#if USE_ExtraFrameworks
+#pragma mark -
+@implementation UIDevice (Added)
+- (CGAffineTransform)affineTransformForOrientation {	//FXDLog_DEFAULT;
+
+	CGAffineTransform affineTransform =
+	[self
+	 affineTransformForOrientation:self.orientation
+	 forPosition:AVCaptureDevicePositionBack];
+
+	return affineTransform;
+}
+
+- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition {
+
+	CGAffineTransform affineTransform =
+	[self
+	 affineTransformForOrientation:self.orientation
+	 forPosition:cameraPosition];
+
+	return affineTransform;
+}
+
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition {
+
+	CGAffineTransform affineTransform = CGAffineTransformIdentity;
+
+	switch (deviceOrientation) {
+		case UIDeviceOrientationLandscapeLeft:
+			affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+
+			if (cameraPosition == AVCaptureDevicePositionFront) {
+				affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+			}
+			break;
+
+		case UIDeviceOrientationLandscapeRight:
+			affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
+
+			if (cameraPosition == AVCaptureDevicePositionFront) {
+				affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
+			}
+			break;
+
+		case UIDeviceOrientationPortraitUpsideDown:
+			affineTransform = CGAffineTransformMakeRotation( ( -90 * M_PI ) / 180 );
+			break;
+
+		case UIDeviceOrientationUnknown:
+		case UIDeviceOrientationFaceUp:
+		case UIDeviceOrientationFaceDown:
+		case UIDeviceOrientationPortrait:
+		default: {
+			affineTransform =  CGAffineTransformMakeRotation( ( 90 * M_PI ) / 180 );
+			break;
+		}
+	}
+
+	//FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
+	return affineTransform;
+}
+
+#pragma mark -
+- (CGRect)screenFrameForOrientation {	//FXDLog_DEFAULT;
+
+	CGRect screenFrame = [self screenFrameForOrientation:self.orientation];
+
+	return screenFrame;
+}
+
+- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation {
+
+	CGRect screenFrame = [UIScreen mainScreen].bounds;
+
+	CGFloat screenWidth = screenFrame.size.width;
+	CGFloat screenHeight = screenFrame.size.height;
+
+	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
+		screenFrame.size.width = screenHeight;
+		screenFrame.size.height = screenWidth;
+	}
+
+	//FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
+
+	return screenFrame;
+}
+
+@end
+
+#pragma mark -
+@implementation AVCaptureDevice (Added)
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode {
+
+	AVCaptureDevice *videoCaptureDevice = nil;
+
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+	for (AVCaptureDevice *device in devices) {
+
+		if ([device position] != cameraPosition) {
+			continue;
+		}
+
+
+		videoCaptureDevice = device;
+		break;
+	}
+
+	[videoCaptureDevice applyDefaultConfigurationWithFlashMode:flashMode];
+
+	return videoCaptureDevice;
+}
+
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode {
+	NSError *error = nil;
+
+	if ([self lockForConfiguration:&error]) {
+
+		if ([self isFlashModeSupported:flashMode]) {
+			self.flashMode = flashMode;
+		}
+
+		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+		}
+
+		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+		}
+
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+		}
+
+		self.subjectAreaChangeMonitoringEnabled = YES;
+
+		[self unlockForConfiguration];
+	}
+
+	FXDLog_ERROR;
+}
+
+@end
+
+#pragma mark -
+@implementation AVPlayerItem (Added)
+- (Float64)progressValue {
+	return (CMTimeGetSeconds([self currentTime])/CMTimeGetSeconds(self.duration));
+}
+@end
+#endif
+
 
 #import "FXDsuperMainCoredata.h"
 

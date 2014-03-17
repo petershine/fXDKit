@@ -6,26 +6,6 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-@interface UIDevice (Added)
-- (CGAffineTransform)affineTransformForOrientation;
-- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
-
-- (CGRect)screenFrameForOrientation;
-- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
-@end
-
-
-@interface AVCaptureDevice (Added)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
-@end
-
-
-@interface AVPlayerItem (Added)
-- (Float64)progressValue;
-@end
-
 
 @interface FXDsuperCaptureManager : FXDObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
