@@ -166,7 +166,7 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 	[_captureSession stopRunning];
 
-	[_capturePreviewLayer removeFromSuperlayer];
+	[_previewLayer removeFromSuperlayer];
 
 	for (AVCaptureDeviceInput *deviceInput in _captureSession.inputs) {
 		[_captureSession removeInput:deviceInput];
@@ -216,8 +216,8 @@
 
 	//TODO: When taking a phone call, this error appear
 	//ERROR: [0x2bdb000] AVAudioSessionPortImpl.mm:50: ValidateRequiredFields: Unknown selected data source for Port iPhone Microphone (type: MicrophoneBuiltIn)
-	if ([_captureSession canAddInput:self.captureInputAudio]) {
-		[_captureSession addInput:self.captureInputAudio];
+	if ([_captureSession canAddInput:self.deviceInputAudio]) {
+		[_captureSession addInput:self.deviceInputAudio];
 	}
 
 	//FXDLog(@"_captureSession inputs: %@", [_captureSession inputs]);
@@ -227,22 +227,30 @@
 	dispatch_queue_t sampleCapturingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 	FXDLog(@"sampleCapturingQueue: %@", sampleCapturingQueue);
 
-	if ([_captureSession canAddOutput:self.capturedVideoOutput]) {
+	if ([_captureSession canAddOutput:self.dataOutputVideo]) {
 
-		[self.capturedVideoOutput
+		NSDictionary *outputSettings = @{(NSString*)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
+		[self.dataOutputVideo setVideoSettings:outputSettings];
+
+		self.dataOutputVideo.alwaysDiscardsLateVideoFrames = NO;
+
+		[self.dataOutputVideo
 		 setSampleBufferDelegate:self
 		 queue:sampleCapturingQueue];
 
-		[_captureSession addOutput:self.capturedVideoOutput];
+		[_captureSession addOutput:self.dataOutputVideo];
 	}
 
-	if ([_captureSession canAddOutput:self.capturedAudioOutput]) {
+	if ([_captureSession canAddOutput:self.dataOutputAudio]) {
 
-		[self.capturedAudioOutput
+		// for audio, we want the channels and sample rate, but we can't get those from audioout.audiosettings on ios, so
+        // we need to wait for the first sample
+
+		[self.dataOutputAudio
 		 setSampleBufferDelegate:self
 		 queue:sampleCapturingQueue];
 
-		[_captureSession addOutput:self.capturedAudioOutput];
+		[_captureSession addOutput:self.dataOutputAudio];
 	}
 
 	[_captureSession commitConfiguration];
@@ -252,51 +260,51 @@
 }
 
 #pragma mark -
-- (AVCaptureVideoPreviewLayer*)capturePreviewLayer {
-	if (_capturePreviewLayer == nil) {	FXDLog_DEFAULT;
-		_capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
+- (AVCaptureVideoPreviewLayer*)previewLayer {
+	if (_previewLayer == nil) {	FXDLog_DEFAULT;
+		_previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
 
-		[_capturePreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+		[_previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
 	}
 
-	return _capturePreviewLayer;
+	return _previewLayer;
 }
 
 #pragma mark -
-- (AVCaptureDeviceInput*)captureInputBack {
-	if (_captureInputBack == nil) {	//FXDLog_DEFAULT;
+- (AVCaptureDeviceInput*)deviceInputBack {
+	if (_deviceInputBack == nil) {	//FXDLog_DEFAULT;
 
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
 											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
-											 withFlashMode:self.captureFlashMode];
+											 withFlashMode:self.flashMode];
 
 		NSError *error = nil;
-		_captureInputBack = [[AVCaptureDeviceInput alloc]
+		_deviceInputBack = [[AVCaptureDeviceInput alloc]
 							 initWithDevice:backVideoCapture
 							 error:&error];FXDLog_ERROR;
 	}
 
-	return _captureInputBack;
+	return _deviceInputBack;
 }
 
-- (AVCaptureDeviceInput*)captureInputFront {
-	if (_captureInputFront == nil) {	//FXDLog_DEFAULT;
+- (AVCaptureDeviceInput*)deviceInputFront {
+	if (_deviceInputFront == nil) {	//FXDLog_DEFAULT;
 
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
 											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
-											  withFlashMode:self.captureFlashMode];
+											  withFlashMode:self.flashMode];
 
 		NSError *error = nil;
-		_captureInputFront = [[AVCaptureDeviceInput alloc]
+		_deviceInputFront = [[AVCaptureDeviceInput alloc]
 							  initWithDevice:frontVideoCapture
 							  error:&error];FXDLog_ERROR;
 	}
 
-	return _captureInputFront;
+	return _deviceInputFront;
 }
 
-- (AVCaptureDeviceInput*)captureInputAudio {
-	if (_captureInputAudio == nil) {	//FXDLog_DEFAULT;
+- (AVCaptureDeviceInput*)deviceInputAudio {
+	if (_deviceInputAudio == nil) {	//FXDLog_DEFAULT;
 
 		NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
 		FXDLog(@"audio devices: %@", devices);
@@ -304,39 +312,31 @@
 		AVCaptureDevice *audioCapture = [devices firstObject];
 
 		NSError *error = nil;
-		_captureInputAudio = [[AVCaptureDeviceInput alloc]
+		_deviceInputAudio = [[AVCaptureDeviceInput alloc]
 							  initWithDevice:audioCapture
 							  error:&error];FXDLog_ERROR;
 	}
 
-	return _captureInputAudio;
+	return _deviceInputAudio;
 }
 
 #pragma mark -
-- (AVCaptureVideoDataOutput*)capturedVideoOutput {
-	if (_capturedVideoOutput == nil) {	//FXDLog_DEFAULT;
+- (AVCaptureVideoDataOutput*)dataOutputVideo {
+	if (_dataOutputVideo == nil) {	//FXDLog_DEFAULT;
 
-		_capturedVideoOutput = [AVCaptureVideoDataOutput new];
-
-		NSDictionary *outputSettings = @{(NSString*)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
-		[_capturedVideoOutput setVideoSettings:outputSettings];
-
-		_capturedVideoOutput.alwaysDiscardsLateVideoFrames = NO;
+		_dataOutputVideo = [AVCaptureVideoDataOutput new];
 	}
 
-	return _capturedVideoOutput;
+	return _dataOutputVideo;
 }
 
-- (AVCaptureAudioDataOutput*)capturedAudioOutput {
-	if (_capturedAudioOutput == nil) {	//FXDLog_DEFAULT;
+- (AVCaptureAudioDataOutput*)dataOutputAudio {
+	if (_dataOutputAudio == nil) {	//FXDLog_DEFAULT;
 
-		_capturedAudioOutput = [AVCaptureAudioDataOutput new];
-
-        // for audio, we want the channels and sample rate, but we can't get those from audioout.audiosettings on ios, so
-        // we need to wait for the first sample
+		_dataOutputAudio = [AVCaptureAudioDataOutput new];
 	}
 
-	return _capturedAudioOutput;
+	return _dataOutputAudio;
 }
 
 
@@ -345,11 +345,11 @@
 #pragma mark - Public
 - (void)prepareCaptureManager {	FXDLog_DEFAULT;
 	self.cameraPosition = AVCaptureDevicePositionBack;
-	self.captureFlashMode = AVCaptureFlashModeAuto;
-	self.capturedVideoOrientation = AVCaptureVideoOrientationPortrait;
+	self.flashMode = AVCaptureFlashModeAuto;
+	self.videoOrientation = AVCaptureVideoOrientationPortrait;
 
-	self.capturePreviewLayer.connection.automaticallyAdjustsVideoMirroring = NO;
-	self.capturePreviewLayer.connection.videoMirrored = NO;
+	self.previewLayer.connection.automaticallyAdjustsVideoMirroring = NO;
+	self.previewLayer.connection.videoMirrored = NO;
 
 
 	[self observedUIDeviceOrientationDidChangeNotification:nil];
@@ -379,7 +379,7 @@
 		FXDLog(@"1._captureSession.inputs: %@", _captureSession.inputs);
 
 		for (AVCaptureDeviceInput *deviceInput in _captureSession.inputs) {
-			if (deviceInput != self.captureInputAudio) {
+			if (deviceInput != self.deviceInputAudio) {
 				[_captureSession removeInput:deviceInput];
 			}
 		}
@@ -388,17 +388,17 @@
 	}
 
 	if (self.cameraPosition == AVCaptureDevicePositionBack) {
-		FXDLog(@"canAddInput:self.captureInputBack: %d", [_captureSession canAddInput:self.captureInputBack]);
+		FXDLog(@"canAddInput:self.captureInputBack: %d", [_captureSession canAddInput:self.deviceInputBack]);
 
-		if ([_captureSession canAddInput:self.captureInputBack]) {
-			[_captureSession addInput:self.captureInputBack];
+		if ([_captureSession canAddInput:self.deviceInputBack]) {
+			[_captureSession addInput:self.deviceInputBack];
 		}
 	}
 	else {
-		FXDLog(@"canAddInput:self.captureInputFront: %d", [_captureSession canAddInput:self.captureInputFront]);
+		FXDLog(@"canAddInput:self.captureInputFront: %d", [_captureSession canAddInput:self.deviceInputFront]);
 
-		if ([_captureSession canAddInput:self.captureInputFront]) {
-			[_captureSession addInput:self.captureInputFront];
+		if ([_captureSession canAddInput:self.deviceInputFront]) {
+			[_captureSession addInput:self.deviceInputFront];
 		}
 	}
 
@@ -421,9 +421,9 @@
 	FXDLog_DEFAULT;
 	FXDLog(@"deviceOrientation: %ld", deviceOrientation);
 
-	[self.capturePreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)deviceOrientation];
+	[self.previewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)deviceOrientation];
 
-	self.capturedVideoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
+	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 }
 
 

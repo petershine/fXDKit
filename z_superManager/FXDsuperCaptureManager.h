@@ -33,19 +33,19 @@
 
 // Properties
 @property (nonatomic) AVCaptureDevicePosition cameraPosition;
-@property (nonatomic) AVCaptureFlashMode captureFlashMode;
-@property (nonatomic) AVCaptureVideoOrientation capturedVideoOrientation;
+@property (nonatomic) AVCaptureFlashMode flashMode;
+@property (nonatomic) AVCaptureVideoOrientation videoOrientation;
 
 @property (strong, nonatomic) AVCaptureSession *captureSession;
 
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer *previewLayer;
 
-@property (strong, nonatomic) AVCaptureDeviceInput *captureInputBack;
-@property (strong, nonatomic) AVCaptureDeviceInput *captureInputFront;
-@property (strong, nonatomic) AVCaptureDeviceInput *captureInputAudio;
+@property (strong, nonatomic) AVCaptureDeviceInput *deviceInputBack;
+@property (strong, nonatomic) AVCaptureDeviceInput *deviceInputFront;
+@property (strong, nonatomic) AVCaptureDeviceInput *deviceInputAudio;
 
-@property (strong, nonatomic) AVCaptureVideoDataOutput *capturedVideoOutput;
-@property (strong, nonatomic) AVCaptureAudioDataOutput *capturedAudioOutput;
+@property (strong, nonatomic) AVCaptureVideoDataOutput *dataOutputVideo;
+@property (strong, nonatomic) AVCaptureAudioDataOutput *dataOutputAudio;
 
 
 #pragma mark - Initialization
