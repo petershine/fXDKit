@@ -14,25 +14,35 @@
 	#define USE_ExtraFrameworks	0
 #endif
 
+#ifndef USE_MultimediaFrameworks
+	#define USE_MultimediaFrameworks	0
+#endif
+
+
 #if USE_ExtraFrameworks
+	@import AdSupport;
 	@import MessageUI;
 	@import Accounts;
 	@import Social;
 
 	@import MapKit;
-	@import MediaPlayer;
-
-	@import AssetsLibrary;
-	@import AVFoundation;
-
-	@import AdSupport;
-
-	#import "FXDMediaItem.h"
-
 	#import "FXDAnnotation.h"
 	#import "FXDAnnotationView.h"
 	#import "FXDMapView.h"
+#endif
 
+#if USE_MultimediaFrameworks
+	@import AssetsLibrary;
+	@import AVFoundation;
+
+	@import CoreMedia;
+	@import CoreVideo;
+	@import CoreGraphics;
+	@import OpenGLES;
+
+	@import MediaPlayer;
+	@import MediaToolbox;
+	#import "FXDMediaItem.h"
 #endif
 
 

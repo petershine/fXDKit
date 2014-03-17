@@ -33,7 +33,7 @@
 		_didStartCapturing = NO;
 		_shouldAppendSampleBuffer = NO;
 
-		_shouldUseMirroredFront = NO;
+		_shouldUseMirroring = NO;
 
 		_cameraPosition = AVCaptureDevicePositionBack;
 		_flashMode = AVCaptureFlashModeAuto;
@@ -123,6 +123,7 @@
 	FXDLog_DEFAULT;
 	_mainPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
 	[_mainPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+	FXDLog(@"_mainPreviewLayer frame: %@ bounds: %@", NSStringFromCGRect(_mainPreviewLayer.frame), NSStringFromCGRect(_mainPreviewLayer.bounds));
 
 	return _mainPreviewLayer;
 }
@@ -200,9 +201,6 @@
 #pragma mark - Public
 - (void)prepareCaptureManager {	FXDLog_DEFAULT;
 
-	[self configureSessionWithCameraPosition:self.cameraPosition];
-
-
 	[self observedUIDeviceOrientationDidChangeNotification:nil];
 
 	[[NSNotificationCenter defaultCenter]
@@ -212,8 +210,7 @@
 	 object:nil];
 
 
-	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroredFront;
-	self.mainPreviewLayer.connection.videoMirrored = self.shouldUseMirroredFront;
+	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
 
 	[self.mainCaptureSession startRunning];
 }

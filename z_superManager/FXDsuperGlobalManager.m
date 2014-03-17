@@ -31,7 +31,7 @@
 
 @end
 
-#if USE_ExtraFrameworks
+#if USE_MultimediaFrameworks
 #pragma mark -
 @implementation UIDevice (Added)
 - (CGAffineTransform)affineTransformForOrientation {	//FXDLog_DEFAULT;

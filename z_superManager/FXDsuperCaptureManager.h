@@ -16,7 +16,7 @@
 @property (nonatomic) BOOL didStartCapturing;
 @property (nonatomic) BOOL shouldAppendSampleBuffer;
 
-@property (nonatomic) BOOL shouldUseMirroredFront;
+@property (nonatomic) BOOL shouldUseMirroring;
 
 @property (nonatomic) AVCaptureDevicePosition cameraPosition;
 @property (nonatomic) AVCaptureFlashMode flashMode;

@@ -285,14 +285,15 @@
 	return [NSString stringWithFormat:@"frame: %@ bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds)];
 }
 
-#if USE_ExtraFrameworks
 #pragma mark -
+#if USE_MultimediaFrameworks
 - (void)updateLayerForDeviceOrientation {
 	CGAffineTransform affineTransform = [[UIDevice currentDevice] affineTransformForOrientation];
 	CGRect screenFrame = [[UIDevice currentDevice] screenFrameForOrientation];
 
 	[self updateLayerForDeviceOrientationWithAffineTransform:affineTransform andWithScreenFrame:screenFrame];
 }
+#endif
 
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame {	FXDLog_DEFAULT;
 #if TEST_loggingRotatingOrientation
@@ -314,6 +315,5 @@
 	FXDLog(@"2.frame: %@ layer: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.layer.frame));
 #endif
 }
-#endif
 
 @end

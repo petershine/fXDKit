@@ -11,7 +11,7 @@
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
 
-#if USE_ExtraFrameworks
+#if USE_MultimediaFrameworks
 @interface UIDevice (Added)
 - (CGAffineTransform)affineTransformForOrientation;
 - (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
