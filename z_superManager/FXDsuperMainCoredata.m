@@ -254,7 +254,6 @@
 			  [self
 			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
 				   FXDLog_BLOCK(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
-				   FXDLog_FINISHED;
 
 				   [self startObservingCoreDataNotifications];
 
@@ -591,7 +590,8 @@
 	 saveToURL:self.mainDocument.fileURL
 	 forSaveOperation:UIDocumentSaveForOverwriting
 	 completionHandler:^(BOOL success) {
-		 FXDLog(@"saveToURL:forSaveOperation: success: %d", success);
+		 FXDLog_BLOCK(self.mainDocument, @selector(saveToURL:forSaveOperation:completionHandler:));
+		 FXDLog(@"success: %@", BOOLStr(success));
 		 
 		 FXDLog(@"2.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
 		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
@@ -623,7 +623,6 @@
 	 saveMainDocumentShouldSkipMerge:NO
 	 withDidFinishBlock:^(BOOL finished) {
 		 FXDLog_BLOCK(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
-		 FXDLog_FINISHED;
 
 		 FXDLog_REMAINING;
 

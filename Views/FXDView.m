@@ -202,7 +202,6 @@
 		 subview.alpha = 1.0;
 	 }
 	 completion:^(BOOL finished) {
-		 //FXDLog_FINISHED;
 		 
 		 if (afterAddedBlock) {
 			 afterAddedBlock();

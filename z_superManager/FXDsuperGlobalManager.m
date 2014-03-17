@@ -503,7 +503,6 @@
 	 withCompleteProtection:withCompleteProtection
 	 didFinishBlock:^(BOOL finished) {
 		 FXDLog_BLOCK(mainCoredata, @selector(prepareWithUbiquityContainerURL:withCompleteProtection:didFinishBlock:));
-		 FXDLog_FINISHED;
 		 
 		 ManagerDidPrepareBlock();
 	 }];
@@ -625,10 +624,6 @@
 #endif
 
 #if USE_Appsee
-	#if ForDEVELOPER
-	[Appsee setDebugToNSLog:YES];
-	#endif
-
 	[Appsee start:appseeAPIkey];
 #endif
 
