@@ -10,8 +10,16 @@
 #define FXDKit_FXDconfigAdopted_h
 
 
-#ifndef USE_ExtraFrameworks
-	#define USE_ExtraFrameworks	0
+#ifndef USE_AdvertisementFrameworks
+	#define USE_AdvertisementFrameworks	0
+#endif
+
+#ifndef USE_SocialFrameworks
+	#define USE_SocialFrameworks	0
+#endif
+
+#ifndef USE_LocationFrameworks
+	#define USE_LocationFrameworks	0
 #endif
 
 #ifndef USE_MultimediaFrameworks
@@ -19,29 +27,38 @@
 #endif
 
 
-#if USE_ExtraFrameworks
+#if USE_AdvertisementFrameworks
+	@import iAd;
 	@import AdSupport;
+#endif
+
+#if USE_SocialFrameworks
 	@import MessageUI;
 	@import Accounts;
 	@import Social;
+#endif
 
+#if USE_LocationFrameworks
+	@import CoreLocation;
 	@import MapKit;
+
 	#import "FXDAnnotation.h"
 	#import "FXDAnnotationView.h"
 	#import "FXDMapView.h"
 #endif
 
 #if USE_MultimediaFrameworks
-	@import AssetsLibrary;
-	@import AVFoundation;
-
 	@import CoreMedia;
 	@import CoreVideo;
 	@import CoreGraphics;
 	@import OpenGLES;
 
+	@import AssetsLibrary;
+	@import AVFoundation;
+
 	@import MediaPlayer;
 	@import MediaToolbox;
+
 	#import "FXDMediaItem.h"
 #endif
 

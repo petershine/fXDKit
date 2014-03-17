@@ -256,8 +256,8 @@
 }
 
 - (NSString*)mainStoryboardName {
-	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
-		FXDLog(@"mainBundlelocalizedInfoDictionary:\n%@", [[NSBundle mainBundle] localizedInfoDictionary]);
+	if (_mainStoryboardName == nil) {
+		FXDLog_OVERRIDE;
 	}
 
 	return _mainStoryboardName;
@@ -477,29 +477,6 @@
 }
 
 - (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
-	
-	//MARK: UUID can be changed is the device is recovered from backup or sent backup to iCloud
-#if ForDEVELOPER
-	FXDLog(@"identifierForVendor: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
-	
-	#if	USE_ExtraFrameworks
-		FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
-	#endif
-
-	
-	//TODO: Later add to FXDmacroEssential.h
-	FXDLog(@"NSUserName(): %@", NSUserName());
-	FXDLog(@"NSFullUserName(): %@", NSFullUserName());
-
-	FXDLog(@"NSHomeDirectory(): %@", NSHomeDirectory());
-	//FXDLog(@"NSHomeDirectoryForUser(NSString *userName): %@", NSHomeDirectoryForUser(NSString *userName));
-
-	FXDLog(@"NSTemporaryDirectory(): %@", NSTemporaryDirectory());
-
-	FXDLog(@"NSOpenStepRootDirectory(): %@", NSOpenStepRootDirectory());
-
-#endif
-
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
 		[self incrementAppLaunchCount];

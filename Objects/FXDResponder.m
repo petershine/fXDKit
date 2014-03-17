@@ -73,6 +73,23 @@
 		 clickedButtonAtIndexBlock:nil
 		 cancelButtonTitle:nil];
 	}
+
+
+	FXDLog(@"[NSBundle mainBundle] infoDictionary:\n%@", [[NSBundle mainBundle] infoDictionary]);
+
+	FXDLog(@"identifierForVendor: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
+
+#if	USE_AdvertisementFrameworks
+	FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
+#endif
+
+	FXDLog(@"NSUserName(): %@", NSUserName());
+	FXDLog(@"NSFullUserName(): %@", NSFullUserName());
+
+	FXDLog(@"NSHomeDirectory(): %@", NSHomeDirectory());
+	FXDLog(@"NSTemporaryDirectory(): %@", NSTemporaryDirectory());
+
+	FXDLog(@"NSOpenStepRootDirectory(): %@", NSOpenStepRootDirectory());
 #endif
 
 	return YES;
