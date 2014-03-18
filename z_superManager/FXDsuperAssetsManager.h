@@ -6,16 +6,14 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#import <AssetsLibrary/AssetsLibrary.h>
+@import AssetsLibrary;
 
-#pragma mark - ALAsset Category
 @interface ALAsset (Added)
 - (id)valueForKey:(NSString *)key;
 @end
 
 
 @interface FXDsuperAssetsManager : FXDObject
-
 // Properties
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 

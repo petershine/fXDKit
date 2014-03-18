@@ -8,7 +8,6 @@
 
 
 @interface FXDFetchedResultsController : NSFetchedResultsController
-
 // Properties
 @property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> additionalDelegate;
 

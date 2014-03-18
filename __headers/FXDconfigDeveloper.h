@@ -166,7 +166,6 @@
 	#define FXDAssert1(condition, desc, arg1)	{}
 	#define FXDAssert_IsMainThread
 
-
 #endif
 
 

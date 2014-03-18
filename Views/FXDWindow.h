@@ -27,7 +27,6 @@
 
 
 @interface FXDWindow : UIWindow
-
 // Properties
 
 // IBOutlets

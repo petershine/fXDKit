@@ -10,7 +10,23 @@
 
 
 @interface FXDViewController : UIViewController
+// Properties
 @property (nonatomic) BOOL didFinishInitialAppearing;
+
+// IBOutlets
+
+
+#pragma mark - Segues
+
+#pragma mark - IBActions
+
+#pragma mark - Public
+
+
+//MARK: - Observer implementation
+
+//MARK: - Delegate implementation
+
 @end
 
 

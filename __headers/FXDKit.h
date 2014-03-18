@@ -27,7 +27,7 @@
 @import ImageIO;
 
 
-// Headers
+#pragma mark - Headers
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDlocalizedStrings.h"
@@ -39,20 +39,17 @@
 #import "FXDconfigDeveloper.h"
 
 
-// Adopted
+#pragma mark - Adopted
 #import "FXDconfigAdopted.h"
 
 
-// Objects
+#pragma mark - Objects
 #import "FXDObject.h"
 
 #import "FXDString.h"
-#import "FXDDate.h"
 #import "FXDURL.h"
 #import "FXDNumber.h"
-#import "FXDBlockOperation.h"
 
-#import "FXDColor.h"
 #import "FXDImage.h"
 
 #import "FXDCollectionViewLayout.h"
@@ -70,12 +67,8 @@
 
 #import "FXDMetadataQuery.h"
 
-#import	"FXDIndexPath.h"
 
-#import "FXDBarButtonItem.h"
-
-
-// Views
+#pragma mark - Views
 #import "FXDView.h"
 
 #import "FXDButton.h"
@@ -96,15 +89,76 @@
 #import "FXDPopoverBackgroundView.h"
 
 
-// ViewControllers
+#pragma mark - ViewControllers
 #import "FXDViewController.h"
 #import "FXDNavigationController.h"
 #import "FXDPopoverController.h"
 #import "FXDPageViewController.h"
 
 
-// Global controllers
+#pragma mark - Global controllers
 #import "FXDResponder.h"
 
 
 #endif
+
+
+#pragma mark - Categories
+@interface NSIndexPath (Added)
+- (NSString*)stringValue;
+@end
+
+
+@interface NSError (Added)
+- (NSDictionary*)essentialParameters;
+@end
+
+
+@interface NSDate (Added)
++ (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
++ (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;
+
+- (NSInteger)yearValue;
+- (NSInteger)monthValue;
+- (NSInteger)dayValue;
+
+- (NSString*)shortMonthString;
+- (NSString*)weekdayString;
+
+- (NSInteger)hourValue;
+- (NSInteger)minuteValue;
+- (NSInteger)secondValue;
+
+- (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
+@end
+
+
+@interface UIColor (Added)
++ (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue;
++ (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(CGFloat)alpha;
++ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha;	// Use 0xFF0000 type
+@end
+
+
+@interface UIBarButtonItem (Added)
+- (void)customizeWithNormalImage:(UIImage*)normalImage andWithHighlightedImage:(UIImage*)highlightedImage;
+@end
+
+
+@interface UIApplication (Added)
+- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
+@end
+
+
+#if USE_MultimediaFrameworks
+@interface UIDevice (Added)
+- (CGAffineTransform)affineTransformForOrientation;
+- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
+
+- (CGRect)screenFrameForOrientation;
+- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
+@end
+
+#endif
+

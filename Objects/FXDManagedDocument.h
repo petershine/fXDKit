@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-//MARK: FXDManagedDocument
 #if TEST_loggingManagedDocumentAutoSaving
 	#ifndef FXDdocLog
 		#define FXDdocLog	FXDLog
@@ -25,7 +24,6 @@
 
 @interface FXDManagedDocument : UIManagedDocument
 // Properties
-
 
 #pragma mark - Initialization
 

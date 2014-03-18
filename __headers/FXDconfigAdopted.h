@@ -55,7 +55,6 @@
 	@import CoreGraphics;
 	@import OpenGLES;
 
-	@import AssetsLibrary;
 	@import AVFoundation;
 
 	@import MediaPlayer;

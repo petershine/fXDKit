@@ -1,24 +1,55 @@
 //
-//  FXDsuperGlobalManager+MailComposing.m
+//  FXDsuperMessageManager.m
 //
 //
-//  Created by petershine on 1/8/13.
-//  Copyright (c) 2013 fXceed All rights reserved.
+//  Created by petershine on 3/18/14.
+//  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperGlobalManager.h"
+#import "FXDsuperMessageManager.h"
 
 
-@implementation FXDsuperGlobalManager (MailComposing)
+#pragma mark - Public implementation
+@implementation FXDsuperMessageManager
+
+
+#pragma mark - Memory management
+- (void)dealloc {
+    //TODO:
+}
+
+
+#pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+        //TODO:
+	}
+
+	return self;
+}
+
+#pragma mark -
++ (FXDsuperMessageManager*)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
+}
+
+
+#pragma mark - Property overriding
+
+#pragma mark - Method overriding
+
+#pragma mark - Public
 - (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
-	
-	
+
+
 	if ([MFMailComposeViewController canSendMail] == NO) {
 		//TODO: alert user
 		return;
 	}
-	
-	
+
+
 	if (emailController == nil) {
 		if (image || message) {
 			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
@@ -27,20 +58,20 @@
 			emailController = [self preparedMailComposeInterface];
 		}
 	}
-	
+
 	if (presentingController == nil) {
 		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
-		
+
 		if (applicationWindow.rootViewController) {
 			FXDLog(@"applicationWindow.rootViewController: %@", applicationWindow.rootViewController);
-			
+
 			presentingController = applicationWindow.rootViewController;
 		}
 	}
-	
-	
+
+
 	[emailController setMailComposeDelegate:self];
-	
+
 	[presentingController
 	 presentViewController:emailController
 	 animated:YES
@@ -63,7 +94,7 @@
 	NSString *mailAddr = NSLocalizedString(application_ContactEmail, nil);
 
 	NSArray *toRecipients = nil;
-	
+
 	if (mailAddr) {
 		toRecipients = @[mailAddr];
 	}
@@ -76,7 +107,7 @@
 	NSString *lineSeparator = @"_______________________________";
 	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
 
-	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", self.deviceModelName, [[UIDevice currentDevice] systemVersion]];
+	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", [AppGlobalManager deviceModelName], [[UIDevice currentDevice] systemVersion]];
 
 	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
 
@@ -96,19 +127,19 @@
 
 	//TEST: Find the right way to use
 	/*
-	NSString *stringNetwork = [[AFNetworkReachabilityManager sharedManager] localizedNetworkReachabilityStatusString];
-	FXDLog(@"1.stringNetwork: %@", stringNetwork);
+	 NSString *stringNetwork = [[AFNetworkReachabilityManager sharedManager] localizedNetworkReachabilityStatusString];
+	 FXDLog(@"1.stringNetwork: %@", stringNetwork);
 
-	if ([[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi]) {
-		stringNetwork = @"Network : WiFi";
-	}
-	else {
-		stringNetwork = @"Network : 3G network";
-	}
-	
-	FXDLog(@"2.stringNetwork: %@", stringNetwork);
+	 if ([[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi]) {
+	 stringNetwork = @"Network : WiFi";
+	 }
+	 else {
+	 stringNetwork = @"Network : 3G network";
+	 }
 
-	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n%@\n", stringLine, stringAppVersion, stringDevice, stringCountry, stringNetwork];
+	 FXDLog(@"2.stringNetwork: %@", stringNetwork);
+
+	 NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n%@\n", stringLine, stringAppVersion, stringDevice, stringCountry, stringNetwork];
 	 */
 
 	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n", lineSeparator, stringAppVersion, stringDevice, stringCountry];
@@ -150,5 +181,9 @@
 	[controller dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+//MARK: - Observer implementation
+
+//MARK: - Delegate implementation
 
 @end

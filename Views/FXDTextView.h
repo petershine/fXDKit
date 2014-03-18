@@ -8,7 +8,6 @@
 
 
 @interface FXDTextView : UITextView
-
 // Properties
 
 // IBOutlets

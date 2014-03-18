@@ -10,10 +10,6 @@
 #define FXDKit_FXDlocalizedStrings_h
 
 
-// Application
-#define application_IconName	@"application_IconName"
-
-
 // Alert
 #define alert_DoYouReallyWantToDelete			@"alert_DoYouReallyWantToDelete"
 #define alert_DoYouReallyWantToReset			@"alert_DoYouReallyWantToReset"
@@ -103,10 +99,6 @@
 #endif
 
 /*
- // Application
- "application_IconName" = "<#application_IconName#>";
-
-
  // Alert
  "alert_DoYouReallyWantToDelete" = "<#Do you really want to delete?#>";
  "alert_DoYouReallyWantToReset" = "<#Do you really want to reset?#>";

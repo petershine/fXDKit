@@ -6,36 +6,7 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-@interface NSError (Added)
-- (NSDictionary*)essentialParameters;
-@end
-
-@interface UIApplication (Added)
-- (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
-@end
-
-#if USE_MultimediaFrameworks
-@interface UIDevice (Added)
-- (CGAffineTransform)affineTransformForOrientation;
-- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
-
-- (CGRect)screenFrameForOrientation;
-- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
-@end
-
-@interface AVCaptureDevice (Added)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
-@end
-
-@interface AVPlayerItem (Added)
-- (Float64)progressValue;
-@end
-#endif
-
-
-@class FXDsuperMainCoredata;
+#import "FXDsuperMainCoredata.h"
 
 
 @interface FXDsuperGlobalManager : FXDObject {
@@ -113,13 +84,3 @@
 
 @end
 
-
-#pragma mark - Category
-#if USE_SocialFrameworks
-@interface FXDsuperGlobalManager (MailComposing) <MFMailComposeViewControllerDelegate>
-
-- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message;
-- (MFMailComposeViewController*)preparedMailComposeInterface;
-- (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
-@end
-#endif

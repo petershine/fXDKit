@@ -9,6 +9,10 @@
 #ifndef FXDKit_FXDmacroEssential_h
 #define FXDKit_FXDmacroEssential_h
 
+#ifndef AppGlobalManager
+	#warning "//TODO: Must define application's own globalManager"
+	#define AppGlobalManager	[FXDsuperGlobalManager sharedInstance]
+#endif
 
 #ifndef application_AppStoreID
 	#define application_AppStoreID	@"000000000"
@@ -69,7 +73,6 @@
 #define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
 
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
-
 
 
 #define NSIndexPathMake(section, row)	[NSIndexPath indexPathForRow:row inSection:section]

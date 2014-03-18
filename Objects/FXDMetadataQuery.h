@@ -8,7 +8,6 @@
 
 
 @interface FXDMetadataQuery : NSMetadataQuery
-
 // Properties
 
 #pragma mark - Public
@@ -22,7 +21,6 @@
 #pragma mark - Category
 @interface NSMetadataQuery (Added)
 - (BOOL)isQueryResultsTransferringWithLogString:(NSString*)logString;
-
 @end
 
 
@@ -31,5 +29,4 @@
 
 - (NSString*)unicodeAbsoluteString;
 - (NSDate*)attributeModificationDate;
-
 @end

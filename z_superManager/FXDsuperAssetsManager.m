@@ -8,12 +8,11 @@
 
 #import "FXDsuperAssetsManager.h"
 
-#pragma mark - ALAsset Category
+
 @implementation ALAsset (Added)
 - (id)valueForKey:(NSString *)key {
 	return [self valueForProperty:key];
 }
-
 @end
 
 
@@ -22,21 +21,13 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 
 #pragma mark - Initialization
 - (id)init {
 	self = [super init];
 	
 	if (self) {
-		// Primitives
-		
-		// Instance variables
-		
-		// Properties
+		FXDLog_SEPARATE;
 	}
 	
 	return self;

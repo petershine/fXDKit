@@ -104,7 +104,7 @@
 	
 	__weak typeof(self) weakSelf = self;
 	
-	FXDBlockOperation *cellOperation = [FXDBlockOperation new];
+	NSBlockOperation *cellOperation = [NSBlockOperation new];
 	__weak typeof(cellOperation) weakOperation = cellOperation;
 	
 	[cellOperation addExecutionBlock:^{

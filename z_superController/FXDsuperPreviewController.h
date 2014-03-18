@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
+@import AssetsLibrary;
+
+
 #import "FXDsuperCaptureManager.h"
 
 

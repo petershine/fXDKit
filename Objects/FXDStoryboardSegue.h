@@ -8,12 +8,9 @@
 
 
 @interface FXDStoryboardSegue : UIStoryboardSegue
-
 // Properties
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

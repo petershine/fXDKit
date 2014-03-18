@@ -8,7 +8,6 @@
 
 
 @interface FXDCollectionView : UICollectionView
-
 // Properties
 
 // IBOutlets

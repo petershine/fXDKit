@@ -9,6 +9,66 @@
 #import "FXDsuperCaptureManager.h"
 
 
+@implementation AVCaptureDevice (Added)
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode {
+
+	AVCaptureDevice *videoCaptureDevice = nil;
+
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+	for (AVCaptureDevice *device in devices) {
+
+		if ([device position] != cameraPosition) {
+			continue;
+		}
+
+
+		videoCaptureDevice = device;
+		break;
+	}
+
+	[videoCaptureDevice applyDefaultConfigurationWithFlashMode:flashMode];
+
+	return videoCaptureDevice;
+}
+
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode {
+	NSError *error = nil;
+
+	if ([self lockForConfiguration:&error]) {
+
+		if ([self isFlashModeSupported:flashMode]) {
+			self.flashMode = flashMode;
+		}
+
+		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+		}
+
+		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+		}
+
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+		}
+
+		self.subjectAreaChangeMonitoringEnabled = YES;
+
+		[self unlockForConfiguration];
+	}
+
+	FXDLog_ERROR;
+}
+@end
+
+@implementation AVPlayerItem (Added)
+- (Float64)progressValue {
+	return (CMTimeGetSeconds([self currentTime])/CMTimeGetSeconds(self.duration));
+}
+@end
+
+
 #pragma mark - Public implementation
 @implementation FXDsuperCaptureManager
 
@@ -275,7 +335,7 @@
 
 	FXDLog_DEFAULT;
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-	FXDLog(@"videoOrientation: %d", self.videoOrientation);
+	FXDLog(@"videoOrientation: %ld", self.videoOrientation);
 
 	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
 }

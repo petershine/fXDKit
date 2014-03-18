@@ -14,10 +14,6 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
-	//GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
-}
-
 
 #pragma mark - Initialization
 - (instancetype)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation options:(NSDictionary *)options {	FXDLog_DEFAULT;

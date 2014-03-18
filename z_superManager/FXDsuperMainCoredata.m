@@ -695,7 +695,6 @@
 
 		//MARK: Unless save is done for private context in background, you can skip merging"
 		if (self.shouldMergeForManagedContext) {
-#warning "//TODO: Test using @synchronized(self) for safe concurrency"
 			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 			FXDLog(@"DID MERGE: self.mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);
 		}

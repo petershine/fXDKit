@@ -210,7 +210,7 @@
 	}
 	
 	
-	FXDBlockOperation *cellOperation = (self.cellOperationDictionary)[operationObjKey];
+	NSBlockOperation *cellOperation = (self.cellOperationDictionary)[operationObjKey];
 	
 	if (cellOperation) {
 		[cellOperation cancel];

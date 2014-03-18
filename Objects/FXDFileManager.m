@@ -34,36 +34,40 @@
 @implementation NSFileManager (Added)
 - (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL {
 	
-	NSDirectoryEnumerator *fullEnumerator = [self enumeratorAtURL:rootURL
-									   includingPropertiesForKeys:nil
-														  options:0
-													 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
-														 FXDLog_ERROR;
-														 FXDLog(@"url: %@", url);
-														 
-														 return YES;
-													 }];
-	
+	NSDirectoryEnumerator *fullEnumerator =
+	[self
+	 enumeratorAtURL:rootURL
+	 includingPropertiesForKeys:nil
+	 options:0
+	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+		 FXDLog_ERROR;
+		 FXDLog(@"url: %@", url);
+
+		 return YES;
+	 }];
+
 	return fullEnumerator;
 }
 
 - (NSDirectoryEnumerator*)limitedEnumeratorForRootURL:(NSURL*)rootURL {
 	
-	NSDirectoryEnumerator *limitedEnumerator = [self enumeratorAtURL:rootURL
-										  includingPropertiesForKeys:nil
-															 options:NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsPackageDescendants
-														errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
-															FXDLog_ERROR;
-															FXDLog(@"url: %@", url);
-															
-															return YES;
-														}];
-	
+	NSDirectoryEnumerator *limitedEnumerator =
+	[self
+	 enumeratorAtURL:rootURL
+	 includingPropertiesForKeys:nil
+	 options:NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
+	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+		 FXDLog_ERROR;
+		 FXDLog(@"url: %@", url);
+
+		 return YES;
+	 }];
+
 	return limitedEnumerator;
 }
 
 - (NSMutableDictionary*)infoDictionaryForFolderURL:(NSURL*)folderURL {
-	
+
 	NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
 	infoDictionary[@"folderName"] = [folderURL lastPathComponent];

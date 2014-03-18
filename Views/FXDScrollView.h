@@ -8,7 +8,6 @@
 
 
 @interface FXDScrollView : UIScrollView
-
 // Properties
 
 // IBOutlets

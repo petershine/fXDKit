@@ -8,13 +8,10 @@
 
 
 @interface FXDAnnotation : MKPointAnnotation
-
 // Properties
 @property (strong, nonatomic) id addedObj;
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

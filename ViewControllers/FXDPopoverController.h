@@ -8,7 +8,6 @@
 
 
 @interface FXDPopoverController : UIPopoverController
-
 // Properties
 
 

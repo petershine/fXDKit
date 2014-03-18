@@ -8,7 +8,6 @@
 
 
 @interface FXDTableViewCell : UITableViewCell
-
 // Properties
 @property (nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 

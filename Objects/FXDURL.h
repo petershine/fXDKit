@@ -10,9 +10,7 @@
 @interface FXDURL : NSURL
 // Properties
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

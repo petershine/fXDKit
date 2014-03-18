@@ -8,7 +8,6 @@
 
 
 @interface FXDManagedObject : NSManagedObject
-
 // Properties
 
 #pragma mark - Public

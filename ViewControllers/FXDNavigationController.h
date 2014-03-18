@@ -8,7 +8,6 @@
 
 
 @interface FXDNavigationController : UINavigationController
-
 // Properties
 
 // IBOutlets

@@ -14,15 +14,12 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 #pragma mark - Initialization
 - (instancetype)init {
 	self = [super init];
 
-	if (self) {
+	if (self) {	FXDLog_SEPARATE;
 		[[NSNotificationCenter defaultCenter]
 		 addObserver:self
 		 selector:@selector(observedACAccountStoreDidChange:)
