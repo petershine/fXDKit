@@ -6,6 +6,9 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+@interface NSError (Added)
+- (NSDictionary*)essentialParameters;
+@end
 
 @interface UIApplication (Added)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;

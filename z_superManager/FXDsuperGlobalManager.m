@@ -8,6 +8,20 @@
 
 #import "FXDsuperGlobalManager.h"
 
+@implementation NSError (Added)
+- (NSDictionary*)essentialParameters {
+	NSDictionary *parameters =
+	@{
+	  @"localizedDescription": (([self localizedDescription]) ? [self localizedDescription]:@""),
+	  @"domain":	(([self domain]) ? [self domain]:@""),
+	  @"code":	@([self code]),
+	  @"userInfo":	(([self userInfo]) ? [self userInfo]:@"")
+	  };
+
+	return parameters;
+}
+@end
+
 @implementation UIApplication (Added)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {

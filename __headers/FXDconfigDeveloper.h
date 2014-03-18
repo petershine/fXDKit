@@ -32,11 +32,9 @@
 
 	#define USE_FXDLog	1
 
-#elif DEBUG
-	#define USE_FXDLog	0
-
 #else
 	#define USE_FXDLog	0
+
 #endif
 
 

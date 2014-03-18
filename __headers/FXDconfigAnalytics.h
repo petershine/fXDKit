@@ -69,6 +69,7 @@
 								LOGEVENT_FULL(selfClassSelector, parameters, NO);}
 #else
 	#define LOGEVENT(__FORMAT__, ...)	{}
+
 	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	{}
 	#define LOGEVENT_END(identifier, parameters)	{}
 
