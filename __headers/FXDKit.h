@@ -28,15 +28,15 @@
 
 
 // Headers
-#import "FXDconfigAnalytics.h"
-#import "FXDconfigDeveloper.h"
-
 #import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDlocalizedStrings.h"
 #import "FXDimageNames.h"
 
 #import "FXDmacroEssential.h"
+
+#import "FXDconfigAnalytics.h"
+#import "FXDconfigDeveloper.h"
 
 
 // Adopted
@@ -45,8 +45,6 @@
 
 // Objects
 #import "FXDObject.h"
-
-#import "FXDError.h"
 
 #import "FXDString.h"
 #import "FXDDate.h"
