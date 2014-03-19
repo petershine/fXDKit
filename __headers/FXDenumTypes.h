@@ -36,12 +36,6 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 	coverDirectionBottom
 };
 
-// FXDsuperPreviewController
-typedef NS_ENUM(NSInteger, ITEM_VIEWER_TYPE) {
-	itemViewerPhoto,
-	itemViewerVideo,
-};
-
 
 typedef void (^FXDblockDidFinish)(BOOL finished);
 

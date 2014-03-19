@@ -335,7 +335,7 @@
 
 	FXDLog_DEFAULT;
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-	FXDLog(@"videoOrientation: %ld", self.videoOrientation);
+	FXDLog(@"videoOrientation: %ld", (long)self.videoOrientation);
 
 	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
 }

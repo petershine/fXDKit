@@ -7,7 +7,7 @@
 //
 
 #import "FXDPageViewController.h"
-#import "FXDsuperPreviewController.h"
+#import "FXDsuperReviewController.h"
 
 
 #import "FXDsuperContainer.h"

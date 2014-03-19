@@ -108,7 +108,7 @@
 	[weakSelf.mainDataSource addObject:addedObj];
 	
 	
-	FXDsuperPreviewController *previewPage = [weakSelf previewPageForModifiedPageIndex:[weakSelf.mainDataSource count]-1];
+	FXDsuperReviewController *previewPage = [weakSelf previewPageForModifiedPageIndex:[weakSelf.mainDataSource count]-1];
 	
 	[weakSelf.mainPageController
 	 setViewControllers:@[previewPage]
@@ -123,12 +123,6 @@
 - (id)previewPageForModifiedPageIndex:(NSInteger)modifiedPageIndex {	FXDLog_OVERRIDE;
 	FXDLog(@"modifiedPageIndex: %ld", (long)modifiedPageIndex);
 	
-	/*
-	 FXDsuperPreviewController *photoPage = [globalManager.mainStoryboard instantiateViewControllerWithIdentifier:];
-	 
-	 photoPage.previewPageIndex = modifiedPageIndex;
-	 */
-	
 	return nil;
 }
 
@@ -137,7 +131,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(FXDsuperPreviewController*)beforeViewController {	FXDLog_DEFAULT;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(FXDsuperReviewController*)beforeViewController {	FXDLog_DEFAULT;
 	
 	UIViewController *previousController = nil;
 	
@@ -153,7 +147,7 @@
 	return previousController;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(FXDsuperPreviewController*)afterViewController {	FXDLog_DEFAULT;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(FXDsuperReviewController*)afterViewController {	FXDLog_DEFAULT;
 	
 	UIViewController *nextController = nil;
 	
@@ -168,19 +162,6 @@
 	
 	return nextController;
 }
-
-#pragma mark -
-/*
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
-	return [self.mainDataSource count];
-}
-
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
-	FXDsuperPreviewController *previewPage = [pageViewController.viewControllers lastObject];
-	
-	return previewPage.previewPageIndex;	
-}
- */
 
 #pragma mark - UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {	FXDLog_DEFAULT;
