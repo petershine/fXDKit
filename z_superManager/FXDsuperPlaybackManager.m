@@ -82,10 +82,12 @@
 			  @weakify(self);
 			  [RACObserve(self.videoPlayer.currentItem, status)
 			   subscribeNext:^(id status) {	@strongify(self);
-				   FXDLog_REACT(self.videoPlayer.currentItem, @selector(status), status);
+				   if ([status integerValue] == AVAssetExportSessionStatusFailed) {
+					   FXDLog_REACT(self.videoPlayer.currentItem, @selector(status), status);
 
-				   NSError *error = self.videoPlayer.currentItem.error;
-				   FXDLog_ERROR;CHECKPOINT_ERROR;
+					   NSError *error = self.videoPlayer.currentItem.error;
+					   FXDLog_ERROR;CHECKPOINT_ERROR;
+				   }
 			   }];
 
 

@@ -90,17 +90,17 @@
 }
 
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
-#if	TEST_loggingRotatingOrientation
-	FXDLog_DEFAULT;
-#endif
-
 	//FXDLog(@"notification: %@", notification);
 
 	if (self.progressView.viewIndicatorGroup == nil) {
 		return;
 	}
+
 	
-	
+#if	TEST_loggingRotatingOrientation
+	FXDLog_DEFAULT;
+#endif
+
 	self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
 	
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
