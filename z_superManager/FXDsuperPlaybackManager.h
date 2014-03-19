@@ -9,6 +9,11 @@
 @import AssetsLibrary;
 
 
+@interface AVPlayerItem (Added)
+- (Float64)progressValue;
+@end
+
+
 @interface FXDviewVideoDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 @end

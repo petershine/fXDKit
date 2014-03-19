@@ -9,6 +9,13 @@
 #import "FXDsuperPlaybackManager.h"
 
 
+@implementation AVPlayerItem (Added)
+- (Float64)progressValue {
+	return (CMTimeGetSeconds([self currentTime])/CMTimeGetSeconds(self.duration));
+}
+@end
+
+
 @implementation FXDviewVideoDisplay
 + (Class)layerClass {
 	return [AVPlayerLayer class];
