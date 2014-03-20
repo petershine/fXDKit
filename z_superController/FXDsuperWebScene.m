@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-
 #import "FXDsuperWebScene.h"
 
 
@@ -24,13 +23,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	//MARK: Assume keyboard dismissal is default for WebView
-	if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-
-	}
-	else {
-		self.mainWebview.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-	}
+	self.mainWebview.scalesPageToFit = YES;
 }
 
 #pragma mark - StatusBar
@@ -38,6 +31,20 @@
 #pragma mark - Autorotating
 
 #pragma mark - View Appearing
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+
+	NSString *webURL = [[NSUserDefaults standardUserDefaults] stringForKey:userdefaultStringInitialWebURL];
+
+	if ([webURL length] == 0) {
+		webURL = initialWebURLstring;
+
+		[[NSUserDefaults standardUserDefaults] setObject:webURL forKey:userdefaultIntegerAppLaunchCount];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
+
+	[self loadWebURLstring:webURL];
+}
 
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
@@ -73,6 +80,8 @@
 }
 
 - (IBAction)pressedPageReloadButton:(id)sender {	FXDLog_DEFAULT;
+	[self.mainWebview stopLoading];
+
 	[self.mainWebview reload];
 }
 
@@ -81,6 +90,32 @@
 }
 
 #pragma mark - Public
+- (void)loadWebURLstring:(NSString*)webURLstring {	FXDLog_DEFAULT;
+
+	BOOL isValid = [NSURL validateWebURLstringOrModifyURLstring:&webURLstring];
+
+	if (isValid == NO) {
+		return;
+	}
+
+
+	FXDLog(@"mainWebview.isLoading: %d", self.mainWebview.isLoading);
+
+	if (self.mainWebview.isLoading) {
+		return;
+	}
+
+
+	[[NSUserDefaults standardUserDefaults] setObject:webURLstring forKey:userdefaultStringInitialWebURL];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
+	self.initialWebRequest = [[NSURLRequest alloc]
+							  initWithURL:[NSURL URLWithString:webURLstring]
+							  cachePolicy:NSURLRequestUseProtocolCachePolicy
+							  timeoutInterval:(intervalOneSecond*60.0)];
+
+	[self.mainWebview loadRequest:self.initialWebRequest];
+}
 
 
 //MARK: - Observer implementation
@@ -101,6 +136,7 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
+#if ForDEVELOPER
 	NSString *source = [webView stringByEvaluatingJavaScriptFromString:
 						@"document.getElementsByTagName('html')[0].outerHTML"];
 
@@ -108,6 +144,7 @@
 
 	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
 	FXDLog(@"webviewResponse allHeaderFields: %@",[(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
+#endif
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {	FXDLog_DEFAULT;

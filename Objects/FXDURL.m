@@ -34,41 +34,29 @@
 #pragma mark - Category
 @implementation NSURL (Added)
 + (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring {	FXDLog_DEFAULT;
-#warning  "//TODO: Find the right regex to include port number
-	return YES;
 
-	
 	if ([*webURLstring length] == 0) {
 		return NO;
 	}
 
 
-	BOOL isValidWebURLstring = NO;
+	if ([*webURLstring rangeOfString:@"http://"].length == 0) {
+		*webURLstring = [@"http://%@" stringByAppendingString:*webURLstring];
+	}
+
+
+	#warning  "//TODO: Find the right regex to include port number
+	return YES;
 
 
 	NSString *testRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
 	NSPredicate *testPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", testRegEx];
 
-	isValidWebURLstring = [testPredicate evaluateWithObject:*webURLstring];
+	BOOL isValid = [testPredicate evaluateWithObject:*webURLstring];
 
-	FXDLog(@"1.isValidWebURLstring: %d *webURLstring: %@", isValidWebURLstring, *webURLstring);
+	FXDLog(@"isValid: %d *webURLstring: %@", isValid, *webURLstring);
 
-	if (isValidWebURLstring) {
-		return isValidWebURLstring;
-	}
-
-
-	if ([*webURLstring rangeOfString:@"http://"].length == 0
-		|| [*webURLstring rangeOfString:@"https://"].length == 0) {
-
-		*webURLstring = [@"http://" stringByAppendingString:*webURLstring];
-
-		isValidWebURLstring = [testPredicate evaluateWithObject:*webURLstring];
-	}
-
-	FXDLog(@"2.isValidWebURLstring: %d *webURLstring: %@", isValidWebURLstring, *webURLstring);
-
-	return isValidWebURLstring;
+	return isValid;
 }
 
 #pragma mark -

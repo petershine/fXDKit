@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+#ifndef initialWebURLstring
+	#define initialWebURLstring	@"http://www.google.com"
+#endif
+
 
 #import "FXDsuperScrollController.h"
 
@@ -23,8 +27,8 @@
 - (IBAction)pressedPageReloadButton:(id)sender;
 - (IBAction)pressedStopLoadingButton:(id)sender;
 
-
 #pragma mark - Public
+- (void)loadWebURLstring:(NSString*)webURLstring;
 
 
 //MARK: - Observer implementation
