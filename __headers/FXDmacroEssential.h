@@ -9,9 +9,9 @@
 #ifndef FXDKit_FXDmacroEssential_h
 #define FXDKit_FXDmacroEssential_h
 
-#ifndef MainGlobalManager
+#ifndef GlobalAppManager
 	#warning "//TODO: Must define application's own globalManager"
-	#define MainGlobalManager	[FXDsuperGlobalManager sharedInstance]
+	#define GlobalAppManager	[FXDsuperGlobalManager sharedInstance]
 #endif
 
 #ifndef application_AppStoreID
