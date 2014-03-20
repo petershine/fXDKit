@@ -69,12 +69,6 @@
 
 
 
-#define userdefaultIntegerAppLaunchCount			@"AppLaunchCountIntegerKey"
-#define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
-
-#define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
-
-
 #define NSIndexPathMake(section, row)	[NSIndexPath indexPathForRow:row inSection:section]
 #define NSIndexPathString(section, row)	[NSIndexPathMake(section, row) stringValue]
 

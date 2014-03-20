@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define userdefaultObjKeyMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
-#define userdefaultObjKeyMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
+#define userdefaultObjMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
+#define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
 
 
 @interface FXDsuperSocialManager : FXDObject {

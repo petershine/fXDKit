@@ -107,7 +107,7 @@
 	NSString *lineSeparator = @"_______________________________";
 	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
 
-	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", [MainGlobalManager deviceModelName], [[UIDevice currentDevice] systemVersion]];
+	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", [GlobalAppManager deviceModelName], [[UIDevice currentDevice] systemVersion]];
 
 	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
 

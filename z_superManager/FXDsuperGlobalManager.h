@@ -6,6 +6,12 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#define userdefaultIntegerAppLaunchCount			@"AppLaunchCountIntegerKey"
+#define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
+
+#define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
+
+
 #import "FXDsuperMainCoredata.h"
 
 

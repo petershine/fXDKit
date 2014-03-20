@@ -110,10 +110,10 @@
 		NSString *accountObjKey = @"";
 
 		if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			accountObjKey = userdefaultObjKeyMainTwitterAccountIdentifier;
+			accountObjKey = userdefaultObjMainTwitterAccountIdentifier;
 		}
 		else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			accountObjKey = userdefaultObjKeyMainFacebookAccountIdentifier;
+			accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
 		}
 
 
@@ -375,10 +375,10 @@
 	NSString *accountObjKey = @"";
 
 	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		accountObjKey = userdefaultObjKeyMainTwitterAccountIdentifier;
+		accountObjKey = userdefaultObjMainTwitterAccountIdentifier;
 	}
 	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		accountObjKey = userdefaultObjKeyMainFacebookAccountIdentifier;
+		accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
 	}
 
 
