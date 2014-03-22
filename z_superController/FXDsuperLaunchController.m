@@ -66,7 +66,7 @@
 	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 
 		 if (didFinishBlock) {
-			 didFinishBlock(YES);
+			 didFinishBlock(YES, nil);
 		 }
 	 }];
 }

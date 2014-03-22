@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 };
 
 
-typedef void (^FXDblockDidFinish)(BOOL finished);
+typedef void (^FXDblockDidFinish)(BOOL finished, id responseObj);
 
 typedef void (^FXDblockAlertCallback)(id alertObj, NSInteger buttonIndex);
 

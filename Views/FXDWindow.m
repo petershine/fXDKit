@@ -201,7 +201,7 @@
 	if ([launchController isKindOfClass:[FXDsuperLaunchController class]]) {
 
 		[(FXDsuperLaunchController*)launchController
-		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished) {
+		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished, id responseObj) {
 			 FXDLog_BLOCK(launchController, @selector(dismissLaunchControllerWithDidFinishBlock:));
 
 			 FXDLog(@"finished: %d launchController: %@", finished, launchController);

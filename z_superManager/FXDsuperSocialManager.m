@@ -162,7 +162,7 @@
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 		return;
 	}
@@ -197,7 +197,7 @@
 		_mainAccountType = nil;
 
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 	};
 
@@ -261,7 +261,7 @@
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 		return;
 	}
@@ -288,7 +288,7 @@
 		 cancelButtonTitle:nil];
 
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 		return;
 	}
@@ -352,7 +352,7 @@
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 		return;
 	}
@@ -366,7 +366,7 @@
 		_multiAccountArray = nil;
 
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 		return;
 	}
@@ -407,7 +407,7 @@
 	_multiAccountArray = nil;
 
 	if (didFinishBlock) {
-		didFinishBlock(YES);
+		didFinishBlock(YES, nil);
 	}
 }
 

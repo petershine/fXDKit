@@ -308,7 +308,7 @@
 		[self startObservingEssentialNotifications];
 		
 		if (didFinishBlock) {
-			didFinishBlock(YES);
+			didFinishBlock(YES, nil);
 		}
 	};
 	
@@ -323,7 +323,7 @@
 	[mainCoredata
 	 prepareWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
-	 didFinishBlock:^(BOOL finished) {
+	 didFinishBlock:^(BOOL finished, id responseObj) {
 		 FXDLog_BLOCK(mainCoredata, @selector(prepareWithUbiquityContainerURL:withCompleteProtection:didFinishBlock:));
 		 
 		 ManagerDidPrepareBlock();

@@ -157,7 +157,7 @@
 
 			[self.playbackManager
 			 preparePlaybackManagerWithFileURL:[defaultRepresentation url]
-			 withDidFinishBlock:^(BOOL finished) {
+			 withDidFinishBlock:^(BOOL finished, id responseObj) {
 				 FXDLog_BLOCK(self.playbackManager, @selector(preparePlaybackManagerWithFileURL:withDidFinishBlock:));
 				 FXDLog_FINISHED;
 

@@ -252,13 +252,13 @@
 			  //TODO: prepare what to do when Core Data is not setup
 
 			  [self
-			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished) {
+			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished, id responseObj) {
 				   FXDLog_BLOCK(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
 
 				   [self startObservingCoreDataNotifications];
 
 				   if (didFinishBlock) {
-					   didFinishBlock(didConfigure);
+					   didFinishBlock(didConfigure, nil);
 				   }
 			   }];
 		  }];
@@ -270,7 +270,7 @@
 	//TODO: Learn about NSMigrationPolicy implementation
 
 	if (didFinishBlock) {
-		didFinishBlock(YES);
+		didFinishBlock(YES, nil);
 	}
 }
 
@@ -472,7 +472,7 @@
 			  FXDLog(@"2.self.didStartEnumerating: %d", self.didStartEnumerating);
 			  
 			  
-			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished) {
+			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished, id responseObj) {
 				  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
 
 				  FXDLog(@"DidEnumerateBlock finished: %d shouldBreak: %d", finished, shouldBreak);
@@ -496,13 +496,13 @@
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 				  
 				  if (didFinishBlock) {
-					  didFinishBlock(finished);
+					  didFinishBlock(finished, nil);
 				  }
 			  };
 			  
 			  
 			  if (shouldSaveAtTheEnd == NO) {
-				  DidEnumerateBlock(YES);
+				  DidEnumerateBlock(YES, nil);
 				  
 				  return;
 			  }
@@ -539,7 +539,7 @@
 	if (managedContext == nil || managedContext.hasChanges == NO) {
 
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 
 		return;
@@ -555,7 +555,7 @@
 		FXDLog(@"4.hasChanges: %d concurrencyType: %lu", managedContext.hasChanges, (unsigned long)managedContext.concurrencyType);
 		
 		if (didFinishBlock) {
-			didFinishBlock(didSave);
+			didFinishBlock(didSave, nil);
 		}
 	};
 
@@ -597,7 +597,7 @@
 		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 		 
 		 if (didFinishBlock) {
-			 didFinishBlock(success);
+			 didFinishBlock(success, nil);
 		 }
 	 }];
 }
@@ -621,7 +621,7 @@
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
-	 withDidFinishBlock:^(BOOL finished) {
+	 withDidFinishBlock:^(BOOL finished, id responseObj) {
 		 FXDLog_BLOCK(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
 
 		 FXDLog_REMAINING;
