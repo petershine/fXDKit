@@ -6,6 +6,14 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+typedef CGPoint COVERING_OFFSET;
+typedef CGPoint COVERING_DIRECTION;
+
+typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
+	coverDirectionTop,
+	coverDirectionBottom
+};
+
 
 @interface FXDsegueCover : FXDsuperTransitionSegue
 @end

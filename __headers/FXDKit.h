@@ -9,26 +9,14 @@
 #ifndef FXDKit_FXDKit_h
 #define FXDKit_FXDKit_h
 
-#import <objc/runtime.h>
-#import <stdarg.h>
-#import <sys/utsname.h>
 
-#import <Availability.h>
-#import <TargetConditionals.h>
+#pragma mark - Types
+typedef void (^FXDblockDidFinish)(BOOL finished, id responseObj);
 
-@import Foundation;
-@import UIKit;
-
-@import SystemConfiguration;
-@import MobileCoreServices;
-
-@import CoreData;
-@import QuartzCore;
-@import ImageIO;
+typedef void (^FXDblockAlertCallback)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Headers
-#import "FXDenumTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDlocalizedStrings.h"
 #import "FXDimageNames.h"
@@ -39,65 +27,8 @@
 #import "FXDconfigDeveloper.h"
 
 
-#pragma mark - Adopted
-#import "FXDconfigAdopted.h"
-
-
-#pragma mark - Objects
-#import "FXDObject.h"
-
-#import "FXDString.h"
-#import "FXDURL.h"
-#import "FXDNumber.h"
-
-#import "FXDImage.h"
-
-#import "FXDCollectionViewLayout.h"
-
-#import "FXDStoryboardSegue.h"
-#import "FXDStoryboard.h"
-
-#import "FXDManagedDocument.h"
-
-#import "FXDManagedObject.h"
-#import "FXDFetchedResultsController.h"
-#import "FXDManagedObjectContext.h"
-
-#import "FXDFileManager.h"
-
-#import "FXDMetadataQuery.h"
-
-
-#pragma mark - Views
-#import "FXDView.h"
-
-#import "FXDButton.h"
-#import "FXDTextView.h"
-#import "FXDImageView.h"
-#import "FXDTableViewCell.h"
-#import "FXDCollectionViewCell.h"
-#import "FXDLabel.h"
-
-#import "FXDAlertView.h"
-#import "FXDActionSheet.h"
-
-#import "FXDScrollView.h"
-#import "FXDCollectionView.h"
-
-#import "FXDWindow.h"
-
-#import "FXDPopoverBackgroundView.h"
-
-
-#pragma mark - ViewControllers
-#import "FXDViewController.h"
-#import "FXDNavigationController.h"
-#import "FXDPopoverController.h"
-#import "FXDPageViewController.h"
-
-
-#pragma mark - Global controllers
-#import "FXDResponder.h"
+#import "FXDimportCore.h"
+#import "FXDimportAdopted.h"
 
 
 #endif
