@@ -118,15 +118,15 @@
 
 #pragma mark -
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %d, duration: %f %@", selfClassSelector, toInterfaceOrientation, duration, [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, duration: %f %@", selfClassSelector, (long)toInterfaceOrientation, duration, [self.view describeFrameAndBounds]);
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %d, duration: %f %@", selfClassSelector, interfaceOrientation, duration, [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, duration: %f %@", selfClassSelector, (long)interfaceOrientation, duration, [self.view describeFrameAndBounds]);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"%@: %d, %@", selfClassSelector, fromInterfaceOrientation, [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, %@", selfClassSelector, (long)fromInterfaceOrientation, [self.view describeFrameAndBounds]);
 }
 #endif
 
