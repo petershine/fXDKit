@@ -190,7 +190,7 @@
 }
 
 #pragma mark -
-- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(FXDblockDidFinish)completion {	//FXDLog_DEFAULT;
+- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL))completion {	//FXDLog_DEFAULT;
 
 	/*
 	FXDLog(@"fromViewController: %@", fromViewController);
@@ -199,7 +199,13 @@
 	FXDLog(@"options: %u", options);
 	 */
 
-	[super transitionFromViewController:fromViewController toViewController:toViewController duration:duration options:options animations:animations completion:completion];
+	[super
+	 transitionFromViewController:fromViewController
+	 toViewController:toViewController
+	 duration:duration
+	 options:options
+	 animations:animations
+	 completion:completion];
 }
 
 - (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {	//FXDLog_DEFAULT;

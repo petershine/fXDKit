@@ -317,7 +317,7 @@
 	if ([self.childViewControllers count] == 0) {
 
 		if (didFinishBlock) {
-			didFinishBlock(YES);
+			didFinishBlock(YES, nil);
 		}
 
 		return;
@@ -339,7 +339,7 @@
 		lateAddedSceneArray = nil;
 
 		if (didFinishBlock) {
-			didFinishBlock(YES);
+			didFinishBlock(YES, nil);
 		}
 
 		return;
@@ -411,7 +411,7 @@
 		 self.isUncovering = NO;
 		 
 		 if (didFinishBlock) {
-			 didFinishBlock(YES);
+			 didFinishBlock(YES, nil);
 		 }
 	 }];
 }

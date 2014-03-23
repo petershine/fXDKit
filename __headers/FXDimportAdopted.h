@@ -1,13 +1,13 @@
 //
-//  FXDconfigAdopted.h
+//  FXDimportAdopted.h
 //
 //
 //  Created by petershine on 1/13/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#ifndef FXDKit_FXDconfigAdopted_h
-#define FXDKit_FXDconfigAdopted_h
+#ifndef FXDKit_FXDimportAdopted_h
+#define FXDKit_FXDimportAdopted_h
 
 
 #ifndef USE_ReactiveCocoa

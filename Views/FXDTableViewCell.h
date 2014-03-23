@@ -6,6 +6,13 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
+	sectionPositionOne,
+	sectionPositionTop,
+	sectionPositionMiddle,
+	sectionPositionBottom
+};
+
 
 @interface FXDTableViewCell : UITableViewCell
 // Properties

@@ -76,7 +76,7 @@
 
 			  if (valueStatus != AVKeyValueStatusLoaded) {
 				  if (didFinishBlock) {
-					  didFinishBlock(NO);
+					  didFinishBlock(NO, nil);
 				  }
 				  return;
 			  }
@@ -109,12 +109,12 @@
 
 			  [self
 			   startSeekingToProgressValue:0.0
-			   withDidFinishBlock:^(BOOL finished) {
+			   withDidFinishBlock:^(BOOL finished, id responseObj) {
 
 				   [self configurePlaybackObservers];
 
 				   if (didFinishBlock) {
-					   didFinishBlock(YES);
+					   didFinishBlock(YES, nil);
 				   }
 			   }];
 		  }];
@@ -148,7 +148,7 @@
 
 	if (self.didStartSeeking) {
 		if (didFinishBlock) {
-			didFinishBlock(NO);
+			didFinishBlock(NO, nil);
 		}
 		return;
 	}
@@ -165,7 +165,7 @@
 		 self.didStartSeeking = NO;
 
 		 if (didFinishBlock) {
-			 didFinishBlock(finished);
+			 didFinishBlock(finished, nil);
 		 }
 	 }];
 }

@@ -6,6 +6,14 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
+	fileKindUndefined,
+	fileKindImage,
+	fileKindDocument,
+	fileKindAudio,
+	fileKindMovie
+};
+
 
 @interface FXDURL : NSURL
 // Properties
