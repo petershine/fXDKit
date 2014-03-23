@@ -30,6 +30,10 @@
 		#define TEST_loggingRotatingOrientation	0
 	#endif
 
+	#ifndef TEST_loggingMemoryWarning
+		#define TEST_loggingMemoryWarning	0
+	#endif
+
 	#define USE_FXDLog	1
 
 #else

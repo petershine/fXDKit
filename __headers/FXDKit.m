@@ -209,6 +209,24 @@
 @end
 
 
+@implementation UITextField (Added)
+- (CATextLayer*)textLayer {
+	CATextLayer *textLayer = [CATextLayer new];
+
+	[textLayer setFont:(__bridge CFTypeRef)(self.font)];
+	[textLayer setString:self.text];
+	[textLayer setForegroundColor:[self.textColor CGColor]];
+	[textLayer setFontSize:self.font.pointSize];
+	[textLayer setFrame:self.frame];
+
+	//TODO: Get string to Use textfield's own alignment
+	[textLayer setAlignmentMode:kCAAlignmentNatural];
+
+	return textLayer;
+}
+@end
+
+
 @implementation UIApplication (Added)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {

@@ -19,6 +19,24 @@
 
 	FXDLog(@"view.window: %@", self.view.window);
 	FXDLog(@"view.superview: %@", self.view.superview);
+
+
+#if TEST_loggingMemoryWarning
+	UILabel *warningLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, heightStatusBar)];
+	warningLabel.backgroundColor = [UIColor redColor];
+	warningLabel.textColor = [UIColor whiteColor];
+	warningLabel.font = [UIFont boldSystemFontOfSize:20.0];
+	warningLabel.textAlignment = NSTextAlignmentCenter;
+	warningLabel.text = selfClassSelector;
+
+	[self.view.window addSubview:warningLabel];
+
+	[warningLabel
+	 performSelector:@selector(removeFromSuperview)
+	 withObject:nil
+	 afterDelay:delayOneSecond
+	 inModes:@[NSRunLoopCommonModes]];
+#endif
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;

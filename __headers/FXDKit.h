@@ -76,6 +76,11 @@ typedef void (^FXDblockAlertCallback)(id alertObj, NSInteger buttonIndex);
 @end
 
 
+@interface UITextField (Added)
+- (CATextLayer*)textLayer;
+@end
+
+
 @interface UIApplication (Added)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
