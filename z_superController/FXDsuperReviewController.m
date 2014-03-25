@@ -157,14 +157,10 @@
 
 			[self.playbackManager
 			 preparePlaybackManagerWithFileURL:[defaultRepresentation url]
+			 withScene:self
 			 withDidFinishBlock:^(BOOL finished, id responseObj) {
-				 FXDLog_BLOCK(self.playbackManager, @selector(preparePlaybackManagerWithFileURL:withDidFinishBlock:));
+				 FXDLog_BLOCK(self.playbackManager, @selector(preparePlaybackManagerWithFileURL:withScene:withDidFinishBlock:));
 				 FXDLog_FINISHED;
-
-				 if (finished) {
-					 [self.view addSubview:self.playbackManager.videoDisplay];
-					 [self.view sendSubviewToBack:self.playbackManager.videoDisplay];
-				 }
 			 }];
 		}
 		

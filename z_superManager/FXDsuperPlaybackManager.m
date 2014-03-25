@@ -55,7 +55,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 
 	AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
 	NSString *tracksKey = @"tracks";
@@ -105,6 +105,10 @@
 			  self.videoDisplay.contentMode = UIViewContentModeScaleAspectFit;
 			  self.videoDisplay.layer.contentsGravity = @"resizeAspect";
 			  [self.videoDisplay setMainPlayer:self.videoPlayer];
+
+
+			  [scene.view addSubview:self.videoDisplay];
+			  [scene.view sendSubviewToBack:self.videoDisplay];
 
 
 			  [self

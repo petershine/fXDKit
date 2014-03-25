@@ -253,8 +253,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareCaptureManager {	FXDLog_DEFAULT;
-
+- (void)prepareCaptureManagerWithScene:(UIViewController*)scene {	FXDLog_DEFAULT;
 	[self observedUIDeviceOrientationDidChangeNotification:nil];
 
 	[[NSNotificationCenter defaultCenter]
