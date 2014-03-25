@@ -28,7 +28,7 @@
 @property (strong, nonatomic) AVPlayer *videoPlayer;
 @property (strong, nonatomic) id periodicObserver;
 
-@property (strong, nonatomic) FXDviewVideoDisplay *videoDisplay;
+@property (strong, nonatomic) FXDviewVideoDisplay *mainVideoDisplay;
 
 
 #pragma mark - Initialization
