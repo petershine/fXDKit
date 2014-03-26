@@ -84,11 +84,6 @@
 	self = [super init];
 
 	if (self) {
-		_didStartCapturing = NO;
-		_shouldAppendSampleBuffer = NO;
-
-		_shouldUseMirroring = NO;
-
 		_cameraPosition = AVCaptureDevicePositionBack;
 		_flashMode = AVCaptureFlashModeAuto;
 		_videoOrientation = AVCaptureVideoOrientationPortrait;
@@ -134,7 +129,6 @@
 
 	//TODO: Try using separate two queues like GPUImage did"
 	dispatch_queue_t sampleCapturingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-	FXDLog(@"sampleCapturingQueue: %@", sampleCapturingQueue);
 
 	if ([_mainCaptureSession canAddOutput:self.dataOutputVideo]) {
 
@@ -174,9 +168,12 @@
 		return _mainPreviewLayer;
 	}
 
-	FXDLog_DEFAULT;
+
 	_mainPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
 	[_mainPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+
+
+	FXDLog_DEFAULT;
 	FXDLog(@"_mainPreviewLayer frame: %@ bounds: %@", NSStringFromCGRect(_mainPreviewLayer.frame), NSStringFromCGRect(_mainPreviewLayer.bounds));
 
 	return _mainPreviewLayer;
@@ -219,7 +216,6 @@
 	if (_deviceInputAudio == nil) {	//FXDLog_DEFAULT;
 
 		NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
-		FXDLog(@"audio devices: %@", devices);
 
 		AVCaptureDevice *audioCapture = [devices firstObject];
 
