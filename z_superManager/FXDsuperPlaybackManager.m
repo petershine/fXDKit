@@ -83,7 +83,7 @@
 			  
 			  NSError *error = nil;
 			  AVKeyValueStatus valueStatus = [asset statusOfValueForKey:tracksKey error:&error];
-			  FXDLog_ERROR;CHECKPOINT_ERROR;
+			  FXDLog_ERROR;
 			  FXDLog(@"valueStatus: %ld", (long)valueStatus);
 
 			  if (valueStatus != AVKeyValueStatusLoaded) {

@@ -11,41 +11,32 @@
 
 
 #ifndef USE_Flurry
-	#define USE_Flurry	1
+	#define USE_Flurry	TRUE
 #endif
 
 #if USE_Flurry & ForDEVELOPER
 	#ifndef USE_FlurryWithLogging
-		#define USE_FlurryWithLogging	0
+		#define USE_FlurryWithLogging	FALSE
 	#endif
 #endif
 
 
-#if DEBUG &	ForDEVELOPER
+#if DEBUG
 	#ifndef USE_TestFlight
-		#define USE_TestFlight	0
+		#define USE_TestFlight	TRUE
 	#endif
 
 	#ifndef USE_Appsee
-		#define USE_Appsee	0
-	#endif
-
-#elif DEBUG
-	#ifndef USE_TestFlight
-		#define USE_TestFlight	1
-	#endif
-
-	#ifndef USE_Appsee
-		#define USE_Appsee	0
+		#define USE_Appsee	FALSE
 	#endif
 
 #else
 	#ifndef USE_TestFlight
-		#define USE_TestFlight	0
+		#define USE_TestFlight	FALSE
 	#endif
 
 	#ifndef USE_Appsee
-		#define USE_Appsee	1
+		#define USE_Appsee	TRUE
 	#endif
 
 #endif
@@ -83,35 +74,19 @@
 	#warning @"//TODO: Should import libz.dylib for TestFlight
 
 	#import "TestFlight.h"
+
 	#ifndef testflightAppToken
 		#define testflightAppToken	@"testflightAppToken"
 	#endif
-
-	#define NSLog	TFLog
-
-	#define CHECKPOINT(__FORMAT__, ...)	dispatch_async(dispatch_get_main_queue(), ^{\
-											[TestFlight passCheckpoint:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]];})
-
-	#define CHECKPOINT_DEFAULT	CHECKPOINT(@"%@", selfClassSelector)
-	#define CHECKPOINT_ERROR	if(error){\
-									CHECKPOINT(@"error: %@", messageCurrentError);}
-
-#else
-	#define CHECKPOINT(__FORMAT__, ...)	{}
-
-	#define CHECKPOINT_DEFAULT
-	#define CHECKPOINT_ERROR
-
 #endif
 
 
 #if USE_Appsee
 	#import <Appsee/Appsee.h>
+
 	#ifndef appseeAPIkey
 		#define appseeAPIkey	@"appseeAPIkey"
 	#endif
-#else
-
 #endif
 
 
