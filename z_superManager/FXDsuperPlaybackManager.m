@@ -31,13 +31,13 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
+	[_mainVideoDisplay setMainPlayer:nil];
 	[_mainVideoDisplay removeFromSuperview];
 
-	[_videoPlayer removeTimeObserver:_periodicObserver];
+	[_videoPlayer pause];
 
-	if (_videoPlayer.rate > 0.0) {
-		[_videoPlayer pause];
-	}
+	[_videoPlayer removeTimeObserver:_periodicObserver];
+	_periodicObserver = nil;
 }
 
 
@@ -98,17 +98,6 @@
 
 			  self.videoPlayer = [AVPlayer playerWithPlayerItem:videoItem];
 
-			  @weakify(self);
-			  [RACObserve(self.videoPlayer.currentItem, status)
-			   subscribeNext:^(id status) {	@strongify(self);
-				   if ([status integerValue] == AVAssetExportSessionStatusFailed) {
-					   FXDLog_REACT(self.videoPlayer.currentItem, @selector(status), status);
-
-					   NSError *error = self.videoPlayer.currentItem.error;
-					   FXDLog_ERROR;CHECKPOINT_ERROR;
-				   }
-			   }];
-
 			  [self.mainVideoDisplay setMainPlayer:self.videoPlayer];
 
 
@@ -155,7 +144,9 @@
 #pragma mark -
 - (void)startSeekingToProgressValue:(Float64)progressValue withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
 
-	if (self.didStartSeeking) {
+	__weak FXDsuperPlaybackManager *weakSelf = self;
+
+	if (weakSelf.didStartSeeking) {
 		if (didFinishBlock) {
 			didFinishBlock(NO, nil);
 		}
@@ -163,15 +154,15 @@
 	}
 
 
-	self.didStartSeeking = YES;
+	weakSelf.didStartSeeking = YES;
 
-	CMTime seekedTime = [self seekedTimeUsingProgressValue:progressValue];
+	CMTime seekedTime = [weakSelf seekedTimeUsingProgressValue:progressValue];
 
-	[self.videoPlayer
+	[weakSelf.videoPlayer
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
 
-		 self.didStartSeeking = NO;
+		 weakSelf.didStartSeeking = NO;
 
 		 if (didFinishBlock) {
 			 didFinishBlock(finished, nil);
