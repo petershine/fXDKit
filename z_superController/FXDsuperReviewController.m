@@ -27,15 +27,15 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 	
-	FXDLog(@"mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLog(@"imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLogObj(NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLogObj(NSStringFromCGRect(self.imageviewPhoto.frame));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 	
-	FXDLog(@"mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLog(@"imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLogObj(NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLogObj(NSStringFromCGRect(self.imageviewPhoto.frame));
 	
 	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
@@ -44,8 +44,8 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-	FXDLog(@"mainScrollview.frame: %@", NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLog(@"imageviewPhotoItem.frame: %@", NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLogObj(NSStringFromCGRect(self.mainScrollview.frame));
+	FXDLogObj(NSStringFromCGRect(self.imageviewPhoto.frame));
 	
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
@@ -61,7 +61,7 @@
 - (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidDisappear:animated];
 	
-	FXDLog(@"playbackManager.videoPlayer.rate: %f", self.playbackManager.videoPlayer.rate);
+	FXDLogVar(self.playbackManager.videoPlayer.rate);
 	
 	if (self.playbackManager.videoPlayer.rate > 0.0) {
 		[self.playbackManager.videoPlayer pause];
@@ -81,13 +81,13 @@
 
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation {	FXDLog_DEFAULT;
-	FXDLog(@"reviewedAsset: %@", self.reviewedAsset);
+	FXDLogObj(self.reviewedAsset);
 	if (self.reviewedAsset == nil) {
 		return;
 	}
 	
 
-	FXDLog(@"imageviewPhotoItem.image: %@", self.imageviewPhoto.image);
+	FXDLogObj(self.imageviewPhoto.image);
 	if (self.imageviewPhoto.image) {	//MARK: Skip if reusing this instance when changing direction
 		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
 		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];

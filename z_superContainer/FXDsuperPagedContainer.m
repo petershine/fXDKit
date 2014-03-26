@@ -38,7 +38,7 @@
 		}
 	}
 	
-	FXDLog(@"self.mainPageController: %@", self.mainPageController);
+	FXDLogObj(self.mainPageController);
 	
 	if (self.mainPageController) {
 		if (self.mainPageController.dataSource == nil) {
@@ -121,7 +121,7 @@
 
 #pragma mark -
 - (id)previewPageForModifiedPageIndex:(NSInteger)modifiedPageIndex {	FXDLog_OVERRIDE;
-	FXDLog(@"modifiedPageIndex: %ld", (long)modifiedPageIndex);
+	FXDLogVar(modifiedPageIndex);
 	
 	return nil;
 }
@@ -165,7 +165,7 @@
 
 #pragma mark - UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {	FXDLog_DEFAULT;
-	FXDLog(@"pendingViewControllers: %@", pendingViewControllers);
+	FXDLogObj(pendingViewControllers);
 	
 	// Sent when a gesture-initiated transition begins.
 }

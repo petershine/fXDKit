@@ -107,9 +107,12 @@
 		return nil;
 	}
 
+
 	NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
+
+	NSAssert1(entityName, @"MUST NOT be nil: entityName: %@", entityName);
+
 	if (entity == nil) {
-		FXDLog(@"MUST NOT be nil: entity: %@", entity);
 		return nil;
 	}
 
@@ -120,7 +123,7 @@
 	
 	if (predicate) {
 #if TEST_loggingResultObjFiltering
-		FXDLog(@"predicate: %@", predicate);
+		FXDLogObj(predicate);
 #endif
 		[fetchRequest setPredicate:predicate];
 	}

@@ -21,7 +21,7 @@
 
 #pragma mark - Method overriding
 - (instancetype)instantiateViewControllerWithIdentifier:(NSString *)identifier {	FXDLog_DEFAULT;
-	FXDLog(@"identifier: %@", identifier);
+	FXDLogObj(identifier);
 	
 	id instantiatedViewController = [super instantiateViewControllerWithIdentifier:identifier];
 	
@@ -46,7 +46,7 @@
 		storyboardName = [storyboardName stringByAppendingString:@"_iPad"];
 	}
 
-	FXDLog(@"storyboardName: %@", storyboardName);
+	FXDLogObj(storyboardName);
 	
 	UIStoryboard *storyboard = [self storyboardWithName:storyboardName bundle:nil];
 	

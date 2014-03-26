@@ -26,18 +26,18 @@
 	if (self.mainResultsController && self.mainResultsController.additionalDelegate == nil) {
 		[self.mainResultsController setAdditionalDelegate:self];
 
-		FXDLog(@"self.mainResultsController.additionalDelegate: %@", self.mainResultsController.additionalDelegate);
+		FXDLogObj(self.mainResultsController.additionalDelegate);
 	}
 	
 	if (self.mainScrollview) {
 		//MARK: Following should be closely related to scroll view configuration
-		FXDLog(@"self.mainScrollview: %@", self.mainScrollview);
+		FXDLogObj(self.mainScrollview);
 
 		if (self.mainScrollview.delegate == nil) {
 			[self.mainScrollview setDelegate:self];
 		}
 
-		FXDLog(@"mainScrollview.delegate: %@", self.mainScrollview.delegate);
+		FXDLogObj(self.mainScrollview.delegate);
 
 
 		if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
@@ -52,10 +52,10 @@
 
 		if (self.offsetYdismissingController == 0.0) {
 			CGRect screenBounds = [[UIScreen mainScreen] bounds];
-			FXDLog(@"screenBounds: %@", NSStringFromCGRect(screenBounds));
+			FXDLogObj(NSStringFromCGRect(screenBounds));
 
 			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
-			FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
+			FXDLogVar(self.offsetYdismissingController);
 		}
 	}
 }
@@ -74,7 +74,7 @@
 		
 #if ForDEVELOPER
 		if (_mainCellNib) {	FXDLog_DEFAULT;
-			FXDLog(@"_mainCellNib: %@", _mainCellNib);
+			FXDLogObj(_mainCellNib);
 		}
 #endif
 	}
@@ -182,8 +182,8 @@
 
 #pragma mark - Public
 - (void)registerMainCellNib {	FXDLog_OVERRIDE;
-	FXDLog(@"self.mainCellIdentifier: %@", self.mainCellIdentifier);
-	FXDLog(@"self.mainCellNib: %@", self.mainCellNib);
+	FXDLogObj(self.mainCellIdentifier);
+	FXDLogObj(self.mainCellNib);
 }
 
 #pragma mark -
@@ -228,7 +228,7 @@
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
-		//FXDLog(@"self.mainResultsController sections: %@", [self.mainResultsController sections]);
+		//FXDLogObj([self.mainResultsController sections]);
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
 	else if (self.mainDataSource) {
@@ -361,7 +361,7 @@
 	
 	if (scrollView.contentOffset.y < (self.offsetYdismissingController-scrollView.contentInset.top)
 		&& self.didStartDismissingByPullingDown == NO) {
-		FXDLog(@"self.offsetYdismissingController: %f", self.offsetYdismissingController);
+		FXDLogVar(self.offsetYdismissingController);
 		
 		[self dismissByPullingDownScrollView:scrollView];
 	}

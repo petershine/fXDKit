@@ -46,8 +46,8 @@
 #pragma mark - Category
 @implementation UIScrollView (Added)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;
-	FXDLog(@"self.bounds.size: %@", NSStringFromCGSize(self.bounds.size));
-	FXDLog(@"imageView.image.size: %@", NSStringFromCGSize(imageView.image.size));
+	FXDLogObj(NSStringFromCGSize(self.bounds.size));
+	FXDLogObj(NSStringFromCGSize(imageView.image.size));
 	
 	// calculate min/max zoomscale
 	CGFloat xScale = self.bounds.size.width  / imageView.image.size.width;
@@ -68,9 +68,9 @@
 	self.minimumZoomScale = minScale;
 	
 	
-	FXDLog(@"1.imageView.frame: %@", NSStringFromCGRect(imageView.frame));
+	FXDLogObj(NSStringFromCGRect(imageView.frame));
 	[self setZoomScale:self.minimumZoomScale animated:shouldAnimate];
-	FXDLog(@"2.imageView.frame: %@", NSStringFromCGRect(imageView.frame));
+	FXDLogObj(NSStringFromCGRect(imageView.frame));
 }
 
 #pragma mark -
@@ -92,18 +92,18 @@
 }
 
 - (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;
-	FXDLog(@"self.frame: %@", NSStringFromCGRect(self.frame));
-	FXDLog(@"clippingFrame: %@", NSStringFromCGRect(clippingFrame));
+	FXDLogObj(NSStringFromCGRect(self.frame));
+	FXDLogObj(NSStringFromCGRect(clippingFrame));
 	
 	UIEdgeInsets modifiedInset = self.contentInset;
-	FXDLog(@"1.modifiedInset: %@", NSStringFromUIEdgeInsets(modifiedInset));
+	FXDLogObj(NSStringFromUIEdgeInsets(modifiedInset));
 	
 	modifiedInset.left = clippingFrame.origin.x -self.frame.origin.x;
 	modifiedInset.top = clippingFrame.origin.y -self.frame.origin.y;
 	modifiedInset.bottom = self.frame.size.height -(modifiedInset.top +clippingFrame.size.height);
 	modifiedInset.right = self.frame.size.width -(modifiedInset.left +clippingFrame.size.width);
 	
-	FXDLog(@"2.modifiedInset: %@", NSStringFromUIEdgeInsets(modifiedInset));
+	FXDLogObj(NSStringFromUIEdgeInsets(modifiedInset));
 	
 	[self setContentInset:modifiedInset];
 }

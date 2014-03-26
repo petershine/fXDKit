@@ -48,7 +48,7 @@
 	
 	FXDLog_DEFAULT;
 	ALAuthorizationStatus authorizationStatus = [ALAssetsLibrary authorizationStatus];
-	FXDLog(@"authorizationStatus: %@", @(authorizationStatus));
+	FXDLogBOOL(authorizationStatus);
 	
 	if (authorizationStatus != ALAuthorizationStatusRestricted
 		&& authorizationStatus != ALAuthorizationStatusDenied) {
@@ -155,7 +155,7 @@
 
 //MARK: - Observer implementation
 - (void)observedALAssetsLibraryChanged:(NSNotification *)notification {	FXDLog_DEFAULT;
-	FXDLog(@"notification: %@", notification);
+	FXDLogObj(notification);
 	
 	/*
 	extern NSString *const ALAssetLibraryUpdatedAssetsKey __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_6_0);

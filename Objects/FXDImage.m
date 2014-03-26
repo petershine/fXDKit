@@ -106,8 +106,8 @@
 
 #pragma mark -
 - (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect {	FXDLog_DEFAULT;
-	FXDLog(@"self.size: %@", NSStringFromCGSize(self.size));
-	FXDLog(@"cropRect: %@", NSStringFromCGRect(cropRect));
+	FXDLogObj(NSStringFromCGSize(self.size));
+	FXDLogObj(NSStringFromCGRect(cropRect));
 	
 	UIImage *croppedImage = nil;
 	
@@ -124,7 +124,7 @@
 		}
 	}
 	
-	FXDLog(@"croppedImage.size: %@", NSStringFromCGSize(croppedImage.size));
+	FXDLogObj(NSStringFromCGSize(croppedImage.size));
 	
 	return croppedImage;
 }
@@ -326,7 +326,7 @@
 
 	if (maskImage) {
 		CGImageRef maskRef = maskImage.CGImage;
-		FXDLog(@"maskRef: %@", maskRef);
+		FXDLogObj(maskRef);
 
 		CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
 											CGImageGetHeight(maskRef),
@@ -334,15 +334,15 @@
 											CGImageGetBitsPerPixel(maskRef),
 											CGImageGetBytesPerRow(maskRef),
 											CGImageGetDataProvider(maskRef), NULL, false);
-		FXDLog(@"mask: %@", mask);
+		FXDLogObj(mask);
 
 		CGImageRef masked = CGImageCreateWithMask([maskedImage CGImage], mask);
 		CFRelease(mask);
 		
-		FXDLog(@"masked: %@", masked);
+		FXDLogObj(masked);
 
 		maskedImage = [UIImage imageWithCGImage:masked];
-		FXDLog(@"maskedImage: %@", maskedImage);
+		FXDLogObj(maskedImage);
 
 		CFRelease(masked);
 	}
@@ -351,10 +351,10 @@
 }
 
 - (CGSize)deviceScaledSize {
-	FXDLog(@"self.size: %@", NSStringFromCGSize(self.size));
+	FXDLogObj(NSStringFromCGSize(self.size));
 
 	CGSize scaledSize = CGSizeMake(self.size.width/self.scale, self.size.height /self.scale);
-	FXDLog(@"scaledSize: %@", NSStringFromCGSize(scaledSize));
+	FXDLogObj(NSStringFromCGSize(scaledSize));
 
 	return scaledSize;
 }

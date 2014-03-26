@@ -41,7 +41,7 @@
 	 options:0
 	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
 		 FXDLog_ERROR;
-		 FXDLog(@"url: %@", url);
+		 FXDLogObj(url);
 
 		 return YES;
 	 }];
@@ -58,7 +58,7 @@
 	 options:NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
 	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
 		 FXDLog_ERROR;
-		 FXDLog(@"url: %@", url);
+		 FXDLogObj(url);
 
 		 return YES;
 	 }];

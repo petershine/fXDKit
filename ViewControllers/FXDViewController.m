@@ -17,8 +17,8 @@
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
 	[super didReceiveMemoryWarning];
 
-	FXDLog(@"view.window: %@", self.view.window);
-	FXDLog(@"view.superview: %@", self.view.superview);
+	FXDLogObj(self.view.window);
+	FXDLogObj(self.view.superview);
 
 
 #if TEST_loggingMemoryWarning
@@ -90,21 +90,21 @@
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
 	UIStatusBarAnimation updateAnimation = [super preferredStatusBarUpdateAnimation];
-	FXDLog(@"updateAnimation: %@", @(updateAnimation));
+	FXDLogVar(updateAnimation);
 
 	return updateAnimation;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
 	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
-	FXDLog(@"statusBarStyle: %ld", (long)statusBarStyle);
+	FXDLogVar(statusBarStyle);
 
 	return statusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
 	BOOL prefers = [super prefersStatusBarHidden];
-	FXDLog(@"prefers: %@", strBOOL(prefers));
+	FXDLogBOOL(prefers);
 
 	return prefers;
 }
@@ -155,7 +155,7 @@
 
 #if	ForDEVELOPER
 	if (self.didFinishInitialAppearing) {
-		FXDLog(@"didFinishInitialAppearing: %@", strBOOL(self.didFinishInitialAppearing));
+		FXDLogBOOL(self.didFinishInitialAppearing);
 	}
 #endif
 }
@@ -194,7 +194,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 #if ForDEVELOPER
 	if (parent == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"parent: %@", parent);
+		FXDLogObj(parent);
 	}
 #endif
 
@@ -202,20 +202,13 @@
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {	//FXDLog_DEFAULT;
-	//FXDLog(@"parent: %@", parent);
+	//FXDLogObj(parent);
 
 	[super didMoveToParentViewController:parent];
 }
 
 #pragma mark -
 - (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL))completion {	//FXDLog_DEFAULT;
-
-	/*
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"toViewController: %@", toViewController);
-	FXDLog(@"duration: %f", duration);
-	FXDLog(@"options: %u", options);
-	 */
 
 	[super
 	 transitionFromViewController:fromViewController
@@ -246,30 +239,30 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
-	FXDLog(@"sender: %@", sender);
-	FXDLog(@"identifier: %@", identifier);
+	FXDLogObj(sender);
+	FXDLogObj(identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
-	FXDLog(@"shouldPerform: %@", strBOOL(shouldPerform));
+	FXDLogBOOL(shouldPerform);
 
 	return shouldPerform;
 }
 
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"sender: %@", sender);
-	FXDLog(@"identifier: %@", identifier);
+	FXDLogObj(sender);
+	FXDLogObj(identifier);
 
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"sender: %@", sender);
+	FXDLogObj(sender);
 
 	if ([segue isKindOfClass:[FXDStoryboardSegue class]]) {
-		FXDLog(@"segue: %@", segue);
+		FXDLogObj(segue);
 	}
 	else {
-		FXDLog(@"segue:\n%@", [segue fullDescription]);
+		FXDLogObj([segue fullDescription]);
 	}
 
 	[super prepareForSegue:segue sender:sender];
@@ -278,12 +271,12 @@
 - (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 
-	FXDLog(@"action: %@", NSStringFromSelector(action));
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"sender: %@", sender);
+	FXDLogObj(NSStringFromSelector(action));
+	FXDLogObj(fromViewController);
+	FXDLogObj(sender);
 
 	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-	FXDLog(@"canPerform: %@", strBOOL(canPerform));
+	FXDLogBOOL(canPerform);
 
 	return canPerform;
 }
@@ -291,9 +284,9 @@
 - (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
 
-	FXDLog(@"action: %@", NSStringFromSelector(action));
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"sender: %@", sender);
+	FXDLogObj(NSStringFromSelector(action));
+	FXDLogObj(fromViewController);
+	FXDLogObj(sender);
 
 	__block UIViewController *viewController = nil;
 
@@ -325,13 +318,13 @@
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
 	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
 
-	FXDLog(@"toViewController: %@", toViewController);
-	FXDLog(@"fromViewController: %@", fromViewController);
-	FXDLog(@"identifier: %@", identifier);
+	FXDLogObj(toViewController);
+	FXDLogObj(fromViewController);
+	FXDLogObj(identifier);
 
 	UIStoryboardSegue *segue = [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
 
-	FXDLog(@"segue: %@", segue);
+	FXDLogObj(segue);
 
 	return segue;
 }
@@ -384,7 +377,7 @@
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
 
 	UIView *sceneView = [viewArray firstObject];	
-	FXDLog(@"sceneView: %@", sceneView);
+	FXDLogObj(sceneView);
 	
 #if ForDEVELOPER
 	if (sceneView == nil) {

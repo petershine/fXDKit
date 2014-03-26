@@ -51,7 +51,7 @@
 	}
 	
 	if (assignedText) {	FXDLog_DEFAULT;
-		FXDLog(@"assignedText: %@", assignedText);
+		FXDLogObj(assignedText);
 		
 		CGRect modifiedFrame = self.frame;
 		FXDLog(@"(before)modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));

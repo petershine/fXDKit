@@ -15,9 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-#if ForDEVELOPER
-	FXDLog(@"_callbackBlock: %@", _callbackBlock);
-#endif
+	FXDLogObj(_callbackBlock);
 
 	_callbackBlock = nil;
 }

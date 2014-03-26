@@ -60,7 +60,7 @@
 		
 #if ForDEVELOPER
 		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
-		FXDLog(@"didStart: %d", didStart);
+		FXDLogBOOL(didStart);
 #else
 		[_ubiquitousCachesMetadataQuery startQuery];
 #endif

@@ -24,7 +24,7 @@
 		indexPathString = nil;
 	}
 
-	//FXDLog(@"indexPathString: %@", indexPathString);
+	//FXDLogObj(indexPathString);
 
 	return indexPathString;
 }
@@ -308,7 +308,7 @@
 		}
 	}
 
-	//FXDLog(@"affineTransform: %@", NSStringFromCGAffineTransform(affineTransform));
+	//FXDLogObj(NSStringFromCGAffineTransform(affineTransform));
 	return affineTransform;
 }
 
@@ -332,7 +332,7 @@
 		screenFrame.size.height = screenWidth;
 	}
 
-	//FXDLog(@"screenFrame: %@", NSStringFromCGRect(screenFrame));
+	//FXDLogObj(NSStringFromCGRect(screenFrame));
 
 	return screenFrame;
 }

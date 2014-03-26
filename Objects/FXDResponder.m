@@ -36,22 +36,22 @@
 #pragma mark - Method overriding
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesBegan:touches withEvent:event];
-	//FXDLog(@"event: %@", event);
+	//FXDLogObj(event);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesMoved:touches withEvent:event];
-	//FXDLog(@"event: %@", event);
+	//FXDLogObj(event);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesEnded:touches withEvent:event];
-	//FXDLog(@"event: %@", event);
+	//FXDLogObj(event);
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesCancelled:touches withEvent:event];
-	//FXDLog(@"event: %@", event);
+	//FXDLogObj(event);
 }
 
 
@@ -99,12 +99,12 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 
 #if ForDEVELOPER
-	NSString *tokenString = [deviceToken description];
-	tokenString = [tokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
-	tokenString = [tokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
-	tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+	NSString *deviceTokenString = [deviceToken description];
+	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
+	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
+	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-	FXDLog(@"deviceToken length: %lu tokenString: %@", (unsigned long)[deviceToken length], tokenString);
+	FXDLogObj(deviceTokenString);
 #endif
 }
 
@@ -113,8 +113,8 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
-	FXDLog(@"userInfo: %@", userInfo);
-	FXDLog(@"completionHandler: %@", completionHandler);
+	FXDLogObj(userInfo);
+	FXDLogObj(completionHandler);
 
 #if ForDEVELOPER
 	[FXDAlertView
@@ -137,7 +137,7 @@
 								 @"url":	([url absoluteString]) ? [[url absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]:@"",
 								 @"url scheme":	([url scheme]) ? [url scheme]:@"",};
 
-	FXDLog(@"parameters: %@", parameters);
+	FXDLogObj(parameters);
 
 	[FXDAlertView
 	 showAlertWithTitle:selfClassSelector
@@ -176,15 +176,15 @@
 
 	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
-		FXDLog(@"self.isAppLaunching: %d", self.isAppLaunching);
+		FXDLogBOOL(self.isAppLaunching);
 		return;
 	}
 
 
-	FXDLog(@"applicationIconBadgeNumber: %ld", (long)application.applicationIconBadgeNumber);
+	FXDLogVar(application.applicationIconBadgeNumber);
 	application.applicationIconBadgeNumber = 0;
 
-	FXDLog(@"self.didFinishLaunching: %d", self.didFinishLaunching);
+	FXDLogBOOL(self.didFinishLaunching);
 
 
 	//SAMPLE:
@@ -319,7 +319,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application	{FXDLog_SEPARATE;
 	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
-		FXDLog(@"self.isAppLaunching: %d", self.isAppLaunching);
+		FXDLogBOOL(self.isAppLaunching);
 		return;
 	}
 
@@ -347,7 +347,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {	FXDLog_SEPARATE;
 	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
-		FXDLog(@"self.isAppLaunching: %d", self.isAppLaunching);
+		FXDLogBOOL(self.isAppLaunching);
 		return;
 	}
 

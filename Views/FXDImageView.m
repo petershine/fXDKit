@@ -45,7 +45,7 @@
 #pragma mark - Category
 @implementation UIImageView (Added)
 - (void)modifyHeightForContainedImage {	FXDLog_DEFAULT;
-	FXDLog(@"self.image: %@", self.image);
+	FXDLogObj(self.image);
 	
 	self.contentMode = UIViewContentModeScaleAspectFit;
 	
@@ -63,7 +63,7 @@
 }
 
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	//FXDLog_DEFAULT;
-	//FXDLog(@"capInsets: %@", NSStringFromUIEdgeInsets(capInsets));
+	//FXDLogObj(NSStringFromUIEdgeInsets(capInsets));
 	
 	__weak typeof(self) weakSelf = self;
 	

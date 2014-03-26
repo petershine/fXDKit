@@ -54,8 +54,8 @@
 		}
 
 		FXDLog_DEFAULT;
-		FXDLog(@"_oldDeviceArray: %@", _oldDeviceArray);
-		FXDLog(@"_isDeviceOld: %d", _isDeviceOld);
+		FXDLogObj(_oldDeviceArray);
+		FXDLogBOOL(_isDeviceOld);
 	}
 
 	return _isDeviceOld;
@@ -123,7 +123,7 @@
 		
 		_deviceCountryCode = components[1];
 		
-		FXDLog(@"_deviceCountryCode: %@", _deviceCountryCode);
+		FXDLogObj(_deviceCountryCode);
 	}
 	
 	return _deviceCountryCode;
@@ -197,7 +197,7 @@
 		[_dateformatterUTC setTimeZone:UTCtimezone];
 		[_dateformatterUTC setDateFormat:dateformatDefault];
 		
-		FXDLog(@"_dateformatterUTC: %@", _dateformatterUTC);
+		FXDLogObj(_dateformatterUTC);
 	}
 	
 	return _dateformatterUTC;
@@ -212,7 +212,7 @@
 		[_dateformatterLocal setTimeZone:localTimeZone];
 		[_dateformatterLocal setDateFormat:dateformatDefault];
 				
-		FXDLog(@"_dateformatterLocal: %@", _dateformatterLocal);
+		FXDLogObj(_dateformatterLocal);
 	}
 	
 	return _dateformatterLocal;
@@ -226,7 +226,7 @@
 		}
 
 		FXDLog_DEFAULT;
-		FXDLog(@"_rootController: %@", _rootController);
+		FXDLogObj(_rootController);
 	}
 
 	return _rootController;
@@ -249,7 +249,7 @@
 		addedControllers = [self.rootController performSelector:@selector(childViewControllers)];
 	}
 	
-	FXDLog(@"addedControllers count: %lu", (unsigned long)[addedControllers count]);
+	FXDLogVar([addedControllers count]);
 	
 	if ([addedControllers count] == 0) {
 		_homeController = self.rootController;
@@ -458,10 +458,10 @@
 - (BOOL)shouldUpgradeForNewAppVersion {
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
-	FXDLog(@"APP versionInteger: %ld", (long)versionInteger);
+	FXDLogVar(versionInteger);
 
 	BOOL shouldUpgrade = [self isLastVersionOlderThanVersionInteger:versionInteger];
-	FXDLog(@"shouldUpgrade: %d", shouldUpgrade);
+	FXDLogBOOL(shouldUpgrade);
 
 	return shouldUpgrade;
 }
@@ -475,7 +475,7 @@
 	if ([lastVersionObj integerValue] < versionInteger) {
 		isOlder = YES;
 	}
-	FXDLog(@"isOlder: %d", isOlder);
+	FXDLogBOOL(isOlder);
 
 	return isOlder;
 }
@@ -527,12 +527,12 @@
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLog(@"UIApplication sharedApplication].statusBarFrame: %@", NSStringFromCGRect([UIApplication sharedApplication].statusBarFrame));
-	FXDLog(@"notification: %@", [notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
+	FXDLogObj(NSStringFromCGRect([UIApplication sharedApplication].statusBarFrame));
+	FXDLogObj([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
 }
 
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLog(@"notification: %@", notification);
+	FXDLogObj(notification);
 }
 
 #pragma mark -

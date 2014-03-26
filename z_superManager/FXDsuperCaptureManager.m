@@ -124,7 +124,7 @@
 		[_mainCaptureSession addInput:self.deviceInputAudio];
 	}
 
-	//FXDLog(@"_mainCaptureSession inputs: %@", [_mainCaptureSession inputs]);
+	//FXDLogObj([_mainCaptureSession inputs]);
 
 
 	//TODO: Try using separate two queues like GPUImage did"
@@ -270,7 +270,7 @@
 	self.cameraPosition = cameraPosition;
 
 	BOOL shouldRemoveBeforeAdd = self.mainCaptureSession.isRunning;
-	FXDLog(@"shouldRemoveBeforeAdd: %d", shouldRemoveBeforeAdd);
+	FXDLogBOOL(shouldRemoveBeforeAdd);
 
 
 	[self.mainCaptureSession beginConfiguration];
@@ -288,14 +288,14 @@
 	}
 
 	if (self.cameraPosition == AVCaptureDevicePositionBack) {
-		FXDLog(@"canAddInput:self.deviceInputBack: %d", [self.mainCaptureSession canAddInput:self.deviceInputBack]);
+		FXDLogBOOL([self.mainCaptureSession canAddInput:self.deviceInputBack]);
 
 		if ([self.mainCaptureSession canAddInput:self.deviceInputBack]) {
 			[self.mainCaptureSession addInput:self.deviceInputBack];
 		}
 	}
 	else {
-		FXDLog(@"canAddInput:self.deviceInputFront: %d", [self.mainCaptureSession canAddInput:self.deviceInputFront]);
+		FXDLogBOOL([self.mainCaptureSession canAddInput:self.deviceInputFront]);
 
 		if ([self.mainCaptureSession canAddInput:self.deviceInputFront]) {
 			[self.mainCaptureSession addInput:self.deviceInputFront];
@@ -325,7 +325,7 @@
 
 	FXDLog_DEFAULT;
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-	FXDLog(@"videoOrientation: %ld", (long)self.videoOrientation);
+	FXDLogVar(self.videoOrientation);
 
 	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
 }

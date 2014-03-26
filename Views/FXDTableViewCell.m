@@ -80,12 +80,12 @@
 }
 
 - (void)willTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
-	//FXDLog(@"state: %d", state);
+	//FXDLogVar(state);
 	[super willTransitionToState:state];
 }
 
 - (void)didTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
-	//FXDLog(@"state: %d", state);
+	//FXDLogVar(state);
 	[super didTransitionToState:state];
 }
 
@@ -105,7 +105,7 @@
 			modifiedFrame.origin.x = (self.frame.size.width - self.backgroundImageview.frame.size.width)/2.0;
 			[self.backgroundImageview setFrame:modifiedFrame];
 			
-			//FXDLog(@"modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
+			//FXDLogObj(NSStringFromCGRect(modifiedFrame));
 			
 			[self addSubview:self.backgroundImageview];
 			[self sendSubviewToBack:self.backgroundImageview];

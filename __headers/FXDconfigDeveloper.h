@@ -76,8 +76,8 @@
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
 	#define FXDLogObj(object)		FXDLog(@"%s: %@", #object, object)
-	#define FXDLogVar(variable)		FXDLogObj(@(variable))
-	#define FXDLogBOOL(boolean)		FXDLogObj(strBOOL(boolean))
+	#define FXDLogVar(variable)		FXDLog(@"%s: %@", #variable, @(variable))
+	#define FXDLogBOOL(boolean)		FXDLog(@"%s: %@", #boolean, strBOOL(boolean))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 

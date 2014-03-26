@@ -90,7 +90,7 @@
 }
 
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
-	//FXDLog(@"notification: %@", notification);
+	//FXDLogObj(notification);
 
 	if (self.progressView.viewIndicatorGroup == nil) {
 		return;

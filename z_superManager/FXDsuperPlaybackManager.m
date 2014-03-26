@@ -76,7 +76,7 @@
 	 loadValuesAsynchronouslyForKeys:@[tracksKey]
 	 completionHandler:^{
 		 FXDLog_BLOCK(asset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
-		 FXDLog(@"asset.isPlayable: %d", asset.isPlayable);
+		 FXDLogBOOL(asset.isPlayable);
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
@@ -84,7 +84,7 @@
 			  NSError *error = nil;
 			  AVKeyValueStatus valueStatus = [asset statusOfValueForKey:tracksKey error:&error];
 			  FXDLog_ERROR;
-			  FXDLog(@"valueStatus: %ld", (long)valueStatus);
+			  FXDLogVar(valueStatus);
 
 			  if (valueStatus != AVKeyValueStatusLoaded) {
 				  if (didFinishBlock) {

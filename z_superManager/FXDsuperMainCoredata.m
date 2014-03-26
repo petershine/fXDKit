@@ -37,7 +37,7 @@
 	
 	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
 		_mainModelName = application_BundleIdentifier;
-		FXDLog(@"_mainModelName: %@", _mainModelName);
+		FXDLogObj(_mainModelName);
 	}
 
 	return _mainModelName;
@@ -49,7 +49,7 @@
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
 
 		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
-		FXDLog(@"_mainDocument: %@", _mainDocument);
+		FXDLogObj(_mainDocument);
 	}
 	
 	return _mainDocument;
@@ -61,13 +61,13 @@
 	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
 		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
 
-		//MARK: Use different name for better controlling between developer build and release build
 	#if ForDEVELOPER
 	#else
+		#warning "//MARK: Use different name for better controlling between developer build and release build"
 		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@", _mainSqlitePathComponent];
 	#endif
 
-		FXDLog(@"_mainSqlitePathComponent: %@", _mainSqlitePathComponent);
+		FXDLogObj(_mainSqlitePathComponent);
 	}
 	
 	return _mainSqlitePathComponent;
@@ -75,8 +75,9 @@
 
 - (NSString*)mainUbiquitousContentName {
 	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
+
 		_mainUbiquitousContentName = [NSString stringWithFormat:@"ubiquitousContent.%@", self.mainModelName];
-		FXDLog(@"_mainUbiquitousContentName: %@", _mainUbiquitousContentName);
+		FXDLogObj(_mainUbiquitousContentName);
 	}
 	
 	return _mainUbiquitousContentName;
@@ -126,7 +127,7 @@
 
 
 	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
-	FXDLog(@"bundledSqlitePath: %@", bundledSqlitePath);
+	FXDLogObj(bundledSqlitePath);
 
 	[self storeCopiedItemFromSqlitePath:bundledSqlitePath toStoredPath:nil];
 }
@@ -145,17 +146,17 @@
 #endif
 
 	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
-	FXDLog(@"oldSqlitePath: %@", oldSqlitePath);
+	FXDLogObj(oldSqlitePath);
 
 	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
 }
 
 - (BOOL)isSqliteAlreadyStored {
 	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
-	FXDLog(@"storedSqlitePath: %@", storedSqlitePath);
+	FXDLogObj(storedSqlitePath);
 
 	BOOL isAlreadyStored = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
-	FXDLog(@"isAlreadyStored: %d", isAlreadyStored);
+	FXDLogBOOL(isAlreadyStored);
 
 	return isAlreadyStored;
 }
@@ -164,7 +165,7 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 
 	BOOL sqliteFileExists = [fileManager fileExistsAtPath:sqlitePath];
-	FXDLog(@"sqliteFileExists: %d", sqliteFileExists);
+	FXDLogBOOL(sqliteFileExists);
 
 	if (sqliteFileExists == NO) {
 		return NO;
@@ -178,7 +179,7 @@
 	NSError *error = nil;
 
 	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedPath error:&error];
-	FXDLog(@"didCopy: %d", didCopy);
+	FXDLogBOOL(didCopy);
 
 	FXDLog_ERROR;FXDLog_ERROR_ALERT;
 
@@ -190,12 +191,12 @@
 	
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
-		 FXDLog(@"ubiquityContainerURL: %@", ubiquityContainerURL);
-		 FXDLog(@"withCompleteProtection: %d", withCompleteProtection);
+		 FXDLogObj(ubiquityContainerURL);
+		 FXDLogBOOL(withCompleteProtection);
 		 
 		 NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 		 NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
-		 FXDLog(@"storeURL: %@", storeURL);
+		 FXDLogObj(storeURL);
 		 
 		 
 		 NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -206,7 +207,7 @@
 			 //TODO: get UUID unique URL using ubiquityContainerURL instead
 			 //NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 			 NSURL *ubiquitousContentURL = ubiquityContainerURL;
-			 FXDLog(@"ubiquitousContentURL: %@", ubiquitousContentURL);
+			 FXDLogObj(ubiquitousContentURL);
 			 
 			 options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
 			 options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
@@ -217,7 +218,7 @@
 			 options[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
 		 }
 		 
-		 FXDLog(@"options:\n%@", options);
+		 FXDLogObj(options);
 		 
 		 
 		 NSError *error = nil;
@@ -236,8 +237,8 @@
 		 NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
 		 
 		 for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
-			 FXDLog(@"persistentStore: %@", persistentStore.URL);
-			 FXDLog(@"metadataForPersistentStore:\n%@", [storeCoordinator metadataForPersistentStore:persistentStore]);
+			 FXDLogObj(persistentStore.URL);
+			 FXDLogObj([storeCoordinator metadataForPersistentStore:persistentStore]);
 		 }
 #endif
 		 
@@ -306,7 +307,7 @@
 	
 	
 	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
-	FXDLog(@"notifyingContext: %@", notifyingContext);
+	FXDLogObj(notifyingContext);
 	
 	[notificationCenter
 	 addObserver:self
@@ -336,7 +337,7 @@
 	
 	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
 		//MARK: Default is to skip
-		FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
+		FXDLog_IsMainThread;
 		return nil;
 	}
 	
@@ -365,6 +366,7 @@
 	 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
 	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
 	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
+		 FXDLog_BLOCK(applicationWindow, @selector(showMessageViewWithNibName:withTitle:message:cancelButtonTitle:acceptButtonTitle:clickedButtonAtIndexBlock:));
 		 FXDLog(@"alertObj: %@, buttonIndex: %ld", alertObj, (long)buttonIndex);
 		 
 		 if (buttonIndex == buttonIndexAccept) {
@@ -376,7 +378,9 @@
 				  
 				  //TODO: Implement shouldBreak different, making this block to return boolean
 				  if (*shouldBreak) {
-					  FXDLog(@"enumerateAllMainEntityObjWithDefaultProgressView shouldBreak: %d", *shouldBreak);
+					  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
+
+					  FXDLogBOOL(*shouldBreak);
 				  }
 				  
 				  [managedContext deleteObject:mainEntityObj];
@@ -399,7 +403,7 @@
 
 - (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	
-	FXDLog(@"shouldUsePrivateContext: %d", shouldUsePrivateContext);
+	FXDLogBOOL(shouldUsePrivateContext);
 	FXDLog(@"0.self.didStartEnumerating: %d", self.didStartEnumerating);
 	
 	//TODO: Decide if returning is not appropriate
@@ -418,7 +422,8 @@
 										  [sharedApplication endBackgroundTask:self.enumeratingTaskIdentifier];
 										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 									  }];
-	FXDLog(@"1.enumeratingTaskIdentifier: %lu", (unsigned long)self.enumeratingTaskIdentifier);
+
+	FXDLogVar(self.enumeratingTaskIdentifier);
 	
 	
 	FXDWindow *applicationWindow = nil;
@@ -490,7 +495,7 @@
 				  
 				  FXDLog_REMAINING;
 				  
-				  FXDLog(@"2.enumeratingTaskIdentifier: %lu", (unsigned long)self.enumeratingTaskIdentifier);
+				  FXDLogVar(self.enumeratingTaskIdentifier);
 				  
 				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
@@ -559,8 +564,8 @@
 		}
 	};
 
-	
-	FXDLog(@"[NSThread isMainThread]: %d", [NSThread isMainThread]);
+
+	FXDLog_IsMainThread;
 	
 	if ([NSThread isMainThread]) {
 		[managedContext performBlockAndWait:ManagedContextSavingBlock];
@@ -572,9 +577,9 @@
 
 - (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
-	FXDLog(@"shouldSkipMerge: %d", shouldSkipMerge);
-	FXDLog(@"1.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
-	FXDLog(@"1.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
+	FXDLogBOOL(shouldSkipMerge);
+	FXDLog(@"1.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
+	FXDLog(@"1.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 	
 	if (shouldSkipMerge) {
 		self.shouldMergeForManagedContext = NO;
@@ -583,7 +588,7 @@
 		self.shouldMergeForManagedContext = YES;
 	}
 	
-	FXDLog(@"self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
+	FXDLog(@"shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
 	
 	
 	[self.mainDocument
@@ -591,10 +596,10 @@
 	 forSaveOperation:UIDocumentSaveForOverwriting
 	 completionHandler:^(BOOL success) {
 		 FXDLog_BLOCK(self.mainDocument, @selector(saveToURL:forSaveOperation:completionHandler:));
-		 FXDLog(@"success: %@", strBOOL(success));
+		 FXDLogBOOL(success);
 		 
-		 FXDLog(@"2.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
-		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
+		 FXDLog(@"2.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
+		 FXDLog(@"2.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
 		 
 		 if (didFinishBlock) {
 			 didFinishBlock(success, nil);
@@ -617,7 +622,7 @@
 		   [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
 		   self.savingTaskIdentifier = UIBackgroundTaskInvalid;
 	   }];
-	FXDLog(@"1.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
+	FXDLogVar(self.savingTaskIdentifier);
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
@@ -626,7 +631,7 @@
 
 		 FXDLog_REMAINING;
 
-		 FXDLog(@"2.savingTaskIdentifier: %lu", (unsigned long)self.savingTaskIdentifier);
+		 FXDLogVar(self.savingTaskIdentifier);
 
 		 [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
 		 self.savingTaskIdentifier = UIBackgroundTaskInvalid;
@@ -637,9 +642,9 @@
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
 	//notification: NSConcreteNotification 0x1a3746e0 {name = UIDocumentStateChangedNotification; object = <FXDManagedDocument: 0x16d94d10> fileURL: file:///var/mobile/Applications/A2651A45-6230-4225-A538-420889FD5693/Documents/managed.coredata.document documentState: [EditingDisabled | SavingError]}
 
-	FXDLog(@"notification: %@", notification);
-	FXDLog(@"self.mainDocument.fileModificationDate: %@", self.mainDocument.fileModificationDate);
-	FXDLog(@"self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
+	FXDLogObj(notification);
+	FXDLogObj(self.mainDocument.fileModificationDate);
+	FXDLogVar(self.mainDocument.documentState);
 }
 
 #pragma mark -
@@ -661,7 +666,7 @@
 	}
 	
 	
-	FXDLog(@"NSThread isMainThread: %d", [NSThread isMainThread]);
+	FXDLog_IsMainThread;
 	FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
 	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
@@ -675,7 +680,7 @@
 		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][mainStoreIndex];
 		mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
 		
-		FXDLog(@"mainStoreUUID: %@", mainStoreUUID);
+		FXDLogObj(mainStoreUUID);
 	}
 	
 	NSString *notifyingStoreUUID = nil;
@@ -684,30 +689,30 @@
 		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][mainStoreIndex];
 		notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
 		
-		FXDLog(@"notifyingStoreUUID: %@", notifyingStoreUUID);
+		FXDLogObj(notifyingStoreUUID);
 	}
 	
-	FXDLog(@"[mainStoreUUID isEqualToString:notifyingStoreUUID]: %d", [mainStoreUUID isEqualToString:notifyingStoreUUID]);
+	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);
 	
-	FXDLog(@"1.self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
+	FXDLog(@"1.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
 	
 	if (mainStoreUUID && notifyingStoreUUID && [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
 
 		//MARK: Unless save is done for private context in background, you can skip merging"
 		if (self.shouldMergeForManagedContext) {
 			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-			FXDLog(@"DID MERGE: self.mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);
+			FXDLog(@"DID MERGE: mainDocument.managedObjectContext.hasChanges: %d", self.mainDocument.managedObjectContext.hasChanges);
 		}
 		
 		self.shouldMergeForManagedContext = NO;
 	}
 	
-	FXDLog(@"2.self.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
+	FXDLog(@"2.shouldMergeForManagedContext: %d", self.shouldMergeForManagedContext);
 }
 
 #pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"notification.object: %@", notification.object);
+	FXDLogObj(notification.object);
 	
 	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);

@@ -34,7 +34,7 @@
 - (void)layoutSubviews {	FXDLog_DEFAULT;
 	[super layoutSubviews];
 
-	FXDLog(@"%@", [self describeFrameAndBounds]);
+	FXDLogObj([self describeFrameAndBounds]);
 }
 #endif
 
@@ -243,11 +243,6 @@
 		image = UIGraphicsGetImageFromCurrentImageContext();
 	}
 	UIGraphicsEndImageContext();
-
-	/*
-	FXDLog_DEFAULT;
-	FXDLog(@"image.size: %@", NSStringFromCGSize(image.size));
-	 */
 
     return image;
 }
