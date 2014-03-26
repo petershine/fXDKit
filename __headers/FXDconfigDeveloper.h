@@ -42,21 +42,23 @@
 #endif
 
 
+#define strBOOL(boolValue)	(boolValue ? @"YES":@"NO")
+
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
 									componentsSeparatedByString:@":"]\
 									firstObject]
 
-#define messageCurrentError	[NSString\
-							stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@",\
-							__FILE__,\
-							__LINE__,\
-							[error localizedDescription],\
-							[error localizedFailureReason],\
-							[error userInfo]]
+#define strCurrentError	[NSString\
+						stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@",\
+						__FILE__,\
+						__LINE__,\
+						[error localizedDescription],\
+						[error localizedFailureReason],\
+						[error userInfo]]
 
 #define strIsMainThread	[NSString\
 						stringWithFormat:@"isMain: %@",\
-						BOOLStr([NSThread isMainThread])]
+						strBOOL([NSThread isMainThread])]
 
 #define formattedClassSelector(instance, selector)	[NSString\
 													stringWithFormat:@"[%@ %@]",\
@@ -72,6 +74,10 @@
 	#define FXDLog	NSLog
 
 	#define FXDLog_EMPTY	FXDLog(@" ")
+
+	#define FXDLogObj(object)		FXDLog(@"%s: %@", #object, object)
+	#define FXDLogVar(variable)		FXDLogObj(@(variable))
+	#define FXDLogBOOL(boolean)		FXDLogObj(strBOOL(boolean))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
@@ -103,11 +109,10 @@
 								parameters[@"line"] = @(__LINE__);\
 								FXDLog(@"ERROR: %@\n%@", selfClassSelector, parameters);}
 
-	#define FXDLog_ERROR_ALERT	FXDLog_ERROR;\
-								if (error) {\
+	#define FXDLog_ERROR_ALERT if (error) {\
 									[FXDAlertView\
 									showAlertWithTitle:selfClassSelector\
-									message:messageCurrentError\
+									message:strCurrentError\
 									clickedButtonAtIndexBlock:nil\
 									cancelButtonTitle:nil];}
 
@@ -116,7 +121,7 @@
 													FXDLog_ERROR;}
 
 
-	#define FXDLog_FINISHED	FXDLog(@"finished: %@", BOOLStr(finished))
+	#define FXDLog_FINISHED	FXDLogBOOL(finished)
 
 	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
 												FXDLog(@"BLOCK: [%@ %@] %@",\
@@ -124,14 +129,13 @@
 												strSimpleSelector(selector),\
 												strIsMainThread)
 
-	#define FXDLog_REACT(target, keypath, value)	FXDLog_EMPTY;\
-													FXDLog(@"REACT: [%@ %@] %@ %@.%@: %@",\
-													NSStringFromClass([self class]),\
-													strSimpleSelector(_cmd),\
-													strIsMainThread,\
-													[target class],\
-													strSimpleSelector(keypath),\
-													value)
+	#define FXDLog_REACT(keypath, value)	FXDLog_EMPTY;\
+											FXDLog(@"REACT: [%@ %@] %@ %s: %@",\
+											NSStringFromClass([self class]),\
+											strSimpleSelector(_cmd),\
+											strIsMainThread,\
+											#keypath,\
+											value)
 
 
 	#define FXDAssert1	NSAssert1
@@ -143,6 +147,10 @@
 	#define FXDLog(__FORMAT__, ...)	{}
 
 	#define FXDLog_EMPTY
+
+	#define FXDLogObj(object)
+	#define FXDLogVar(variable)
+	#define FXDLogBOOL(boolean)
 
 	#define FXDLog_IsMainThread
 	#define FXDLog_REMAINING
@@ -164,7 +172,7 @@
 	#define FXDLog_BLOCK(instance, selector)
 	#define FXDLog_FINISHED
 
-	#define FXDLog_REACT(target, keypath, value)
+	#define FXDLog_REACT(keypath, value)
 
 	#define FXDAssert1(condition, desc, arg1)	{}
 	#define FXDAssert_IsMainThread

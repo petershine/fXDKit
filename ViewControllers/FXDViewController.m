@@ -85,7 +85,7 @@
 - (void)setNeedsStatusBarAppearanceUpdate {	FXDLog_DEFAULT;
 	[super setNeedsStatusBarAppearanceUpdate];
 
-	FXDLog(@"sharedApplication.statusBarHidden: %@ statusBarStyle: %@", BOOLStr([UIApplication sharedApplication].statusBarHidden), @([UIApplication sharedApplication].statusBarStyle));
+	FXDLog(@"sharedApplication.statusBarHidden: %@ statusBarStyle: %@", strBOOL([UIApplication sharedApplication].statusBarHidden), @([UIApplication sharedApplication].statusBarStyle));
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
@@ -104,7 +104,7 @@
 
 - (BOOL)prefersStatusBarHidden {
 	BOOL prefers = [super prefersStatusBarHidden];
-	FXDLog(@"prefers: %@", BOOLStr(prefers));
+	FXDLog(@"prefers: %@", strBOOL(prefers));
 
 	return prefers;
 }
@@ -115,7 +115,7 @@
 - (BOOL)shouldAutorotate {
 	BOOL shouldAutorotate = [super shouldAutorotate];
 
-	//FXDLog(@"%@: %@", selfClassSelector, BOOLStr(shouldAutorotate));
+	//FXDLog(@"%@: %@", selfClassSelector, strBOOL(shouldAutorotate));
 
 	return shouldAutorotate;
 }
@@ -155,7 +155,7 @@
 
 #if	ForDEVELOPER
 	if (self.didFinishInitialAppearing) {
-		FXDLog(@"didFinishInitialAppearing: %@", BOOLStr(self.didFinishInitialAppearing));
+		FXDLog(@"didFinishInitialAppearing: %@", strBOOL(self.didFinishInitialAppearing));
 	}
 #endif
 }
@@ -175,7 +175,7 @@
 
 #if ForDEVELOPER
 	if (self.didFinishInitialAppearing == NO) {
-		FXDLog(@"didFinishInitialAppearing: %@", BOOLStr(YES));
+		FXDLog(@"didFinishInitialAppearing: %@", strBOOL(YES));
 	}
 #endif
 
@@ -250,7 +250,7 @@
 	FXDLog(@"identifier: %@", identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
-	FXDLog(@"shouldPerform: %@", BOOLStr(shouldPerform));
+	FXDLog(@"shouldPerform: %@", strBOOL(shouldPerform));
 
 	return shouldPerform;
 }
@@ -283,7 +283,7 @@
 	FXDLog(@"sender: %@", sender);
 
 	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-	FXDLog(@"canPerform: %@", BOOLStr(canPerform));
+	FXDLog(@"canPerform: %@", strBOOL(canPerform));
 
 	return canPerform;
 }

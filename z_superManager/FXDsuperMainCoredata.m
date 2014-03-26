@@ -180,7 +180,7 @@
 	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedPath error:&error];
 	FXDLog(@"didCopy: %d", didCopy);
 
-	FXDLog_ERROR_ALERT;
+	FXDLog_ERROR;FXDLog_ERROR_ALERT;
 
 	return didCopy;
 }
@@ -246,7 +246,7 @@
 			  FXDLog(@"2.didConfigure: %d", didConfigure);
 
 			  //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
-			  FXDLog_ERROR_ALERT;
+			  FXDLog_ERROR;FXDLog_ERROR_ALERT;
 
 			  //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
 			  //TODO: prepare what to do when Core Data is not setup
@@ -591,7 +591,7 @@
 	 forSaveOperation:UIDocumentSaveForOverwriting
 	 completionHandler:^(BOOL success) {
 		 FXDLog_BLOCK(self.mainDocument, @selector(saveToURL:forSaveOperation:completionHandler:));
-		 FXDLog(@"success: %@", BOOLStr(success));
+		 FXDLog(@"success: %@", strBOOL(success));
 		 
 		 FXDLog(@"2.self.mainDocument.documentState: %lu", (unsigned long)self.mainDocument.documentState);
 		 FXDLog(@"2.self.mainDocument hasUnsavedChanges: %d", [self.mainDocument hasUnsavedChanges]);
@@ -653,7 +653,7 @@
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLog(@"notification.object: %@ concurrencyType: %lu", notification.object, (unsigned long)[(NSManagedObjectContext*)notification.object concurrencyType]);
-	FXDLog(@"isEqual:self.mainDocument.managedObjectContext: %@", BOOLStr([notification.object isEqual:self.mainDocument.managedObjectContext]));
+	FXDLog(@"isEqual:self.mainDocument.managedObjectContext: %@", strBOOL([notification.object isEqual:self.mainDocument.managedObjectContext]));
 
 	// Distinguish notification from main managedObjectContext and private managedObjectContext
 	if ([notification.object isEqual:self.mainDocument.managedObjectContext]) {

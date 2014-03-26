@@ -63,7 +63,7 @@
 //MARK: - Delegate implementation
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
-	FXDLog(@"launchOptions: %@", launchOptions);
+	FXDLogObj(launchOptions);
 
 #if ForDEVELOPER
 	if (launchOptions) {
@@ -75,21 +75,21 @@
 	}
 
 
-	FXDLog(@"[NSBundle mainBundle] infoDictionary:\n%@", [[NSBundle mainBundle] infoDictionary]);
+	FXDLogObj([[NSBundle mainBundle] infoDictionary]);
 
-	FXDLog(@"identifierForVendor: %@", [[UIDevice currentDevice].identifierForVendor UUIDString]);
+	FXDLogObj([[UIDevice currentDevice].identifierForVendor UUIDString]);
 
 #if	USE_AdvertisementFrameworks
-	FXDLog(@"advertisingIdentifier: %@", [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
+	FXDLogObj([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #endif
 
-	FXDLog(@"NSUserName(): %@", NSUserName());
-	FXDLog(@"NSFullUserName(): %@", NSFullUserName());
+	FXDLogObj(NSUserName());
+	FXDLogObj(NSFullUserName());
 
-	FXDLog(@"NSHomeDirectory(): %@", NSHomeDirectory());
-	FXDLog(@"NSTemporaryDirectory(): %@", NSTemporaryDirectory());
+	FXDLogObj(NSHomeDirectory());
+	FXDLogObj(NSTemporaryDirectory());
 
-	FXDLog(@"NSOpenStepRootDirectory(): %@", NSOpenStepRootDirectory());
+	FXDLogObj(NSOpenStepRootDirectory());
 #endif
 
 	return YES;
@@ -109,7 +109,7 @@
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {	FXDLog_SEPARATE;
-	FXDLog_ERROR_ALERT;
+	FXDLog_ERROR;FXDLog_ERROR_ALERT;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
