@@ -28,7 +28,6 @@
 #pragma mark - Segues
 
 #pragma mark - IBActions
-- (IBAction)actionPlayOrPauseMovie:(id)sender;
 
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation;

@@ -9,11 +9,6 @@
 @import AssetsLibrary;
 
 
-@interface AVPlayerItem (Added)
-- (Float64)progressValue;
-@end
-
-
 @interface FXDviewVideoDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 @end
@@ -23,7 +18,7 @@
 // Properties
 @property (nonatomic) BOOL didStartSeeking;
 
-@property (nonatomic) Float64 progressValue;
+@property (nonatomic) CMTime playbackProgressTime;
 
 @property (strong, nonatomic) AVPlayer *videoPlayer;
 @property (strong, nonatomic) id periodicObserver;

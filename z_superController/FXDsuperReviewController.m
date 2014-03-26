@@ -78,35 +78,6 @@
 #pragma mark - Segues
 
 #pragma mark - IBActions
-- (IBAction)actionPlayOrPauseMovie:(id)sender {
-	
-	if (self.playbackManager.videoPlayer.rate > 0.0) {
-		[self.playbackManager.videoPlayer pause];
-		
-		[self.buttonPlay fadeInFromHidden];
-		
-		return;
-	}
-	
-	
-	if ([self.playbackManager.videoPlayer.currentItem progressValue] < 1.0) {
-		[self.playbackManager.videoPlayer play];
-		
-		[self.buttonPlay fadeOutThenHidden];
-		
-		return;
-	}
-	
-	
-	[self.playbackManager.videoPlayer
-	 seekToTime:kCMTimeZero
-	 completionHandler:^(BOOL finished) {
-		 [self.playbackManager.videoPlayer play];
-		 
-		 [self.buttonPlay fadeOutThenHidden];
-	 }];
-}
-
 
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation {	FXDLog_DEFAULT;
@@ -143,9 +114,7 @@
 			self.buttonPlay.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
 			
 			self.buttonPlay.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0);
-			
-			[self.buttonPlay addTarget:self action:@selector(actionPlayOrPauseMovie:) forControlEvents:UIControlEventTouchUpInside];
-			
+						
 			[self.view addSubview:self.buttonPlay];
 		}
 
