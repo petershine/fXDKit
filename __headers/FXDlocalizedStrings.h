@@ -32,18 +32,10 @@
 	#define message_PurposeOfAccessingPhotoAlbum	@"message_PurposeOfAccessingPhotoAlbum"
 #endif
 
-#ifndef message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain
-	#define message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain	@"message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain"
-#endif
-
-
 #define message_FolderWithTheSameNameAlreadyExists	@"message_FolderWithTheSameNameAlreadyExists"
 
 
 // Text
-#define text_Settings	@"text_Settings"
-#define text_Information	@"text_Information"
-
 #ifndef text_Cancel
 	#define text_Cancel	@"text_Cancel"
 #endif
@@ -51,6 +43,11 @@
 #ifndef text_OK
 	#define text_OK	@"text_OK"
 #endif
+
+
+#define text_Settings	@"text_Settings"
+#define text_Information	@"text_Information"
+
 
 #define text_Canceling	@"text_Canceling"
 #define text_Accepting	@"text_Accepting"
@@ -117,7 +114,6 @@
 
  "message_PurposeOfAccessingPhotoAlbum" = "<#This App needs your permission to access your photos.\n\nPlease enable the switch:\nSettings > Privacy > Photos > This App#>";
 
- "message_CurrentItemsWillBeDeletedAndIndexNewItemsFromPhotoAlbumsAgain" = "<#Current items will be deleted, and import new items from Photo Albums again#>";
 
  "message_FolderWithTheSameNameAlreadyExists" = "<#A folder with the same name already exists#>";
 

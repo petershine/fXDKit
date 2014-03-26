@@ -45,11 +45,16 @@
 
 #define minimumTouchableDimension	44.0
 
-#define heightStatusBar	20.0
-#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height	//MARK: They can be changed dynamically
 
+//MARK: These can be changed dynamically
+#define heightStatusBar	20.0
+#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
+
+
+//MARK: Assume these are identical
 #define heightNavigationBar	44.0
-#define heightToolBar	heightNavigationBar	//MARK: Assume they are identical
+#define heightToolBar	heightNavigationBar
+
 
 #define height35inch	480.0
 #define height40inch	568.0

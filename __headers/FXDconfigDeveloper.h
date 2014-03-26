@@ -11,33 +11,33 @@
 
 #if DEBUG & ForDEVELOPER
 	#ifndef TEST_loggingViewDrawing
-		#define TEST_loggingViewDrawing	0
+		#define TEST_loggingViewDrawing	FALSE
 	#endif
 
 	#ifndef TEST_loggingResultObjFiltering
-		#define TEST_loggingResultObjFiltering	0
+		#define TEST_loggingResultObjFiltering	FALSE
 	#endif
 
 	#ifndef TEST_loggingManagedObject
-		#define TEST_loggingManagedObject	0
+		#define TEST_loggingManagedObject	FALSE
 	#endif
 
 	#ifndef TEST_loggingManagedDocumentAutoSaving
-		#define TEST_loggingManagedDocumentAutoSaving	0
+		#define TEST_loggingManagedDocumentAutoSaving	FALSE
 	#endif
 
 	#ifndef TEST_loggingRotatingOrientation
-		#define TEST_loggingRotatingOrientation	0
+		#define TEST_loggingRotatingOrientation	FALSE
 	#endif
 
 	#ifndef TEST_loggingMemoryWarning
-		#define TEST_loggingMemoryWarning	0
+		#define TEST_loggingMemoryWarning	FALSE
 	#endif
 
-	#define USE_FXDLog	1
+	#define USE_FXDLog	TRUE
 
 #else
-	#define USE_FXDLog	0
+	#define USE_FXDLog	FALSE
 
 #endif
 
@@ -76,8 +76,7 @@
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
 	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
-								&& intervalRemainingBackground != DBL_MAX\
-								&& (NSInteger)(intervalRemainingBackground)%2 == 0) {\
+								&& intervalRemainingBackground != DBL_MAX) {\
 									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
 
 

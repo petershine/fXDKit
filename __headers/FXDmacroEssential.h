@@ -10,13 +10,26 @@
 #define FXDKit_FXDmacroEssential_h
 
 #ifndef GlobalAppManager
-	#warning "//TODO: Must define application's own globalManager"
+	#warning "//TODO: Must define GlobalAppManager"
 	#define GlobalAppManager	[FXDsuperGlobalManager sharedInstance]
 #endif
 
 #ifndef application_AppStoreID
+	#if	!DEBUG
+		#warning "//TODO: Define application_AppStoreID"
+	#endif
+
 	#define application_AppStoreID	@"000000000"
 #endif
+
+#ifndef application_ContactEmail
+	#if	!DEBUG
+		#warning "//TODO: Define application_ContactEmail"
+	#endif
+
+	#define application_ContactEmail	@"app@company.com"
+#endif
+
 
 #ifndef application_BundleIdentifier
 	#define application_BundleIdentifier	[[NSBundle mainBundle] bundleIdentifier]
@@ -30,9 +43,6 @@
 	#define application_DisplayName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]
 #endif
 
-#ifndef application_ContactEmail
-	#define application_ContactEmail	@"app@company.com"
-#endif
 
 
 #define iosVersion6	6.0
