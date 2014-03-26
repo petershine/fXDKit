@@ -42,7 +42,21 @@
 #endif
 
 
-#define strBOOL(boolValue)	(boolValue ? @"YES":@"NO")
+#define strObject(object)	[NSString\
+							stringWithFormat:@"%s: %@",\
+							#object,\
+							object]
+
+#define strVariable(variable)	[NSString\
+								stringWithFormat:@"%s: %@",\
+								#variable,\
+								@(variable)]
+
+#define strBOOL(boolean)	[NSString\
+							stringWithFormat:@"%s: %@",\
+							#boolean,\
+							(boolean ? @"YES":@"NO")]
+
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
 									componentsSeparatedByString:@":"]\
@@ -58,7 +72,7 @@
 
 #define strIsMainThread	[NSString\
 						stringWithFormat:@"isMain: %@",\
-						strBOOL([NSThread isMainThread])]
+						([NSThread isMainThread] ? @"YES":@"NO")]
 
 #define formattedClassSelector(instance, selector)	[NSString\
 													stringWithFormat:@"[%@ %@]",\
@@ -75,9 +89,9 @@
 
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
-	#define FXDLogObj(object)		FXDLog(@"%s: %@", #object, object)
-	#define FXDLogVar(variable)		FXDLog(@"%s: %@", #variable, @(variable))
-	#define FXDLogBOOL(boolean)		FXDLog(@"%s: %@", #boolean, strBOOL(boolean))
+	#define FXDLogObj(object)		FXDLog(@"%@", strObject(object))
+	#define FXDLogVar(variable)		FXDLog(@"%@", strVariable(variable))
+	#define FXDLogBOOL(boolean)		FXDLog(@"%@", strBOOL(boolean))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
@@ -130,9 +144,8 @@
 												strIsMainThread)
 
 	#define FXDLog_REACT(keypath, value)	FXDLog_EMPTY;\
-											FXDLog(@"REACT: [%@ %@] %@ %s: %@",\
+											FXDLog(@"REACT: [%@] %@ %s: %@",\
 											NSStringFromClass([self class]),\
-											strSimpleSelector(_cmd),\
 											strIsMainThread,\
 											#keypath,\
 											value)
