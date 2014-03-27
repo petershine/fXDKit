@@ -9,15 +9,15 @@
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
 // Properties
-@property (copy) FXDblockAlertCallback callbackBlock;
+@property (copy) FXDcallbackAlert callbackBlock;
 
 
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle;
++ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle;
 
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle;
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle;
 
 
 //MARK: - Observer implementation

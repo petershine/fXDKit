@@ -52,7 +52,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (instancetype)initWithTitle:(NSString *)title clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock withButtonTitleArray:(NSArray*)buttonTitleArray cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {	FXDLog_DEFAULT;
+- (instancetype)initWithTitle:(NSString *)title clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock withButtonTitleArray:(NSArray*)buttonTitleArray cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {	FXDLog_DEFAULT;
 	
 	self = [super initWithTitle:title
 					   delegate:nil

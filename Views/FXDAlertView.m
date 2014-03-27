@@ -40,7 +40,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
++ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
 
 	__block FXDAlertView *alertView = nil;
 
@@ -60,7 +60,7 @@
 }
 
 #pragma mark -
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
 	
 	if (cancelButtonTitle == nil) {
 		cancelButtonTitle = NSLocalizedString(text_OK, nil);

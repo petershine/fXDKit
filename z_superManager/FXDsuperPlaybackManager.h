@@ -29,10 +29,10 @@
 #pragma mark - Initialization
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withDidFinishBlock:(FXDcallbackFinish)didFinishBlock;
 - (void)configurePlaybackObservers;
 
-- (void)startSeekingToProgressValue:(Float64)progressValue withDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)startSeekingToProgressValue:(Float64)progressValue withDidFinishBlock:(FXDcallbackFinish)didFinishBlock;
 - (CMTime)seekedTimeUsingProgressValue:(Float64)progressValue;
 
 

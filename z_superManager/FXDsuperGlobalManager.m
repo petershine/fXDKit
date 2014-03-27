@@ -288,7 +288,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	//FXDLog_OVERRIDE;
+- (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	//FXDLog_OVERRIDE;
 	[self
 	 prepareGlobalManagerWithMainCoredata:nil
 	 withUbiquityContainerURL:nil
@@ -296,7 +296,7 @@
 	 withDidFinishBlock:didFinishBlock];
 }
 
-- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_DEFAULT;
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
 		[self incrementAppLaunchCount];

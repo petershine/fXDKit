@@ -286,7 +286,7 @@
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame {
 #if TEST_loggingRotatingOrientation
 	FXDLog_DEFAULT;
-	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.layer.frame), _Rect(self.bounds), _Rect(self.layer.bounds));
+	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
 #endif
 
 	[self.layer setAffineTransform:affineTransform];
@@ -306,7 +306,7 @@
 	[self setNeedsLayout];
 
 #if TEST_loggingRotatingOrientation
-	FXDLog(@"2.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.layer.frame), _Rect(self.bounds), _Rect(self.layer.bounds));
+	FXDLog(@"2.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
 #endif
 }
 

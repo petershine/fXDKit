@@ -67,7 +67,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_DEFAULT;
 
 	AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
 	NSString *tracksKey = @"tracks";
@@ -142,7 +142,7 @@
 
 
 #pragma mark -
-- (void)startSeekingToProgressValue:(Float64)progressValue withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+- (void)startSeekingToProgressValue:(Float64)progressValue withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
 
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 

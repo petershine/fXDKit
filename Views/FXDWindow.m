@@ -301,7 +301,7 @@
 @end
 
 @implementation UIWindow (Message)
-- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDblockAlertCallback)clickedButtonAtIndexBlock {
+- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock {
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	if (applicationWindow.messageView) {

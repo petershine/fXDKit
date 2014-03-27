@@ -312,7 +312,7 @@
 	 }];
 }
 
-- (void)uncoverAllSceneWithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+- (void)uncoverAllSceneWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
 	//MARK: Assume direction is only vertical
 	if ([self.childViewControllers count] == 0) {
 

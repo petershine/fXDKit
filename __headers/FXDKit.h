@@ -11,9 +11,9 @@
 
 
 #pragma mark - Types
-typedef void (^FXDblockDidFinish)(BOOL finished, id responseObj);
+typedef void (^FXDcallbackFinish)(BOOL finished, id responseObj);
 
-typedef void (^FXDblockAlertCallback)(id alertObj, NSInteger buttonIndex);
+typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Headers
