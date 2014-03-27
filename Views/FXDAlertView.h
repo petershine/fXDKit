@@ -9,7 +9,7 @@
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
 // Properties
-@property (copy) FXDcallbackAlert callbackBlock;
+@property (copy) FXDcallbackAlert mainCallback;
 
 
 #pragma mark - IBActions

@@ -17,9 +17,9 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	FXDLogObject(_callbackBlock);
+	FXDLogObject(_mainCallback);
 
-	_callbackBlock = nil;
+	_mainCallback = nil;
 }
 
 
@@ -61,7 +61,7 @@
 			  otherButtonTitles:otherButtonTitles, nil];
 	
 	if (self) {
-		self.callbackBlock = clickedButtonAtIndexBlock;
+		self.mainCallback = clickedButtonAtIndexBlock;
 		[self setDelegate:self];
 	}
 	
@@ -71,8 +71,8 @@
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
-	if (self.callbackBlock) {
-		self.callbackBlock(self, self.cancelButtonIndex);
+	if (self.mainCallback) {
+		self.mainCallback(self, self.cancelButtonIndex);
 	}
 	
 	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
@@ -81,8 +81,8 @@
 //MARK: - Delegate implementation
 - (void)actionSheet:(FXDActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	
-	if (actionSheet.callbackBlock) {
-		actionSheet.callbackBlock(actionSheet, buttonIndex);
+	if (actionSheet.mainCallback) {
+		actionSheet.mainCallback(actionSheet, buttonIndex);
 	}
 }
 

@@ -15,9 +15,9 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	FXDLogObject(_callbackBlock);
+	FXDLogObject(_mainCallback);
 
-	_callbackBlock = nil;
+	_mainCallback = nil;
 }
 
 
@@ -31,8 +31,8 @@
 - (IBAction)pressedCancelButton:(id)sender {
 	[super pressedCancelButton:sender];
 	
-	if (self.callbackBlock) {
-		self.callbackBlock(self, buttonIndexCancel);
+	if (self.mainCallback) {
+		self.mainCallback(self, buttonIndexCancel);
 	}
 	
 	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
@@ -40,8 +40,8 @@
 }
 
 - (IBAction)pressedAcceptButton:(id)sender {	FXDLog_DEFAULT;
-	if (self.callbackBlock) {
-		self.callbackBlock(self, buttonIndexAccept);
+	if (self.mainCallback) {
+		self.mainCallback(self, buttonIndexAccept);
 	}
 	
 	self.didPressAcceptButton = YES;

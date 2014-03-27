@@ -15,9 +15,9 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	FXDLogObject(_callbackBlock);
+	FXDLogObject(_mainCallback);
 
-	_callbackBlock = nil;
+	_mainCallback = nil;
 }
 
 
@@ -73,7 +73,7 @@
 			 otherButtonTitles:nil];
 
 	if (self) {
-		self.callbackBlock = clickedButtonAtIndexBlock;
+		self.mainCallback = clickedButtonAtIndexBlock;
 		[self setDelegate:self];
 	}
 
@@ -86,8 +86,8 @@
 //MARK: - Delegate implementation
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-	if (alertView.callbackBlock) {
-		alertView.callbackBlock(alertView, buttonIndex);
+	if (alertView.mainCallback) {
+		alertView.mainCallback(alertView, buttonIndex);
 	}
 }
 

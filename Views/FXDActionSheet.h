@@ -9,7 +9,7 @@
 
 @interface FXDActionSheet : UIActionSheet <UIActionSheetDelegate>
 // Properties
-@property (copy) FXDcallbackAlert callbackBlock;
+@property (copy) FXDcallbackAlert mainCallback;
 
 // IBOutlets
 
