@@ -82,7 +82,7 @@
 
 #if	USE_TestFlight
 	#ifndef testflightAppToken
-		#warning "//TODO: Define testflightAppToken"
+		#warning	//TODO: Define testflightAppToken
 		#define testflightAppToken	@"testflightAppToken"
 	#endif
 

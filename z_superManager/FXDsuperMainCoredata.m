@@ -62,7 +62,7 @@
 		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
 
 	#if !ForDEVELOPER
-		#warning "//MARK: Use different name for better controlling between developer build and release build"
+		#warning //MARK: Use different name for better controlling between developer build and release build
 		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@", _mainSqlitePathComponent];
 	#endif
 

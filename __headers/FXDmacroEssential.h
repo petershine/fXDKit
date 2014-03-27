@@ -10,13 +10,13 @@
 #define FXDKit_FXDmacroEssential_h
 
 #ifndef GlobalAppManager
-	#warning "//TODO: Must define GlobalAppManager"
+	#warning //TODO: Must define GlobalAppManager
 	#define GlobalAppManager	[FXDsuperGlobalManager sharedInstance]
 #endif
 
 #ifndef application_AppStoreID
 	#if	!DEBUG
-		#warning "//TODO: Define application_AppStoreID"
+		#warning //TODO: Define application_AppStoreID
 	#endif
 
 	#define application_AppStoreID	@"000000000"
@@ -24,7 +24,7 @@
 
 #ifndef application_ContactEmail
 	#if	!DEBUG
-		#warning "//TODO: Define application_ContactEmail"
+		#warning //TODO: Define application_ContactEmail
 	#endif
 
 	#define application_ContactEmail	@"app@company.com"
