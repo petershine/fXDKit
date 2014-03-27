@@ -55,7 +55,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;
 
-	FXDLog(@"kind: %@ indexPath: %@", kind, indexPath);
+	FXDLog(@"%@ %@", strObject(kind), strObject(indexPath));
 
 	UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
 
@@ -64,7 +64,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString*)decorationViewKind atIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;
 
-	FXDLog(@"decorationViewKind: %@ indexPath: %@", decorationViewKind, indexPath);
+	FXDLog(@"%@ %@", strObject(decorationViewKind), strObject(indexPath));
 
 	UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForDecorationViewOfKind:decorationViewKind atIndexPath:indexPath];
 
@@ -85,7 +85,7 @@
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {	FXDLog_DEFAULT;
 	// return a point at which to rest after scrolling - for layouts that want snap-to-point scrolling behavior
 
-	FXDLog(@"proposedContentOffset: %@ velocity: %@", NSStringFromCGPoint(proposedContentOffset), NSStringFromCGPoint(velocity));
+	FXDLog(@"%@ %@", strStruct(proposedContentOffset), strStruct(velocity));
 
 	CGPoint contentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset withScrollingVelocity:velocity];
 	FXDLogStruct(contentOffset);

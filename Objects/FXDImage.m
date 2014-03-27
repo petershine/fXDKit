@@ -62,7 +62,7 @@
 	
 #if ForDEVELOPER
 	if (bundledImage == nil) {
-		FXDLog(@"imageName: %@ bundledImage: %@", imageName, bundledImage);
+		FXDLog(@"%@ %@", strObject(imageName), strObject(bundledImage));
 	}
 #endif
 	
@@ -322,7 +322,7 @@
 	UIImage *maskedImage = self;
 
 	UIImage *maskImage = [UIImage bundledImageForName:maskImageName];
-	FXDLog(@"maskImageName: %@, maskImage: %@", maskImageName, maskImage);
+	FXDLog(@"%@ %@", strObject(maskImageName), strObject(maskImage));
 
 	if (maskImage) {
 		CGImageRef maskRef = maskImage.CGImage;

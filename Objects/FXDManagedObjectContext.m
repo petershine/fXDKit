@@ -55,7 +55,7 @@
 		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 		
 		if (didPerformFetch == NO) {
-			FXDLog(@"didPerformFetch: %d concurrencyType: %lu", didPerformFetch, (unsigned long)self.concurrencyType);
+			FXDLog(@"%@ %@", strBOOL(didPerformFetch), strVariable(self.concurrencyType));
 		}
 	}
 
@@ -92,7 +92,7 @@
 
 #if TEST_loggingResultObjFiltering
 		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
-			FXDLog(@"fetchedObjArray: %d self.concurrencyType: %d isMainThread: %d", [fetchedObjArray count], self.concurrencyType, [NSThread isMainThread]);
+			FXDLog(@"%@ %@ %@", strVariable([fetchedObjArray count]), strVariable(self.concurrencyType), strIsMainThread);
 		}
 #endif
 	}
@@ -103,6 +103,7 @@
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
 
 	NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: entityName: %@, sortDescriptors: %@", entityName, sortDescriptors);
+	
 	if (entityName == nil || sortDescriptors == nil) {
 		return nil;
 	}

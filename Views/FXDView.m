@@ -98,7 +98,7 @@
 
 #if ForDEVELOPER
 	if (view == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
+		FXDLog(@"%@ %@", strObject([self class]), strObject(viewArray));
 	}
 #endif
 
@@ -217,7 +217,6 @@
 		 subview.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
-		 //FXDLog(@"finished: %d subview: %@", finished, subview);
 		 [subview removeFromSuperview];
 		 
 		 if (afterRemovedBlock) {
@@ -292,7 +291,7 @@
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame {
 #if TEST_loggingRotatingOrientation
 	FXDLog_DEFAULT;
-	FXDLog(@"1.frame: %@ layer: %@ bounds: %@ layer.bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.layer.frame), NSStringFromCGRect(self.bounds), NSStringFromCGRect(self.layer.bounds));
+	FXDLog(@"1.%@ %@ %@ %@", strRect(self.frame), strRect(self.layer.frame), strRect(self.bounds), strRect(self.layer.bounds));
 #endif
 
 	[self.layer setAffineTransform:affineTransform];
@@ -300,19 +299,19 @@
 
 	for (CALayer *sublayer in self.layer.sublayers) {
 #if TEST_loggingRotatingOrientation
-		FXDLog(@"1.sublayer.frame: %@ bounds: %@", NSStringFromCGRect(sublayer.frame), NSStringFromCGRect(sublayer.bounds));
+		FXDLog(@"1.%@ %@", strRect(sublayer.frame), strRect(sublayer.bounds));
 #endif
 		[sublayer setFrame:sublayer.superlayer.bounds];
 
 #if TEST_loggingRotatingOrientation
-		FXDLog(@"2.sublayer.frame: %@ bounds: %@", NSStringFromCGRect(sublayer.frame), NSStringFromCGRect(sublayer.bounds));
+		FXDLog(@"2.%@ %@", strRect(sublayer.frame), strRect(sublayer.bounds));
 #endif
 	}
 
 	[self setNeedsLayout];
 
 #if TEST_loggingRotatingOrientation
-	FXDLog(@"2.frame: %@ layer: %@ bounds: %@ layer.bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.layer.frame), NSStringFromCGRect(self.bounds), NSStringFromCGRect(self.layer.bounds));
+	FXDLog(@"2.%@ %@ %@ %@", strRect(self.frame), strRect(self.layer.frame), strRect(self.bounds), strRect(self.layer.bounds));
 #endif
 }
 

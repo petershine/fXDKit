@@ -45,7 +45,7 @@
 		 */
 		action = @selector(popSceneWithAnimation:);
 
-		FXDLog(@"highlightedImage: %@, normalImage: %@", highlightedImage, normalImage);
+		FXDLog(@"%@, %@", strObject(highlightedImage), strObject(normalImage));
 
 	}
 	else {

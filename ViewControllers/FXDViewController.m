@@ -55,7 +55,7 @@
 			nibNameOrNil = filename;
 		}
 		else {
-			FXDLog(@"NO fileExistsAtPath:resourcePath: %@ for %@", resourcePath, filename);
+			FXDLog(@"NO fileExistsAtPath:%@", strObject(resourcePath));
 		}
 	}
 
@@ -73,7 +73,7 @@
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
-	FXDLog(@"storyboard: %@, nibName: %@", self.storyboard, self.nibName);
+	FXDLog(@"%@, %@", strObject(self.storyboard), strObject(self.nibName));
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
@@ -115,32 +115,30 @@
 - (BOOL)shouldAutorotate {
 	BOOL shouldAutorotate = [super shouldAutorotate];
 
-	//FXDLog(@"%@: %@", selfClassSelector, strBOOL(shouldAutorotate));
-
 	return shouldAutorotate;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	FXDLog(@"%@: supportedInterface: %u", selfClassSelector, supportedInterface);
+	FXDLog(@"%@: %@", selfClassSelector, strVariable(supportedInterface));
 
 	return supportedInterface;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
 	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
-	FXDLog(@"%@: preferredInterfaceOrientation: %u", selfClassSelector, preferredInterfaceOrientation);
+	FXDLog(@"%@: %@", selfClassSelector, strVariable(preferredInterfaceOrientation));
 
 	return preferredInterfaceOrientation;
 }
 
 #pragma mark -
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %ld, duration: %f %@", selfClassSelector, (long)toInterfaceOrientation, duration, [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)toInterfaceOrientation, strVariable(duration), [self.view describeFrameAndBounds]);
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %ld, duration: %f %@", selfClassSelector, (long)interfaceOrientation, duration, [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)interfaceOrientation, strVariable(duration), [self.view describeFrameAndBounds]);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -220,8 +218,6 @@
 }
 
 - (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {	//FXDLog_DEFAULT;
-	//FXDLog(@"isAppearing: %d animated: %d", isAppearing, animated);
-
 	[super beginAppearanceTransition:isAppearing animated:animated];
 
 }
@@ -271,7 +267,7 @@
 - (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 
-	FXDLogObj(NSStringFromSelector(action));
+	FXDLogSelector(action);
 	FXDLogObj(fromViewController);
 	FXDLogObj(sender);
 
@@ -284,7 +280,7 @@
 - (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
 
-	FXDLogObj(NSStringFromSelector(action));
+	FXDLogSelector(action);
 	FXDLogObj(fromViewController);
 	FXDLogObj(sender);
 
@@ -294,23 +290,23 @@
 	[self.childViewControllers
 	 enumerateObjectsWithOptions:NSEnumerationReverse
 	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		 FXDLog(@"idx: %lu obj: %@ viewController: %@", (unsigned long)idx, obj, viewController);
+		 FXDLog(@"idx: %lu %@ %@", (unsigned long)idx, strObject(obj), strObject(viewController));
 
 		 if (viewController == nil) {
 			 if (obj) {
 				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
 					 viewController = (UIViewController*)obj;
-					 FXDLog(@"1.(obj)viewController: %@", viewController);
+					 FXDLog(@"1.(obj) %@", strObject(viewController));
 				 }
 			 }
 			 else {
 				 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-				 FXDLog(@"1.([super])viewController: %@", viewController);
+				 FXDLog(@"1.([super]) %@", strObject(viewController));
 			 }
 		 }
 	 }];
 
-	FXDLog(@"2.viewController: %@", viewController);
+	FXDLog(@"2.%@", strObject(viewController));
 
 	return viewController;
 }
@@ -381,7 +377,7 @@
 	
 #if ForDEVELOPER
 	if (sceneView == nil) {
-		FXDLog(@"self class: %@ viewArray:\n%@", [self class], viewArray);
+		FXDLog(@"%@ %@", strObject([self class]), strObject(viewArray));
 	}
 #endif
 	

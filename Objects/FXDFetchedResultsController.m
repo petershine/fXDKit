@@ -53,7 +53,7 @@
 
 #if TEST_loggingResultObjFiltering
 	if (resultObj == nil || [filteredArray count] > 1) {
-		FXDLog(@"predicate: %@ filteredArray count: %d", predicate, [filteredArray count]);
+		FXDLog(@"%@ %@", strObject(predicate), strVariable([filteredArray count]));
 	}
 #endif
 

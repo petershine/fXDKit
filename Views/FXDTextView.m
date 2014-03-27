@@ -54,7 +54,7 @@
 		FXDLogObj(assignedText);
 		
 		CGRect modifiedFrame = self.frame;
-		FXDLog(@"(before)modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
+		FXDLog(@"(before) %@", strStruct(modifiedFrame));
 		
 		CGSize maximumSize = CGSizeMake(modifiedFrame.size.width, 100000000.0);
 		
@@ -63,7 +63,7 @@
 		sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
 		
 		modifiedFrame.size.height = (sizeForAssignedText.height > self.contentSize.height) ? sizeForAssignedText.height : self.contentSize.height;
-		FXDLog(@"(after)modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
+		FXDLog(@"(after) %@", strStruct(modifiedFrame));
 				
 		[self setFrame:modifiedFrame];
 	}

@@ -99,7 +99,7 @@
 			_deviceLanguageCode = @"tw";
 		}
 		
-		FXDLog(@"1._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
+		FXDLog(@"1.%@ %@", strObject(_deviceLanguageCode), strObject(languages));
 		
 		//MARK: limit supported languages
 		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
@@ -109,7 +109,7 @@
 			&& [_deviceLanguageCode isEqualToString:@"tw"] == NO) {
 			_deviceLanguageCode = @"en";
 		}
-		FXDLog(@"2._deviceLanguageCode: %@ languages:\n%@", _deviceLanguageCode, languages);
+		FXDLog(@"2.%@ %@", strObject(_deviceLanguageCode), strObject(languages));
 	}
 
 	return _deviceLanguageCode;
@@ -181,7 +181,7 @@
 			_deviceModelName = machineName;
 		}
 
-		FXDLog(@"_deviceModelName: %@ machineName: %@", _deviceModelName, machineName);
+		FXDLog(@"%@ %@", strObject(_deviceModelName), strObject(machineName));
 	}
 
 	return _deviceModelName;
@@ -253,7 +253,7 @@
 	
 	if ([addedControllers count] == 0) {
 		_homeController = self.rootController;
-		FXDLog(@"_homeController = self.rootController: %@", _homeController);
+		FXDLogObj(self.rootController);
 		
 		return _homeController;
 	}
@@ -261,7 +261,7 @@
 	
 	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
 		_homeController = [addedControllers firstObject];
-		FXDLog(@"_homeController = [addedControllers firstObject]: %@", _homeController);
+		FXDLogObj([addedControllers firstObject]);
 		
 		return _homeController;
 	}
@@ -274,14 +274,12 @@
 		
 		if ([navigationController.viewControllers count] > 0) {
 			_homeController = [(navigationController.viewControllers) firstObject];
-			
-			FXDLog(@"_homeController = [(containedNavigationController.viewControllers) firstObject]: %@", _homeController);
+			FXDLogObj([(navigationController.viewControllers) firstObject]);
 		}
 	}
 	else {
 		_homeController = subContainerController;
-		
-		FXDLog(@"_homeController = subContainerController: %@", _homeController);
+		FXDLogObj(subContainerController);
 	}
 	
 	return _homeController;
@@ -334,10 +332,10 @@
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
 
 	NSInteger modifiedCount = self.appLaunchCount;
-	FXDLog(@"1.modifiedCount: %ld", (long)modifiedCount);
+	FXDLog(@"1.%@", strVariable(modifiedCount));
 
 	_appLaunchCount = modifiedCount+1;
-	FXDLog(@"2.modifiedCount: %ld", (long)_appLaunchCount);
+	FXDLog(@"2.%@", strVariable(_appLaunchCount));
 	
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
@@ -470,7 +468,7 @@
 	BOOL isOlder = NO;
 
 	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
-	FXDLog(@"[lastVersionObj integerValue]: %ld < versionInteger: %ld", (long)[lastVersionObj integerValue], (long)versionInteger);
+	FXDLog(@"%@ < %@", strVariable([lastVersionObj integerValue]), strVariable(versionInteger));
 
 	if ([lastVersionObj integerValue] < versionInteger) {
 		isOlder = YES;
@@ -486,7 +484,7 @@
 
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-	FXDLog(@"SAVED: userdefaultIntegerLastUpgradedAppVersion: %ld", (long)versionInteger);
+	FXDLog(@"SAVED: %@", strVariable(versionInteger));
 }
 
 #pragma mark -
@@ -527,7 +525,7 @@
 
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogObj(NSStringFromCGRect([UIApplication sharedApplication].statusBarFrame));
+	FXDLogRect([UIApplication sharedApplication].statusBarFrame);
 	FXDLogObj([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
 }
 

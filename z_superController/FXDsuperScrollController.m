@@ -52,7 +52,7 @@
 
 		if (self.offsetYdismissingController == 0.0) {
 			CGRect screenBounds = [[UIScreen mainScreen] bounds];
-			FXDLogObj(NSStringFromCGRect(screenBounds));
+			FXDLogStruct(screenBounds);
 
 			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
 			FXDLogVar(self.offsetYdismissingController);
@@ -258,7 +258,7 @@
 		}
 		
 		if (numberOfItems != fetchedCount) {	//FXDLog_DEFAULT;
-			FXDLog(@"section: %ld numberOfItems: %ld == fetchedCount: %lu", (long)section, (long)numberOfItems, (unsigned long)fetchedCount);
+			FXDLog(@"%@ %@ == %@", strVariable(section), strVariable(numberOfItems), strVariable(fetchedCount));
 		}
 #else
 		numberOfItems = fetchedCount;
@@ -287,7 +287,7 @@
 		scrollView = self.mainScrollview;
 	}
 	
-	FXDLog(@"contentOffset.y: %f didStartDismissingByPullingDown: %d", scrollView.contentOffset.y, self.didStartDismissingByPullingDown);
+	FXDLog(@"%@ %@", strVariable(scrollView.contentOffset.y), strBOOL(self.didStartDismissingByPullingDown));
 #endif
 	
 	if (self.didStartDismissingByPullingDown) {
@@ -315,10 +315,7 @@
 	}
 }
 
-- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-	
-	//FXDLog_OVERRIDE;
-	//FXDLog(@"type: %d indexPath: %@ newIndexPath: %@", type, indexPath, newIndexPath);
+- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	//FXDLog_OVERRIDE;
 	
 	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {
 		return;

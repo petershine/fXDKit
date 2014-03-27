@@ -165,17 +165,11 @@
 
 	error = nil;
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];
+	FXDLogBOOL(didSetUbiquitous);
 
 	if ([error code] != 2 && [error code] != 516) {
 		FXDLog_ERROR;
 	}
-	
-
-	if (didSetUbiquitous) {
-		//TODO:
-	}
-
-	//FXDLog(@"didCreate: %d didSetUbiquitous: %d %@", didCreate, didSetUbiquitous, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
 }
 
 - (void)enumerateCachesMetadataQueryResults {
@@ -215,7 +209,7 @@
 				 }
 				 
 #if ForDEVELOPER
-				 FXDLog(@"didStartDownloading: %d isReachable: %d %@ didRemove: %d %@", didStartDownloading, isReachable, [itemURL followingPathInDocuments], didRemove, [cachedURL followingPathAfterPathComponent:pathcomponentCaches]);
+				 FXDLog(@"%@ %@ %@ %@ %@", strBOOL(didStartDownloading), strBOOL(isReachable), strObject([itemURL followingPathInDocuments]), strBOOL(didRemove), strObject([cachedURL followingPathAfterPathComponent:pathcomponentCaches]));
 #endif
 				 continue;
 			 }

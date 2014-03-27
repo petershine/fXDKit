@@ -27,15 +27,15 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 	
-	FXDLogObj(NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLogObj(NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLogRect(self.mainScrollview.frame);
+	FXDLogRect(self.imageviewPhoto.frame);
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 	
-	FXDLogObj(NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLogObj(NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLogRect(self.mainScrollview.frame);
+	FXDLogRect(self.imageviewPhoto.frame);
 	
 	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
@@ -44,8 +44,8 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-	FXDLogObj(NSStringFromCGRect(self.mainScrollview.frame));
-	FXDLogObj(NSStringFromCGRect(self.imageviewPhoto.frame));
+	FXDLogRect(self.mainScrollview.frame);
+	FXDLogRect(self.imageviewPhoto.frame);
 	
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
@@ -151,10 +151,10 @@
 		 CGFloat scale = [[UIScreen mainScreen] scale];
 		 
 		 ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
-		 FXDLog(@"scale: %f assetOrientation: %ld", scale, (long)assetOrientation);
+		 FXDLog(@"%@ %@", strVariable(scale), strVariable(assetOrientation));
 		 
 		 UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
-		 FXDLog(@"fullImage.imageOrientation: %ld fullImage.size: %@", (long)fullImage.imageOrientation, NSStringFromCGSize(fullImage.size));
+		 FXDLog(@"%@ %@", strVariable(fullImage.imageOrientation), strSize(fullImage.size));
 		 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{

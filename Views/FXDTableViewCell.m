@@ -105,7 +105,7 @@
 			modifiedFrame.origin.x = (self.frame.size.width - self.backgroundImageview.frame.size.width)/2.0;
 			[self.backgroundImageview setFrame:modifiedFrame];
 			
-			//FXDLogObj(NSStringFromCGRect(modifiedFrame));
+			//FXDLogStruct(modifiedFrame);
 			
 			[self addSubview:self.backgroundImageview];
 			[self sendSubviewToBack:self.backgroundImageview];

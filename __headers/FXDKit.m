@@ -308,7 +308,8 @@
 		}
 	}
 
-	//FXDLogObj(NSStringFromCGAffineTransform(affineTransform));
+	//FXDLogStruct(affineTransform);
+
 	return affineTransform;
 }
 
@@ -332,7 +333,7 @@
 		screenFrame.size.height = screenWidth;
 	}
 
-	//FXDLogObj(NSStringFromCGRect(screenFrame));
+	//FXDLogStruct(screenFrame);
 
 	return screenFrame;
 }

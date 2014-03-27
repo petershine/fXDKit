@@ -89,7 +89,7 @@
 	[self.mainAssetsLibrary
 	 enumerateGroupsWithTypes:types
 	 usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-		 FXDLog(@"*stop: %d group: %@", *stop, group);
+		 FXDLog(@"%@ %@", strBOOL(*stop), strObject(group));
 		 
 		 if (group) {
 			 if (collectedGroupsArray == nil) {
@@ -135,7 +135,6 @@
 	
 	[group
 	 enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop) {
-		 //FXDLog(@"*stop: %d index: %d group: %@", *stop, index, asset);
 		 
 		 if (asset) {
 			 if (collectedAssetsArray == nil) {

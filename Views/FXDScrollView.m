@@ -46,13 +46,13 @@
 #pragma mark - Category
 @implementation UIScrollView (Added)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;
-	FXDLogObj(NSStringFromCGSize(self.bounds.size));
-	FXDLogObj(NSStringFromCGSize(imageView.image.size));
+	FXDLogSize(self.bounds.size);
+	FXDLogSize(imageView.image.size);
 	
 	// calculate min/max zoomscale
 	CGFloat xScale = self.bounds.size.width  / imageView.image.size.width;
 	CGFloat yScale = self.bounds.size.height / imageView.image.size.height;
-	FXDLog(@"xScale: %f, yScale: %f", xScale, yScale);
+	FXDLog(@"%@, %@", strVariable(xScale), strVariable(yScale));
 	
 	
 	CGFloat minScale = MIN(xScale, yScale);
@@ -62,15 +62,15 @@
 		minScale = 1.0;
 	}
 	
-	FXDLog(@"minScale: %f, maxScale: %f", minScale, maxScale);
+	FXDLog(@"%@, %@", strVariable(minScale), strVariable(maxScale));
 	
 	self.maximumZoomScale = maxScale;
 	self.minimumZoomScale = minScale;
 	
 	
-	FXDLogObj(NSStringFromCGRect(imageView.frame));
+	FXDLogRect(imageView.frame);
 	[self setZoomScale:self.minimumZoomScale animated:shouldAnimate];
-	FXDLogObj(NSStringFromCGRect(imageView.frame));
+	FXDLogRect(imageView.frame);
 }
 
 #pragma mark -
@@ -92,18 +92,18 @@
 }
 
 - (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;
-	FXDLogObj(NSStringFromCGRect(self.frame));
-	FXDLogObj(NSStringFromCGRect(clippingFrame));
+	FXDLogRect(self.frame);
+	FXDLogStruct(clippingFrame);
 	
 	UIEdgeInsets modifiedInset = self.contentInset;
-	FXDLogObj(NSStringFromUIEdgeInsets(modifiedInset));
+	FXDLogStruct(modifiedInset);
 	
 	modifiedInset.left = clippingFrame.origin.x -self.frame.origin.x;
 	modifiedInset.top = clippingFrame.origin.y -self.frame.origin.y;
 	modifiedInset.bottom = self.frame.size.height -(modifiedInset.top +clippingFrame.size.height);
 	modifiedInset.right = self.frame.size.width -(modifiedInset.left +clippingFrame.size.width);
 	
-	FXDLogObj(NSStringFromUIEdgeInsets(modifiedInset));
+	FXDLogStruct(modifiedInset);
 	
 	[self setContentInset:modifiedInset];
 }

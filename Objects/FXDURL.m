@@ -54,7 +54,7 @@
 
 	BOOL isValid = [testPredicate evaluateWithObject:*webURLstring];
 
-	FXDLog(@"isValid: %d *webURLstring: %@", isValid, *webURLstring);
+	FXDLog(@"%@ %@", strBOOL(isValid), strObject(*webURLstring));
 
 	return isValid;
 }

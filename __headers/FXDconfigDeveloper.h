@@ -46,6 +46,7 @@
 #define strStruct(struct)		[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]]
 #define strVariable(variable)	[NSString stringWithFormat:@"%s: %@", #variable, @(variable)]
 #define strBOOL(boolean)		[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")]
+#define strSelector(selector)	[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)]
 
 #define strPoint(point)	[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)]
 #define strSize(size)	[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)]
@@ -82,10 +83,11 @@
 
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
-	#define FXDLogObj(object)		FXDLog(@"%@", strObject(object))
-	#define FXDLogStruct(struct)	FXDLog(@"%@", strStruct(struct))
-	#define FXDLogVar(variable)		FXDLog(@"%@", strVariable(variable))
-	#define FXDLogBOOL(boolean)		FXDLog(@"%@", strBOOL(boolean))
+	#define FXDLogObj(object)			FXDLog(@"%@", strObject(object))
+	#define FXDLogStruct(struct)		FXDLog(@"%@", strStruct(struct))
+	#define FXDLogVar(variable)			FXDLog(@"%@", strVariable(variable))
+	#define FXDLogBOOL(boolean)			FXDLog(@"%@", strBOOL(boolean))
+	#define FXDLogSelector(selector)	FXDLog(@"%@", strSelector(selector))
 
 	#define FXDLogPoint(point)		FXDLog(@"%@", strPoint(point))
 	#define FXDLogSize(size)		FXDLog(@"%@", strSize(size))
@@ -157,6 +159,7 @@
 	#define FXDLogStruct(struct)
 	#define FXDLogVar(variable)
 	#define FXDLogBOOL(boolean)
+	#define FXDLogSelector(selector)
 
 	#define FXDLogPoint(point)
 	#define FXDLogSize(size)
