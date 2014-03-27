@@ -230,7 +230,7 @@
 		 
 		 FXDLog_ERROR;
 		 
-		 FXDLog(@"1.%@", strBOOL(didConfigure));
+		 FXDLog(@"1.%@", _BOOL(didConfigure));
 		 
 #if ForDEVELOPER
 		 NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
@@ -243,7 +243,7 @@
 		 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
-			  FXDLog(@"2.%@", strBOOL(didConfigure));
+			  FXDLog(@"2.%@", _BOOL(didConfigure));
 
 			  //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 			  FXDLog_ERROR;FXDLog_ERROR_ALERT;
@@ -366,7 +366,7 @@
 	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
 	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
 		 FXDLog_BLOCK(applicationWindow, @selector(showMessageViewWithNibName:withTitle:message:cancelButtonTitle:acceptButtonTitle:clickedButtonAtIndexBlock:));
-		 FXDLog(@"%@, %@", strObject(alertObj), strVariable(buttonIndex));
+		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
 		 
 		 if (buttonIndex == buttonIndexAccept) {
 			 [self
@@ -403,7 +403,7 @@
 - (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
 	
 	FXDLogBOOL(shouldUsePrivateContext);
-	FXDLog(@"0.%@", strVariable(self.didStartEnumerating));
+	FXDLog(@"0.%@", _Variable(self.didStartEnumerating));
 	
 	//TODO: Decide if returning is not appropriate
 	if (self.didStartEnumerating) {
@@ -471,15 +471,15 @@
 		 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
-			  FXDLog(@"1.%@", strVariable(self.didStartEnumerating));
+			  FXDLog(@"1.%@", _Variable(self.didStartEnumerating));
 			  self.didStartEnumerating = NO;
-			  FXDLog(@"2.%@", strVariable(self.didStartEnumerating));
+			  FXDLog(@"2.%@", _Variable(self.didStartEnumerating));
 			  
 			  
 			  FXDblockDidFinish DidEnumerateBlock = ^(BOOL finished, id responseObj) {
 				  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
 
-				  FXDLog(@"1.%@ %@", strBOOL(finished), strBOOL(shouldBreak));
+				  FXDLog(@"1.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
 				  
 				  if (withDefaultProgressView) {
 					  [applicationWindow hideProgressView];
@@ -489,7 +489,7 @@
 					  finished = NO;
 				  }
 				  
-				  FXDLog(@"2.%@ %@", strBOOL(finished), strBOOL(shouldBreak));
+				  FXDLog(@"2.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
 				  
 				  
 				  FXDLog_REMAINING;
@@ -522,23 +522,23 @@
 #pragma mark -
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
-	FXDLog(@"1.%@ %@", strBOOL(managedContext.hasChanges), strVariable(managedContext.concurrencyType));
+	FXDLog(@"1.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 
 	if (managedContext == nil) {
 		managedContext = self.mainDocument.managedObjectContext;
 
-		FXDLog(@"2.%@ %@", strBOOL(managedContext.hasChanges), strVariable(managedContext.concurrencyType));
+		FXDLog(@"2.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 
 		if (managedContext.hasChanges == NO
 			&& managedContext.concurrencyType != self.mainDocument.managedObjectContext.parentContext.concurrencyType) {
 			
 			managedContext = self.mainDocument.managedObjectContext.parentContext;
 
-			FXDLog(@"3.%@ %@", strBOOL(managedContext.hasChanges), strVariable(managedContext.concurrencyType));
+			FXDLog(@"3.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 		}
 	}
 
-	FXDLog(@"%@ %@ %@", strObject(managedContext), strBOOL(managedContext.hasChanges), strVariable(managedContext.concurrencyType));
+	FXDLog(@"%@ %@ %@", _Object(managedContext), _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 
 	if (managedContext == nil || managedContext.hasChanges == NO) {
 
@@ -555,8 +555,8 @@
 		BOOL didSave = [managedContext save:&error];FXDLog_ERROR;
 		
 		FXDLog_DEFAULT;
-		FXDLog(@"%@ %@", strBOOL(didSave), strVariable(managedContext.concurrencyType));
-		FXDLog(@"4.%@ %@", strBOOL(managedContext.hasChanges), strVariable(managedContext.concurrencyType));
+		FXDLog(@"%@ %@", _BOOL(didSave), _Variable(managedContext.concurrencyType));
+		FXDLog(@"4.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 		
 		if (didFinishBlock) {
 			didFinishBlock(didSave, nil);
@@ -577,8 +577,8 @@
 - (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_SEPARATE;
 	
 	FXDLogBOOL(shouldSkipMerge);
-	FXDLog(@"1.%@", strVariable(self.mainDocument.documentState));
-	FXDLog(@"1.%@", strBOOL([self.mainDocument hasUnsavedChanges]));
+	FXDLog(@"1.%@", _Variable(self.mainDocument.documentState));
+	FXDLog(@"1.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
 	
 	if (shouldSkipMerge) {
 		self.shouldMergeForManagedContext = NO;
@@ -597,8 +597,8 @@
 		 FXDLog_BLOCK(self.mainDocument, @selector(saveToURL:forSaveOperation:completionHandler:));
 		 FXDLogBOOL(success);
 		 
-		 FXDLog(@"2.%@", strVariable(self.mainDocument.documentState));
-		 FXDLog(@"2.%@", strBOOL([self.mainDocument hasUnsavedChanges]));
+		 FXDLog(@"2.%@", _Variable(self.mainDocument.documentState));
+		 FXDLog(@"2.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
 		 
 		 if (didFinishBlock) {
 			 didFinishBlock(success, nil);
@@ -648,15 +648,15 @@
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", strObject(notification.object), strVariable([(NSManagedObjectContext*)notification.object concurrencyType]));
+	FXDLog(@"%@ %@", _Object(notification.object), _Variable([(NSManagedObjectContext*)notification.object concurrencyType]));
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", strObject(notification.object), strVariable([(NSManagedObjectContext*)notification.object concurrencyType]));
+	FXDLog(@"%@ %@", _Object(notification.object), _Variable([(NSManagedObjectContext*)notification.object concurrencyType]));
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", strObject(notification.object), strVariable([(NSManagedObjectContext*)notification.object concurrencyType]));
+	FXDLog(@"%@ %@", _Object(notification.object), _Variable([(NSManagedObjectContext*)notification.object concurrencyType]));
 	FXDLogBOOL([notification.object isEqual:self.mainDocument.managedObjectContext]);
 
 	// Distinguish notification from main managedObjectContext and private managedObjectContext
@@ -693,20 +693,20 @@
 	
 	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);
 	
-	FXDLog(@"1.%@", strBOOL(self.shouldMergeForManagedContext));
+	FXDLog(@"1.%@", _BOOL(self.shouldMergeForManagedContext));
 	
 	if (mainStoreUUID && notifyingStoreUUID && [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
 
 		//MARK: Unless save is done for private context in background, you can skip merging"
 		if (self.shouldMergeForManagedContext) {
 			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-			FXDLog(@"DID MERGE: %@", strBOOL(self.mainDocument.managedObjectContext.hasChanges));
+			FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));
 		}
 		
 		self.shouldMergeForManagedContext = NO;
 	}
 	
-	FXDLog(@"2.%@", strBOOL(self.shouldMergeForManagedContext));
+	FXDLog(@"2.%@", _BOOL(self.shouldMergeForManagedContext));
 }
 
 #pragma mark -

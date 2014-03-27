@@ -47,7 +47,7 @@
 }
 
 - (void)saveToURL:(NSURL *)url forSaveOperation:(UIDocumentSaveOperation)saveOperation completionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;;
-	FXDLog(@"%@, %@", strObject(url), strVariable(saveOperation));
+	FXDLog(@"%@, %@", _Object(url), _Variable(saveOperation));
 	
 	[super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
 }
@@ -162,12 +162,12 @@
 
 #pragma mark -
 - (void)handleError:(NSError *)error userInteractionPermitted:(BOOL)userInteractionPermitted {	FXDdocLog_DEFAULT;
-	FXDLog(@"%@, %@", strObject(error), strBOOL(userInteractionPermitted));
+	FXDLog(@"%@, %@", _Object(error), _BOOL(userInteractionPermitted));
 	[super handleError:error userInteractionPermitted:userInteractionPermitted];
 }
 
 - (void)finishedHandlingError:(NSError *)error recovered:(BOOL)recovered {	FXDdocLog_DEFAULT;
-	FXDLog(@"%@, %@", strObject(error), strBOOL(recovered));
+	FXDLog(@"%@, %@", _Object(error), _BOOL(recovered));
 	[super finishedHandlingError:error recovered:recovered];
 }
 

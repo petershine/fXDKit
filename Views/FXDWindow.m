@@ -204,7 +204,7 @@
 		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished, id responseObj) {
 			 FXDLog_BLOCK(launchController, @selector(dismissLaunchControllerWithDidFinishBlock:));
 
-			 FXDLog(@"%@ %@", strBOOL(finished), strObject(launchController));
+			 FXDLog(@"%@ %@", _BOOL(finished), _Object(launchController));
 			 [launchController.view removeFromSuperview];
 			 
 			 if (finishedAnimationBlock) {
@@ -224,7 +224,7 @@
 		 launchController.view.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
-		 FXDLog(@"animateWithDuration %@ %@", strBOOL(finished), strObject(launchController));
+		 FXDLog(@"animateWithDuration %@ %@", _BOOL(finished), _Object(launchController));
 		 [launchController.view removeFromSuperview];
 		 
 		 if (finishedAnimationBlock) {
@@ -276,7 +276,7 @@
 	//FXDLog_DEFAULT;
 
 	Class progressViewClass = NSClassFromString(classnameProgressView);
-	FXDLog(@"%@ %@", strObject(progressViewClass), strObject(nibName));
+	FXDLog(@"%@ %@", _Object(progressViewClass), _Object(nibName));
 	
 	applicationWindow.progressView = [progressViewClass viewFromNibName:nibName];
 	
@@ -312,7 +312,7 @@
 	FXDLog_DEFAULT;
 	
 	Class messageViewClass = NSClassFromString(classnameMessageView);
-	FXDLog(@"%@ %@", strObject(messageViewClass), strObject(nibName));
+	FXDLog(@"%@ %@", _Object(messageViewClass), _Object(nibName));
 	
 	applicationWindow.messageView = [messageViewClass viewFromNibName:nibName];
 	applicationWindow.messageView.callbackBlock = clickedButtonAtIndexBlock;

@@ -258,7 +258,7 @@
 		}
 		
 		if (numberOfItems != fetchedCount) {	//FXDLog_DEFAULT;
-			FXDLog(@"%@ %@ == %@", strVariable(section), strVariable(numberOfItems), strVariable(fetchedCount));
+			FXDLog(@"%@ %@ == %@", _Variable(section), _Variable(numberOfItems), _Variable(fetchedCount));
 		}
 #else
 		numberOfItems = fetchedCount;
@@ -287,7 +287,7 @@
 		scrollView = self.mainScrollview;
 	}
 	
-	FXDLog(@"%@ %@", strVariable(scrollView.contentOffset.y), strBOOL(self.didStartDismissingByPullingDown));
+	FXDLog(@"%@ %@", _Variable(scrollView.contentOffset.y), _BOOL(self.didStartDismissingByPullingDown));
 #endif
 	
 	if (self.didStartDismissingByPullingDown) {

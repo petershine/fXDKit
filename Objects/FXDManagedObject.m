@@ -18,7 +18,7 @@
 #pragma mark - Initialization
 #if TEST_loggingManagedObject
 - (instancetype)initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", strObject([entity name]), strVariable(context.concurrencyType));
+	FXDLog(@"%@ %@", _Object([entity name]), _Variable(context.concurrencyType));
 	
 	self = [super initWithEntity:entity insertIntoManagedObjectContext:context];
 
@@ -84,14 +84,14 @@
 
 - (void)willChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {	FXDLog_DEFAULT;
 
-	FXDLog(@"%@, %@, %@", strObject(inKey), strVariable(inMutationKind), strObject(inObjects));
+	FXDLog(@"%@, %@, %@", _Object(inKey), _Variable(inMutationKind), _Object(inObjects));
 
 	[super willChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
 
 }
 - (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {	FXDLog_DEFAULT;
 
-	FXDLog(@"%@, %@, %@", strObject(inKey), strVariable(inMutationKind), strObject(inObjects));
+	FXDLog(@"%@, %@, %@", _Object(inKey), _Variable(inMutationKind), _Object(inObjects));
 
 	[super didChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
 }
@@ -126,7 +126,7 @@
 
 	BOOL isValid = [super validateValue:value forKey:key error:error];
 
-	FXDLog(@"%@, %@, %@, %@", strBOOL(isValid), strObject(*value), strObject(key), strObject(*error));
+	FXDLog(@"%@, %@, %@, %@", _BOOL(isValid), _Object(*value), _Object(key), _Object(*error));
 
 	return isValid;
 }
@@ -134,7 +134,7 @@
 - (BOOL)validateForDelete:(NSError **)error {	FXDLog_DEFAULT;
 	BOOL isValid = [super validateForDelete:error];
 
-	FXDLog(@"%@, %@", strBOOL(isValid), strObject(*error));
+	FXDLog(@"%@, %@", _BOOL(isValid), _Object(*error));
 
 	return isValid;
 }
@@ -142,7 +142,7 @@
 - (BOOL)validateForInsert:(NSError **)error {	FXDLog_DEFAULT;
 	BOOL isValid = [super validateForInsert:error];
 
-	FXDLog(@"%@, %@", strBOOL(isValid), strObject(*error));
+	FXDLog(@"%@, %@", _BOOL(isValid), _Object(*error));
 
 	return isValid;
 }
@@ -151,7 +151,7 @@
 
 	BOOL isValid = [super validateForUpdate:error];
 
-	FXDLog(@"%@, %@", strBOOL(isValid), strObject(*error));
+	FXDLog(@"%@, %@", _BOOL(isValid), _Object(*error));
 
 	return isValid;
 }

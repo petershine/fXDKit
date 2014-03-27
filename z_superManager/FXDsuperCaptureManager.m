@@ -174,7 +174,7 @@
 
 
 	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", strRect(_mainPreviewLayer.frame), strRect(_mainPreviewLayer.bounds));
+	FXDLog(@"%@ %@", _Rect(_mainPreviewLayer.frame), _Rect(_mainPreviewLayer.bounds));
 
 	return _mainPreviewLayer;
 }
@@ -276,7 +276,7 @@
 	[self.mainCaptureSession beginConfiguration];
 
 	if (shouldRemoveBeforeAdd) {
-		FXDLog(@"1.%@", strObject(self.mainCaptureSession.inputs));
+		FXDLog(@"1.%@", _Object(self.mainCaptureSession.inputs));
 
 		for (AVCaptureDeviceInput *deviceInput in self.mainCaptureSession.inputs) {
 			if (deviceInput != self.deviceInputAudio) {
@@ -284,7 +284,7 @@
 			}
 		}
 
-		FXDLog(@"2.%@", strObject(self.mainCaptureSession.inputs));
+		FXDLog(@"2.%@", _Object(self.mainCaptureSession.inputs));
 	}
 
 	if (self.cameraPosition == AVCaptureDevicePositionBack) {
@@ -304,7 +304,7 @@
 
 	[self.mainCaptureSession commitConfiguration];
 
-	FXDLog(@"3.%@", strObject(self.mainCaptureSession.inputs));
+	FXDLog(@"3.%@", _Object(self.mainCaptureSession.inputs));
 }
 
 

@@ -37,7 +37,7 @@
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {	FXDLog_DEFAULT;
 	// return an array layout attributes instances for all the views in the given rect
-	FXDLogRect(rect);
+	FXDLogStruct(rect);
 
 	NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
 	FXDLogObject(attributes);
@@ -55,7 +55,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;
 
-	FXDLog(@"%@ %@", strObject(kind), strObject(indexPath));
+	FXDLog(@"%@ %@", _Object(kind), _Object(indexPath));
 
 	UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
 
@@ -64,7 +64,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString*)decorationViewKind atIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;
 
-	FXDLog(@"%@ %@", strObject(decorationViewKind), strObject(indexPath));
+	FXDLog(@"%@ %@", _Object(decorationViewKind), _Object(indexPath));
 
 	UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForDecorationViewOfKind:decorationViewKind atIndexPath:indexPath];
 
@@ -74,7 +74,7 @@
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {	FXDLog_DEFAULT;
 	// return YES to cause the collection view to requery the layout for geometry information
 
-	FXDLogRect(newBounds);
+	FXDLogStruct(newBounds);
 
 	BOOL shouldInvalidate = [super shouldInvalidateLayoutForBoundsChange:newBounds];
 	FXDLogBOOL(shouldInvalidate);
@@ -85,7 +85,7 @@
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {	FXDLog_DEFAULT;
 	// return a point at which to rest after scrolling - for layouts that want snap-to-point scrolling behavior
 
-	FXDLog(@"%@ %@", strStruct(proposedContentOffset), strStruct(velocity));
+	FXDLog(@"%@ %@", _Struct(proposedContentOffset), _Struct(velocity));
 
 	CGPoint contentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset withScrollingVelocity:velocity];
 	FXDLogStruct(contentOffset);

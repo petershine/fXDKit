@@ -52,7 +52,7 @@
 	// calculate min/max zoomscale
 	CGFloat xScale = self.bounds.size.width  / imageView.image.size.width;
 	CGFloat yScale = self.bounds.size.height / imageView.image.size.height;
-	FXDLog(@"%@, %@", strVariable(xScale), strVariable(yScale));
+	FXDLog(@"%@, %@", _Variable(xScale), _Variable(yScale));
 	
 	
 	CGFloat minScale = MIN(xScale, yScale);
@@ -62,7 +62,7 @@
 		minScale = 1.0;
 	}
 	
-	FXDLog(@"%@, %@", strVariable(minScale), strVariable(maxScale));
+	FXDLog(@"%@, %@", _Variable(minScale), _Variable(maxScale));
 	
 	self.maximumZoomScale = maxScale;
 	self.minimumZoomScale = minScale;

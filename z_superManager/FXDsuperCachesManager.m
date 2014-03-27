@@ -210,7 +210,7 @@
 				 }
 				 
 #if ForDEVELOPER
-				 FXDLog(@"%@ %@ %@ %@ %@", strBOOL(didStartDownloading), strBOOL(isReachable), strObject([itemURL followingPathInDocuments]), strBOOL(didRemove), strObject([cachedURL followingPathAfterPathComponent:pathcomponentCaches]));
+				 FXDLog(@"%@ %@ %@ %@ %@", _BOOL(didStartDownloading), _BOOL(isReachable), _Object([itemURL followingPathInDocuments]), _BOOL(didRemove), _Object([cachedURL followingPathAfterPathComponent:pathcomponentCaches]));
 #endif
 				 continue;
 			 }

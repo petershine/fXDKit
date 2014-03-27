@@ -85,4 +85,7 @@
 	return [nonemptyComps componentsJoinedByString:seperator];  // already marked as autoreleased
 }
 
+- (NSString*)replacedSelf {
+	return [self stringByReplacingOccurrencesOfString:@"self." withString:@""];
+}
 @end

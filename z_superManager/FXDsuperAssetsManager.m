@@ -89,7 +89,7 @@
 	[self.mainAssetsLibrary
 	 enumerateGroupsWithTypes:types
 	 usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-		 FXDLog(@"%@ %@", strBOOL(*stop), strObject(group));
+		 FXDLog(@"%@ %@", _BOOL(*stop), _Object(group));
 		 
 		 if (group) {
 			 if (collectedGroupsArray == nil) {

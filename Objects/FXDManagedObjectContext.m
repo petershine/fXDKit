@@ -55,7 +55,7 @@
 		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
 		
 		if (didPerformFetch == NO) {
-			FXDLog(@"%@ %@", strBOOL(didPerformFetch), strVariable(self.concurrencyType));
+			FXDLog(@"%@ %@", _BOOL(didPerformFetch), _Variable(self.concurrencyType));
 		}
 	}
 
@@ -92,7 +92,7 @@
 
 #if TEST_loggingResultObjFiltering
 		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
-			FXDLog(@"%@ %@ %@", strVariable([fetchedObjArray count]), strVariable(self.concurrencyType), strIsMainThread);
+			FXDLog(@"%@ %@ %@", _Variable([fetchedObjArray count]), _Variable(self.concurrencyType), strIsMainThread);
 		}
 #endif
 	}

@@ -62,7 +62,7 @@
 	
 #if ForDEVELOPER
 	if (bundledImage == nil) {
-		FXDLog(@"%@ %@", strObject(imageName), strObject(bundledImage));
+		FXDLog(@"%@ %@", _Object(imageName), _Object(bundledImage));
 	}
 #endif
 	
@@ -322,7 +322,7 @@
 	UIImage *maskedImage = self;
 
 	UIImage *maskImage = [UIImage bundledImageForName:maskImageName];
-	FXDLog(@"%@ %@", strObject(maskImageName), strObject(maskImage));
+	FXDLog(@"%@ %@", _Object(maskImageName), _Object(maskImage));
 
 	if (maskImage) {
 		CGImageRef maskRef = maskImage.CGImage;
@@ -354,7 +354,7 @@
 	FXDLogSize(self.size);
 
 	CGSize scaledSize = CGSizeMake(self.size.width/self.scale, self.size.height /self.scale);
-	FXDLogSize(scaledSize);
+	FXDLogStruct(scaledSize);
 
 	return scaledSize;
 }

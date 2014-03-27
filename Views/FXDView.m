@@ -34,7 +34,7 @@
 - (void)layoutSubviews {	FXDLog_DEFAULT;
 	[super layoutSubviews];
 
-	FXDLog(@"%@ %@", strRect(self.frame), strRect(self.bounds));
+	FXDLog(@"%@ %@", _Rect(self.frame), _Rect(self.bounds));
 }
 #endif
 
@@ -98,7 +98,7 @@
 
 #if ForDEVELOPER
 	if (view == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"%@ %@", strObject([self class]), strObject(viewArray));
+		FXDLog(@"%@ %@", _Object([self class]), _Object(viewArray));
 	}
 #endif
 
@@ -286,7 +286,7 @@
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame {
 #if TEST_loggingRotatingOrientation
 	FXDLog_DEFAULT;
-	FXDLog(@"1.%@ %@ %@ %@", strRect(self.frame), strRect(self.layer.frame), strRect(self.bounds), strRect(self.layer.bounds));
+	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.layer.frame), _Rect(self.bounds), _Rect(self.layer.bounds));
 #endif
 
 	[self.layer setAffineTransform:affineTransform];
@@ -294,19 +294,19 @@
 
 	for (CALayer *sublayer in self.layer.sublayers) {
 #if TEST_loggingRotatingOrientation
-		FXDLog(@"1.%@ %@", strRect(sublayer.frame), strRect(sublayer.bounds));
+		FXDLog(@"1.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
 #endif
 		[sublayer setFrame:sublayer.superlayer.bounds];
 
 #if TEST_loggingRotatingOrientation
-		FXDLog(@"2.%@ %@", strRect(sublayer.frame), strRect(sublayer.bounds));
+		FXDLog(@"2.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
 #endif
 	}
 
 	[self setNeedsLayout];
 
 #if TEST_loggingRotatingOrientation
-	FXDLog(@"2.%@ %@ %@ %@", strRect(self.frame), strRect(self.layer.frame), strRect(self.bounds), strRect(self.layer.bounds));
+	FXDLog(@"2.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.layer.frame), _Rect(self.bounds), _Rect(self.layer.bounds));
 #endif
 }
 

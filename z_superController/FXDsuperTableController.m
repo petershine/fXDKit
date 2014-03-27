@@ -223,7 +223,7 @@
 	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
 
 	if (didCancel) {
-		FXDLog(@"%@ %@", strBOOL(didCancel), strObject(indexPath));
+		FXDLog(@"%@ %@", _BOOL(didCancel), _Object(indexPath));
 	}
 }
 

@@ -151,10 +151,10 @@
 		 CGFloat scale = [[UIScreen mainScreen] scale];
 		 
 		 ALAssetOrientation assetOrientation = [defaultRepresentation orientation];
-		 FXDLog(@"%@ %@", strVariable(scale), strVariable(assetOrientation));
+		 FXDLog(@"%@ %@", _Variable(scale), _Variable(assetOrientation));
 		 
 		 UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
-		 FXDLog(@"%@ %@", strVariable(fullImage.imageOrientation), strSize(fullImage.size));
+		 FXDLog(@"%@ %@", _Variable(fullImage.imageOrientation), _Size(fullImage.size));
 		 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{

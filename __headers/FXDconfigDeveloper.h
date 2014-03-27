@@ -42,17 +42,15 @@
 #endif
 
 
-#define strReplacedSelf	[(NSString*)string stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define _Object(object)		[[NSString stringWithFormat:@"%s: %@", #object, object] replacedSelf]
+#define _Struct(struct)		[[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]] replacedSelf]
+#define _Variable(variable)	[[NSString stringWithFormat:@"%s: %@", #variable, @(variable)] replacedSelf]
+#define _BOOL(boolean)		[[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")] replacedSelf]
+#define _Selector(selector)	[[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)] replacedSelf]
 
-#define strObject(object)		[[NSString stringWithFormat:@"%s: %@", #object, object] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-#define strStruct(struct)		[[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-#define strVariable(variable)	[[NSString stringWithFormat:@"%s: %@", #variable, @(variable)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-#define strBOOL(boolean)		[[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-#define strSelector(selector)	[[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-
-#define strPoint(point)	[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-#define strSize(size)	[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
-#define strRect(rect)	[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define _Point(point)	[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] replacedSelf]
+#define _Size(size)	[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] replacedSelf]
+#define _Rect(rect)	[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
 
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
@@ -85,15 +83,15 @@
 
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
-	#define FXDLogObject(object)		FXDLog(@"%@", strObject(object))
-	#define FXDLogStruct(struct)		FXDLog(@"%@", strStruct(struct))
-	#define FXDLogVar(variable)			FXDLog(@"%@", strVariable(variable))
-	#define FXDLogBOOL(boolean)			FXDLog(@"%@", strBOOL(boolean))
-	#define FXDLogSelector(selector)	FXDLog(@"%@", strSelector(selector))
+	#define FXDLogObject(object)		FXDLog(@"%@", _Object(object))
+	#define FXDLogStruct(struct)		FXDLog(@"%@", _Struct(struct))
+	#define FXDLogVar(variable)			FXDLog(@"%@", _Variable(variable))
+	#define FXDLogBOOL(boolean)			FXDLog(@"%@", _BOOL(boolean))
+	#define FXDLogSelector(selector)	FXDLog(@"%@", _Selector(selector))
 
-	#define FXDLogPoint(point)		FXDLog(@"%@", strPoint(point))
-	#define FXDLogSize(size)		FXDLog(@"%@", strSize(size))
-	#define FXDLogRect(rect)		FXDLog(@"%@", strRect(rect))
+	#define FXDLogPoint(point)		FXDLog(@"%@", _Point(point))
+	#define FXDLogSize(size)		FXDLog(@"%@", _Size(size))
+	#define FXDLogRect(rect)		FXDLog(@"%@", _Rect(rect))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
@@ -110,10 +108,10 @@
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@ %@", selfClassSelector, strRect(self.view.frame), strRect(self.view.bounds))
+							FXDLog(@"%@: %@ %@", selfClassSelector, _Rect(self.view.frame), _Rect(self.view.bounds))
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@", selfClassSelector, strRect(self.view.frame), strRect(self.view.bounds))
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@", selfClassSelector, _Rect(self.view.frame), _Rect(self.view.bounds))
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", selfClassSelector)

@@ -55,7 +55,7 @@
 			nibNameOrNil = filename;
 		}
 		else {
-			FXDLog(@"NO fileExistsAtPath:%@", strObject(resourcePath));
+			FXDLog(@"NO fileExistsAtPath:%@", _Object(resourcePath));
 		}
 	}
 
@@ -73,7 +73,7 @@
 - (void)awakeFromNib {	//FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
-	FXDLog(@"%@, %@", strObject(self.storyboard), strObject(self.nibName));
+	FXDLog(@"%@, %@", _Object(self.storyboard), _Object(self.nibName));
 }
 
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
@@ -85,7 +85,7 @@
 - (void)setNeedsStatusBarAppearanceUpdate {	FXDLog_DEFAULT;
 	[super setNeedsStatusBarAppearanceUpdate];
 
-	FXDLog(@"%@ %@", strBOOL([UIApplication sharedApplication].statusBarHidden), strVariable([UIApplication sharedApplication].statusBarStyle));
+	FXDLog(@"%@ %@", _BOOL([UIApplication sharedApplication].statusBarHidden), _Variable([UIApplication sharedApplication].statusBarStyle));
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
@@ -120,29 +120,29 @@
 
 - (NSUInteger)supportedInterfaceOrientations {
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	FXDLog(@"%@: %@", selfClassSelector, strVariable(supportedInterface));
+	FXDLog(@"%@: %@", selfClassSelector, _Variable(supportedInterface));
 
 	return supportedInterface;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
 	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
-	FXDLog(@"%@: %@", selfClassSelector, strVariable(preferredInterfaceOrientation));
+	FXDLog(@"%@: %@", selfClassSelector, _Variable(preferredInterfaceOrientation));
 
 	return preferredInterfaceOrientation;
 }
 
 #pragma mark -
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %ld, %@ %@ %@", selfClassSelector, (long)toInterfaceOrientation, strVariable(duration), strRect(self.view.frame), strRect(self.view.bounds));
+	FXDLog(@"%@: %ld, %@ %@ %@", selfClassSelector, (long)toInterfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %ld, %@ %@ %@", selfClassSelector, (long)interfaceOrientation, strVariable(duration), strRect(self.view.frame), strRect(self.view.bounds));
+	FXDLog(@"%@: %ld, %@ %@ %@", selfClassSelector, (long)interfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)fromInterfaceOrientation, strRect(self.view.frame), strRect(self.view.bounds));
+	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)fromInterfaceOrientation, _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 #endif
 
@@ -173,7 +173,7 @@
 
 #if ForDEVELOPER
 	if (self.didFinishInitialAppearing == NO) {
-		FXDLog(@"didFinishInitialAppearing: %@", strBOOL(YES));
+		FXDLog(@"didFinishInitialAppearing: %@", _BOOL(YES));
 	}
 #endif
 
@@ -290,23 +290,23 @@
 	[self.childViewControllers
 	 enumerateObjectsWithOptions:NSEnumerationReverse
 	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		 FXDLog(@"idx: %lu %@ %@", (unsigned long)idx, strObject(obj), strObject(viewController));
+		 FXDLog(@"idx: %lu %@ %@", (unsigned long)idx, _Object(obj), _Object(viewController));
 
 		 if (viewController == nil) {
 			 if (obj) {
 				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
 					 viewController = (UIViewController*)obj;
-					 FXDLog(@"1.(obj) %@", strObject(viewController));
+					 FXDLog(@"1.(obj) %@", _Object(viewController));
 				 }
 			 }
 			 else {
 				 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-				 FXDLog(@"1.([super]) %@", strObject(viewController));
+				 FXDLog(@"1.([super]) %@", _Object(viewController));
 			 }
 		 }
 	 }];
 
-	FXDLog(@"2.%@", strObject(viewController));
+	FXDLog(@"2.%@", _Object(viewController));
 
 	return viewController;
 }
@@ -377,7 +377,7 @@
 	
 #if ForDEVELOPER
 	if (sceneView == nil) {
-		FXDLog(@"%@ %@", strObject([self class]), strObject(viewArray));
+		FXDLog(@"%@ %@", _Object([self class]), _Object(viewArray));
 	}
 #endif
 	

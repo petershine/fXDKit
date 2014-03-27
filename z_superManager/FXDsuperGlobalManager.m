@@ -99,7 +99,7 @@
 			_deviceLanguageCode = @"tw";
 		}
 		
-		FXDLog(@"1.%@ %@", strObject(_deviceLanguageCode), strObject(languages));
+		FXDLog(@"1.%@ %@", _Object(_deviceLanguageCode), _Object(languages));
 		
 		//MARK: limit supported languages
 		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
@@ -109,7 +109,7 @@
 			&& [_deviceLanguageCode isEqualToString:@"tw"] == NO) {
 			_deviceLanguageCode = @"en";
 		}
-		FXDLog(@"2.%@ %@", strObject(_deviceLanguageCode), strObject(languages));
+		FXDLog(@"2.%@ %@", _Object(_deviceLanguageCode), _Object(languages));
 	}
 
 	return _deviceLanguageCode;
@@ -181,7 +181,7 @@
 			_deviceModelName = machineName;
 		}
 
-		FXDLog(@"%@ %@", strObject(_deviceModelName), strObject(machineName));
+		FXDLog(@"%@ %@", _Object(_deviceModelName), _Object(machineName));
 	}
 
 	return _deviceModelName;
@@ -332,10 +332,10 @@
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
 
 	NSInteger modifiedCount = self.appLaunchCount;
-	FXDLog(@"1.%@", strVariable(modifiedCount));
+	FXDLog(@"1.%@", _Variable(modifiedCount));
 
 	_appLaunchCount = modifiedCount+1;
-	FXDLog(@"2.%@", strVariable(_appLaunchCount));
+	FXDLog(@"2.%@", _Variable(_appLaunchCount));
 	
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
@@ -468,7 +468,7 @@
 	BOOL isOlder = NO;
 
 	id lastVersionObj = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultIntegerLastUpgradedAppVersion];
-	FXDLog(@"%@ < %@", strVariable([lastVersionObj integerValue]), strVariable(versionInteger));
+	FXDLog(@"%@ < %@", _Variable([lastVersionObj integerValue]), _Variable(versionInteger));
 
 	if ([lastVersionObj integerValue] < versionInteger) {
 		isOlder = YES;
@@ -484,7 +484,7 @@
 
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-	FXDLog(@"SAVED: %@", strVariable(versionInteger));
+	FXDLog(@"SAVED: %@", _Variable(versionInteger));
 }
 
 #pragma mark -

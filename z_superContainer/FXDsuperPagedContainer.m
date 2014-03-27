@@ -142,7 +142,7 @@
 		previousController = [self previewPageForModifiedPageIndex:modifiedPageIndex];
 	}
 	
-	FXDLog(@"%@ %@", strVariable(modifiedPageIndex), strObject(previousController));
+	FXDLog(@"%@ %@", _Variable(modifiedPageIndex), _Object(previousController));
 	
 	return previousController;
 }
@@ -158,7 +158,7 @@
 		nextController = [self previewPageForModifiedPageIndex:modifiedPageIndex];
 	}
 	
-	FXDLog(@"%@ %@", strVariable(modifiedPageIndex), strObject(nextController));
+	FXDLog(@"%@ %@", _Variable(modifiedPageIndex), _Object(nextController));
 	
 	return nextController;
 }
@@ -171,7 +171,7 @@
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-	FXDLog(@"%@ %@ %@", strBOOL(finished), strBOOL(completed), strObject(previousViewControllers));
+	FXDLog(@"%@ %@ %@", _BOOL(finished), _BOOL(completed), _Object(previousViewControllers));
 	
 	// Sent when a gesture-initiated transition ends. The 'finished' parameter indicates whether the animation finished, while the 'completed' parameter indicates whether the transition completed or bailed out (if the user let go early).
 }
