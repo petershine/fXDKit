@@ -44,27 +44,27 @@
 
 #if USE_Flurry
 	#ifndef flurryApplicationKey
-		#warning "//TODO: Define flurryApplicationKey"
-
-	#else
-		#import "Flurry.h"
-
-		#define LOGEVENT(__FORMAT__, ...)	[Flurry logEvent:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
-
-		#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry\
-																	logEvent:identifier\
-																	withParameters:parameters\
-																	timed:shouldTime]
-
-		#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
-
-		#define LOGEVENT_DEFAULT	LOGEVENT(@"%@", selfClassSelector)
-		#define LOGEVENT_ERROR	if(error){\
-									NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
-									parameters[@"file"] = @(__FILE__);\
-									parameters[@"line"] = @(__LINE__);\
-									LOGEVENT_FULL(selfClassSelector, parameters, NO);}
+		#warning //TODO: Define flurryApplicationKey
+		#define	flurryApplicationKey	@"flurryApplicationKey"
 	#endif
+
+	#import "Flurry.h"
+
+	#define LOGEVENT(__FORMAT__, ...)	[Flurry logEvent:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
+
+	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry\
+																logEvent:identifier\
+																withParameters:parameters\
+																timed:shouldTime]
+
+	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
+
+	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@", selfClassSelector)
+	#define LOGEVENT_ERROR	if(error){\
+								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
+								parameters[@"file"] = @(__FILE__);\
+								parameters[@"line"] = @(__LINE__);\
+								LOGEVENT_FULL(selfClassSelector, parameters, NO);}
 
 #else
 	#define LOGEVENT(__FORMAT__, ...)	{}
@@ -75,6 +75,7 @@
 
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_ERROR
+
 #endif
 
 
@@ -82,20 +83,23 @@
 #if	USE_TestFlight
 	#ifndef testflightAppToken
 		#warning "//TODO: Define testflightAppToken"
-	#else
-		#import "TestFlight.h"
-
-		#warning @"//TODO: Should import libz.dylib for TestFlight
+		#define testflightAppToken	@"testflightAppToken"
 	#endif
+
+	#import "TestFlight.h"
+
+	#warning //TODO: Should add libz.dylib for TestFlight
+
 #endif
 
 
 #if USE_Appsee
 	#ifndef appseeAPIkey
-		#warning "//TODO: Define appseeAPIkey"
-	#else
-		#import <Appsee/Appsee.h>
+		#warning //TODO: Define appseeAPIkey
+		#define appseeAPIkey	@"appseeAPIkey"
 	#endif
+
+	#import <Appsee/Appsee.h>
 #endif
 
 

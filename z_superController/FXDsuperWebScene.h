@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+#define	userdefaultStringInitialWebURL	@"InitialWebURLstringKey"
+
 #ifndef initialWebURLstring
+	#warning //TODO: Define initialWebURLstring
 	#define initialWebURLstring	@"http://www.google.com"
 #endif
 
