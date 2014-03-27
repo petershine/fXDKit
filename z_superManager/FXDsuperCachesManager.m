@@ -107,7 +107,8 @@
 	id isDirectory = nil;
 
 	NSError *error = nil;
-	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR_ignored(260);
+	[cachedURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+	FXDLog_ERROR_ignored(260);
 	
 	
 	if ([isDirectory boolValue]) {

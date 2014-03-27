@@ -42,15 +42,17 @@
 #endif
 
 
-#define strObject(object)		[NSString stringWithFormat:@"%s: %@", #object, object]
-#define strStruct(struct)		[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]]
-#define strVariable(variable)	[NSString stringWithFormat:@"%s: %@", #variable, @(variable)]
-#define strBOOL(boolean)		[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")]
-#define strSelector(selector)	[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)]
+#define strReplacedSelf	[(NSString*)string stringByReplacingOccurrencesOfString:@"self." withString:@""]
 
-#define strPoint(point)	[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)]
-#define strSize(size)	[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)]
-#define strRect(rect)	[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)]
+#define strObject(object)		[[NSString stringWithFormat:@"%s: %@", #object, object] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define strStruct(struct)		[[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define strVariable(variable)	[[NSString stringWithFormat:@"%s: %@", #variable, @(variable)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define strBOOL(boolean)		[[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define strSelector(selector)	[[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+
+#define strPoint(point)	[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define strSize(size)	[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
+#define strRect(rect)	[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] stringByReplacingOccurrencesOfString:@"self." withString:@""]
 
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
