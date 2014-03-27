@@ -150,12 +150,6 @@
 											#keypath,\
 											value)
 
-
-	#define FXDAssert1	NSAssert1
-	#define FXDAssert_IsMainThread	FXDAssert1([NSThread isMainThread],\
-									@"THREAD %@", strIsMainThread)
-
-
 #else
 	#define FXDLog(__FORMAT__, ...)	{}
 
@@ -186,9 +180,6 @@
 	#define FXDLog_FINISHED
 
 	#define FXDLog_REACT(keypath, value)
-
-	#define FXDAssert1(condition, desc, arg1)	{}
-	#define FXDAssert_IsMainThread
 
 #endif
 
