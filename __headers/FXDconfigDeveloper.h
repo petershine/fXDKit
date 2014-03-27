@@ -42,20 +42,14 @@
 #endif
 
 
-#define strObject(object)	[NSString\
-							stringWithFormat:@"%s: %@",\
-							#object,\
-							object]
+#define strObject(object)		[NSString stringWithFormat:@"%s: %@", #object, object]
+#define strStruct(struct)		[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]]
+#define strVariable(variable)	[NSString stringWithFormat:@"%s: %@", #variable, @(variable)]
+#define strBOOL(boolean)		[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")]
 
-#define strVariable(variable)	[NSString\
-								stringWithFormat:@"%s: %@",\
-								#variable,\
-								@(variable)]
-
-#define strBOOL(boolean)	[NSString\
-							stringWithFormat:@"%s: %@",\
-							#boolean,\
-							(boolean ? @"YES":@"NO")]
+#define strPoint(point)	[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)]
+#define strSize(size)	[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)]
+#define strRect(rect)	[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)]
 
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
@@ -74,14 +68,13 @@
 						stringWithFormat:@"isMain: %@",\
 						([NSThread isMainThread] ? @"YES":@"NO")]
 
+
 #define formattedClassSelector(instance, selector)	[NSString\
 													stringWithFormat:@"[%@ %@]",\
 													NSStringFromClass([instance class]),\
 													NSStringFromSelector(selector)]
 
 #define selfClassSelector	formattedClassSelector(self, _cmd)
-
-#define intervalRemainingBackground	[UIApplication sharedApplication].backgroundTimeRemaining
 
 
 #if USE_FXDLog
@@ -90,8 +83,13 @@
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
 	#define FXDLogObj(object)		FXDLog(@"%@", strObject(object))
+	#define FXDLogStruct(struct)	FXDLog(@"%@", strStruct(struct))
 	#define FXDLogVar(variable)		FXDLog(@"%@", strVariable(variable))
 	#define FXDLogBOOL(boolean)		FXDLog(@"%@", strBOOL(boolean))
+
+	#define FXDLogPoint(point)		FXDLog(@"%@", strPoint(point))
+	#define FXDLogSize(size)		FXDLog(@"%@", strSize(size))
+	#define FXDLogRect(rect)		FXDLog(@"%@", strRect(rect))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
@@ -156,8 +154,13 @@
 	#define FXDLog_EMPTY
 
 	#define FXDLogObj(object)
+	#define FXDLogStruct(struct)
 	#define FXDLogVar(variable)
 	#define FXDLogBOOL(boolean)
+
+	#define FXDLogPoint(point)
+	#define FXDLogSize(size)
+	#define FXDLogRect(rect)
 
 	#define FXDLog_IsMainThread
 	#define FXDLog_REMAINING

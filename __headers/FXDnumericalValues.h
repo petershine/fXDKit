@@ -31,6 +31,8 @@
 
 #define intervalOneSecond	durationOneSecond
 
+#define intervalRemainingBackground	[UIApplication sharedApplication].backgroundTimeRemaining
+
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0
 

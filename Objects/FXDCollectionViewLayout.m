@@ -37,7 +37,7 @@
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {	FXDLog_DEFAULT;
 	// return an array layout attributes instances for all the views in the given rect
-	FXDLogObj(NSStringFromCGRect(rect));
+	FXDLogRect(rect);
 
 	NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
 	FXDLogObj(attributes);
@@ -74,7 +74,7 @@
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {	FXDLog_DEFAULT;
 	// return YES to cause the collection view to requery the layout for geometry information
 
-	FXDLogObj(NSStringFromCGRect(newBounds));
+	FXDLogRect(newBounds);
 
 	BOOL shouldInvalidate = [super shouldInvalidateLayoutForBoundsChange:newBounds];
 	FXDLogBOOL(shouldInvalidate);
@@ -88,7 +88,7 @@
 	FXDLog(@"proposedContentOffset: %@ velocity: %@", NSStringFromCGPoint(proposedContentOffset), NSStringFromCGPoint(velocity));
 
 	CGPoint contentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset withScrollingVelocity:velocity];
-	FXDLogObj(NSStringFromCGPoint(contentOffset));
+	FXDLogStruct(contentOffset);
 
 	return contentOffset;
 }
@@ -96,7 +96,7 @@
 - (CGSize)collectionViewContentSize {	FXDLog_DEFAULT;
 	// Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
 	CGSize contentSize = [super collectionViewContentSize];
-	FXDLogObj(NSStringFromCGSize(contentSize));
+	FXDLogStruct(contentSize);
 
 	return contentSize;
 }
