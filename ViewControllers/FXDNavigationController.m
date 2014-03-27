@@ -53,8 +53,8 @@
 
 #pragma mark - Segues
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLogObj(sender);
-	FXDLogObj(identifier);
+	FXDLogObject(sender);
+	FXDLogObject(identifier);
 
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
@@ -62,8 +62,8 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
-	FXDLogObj(sender);
-	FXDLogObj(identifier);
+	FXDLogObject(sender);
+	FXDLogObject(identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
 	FXDLogBOOL(shouldPerform);
@@ -72,13 +72,13 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLogObj(sender);
+	FXDLogObject(sender);
 
 	if ([segue isKindOfClass:[FXDStoryboardSegue class]]) {
-		FXDLogObj(segue);
+		FXDLogObject(segue);
 	}
 	else {
-		FXDLogObj([segue fullDescription]);
+		FXDLogObject([segue fullDescription]);
 	}
 
 	[super prepareForSegue:segue sender:sender];

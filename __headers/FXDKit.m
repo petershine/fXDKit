@@ -24,7 +24,7 @@
 		indexPathString = nil;
 	}
 
-	//FXDLogObj(indexPathString);
+	//FXDLogObject(indexPathString);
 
 	return indexPathString;
 }

@@ -17,7 +17,7 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	FXDLogObj(_callbackBlock);
+	FXDLogObject(_callbackBlock);
 
 	_callbackBlock = nil;
 }

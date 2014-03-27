@@ -66,7 +66,7 @@
 						[error userInfo]]
 
 #define strIsMainThread	[NSString\
-						stringWithFormat:@"isMain: %@",\
+						stringWithFormat:@"mainQueue: %@",\
 						([NSThread isMainThread] ? @"YES":@"NO")]
 
 
@@ -83,7 +83,7 @@
 
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
-	#define FXDLogObj(object)			FXDLog(@"%@", strObject(object))
+	#define FXDLogObject(object)		FXDLog(@"%@", strObject(object))
 	#define FXDLogStruct(struct)		FXDLog(@"%@", strStruct(struct))
 	#define FXDLogVar(variable)			FXDLog(@"%@", strVariable(variable))
 	#define FXDLogBOOL(boolean)			FXDLog(@"%@", strBOOL(boolean))
@@ -97,7 +97,7 @@
 
 	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
 								&& intervalRemainingBackground != DBL_MAX) {\
-									FXDLog(@"intervalRemainingBackground: %f", intervalRemainingBackground);}
+									FXDLogVar(intervalRemainingBackground);}
 
 
 	#define FXDLog_DEFAULT	FXDLog_EMPTY;\
@@ -108,10 +108,10 @@
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@", selfClassSelector, [self.view describeFrameAndBounds])
+							FXDLog(@"%@: %@ %@", selfClassSelector, strRect(self.view.frame), strRect(self.view.bounds))
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@", selfClassSelector, [self.view describeFrameAndBounds])
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@", selfClassSelector, strRect(self.view.frame), strRect(self.view.bounds))
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", selfClassSelector)
@@ -135,8 +135,6 @@
 													FXDLog_ERROR;}
 
 
-	#define FXDLog_FINISHED	FXDLogBOOL(finished)
-
 	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
 												FXDLog(@"BLOCK: [%@ %@] %@",\
 												[instance class],\
@@ -144,8 +142,9 @@
 												strIsMainThread)
 
 	#define FXDLog_REACT(keypath, value)	FXDLog_EMPTY;\
-											FXDLog(@"REACT: [%@] %@ %s: %@",\
+											FXDLog(@"REACT: [%@ %@] %@ %s: %@",\
 											NSStringFromClass([self class]),\
+											NSStringFromSelector(_cmd),\
 											strIsMainThread,\
 											#keypath,\
 											value)
@@ -155,7 +154,7 @@
 
 	#define FXDLog_EMPTY
 
-	#define FXDLogObj(object)
+	#define FXDLogObject(object)
 	#define FXDLogStruct(struct)
 	#define FXDLogVar(variable)
 	#define FXDLogBOOL(boolean)
@@ -183,7 +182,6 @@
 
 
 	#define FXDLog_BLOCK(instance, selector)
-	#define FXDLog_FINISHED
 
 	#define FXDLog_REACT(keypath, value)
 

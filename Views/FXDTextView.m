@@ -51,7 +51,7 @@
 	}
 	
 	if (assignedText) {	FXDLog_DEFAULT;
-		FXDLogObj(assignedText);
+		FXDLogObject(assignedText);
 		
 		CGRect modifiedFrame = self.frame;
 		FXDLog(@"(before) %@", strStruct(modifiedFrame));

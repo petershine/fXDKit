@@ -45,7 +45,7 @@
 #pragma mark - Category
 @implementation UIImageView (Added)
 - (void)modifyHeightForContainedImage {	FXDLog_DEFAULT;
-	FXDLogObj(self.image);
+	FXDLogObject(self.image);
 	
 	self.contentMode = UIViewContentModeScaleAspectFit;
 	

@@ -55,8 +55,8 @@
 	FXDViewController *destinationScene = (FXDViewController*)transitionSegue.destinationViewController;
 	FXDViewController *sourceScene = (FXDViewController*)transitionSegue.sourceViewController;
 	
-	FXDLogObj(destinationScene);
-	FXDLogObj(sourceScene);
+	FXDLogObject(destinationScene);
+	FXDLogObject(sourceScene);
 	
 	if ([sourceScene isKindOfClass:[FXDViewController class]]
 		&& [destinationScene isKindOfClass:[FXDViewController class]]) {
@@ -79,9 +79,9 @@
 #pragma mark - Segues
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_DEFAULT;
 
-	FXDLogObj(toViewController);
-	FXDLogObj(fromViewController);
-	FXDLogObj(identifier);
+	FXDLogObject(toViewController);
+	FXDLogObject(fromViewController);
+	FXDLogObject(identifier);
 
 	FXDsegueUncover *uncoveringSegue = [[FXDsegueUncover alloc] initWithIdentifier:identifier source:fromViewController destination:toViewController];
 
@@ -186,7 +186,7 @@
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 FXDLog_BLOCK(self, @selector(coverWithSegue:));
-		 FXDLogObj(self.childViewControllers);
+		 FXDLogObject(self.childViewControllers);
 		 
 		 self.isCovering = NO;
 
@@ -350,7 +350,7 @@
 
 	FXDLog_DEFAULT;
 	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
-	FXDLogObj(lateAddedSceneArray);
+	FXDLogObject(lateAddedSceneArray);
 	CGFloat totalUncoveringOffsetY = 0.0;
 	
 	for (FXDViewController *childScene in lateAddedSceneArray) {
@@ -371,7 +371,7 @@
 		[childScene willMoveToParentViewController:nil];
 	}
 	
-	FXDLogObj(animatedFrameObjArray);
+	FXDLogObject(animatedFrameObjArray);
 	
 	
 	FXDViewController *rootScene = [self.childViewControllers firstObject];

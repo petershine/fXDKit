@@ -17,8 +17,8 @@
 - (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
 	[super didReceiveMemoryWarning];
 
-	FXDLogObj(self.view.window);
-	FXDLogObj(self.view.superview);
+	FXDLogObject(self.view.window);
+	FXDLogObject(self.view.superview);
 
 
 #if TEST_loggingMemoryWarning
@@ -134,15 +134,15 @@
 
 #pragma mark -
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)toInterfaceOrientation, strVariable(duration), [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, %@ %@ %@", selfClassSelector, (long)toInterfaceOrientation, strVariable(duration), strRect(self.view.frame), strRect(self.view.bounds));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)interfaceOrientation, strVariable(duration), [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, %@ %@ %@", selfClassSelector, (long)interfaceOrientation, strVariable(duration), strRect(self.view.frame), strRect(self.view.bounds));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"%@: %ld, %@", selfClassSelector, (long)fromInterfaceOrientation, [self.view describeFrameAndBounds]);
+	FXDLog(@"%@: %ld, %@ %@", selfClassSelector, (long)fromInterfaceOrientation, strRect(self.view.frame), strRect(self.view.bounds));
 }
 #endif
 
@@ -192,7 +192,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 #if ForDEVELOPER
 	if (parent == nil) {	FXDLog_DEFAULT;
-		FXDLogObj(parent);
+		FXDLogObject(parent);
 	}
 #endif
 
@@ -200,7 +200,7 @@
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {	//FXDLog_DEFAULT;
-	//FXDLogObj(parent);
+	//FXDLogObject(parent);
 
 	[super didMoveToParentViewController:parent];
 }
@@ -235,8 +235,8 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
 	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
-	FXDLogObj(sender);
-	FXDLogObj(identifier);
+	FXDLogObject(sender);
+	FXDLogObject(identifier);
 
 	BOOL shouldPerform = [super shouldPerformSegueWithIdentifier:identifier sender:sender];
 	FXDLogBOOL(shouldPerform);
@@ -245,20 +245,20 @@
 }
 
 - (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLogObj(sender);
-	FXDLogObj(identifier);
+	FXDLogObject(sender);
+	FXDLogObject(identifier);
 
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
-	FXDLogObj(sender);
+	FXDLogObject(sender);
 
 	if ([segue isKindOfClass:[FXDStoryboardSegue class]]) {
-		FXDLogObj(segue);
+		FXDLogObject(segue);
 	}
 	else {
-		FXDLogObj([segue fullDescription]);
+		FXDLogObject([segue fullDescription]);
 	}
 
 	[super prepareForSegue:segue sender:sender];
@@ -268,8 +268,8 @@
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 
 	FXDLogSelector(action);
-	FXDLogObj(fromViewController);
-	FXDLogObj(sender);
+	FXDLogObject(fromViewController);
+	FXDLogObject(sender);
 
 	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 	FXDLogBOOL(canPerform);
@@ -281,8 +281,8 @@
 	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
 
 	FXDLogSelector(action);
-	FXDLogObj(fromViewController);
-	FXDLogObj(sender);
+	FXDLogObject(fromViewController);
+	FXDLogObject(sender);
 
 	__block UIViewController *viewController = nil;
 
@@ -314,13 +314,13 @@
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
 	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
 
-	FXDLogObj(toViewController);
-	FXDLogObj(fromViewController);
-	FXDLogObj(identifier);
+	FXDLogObject(toViewController);
+	FXDLogObject(fromViewController);
+	FXDLogObject(identifier);
 
 	UIStoryboardSegue *segue = [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
 
-	FXDLogObj(segue);
+	FXDLogObject(segue);
 
 	return segue;
 }
@@ -373,7 +373,7 @@
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
 
 	UIView *sceneView = [viewArray firstObject];	
-	FXDLogObj(sceneView);
+	FXDLogObject(sceneView);
 	
 #if ForDEVELOPER
 	if (sceneView == nil) {

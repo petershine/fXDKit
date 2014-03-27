@@ -81,13 +81,13 @@
 
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation {	FXDLog_DEFAULT;
-	FXDLogObj(self.reviewedAsset);
+	FXDLogObject(self.reviewedAsset);
 	if (self.reviewedAsset == nil) {
 		return;
 	}
 	
 
-	FXDLogObj(self.imageviewPhoto.image);
+	FXDLogObject(self.imageviewPhoto.image);
 	if (self.imageviewPhoto.image) {	//MARK: Skip if reusing this instance when changing direction
 		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
 		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
@@ -129,7 +129,7 @@
 			 withScene:self
 			 withDidFinishBlock:^(BOOL finished, id responseObj) {
 				 FXDLog_BLOCK(self.playbackManager, @selector(preparePlaybackManagerWithFileURL:withScene:withDidFinishBlock:));
-				 FXDLog_FINISHED;
+				 FXDLogBOOL(finished);
 			 }];
 		}
 		

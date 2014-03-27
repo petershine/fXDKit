@@ -154,7 +154,7 @@
 
 //MARK: - Observer implementation
 - (void)observedALAssetsLibraryChanged:(NSNotification *)notification {	FXDLog_DEFAULT;
-	FXDLogObj(notification);
+	FXDLogObject(notification);
 	
 	/*
 	extern NSString *const ALAssetLibraryUpdatedAssetsKey __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_6_0);

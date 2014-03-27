@@ -54,7 +54,7 @@
 		}
 
 		FXDLog_DEFAULT;
-		FXDLogObj(_oldDeviceArray);
+		FXDLogObject(_oldDeviceArray);
 		FXDLogBOOL(_isDeviceOld);
 	}
 
@@ -123,7 +123,7 @@
 		
 		_deviceCountryCode = components[1];
 		
-		FXDLogObj(_deviceCountryCode);
+		FXDLogObject(_deviceCountryCode);
 	}
 	
 	return _deviceCountryCode;
@@ -197,7 +197,7 @@
 		[_dateformatterUTC setTimeZone:UTCtimezone];
 		[_dateformatterUTC setDateFormat:dateformatDefault];
 		
-		FXDLogObj(_dateformatterUTC);
+		FXDLogObject(_dateformatterUTC);
 	}
 	
 	return _dateformatterUTC;
@@ -212,7 +212,7 @@
 		[_dateformatterLocal setTimeZone:localTimeZone];
 		[_dateformatterLocal setDateFormat:dateformatDefault];
 				
-		FXDLogObj(_dateformatterLocal);
+		FXDLogObject(_dateformatterLocal);
 	}
 	
 	return _dateformatterLocal;
@@ -226,7 +226,7 @@
 		}
 
 		FXDLog_DEFAULT;
-		FXDLogObj(_rootController);
+		FXDLogObject(_rootController);
 	}
 
 	return _rootController;
@@ -253,7 +253,7 @@
 	
 	if ([addedControllers count] == 0) {
 		_homeController = self.rootController;
-		FXDLogObj(self.rootController);
+		FXDLogObject(self.rootController);
 		
 		return _homeController;
 	}
@@ -261,7 +261,7 @@
 	
 	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
 		_homeController = [addedControllers firstObject];
-		FXDLogObj([addedControllers firstObject]);
+		FXDLogObject([addedControllers firstObject]);
 		
 		return _homeController;
 	}
@@ -274,12 +274,12 @@
 		
 		if ([navigationController.viewControllers count] > 0) {
 			_homeController = [(navigationController.viewControllers) firstObject];
-			FXDLogObj([(navigationController.viewControllers) firstObject]);
+			FXDLogObject([(navigationController.viewControllers) firstObject]);
 		}
 	}
 	else {
 		_homeController = subContainerController;
-		FXDLogObj(subContainerController);
+		FXDLogObject(subContainerController);
 	}
 	
 	return _homeController;
@@ -526,11 +526,11 @@
 //MARK: - Observer implementation
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogRect([UIApplication sharedApplication].statusBarFrame);
-	FXDLogObj([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
+	FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
 }
 
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogObj(notification);
+	FXDLogObject(notification);
 }
 
 #pragma mark -

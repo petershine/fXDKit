@@ -34,7 +34,7 @@
 - (void)layoutSubviews {	FXDLog_DEFAULT;
 	[super layoutSubviews];
 
-	FXDLogObj([self describeFrameAndBounds]);
+	FXDLog(@"%@ %@", strRect(self.frame), strRect(self.bounds));
 }
 #endif
 
@@ -271,11 +271,6 @@
 	blinkShadow.duration = durationAnimation;
 	blinkShadow.autoreverses = YES;
 	[self.layer addAnimation:blinkShadow forKey:@"shadowOpacity"];
-}
-
-#pragma mark -
-- (NSString*)describeFrameAndBounds {
-	return [NSString stringWithFormat:@"frame: %@ bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds)];
 }
 
 #pragma mark -

@@ -36,22 +36,22 @@
 #pragma mark - Method overriding
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesBegan:touches withEvent:event];
-	//FXDLogObj(event);
+	//FXDLogObject(event);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesMoved:touches withEvent:event];
-	//FXDLogObj(event);
+	//FXDLogObject(event);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesEnded:touches withEvent:event];
-	//FXDLogObj(event);
+	//FXDLogObject(event);
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
 	[super touchesCancelled:touches withEvent:event];
-	//FXDLogObj(event);
+	//FXDLogObject(event);
 }
 
 
@@ -63,7 +63,7 @@
 //MARK: - Delegate implementation
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
-	FXDLogObj(launchOptions);
+	FXDLogObject(launchOptions);
 
 #if ForDEVELOPER
 	if (launchOptions) {
@@ -75,21 +75,21 @@
 	}
 
 
-	FXDLogObj([[NSBundle mainBundle] infoDictionary]);
+	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
-	FXDLogObj([[UIDevice currentDevice].identifierForVendor UUIDString]);
+	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
 
 #if	USE_AdvertisementFrameworks
-	FXDLogObj([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
+	FXDLogObject([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #endif
 
-	FXDLogObj(NSUserName());
-	FXDLogObj(NSFullUserName());
+	FXDLogObject(NSUserName());
+	FXDLogObject(NSFullUserName());
 
-	FXDLogObj(NSHomeDirectory());
-	FXDLogObj(NSTemporaryDirectory());
+	FXDLogObject(NSHomeDirectory());
+	FXDLogObject(NSTemporaryDirectory());
 
-	FXDLogObj(NSOpenStepRootDirectory());
+	FXDLogObject(NSOpenStepRootDirectory());
 #endif
 
 	return YES;
@@ -104,7 +104,7 @@
 	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
 	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-	FXDLogObj(deviceTokenString);
+	FXDLogObject(deviceTokenString);
 #endif
 }
 
@@ -113,8 +113,8 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
-	FXDLogObj(userInfo);
-	FXDLogObj(completionHandler);
+	FXDLogObject(userInfo);
+	FXDLogObject(completionHandler);
 
 #if ForDEVELOPER
 	[FXDAlertView
@@ -137,7 +137,7 @@
 								 @"url":	([url absoluteString]) ? [[url absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]:@"",
 								 @"url scheme":	([url scheme]) ? [url scheme]:@"",};
 
-	FXDLogObj(parameters);
+	FXDLogObject(parameters);
 
 	[FXDAlertView
 	 showAlertWithTitle:selfClassSelector

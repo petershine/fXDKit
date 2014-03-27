@@ -37,7 +37,7 @@
 	
 	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
 		_mainModelName = application_BundleIdentifier;
-		FXDLogObj(_mainModelName);
+		FXDLogObject(_mainModelName);
 	}
 
 	return _mainModelName;
@@ -49,7 +49,7 @@
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
 
 		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
-		FXDLogObj(_mainDocument);
+		FXDLogObject(_mainDocument);
 	}
 	
 	return _mainDocument;
@@ -66,7 +66,7 @@
 		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@", _mainSqlitePathComponent];
 	#endif
 
-		FXDLogObj(_mainSqlitePathComponent);
+		FXDLogObject(_mainSqlitePathComponent);
 	}
 	
 	return _mainSqlitePathComponent;
@@ -76,7 +76,7 @@
 	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
 
 		_mainUbiquitousContentName = [NSString stringWithFormat:@"ubiquitousContent.%@", self.mainModelName];
-		FXDLogObj(_mainUbiquitousContentName);
+		FXDLogObject(_mainUbiquitousContentName);
 	}
 	
 	return _mainUbiquitousContentName;
@@ -126,7 +126,7 @@
 
 
 	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
-	FXDLogObj(bundledSqlitePath);
+	FXDLogObject(bundledSqlitePath);
 
 	[self storeCopiedItemFromSqlitePath:bundledSqlitePath toStoredPath:nil];
 }
@@ -145,14 +145,14 @@
 #endif
 
 	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
-	FXDLogObj(oldSqlitePath);
+	FXDLogObject(oldSqlitePath);
 
 	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
 }
 
 - (BOOL)isSqliteAlreadyStored {
 	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
-	FXDLogObj(storedSqlitePath);
+	FXDLogObject(storedSqlitePath);
 
 	BOOL isAlreadyStored = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
 	FXDLogBOOL(isAlreadyStored);
@@ -190,12 +190,12 @@
 	
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
-		 FXDLogObj(ubiquityContainerURL);
+		 FXDLogObject(ubiquityContainerURL);
 		 FXDLogBOOL(withCompleteProtection);
 		 
 		 NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 		 NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
-		 FXDLogObj(storeURL);
+		 FXDLogObject(storeURL);
 		 
 		 
 		 NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -206,7 +206,7 @@
 			 //TODO: get UUID unique URL using ubiquityContainerURL instead
 			 //NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 			 NSURL *ubiquitousContentURL = ubiquityContainerURL;
-			 FXDLogObj(ubiquitousContentURL);
+			 FXDLogObject(ubiquitousContentURL);
 			 
 			 options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
 			 options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
@@ -217,7 +217,7 @@
 			 options[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
 		 }
 		 
-		 FXDLogObj(options);
+		 FXDLogObject(options);
 		 
 		 
 		 NSError *error = nil;
@@ -236,8 +236,8 @@
 		 NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
 		 
 		 for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
-			 FXDLogObj(persistentStore.URL);
-			 FXDLogObj([storeCoordinator metadataForPersistentStore:persistentStore]);
+			 FXDLogObject(persistentStore.URL);
+			 FXDLogObject([storeCoordinator metadataForPersistentStore:persistentStore]);
 		 }
 #endif
 		 
@@ -306,7 +306,7 @@
 	
 	
 	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
-	FXDLogObj(notifyingContext);
+	FXDLogObject(notifyingContext);
 	
 	[notificationCenter
 	 addObserver:self
@@ -641,8 +641,8 @@
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
 	//notification: NSConcreteNotification 0x1a3746e0 {name = UIDocumentStateChangedNotification; object = <FXDManagedDocument: 0x16d94d10> fileURL: file:///var/mobile/Applications/A2651A45-6230-4225-A538-420889FD5693/Documents/managed.coredata.document documentState: [EditingDisabled | SavingError]}
 
-	FXDLogObj(notification);
-	FXDLogObj(self.mainDocument.fileModificationDate);
+	FXDLogObject(notification);
+	FXDLogObject(self.mainDocument.fileModificationDate);
 	FXDLogVar(self.mainDocument.documentState);
 }
 
@@ -679,7 +679,7 @@
 		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][mainStoreIndex];
 		mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
 		
-		FXDLogObj(mainStoreUUID);
+		FXDLogObject(mainStoreUUID);
 	}
 	
 	NSString *notifyingStoreUUID = nil;
@@ -688,7 +688,7 @@
 		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][mainStoreIndex];
 		notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
 		
-		FXDLogObj(notifyingStoreUUID);
+		FXDLogObject(notifyingStoreUUID);
 	}
 	
 	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);
@@ -711,7 +711,7 @@
 
 #pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogObj(notification.object);
+	FXDLogObject(notification.object);
 	
 	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
 	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);

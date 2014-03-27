@@ -23,7 +23,7 @@
 + (Class)layoutAttributesClass {	FXDLog_DEFAULT;
 	// override this method to provide a custom class to be used when instantiating instances of UICollectionViewLayoutAttributes
 	Class attributesClass = [super layoutAttributesClass];
-	FXDLogObj(attributesClass);
+	FXDLogObject(attributesClass);
 
 	return attributesClass;
 }
@@ -40,13 +40,13 @@
 	FXDLogRect(rect);
 
 	NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
-	FXDLogObj(attributes);
+	FXDLogObject(attributes);
 
 	return attributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;
-	FXDLogObj(indexPath);
+	FXDLogObject(indexPath);
 
 	UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:indexPath];
 

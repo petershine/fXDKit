@@ -62,7 +62,7 @@
 			alignedParagraph = [alignedParagraph stringByAppendingString:@"\n"];
 		}
 		
-		FXDLogObj(modifiedComponent);
+		FXDLogObject(modifiedComponent);
 		
 		alignedParagraph = [alignedParagraph stringByAppendingString:modifiedComponent];
 	}

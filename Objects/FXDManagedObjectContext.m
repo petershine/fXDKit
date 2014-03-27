@@ -124,7 +124,7 @@
 	
 	if (predicate) {
 #if TEST_loggingResultObjFiltering
-		FXDLogObj(predicate);
+		FXDLogObject(predicate);
 #endif
 		[fetchRequest setPredicate:predicate];
 	}

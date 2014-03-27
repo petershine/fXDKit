@@ -52,8 +52,6 @@
 
 - (void)blinkShadowOpacity;
 
-- (NSString*)describeFrameAndBounds;
-
 #if USE_MultimediaFrameworks
 - (void)updateLayerForDeviceOrientation;
 #endif

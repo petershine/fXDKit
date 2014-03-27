@@ -26,18 +26,18 @@
 	if (self.mainResultsController && self.mainResultsController.additionalDelegate == nil) {
 		[self.mainResultsController setAdditionalDelegate:self];
 
-		FXDLogObj(self.mainResultsController.additionalDelegate);
+		FXDLogObject(self.mainResultsController.additionalDelegate);
 	}
 	
 	if (self.mainScrollview) {
 		//MARK: Following should be closely related to scroll view configuration
-		FXDLogObj(self.mainScrollview);
+		FXDLogObject(self.mainScrollview);
 
 		if (self.mainScrollview.delegate == nil) {
 			[self.mainScrollview setDelegate:self];
 		}
 
-		FXDLogObj(self.mainScrollview.delegate);
+		FXDLogObject(self.mainScrollview.delegate);
 
 
 		if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
@@ -74,7 +74,7 @@
 		
 #if ForDEVELOPER
 		if (_mainCellNib) {	FXDLog_DEFAULT;
-			FXDLogObj(_mainCellNib);
+			FXDLogObject(_mainCellNib);
 		}
 #endif
 	}
@@ -182,8 +182,8 @@
 
 #pragma mark - Public
 - (void)registerMainCellNib {	FXDLog_OVERRIDE;
-	FXDLogObj(self.mainCellIdentifier);
-	FXDLogObj(self.mainCellNib);
+	FXDLogObject(self.mainCellIdentifier);
+	FXDLogObject(self.mainCellNib);
 }
 
 #pragma mark -
@@ -228,7 +228,7 @@
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
-		//FXDLogObj([self.mainResultsController sections]);
+		//FXDLogObject([self.mainResultsController sections]);
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
 	else if (self.mainDataSource) {

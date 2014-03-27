@@ -125,8 +125,8 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 
 	FXDLogVar(navigationType);
-	FXDLogObj(request);
-	FXDLogObj([request allHTTPHeaderFields]);
+	FXDLogObject(request);
+	FXDLogObject([request allHTTPHeaderFields]);
 
 	return YES;
 }
@@ -140,10 +140,10 @@
 	NSString *source = [webView stringByEvaluatingJavaScriptFromString:
 						@"document.getElementsByTagName('html')[0].outerHTML"];
 
-	FXDLogObj(source);
+	FXDLogObject(source);
 
 	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
-	FXDLogObj([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
+	FXDLogObject([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
 #endif
 }
 

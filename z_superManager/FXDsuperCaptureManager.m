@@ -124,7 +124,7 @@
 		[_mainCaptureSession addInput:self.deviceInputAudio];
 	}
 
-	//FXDLogObj([_mainCaptureSession inputs]);
+	//FXDLogObject([_mainCaptureSession inputs]);
 
 
 	//TODO: Try using separate two queues like GPUImage did"

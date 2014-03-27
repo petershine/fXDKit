@@ -41,7 +41,7 @@
 
 /* Callback for undo, redo, and other multi-property state resets */
 - (void)awakeFromSnapshotEvents:(NSSnapshotEventType)flags {	FXDLog_DEFAULT;
-	FXDLogObj(flags);
+	FXDLogObject(flags);
 
 	[super awakeFromSnapshotEvents:flags];
 }
@@ -56,7 +56,7 @@
 	// lifecycle/change management (includes key-value observing methods)
 	// read notification
 
-	//FXDLogObj(key);
+	//FXDLogObject(key);
 
 	[super willAccessValueForKey:key];
 }
@@ -64,20 +64,20 @@
 - (void)didAccessValueForKey:(NSString *)key {	//FXDLog_DEFAULT;
 	// read notification (together with willAccessValueForKey used to maintain inverse relationships, to fire faults, etc.) - each read access has to be wrapped in this method pair (in the same way as each write access has to be wrapped in the KVO method pair)
 
-	//FXDLogObj(key);
+	//FXDLogObject(key);
 
 	[super didAccessValueForKey:key];
 }
 
 // KVO change notification
 - (void)willChangeValueForKey:(NSString *)key {	FXDLog_DEFAULT;
-	FXDLogObj(key);
+	FXDLogObject(key);
 
 	[super willChangeValueForKey:key];
 }
 
 - (void)didChangeValueForKey:(NSString *)key {	FXDLog_DEFAULT;
-	FXDLogObj(key);
+	FXDLogObject(key);
 
 	[super didChangeValueForKey:key];
 }

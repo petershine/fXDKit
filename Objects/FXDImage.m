@@ -326,7 +326,7 @@
 
 	if (maskImage) {
 		CGImageRef maskRef = maskImage.CGImage;
-		FXDLogObj(maskRef);
+		FXDLogObject(maskRef);
 
 		CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
 											CGImageGetHeight(maskRef),
@@ -334,15 +334,15 @@
 											CGImageGetBitsPerPixel(maskRef),
 											CGImageGetBytesPerRow(maskRef),
 											CGImageGetDataProvider(maskRef), NULL, false);
-		FXDLogObj(mask);
+		FXDLogObject(mask);
 
 		CGImageRef masked = CGImageCreateWithMask([maskedImage CGImage], mask);
 		CFRelease(mask);
 		
-		FXDLogObj(masked);
+		FXDLogObject(masked);
 
 		maskedImage = [UIImage imageWithCGImage:masked];
-		FXDLogObj(maskedImage);
+		FXDLogObject(maskedImage);
 
 		CFRelease(masked);
 	}

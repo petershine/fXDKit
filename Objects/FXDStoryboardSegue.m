@@ -38,7 +38,7 @@
 }
 
 - (void)perform {	FXDLog_DEFAULT;
-	FXDLogObj(self);
+	FXDLogObject(self);
 }
 
 
@@ -100,10 +100,10 @@
 	}
 
 	FXDLogBOOL(shouldUseNavigationPush);
-	FXDLogObj(parentViewController);
+	FXDLogObject(parentViewController);
 
-	FXDLogObj(self.sourceViewController);
-	FXDLogObj(self.destinationViewController);
+	FXDLogObject(self.sourceViewController);
+	FXDLogObject(self.destinationViewController);
 
 	return shouldUseNavigationPush;
 }
@@ -140,8 +140,8 @@
 	[parentController.view addSubview:embeddedController.view];
 	[embeddedController didMoveToParentViewController:parentController];
 	
-	FXDLogObj(parentController.childViewControllers);
-	FXDLogObj(parentController.view.subviews);
+	FXDLogObject(parentController.childViewControllers);
+	FXDLogObject(parentController.view.subviews);
 }
 
 @end

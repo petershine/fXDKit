@@ -38,7 +38,7 @@
 		}
 	}
 	
-	FXDLogObj(self.mainPageController);
+	FXDLogObject(self.mainPageController);
 	
 	if (self.mainPageController) {
 		if (self.mainPageController.dataSource == nil) {
@@ -165,7 +165,7 @@
 
 #pragma mark - UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {	FXDLog_DEFAULT;
-	FXDLogObj(pendingViewControllers);
+	FXDLogObject(pendingViewControllers);
 	
 	// Sent when a gesture-initiated transition begins.
 }
