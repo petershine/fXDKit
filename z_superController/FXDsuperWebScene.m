@@ -70,12 +70,12 @@
 
 #pragma mark - IBActions
 - (IBAction)pressedNavigateBackButton:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"mainWebview.canGoBack: %d", self.mainWebview.canGoBack);
+	FXDLogBOOL(self.mainWebview.canGoBack);
 	[self.mainWebview goBack];
 }
 
 - (IBAction)pressedNavigateForwardButton:(id)sender {	FXDLog_DEFAULT;
-	FXDLog(@"mainWebview.canGoForward: %d", self.mainWebview.canGoForward);
+	FXDLogBOOL(self.mainWebview.canGoForward);
 	[self.mainWebview goForward];
 }
 
@@ -99,7 +99,7 @@
 	}
 
 
-	FXDLog(@"mainWebview.isLoading: %d", self.mainWebview.isLoading);
+	FXDLogBOOL(self.mainWebview.isLoading);
 
 	if (self.mainWebview.isLoading) {
 		return;
@@ -124,9 +124,9 @@
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 
-	FXDLog(@"navigationType: %ld", (long)navigationType);
-	FXDLog(@"request: %@", request);
-	FXDLog(@"allHTTPHeaderFields: %@", [request allHTTPHeaderFields]);
+	FXDLogVar(navigationType);
+	FXDLogObj(request);
+	FXDLogObj([request allHTTPHeaderFields]);
 
 	return YES;
 }
@@ -140,10 +140,10 @@
 	NSString *source = [webView stringByEvaluatingJavaScriptFromString:
 						@"document.getElementsByTagName('html')[0].outerHTML"];
 
-	FXDLog(@"source: %@", source);
+	FXDLogObj(source);
 
 	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
-	FXDLog(@"webviewResponse allHeaderFields: %@",[(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
+	FXDLogObj([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
 #endif
 }
 
