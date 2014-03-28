@@ -201,8 +201,8 @@
 	if ([launchController isKindOfClass:[FXDsuperLaunchController class]]) {
 
 		[(FXDsuperLaunchController*)launchController
-		 dismissLaunchControllerWithDidFinishBlock:^(BOOL finished, id responseObj) {
-			 FXDLog_BLOCK(launchController, @selector(dismissLaunchControllerWithDidFinishBlock:));
+		 dismissLaunchControllerWithFinishCallback:^(BOOL finished, id responseObj) {
+			 FXDLog_BLOCK(launchController, @selector(dismissLaunchControllerWithFinishCallback:));
 
 			 FXDLog(@"%@ %@", _BOOL(finished), _Object(launchController));
 			 [launchController.view removeFromSuperview];

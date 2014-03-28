@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 #pragma mark - Public
 - (void)coverWithSegue:(FXDsegueCover*)coveringSegue;
 - (void)uncoverWithSegue:(FXDsegueUncover*)uncoveringSegue;
-- (void)uncoverAllSceneWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock;
+- (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)configureUpperMenuViewForCurrentScene:(FXDViewController*)currentScene;
 - (void)configureBottomMenuViewForCurrentScene:(FXDViewController*)currentScene;

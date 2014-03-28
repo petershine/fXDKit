@@ -67,7 +67,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
 	NSString *tracksKey = @"tracks";
@@ -87,8 +87,8 @@
 			  FXDLogVar(valueStatus);
 
 			  if (valueStatus != AVKeyValueStatusLoaded) {
-				  if (didFinishBlock) {
-					  didFinishBlock(NO, nil);
+				  if (finishCallback) {
+					  finishCallback(NO, nil);
 				  }
 				  return;
 			  }
@@ -107,12 +107,12 @@
 
 			  [self
 			   startSeekingToProgressValue:0.0
-			   withDidFinishBlock:^(BOOL finished, id responseObj) {
+			   withFinishCallback:^(BOOL finished, id responseObj) {
 
 				   [self configurePlaybackObservers];
 
-				   if (didFinishBlock) {
-					   didFinishBlock(YES, nil);
+				   if (finishCallback) {
+					   finishCallback(YES, nil);
 				   }
 			   }];
 		  }];
@@ -142,13 +142,13 @@
 
 
 #pragma mark -
-- (void)startSeekingToProgressValue:(Float64)progressValue withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
+- (void)startSeekingToProgressValue:(Float64)progressValue withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
 	if (weakSelf.didStartSeeking) {
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil);
 		}
 		return;
 	}
@@ -164,8 +164,8 @@
 
 		 weakSelf.didStartSeeking = NO;
 
-		 if (didFinishBlock) {
-			 didFinishBlock(finished, nil);
+		 if (finishCallback) {
+			 finishCallback(finished, nil);
 		 }
 	 }];
 }

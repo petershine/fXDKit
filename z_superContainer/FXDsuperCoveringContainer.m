@@ -312,12 +312,12 @@
 	 }];
 }
 
-- (void)uncoverAllSceneWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
+- (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	//MARK: Assume direction is only vertical
 	if ([self.childViewControllers count] == 0) {
 
-		if (didFinishBlock) {
-			didFinishBlock(YES, nil);
+		if (finishCallback) {
+			finishCallback(YES, nil);
 		}
 
 		return;
@@ -338,8 +338,8 @@
 	if ([lateAddedSceneArray count] == 0) {
 		lateAddedSceneArray = nil;
 
-		if (didFinishBlock) {
-			didFinishBlock(YES, nil);
+		if (finishCallback) {
+			finishCallback(YES, nil);
 		}
 
 		return;
@@ -410,8 +410,8 @@
 		 
 		 self.isUncovering = NO;
 		 
-		 if (didFinishBlock) {
-			 didFinishBlock(YES, nil);
+		 if (finishCallback) {
+			 finishCallback(YES, nil);
 		 }
 	 }];
 }

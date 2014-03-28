@@ -216,7 +216,7 @@
 		 prepareGlobalManagerWithMainCoredata:mainCoredata
 		 withUbiquityContainerURL:nil
 		 withCompleteProtection:<#NO#>
-		 withDidFinishBlock:^(BOOL finished) {
+		 withFinishCallback:^(BOOL finished) {
 
 			 <#APP_PREFIX#>sceneLaunch *launchScene = (<#APP_PREFIX#>sceneLaunch*)self.window.rootViewController;
 			 [globalManager.rootContainer.view addSubview:launchScene.view];
@@ -226,7 +226,7 @@
 
 
 			 [globalManager
-			  updateAllDataWithDidFinishBlock:^(BOOL finished) {
+			  updateAllDataWithFinishCallback:^(BOOL finished) {
 
 				  <#APP_PREFIX#>managerGeolocation *geolocationManager = [<#APP_PREFIX#>managerGeolocation sharedInstance];
 				  [geolocationManager startMainLocationManager];
@@ -242,7 +242,7 @@
 				  [globalManager.mainContainer prepareForFrontScenePresentation];
 
 				  [launchScene
-				   dismissLaunchControllerWithDidFinishBlock:^(BOOL finished) {
+				   dismissLaunchControllerWithFinishCallback:^(BOOL finished) {
 					   [globalManager updateLastUpgradedAppVersionAfterLaunch];
 
 
@@ -282,7 +282,7 @@
 	[globalManager cancelClearingForMemory];
 
 	[globalManager
-	 updateAllDataWithDidFinishBlock:^(BOOL finished) {
+	 updateAllDataWithFinishCallback:^(BOOL finished) {
 		 <#APP_PREFIX#>managerGeolocation *geolocationManager = [POPmanagerGeolocation sharedInstance];
 		 [geolocationManager maximizeLocationAccuracy];
 

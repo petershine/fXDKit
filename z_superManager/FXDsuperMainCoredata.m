@@ -186,7 +186,7 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection didFinishBlock:(FXDcallbackFinish)didFinishBlock {	//FXDLog_DEFAULT;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {	//FXDLog_DEFAULT;
 	
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
@@ -252,13 +252,13 @@
 			  //TODO: prepare what to do when Core Data is not setup
 
 			  [self
-			   upgradeAllAttributesForNewDataModelWithDidFinishBlock:^(BOOL finished, id responseObj) {
-				   FXDLog_BLOCK(self, @selector(upgradeAllAttributesForNewDataModelWithDidFinishBlock:));
+			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(BOOL finished, id responseObj) {
+				   FXDLog_BLOCK(self, @selector(upgradeAllAttributesForNewDataModelWithFinishCallback:));
 
 				   [self startObservingCoreDataNotifications];
 
-				   if (didFinishBlock) {
-					   didFinishBlock(didConfigure, nil);
+				   if (finishCallback) {
+					   finishCallback(didConfigure, nil);
 				   }
 			   }];
 		  }];
@@ -266,11 +266,11 @@
 }
 
 #pragma mark -
-- (void)upgradeAllAttributesForNewDataModelWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	//TODO: Learn about NSMigrationPolicy implementation
 
-	if (didFinishBlock) {
-		didFinishBlock(YES, nil);
+	if (finishCallback) {
+		finishCallback(YES, nil);
 	}
 }
 
@@ -354,7 +354,7 @@
 }
 
 #pragma mark -
-- (void)deleteAllDataWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
+- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	
 	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 	
@@ -377,30 +377,30 @@
 				  
 				  //TODO: Implement shouldBreak different, making this block to return boolean
 				  if (*shouldBreak) {
-					  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
+					  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withFinishCallback:));
 
 					  FXDLogBOOL(*shouldBreak);
 				  }
 				  
 				  [managedContext deleteObject:mainEntityObj];
 				  
-			  } withDidFinishBlock:didFinishBlock];
+			  } withFinishCallback:finishCallback];
 		 }
 	 }];
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
+- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {
 	
 	[self
 	 enumerateAllMainEntityObjShouldUsePrivateContext:NO
 	 shouldSaveAtTheEnd:YES
 	 withDefaultProgressView:withDefaultProgressView
 	 withEnumerationBlock:enumerationBlock
-	 withDidFinishBlock:didFinishBlock];
+	 withFinishCallback:finishCallback];
 }
 
-- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	
 	FXDLogBOOL(shouldUsePrivateContext);
 	FXDLog(@"0.%@", _Variable(self.didStartEnumerating));
@@ -477,7 +477,7 @@
 			  
 			  
 			  FXDcallbackFinish DidEnumerateBlock = ^(BOOL finished, id responseObj) {
-				  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withDidFinishBlock:));
+				  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withFinishCallback:));
 
 				  FXDLog(@"1.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
 				  
@@ -499,8 +499,8 @@
 				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 				  
-				  if (didFinishBlock) {
-					  didFinishBlock(finished, nil);
+				  if (finishCallback) {
+					  finishCallback(finished, nil);
 				  }
 			  };
 			  
@@ -514,13 +514,13 @@
 			  
 			  [self
 			   saveMainDocumentShouldSkipMerge:NO
-			   withDidFinishBlock:DidEnumerateBlock];
+			   withFinishCallback:DidEnumerateBlock];
 		  }];
 	 }];
 }
 
 #pragma mark -
-- (void)saveManagedContext:(NSManagedObjectContext*)managedContext withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_SEPARATE;
+- (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
 	
 	FXDLog(@"1.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 
@@ -542,8 +542,8 @@
 
 	if (managedContext == nil || managedContext.hasChanges == NO) {
 
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil);
 		}
 
 		return;
@@ -558,8 +558,8 @@
 		FXDLog(@"%@ %@", _BOOL(didSave), _Variable(managedContext.concurrencyType));
 		FXDLog(@"4.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 		
-		if (didFinishBlock) {
-			didFinishBlock(didSave, nil);
+		if (finishCallback) {
+			finishCallback(didSave, nil);
 		}
 	};
 
@@ -574,7 +574,7 @@
 	}
 }
 
-- (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_SEPARATE;
+- (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
 	
 	FXDLogBOOL(shouldSkipMerge);
 	FXDLog(@"1.%@", _Variable(self.mainDocument.documentState));
@@ -600,8 +600,8 @@
 		 FXDLog(@"2.%@", _Variable(self.mainDocument.documentState));
 		 FXDLog(@"2.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
 		 
-		 if (didFinishBlock) {
-			 didFinishBlock(success, nil);
+		 if (finishCallback) {
+			 finishCallback(success, nil);
 		 }
 	 }];
 }
@@ -625,8 +625,8 @@
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
-	 withDidFinishBlock:^(BOOL finished, id responseObj) {
-		 FXDLog_BLOCK(self, @selector(saveMainDocumentShouldSkipMerge:withDidFinishBlock:));
+	 withFinishCallback:^(BOOL finished, id responseObj) {
+		 FXDLog_BLOCK(self, @selector(saveMainDocumentShouldSkipMerge:withFinishCallback:));
 
 		 FXDLog_REMAINING;
 

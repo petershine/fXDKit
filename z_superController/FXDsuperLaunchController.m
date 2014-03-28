@@ -56,7 +56,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)dismissLaunchControllerWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {
+- (void)dismissLaunchControllerWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	[UIView
 	 animateWithDuration:durationOneSecond
 	 delay:0.0
@@ -65,8 +65,8 @@
 		 [self.view setAlpha:0.0];
 	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 
-		 if (didFinishBlock) {
-			 didFinishBlock(YES, nil);
+		 if (finishCallback) {
+			 finishCallback(YES, nil);
 		 }
 	 }];
 }

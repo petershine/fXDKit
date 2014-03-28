@@ -48,8 +48,8 @@
 #pragma mark - Public
 + (FXDsuperGlobalManager*)sharedInstance;
 
-- (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock;
-- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDcallbackFinish)didFinishBlock;
+- (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)incrementAppLaunchCount;
 

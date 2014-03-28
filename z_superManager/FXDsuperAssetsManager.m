@@ -73,11 +73,11 @@
 }
 
 #pragma mark -
-- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withDidFinishBlock:(void(^)(NSMutableArray* groupsArray))didFinishBlock {	FXDLog_DEFAULT;
+- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withFinishCallback:(void(^)(NSMutableArray* groupsArray))finishCallback {	FXDLog_DEFAULT;
 	
 	if (self.mainAssetsLibrary == nil) {
-		if (didFinishBlock) {
-			didFinishBlock(nil);
+		if (finishCallback) {
+			finishCallback(nil);
 		}
 		
 		return;
@@ -99,8 +99,8 @@
 			 [collectedGroupsArray addObject:group];
 		 }
 		 else {
-			 if (didFinishBlock) {
-				 didFinishBlock(collectedGroupsArray);
+			 if (finishCallback) {
+				 finishCallback(collectedGroupsArray);
 			 }
 		 }
 	 }
@@ -108,7 +108,7 @@
 		 FXDLog_ERROR;
 		 
 		 /*
-		  ALBmanagerAssets__73-[FXDsuperAssetsManager prepareSavedPhotosAssetsGroupWithDidFinishBlock:]_block_invoke41
+		  ALBmanagerAssets__73-[FXDsuperAssetsManager prepareSavedPhotosAssetsGroupWithFinishCallback:]_block_invoke41
 		  file: /Users/thckbrws/Desktop/_WORK_Provus/_PROJECT/PhotoAlbum/_Submodules/FXDKit_PhotoAlbum/z_superManager/FXDsuperAssetsManager.m
 		  line: 105
 		  
@@ -123,13 +123,13 @@
 		  }
 		  */
 		 
-		 if (didFinishBlock) {
-			 didFinishBlock(collectedGroupsArray);
+		 if (finishCallback) {
+			 finishCallback(collectedGroupsArray);
 		 }
 	 }];
 }
 
-- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withDidFinishBlock:(void(^)(NSMutableArray *assetsArray))didFinishBlock {	FXDLog_DEFAULT;
+- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withFinishCallback:(void(^)(NSMutableArray *assetsArray))finishCallback {	FXDLog_DEFAULT;
 	
 	__block NSMutableArray *collectedAssetsArray = nil;
 	
@@ -144,8 +144,8 @@
 			 [collectedAssetsArray addObject:asset];
 		 }
 		 else {
-			 if (didFinishBlock) {
-				 didFinishBlock(collectedAssetsArray);
+			 if (finishCallback) {
+				 finishCallback(collectedAssetsArray);
 			 }
 		 }
 	 }];

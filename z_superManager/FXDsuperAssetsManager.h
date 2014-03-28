@@ -25,8 +25,8 @@
 #pragma mark - Public
 - (void)startObservingAssetsLibraryNotifications;
 
-- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withDidFinishBlock:(void(^)(NSMutableArray* groupsArray))didFinishBlock;
-- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withDidFinishBlock:(void(^)(NSMutableArray *assetsArray))didFinishBlock;
+- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withFinishCallback:(void(^)(NSMutableArray* groupsArray))finishCallback;
+- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withFinishCallback:(void(^)(NSMutableArray *assetsArray))finishCallback;
 
 
 //MARK: - Observer implementation

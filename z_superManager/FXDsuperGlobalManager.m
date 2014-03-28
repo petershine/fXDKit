@@ -288,15 +288,15 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	//FXDLog_OVERRIDE;
+- (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback {	//FXDLog_OVERRIDE;
 	[self
 	 prepareGlobalManagerWithMainCoredata:nil
 	 withUbiquityContainerURL:nil
 	 withCompleteProtection:NO
-	 withDidFinishBlock:didFinishBlock];
+	 withFinishCallback:finishCallback];
 }
 
-- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withDidFinishBlock:(FXDcallbackFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){
 		[self incrementAppLaunchCount];
@@ -305,8 +305,8 @@
 		[self configureGlobalAppearance];
 		[self startObservingEssentialNotifications];
 		
-		if (didFinishBlock) {
-			didFinishBlock(YES, nil);
+		if (finishCallback) {
+			finishCallback(YES, nil);
 		}
 	};
 	
@@ -321,8 +321,8 @@
 	[mainCoredata
 	 prepareWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
-	 didFinishBlock:^(BOOL finished, id responseObj) {
-		 FXDLog_BLOCK(mainCoredata, @selector(prepareWithUbiquityContainerURL:withCompleteProtection:didFinishBlock:));
+	 finishCallback:^(BOOL finished, id responseObj) {
+		 FXDLog_BLOCK(mainCoredata, @selector(prepareWithUbiquityContainerURL:withCompleteProtection:finishCallback:));
 		 
 		 ManagerDidPrepareBlock();
 	 }];
