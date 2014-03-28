@@ -252,13 +252,13 @@
 			  //TODO: prepare what to do when Core Data is not setup
 
 			  [self
-			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(BOOL finished, id responseObj) {
-				   FXDLog_BLOCK(self, @selector(upgradeAllAttributesForNewDataModelWithFinishCallback:));
+			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+				   FXDLog_BLOCK(self, caller);
 
 				   [self startObservingCoreDataNotifications];
 
 				   if (finishCallback) {
-					   finishCallback(didConfigure, nil);
+					   finishCallback(didConfigure, nil, _cmd);
 				   }
 			   }];
 		  }];
@@ -270,7 +270,7 @@
 	//TODO: Learn about NSMigrationPolicy implementation
 
 	if (finishCallback) {
-		finishCallback(YES, nil);
+		finishCallback(YES, nil, _cmd);
 	}
 }
 
@@ -365,7 +365,6 @@
 	 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
 	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
 	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
-		 FXDLog_BLOCK(applicationWindow, @selector(showMessageViewWithNibName:withTitle:message:cancelButtonTitle:acceptButtonTitle:clickedButtonAtIndexBlock:));
 		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
 		 
 		 if (buttonIndex == buttonIndexAccept) {
@@ -377,8 +376,6 @@
 				  
 				  //TODO: Implement shouldBreak different, making this block to return boolean
 				  if (*shouldBreak) {
-					  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withFinishCallback:));
-
 					  FXDLogBOOL(*shouldBreak);
 				  }
 				  
@@ -476,9 +473,7 @@
 			  FXDLog(@"2.%@", _Variable(self.didStartEnumerating));
 			  
 			  
-			  FXDcallbackFinish DidEnumerateBlock = ^(BOOL finished, id responseObj) {
-				  FXDLog_BLOCK(self, @selector(enumerateAllMainEntityObjShouldUsePrivateContext:shouldSaveAtTheEnd:withDefaultProgressView:withEnumerationBlock:withFinishCallback:));
-
+			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL finished) {
 				  FXDLog(@"1.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
 				  
 				  if (withDefaultProgressView) {
@@ -500,13 +495,13 @@
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 				  
 				  if (finishCallback) {
-					  finishCallback(finished, nil);
+					  finishCallback(finished, nil, _cmd);
 				  }
 			  };
 			  
 			  
 			  if (shouldSaveAtTheEnd == NO) {
-				  DidEnumerateBlock(YES, nil);
+				  DidEnumerateBlock(YES);
 				  
 				  return;
 			  }
@@ -514,7 +509,9 @@
 			  
 			  [self
 			   saveMainDocumentShouldSkipMerge:NO
-			   withFinishCallback:DidEnumerateBlock];
+			   withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+				   DidEnumerateBlock(finished);
+			   }];
 		  }];
 	 }];
 }
@@ -543,7 +540,7 @@
 	if (managedContext == nil || managedContext.hasChanges == NO) {
 
 		if (finishCallback) {
-			finishCallback(NO, nil);
+			finishCallback(NO, nil, _cmd);
 		}
 
 		return;
@@ -559,7 +556,7 @@
 		FXDLog(@"4.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 		
 		if (finishCallback) {
-			finishCallback(didSave, nil);
+			finishCallback(didSave, nil, _cmd);
 		}
 	};
 
@@ -601,7 +598,7 @@
 		 FXDLog(@"2.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
 		 
 		 if (finishCallback) {
-			 finishCallback(success, nil);
+			 finishCallback(success, nil, _cmd);
 		 }
 	 }];
 }
@@ -625,8 +622,8 @@
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
-	 withFinishCallback:^(BOOL finished, id responseObj) {
-		 FXDLog_BLOCK(self, @selector(saveMainDocumentShouldSkipMerge:withFinishCallback:));
+	 withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+		 FXDLog_BLOCK(self, caller);
 
 		 FXDLog_REMAINING;
 

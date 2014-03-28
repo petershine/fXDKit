@@ -317,7 +317,7 @@
 	if ([self.childViewControllers count] == 0) {
 
 		if (finishCallback) {
-			finishCallback(YES, nil);
+			finishCallback(YES, nil, _cmd);
 		}
 
 		return;
@@ -339,7 +339,7 @@
 		lateAddedSceneArray = nil;
 
 		if (finishCallback) {
-			finishCallback(YES, nil);
+			finishCallback(YES, nil, _cmd);
 		}
 
 		return;
@@ -411,7 +411,7 @@
 		 self.isUncovering = NO;
 		 
 		 if (finishCallback) {
-			 finishCallback(YES, nil);
+			 finishCallback(YES, nil, _cmd);
 		 }
 	 }];
 }

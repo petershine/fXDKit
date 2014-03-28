@@ -66,7 +66,7 @@
 	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
 		 
 		 if (finishCallback) {
-			 finishCallback(YES, nil);
+			 finishCallback(YES, nil, _cmd);
 		 }
 	 }];
 }
