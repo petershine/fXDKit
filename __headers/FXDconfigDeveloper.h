@@ -49,8 +49,8 @@
 #define _Selector(selector)	[[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)] replacedSelf]
 
 #define _Point(point)	[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] replacedSelf]
-#define _Size(size)	[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] replacedSelf]
-#define _Rect(rect)	[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
+#define _Size(size)		[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] replacedSelf]
+#define _Rect(rect)		[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
 
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
@@ -136,18 +136,30 @@
 
 
 	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
-												FXDLog(@"BLOCK: [%@ %@] %@",\
-												[instance class],\
-												strSimpleSelector(selector),\
-												strIsMainThread)
+												if ([NSThread isMainThread]) {\
+													FXDLog(@"BLOCK: [%@ %@]",\
+													[instance class],\
+													strSimpleSelector(selector));\
+												} else {\
+													FXDLog(@"BLOCK: [%@ %@] %@",\
+													[instance class],\
+													strSimpleSelector(selector),\
+													strIsMainThread);}
+
+
 
 	#define FXDLog_REACT(keypath, value)	FXDLog_EMPTY;\
-											FXDLog(@"REACT: [%@ %@] %@ %s: %@",\
-											NSStringFromClass([self class]),\
-											NSStringFromSelector(_cmd),\
-											strIsMainThread,\
-											#keypath,\
-											value)
+											if ([NSThread isMainThread]) {\
+												FXDLog(@"REACT: [%@] %s: %@",\
+												NSStringFromClass([self class]),\
+												#keypath,\
+												value);\
+											} else {\
+												FXDLog(@"REACT: [%@] %@ %s: %@",\
+												NSStringFromClass([self class]),\
+												strIsMainThread,\
+												#keypath,\
+												value);}
 
 #else
 	#define FXDLog(__FORMAT__, ...)	{}
