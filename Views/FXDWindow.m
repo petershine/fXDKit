@@ -126,9 +126,13 @@
 
 #pragma mark - Category
 @implementation UIWindow (Added)
-+ (instancetype)instantiateDefaultWindow {
-	id defaultWindow = [[[self class] alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	[(FXDWindow*)defaultWindow setBackgroundColor:[UIColor blackColor]];
++ (instancetype)instantiateDefaultWindow {	FXDLog_DEFAULT;
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
+	FXDLogRect(screenBounds);
+
+	id defaultWindow = [[[self class] alloc] initWithFrame:screenBounds];
+	[(UIWindow*)defaultWindow setBackgroundColor:[UIColor blackColor]];
 
 	return defaultWindow;
 }
