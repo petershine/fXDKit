@@ -61,8 +61,8 @@
 			 [FXDAlertView
 			  showAlertWithTitle:[error localizedDescription]
 			  message:nil
-			  clickedButtonAtIndexBlock:nil
-			  cancelButtonTitle:nil];
+			  cancelButtonTitle:nil
+			  withAlertCallback:nil];
 		 }
 
 		 if (didCollectBlock) {

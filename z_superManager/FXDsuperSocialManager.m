@@ -152,7 +152,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -161,8 +161,8 @@
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil, _cmd);
 		}
 		return;
 	}
@@ -175,7 +175,7 @@
 		[self
 		 showActionSheetInPresentingView:presentingView
 		 forSelectingAccountForTypeIdentifier:typeIdentifier
-		 withDidFinishBlock:didFinishBlock];
+		 withFinishCallback:finishCallback];
 	};
 
 	void (^DeniedAccess)(void) = ^(void){
@@ -191,13 +191,13 @@
 		[FXDAlertView
 		 showAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
-		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil];
+		 cancelButtonTitle:nil
+		 withAlertCallback:nil];
 
 		_mainAccountType = nil;
 
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil, _cmd);
 		}
 	};
 
@@ -251,7 +251,7 @@
 	 }];
 }
 
-- (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -260,8 +260,8 @@
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil, _cmd);
 		}
 		return;
 	}
@@ -284,11 +284,11 @@
 		[FXDAlertView
 		 showAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
-		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil];
+		 cancelButtonTitle:nil
+		 withAlertCallback:nil];
 
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil, _cmd);
 		}
 		return;
 	}
@@ -306,17 +306,16 @@
 	FXDActionSheet *actionSheet =
 	[[FXDActionSheet alloc]
 	 initWithTitle:actionsheetTitle
-	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
+	 withButtonTitleArray:nil
+	 cancelButtonTitle:nil
+	 destructiveButtonTitle:nil
+	 withAlertCallback:^(id alertObj, NSInteger buttonIndex) {
 		 [self
 		  selectAccountForTypeIdentifier:typeIdentifier
 		  fromActionSheet:alertObj
 		  forButtonIndex:buttonIndex
-		  withDidFinishBlock:didFinishBlock];
-		 
-	 } withButtonTitleArray:nil
-	 cancelButtonTitle:nil
-	 destructiveButtonTitle:nil
-	 otherButtonTitles:nil];
+		  withFinishCallback:finishCallback];
+	 }];
 	
 	[actionSheet addButtonWithTitle:NSLocalizedString(text_Cancel, nil)];
 	actionSheet.cancelButtonIndex = 0;
@@ -342,7 +341,7 @@
 	[actionSheet showInView:presentingView];
 }
 
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withDidFinishBlock:(FXDblockDidFinish)didFinishBlock {
+- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -351,8 +350,8 @@
 	FXDLog(@"typeIdentifier: %@", typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil, _cmd);
 		}
 		return;
 	}
@@ -365,8 +364,8 @@
 	if (buttonIndex == (NSInteger)[actionSheet performSelector:@selector(cancelButtonIndex)]) {
 		_multiAccountArray = nil;
 
-		if (didFinishBlock) {
-			didFinishBlock(NO, nil);
+		if (finishCallback) {
+			finishCallback(NO, nil, _cmd);
 		}
 		return;
 	}
@@ -406,8 +405,8 @@
 
 	_multiAccountArray = nil;
 
-	if (didFinishBlock) {
-		didFinishBlock(YES, nil);
+	if (finishCallback) {
+		finishCallback(YES, nil, _cmd);
 	}
 }
 
@@ -456,8 +455,8 @@
 		[FXDAlertView
 		 showAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
-		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil];
+		 cancelButtonTitle:nil
+		 withAlertCallback:nil];
 		
 		return nil;
 	}
@@ -500,8 +499,8 @@
 		[FXDAlertView
 		 showAlertWithTitle:nil
 		 message:[error localizedDescription]
-		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil];
+		 cancelButtonTitle:nil
+		 withAlertCallback:nil];
 	}
 #endif
 
