@@ -32,8 +32,7 @@
 - (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)configurePlaybackObservers;
 
-- (void)startSeekingToProgressValue:(Float64)progressValue withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (CMTime)seekedTimeUsingProgressValue:(Float64)progressValue;
+- (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 //MARK: - Observer implementation

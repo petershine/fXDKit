@@ -48,9 +48,10 @@
 #define _BOOL(boolean)		[[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")] replacedSelf]
 #define _Selector(selector)	[[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)] replacedSelf]
 
-#define _Point(point)	[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] replacedSelf]
-#define _Size(size)		[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] replacedSelf]
-#define _Rect(rect)		[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
+#define _Point(point)			[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] replacedSelf]
+#define _Size(size)				[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] replacedSelf]
+#define _Rect(rect)				[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
+#define _Transform(transform)	[[NSString stringWithFormat:@"%s: %@", #transform, NSStringFromCGAffineTransform(transform)] replacedSelf]
 
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
@@ -89,9 +90,10 @@
 	#define FXDLogBOOL(boolean)			FXDLog(@"%@", _BOOL(boolean))
 	#define FXDLogSelector(selector)	FXDLog(@"%@", _Selector(selector))
 
-	#define FXDLogPoint(point)		FXDLog(@"%@", _Point(point))
-	#define FXDLogSize(size)		FXDLog(@"%@", _Size(size))
-	#define FXDLogRect(rect)		FXDLog(@"%@", _Rect(rect))
+	#define FXDLogPoint(point)			FXDLog(@"%@", _Point(point))
+	#define FXDLogSize(size)			FXDLog(@"%@", _Size(size))
+	#define FXDLogRect(rect)			FXDLog(@"%@", _Rect(rect))
+	#define FXDLogTransform(transform)	FXDLog(@"%@", _Transform(transform))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
@@ -175,6 +177,7 @@
 	#define FXDLogPoint(point)
 	#define FXDLogSize(size)
 	#define FXDLogRect(rect)
+	#define FXDLogTransform(transform)
 
 	#define FXDLog_IsMainThread
 	#define FXDLog_REMAINING

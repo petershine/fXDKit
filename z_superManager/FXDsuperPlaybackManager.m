@@ -106,7 +106,7 @@
 
 
 			  [self
-			   startSeekingToProgressValue:0.0
+			   startSeekingToProgressTime:kCMTimeZero
 			   withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
 
 				   [self configurePlaybackObservers];
@@ -142,7 +142,7 @@
 
 
 #pragma mark -
-- (void)startSeekingToProgressValue:(Float64)progressValue withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
@@ -156,10 +156,8 @@
 
 	weakSelf.didStartSeeking = YES;
 
-	CMTime seekedTime = [weakSelf seekedTimeUsingProgressValue:progressValue];
-
 	[weakSelf.videoPlayer
-	 seekToTime:seekedTime
+	 seekToTime:progressTime
 	 completionHandler:^(BOOL finished) {
 
 		 weakSelf.didStartSeeking = NO;
@@ -168,17 +166,6 @@
 			 finishCallback(finished, nil, _cmd);
 		 }
 	 }];
-}
-
-- (CMTime)seekedTimeUsingProgressValue:(Float64)progressValue {
-
-	CMTime recordingDuration = self.videoPlayer.currentItem.duration;
-
-	Float64 progressSeconds = CMTimeGetSeconds(recordingDuration)*progressValue;
-
-	CMTime seekedTime = CMTimeForMediaSeconds(progressSeconds);
-
-	return seekedTime;
 }
 
 

@@ -66,4 +66,6 @@
 #define limitConcurrentOperationCount	1
 
 
+#define radianAngleForDegree(degree)	(degree*(M_PI/180.0))
+
 #endif
