@@ -37,7 +37,7 @@
 	[super viewDidLoad];
 	
 	self.minimumChildCount = [self.childViewControllers count];
-	FXDLogVar(self.minimumChildCount);
+	FXDLogVariable(self.minimumChildCount);
 }
 
 
@@ -64,7 +64,7 @@
 	}
 	
 	
-	FXDLog(@"isCovering: %d, isUncovering: %d", self.isCovering, self.isUncovering);
+	FXDLog(@"%@ %@", _BOOL(self.isCovering), _BOOL(self.isUncovering));
 	
 	if (self.isCovering || self.isUncovering) {
 		canAnimate = NO;
@@ -120,7 +120,7 @@
 	
 	CGRect animatedFrame = presentedScene.view.frame;
 	animatedFrame.origin.y = 0.0;
-	FXDLog(@"1.animatedFrame: %@", NSStringFromCGRect(animatedFrame));
+	FXDLog(@"1.%@", _Rect(animatedFrame));
 
 	CGRect modifiedFrame = presentedScene.view.frame;
 	modifiedFrame.origin.x -= coveringOffset.x;
@@ -139,7 +139,7 @@
 		NSInteger destinationIndex = [self.childViewControllers indexOfObject:presentedScene];
 		
 		for (FXDViewController *childScene in self.childViewControllers) {
-			FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
+			FXDLog(@"%@ %@", _Object(childScene), _Variable([childScene shouldStayFixed]));
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childScene];
 			
@@ -163,7 +163,7 @@
 		}
 	}
 	
-	FXDLog(@"pushedScene: %@ animatedPushedFrame: %@", pushedScene, NSStringFromCGRect(animatedPushedFrame));
+	FXDLog(@"%@ %@", _Object(pushedScene), _Rect(animatedPushedFrame));
 
 	presentedScene.view.autoresizingMask = UIViewAutoresizingNone;
 	presentedScene.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -217,7 +217,7 @@
 	
 	
 	CGFloat uncoveringOffsetY = [[dismissedScene offsetYforUncovering] floatValue];
-	FXDLog(@"1.uncoveringOffsetY: %f", uncoveringOffsetY);
+	FXDLog(@"1.%@", _Variable(uncoveringOffsetY));
 	
 	if (uncoveringOffsetY > 0.0) {
 		animatedFrame.origin.y -= (uncoveringOffsetY *uncoveringDirection.y);
@@ -238,7 +238,7 @@
 		NSInteger sourceIndex = [self.childViewControllers indexOfObject:dismissedScene];
 		
 		for (FXDViewController *childScene in self.childViewControllers) {
-			FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
+			FXDLog(@"%@ %@", _Object(childScene), _Variable([childScene shouldStayFixed]));
 			
 			NSInteger childIndex = [self.childViewControllers indexOfObject:childScene];
 			
@@ -262,7 +262,7 @@
 		}
 	}
 	
-	FXDLog(@"pulledController: %@ animatedPulledFrame: %@", pulledScene, NSStringFromCGRect(animatedPulledFrame));
+	FXDLog(@"%@ %@", _Object(pulledScene), _Rect(animatedPulledFrame));
 	
 	if (self.mainNavigationbar) {
 		if (pulledScene) {
@@ -301,7 +301,7 @@
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-		 FXDLog(@"finished: %d pulledScene: %@", finished, pulledScene);
+		 FXDLog(@"%@ %@", _BOOL(finished), _Object(pulledScene));
 		 
 		 [dismissedScene.view removeFromSuperview];
 		 [dismissedScene removeFromParentViewController];
@@ -327,7 +327,7 @@
 	__block NSMutableArray *lateAddedSceneArray = [[NSMutableArray alloc] initWithCapacity:0];
 	
 	for (FXDViewController *childScene in self.childViewControllers) {
-		FXDLog(@"childScene: %@ shouldStayFixed: %d", childScene, [childScene shouldStayFixed]);
+		FXDLog(@"%@ %@", _BOOL(childScene), _Variable([childScene shouldStayFixed]));
 		
 		if ([childScene shouldStayFixed] == NO) {
 			[lateAddedSceneArray addObject:childScene];
@@ -349,15 +349,16 @@
 	self.isUncovering = YES;
 
 	FXDLog_DEFAULT;
-	FXDLog(@"1.self.childViewControllers: %@", self.childViewControllers);
+	FXDLog(@"1.%@", _Object(self.childViewControllers));
 	FXDLogObject(lateAddedSceneArray);
+
 	CGFloat totalUncoveringOffsetY = 0.0;
 	
 	for (FXDViewController *childScene in lateAddedSceneArray) {
 		totalUncoveringOffsetY += childScene.view.frame.size.height;
 	}
 	
-	FXDLogVar(totalUncoveringOffsetY);
+	FXDLogVariable(totalUncoveringOffsetY);
 	
 	
 	__block NSMutableArray *animatedFrameObjArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -406,7 +407,7 @@
 		 lateAddedSceneArray = nil;
 		 animatedFrameObjArray = nil;
 		 
-		 FXDLog(@"2.self.childViewControllers: %@", self.childViewControllers);
+		 FXDLog(@"2.%@", _Object(self.childViewControllers));
 		 
 		 self.isUncovering = NO;
 		 

@@ -63,7 +63,7 @@
 		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
 
 		if (applicationWindow.rootViewController) {
-			FXDLog(@"applicationWindow.rootViewController: %@", applicationWindow.rootViewController);
+			FXDLogObject(applicationWindow.rootViewController);
 
 			presentingController = applicationWindow.rootViewController;
 		}
@@ -79,16 +79,16 @@
 }
 
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
-	FXDLog(@"[NSBundle mainBundle] infoDictionary: %@", [[NSBundle mainBundle] infoDictionary]);
+	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
-	FXDLog(@"version: %@", version);
+	FXDLogObject(version);
 
 #if ForDEVELOPER
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
 	NSString *currentLanguage = [languages firstObject];
-	FXDLog(@"currentLanguage: %@", currentLanguage);
+	FXDLogObject(currentLanguage);
 #endif
 
 	NSString *mailAddr = NSLocalizedString(application_ContactEmail, nil);
@@ -125,26 +125,9 @@
 	NSString *stringCountry = [NSString stringWithFormat:@"%@", returnString];
 
 
-	//TEST: Find the right way to use
-	/*
-	 NSString *stringNetwork = [[AFNetworkReachabilityManager sharedManager] localizedNetworkReachabilityStatusString];
-	 FXDLog(@"1.stringNetwork: %@", stringNetwork);
-
-	 if ([[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi]) {
-	 stringNetwork = @"Network : WiFi";
-	 }
-	 else {
-	 stringNetwork = @"Network : 3G network";
-	 }
-
-	 FXDLog(@"2.stringNetwork: %@", stringNetwork);
-
-	 NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n%@\n", stringLine, stringAppVersion, stringDevice, stringCountry, stringNetwork];
-	 */
-
 	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n", lineSeparator, stringAppVersion, stringDevice, stringCountry];
 
-	FXDLog(@"mailBodyString: %@", mailBodyString);
+	FXDLogObject(mailBodyString);
 
 	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
 	[emailController setSubject:subjectString];
@@ -174,7 +157,7 @@
 #pragma mark - MFMailComposeViewControllerDelegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {	FXDLog_DEFAULT;
 
-	FXDLog(@"result: %d", result);
+	FXDLogVariable(result);
 
 	FXDLog_ERROR;
 

@@ -76,9 +76,7 @@
 - (void)animateCustomDropAfterDelay:(NSTimeInterval)delay fromOffset:(CGPoint)offset {
 	CGRect animatedFrame = self.frame;
 	
-	// Move annotation out of view
-	//FXDLog(@"superview.superview: %@", NSStringFromCGRect(self.superview.superview.frame));
-	
+	// Move annotation out of view	
 	CGRect modifiedFrame = self.frame;
 	modifiedFrame.origin.x += offset.x;
 	modifiedFrame.origin.y += offset.y;

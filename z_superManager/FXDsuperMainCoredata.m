@@ -419,7 +419,7 @@
 										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 									  }];
 
-	FXDLogVar(self.enumeratingTaskIdentifier);
+	FXDLogVariable(self.enumeratingTaskIdentifier);
 	
 	
 	FXDWindow *applicationWindow = nil;
@@ -489,7 +489,7 @@
 				  
 				  FXDLog_REMAINING;
 				  
-				  FXDLogVar(self.enumeratingTaskIdentifier);
+				  FXDLogVariable(self.enumeratingTaskIdentifier);
 				  
 				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
@@ -618,7 +618,7 @@
 		   [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
 		   self.savingTaskIdentifier = UIBackgroundTaskInvalid;
 	   }];
-	FXDLogVar(self.savingTaskIdentifier);
+	FXDLogVariable(self.savingTaskIdentifier);
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
@@ -627,7 +627,7 @@
 
 		 FXDLog_REMAINING;
 
-		 FXDLogVar(self.savingTaskIdentifier);
+		 FXDLogVariable(self.savingTaskIdentifier);
 
 		 [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
 		 self.savingTaskIdentifier = UIBackgroundTaskInvalid;
@@ -640,7 +640,7 @@
 
 	FXDLogObject(notification);
 	FXDLogObject(self.mainDocument.fileModificationDate);
-	FXDLogVar(self.mainDocument.documentState);
+	FXDLogVariable(self.mainDocument.documentState);
 }
 
 #pragma mark -

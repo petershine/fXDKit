@@ -89,8 +89,8 @@
 }
 
 - (NSMutableArray*)collectedItemArrayFromJSONobj:(id)jsonObj {
-	FXDLog(@"self.mainJSONrootKey: %@", self.mainJSONrootKey);
-	FXDLog(@"jsonObj: %@", jsonObj);
+	FXDLogObject(self.mainJSONrootKey);
+	FXDLogObject(jsonObj);
 
 	NSMutableArray *collectedItemArray = [[NSMutableArray alloc] initWithCapacity:0];
 
@@ -105,13 +105,14 @@
 	}
 
 	//MARK: Never be nil
-	FXDLog(@"collectedItemArray:\n%@", collectedItemArray);
+	FXDLogObject(collectedItemArray);
 
 	return collectedItemArray;
 }
 
 - (id)simplerItemFromItem:(id)item {	FXDLog_OVERRIDE;
-	FXDLog(@"item: %@", item);
+	FXDLogObject(item);
+	
 	return item;
 }
 

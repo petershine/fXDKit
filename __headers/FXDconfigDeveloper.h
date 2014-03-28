@@ -86,7 +86,7 @@
 
 	#define FXDLogObject(object)		FXDLog(@"%@", _Object(object))
 	#define FXDLogStruct(struct)		FXDLog(@"%@", _Struct(struct))
-	#define FXDLogVar(variable)			FXDLog(@"%@", _Variable(variable))
+	#define FXDLogVariable(variable)			FXDLog(@"%@", _Variable(variable))
 	#define FXDLogBOOL(boolean)			FXDLog(@"%@", _BOOL(boolean))
 	#define FXDLogSelector(selector)	FXDLog(@"%@", _Selector(selector))
 
@@ -99,7 +99,7 @@
 
 	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
 								&& intervalRemainingBackground != DBL_MAX) {\
-									FXDLogVar(intervalRemainingBackground);}
+									FXDLogVariable(intervalRemainingBackground);}
 
 
 	#define FXDLog_DEFAULT	FXDLog_EMPTY;\
@@ -170,7 +170,7 @@
 
 	#define FXDLogObject(object)
 	#define FXDLogStruct(struct)
-	#define FXDLogVar(variable)
+	#define FXDLogVariable(variable)
 	#define FXDLogBOOL(boolean)
 	#define FXDLogSelector(selector)
 

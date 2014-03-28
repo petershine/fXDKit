@@ -90,14 +90,14 @@
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
 	UIStatusBarAnimation updateAnimation = [super preferredStatusBarUpdateAnimation];
-	FXDLogVar(updateAnimation);
+	FXDLogVariable(updateAnimation);
 
 	return updateAnimation;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
 	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
-	FXDLogVar(statusBarStyle);
+	FXDLogVariable(statusBarStyle);
 
 	return statusBarStyle;
 }

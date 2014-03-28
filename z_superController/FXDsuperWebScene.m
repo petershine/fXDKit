@@ -124,7 +124,7 @@
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 
-	FXDLogVar(navigationType);
+	FXDLogVariable(navigationType);
 	FXDLogObject(request);
 	FXDLogObject([request allHTTPHeaderFields]);
 

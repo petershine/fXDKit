@@ -102,7 +102,7 @@
 
 #pragma mark -
 - (id)previewPageForModifiedPageIndex:(NSInteger)modifiedPageIndex {	FXDLog_OVERRIDE;
-	FXDLogVar(modifiedPageIndex);
+	FXDLogVariable(modifiedPageIndex);
 	
 	return nil;
 }

@@ -55,7 +55,7 @@
 			FXDLogRect(screenBounds);
 
 			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
-			FXDLogVar(self.offsetYdismissingController);
+			FXDLogVariable(self.offsetYdismissingController);
 		}
 	}
 }
@@ -357,7 +357,7 @@
 	
 	if (scrollView.contentOffset.y < (self.offsetYdismissingController-scrollView.contentInset.top)
 		&& self.didStartDismissingByPullingDown == NO) {
-		FXDLogVar(self.offsetYdismissingController);
+		FXDLogVariable(self.offsetYdismissingController);
 		
 		[self dismissByPullingDownScrollView:scrollView];
 	}

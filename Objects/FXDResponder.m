@@ -177,7 +177,7 @@
 	}
 
 
-	FXDLogVar(application.applicationIconBadgeNumber);
+	FXDLogVariable(application.applicationIconBadgeNumber);
 	application.applicationIconBadgeNumber = 0;
 
 	FXDLogBOOL(self.didFinishLaunching);

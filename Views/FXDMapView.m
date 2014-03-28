@@ -43,16 +43,16 @@
 	id disclaimerView = [self disclaimerView];
 	
 	if (disclaimerView) {
-		FXDLog(@"disclaimerView: %@", disclaimerView);
-		FXDLog(@"disclaimerView font: %@", [(UILabel*)disclaimerView font]);
+		FXDLogObject(disclaimerView);
+		FXDLogObject([(UILabel*)disclaimerView font]);
 
 		CGRect modifiedFrame = [disclaimerView frame];
-		FXDLog(@"1.disclaimerView modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
+		FXDLog(@"1.%@", _Rect(modifiedFrame));
 
 		modifiedFrame.origin.x = self.initialDisclaimerFrame.origin.x +self.disclaimerOffset.x;
 		modifiedFrame.origin.y = (self.frame.size.height -self.initialDisclaimerFrame.size.height) +self.disclaimerOffset.y;
 
-		FXDLog(@"2.disclaimerView modifiedFrame: %@", NSStringFromCGRect(modifiedFrame));
+		FXDLog(@"2.%@", _Rect(modifiedFrame));
 		
 		[disclaimerView setFrame:modifiedFrame];
 	}
@@ -78,8 +78,6 @@
     id disclaimerView = nil;
 	
     for (id subview in self.subviews) {
-		//FXDLog(@"subview: %@", subview);
-		
 		if ([subview isKindOfClass:[UILabel class]]) {
 			disclaimerView = subview;		
 			break;
@@ -135,7 +133,6 @@
 	scaledMapRect.size.height *= scale;
 	scaledMapRect.origin.x = centerMapPoint.x -(scaledMapRect.size.width/2.0);
 	scaledMapRect.origin.y = centerMapPoint.y -(scaledMapRect.size.height/2.0);
-	//FXDLog(@"scaledMapRect width: %f height: %f", scaledMapRect.size.width, scaledMapRect.size.height);
 	
 	return scaledMapRect;
 }
@@ -150,11 +147,11 @@
 	
 	
 	FXDLog_DEFAULT;
-	FXDLog(@"[self mapZoomScale]: %f zoomScale: %f", [self mapZoomScale], mapZoomScale);
+	FXDLog(@"%@ %@", _Variable([self mapZoomScale]), _Variable(mapZoomScale));
 	
 	Float64 mapWidth = self.frame.size.width /mapZoomScale;
 	Float64 mapHeight = self.frame.size.height /mapZoomScale;
-	FXDLog(@"mapWidth: %f mapHeight: %f", mapWidth, mapHeight);
+	FXDLog(@"%@ %@", _Variable(mapWidth), _Variable(mapHeight));
 	
 	MKMapPoint mapPoint = MKMapPointForCoordinate(coordinate);
 	

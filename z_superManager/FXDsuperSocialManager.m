@@ -121,7 +121,7 @@
 
 		NSString *identifier = [userDefaults stringForKey:accountObjKey];
 
-		FXDLog(@"accountObjKey: %@ identifier: %@", accountObjKey, identifier);
+		FXDLog(@"%@ %@", _Object(accountObjKey), _Object(identifier));
 
 		if (identifier) {
 
@@ -142,7 +142,7 @@
 		}
 
 		[userDefaults synchronize];
-		FXDLog(@"_currentMainAccount: %@", _currentMainAccount);
+		FXDLogObject(_currentMainAccount);
 	}
 
 	return _currentMainAccount;
@@ -158,7 +158,7 @@
 		typeIdentifier = self.typeIdentifier;
 	}
 
-	FXDLog(@"typeIdentifier: %@", typeIdentifier);
+	FXDLogObject(typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
@@ -168,8 +168,8 @@
 	}
 
 
-	FXDLog(@"mainAccountType.accountTypeDescription: %@", self.mainAccountType.accountTypeDescription);
-	FXDLog(@"mainAccountType.accessGranted: %d", self.mainAccountType.accessGranted);
+	FXDLogObject(self.mainAccountType.accountTypeDescription);
+	FXDLogVariable(self.mainAccountType.accessGranted);
 
 	void (^GrantedAccess)(void) = ^(void){
 		[self
@@ -212,7 +212,7 @@
 	 requestAccessToAccountsWithType:self.mainAccountType
 	 options:self.initialAccessOptions
 	 completion:^(BOOL granted, NSError *error) {
-		 FXDLog(@"1.granted: %d", granted);
+		 FXDLog(@"1.%@", _BOOL(granted));
 		 FXDLog_ERROR;
 		 
 		 [[NSOperationQueue mainQueue]
@@ -233,7 +233,7 @@
 			   requestAccessToAccountsWithType:self.mainAccountType
 			   options:self.additionalAccessOptions
 			   completion:^(BOOL granted, NSError *error) {
-				   FXDLog(@"2.granted: %d", granted);
+				   FXDLog(@"2.%@", _BOOL(granted));
 				   FXDLog_ERROR;
 
 				   [[NSOperationQueue mainQueue]
@@ -257,7 +257,7 @@
 		typeIdentifier = self.typeIdentifier;
 	}
 
-	FXDLog(@"typeIdentifier: %@", typeIdentifier);
+	FXDLogObject(typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
@@ -267,7 +267,7 @@
 	}
 
 
-	FXDLog(@"self.multiAccountArray:\n%@", self.multiAccountArray);
+	FXDLogObject(self.multiAccountArray);
 	
 	if ([self.multiAccountArray count] == 0) {
 		_multiAccountArray = nil;
@@ -347,7 +347,7 @@
 		typeIdentifier = self.typeIdentifier;
 	}
 
-	FXDLog(@"typeIdentifier: %@", typeIdentifier);
+	FXDLogObject(typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
@@ -357,9 +357,9 @@
 	}
 
 
-	FXDLog(@"buttonIndex: %ld", (long)buttonIndex);
-	FXDLog(@"cancelButtonIndex: %ld", (long)actionSheet.cancelButtonIndex);
-	FXDLog(@"destructiveButtonIndex: %ld", (long)actionSheet.destructiveButtonIndex);
+	FXDLogVariable(buttonIndex);
+	FXDLogVariable(actionSheet.cancelButtonIndex);
+	FXDLogVariable(actionSheet.destructiveButtonIndex);
 
 	if (buttonIndex == (NSInteger)[actionSheet performSelector:@selector(cancelButtonIndex)]) {
 		_multiAccountArray = nil;
@@ -392,7 +392,7 @@
 	}
 	else {
 		ACAccount *selectedAccount = (self.multiAccountArray)[buttonIndex-1];
-		FXDLog(@"selectedAccount: %@", selectedAccount);
+		FXDLogObject(selectedAccount);
 		
 		if (selectedAccount) {
 			[userDefaults setObject:selectedAccount.identifier forKey:accountObjKey];
@@ -419,7 +419,7 @@
 		 completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
 			 FXDLog_ERROR;
 			 
-			 FXDLog(@"renewResult: %ld", (long)renewResult);
+			 FXDLogVariable(renewResult);
 			 
 			 //TODO: alert user about needing to have accessibility
 
@@ -466,14 +466,14 @@
 
 	if (initialText) {
 		if ([socialComposeController setInitialText:initialText] == NO) {
-			FXDLog(@"initialText: %@", initialText);
+			FXDLogObject(initialText);
 		}
 	}
 
 	if ([imageArray count] > 0) {
 		for (UIImage *image in imageArray) {
 			if ([socialComposeController addImage:image] == NO) {
-				FXDLog(@"image: %@", image);
+				FXDLogObject(image);
 			}
 		}
 	}
@@ -481,7 +481,7 @@
 	if ([URLarray count] > 0) {
 		for (NSURL *url in URLarray) {
 			if ([socialComposeController addURL:url] == NO) {
-				FXDLog(@"URL: %@", url);
+				FXDLogObject(url);
 			}
 		}
 	}
@@ -507,16 +507,16 @@
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
 		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
-		FXDLog(@"httpResponse: %ld : %@", (long)statusCode, statusCodeDescription);
+		FXDLog(@"httpResponse: %@ : %@", _Variable(statusCode), _Object(statusCodeDescription));
 
-		FXDLog(@"allHeaderFields:\n%@", [(NSHTTPURLResponse*)urlResponse allHeaderFields]);
+		FXDLogObject([(NSHTTPURLResponse*)urlResponse allHeaderFields]);
 	}
 
-	FXDLog(@"responseData length: %lu bytes", (unsigned long)[responseData length]);
+	FXDLog(@"responseData %@ bytes", _Variable([responseData length]));
 
 	if ([responseData length] > 0) {
 		id jsonObj = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
-		FXDLog(@"jsonObj: %@\n %@", [jsonObj class], jsonObj);
+		FXDLog(@"%@\n %@", _Object([jsonObj class]), jsonObj);
 	}
 }
 #endif
@@ -525,13 +525,12 @@
 //MARK: - Observer implementation
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 #if	ForDEVELOPER
-	FXDLog(@"notification: %@", notification);
+	FXDLogObject(notification);
 
 	ACAccountStore *accountStore = [notification object];
-	//FXDLog(@"accountStore.accounts: %@", accountStore.accounts);
 
 	for (ACAccount *account in accountStore.accounts) {
-		FXDLog(@"accountTypeDescription: %@ username: %@ accessGranted: %d", account.accountType.accountTypeDescription, account.username, account.accountType.accessGranted);
+		FXDLog(@"%@ %@ %@", _Object(account.accountType.accountTypeDescription), _Object(account.username), _BOOL(account.accountType.accessGranted));
 	}
 #endif
 }
@@ -562,7 +561,7 @@
 - (void)twitterUserShowWithScreenName:(NSString*)screenName {
 
 	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self.currentMainAccount: %@", self.currentMainAccount);
+		FXDLogObject(self.currentMainAccount);
 		return;
 	}
 
@@ -590,7 +589,7 @@
 - (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude {
 
 	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self.currentMainAccount: %@", self.currentMainAccount);
+		FXDLogObject(self.currentMainAccount);
 		return;
 	}
 
@@ -647,7 +646,7 @@
 		_initialAccessOptions = @{ACFacebookAppIdKey:	apikeyFacebookAppId,
 						   ACFacebookPermissionsKey:	@[facebookPermissionEmail]};
 
-		FXDLog(@"_initialAccessOptions: %@", _initialAccessOptions);
+		FXDLogObject(_initialAccessOptions);
 	}
 
 	return _initialAccessOptions;
@@ -656,7 +655,7 @@
 #pragma mark -
 - (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId {
 	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
-		FXDLog(@"self.currentMainAccount: %@", self.currentMainAccount);
+		FXDLogObject(self.currentMainAccount);
 		return;
 	}
 

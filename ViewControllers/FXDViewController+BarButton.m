@@ -31,7 +31,7 @@
 
 	SEL action = nil;
 
-	FXDLogVar([self.navigationController.viewControllers count]);
+	FXDLogVariable([self.navigationController.viewControllers count]);
 
 	if ([self.navigationController.viewControllers count] > 1) {	// If there is more than 1 navigated interfaces
 		action = @selector(popSceneWithAnimation:);

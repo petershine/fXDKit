@@ -60,7 +60,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - MKMapViewDelegate
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {	//FXDLog_DEFAULT;
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
 	
 	if (self.shouldResumeTracking) {	//MARK: Keep canceling until scrolling is stopped
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resumeTrackingUser) object:nil];

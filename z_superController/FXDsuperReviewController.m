@@ -61,7 +61,7 @@
 - (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidDisappear:animated];
 	
-	FXDLogVar(self.playbackManager.videoPlayer.rate);
+	FXDLogVariable(self.playbackManager.videoPlayer.rate);
 	
 	if (self.playbackManager.videoPlayer.rate > 0.0) {
 		[self.playbackManager.videoPlayer pause];

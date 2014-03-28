@@ -249,7 +249,7 @@
 		addedControllers = [self.rootController performSelector:@selector(childViewControllers)];
 	}
 	
-	FXDLogVar([addedControllers count]);
+	FXDLogVariable([addedControllers count]);
 	
 	if ([addedControllers count] == 0) {
 		_homeController = self.rootController;
@@ -456,7 +456,7 @@
 - (BOOL)shouldUpgradeForNewAppVersion {
 	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
-	FXDLogVar(versionInteger);
+	FXDLogVariable(versionInteger);
 
 	BOOL shouldUpgrade = [self isLastVersionOlderThanVersionInteger:versionInteger];
 	FXDLogBOOL(shouldUpgrade);
