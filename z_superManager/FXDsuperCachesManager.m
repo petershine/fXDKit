@@ -140,7 +140,7 @@
 	return folderURL;
 }
 
-- (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {	//FXDLog_DEFAULT;
+- (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL {
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
@@ -176,15 +176,13 @@
 - (void)enumerateCachesMetadataQueryResults {
 	
 	[[NSOperationQueue new]
-	 addOperationWithBlock:^{	//FXDLog_DEFAULT;
+	 addOperationWithBlock:^{	FXDLog_DEFAULT;
 		 NSString *alertTitle = nil;
 		 
 		 NSFileManager *fileManager = [NSFileManager defaultManager];
-		 
-		 //for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
-		 for (NSUInteger i = 0; i < self.ubiquitousCachesMetadataQuery.resultCount; i++) {
-			 NSMetadataItem *metadataItem = [self.ubiquitousCachesMetadataQuery resultAtIndex:i];
-			 
+
+		 for (NSMetadataItem *metadataItem in self.ubiquitousCachesMetadataQuery.results) {
+
 			 NSError *error = nil;
 			 
 			 NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];

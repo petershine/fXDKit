@@ -68,7 +68,7 @@
 #pragma mark - Property overriding
 - (UINib*)mainCellNib {
 	if (_mainCellNib == nil) {
-		if (self.mainCellIdentifier) {
+		if (self.mainCellIdentifier) {	FXDLog_DEFAULT;
 			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
 		}
 		
@@ -84,7 +84,7 @@
 
 - (NSString*)mainCellIdentifier {
 	if (_mainCellIdentifier == nil) {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 	
 	return _mainCellIdentifier;
@@ -94,7 +94,7 @@
 - (NSArray*)itemCounts {
 	
 	if (_itemCounts == nil) {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 	
 	return _itemCounts;
@@ -103,7 +103,7 @@
 - (NSDictionary*)cellTitleDictionary {
 	
 	if (_cellTitleDictionary == nil) {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 	
 	return _cellTitleDictionary;
@@ -111,7 +111,7 @@
 
 - (NSDictionary*)cellSubTitleDictionary {
 	if (_cellSubTitleDictionary == nil) {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 	
 	return _cellSubTitleDictionary;
@@ -121,7 +121,7 @@
 - (NSMutableArray*)mainDataSource {
 	
 	if (_mainDataSource == nil) {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 	
 	return _mainDataSource;
@@ -130,7 +130,7 @@
 - (FXDFetchedResultsController*)mainResultsController {
 	
 	if (_mainResultsController == nil) {
-		//FXDLog_OVERRIDE;
+		FXDLog_OVERRIDE;
 	}
 	
 	return _mainResultsController;
@@ -139,7 +139,7 @@
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	
-	if (_cellOperationQueue == nil) {	//FXDLog_DEFAULT;
+	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
 		_cellOperationQueue = [NSOperationQueue new];
 		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 	}
@@ -149,7 +149,7 @@
 
 - (NSMutableDictionary*)cellOperationDictionary {
 	
-	if (_cellOperationDictionary == nil) {	//FXDLog_DEFAULT;
+	if (_cellOperationDictionary == nil) {	FXDLog_DEFAULT;
 		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 	
@@ -223,18 +223,17 @@
 }
 
 #pragma mark -
-- (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView {	//FXDLog_OVERRIDE;
+- (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView {
 	
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
-		//FXDLogObject([self.mainResultsController sections]);
 		numberOfSections = [[self.mainResultsController sections] count];
 	}
 	else if (self.mainDataSource) {
 		//MARK: Assume it's just one array
 	}
-	else if (self.itemCounts) {	//FXDLog_OVERRIDE;
+	else if (self.itemCounts) {
 		numberOfSections = [self.itemCounts count];
 	}
 	
@@ -257,7 +256,7 @@
 			numberOfItems = [sectionInfo numberOfObjects];
 		}
 		
-		if (numberOfItems != fetchedCount) {	//FXDLog_DEFAULT;
+		if (numberOfItems != fetchedCount) {	FXDLog_DEFAULT;
 			FXDLog(@"%@ %@ == %@", _Variable(section), _Variable(numberOfItems), _Variable(fetchedCount));
 		}
 #else
@@ -303,19 +302,19 @@
 
 //MARK: - Delegate implementation
 #pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {	//FXDLog_OVERRIDE;
+- (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
 		[self.mainScrollview performSelector:@selector(beginUpdates)];
 	}
 }
 
-- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {	//FXDLog_OVERRIDE;
+- (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
 		[self.mainScrollview performSelector:@selector(endUpdates)];
 	}
 }
 
-- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {	//FXDLog_OVERRIDE;
+- (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 	
 	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {
 		return;
@@ -364,13 +363,13 @@
 	}
 }
 
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
 	self.didStartAutoScrollingToTop = scrollView.scrollsToTop;
 	
 	return scrollView.scrollsToTop;
 }
 
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {	//FXDLog_DEFAULT;
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
 	
 	self.didStartAutoScrollingToTop = NO;
 }

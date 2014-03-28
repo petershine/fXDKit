@@ -209,7 +209,7 @@
 	 }];
 }
 
-- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock {	//FXDLog_DEFAULT;
+- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock {
 
 	[UIView
 	 animateWithDuration:durationAnimation

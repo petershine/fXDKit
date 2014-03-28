@@ -288,7 +288,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback {	//FXDLog_OVERRIDE;
+- (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	[self
 	 prepareGlobalManagerWithMainCoredata:nil
 	 withUbiquityContainerURL:nil

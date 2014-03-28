@@ -74,7 +74,7 @@
 }
 
 #pragma mark -
-- (void)configureContentInsetForSubview:(UIView*)subview {	//FXDLog_DEFAULT;
+- (void)configureContentInsetForSubview:(UIView*)subview {
 	CGFloat horizontalInset = (self.frame.size.width -subview.frame.size.width)/2.0;
 	CGFloat verticalInset = (self.frame.size.height -subview.frame.size.height)/2.0;
 	
@@ -109,7 +109,7 @@
 }
 
 #pragma mark -
-- (void)configureContentSizeForSubview:(UIView*)subView {	//FXDLog_DEFAULT;	
+- (void)configureContentSizeForSubview:(UIView*)subView {
 	CGSize modifiedSize = subView.frame.size;
 	modifiedSize.width += (self.frame.size.width);
 	modifiedSize.height += (self.frame.size.height);
@@ -117,7 +117,7 @@
 }
 
 #pragma mark -
-- (void)reframeSubView:(UIView*)subView shouldModifyOffset:(BOOL)shouldModifyOffset {	//FXDLog_DEFAULT;
+- (void)reframeSubView:(UIView*)subView shouldModifyOffset:(BOOL)shouldModifyOffset {
 	
 	CGPoint oldPosition = subView.frame.origin;
 	
@@ -137,7 +137,7 @@
 }
 
 #pragma mark -
-- (void)scrollToCenterToShowSubView:(UIView*)subView shouldAnimate:(BOOL)shouldAnimate {	//FXDLog_DEFAULT;
+- (void)scrollToCenterToShowSubView:(UIView*)subView shouldAnimate:(BOOL)shouldAnimate {
 	
 	CGRect visibleRect = subView.frame;
 	

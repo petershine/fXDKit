@@ -118,16 +118,11 @@
 	}
 
 
-	//TODO: When taking a phone call, this error appear
-	//ERROR: [0x2bdb000] AVAudioSessionPortImpl.mm:50: ValidateRequiredFields: Unknown selected data source for Port iPhone Microphone (type: MicrophoneBuiltIn)
 	if ([_mainCaptureSession canAddInput:self.deviceInputAudio]) {
 		[_mainCaptureSession addInput:self.deviceInputAudio];
 	}
 
-	//FXDLogObject([_mainCaptureSession inputs]);
 
-
-	//TODO: Try using separate two queues like GPUImage did"
 	dispatch_queue_t sampleCapturingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 
 	if ([_mainCaptureSession canAddOutput:self.dataOutputVideo]) {
@@ -181,7 +176,7 @@
 
 #pragma mark -
 - (AVCaptureDeviceInput*)deviceInputBack {
-	if (_deviceInputBack == nil) {	//FXDLog_DEFAULT;
+	if (_deviceInputBack == nil) {
 
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
 											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
@@ -197,7 +192,7 @@
 }
 
 - (AVCaptureDeviceInput*)deviceInputFront {
-	if (_deviceInputFront == nil) {	//FXDLog_DEFAULT;
+	if (_deviceInputFront == nil) {
 
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
 											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
@@ -213,7 +208,7 @@
 }
 
 - (AVCaptureDeviceInput*)deviceInputAudio {
-	if (_deviceInputAudio == nil) {	//FXDLog_DEFAULT;
+	if (_deviceInputAudio == nil) {
 
 		NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
 
@@ -230,7 +225,7 @@
 
 #pragma mark -
 - (AVCaptureVideoDataOutput*)dataOutputVideo {
-	if (_dataOutputVideo == nil) {	//FXDLog_DEFAULT;
+	if (_dataOutputVideo == nil) {
 		_dataOutputVideo = [AVCaptureVideoDataOutput new];
 	}
 
@@ -238,7 +233,7 @@
 }
 
 - (AVCaptureAudioDataOutput*)dataOutputAudio {
-	if (_dataOutputAudio == nil) {	//FXDLog_DEFAULT;
+	if (_dataOutputAudio == nil) {
 		_dataOutputAudio = [AVCaptureAudioDataOutput new];
 	}
 

@@ -3,7 +3,7 @@
 
 
 @implementation NSIndexPath (Added)
-- (NSString*)stringValue {	//FXDLog_DEFAULT;
+- (NSString*)stringValue {
 	NSString *indexPathString = @"";
 
 	for (NSInteger i = 0; i < [self length]; i++) {
@@ -23,8 +23,6 @@
 	if ([indexPathString length] == 0) {
 		indexPathString = nil;
 	}
-
-	//FXDLogObject(indexPathString);
 
 	return indexPathString;
 }
@@ -253,7 +251,7 @@
 #if USE_MultimediaFrameworks
 #pragma mark -
 @implementation UIDevice (Added)
-- (CGAffineTransform)affineTransformForOrientation {	//FXDLog_DEFAULT;
+- (CGAffineTransform)affineTransformForOrientation {
 
 	CGAffineTransform affineTransform =
 	[self
@@ -308,14 +306,11 @@
 		}
 	}
 
-	//FXDLogStruct(affineTransform);
-
 	return affineTransform;
 }
 
 #pragma mark -
-- (CGRect)screenFrameForOrientation {	//FXDLog_DEFAULT;
-
+- (CGRect)screenFrameForOrientation {
 	CGRect screenFrame = [self screenFrameForOrientation:self.orientation];
 
 	return screenFrame;
@@ -332,8 +327,6 @@
 		screenFrame.size.width = screenHeight;
 		screenFrame.size.height = screenWidth;
 	}
-
-	//FXDLogRect(screenFrame);
 
 	return screenFrame;
 }

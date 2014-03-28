@@ -97,7 +97,7 @@
 	cell.accessoryView = [self accessoryViewForTableCellAtIndexPath:indexPath];
 }
 
-- (void)configureSectionPostionTypeForTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {	//FXDLog_DEFAULT;
+- (void)configureSectionPostionTypeForTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
 
 	NSInteger rowCount = [(self.itemCounts)[indexPath.section] integerValue];
 
@@ -117,13 +117,13 @@
 	}
 }
 
-- (UIImage*)backgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIImage*)backgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;
 }
 
-- (UIImage*)selectedBackgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {	//FXDLog_OVERRIDE;
+- (UIImage*)selectedBackgroundImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *backgroundImage = nil;
 	
 	return backgroundImage;

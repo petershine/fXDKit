@@ -30,7 +30,7 @@
 }
 
 // invoked after a fetch or after unfaulting (commonly used for computing derived values from the persisted properties)
-- (void)awakeFromFetch {	//FXDLog_DEFAULT;
+- (void)awakeFromFetch {
 	[super awakeFromFetch];
 }
 
@@ -52,19 +52,15 @@
 
 #pragma mark - Method overriding
 #if TEST_loggingManagedObject
-- (void)willAccessValueForKey:(NSString *)key {	//FXDLog_DEFAULT;
+- (void)willAccessValueForKey:(NSString *)key {
 	// lifecycle/change management (includes key-value observing methods)
 	// read notification
-
-	//FXDLogObject(key);
 
 	[super willAccessValueForKey:key];
 }
 
-- (void)didAccessValueForKey:(NSString *)key {	//FXDLog_DEFAULT;
+- (void)didAccessValueForKey:(NSString *)key {
 	// read notification (together with willAccessValueForKey used to maintain inverse relationships, to fire faults, etc.) - each read access has to be wrapped in this method pair (in the same way as each write access has to be wrapped in the KVO method pair)
-
-	//FXDLogObject(key);
 
 	[super didAccessValueForKey:key];
 }

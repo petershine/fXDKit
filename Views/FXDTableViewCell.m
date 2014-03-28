@@ -54,12 +54,12 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {	//FXDLog_OVERRIDE;
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {	//FXDLog_OVERRIDE;
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
 	[super setHighlighted:highlighted animated:animated];
 	
 	if (self.imageView) {
@@ -79,17 +79,17 @@
 	}
 }
 
-- (void)willTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
+- (void)willTransitionToState:(UITableViewCellStateMask)state {
 	[super willTransitionToState:state];
 }
 
-- (void)didTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
+- (void)didTransitionToState:(UITableViewCellStateMask)state {
 	[super didTransitionToState:state];
 }
 
 
 #pragma mark - Public
-- (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage {	//FXDLog_DEFAULT;
+- (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage {
 	
 	if (image) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -140,15 +140,13 @@
 	}
 }
 
-- (void)modifySizeOfCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
-	
+- (void)modifySizeOfCellSubview:(UIView*)cellSubview {
 }
 
-- (void)modifyOriginXofCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
-	
+- (void)modifyOriginXofCellSubview:(UIView*)cellSubview {
 }
 
-- (void)modifyOriginYofCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
+- (void)modifyOriginYofCellSubview:(UIView*)cellSubview {
 	CGRect modifiedFrame = cellSubview.frame;
 	modifiedFrame.origin.y = (self.frame.size.height -modifiedFrame.size.height)/2.0;
 	

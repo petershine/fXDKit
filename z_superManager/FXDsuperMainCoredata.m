@@ -186,7 +186,7 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {	//FXDLog_DEFAULT;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {
 	
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;

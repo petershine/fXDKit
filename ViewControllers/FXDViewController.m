@@ -70,7 +70,7 @@
 }
 
 #pragma mark -
-- (void)awakeFromNib {	//FXDLog_DEFAULT;
+- (void)awakeFromNib {
 	[super awakeFromNib];
 	
 	FXDLog(@"%@, %@", _Object(self.storyboard), _Object(self.nibName));
@@ -180,11 +180,11 @@
 	self.didFinishInitialAppearing = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {	//FXDLog_FRAME;
+- (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {	//FXDLog_FRAME;
+- (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 }
 
@@ -199,14 +199,12 @@
 	[super willMoveToParentViewController:parent];
 }
 
-- (void)didMoveToParentViewController:(UIViewController *)parent {	//FXDLog_DEFAULT;
-	//FXDLogObject(parent);
-
+- (void)didMoveToParentViewController:(UIViewController *)parent {
 	[super didMoveToParentViewController:parent];
 }
 
 #pragma mark -
-- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL))completion {	//FXDLog_DEFAULT;
+- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL))completion {
 
 	[super
 	 transitionFromViewController:fromViewController
@@ -217,12 +215,11 @@
 	 completion:completion];
 }
 
-- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {	//FXDLog_DEFAULT;
+- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {
 	[super beginAppearanceTransition:isAppearing animated:animated];
-
 }
 
-- (void)endAppearanceTransition {	//FXDLog_DEFAULT;
+- (void)endAppearanceTransition {
 	[super endAppearanceTransition];
 }
 

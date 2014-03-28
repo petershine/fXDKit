@@ -60,32 +60,30 @@
 }
 
 #pragma mark -
-- (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {	//FXDLog_DEFAULT;
+- (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {
 	NSArray *ubiquitousItemKeys =
-	@[
-   NSURLIsUbiquitousItemKey,
-   NSURLUbiquitousItemHasUnresolvedConflictsKey,
-   
+	@[NSURLIsUbiquitousItemKey,
+	  NSURLUbiquitousItemHasUnresolvedConflictsKey,
+
 #if __IPHONE_7_0
-   NSURLUbiquitousItemDownloadingStatusKey,
+	  NSURLUbiquitousItemDownloadingStatusKey,
 #else
-   NSURLUbiquitousItemIsDownloadedKey,
+	  NSURLUbiquitousItemIsDownloadedKey,
 #endif
-   
-   NSURLUbiquitousItemIsDownloadingKey,
-   NSURLUbiquitousItemIsUploadedKey,
-   NSURLUbiquitousItemIsUploadingKey,
-   
-   NSURLFileSizeKey,
-   NSURLFileAllocatedSizeKey,
-   NSURLTotalFileSizeKey,
-   NSURLTotalFileAllocatedSizeKey,
-   NSURLIsAliasFileKey,
-   
-   NSURLEffectiveIconKey,
-   
-   ];
-	
+
+	  NSURLUbiquitousItemIsDownloadingKey,
+	  NSURLUbiquitousItemIsUploadedKey,
+	  NSURLUbiquitousItemIsUploadingKey,
+
+	  NSURLFileSizeKey,
+	  NSURLFileAllocatedSizeKey,
+	  NSURLTotalFileSizeKey,
+	  NSURLTotalFileAllocatedSizeKey,
+	  NSURLIsAliasFileKey,
+
+	  NSURLEffectiveIconKey,
+	  ];
+
 	NSDictionary *resourceValues = [self resourceValuesForKeys:ubiquitousItemKeys error:error];
 	
 	return resourceValues;

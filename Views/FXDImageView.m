@@ -62,7 +62,7 @@
 	}
 }
 
-- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	//FXDLog_DEFAULT;
+- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
 	FXDLogStruct(capInsets);
 
 	__weak typeof(self) weakSelf = self;

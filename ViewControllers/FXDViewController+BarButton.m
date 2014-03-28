@@ -87,7 +87,7 @@
 	self.navigationItem.leftItemsSupplementBackButton = YES;
 }
 
-- (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
+- (void)customizeLeftBarbuttonWithText:(NSString*)text andWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {
 
 	UIView *buttonGroup = [self buttonGroupWithOnImage:onImage andOffImage:offImage withOffset:offset orWithText:text forTarget:target forAction:action];
 
@@ -96,7 +96,7 @@
 	[(UIViewController*)target navigationItem].leftBarButtonItem = barButtonItem;
 }
 
-- (void)customizeLeftBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
+- (void)customizeLeftBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {
 
 	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage withOffset:offset forTarget:target forAction:action];
 
@@ -114,7 +114,7 @@
 	[(UIViewController*)target navigationItem].rightBarButtonItem = barButtonItem;
 }
 
-- (void)customizeRightBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {	//FXDLog_DEFAULT;
+- (void)customizeRightBarbuttonWithOnImage:(UIImage*)onImage andWithOffImage:(UIImage*)offImage withOffset:(CGPoint)offset forTarget:(id)target forAction:(SEL)action {
 
 	UIBarButtonItem *barButtonItem = [self barButtonWithOnImage:onImage andOffImage:offImage withOffset:offset forTarget:target forAction:action];
 

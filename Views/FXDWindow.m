@@ -71,7 +71,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification {	//FXDLog_DEFAULT;
+- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification {
 	[self showProgressViewWithNibName:nil];
 }
 
@@ -84,13 +84,12 @@
 	
 	[self
 	 removeAsFadeOutSubview:self.progressView
-	 afterRemovedBlock:^{	//FXDLog_DEFAULT;
+	 afterRemovedBlock:^{
 		 self.progressView = nil;
 	 }];
 }
 
 - (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
-	//FXDLogObject(notification);
 
 	if (self.progressView.viewIndicatorGroup == nil) {
 		return;
@@ -99,6 +98,7 @@
 	
 #if	TEST_loggingRotatingOrientation
 	FXDLog_DEFAULT;
+	FXDLogObject(notification);
 #endif
 
 	self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
@@ -258,7 +258,7 @@
 }
 
 #pragma mark -
-- (void)showDefaultProgressView {	//FXDLog_DEFAULT;
+- (void)showDefaultProgressView {
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	[applicationWindow observedFXDWindowShouldFadeInProgressView:nil];
@@ -272,8 +272,6 @@
 		return;
 	}
 	
-
-	//FXDLog_DEFAULT;
 
 	Class progressViewClass = NSClassFromString(classnameProgressView);
 	FXDLog(@"%@ %@", _Object(progressViewClass), _Object(nibName));
@@ -292,7 +290,7 @@
 	[applicationWindow.progressView fadeInFromHidden];
 }
 
-- (void)hideProgressView {	//FXDLog_DEFAULT;
+- (void)hideProgressView {
 	FXDWindow *applicationWindow = [[self class] applicationWindow];
 	
 	[applicationWindow observedFXDWindowShouldFadeOutProgressView:nil];
@@ -352,7 +350,7 @@
 	
 	[applicationWindow
 	 removeAsFadeOutSubview:applicationWindow.messageView
-	 afterRemovedBlock:^{	//FXDLog_DEFAULT;
+	 afterRemovedBlock:^{
 		 applicationWindow.messageView = nil;
 	 }];
 }

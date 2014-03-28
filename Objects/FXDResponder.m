@@ -34,24 +34,20 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesBegan:touches withEvent:event];
-	//FXDLogObject(event);
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesMoved:touches withEvent:event];
-	//FXDLogObject(event);
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesEnded:touches withEvent:event];
-	//FXDLogObject(event);
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {	//FXDLog_DEFAULT;
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesCancelled:touches withEvent:event];
-	//FXDLogObject(event);
 }
 
 
