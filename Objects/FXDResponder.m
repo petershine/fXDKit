@@ -70,8 +70,8 @@
 		[FXDAlertView
 		 showAlertWithTitle:selfClassSelector
 		 message:[launchOptions description]
-		 clickedButtonAtIndexBlock:nil
-		 cancelButtonTitle:nil];
+		 cancelButtonTitle:nil
+		 withAlertCallback:nil];
 	}
 
 
@@ -120,8 +120,8 @@
 	[FXDAlertView
 	 showAlertWithTitle:selfClassSelector
 	 message:[userInfo description]
-	 clickedButtonAtIndexBlock:nil
-	 cancelButtonTitle:nil];
+	 cancelButtonTitle:nil
+	 withAlertCallback:nil];
 #endif
 
 	if (completionHandler) {
@@ -142,8 +142,8 @@
 	[FXDAlertView
 	 showAlertWithTitle:selfClassSelector
 	 message:[parameters description]
-	 clickedButtonAtIndexBlock:nil
-	 cancelButtonTitle:nil];
+	 cancelButtonTitle:nil
+	 withAlertCallback:nil];
 #endif
 
 	return YES;

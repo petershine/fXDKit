@@ -127,8 +127,8 @@
 									[FXDAlertView\
 									showAlertWithTitle:selfClassSelector\
 									message:strCurrentError\
-									clickedButtonAtIndexBlock:nil\
-									cancelButtonTitle:nil];}
+									cancelButtonTitle:nil\
+									withAlertCallback:nil];}
 
 	#define FXDLog_ERROR_ignored(ignoredCode)	if (error\
 												&& [error code] != ignoredCode){\

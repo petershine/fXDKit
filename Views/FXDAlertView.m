@@ -15,9 +15,9 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	FXDLogObject(_mainCallback);
+	FXDLogObject(_alertCallback);
 
-	_mainCallback = nil;
+	_alertCallback = nil;
 }
 
 
@@ -40,18 +40,17 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
++ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
 	__block FXDAlertView *alertView = nil;
 
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
-		 alertView =
-		 [[FXDAlertView alloc]
-		  initWithTitle:title
-		  message:message
-		  clickedButtonAtIndexBlock:clickedButtonAtIndexBlock
-		  cancelButtonTitle:cancelButtonTitle];
+		 alertView = [[FXDAlertView alloc]
+					  initWithTitle:title
+					  message:message
+					  cancelButtonTitle:cancelButtonTitle
+					  withAlertCallback:alertCallback];
 
 		 [alertView show];
 	 }];
@@ -60,20 +59,21 @@
 }
 
 #pragma mark -
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock cancelButtonTitle:(NSString*)cancelButtonTitle {
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 	
 	if (cancelButtonTitle == nil) {
 		cancelButtonTitle = NSLocalizedString(text_OK, nil);
 	}
 
-	self = [super initWithTitle:title
-					   message:message
-					  delegate:nil
-			 cancelButtonTitle:cancelButtonTitle
-			 otherButtonTitles:nil];
+	self = [super
+			initWithTitle:title
+			message:message
+			delegate:nil
+			cancelButtonTitle:cancelButtonTitle
+			otherButtonTitles:nil];
 
 	if (self) {
-		self.mainCallback = clickedButtonAtIndexBlock;
+		self.alertCallback = alertCallback;
 		[self setDelegate:self];
 	}
 
@@ -86,8 +86,8 @@
 //MARK: - Delegate implementation
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-	if (alertView.mainCallback) {
-		alertView.mainCallback(alertView, buttonIndex);
+	if (alertView.alertCallback) {
+		alertView.alertCallback(alertView, buttonIndex);
 	}
 }
 
