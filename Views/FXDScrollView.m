@@ -93,7 +93,7 @@
 
 - (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;
 	FXDLogRect(self.frame);
-	FXDLogStruct(clippingFrame);
+	FXDLogRect(clippingFrame);
 	
 	UIEdgeInsets modifiedInset = self.contentInset;
 	FXDLogStruct(modifiedInset);

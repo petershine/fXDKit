@@ -37,7 +37,7 @@
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {	FXDLog_DEFAULT;
 	// return an array layout attributes instances for all the views in the given rect
-	FXDLogStruct(rect);
+	FXDLogRect(rect);
 
 	NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
 	FXDLogObject(attributes);
@@ -74,7 +74,7 @@
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {	FXDLog_DEFAULT;
 	// return YES to cause the collection view to requery the layout for geometry information
 
-	FXDLogStruct(newBounds);
+	FXDLogRect(newBounds);
 
 	BOOL shouldInvalidate = [super shouldInvalidateLayoutForBoundsChange:newBounds];
 	FXDLogBOOL(shouldInvalidate);
@@ -85,10 +85,10 @@
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {	FXDLog_DEFAULT;
 	// return a point at which to rest after scrolling - for layouts that want snap-to-point scrolling behavior
 
-	FXDLog(@"%@ %@", _Struct(proposedContentOffset), _Struct(velocity));
+	FXDLog(@"%@ %@", _Point(proposedContentOffset), _Point(velocity));
 
 	CGPoint contentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset withScrollingVelocity:velocity];
-	FXDLogStruct(contentOffset);
+	FXDLogPoint(contentOffset);
 
 	return contentOffset;
 }
@@ -96,7 +96,7 @@
 - (CGSize)collectionViewContentSize {	FXDLog_DEFAULT;
 	// Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
 	CGSize contentSize = [super collectionViewContentSize];
-	FXDLogStruct(contentSize);
+	FXDLogSize(contentSize);
 
 	return contentSize;
 }

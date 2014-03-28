@@ -107,7 +107,7 @@
 #pragma mark -
 - (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect {	FXDLog_DEFAULT;
 	FXDLogSize(self.size);
-	FXDLogStruct(cropRect);
+	FXDLogRect(cropRect);
 	
 	UIImage *croppedImage = nil;
 	
@@ -354,7 +354,7 @@
 	FXDLogSize(self.size);
 
 	CGSize scaledSize = CGSizeMake(self.size.width/self.scale, self.size.height /self.scale);
-	FXDLogStruct(scaledSize);
+	FXDLogSize(scaledSize);
 
 	return scaledSize;
 }

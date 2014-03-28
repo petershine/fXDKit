@@ -53,10 +53,10 @@
 		CGFloat aspectRatio = (CGFloat)self.image.size.width / (CGFloat)self.image.size.height;
 		
 		CGRect modifiedFrame = self.frame;
-		FXDLog(@"(before) %@", _Struct(modifiedFrame));
+		FXDLog(@"(before) %@", _Rect(modifiedFrame));
 		
 		modifiedFrame.size.height = modifiedFrame.size.width / aspectRatio;
-		FXDLog(@"(after) %@", _Struct(modifiedFrame));
+		FXDLog(@"(after) %@", _Rect(modifiedFrame));
 		
 		[self setFrame:modifiedFrame];
 	}

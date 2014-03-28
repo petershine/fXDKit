@@ -333,7 +333,7 @@
 		screenFrame.size.height = screenWidth;
 	}
 
-	//FXDLogStruct(screenFrame);
+	//FXDLogRect(screenFrame);
 
 	return screenFrame;
 }

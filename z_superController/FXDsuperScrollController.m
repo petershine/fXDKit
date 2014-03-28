@@ -52,7 +52,7 @@
 
 		if (self.offsetYdismissingController == 0.0) {
 			CGRect screenBounds = [[UIScreen mainScreen] bounds];
-			FXDLogStruct(screenBounds);
+			FXDLogRect(screenBounds);
 
 			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleControllerDismissingOffset);
 			FXDLogVar(self.offsetYdismissingController);

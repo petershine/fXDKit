@@ -80,12 +80,10 @@
 }
 
 - (void)willTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
-	//FXDLogVar(state);
 	[super willTransitionToState:state];
 }
 
 - (void)didTransitionToState:(UITableViewCellStateMask)state {	//FXDLog_DEFAULT;
-	//FXDLogVar(state);
 	[super didTransitionToState:state];
 }
 
@@ -104,9 +102,7 @@
 			CGRect modifiedFrame = self.backgroundImageview.frame;
 			modifiedFrame.origin.x = (self.frame.size.width - self.backgroundImageview.frame.size.width)/2.0;
 			[self.backgroundImageview setFrame:modifiedFrame];
-			
-			//FXDLogStruct(modifiedFrame);
-			
+
 			[self addSubview:self.backgroundImageview];
 			[self sendSubviewToBack:self.backgroundImageview];
 		}
@@ -154,7 +150,6 @@
 
 - (void)modifyOriginYofCellSubview:(UIView*)cellSubview {	//FXDLog_OVERRIDE;
 	CGRect modifiedFrame = cellSubview.frame;
-	
 	modifiedFrame.origin.y = (self.frame.size.height -modifiedFrame.size.height)/2.0;
 	
 	[cellSubview setFrame:modifiedFrame];

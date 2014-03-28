@@ -108,10 +108,10 @@
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@ %@", selfClassSelector, _Rect(self.view.frame), _Rect(self.view.bounds))
+							FXDLog(@"%@: %@ %@ %@", selfClassSelector, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@", selfClassSelector, _Rect(self.view.frame), _Rect(self.view.bounds))
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", selfClassSelector, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", selfClassSelector)
