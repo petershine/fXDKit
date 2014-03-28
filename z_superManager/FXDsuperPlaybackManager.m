@@ -52,9 +52,9 @@
 
 	FXDLog_DEFAULT;
 
-	CGRect screenFrame = [[UIDevice currentDevice] screenFrameForOrientation];
+	CGRect screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
 
-	_mainVideoDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenFrame];
+	_mainVideoDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
 	_mainVideoDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	_mainVideoDisplay.contentMode = UIViewContentModeScaleAspectFit;
 

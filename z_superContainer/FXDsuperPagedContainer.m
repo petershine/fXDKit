@@ -76,25 +76,6 @@
 
 
 #pragma mark - Method overriding
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	
-	if (parent == nil) {
-		
-		//TEST: DataSource & Delegate
-		/*
-		if ([self.mainPageController respondsToSelector:@selector(setDelegate:)]) {
-			[self.mainPageController performSelector:@selector(setDelegate:) withObject:nil];
-		}
-		
-		if ([self.mainPageController respondsToSelector:@selector(setDataSource:)]) {
-			[self.mainPageController performSelector:@selector(setDataSource:) withObject:nil];
-		}
-		 */
-	}
-	
-	[super willMoveToParentViewController:parent];
-}
-
 
 #pragma mark - Segues
 

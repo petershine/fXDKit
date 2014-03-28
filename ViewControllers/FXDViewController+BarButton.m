@@ -34,15 +34,6 @@
 	FXDLogVar([self.navigationController.viewControllers count]);
 
 	if ([self.navigationController.viewControllers count] > 1) {	// If there is more than 1 navigated interfaces
-		//TEST:
-		/*
-		if ([self.navigationController.viewControllers count] == 2) {
-			action = @selector(popToRootSceneWithAnimation:);
-		}
-		else {
-			action = @selector(popSceneWithAnimation:);
-		}
-		 */
 		action = @selector(popSceneWithAnimation:);
 
 		FXDLog(@"%@, %@", _Object(highlightedImage), _Object(normalImage));
@@ -76,13 +67,7 @@
 			 forAction:action];
 		}
 	}
-	//TEST:
-	/*
-	else {
-		self.navigationItem.hidesBackButton = YES;
-		self.navigationItem.leftItemsSupplementBackButton = YES;
-	}
-	 */
+	
 	self.navigationItem.hidesBackButton = YES;
 	self.navigationItem.leftItemsSupplementBackButton = YES;
 }

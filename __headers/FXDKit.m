@@ -310,25 +310,25 @@
 }
 
 #pragma mark -
-- (CGRect)screenFrameForOrientation {
-	CGRect screenFrame = [self screenFrameForOrientation:self.orientation];
+- (CGRect)screenBoundsForOrientation {
+	CGRect screenBounds = [self screenBoundsForOrientation:self.orientation];
 
-	return screenFrame;
+	return screenBounds;
 }
 
-- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation {
+- (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
 
-	CGRect screenFrame = [UIScreen mainScreen].bounds;
+	CGRect screenBounds = [UIScreen mainScreen].bounds;
 
-	CGFloat screenWidth = screenFrame.size.width;
-	CGFloat screenHeight = screenFrame.size.height;
+	CGFloat screenWidth = screenBounds.size.width;
+	CGFloat screenHeight = screenBounds.size.height;
 
 	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
-		screenFrame.size.width = screenHeight;
-		screenFrame.size.height = screenWidth;
+		screenBounds.size.width = screenHeight;
+		screenBounds.size.height = screenWidth;
 	}
 
-	return screenFrame;
+	return screenBounds;
 }
 @end
 

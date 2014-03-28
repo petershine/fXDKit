@@ -327,16 +327,6 @@
 
 
 //MARK: - Delegate implementation
-#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
-//TEST:
-/*
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
 
-}
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didDropSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-
-}
- */
 
 @end

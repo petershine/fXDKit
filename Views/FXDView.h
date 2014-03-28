@@ -55,6 +55,6 @@
 #if USE_MultimediaFrameworks
 - (void)updateLayerForDeviceOrientation;
 #endif
-- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame;
+- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds;
 
 @end

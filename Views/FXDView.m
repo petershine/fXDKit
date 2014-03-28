@@ -277,20 +277,20 @@
 #if USE_MultimediaFrameworks
 - (void)updateLayerForDeviceOrientation {
 	CGAffineTransform affineTransform = [[UIDevice currentDevice] affineTransformForOrientation];
-	CGRect screenFrame = [[UIDevice currentDevice] screenFrameForOrientation];
+	CGRect screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
 
-	[self updateLayerForDeviceOrientationWithAffineTransform:affineTransform andWithScreenFrame:screenFrame];
+	[self updateLayerForDeviceOrientationWithAffineTransform:affineTransform andWithScreenBounds:screenBounds];
 }
 #endif
 
-- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenFrame:(CGRect)screenFrame {
+- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {
 #if TEST_loggingRotatingOrientation
 	FXDLog_DEFAULT;
 	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
 #endif
 
 	[self.layer setAffineTransform:affineTransform];
-	[self.layer setFrame:screenFrame];
+	[self.layer setFrame:screenBounds];
 
 	for (CALayer *sublayer in self.layer.sublayers) {
 #if TEST_loggingRotatingOrientation

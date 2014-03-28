@@ -92,8 +92,8 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 - (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
 
-- (CGRect)screenFrameForOrientation;
-- (CGRect)screenFrameForOrientation:(UIDeviceOrientation)deviceOrientation;
+- (CGRect)screenBoundsForOrientation;
+- (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 
 #endif
