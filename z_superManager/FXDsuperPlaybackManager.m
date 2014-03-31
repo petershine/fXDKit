@@ -56,9 +56,11 @@
 
 	_mainVideoDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
 	_mainVideoDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	_mainVideoDisplay.contentMode = UIViewContentModeScaleAspectFit;
 
-	_mainVideoDisplay.layer.contentsGravity = @"resizeAspect";
+	AVPlayerLayer *displayLayer = (AVPlayerLayer*)[_mainVideoDisplay layer];
+	FXDLogObject([displayLayer class]);
+
+	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
 	return _mainVideoDisplay;
 }
