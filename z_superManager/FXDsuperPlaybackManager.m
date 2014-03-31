@@ -57,7 +57,10 @@
 	_playbackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_playbackDisplay.layer;
-	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+
+	//TEST:
+	//displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+	displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 
 	return _playbackDisplay;
 }

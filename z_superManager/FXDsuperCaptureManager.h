@@ -15,7 +15,7 @@
 
 @interface FXDsuperCaptureManager : FXDObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
-	AVCaptureVideoPreviewLayer *_mainPreviewLayer;
+	AVCaptureVideoPreviewLayer *_capturePreviewLayer;
 }
 
 // Properties
@@ -30,7 +30,7 @@
 
 
 @property (strong, nonatomic) AVCaptureSession *mainCaptureSession;
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer *mainPreviewLayer;
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
 
 @property (strong, nonatomic) AVCaptureDeviceInput *deviceInputBack;
 @property (strong, nonatomic) AVCaptureDeviceInput *deviceInputFront;
