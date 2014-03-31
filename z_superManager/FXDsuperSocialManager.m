@@ -162,7 +162,7 @@
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -197,7 +197,7 @@
 		_mainAccountType = nil;
 
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 	};
 
@@ -261,7 +261,7 @@
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -288,7 +288,7 @@
 		 withAlertCallback:nil];
 
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -351,7 +351,7 @@
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -365,7 +365,7 @@
 		_multiAccountArray = nil;
 
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -406,7 +406,7 @@
 	_multiAccountArray = nil;
 
 	if (finishCallback) {
-		finishCallback(YES, nil, _cmd);
+		finishCallback(_cmd, YES, nil);
 	}
 }
 
