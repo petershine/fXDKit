@@ -26,6 +26,12 @@
     return self;
 }
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+
+	self.initialViewFrame = self.frame;
+}
+
 
 #pragma mark - Property overriding
 
@@ -271,6 +277,11 @@
 	blinkShadow.duration = durationAnimation;
 	blinkShadow.autoreverses = YES;
 	[self.layer addAnimation:blinkShadow forKey:@"shadowOpacity"];
+}
+
+#pragma mark -
+- (void)configureForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation shouldAnimate:(BOOL)shouldAnimate forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
+
 }
 
 #pragma mark -

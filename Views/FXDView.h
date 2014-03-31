@@ -52,6 +52,8 @@
 
 - (void)blinkShadowOpacity;
 
+- (void)configureForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation shouldAnimate:(BOOL)shouldAnimate forDuration:(NSTimeInterval)duration;
+
 #if USE_MultimediaFrameworks
 - (void)updateLayerForDeviceOrientation;
 #endif
