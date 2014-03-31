@@ -31,8 +31,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	[_mainVideoDisplay setMainPlayer:nil];
-	[_mainVideoDisplay removeFromSuperview];
+	[_playbackDisplay setMainPlayer:nil];
+	[_playbackDisplay removeFromSuperview];
 
 	[_videoPlayer pause];
 
@@ -44,9 +44,9 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (FXDviewVideoDisplay*)mainVideoDisplay {
-	if (_mainVideoDisplay) {
-		return _mainVideoDisplay;
+- (FXDviewVideoDisplay*)playbackDisplay {
+	if (_playbackDisplay) {
+		return _playbackDisplay;
 	}
 
 
@@ -54,15 +54,12 @@
 
 	CGRect screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
 
-	_mainVideoDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
-	_mainVideoDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	_playbackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
 
-	AVPlayerLayer *displayLayer = (AVPlayerLayer*)[_mainVideoDisplay layer];
-	FXDLogObject([displayLayer class]);
-
+	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_playbackDisplay.layer;
 	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
-	return _mainVideoDisplay;
+	return _playbackDisplay;
 }
 
 
@@ -100,11 +97,11 @@
 
 			  self.videoPlayer = [AVPlayer playerWithPlayerItem:videoItem];
 
-			  [self.mainVideoDisplay setMainPlayer:self.videoPlayer];
+			  [self.playbackDisplay setMainPlayer:self.videoPlayer];
 
 
-			  [scene.view addSubview:self.mainVideoDisplay];
-			  [scene.view sendSubviewToBack:self.mainVideoDisplay];
+			  [scene.view addSubview:self.playbackDisplay];
+			  [scene.view sendSubviewToBack:self.playbackDisplay];
 
 
 			  [self
