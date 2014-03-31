@@ -11,7 +11,7 @@
 
 
 #pragma mark - Types
-typedef void (^FXDcallbackFinish)(BOOL finished, id responseObj, SEL caller);
+typedef void (^FXDcallbackFinish)(SEL caller, BOOL finished, id responseObj);
 
 typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 

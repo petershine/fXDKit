@@ -252,13 +252,13 @@
 			  //TODO: prepare what to do when Core Data is not setup
 
 			  [self
-			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 				   FXDLog_BLOCK(self, caller);
 
 				   [self startObservingCoreDataNotifications];
 
 				   if (finishCallback) {
-					   finishCallback(didConfigure, nil, _cmd);
+					   finishCallback(_cmd, didConfigure, nil);
 				   }
 			   }];
 		  }];
@@ -270,7 +270,7 @@
 	//TODO: Learn about NSMigrationPolicy implementation
 
 	if (finishCallback) {
-		finishCallback(YES, nil, _cmd);
+		finishCallback(_cmd, YES, nil);
 	}
 }
 
@@ -495,7 +495,7 @@
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 				  
 				  if (finishCallback) {
-					  finishCallback(finished, nil, _cmd);
+					  finishCallback(_cmd, finished, nil);
 				  }
 			  };
 			  
@@ -509,7 +509,7 @@
 			  
 			  [self
 			   saveMainDocumentShouldSkipMerge:NO
-			   withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 				   DidEnumerateBlock(finished);
 			   }];
 		  }];
@@ -540,7 +540,7 @@
 	if (managedContext == nil || managedContext.hasChanges == NO) {
 
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 
 		return;
@@ -556,7 +556,7 @@
 		FXDLog(@"4.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 		
 		if (finishCallback) {
-			finishCallback(didSave, nil, _cmd);
+			finishCallback(_cmd, didSave, nil);
 		}
 	};
 
@@ -598,7 +598,7 @@
 		 FXDLog(@"2.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
 		 
 		 if (finishCallback) {
-			 finishCallback(success, nil, _cmd);
+			 finishCallback(_cmd, success, nil);
 		 }
 	 }];
 }
@@ -622,7 +622,7 @@
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
-	 withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+	 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 
 		 FXDLog_REMAINING;

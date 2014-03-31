@@ -88,7 +88,7 @@
 
 			  if (valueStatus != AVKeyValueStatusLoaded) {
 				  if (finishCallback) {
-					  finishCallback(NO, nil, _cmd);
+					  finishCallback(_cmd, NO, nil);
 				  }
 				  return;
 			  }
@@ -107,12 +107,12 @@
 
 			  [self
 			   startSeekingToProgressTime:kCMTimeZero
-			   withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 
 				   [self configurePlaybackObservers];
 
 				   if (finishCallback) {
-					   finishCallback(YES, nil, _cmd);
+					   finishCallback(_cmd, YES, nil);
 				   }
 			   }];
 		  }];
@@ -148,7 +148,7 @@
 
 	if (weakSelf.didStartSeeking) {
 		if (finishCallback) {
-			finishCallback(NO, nil, _cmd);
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -163,7 +163,7 @@
 		 weakSelf.didStartSeeking = NO;
 
 		 if (finishCallback) {
-			 finishCallback(finished, nil, _cmd);
+			 finishCallback(_cmd, finished, nil);
 		 }
 	 }];
 }

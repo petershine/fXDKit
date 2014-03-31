@@ -127,7 +127,7 @@
 			[self.playbackManager
 			 preparePlaybackManagerWithFileURL:[defaultRepresentation url]
 			 withScene:self
-			 withFinishCallback:^(BOOL finished, id responseObj, SEL caller) {
+			 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 				 FXDLog_BLOCK(self.playbackManager, caller);
 				 FXDLogBOOL(finished);
 			 }];

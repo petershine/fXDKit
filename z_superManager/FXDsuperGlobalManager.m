@@ -306,7 +306,7 @@
 		[self startObservingEssentialNotifications];
 		
 		if (finishCallback) {
-			finishCallback(YES, nil, _cmd);
+			finishCallback(_cmd, YES, nil);
 		}
 	};
 	
@@ -321,7 +321,7 @@
 	[mainCoredata
 	 prepareWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
-	 finishCallback:^(BOOL finished, id responseObj, SEL caller) {
+	 finishCallback:^(SEL caller, BOOL finished, id responseObj) {
 		 FXDLog_BLOCK(mainCoredata, caller);
 		 
 		 ManagerDidPrepareBlock();
