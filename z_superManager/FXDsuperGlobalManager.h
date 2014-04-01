@@ -26,7 +26,7 @@
 }
 
 @property (nonatomic, readonly) NSInteger appLaunchCount;
-@property (assign, nonatomic) BOOL isDeviceOld;
+@property (nonatomic) BOOL isDeviceOld;
 
 @property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) NSString *mainStoryboardName;

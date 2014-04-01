@@ -122,6 +122,7 @@
 }
 
 - (void)configurePlaybackObservers {	FXDLog_DEFAULT;
+	
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
 	CMTime periodInterval = CMTimeMake(1.0, doubleOneBillion);
