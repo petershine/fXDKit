@@ -174,7 +174,7 @@
 
 #if ForDEVELOPER
 	if (self.didFinishInitialAppearing == NO) {
-		FXDLog(@"didFinishInitialAppearing: %@", _BOOL(YES));
+		FXDLog(@"didFinishInitialAppearing: YES");
 	}
 #endif
 
