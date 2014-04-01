@@ -316,7 +316,11 @@
 	FXDLogObject(fromViewController);
 	FXDLogObject(identifier);
 
-	UIStoryboardSegue *segue = [super segueForUnwindingToViewController:toViewController fromViewController:fromViewController identifier:identifier];
+	UIStoryboardSegue *segue =
+	[super
+	 segueForUnwindingToViewController:toViewController
+	 fromViewController:fromViewController
+	 identifier:identifier];
 
 	FXDLogObject(segue);
 
