@@ -140,8 +140,7 @@
 - (NSOperationQueue*)cellOperationQueue {
 	
 	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
-		_cellOperationQueue = [NSOperationQueue new];
-		[_cellOperationQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
+		_cellOperationQueue = [NSOperationQueue newSerialQueue];
 	}
 	
 	return _cellOperationQueue;

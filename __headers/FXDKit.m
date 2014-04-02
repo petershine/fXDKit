@@ -170,6 +170,16 @@
 @end
 
 
+@implementation NSOperationQueue (Added)
++ (instancetype)newSerialQueue {
+	NSOperationQueue *serialQueue = [NSOperationQueue new];
+	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
+
+	return serialQueue;
+}
+@end
+
+
 @implementation UIColor (Added)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue {
 	return [self colorUsingIntegersForRed:red forGreen:green forBlue:blue forAlpha:1];

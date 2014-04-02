@@ -83,8 +83,8 @@
 #define NSIndexPathString(section, row)	[NSIndexPathMake(section, row) stringValue]
 
 
-#define CMTimeValue(timeStruct)		[NSValue valueWithCMTime:timeStruct]
-#define CMTimeRangeValue(timeRange)	[NSValue valueWithCMTimeRange:timeRange]
+#define ValueOfTime(timeStruct)		[NSValue valueWithCMTime:timeStruct]
+#define ValueOfTimeRange(timeRange)	[NSValue valueWithCMTimeRange:timeRange]
 
 #define CMTimeForMediaSeconds(mediaSeconds)	CMTimeMakeWithSeconds(mediaSeconds, doubleOneBillion)
 

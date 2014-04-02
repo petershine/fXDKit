@@ -53,6 +53,9 @@
 #define _Rect(rect)				[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
 #define _Transform(transform)	[[NSString stringWithFormat:@"%s: %@", #transform, NSStringFromCGAffineTransform(transform)] replacedSelf]
 
+#define _Time(time)				[[NSString stringWithFormat:@"%s: %@", #time, ValueOfTime(time)] replacedSelf]
+#define _TimeRange(timeRange)	[[NSString stringWithFormat:@"%s: %@", #timeRange, ValueOfTimeRange(timeRange)] replacedSelf]
+
 
 #define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
 									componentsSeparatedByString:@":"]\
@@ -94,6 +97,9 @@
 	#define FXDLogSize(size)			FXDLog(@"%@", _Size(size))
 	#define FXDLogRect(rect)			FXDLog(@"%@", _Rect(rect))
 	#define FXDLogTransform(transform)	FXDLog(@"%@", _Transform(transform))
+
+	#define FXDLogTime(time)			FXDLog(@"%@", _Transform(time))
+	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _Transform(timeRange))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
@@ -178,6 +184,9 @@
 	#define FXDLogSize(size)
 	#define FXDLogRect(rect)
 	#define FXDLogTransform(transform)
+
+	#define FXDLogTime(time)
+	#define FXDLogTimeRange(timeRange)
 
 	#define FXDLog_IsMainThread
 	#define FXDLog_REMAINING
