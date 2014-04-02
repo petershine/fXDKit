@@ -10,7 +10,7 @@
 #define FXDKit_FXDmacroEssential_h
 
 #ifndef GlobalAppManager
-	#warning //TODO: Must define GlobalAppManager
+	#warning //TODO: Must define app's own GlobalAppManager
 	#define GlobalAppManager	[FXDsuperGlobalManager sharedInstance]
 #endif
 
