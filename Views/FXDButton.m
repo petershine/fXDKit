@@ -69,7 +69,7 @@
 @implementation UIButton (Added)
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
 	
-	void (^ResizeForState)(UIControlState state) = ^(UIControlState state){
+	void (^ResizeForState)(UIControlState) = ^(UIControlState state){
 		UIImage *image = [self imageForState:state];
 		
 		if (image) {
@@ -85,7 +85,7 @@
 }
 
 - (void)replaceBackgroundImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
-	void (^ResizeForState)(UIControlState state) = ^(UIControlState state){
+	void (^ResizeForState)(UIControlState) = ^(UIControlState state){
 		UIImage *image = [self backgroundImageForState:state];
 		
 		if (image) {
