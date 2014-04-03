@@ -152,7 +152,7 @@
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewWillAppear:animated];
 
-#if	ForDEVELOPER
+#if ForDEVELOPER
 	if (self.didFinishInitialAppearing) {
 		FXDLogBOOL(self.didFinishInitialAppearing);
 	}
