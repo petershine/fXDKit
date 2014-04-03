@@ -32,6 +32,26 @@
 
 #pragma mark - Category
 @implementation NSString (Added)
++ (NSString*)uniqueKeyFrom:(Float64)doubleVariable {
+	//MARK: Use 32 as the string length
+	NSString *digits = [[NSString stringWithFormat:@"%16d", (NSInteger)doubleVariable] stringByReplacingOccurrencesOfString:@" " withString:@"0"];
+	NSString *decimals = [[[NSString stringWithFormat:@"%.16f", (doubleVariable -((NSInteger)doubleVariable))] componentsSeparatedByString:@"."] lastObject];
+
+	return [NSString stringWithFormat:@"%@%@", digits, decimals];
+}
+
++ (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(NSString*)type {
+
+	NSString *uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
+
+	NSString *extension = CFBridgingRelease(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)type, kUTTagClassFilenameExtension));
+
+	NSString *filename = [NSString stringWithFormat:@"%@_%@.%@", prefix, uniqueKey, extension];
+
+	return filename;
+}
+
+#pragma mark -
 - (NSString*)leftAlignedParagraph {	FXDLog_DEFAULT;
 	NSArray *components = [self componentsSeparatedByString:@"\n"];
 	
@@ -88,4 +108,5 @@
 - (NSString*)replacedSelf {
 	return [self stringByReplacingOccurrencesOfString:@"self." withString:@""];
 }
+
 @end

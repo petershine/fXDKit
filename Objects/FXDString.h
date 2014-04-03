@@ -21,10 +21,12 @@
 
 #pragma mark - Category
 @interface NSString (Added)
++ (NSString*)uniqueKeyFrom:(Float64)doubleVariable;
++ (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(NSString*)type;
+
 - (NSString*)leftAlignedParagraph;
 
 - (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator;
 
 - (NSString*)replacedSelf;
-
 @end
