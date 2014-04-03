@@ -160,13 +160,16 @@
 
 	NSError *error = nil;
 	[fileManager createDirectoryAtURL:[cachedURL URLByDeletingLastPathComponent]
-									withIntermediateDirectories:YES
-													 attributes:nil
-														  error:&error];FXDLog_ERROR_ignored(516);
+		  withIntermediateDirectories:YES
+						   attributes:nil
+								error:&error];FXDLog_ERROR_ignored(516);
 
 	error = nil;
 	BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:thumbItemURL destinationURL:cachedURL error:&error];
-	FXDLogBOOL(didSetUbiquitous);
+
+	if (didSetUbiquitous == NO) {
+		FXDLogBOOL(didSetUbiquitous);
+	}
 
 	if ([error code] != 2 && [error code] != 516) {
 		FXDLog_ERROR;
