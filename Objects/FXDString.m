@@ -34,7 +34,7 @@
 @implementation NSString (Added)
 + (NSString*)uniqueKeyFrom:(Float64)doubleVariable {
 	//MARK: Use 32 as the string length
-	NSString *digits = [[NSString stringWithFormat:@"%12d", (NSInteger)doubleVariable] stringByReplacingOccurrencesOfString:@" " withString:@"0"];
+	NSString *digits = [[NSString stringWithFormat:@"%12ld", (long)doubleVariable] stringByReplacingOccurrencesOfString:@" " withString:@"0"];
 	NSString *decimals = [[[NSString stringWithFormat:@"%.20f", (doubleVariable -((NSInteger)doubleVariable))] componentsSeparatedByString:@"."] lastObject];
 
 	return [NSString stringWithFormat:@"%@%@", digits, decimals];
