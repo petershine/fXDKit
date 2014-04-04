@@ -69,22 +69,25 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithFileURL:(NSURL*)fileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
+	AVURLAsset *movieAsset = [AVURLAsset
+							  URLAssetWithURL:movieFileURL
+							  options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
+
 	NSString *tracksKey = @"tracks";
 
-	[asset
+	[movieAsset
 	 loadValuesAsynchronouslyForKeys:@[tracksKey]
 	 completionHandler:^{
-		 FXDLog_BLOCK(asset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
-		 FXDLogBOOL(asset.isPlayable);
+		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
+		 FXDLogBOOL(movieAsset.isPlayable);
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 			  
 			  NSError *error = nil;
-			  AVKeyValueStatus valueStatus = [asset statusOfValueForKey:tracksKey error:&error];
+			  AVKeyValueStatus valueStatus = [movieAsset statusOfValueForKey:tracksKey error:&error];
 			  FXDLog_ERROR;
 			  FXDLogVariable(valueStatus);
 
@@ -96,7 +99,7 @@
 			  }
 
 
-			  AVPlayerItem *videoItem = [AVPlayerItem playerItemWithAsset:asset];
+			  AVPlayerItem *videoItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 
 			  self.videoPlayer = [AVPlayer playerWithPlayerItem:videoItem];
 

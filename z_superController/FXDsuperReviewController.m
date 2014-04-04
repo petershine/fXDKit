@@ -125,7 +125,7 @@
 			self.playbackManager = [FXDsuperPlaybackManager new];
 
 			[self.playbackManager
-			 preparePlaybackManagerWithFileURL:[defaultRepresentation url]
+			 preparePlaybackManagerWithMovieFileURL:[defaultRepresentation url]
 			 withScene:self
 			 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 				 FXDLog_BLOCK(self.playbackManager, caller);
