@@ -10,6 +10,7 @@
 @interface AVCaptureDevice (Added)
 + (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
 - (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)addDefaultNotificationObserver:(id)observer;
 @end
 
 
@@ -51,7 +52,11 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification;
+- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
+
+- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification;
+- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification;
+- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

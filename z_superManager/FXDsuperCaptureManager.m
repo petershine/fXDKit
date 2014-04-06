@@ -27,6 +27,7 @@
 		break;
 	}
 
+	FXDLog_DEFAULT;
 	[videoCaptureDevice applyDefaultConfigurationWithFlashMode:flashMode];
 
 	return videoCaptureDevice;
@@ -41,16 +42,16 @@
 			self.flashMode = flashMode;
 		}
 
-		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
-			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+		if ([self isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+			self.focusMode = AVCaptureFocusModeAutoFocus;
 		}
 
-		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
-			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+		if ([self isExposureModeSupported:AVCaptureExposureModeAutoExpose]) {
+			self.exposureMode = AVCaptureExposureModeAutoExpose;
 		}
 
-		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
-			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeAutoWhiteBalance]) {
+			self.whiteBalanceMode = AVCaptureWhiteBalanceModeAutoWhiteBalance;
 		}
 
 		self.subjectAreaChangeMonitoringEnabled = YES;
@@ -58,7 +59,32 @@
 		[self unlockForConfiguration];
 	}
 
+	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@ %@ %@ %@", _Variable(self.flashMode), _Variable(self.focusMode), _Variable(self.exposureMode), _Variable(self.whiteBalanceMode), _BOOL(self.subjectAreaChangeMonitoringEnabled));
+
 	FXDLog_ERROR;
+}
+
+- (void)addDefaultNotificationObserver:(id)observer {	FXDLog_DEFAULT;
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter
+	 addObserver:observer
+	 selector:@selector(observedAVCaptureDeviceWasConnected:)
+	 name:AVCaptureDeviceWasConnectedNotification
+	 object:nil];
+
+	[notificationCenter
+	 addObserver:observer
+	 selector:@selector(observedAVCaptureDeviceWasDisconnected:)
+	 name:AVCaptureDeviceWasDisconnectedNotification
+	 object:nil];
+
+	[notificationCenter
+	 addObserver:observer
+	 selector:@selector(observedAVCaptureDeviceSubjectAreaDidChange:)
+	 name:AVCaptureDeviceSubjectAreaDidChangeNotification
+	 object:nil];
 }
 @end
 
@@ -184,11 +210,11 @@
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
 											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
 											 withFlashMode:self.flashMode];
+		[backVideoCapture addDefaultNotificationObserver:self];
 
 		NSError *error = nil;
-		_deviceInputBack = [[AVCaptureDeviceInput alloc]
-							 initWithDevice:backVideoCapture
-							 error:&error];FXDLog_ERROR;
+		_deviceInputBack = [[AVCaptureDeviceInput alloc] initWithDevice:backVideoCapture error:&error];
+		FXDLog_ERROR;
 	}
 
 	return _deviceInputBack;
@@ -200,11 +226,11 @@
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
 											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
 											  withFlashMode:self.flashMode];
+		[frontVideoCapture addDefaultNotificationObserver:self];
 
 		NSError *error = nil;
-		_deviceInputFront = [[AVCaptureDeviceInput alloc]
-							  initWithDevice:frontVideoCapture
-							  error:&error];FXDLog_ERROR;
+		_deviceInputFront = [[AVCaptureDeviceInput alloc] initWithDevice:frontVideoCapture error:&error];
+		FXDLog_ERROR;
 	}
 
 	return _deviceInputFront;
@@ -248,11 +274,11 @@
 
 #pragma mark - Public
 - (void)prepareCaptureManagerWithScene:(UIViewController*)scene {	FXDLog_DEFAULT;
-	[self observedUIDeviceOrientationDidChangeNotification:nil];
+	[self observedUIDeviceOrientationDidChange:nil];
 
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self
-	 selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
+	 selector:@selector(observedUIDeviceOrientationDidChange:)
 	 name:UIDeviceOrientationDidChangeNotification
 	 object:nil];
 
@@ -307,7 +333,7 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
+- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
 	if (self.didStartCapturing) {
 		return;
 	}
@@ -326,6 +352,18 @@
 	FXDLogVariable(self.videoOrientation);
 
 	[self.capturePreviewLayer.connection setVideoOrientation:self.videoOrientation];
+}
+
+#pragma mark -
+- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {
+
+}
+- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {
+
+}
+- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLogObject(notification);
+
 }
 
 

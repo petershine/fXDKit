@@ -55,7 +55,7 @@
 	
 	[notificationCenter
 	 addObserver:self
-	 selector:@selector(observedUIDeviceOrientationDidChangeNotification:)
+	 selector:@selector(observedUIDeviceOrientationDidChange:)
 	 name:UIDeviceOrientationDidChangeNotification
 	 object:nil];
 }
@@ -89,7 +89,7 @@
 	 }];
 }
 
-- (void)observedUIDeviceOrientationDidChangeNotification:(NSNotification*)notification {
+- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
 
 	if (self.progressView.viewIndicatorGroup == nil) {
 		return;
@@ -286,7 +286,7 @@
 	modifiedFrame.size = applicationWindow.frame.size;
 	[applicationWindow.progressView setFrame:modifiedFrame];
 	
-	[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
+	[applicationWindow observedUIDeviceOrientationDidChange:nil];
 	
 	[applicationWindow addSubview:applicationWindow.progressView];
 	[applicationWindow bringSubviewToFront:applicationWindow.progressView];
@@ -323,7 +323,7 @@
 	modifiedFrame.size = applicationWindow.frame.size;
 	[applicationWindow.messageView setFrame:modifiedFrame];
 	
-	[applicationWindow observedUIDeviceOrientationDidChangeNotification:nil];
+	[applicationWindow observedUIDeviceOrientationDidChange:nil];
 	
 	
 	applicationWindow.messageView.labelTitle.text = title;
