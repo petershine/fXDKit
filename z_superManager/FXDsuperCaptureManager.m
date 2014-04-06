@@ -356,14 +356,15 @@
 
 #pragma mark -
 - (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {
-
+	FXDLog_DEFAULT;
 }
+
 - (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {
-
+	FXDLog_DEFAULT;
 }
+
 - (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
-
 }
 
 
