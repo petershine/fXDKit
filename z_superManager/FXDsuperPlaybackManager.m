@@ -127,7 +127,7 @@
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
 	CMTime periodInterval = CMTimeMake(1.0, doubleOneBillion);
-	FXDLogStruct(periodInterval);
+	FXDLogTime(periodInterval);
 
 	weakSelf.periodicObserver =
 	[weakSelf.videoPlayer

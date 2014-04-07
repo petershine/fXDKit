@@ -96,14 +96,14 @@
 	FXDLogRect(clippingFrame);
 	
 	UIEdgeInsets modifiedInset = self.contentInset;
-	FXDLogStruct(modifiedInset);
+	FXDLog(@"1.%@", _Struct(modifiedInset));
 	
 	modifiedInset.left = clippingFrame.origin.x -self.frame.origin.x;
 	modifiedInset.top = clippingFrame.origin.y -self.frame.origin.y;
 	modifiedInset.bottom = self.frame.size.height -(modifiedInset.top +clippingFrame.size.height);
 	modifiedInset.right = self.frame.size.width -(modifiedInset.left +clippingFrame.size.width);
 	
-	FXDLogStruct(modifiedInset);
+	FXDLog(@"2.%@", _Struct(modifiedInset));
 	
 	[self setContentInset:modifiedInset];
 }
