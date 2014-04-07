@@ -98,8 +98,8 @@
 	#define FXDLogRect(rect)			FXDLog(@"%@", _Rect(rect))
 	#define FXDLogTransform(transform)	FXDLog(@"%@", _Transform(transform))
 
-	#define FXDLogTime(time)			FXDLog(@"%@", _Transform(time))
-	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _Transform(timeRange))
+	#define FXDLogTime(time)			FXDLog(@"%@", _Time(time))
+	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _TimeRange(timeRange))
 
 	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
 
