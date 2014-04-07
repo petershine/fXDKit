@@ -43,8 +43,6 @@
 - (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification;
 - (void)observedFXDWindowShouldFadeOutProgressView:(NSNotification*)notification;
 
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
-
 //MARK: - Delegate implementation
 
 @end

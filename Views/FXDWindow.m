@@ -51,13 +51,6 @@
 	 selector:@selector(observedFXDWindowShouldFadeOutProgressView:)
 	 name:notificationFXDWindowShouldFadeOutProgressView
 	 object:nil];
-	
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIDeviceOrientationDidChange:)
-	 name:UIDeviceOrientationDidChangeNotification
-	 object:nil];
 }
 
 
@@ -88,38 +81,6 @@
 		 self.progressView = nil;
 	 }];
 }
-
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
-
-	if (self.progressView.viewIndicatorGroup == nil) {
-		return;
-	}
-
-	
-#if	TEST_loggingRotatingOrientation
-	FXDLog_DEFAULT;
-	FXDLogObject(notification);
-#endif
-
-	self.progressView.viewIndicatorGroup.transform = CGAffineTransformIdentity;
-	
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
-		CGAffineTransform modifiedTransform = self.progressView.viewIndicatorGroup.transform;
-		
-		if (deviceOrientation == UIDeviceOrientationLandscapeLeft) {
-			modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((90)/180.0 * M_PI));
-		}
-		else if (deviceOrientation == UIDeviceOrientationLandscapeRight) {
-			modifiedTransform = CGAffineTransformRotate(modifiedTransform, ((270)/180.0 * M_PI));
-		}
-		
-		self.progressView.viewIndicatorGroup.transform = modifiedTransform;
-	}
-}
-
-//MARK: - Delegate implementation
 
 @end
 
@@ -286,9 +247,7 @@
 	CGRect modifiedFrame = applicationWindow.progressView.frame;
 	modifiedFrame.size = applicationWindow.frame.size;
 	[applicationWindow.progressView setFrame:modifiedFrame];
-	
-	[applicationWindow observedUIDeviceOrientationDidChange:nil];
-	
+
 	[applicationWindow addSubview:applicationWindow.progressView];
 	[applicationWindow bringSubviewToFront:applicationWindow.progressView];
 	
@@ -323,8 +282,6 @@
 	CGRect modifiedFrame = applicationWindow.messageView.frame;
 	modifiedFrame.size = applicationWindow.frame.size;
 	[applicationWindow.messageView setFrame:modifiedFrame];
-	
-	[applicationWindow observedUIDeviceOrientationDidChange:nil];
 	
 	
 	applicationWindow.messageView.labelTitle.text = title;
