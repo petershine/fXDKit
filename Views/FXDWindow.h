@@ -23,7 +23,7 @@
 #import "FXDsuperMessageView.h"
 
 
-@class FXDsuperLaunchController;
+@class FXDsuperLaunchScene;
 
 
 @interface FXDWindow : UIWindow
@@ -53,7 +53,7 @@
 + (instancetype)instantiateDefaultWindow;
 + (instancetype)applicationWindow;
 
-- (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController;
+- (void)prepareWithLaunchImageController:(FXDsuperLaunchScene*)launchImageController;
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void(^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void(^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock;
 
 @end

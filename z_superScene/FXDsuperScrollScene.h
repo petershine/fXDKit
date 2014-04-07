@@ -1,5 +1,5 @@
 //
-//  FXDsuperScrollController.h
+//  FXDsuperScrollScene.h
 //
 //
 //  Created by petershine on 2/5/13.
@@ -12,7 +12,7 @@
 #endif
 
 
-@interface FXDsuperScrollController : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
+@interface FXDsuperScrollScene : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;

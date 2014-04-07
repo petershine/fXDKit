@@ -89,7 +89,7 @@
 	[weakSelf.mainDataSource addObject:addedObj];
 	
 	
-	FXDsuperReviewController *previewPage = [weakSelf previewPageForModifiedPageIndex:[weakSelf.mainDataSource count]-1];
+	FXDsuperPlaybackScene *previewPage = [weakSelf previewPageForModifiedPageIndex:[weakSelf.mainDataSource count]-1];
 	
 	[weakSelf.mainPageController
 	 setViewControllers:@[previewPage]
@@ -112,7 +112,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(FXDsuperReviewController*)beforeViewController {	FXDLog_DEFAULT;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(FXDsuperPlaybackScene*)beforeViewController {	FXDLog_DEFAULT;
 	
 	UIViewController *previousController = nil;
 	
@@ -128,7 +128,7 @@
 	return previousController;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(FXDsuperReviewController*)afterViewController {	FXDLog_DEFAULT;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(FXDsuperPlaybackScene*)afterViewController {	FXDLog_DEFAULT;
 	
 	UIViewController *nextController = nil;
 	

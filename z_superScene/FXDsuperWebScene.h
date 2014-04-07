@@ -14,9 +14,9 @@
 #endif
 
 
-#import "FXDsuperScrollController.h"
+#import "FXDsuperScrollScene.h"
 
-@interface FXDsuperWebScene : FXDsuperScrollController <UIWebViewDelegate>
+@interface FXDsuperWebScene : FXDsuperScrollScene <UIWebViewDelegate>
 // Properties
 @property (strong, nonatomic) NSURLRequest *initialWebRequest;
 

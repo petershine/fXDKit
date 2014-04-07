@@ -1,5 +1,5 @@
 //
-//  FXDsuperTableController.h
+//  FXDsuperTableScene.h
 //
 //
 //  Created by petershine on 1/20/12.
@@ -7,9 +7,9 @@
 //
 
 
-#import "FXDsuperScrollController.h"
+#import "FXDsuperScrollScene.h"
 
-@interface FXDsuperTableController : FXDsuperScrollController <UITableViewDataSource, UITableViewDelegate>
+@interface FXDsuperTableScene : FXDsuperScrollScene <UITableViewDataSource, UITableViewDelegate>
 // Properties
 
 // IBOutlets

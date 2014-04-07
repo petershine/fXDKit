@@ -1,16 +1,16 @@
 //
-//  FXDsuperCollectionController.m
+//  FXDsuperCollectionScene.m
 //
 //
 //  Created by petershine on 2/6/13.
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCollectionController.h"
+#import "FXDsuperCollectionScene.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCollectionController
+@implementation FXDsuperCollectionScene
 
 
 #pragma mark - Memory management

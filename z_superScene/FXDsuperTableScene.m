@@ -1,16 +1,16 @@
 //
-//  FXDsuperTableController.m
+//  FXDsuperTableScene.m
 //
 //
 //  Created by petershine on 1/20/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperTableController.h"
+#import "FXDsuperTableScene.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperTableController	
+@implementation FXDsuperTableScene	
 
 
 #pragma mark - Memory management

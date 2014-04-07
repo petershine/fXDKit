@@ -1,16 +1,16 @@
 //
-//  FXDsuperReviewController.m
+//  FXDsuperReviewScene.m
 //
 //
 //  Created by petershine on 5/5/13.
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#import "FXDsuperReviewController.h"
+#import "FXDsuperPlaybackScene.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperReviewController
+@implementation FXDsuperPlaybackScene
 
 
 #pragma mark - Memory management

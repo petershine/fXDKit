@@ -8,7 +8,7 @@
 
 #import "FXDWindow.h"
 
-#import "FXDsuperLaunchController.h"
+#import "FXDsuperLaunchScene.h"
 
 
 #pragma mark - Public implementation
@@ -110,9 +110,9 @@
 }
 
 #pragma mark -
-- (void)prepareWithLaunchImageController:(FXDsuperLaunchController*)launchImageController {	FXDLog_DEFAULT;
+- (void)prepareWithLaunchImageController:(FXDsuperLaunchScene*)launchImageController {	FXDLog_DEFAULT;
 	if (launchImageController == nil) {
-		launchImageController = [[FXDsuperLaunchController alloc] initWithNibName:nil bundle:nil];
+		launchImageController = [[FXDsuperLaunchScene alloc] initWithNibName:nil bundle:nil];
 	}
 	
 	CGRect modifiedFrame = launchImageController.view.frame;
@@ -164,9 +164,9 @@
 		didBecomeRootViewControllerBlock();
 	}
 
-	if ([launchController isKindOfClass:[FXDsuperLaunchController class]]) {
+	if ([launchController isKindOfClass:[FXDsuperLaunchScene class]]) {
 
-		[(FXDsuperLaunchController*)launchController
+		[(FXDsuperLaunchScene*)launchController
 		 dismissLaunchControllerWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 			 FXDLog_BLOCK(launchController, caller);
 

@@ -1,5 +1,5 @@
 //
-//  FXDsuperReviewController.h
+//  FXDsuperReviewScene.h
 //
 //
 //  Created by petershine on 5/5/13.
@@ -9,9 +9,9 @@
 #import "FXDsuperPlaybackManager.h"
 
 
-#import "FXDsuperScrollController.h"
+#import "FXDsuperScrollScene.h"
 
-@interface FXDsuperReviewController : FXDsuperScrollController
+@interface FXDsuperPlaybackScene : FXDsuperScrollScene
 // Properties
 @property (nonatomic) NSInteger previewPageIndex;
 

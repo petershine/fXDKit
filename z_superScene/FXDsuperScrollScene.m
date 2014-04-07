@@ -1,16 +1,16 @@
 //
-//  FXDsuperScrollController.m
+//  FXDsuperScrollScene.m
 //
 //
 //  Created by petershine on 2/5/13.
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#import "FXDsuperScrollController.h"
+#import "FXDsuperScrollScene.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperScrollController
+@implementation FXDsuperScrollScene
 
 
 #pragma mark - Memory management

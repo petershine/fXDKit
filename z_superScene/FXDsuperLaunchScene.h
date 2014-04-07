@@ -1,5 +1,5 @@
 //
-//  FXDsuperLaunchImageController.h
+//  FXDsuperLaunchScene.h
 //
 //
 //  Created by petershine on 12/17/12.
@@ -15,7 +15,7 @@
 #endif
 
 
-@interface FXDsuperLaunchController : FXDViewController
+@interface FXDsuperLaunchScene : FXDViewController
 // Properties
 
 // IBOutlets

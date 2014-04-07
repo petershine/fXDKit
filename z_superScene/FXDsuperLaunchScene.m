@@ -1,16 +1,16 @@
 //
-//  FXDsuperLaunchImageController.m
+//  FXDsuperLaunchScene.m
 //
 //
 //  Created by petershine on 12/17/12.
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
-#import "FXDsuperLaunchController.h"
+#import "FXDsuperLaunchScene.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperLaunchController
+@implementation FXDsuperLaunchScene
 
 
 #pragma mark - Memory management

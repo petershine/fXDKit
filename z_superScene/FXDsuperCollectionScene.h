@@ -1,5 +1,5 @@
 //
-//  FXDsuperCollectionController.h
+//  FXDsuperCollectionScene.h
 //
 //
 //  Created by petershine on 2/6/13.
@@ -7,9 +7,9 @@
 //
 
 
-#import "FXDsuperTableController.h"
+#import "FXDsuperTableScene.h"
 
-@interface FXDsuperCollectionController : FXDsuperTableController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface FXDsuperCollectionScene : FXDsuperTableScene <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 // Properties
 
 // IBOutlets
