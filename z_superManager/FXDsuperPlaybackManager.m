@@ -58,8 +58,6 @@
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_playbackDisplay.layer;
 
-	//TEST:
-	//displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 	displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 
 	return _playbackDisplay;
