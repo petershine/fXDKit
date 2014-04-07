@@ -55,6 +55,7 @@
 	CGRect screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
 
 	_playbackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
+	_playbackDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_playbackDisplay.layer;
 
