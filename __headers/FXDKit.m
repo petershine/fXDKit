@@ -173,7 +173,7 @@
 
 @implementation NSOperationQueue (Added)
 + (instancetype)newSerialQueue {
-	NSOperationQueue *serialQueue = [NSOperationQueue new];
+	id serialQueue = [[self class] new];
 	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 
 	return serialQueue;

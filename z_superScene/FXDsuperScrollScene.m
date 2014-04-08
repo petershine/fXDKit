@@ -137,22 +137,13 @@
 }
 
 #pragma mark -
-- (NSOperationQueue*)cellOperationQueue {
+- (FXDOperationQueue*)cellOperationQueue {
 	
 	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
-		_cellOperationQueue = [NSOperationQueue newSerialQueue];
+		_cellOperationQueue = [FXDOperationQueue newSerialQueue];
 	}
 	
 	return _cellOperationQueue;
-}
-
-- (NSMutableDictionary*)cellOperationDictionary {
-	
-	if (_cellOperationDictionary == nil) {	FXDLog_DEFAULT;
-		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-	
-	return _cellOperationDictionary;
 }
 
 
@@ -187,7 +178,7 @@
 
 #pragma mark -
 - (void)stopAllCellOperations {
-	[_cellOperationDictionary removeAllObjects];
+	[_cellOperationQueue.operationDictionary removeAllObjects];
 	[_cellOperationQueue cancelAllOperations];
 }
 
@@ -209,7 +200,7 @@
 	}
 	
 	
-	NSBlockOperation *cellOperation = (self.cellOperationDictionary)[operationObjKey];
+	NSBlockOperation *cellOperation = (self.cellOperationQueue.operationDictionary)[operationObjKey];
 	
 	if (cellOperation) {
 		[cellOperation cancel];

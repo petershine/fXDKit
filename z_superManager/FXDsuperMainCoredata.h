@@ -73,7 +73,7 @@
 - (void)startObservingCoreDataNotifications;
 
 
-- (id)initializedMainEntityObj;
+- (FXDManagedObject*)initializedMainEntityObj;
 
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback;
 

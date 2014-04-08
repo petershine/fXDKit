@@ -328,7 +328,7 @@
 }
 
 #pragma mark -
-- (id)initializedMainEntityObj {
+- (FXDManagedObject*)initializedMainEntityObj {
 	if (self.mainEntityName == nil) {	FXDLog_OVERRIDE;
 		return nil;
 	}
@@ -348,7 +348,7 @@
 	}
 
 	
-	id mainEntityObj = [(FXDManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntity insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
+	FXDManagedObject *mainEntityObj = (FXDManagedObject*)[(FXDManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntity insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
 	
 	return mainEntityObj;
 }

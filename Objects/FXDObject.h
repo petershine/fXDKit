@@ -9,10 +9,7 @@
 
 @interface FXDObject : NSObject
 
-#pragma mark - Initialization
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

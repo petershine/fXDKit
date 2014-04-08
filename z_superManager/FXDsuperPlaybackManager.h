@@ -25,8 +25,6 @@
 @property (strong, nonatomic) FXDviewVideoDisplay *mainPlaybackDisplay;
 
 
-#pragma mark - Initialization
-
 #pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)configurePlaybackObservers;

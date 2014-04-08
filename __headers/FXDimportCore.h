@@ -51,6 +51,8 @@
 
 #import "FXDMetadataQuery.h"
 
+#import "FXDOperationQueue.h"
+
 
 #pragma mark - Views
 #import "FXDView.h"

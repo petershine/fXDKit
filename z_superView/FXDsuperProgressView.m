@@ -12,6 +12,7 @@
 #pragma mark - Public implementation
 @implementation FXDsuperProgressView
 
+
 #pragma mark - Memory management
 
 #pragma mark - Initialization

@@ -24,10 +24,7 @@
 
 @interface FXDManagedDocument : UIManagedDocument
 
-#pragma mark - Initialization
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

@@ -42,11 +42,11 @@
 #pragma mark - Public
 + (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
-	__block FXDAlertView *alertView = nil;
+	__block id alertView = nil;
 
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
-		 alertView = [[FXDAlertView alloc]
+		 alertView = [[[self class] alloc]
 					  initWithTitle:title
 					  message:message
 					  cancelButtonTitle:cancelButtonTitle

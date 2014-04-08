@@ -24,8 +24,7 @@
 	NSMutableArray *_mainDataSource;
 	FXDFetchedResultsController *_mainResultsController;
 	
-	NSOperationQueue *_cellOperationQueue;
-	NSMutableDictionary *_cellOperationDictionary;
+	FXDOperationQueue *_cellOperationQueue;
 	
 	UIScrollView *_mainScrollview;
 }
@@ -47,8 +46,7 @@
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 @property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
 
-@property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
-@property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
+@property (strong, nonatomic) FXDOperationQueue *cellOperationQueue;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;

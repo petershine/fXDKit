@@ -118,12 +118,12 @@
 		 addOperationWithBlock:^{
 			 __strong typeof(weakSelf) strongSelf = weakSelf;
 			 
-			 [strongSelf.cellOperationDictionary removeObjectForKey:indexPath];
+			 [strongSelf.cellOperationQueue.operationDictionary removeObjectForKey:indexPath];
 		 }];
 	}];
 	
 	
-	self.cellOperationDictionary[indexPath] = cellOperation;
+	self.cellOperationQueue.operationDictionary[indexPath] = cellOperation;
 	[self.cellOperationQueue addOperation:cellOperation];
 	
 	return cell;
