@@ -8,7 +8,6 @@
 
 
 @interface FXDLabel : UILabel
-// Properties
 
 // IBOutlets
 

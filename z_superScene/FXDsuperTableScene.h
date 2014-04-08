@@ -10,7 +10,6 @@
 #import "FXDsuperScrollScene.h"
 
 @interface FXDsuperTableScene : FXDsuperScrollScene <UITableViewDataSource, UITableViewDelegate>
-// Properties
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UITableView *mainTableview;

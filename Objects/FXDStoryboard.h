@@ -8,7 +8,6 @@
 
 
 @interface FXDStoryboard : UIStoryboard
-// Properties
 
 #pragma mark - Public
 

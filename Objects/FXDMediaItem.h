@@ -9,11 +9,7 @@
 
 @interface FXDMediaItem : MPMediaItem
 
-// Properties
-
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

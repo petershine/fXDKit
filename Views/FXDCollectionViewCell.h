@@ -8,7 +8,6 @@
 
 
 @interface FXDCollectionViewCell : UICollectionViewCell
-// Properties
 @property (strong, nonatomic) id addedObj;
 
 @property (strong, nonatomic) NSIndexPath *linkedIndexPath;

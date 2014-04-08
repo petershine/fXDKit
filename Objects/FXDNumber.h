@@ -8,7 +8,6 @@
 
 
 @interface FXDNumber : NSNumber
-// Properties
 
 #pragma mark - Public
 

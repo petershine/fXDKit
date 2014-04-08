@@ -13,7 +13,6 @@
 	UIPopoverArrowDirection _arrowDirection;
 }
 
-// Properties
 @property (nonatomic) BOOL shouldHideArrowView;
 @property (strong, nonatomic) NSString *titleText;
 

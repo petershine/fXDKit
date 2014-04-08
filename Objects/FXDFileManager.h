@@ -8,7 +8,6 @@
 
 
 @interface FXDFileManager : NSFileManager
-// Properties
 
 #pragma mark - Public
 

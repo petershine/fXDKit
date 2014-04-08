@@ -10,7 +10,6 @@
 #import "FXDsuperTableScene.h"
 
 @interface FXDsuperCollectionScene : FXDsuperTableScene <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-// Properties
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UICollectionView *mainCollectionview;

@@ -16,7 +16,6 @@
 
 
 @interface FXDsuperLaunchScene : FXDViewController
-// Properties
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;

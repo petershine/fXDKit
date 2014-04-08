@@ -8,7 +8,6 @@
 
 
 @interface FXDImage : UIImage
-// Properties
 
 #pragma mark - Public
 

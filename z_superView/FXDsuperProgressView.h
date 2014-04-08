@@ -9,7 +9,6 @@
 
 @interface FXDsuperProgressView : FXDView
 
-// Properties
 @property (nonatomic) BOOL didPressCancelButton;
 
 // IBOutlets

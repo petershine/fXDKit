@@ -23,7 +23,6 @@
 
 
 @interface FXDManagedDocument : UIManagedDocument
-// Properties
 
 #pragma mark - Initialization
 

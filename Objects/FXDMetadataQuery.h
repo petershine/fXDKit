@@ -8,7 +8,6 @@
 
 
 @interface FXDMetadataQuery : NSMetadataQuery
-// Properties
 
 #pragma mark - Public
 

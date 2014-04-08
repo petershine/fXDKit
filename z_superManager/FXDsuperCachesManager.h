@@ -13,7 +13,6 @@
 
 @interface FXDsuperCachesManager : FXDObject <NSMetadataQueryDelegate>
 
-// Properties
 @property (strong, nonatomic) NSMetadataQuery *ubiquitousCachesMetadataQuery;
 
 

@@ -30,7 +30,6 @@
 	UIScrollView *_mainScrollview;
 }
 
-// Properties
 @property (nonatomic) BOOL didStartAutoScrollingToTop;
 
 @property (nonatomic) BOOL shouldDismissingByPullingDown;

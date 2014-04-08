@@ -8,11 +8,8 @@
 
 
 @interface FXDPopoverController : UIPopoverController
-// Properties
-
 
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

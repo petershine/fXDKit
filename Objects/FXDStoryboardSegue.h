@@ -8,7 +8,6 @@
 
 
 @interface FXDStoryboardSegue : UIStoryboardSegue
-// Properties
 
 #pragma mark - Public
 

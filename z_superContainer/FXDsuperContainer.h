@@ -9,7 +9,6 @@
 
 @interface FXDsuperContainer : FXDViewController
 
-// Properties
 
 // IBOutlets
 

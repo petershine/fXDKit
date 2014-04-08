@@ -8,7 +8,6 @@
 
 
 @interface FXDView : UIView
-// Properties
 @property (nonatomic) CGRect initialViewFrame;
 
 // IBOutlets

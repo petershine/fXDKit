@@ -8,7 +8,6 @@
 
 
 @interface FXDString : NSString
-// Properties
 
 #pragma mark - Public
 

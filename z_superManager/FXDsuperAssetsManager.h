@@ -14,7 +14,6 @@
 
 
 @interface FXDsuperAssetsManager : FXDObject
-// Properties
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 
 

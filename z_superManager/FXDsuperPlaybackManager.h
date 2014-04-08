@@ -15,7 +15,6 @@
 
 
 @interface FXDsuperPlaybackManager : FXDObject
-// Properties
 @property (nonatomic) BOOL didStartSeeking;
 
 @property (nonatomic) CMTime playbackProgressTime;

@@ -19,7 +19,6 @@
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;
 }
 
-// Properties
 @property (nonatomic) BOOL didStartCapturing;
 @property (nonatomic) BOOL shouldAppendSampleBuffer;
 

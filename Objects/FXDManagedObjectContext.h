@@ -20,7 +20,6 @@
 
 
 @interface FXDManagedObjectContext : NSManagedObjectContext
-// Properties
 
 #pragma mark - Public
 

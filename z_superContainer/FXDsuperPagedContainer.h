@@ -19,7 +19,6 @@
 	FXDPageViewController *_mainPageController;
 }
 
-// Properties
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 
 @property (strong, nonatomic) FXDPageViewController *mainPageController;

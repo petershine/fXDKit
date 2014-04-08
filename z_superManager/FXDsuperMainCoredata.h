@@ -41,7 +41,6 @@
 	FXDFetchedResultsController *_mainResultsController;
 }
 
-// Properties
 @property (nonatomic) BOOL shouldMergeForManagedContext;
 @property (nonatomic) BOOL didStartEnumerating;
 

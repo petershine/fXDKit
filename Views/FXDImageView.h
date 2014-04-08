@@ -8,7 +8,6 @@
 
 
 @interface FXDImageView : UIImageView
-// Properties
 
 // IBOutlets
 

@@ -8,7 +8,6 @@
 
 
 @interface FXDCollectionViewLayout : UICollectionViewLayout
-// Properties
 
 #pragma mark - Public
 

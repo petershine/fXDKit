@@ -8,7 +8,6 @@
 
 
 @interface FXDPageViewController : UIPageViewController
-// Properties
 
 // IBOutlets
 

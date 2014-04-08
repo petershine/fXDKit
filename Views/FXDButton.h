@@ -11,7 +11,6 @@
 	UILabel *_customTitleLabel;
 }
 
-// Properties
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UILabel *customTitleLabel;

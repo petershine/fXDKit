@@ -12,7 +12,6 @@
 #import "FXDsuperScrollScene.h"
 
 @interface FXDsuperPlaybackScene : FXDsuperScrollScene
-// Properties
 @property (nonatomic) NSInteger previewPageIndex;
 
 @property (strong, nonatomic) ALAsset *reviewedAsset;

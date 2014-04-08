@@ -8,7 +8,6 @@
 
 
 @interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
-// Properties
 @property (copy) FXDcallbackAlert alertCallback;
 
 

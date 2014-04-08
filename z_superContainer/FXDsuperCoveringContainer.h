@@ -26,7 +26,6 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 
 @interface FXDsuperCoveringContainer : FXDsuperContainer
 
-// Properties
 @property (nonatomic) NSUInteger minimumChildCount;
 @property (nonatomic) BOOL shouldFadeOutUncovering;
 

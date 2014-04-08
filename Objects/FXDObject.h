@@ -8,7 +8,6 @@
 
 
 @interface FXDObject : NSObject
-// Properties
 
 #pragma mark - Initialization
 

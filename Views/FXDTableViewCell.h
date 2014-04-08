@@ -15,7 +15,6 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 
 
 @interface FXDTableViewCell : UITableViewCell
-// Properties
 @property (nonatomic) SECTION_POSITION_TYPE sectionPositionType;
 
 @property (strong, nonatomic) id addedObj;

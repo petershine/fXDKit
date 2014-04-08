@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 
 
 @interface FXDURL : NSURL
-// Properties
 
 #pragma mark - Public
 

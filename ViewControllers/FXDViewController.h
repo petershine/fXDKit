@@ -10,7 +10,6 @@
 
 
 @interface FXDViewController : UIViewController
-// Properties
 @property (nonatomic) BOOL didFinishInitialAppearing;
 
 // IBOutlets
