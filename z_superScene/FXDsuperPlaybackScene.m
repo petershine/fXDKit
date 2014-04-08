@@ -1,5 +1,5 @@
 //
-//  FXDsuperReviewScene.m
+//  FXDsuperPlaybackScene.m
 //
 //
 //  Created by petershine on 5/5/13.
@@ -58,7 +58,7 @@
 	[self startDisplayingAssetRepresentation];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	
 	FXDLogVariable(self.playbackManager.videoPlayer.rate);
@@ -68,6 +68,7 @@
 		
 		[self.buttonPlay fadeInFromHidden];
 	}
+
 }
 
 

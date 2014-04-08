@@ -1,5 +1,5 @@
 //
-//  FXDsuperReviewScene.h
+//  FXDsuperPlaybackScene.h
 //
 //
 //  Created by petershine on 5/5/13.

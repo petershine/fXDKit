@@ -89,9 +89,7 @@
 @implementation UIWindow (Added)
 + (instancetype)instantiateDefaultWindow {	FXDLog_DEFAULT;
 	CGRect screenBounds = [[UIScreen mainScreen] bounds];
-	FXDLog(@"1.%@", _Rect(screenBounds));
-	screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
-	FXDLog(@"2.%@", _Rect(screenBounds));
+	FXDLogRect(screenBounds);
 
 	id defaultWindow = [[[self class] alloc] initWithFrame:screenBounds];
 	[(UIWindow*)defaultWindow setBackgroundColor:[UIColor blackColor]];
