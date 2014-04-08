@@ -40,7 +40,7 @@
 	return [NSString stringWithFormat:@"%@%@", digits, decimals];
 }
 
-+ (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(NSString*)type {
++ (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(CFStringRef)type {
 
 	NSString *uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
 
@@ -49,8 +49,8 @@
 	return filename;
 }
 
-+ (NSString*)filenameWithWithPrefix:(NSString*)prefix withUniqueKey:(NSString*)uniqueKey forType:(NSString*)type {
-	NSString *extension = CFBridgingRelease(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)type, kUTTagClassFilenameExtension));
++ (NSString*)filenameWithWithPrefix:(NSString*)prefix withUniqueKey:(NSString*)uniqueKey forType:(CFStringRef)type {
+	NSString *extension = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(type, kUTTagClassFilenameExtension));
 
 	NSString *filename = [NSString stringWithFormat:@"%@_%@.%@", prefix, uniqueKey, extension];
 

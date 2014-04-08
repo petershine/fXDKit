@@ -22,8 +22,8 @@
 #pragma mark - Category
 @interface NSString (Added)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue;
-+ (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(NSString*)type;
-+ (NSString*)filenameWithWithPrefix:(NSString*)prefix withUniqueKey:(NSString*)uniqueKey forType:(NSString*)type;
++ (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(CFStringRef)type;
++ (NSString*)filenameWithWithPrefix:(NSString*)prefix withUniqueKey:(NSString*)uniqueKey forType:(CFStringRef)type;
 
 - (NSString*)leftAlignedParagraph;
 
