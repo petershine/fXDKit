@@ -97,7 +97,7 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 	[_mainCaptureSession stopRunning];
 
-	[_capturePreviewLayer removeFromSuperlayer];
+	[_mainPreviewLayer removeFromSuperlayer];
 
 	for (AVCaptureDeviceInput *deviceInput in _mainCaptureSession.inputs) {
 		[_mainCaptureSession removeInput:deviceInput];
@@ -184,21 +184,21 @@
 }
 
 #pragma mark -
-- (AVCaptureVideoPreviewLayer*)capturePreviewLayer {
-	if (_capturePreviewLayer) {
-		return _capturePreviewLayer;
+- (AVCaptureVideoPreviewLayer*)mainPreviewLayer {
+	if (_mainPreviewLayer) {
+		return _mainPreviewLayer;
 	}
 
 
-	_capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
+	_mainPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
 
-	_capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+	_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 
 
 	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Rect(_capturePreviewLayer.frame), _Rect(_capturePreviewLayer.bounds));
+	FXDLog(@"%@ %@", _Rect(_mainPreviewLayer.frame), _Rect(_mainPreviewLayer.bounds));
 
-	return _capturePreviewLayer;
+	return _mainPreviewLayer;
 }
 
 #pragma mark -
@@ -281,7 +281,7 @@
 	 object:nil];
 
 
-	self.capturePreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
+	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
 
 	[self.mainCaptureSession startRunning];
 }
@@ -349,7 +349,7 @@
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 	FXDLogVariable(self.videoOrientation);
 
-	[self.capturePreviewLayer.connection setVideoOrientation:self.videoOrientation];
+	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
 }
 
 #pragma mark -
