@@ -48,6 +48,7 @@
 	
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
+		 
 		self.labelAccepting.text = NSLocalizedString(text_Accepting, nil);
 	}];
 	

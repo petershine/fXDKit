@@ -46,6 +46,7 @@
 
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
+
 		 alertView = [[[self class] alloc]
 					  initWithTitle:title
 					  message:message

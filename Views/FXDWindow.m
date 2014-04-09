@@ -204,6 +204,7 @@
 + (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
+
 		 FXDWindow *applicationWindow = [self applicationWindow];
 		 
 		 [NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
@@ -214,6 +215,7 @@
 + (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
+		 
 		 FXDWindow *applicationWindow = [self applicationWindow];
 		 
 		 [NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];

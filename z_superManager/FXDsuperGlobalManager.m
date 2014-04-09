@@ -530,7 +530,8 @@
 }
 
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogObject(notification);
+	FXDLogRect([UIApplication sharedApplication].statusBarFrame);
+	FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
 }
 
 #pragma mark -
