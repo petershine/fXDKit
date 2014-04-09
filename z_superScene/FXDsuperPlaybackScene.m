@@ -143,7 +143,9 @@
 	
 		
 	[[FXDWindow applicationWindow] showDefaultProgressView];
-	
+
+	NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{
 		 ALAssetRepresentation *defaultRepresentation = [self.reviewedAsset defaultRepresentation];
@@ -157,7 +159,7 @@
 		 UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
 		 FXDLog(@"%@ %@", _Variable(fullImage.imageOrientation), _Size(fullImage.size));
 		 
-		 [[NSOperationQueue mainQueue]
+		 [currentQueue
 		  addOperationWithBlock:^{
 			  [self refreshWithFullImage:fullImage];
 			  
@@ -167,7 +169,7 @@
 }
 
 #pragma mark -
-- (void)refreshWithFullImage:(UIImage*)fullImage {
+- (void)refreshWithFullImage:(UIImage*)fullImage {	FXDLog_DEFAULT;
 	self.imageviewPhoto.image = fullImage;
 	
 	CGRect modifiedFrame = self.imageviewPhoto.frame;

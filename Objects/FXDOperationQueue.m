@@ -14,7 +14,7 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
+- (void)dealloc {
 	[self resetOperationQueue];
 }
 
@@ -34,8 +34,8 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)resetOperationQueue {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Variable([self operationCount]), _Variable([_operationDictionary count]));
+- (void)resetOperationQueue {
+	//FXDLog(@"%@ %@", _Variable([self operationCount]), _Variable([_operationDictionary count]));
 	[_operationDictionary removeAllObjects];
 	[self cancelAllOperations];
 }
