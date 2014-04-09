@@ -195,7 +195,7 @@
 	}
 	
 
-	didCancel = [self.cellOperationQueue cancelForOperationKey:operationKey];	
+	didCancel = [self.cellOperationQueue cancelOperationForKey:operationKey];	
 	
 	return didCancel;
 }

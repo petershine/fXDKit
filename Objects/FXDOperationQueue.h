@@ -15,11 +15,11 @@
 #pragma mark - Public
 - (void)resetOperationQueue;
 
-- (BOOL)shouldEnqueForOperationKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers;
-- (BOOL)cancelForOperationKey:(id)operationKey;
+- (BOOL)shouldEnqueOperationForKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers;
 
-- (void)enqueOperation:(NSOperation*)operation withOperationKey:(id)operationKey;
-- (void)removeOperation:(NSOperation*)operation withOperationKey:(id)operationKey;
+- (void)enqueOperation:(NSOperation*)operation forKey:(id)operationKey;
+- (void)removeOperationForKey:(id)operationKey;
+- (BOOL)cancelOperationForKey:(id)operationKey;
 
 
 //MARK: - Observer implementation

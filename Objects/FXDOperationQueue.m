@@ -35,13 +35,12 @@
 
 #pragma mark - Public
 - (void)resetOperationQueue {
-	//FXDLog(@"%@ %@", _Variable([self operationCount]), _Variable([_operationDictionary count]));
 	[_operationDictionary removeAllObjects];
 	[self cancelAllOperations];
 }
 
 #pragma mark -
-- (BOOL)shouldEnqueForOperationKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers {
+- (BOOL)shouldEnqueOperationForKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers {
 
 	BOOL shouldEnque = YES;
 
@@ -61,28 +60,28 @@
 		}
 
 
-		[self cancelForOperationKey:key];
+		[self cancelOperationForKey:key];
 	}
 
 	return shouldEnque;
 }
 
-- (BOOL)cancelForOperationKey:(id)operationKey {
-	NSOperation *operation = self.operationDictionary[operationKey];
-	[operation cancel];
-
-	return [operation isCancelled];
-}
-
 #pragma mark -
-- (void)enqueOperation:(NSOperation*)operation withOperationKey:(id)operationKey {
+- (void)enqueOperation:(NSOperation*)operation forKey:(id)operationKey {
 	[self.operationDictionary setObject:operation forKey:operationKey];
 	[self addOperation:operation];
 }
 
-- (void)removeOperation:(NSOperation*)operation withOperationKey:(id)operationKey {
+- (void)removeOperationForKey:(id)operationKey {
+	[self cancelOperationForKey:operationKey];
 	[self.operationDictionary removeObjectForKey:operationKey];
+}
+
+- (BOOL)cancelOperationForKey:(id)operationKey {
+	NSOperation *operation = self.operationDictionary[operationKey];
 	[operation cancel];
+
+	return [operation isCancelled];
 }
 
 

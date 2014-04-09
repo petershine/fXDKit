@@ -119,11 +119,11 @@
 		  addOperationWithBlock:^{
 			  __strong typeof(weakSelf) strongSelf = weakSelf;
 
-			  [strongSelf.cellOperationQueue removeOperation:weakOperation withOperationKey:indexPath];
+			  [strongSelf.cellOperationQueue removeOperationForKey:indexPath];
 		  }];
 	 }];
 
-	[self.cellOperationQueue enqueOperation:cellOperation withOperationKey:indexPath];
+	[self.cellOperationQueue enqueOperation:cellOperation forKey:indexPath];
 
 	
 	return cell;
