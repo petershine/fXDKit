@@ -73,11 +73,11 @@
 }
 
 #pragma mark -
-- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withFinishCallback:(void(^)(NSMutableArray* groupsArray))finishCallback {	FXDLog_DEFAULT;
+- (void)groupsArrayWithTypes:(ALAssetsGroupType)types withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	
 	if (self.mainAssetsLibrary == nil) {
 		if (finishCallback) {
-			finishCallback(nil);
+			finishCallback(_cmd, NO, nil);
 		}
 		
 		return;
@@ -100,7 +100,7 @@
 		 }
 		 else {
 			 if (finishCallback) {
-				 finishCallback(collectedGroupsArray);
+				 finishCallback(_cmd, YES, collectedGroupsArray);
 			 }
 		 }
 	 }
@@ -124,12 +124,12 @@
 		  */
 		 
 		 if (finishCallback) {
-			 finishCallback(collectedGroupsArray);
+			 finishCallback(_cmd, NO, collectedGroupsArray);
 		 }
 	 }];
 }
 
-- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withFinishCallback:(void(^)(NSMutableArray *assetsArray))finishCallback {	FXDLog_DEFAULT;
+- (void)assetsArrayFromGroup:(ALAssetsGroup*)group withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	
 	__block NSMutableArray *collectedAssetsArray = nil;
 	
@@ -145,7 +145,7 @@
 		 }
 		 else {
 			 if (finishCallback) {
-				 finishCallback(collectedAssetsArray);
+				 finishCallback(_cmd, YES, collectedAssetsArray);
 			 }
 		 }
 	 }];
