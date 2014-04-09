@@ -57,11 +57,11 @@
 #define _TimeRange(timeRange)	[[NSString stringWithFormat:@"%s: %@", #timeRange, ValueOfTimeRange(timeRange)] replacedSelf]
 
 
-#define strSimpleSelector(selector)	[[NSStringFromSelector(selector)\
+#define _SimpleSelector(selector)	[[NSStringFromSelector(selector)\
 									componentsSeparatedByString:@":"]\
 									firstObject]
 
-#define strCurrentError	[NSString\
+#define _CurrentError	[NSString\
 						stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@",\
 						__FILE__,\
 						__LINE__,\
@@ -69,7 +69,7 @@
 						[error localizedFailureReason],\
 						[error userInfo]]
 
-#define strIsMainThread	[NSString\
+#define _IsMainThread	[NSString\
 						stringWithFormat:@"mainQueue: %@",\
 						([NSThread isMainThread] ? @"YES":@"NO")]
 
@@ -101,7 +101,12 @@
 	#define FXDLogTime(time)			FXDLog(@"%@", _Time(time))
 	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _TimeRange(timeRange))
 
-	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", strIsMainThread)
+	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", _IsMainThread)
+
+	#define FXDLog_IsCurrentQueueMain	BOOL isCurrentQueueMain =\
+										([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]);\
+										if (isCurrentQueueMain == NO) {\
+											FXDLog(@"%@ [%@ %@]", _BOOL(isCurrentQueueMain), [self class], _SimpleSelector(_cmd));}
 
 	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
 								&& intervalRemainingBackground != DBL_MAX) {\
@@ -112,7 +117,7 @@
 							if ([NSThread isMainThread]) {\
 								FXDLog(@"%@", selfClassSelector);\
 							} else {\
-								FXDLog(@"%@ %@", selfClassSelector, strIsMainThread);}
+								FXDLog(@"%@ %@", selfClassSelector, _IsMainThread);}
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
@@ -134,7 +139,7 @@
 	#define FXDLog_ERROR_ALERT if (error) {\
 									[FXDAlertView\
 									showAlertWithTitle:selfClassSelector\
-									message:strCurrentError\
+									message:_CurrentError\
 									cancelButtonTitle:nil\
 									withAlertCallback:nil];}
 
@@ -147,12 +152,12 @@
 												if ([NSThread isMainThread]) {\
 													FXDLog(@"BLOCK: [%@ %@]",\
 													[instance class],\
-													strSimpleSelector(selector));\
+													_SimpleSelector(selector));\
 												} else {\
 													FXDLog(@"BLOCK: [%@ %@] %@",\
 													[instance class],\
-													strSimpleSelector(selector),\
-													strIsMainThread);}
+													_SimpleSelector(selector),\
+													_IsMainThread);}
 
 
 
@@ -165,7 +170,7 @@
 											} else {\
 												FXDLog(@"REACT: [%@] %@ %s: %@",\
 												NSStringFromClass([self class]),\
-												strIsMainThread,\
+												_IsMainThread,\
 												#keypath,\
 												value);}
 
@@ -189,6 +194,8 @@
 	#define FXDLogTimeRange(timeRange)
 
 	#define FXDLog_IsMainThread
+	#define FXDLog_IsCurrentQueueMain
+
 	#define FXDLog_REMAINING
 
 	#define FXDLog_DEFAULT
