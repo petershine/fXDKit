@@ -59,7 +59,6 @@
 #pragma mark - Public
 - (void)registerMainCellNib;
 
-- (void)stopAllCellOperations;
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
 
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;

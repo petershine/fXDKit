@@ -100,31 +100,31 @@
 - (FXDCollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {	FXDLog_OVERRIDE;
 	
 	FXDCollectionViewCell *cell = (FXDCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:self.mainCellIdentifier forIndexPath:indexPath];
-	
-	
+
+
 	__weak typeof(self) weakSelf = self;
-	
+
 	NSBlockOperation *cellOperation = [NSBlockOperation new];
-	__weak typeof(cellOperation) weakOperation = cellOperation;
-	
-	[cellOperation addExecutionBlock:^{
-		
-		if (weakOperation && [weakOperation isCancelled] == NO) {
-			//TODO:
-		}
-		
-		
-		[[NSOperationQueue mainQueue]
-		 addOperationWithBlock:^{
-			 __strong typeof(weakSelf) strongSelf = weakSelf;
-			 
-			 [strongSelf.cellOperationQueue.operationDictionary removeObjectForKey:indexPath];
-		 }];
-	}];
-	
-	
-	self.cellOperationQueue.operationDictionary[indexPath] = cellOperation;
-	[self.cellOperationQueue addOperation:cellOperation];
+	__weak NSBlockOperation *weakOperation = cellOperation;
+
+	[cellOperation
+	 addExecutionBlock:^{
+
+		 if (weakOperation && [weakOperation isCancelled] == NO) {
+			 //TODO:
+		 }
+
+
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  __strong typeof(weakSelf) strongSelf = weakSelf;
+
+			  [strongSelf.cellOperationQueue removeOperation:weakOperation withOperationKey:indexPath];
+		  }];
+	 }];
+
+	[self.cellOperationQueue enqueOperation:cellOperation withOperationKey:indexPath];
+
 	
 	return cell;
 }

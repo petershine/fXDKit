@@ -15,7 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[self stopAllCellOperations];
+	[_cellOperationQueue resetOperationQueue];
 }
 
 
@@ -151,7 +151,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
-		[self stopAllCellOperations];
+		[self.cellOperationQueue resetOperationQueue];
 		
 		if (self.mainResultsController.additionalDelegate == self) {
 			[self.mainResultsController setAdditionalDelegate:nil];
@@ -177,37 +177,25 @@
 }
 
 #pragma mark -
-- (void)stopAllCellOperations {
-	[_cellOperationQueue.operationDictionary removeAllObjects];
-	[_cellOperationQueue cancelAllOperations];
-}
-
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
 	
 	BOOL didCancel = NO;
 	
-	id operationObjKey = nil;
+	id operationKey = nil;
 	
 	if (indexPath) {
-		operationObjKey = indexPath;
+		operationKey = indexPath;
 	}
 	else if (rowIndex != integerNotDefined) {
-		operationObjKey = NSIndexPathMake(0, rowIndex);
+		operationKey = NSIndexPathMake(0, rowIndex);
 	}
 	
-	if (operationObjKey == nil) {
+	if (operationKey == nil) {
 		return didCancel;
 	}
 	
-	
-	NSBlockOperation *cellOperation = (self.cellOperationQueue.operationDictionary)[operationObjKey];
-	
-	if (cellOperation) {
-		[cellOperation cancel];
-		
-		didCancel = [cellOperation isCancelled];
-	}
-	
+
+	didCancel = [self.cellOperationQueue cancelForOperationKey:operationKey];	
 	
 	return didCancel;
 }
