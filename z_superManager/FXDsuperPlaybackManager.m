@@ -125,14 +125,14 @@
 
 - (void)configurePlaybackObservers {	FXDLog_DEFAULT;
 	
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak typeof(self) weakSelf = self;
 
-	CMTime periodInterval = CMTimeMake(1.0, doubleOneBillion);
-	FXDLogTime(periodInterval);
+	//MARK: Probably this would make processing slower, enlarge the interval
+	FXDLogTime(periodicintervalDefault);
 
 	weakSelf.periodicObserver =
 	[weakSelf.videoPlayer
-	 addPeriodicTimeObserverForInterval:periodInterval
+	 addPeriodicTimeObserverForInterval:periodicintervalDefault
 	 queue:NULL
 	 usingBlock:^(CMTime time) {
 
@@ -149,7 +149,7 @@
 #pragma mark -
 - (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback {
 
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak typeof(self) weakSelf = self;
 
 	if (weakSelf.didStartSeeking) {
 		if (finishCallback) {

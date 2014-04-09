@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+#ifndef periodicintervalDefault
+	#define periodicintervalDefault	CMTimeMake(1.0, doubleOneBillion)
+#endif
+
+
 @import AssetsLibrary;
 
 
