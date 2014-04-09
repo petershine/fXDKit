@@ -102,8 +102,6 @@
 	FXDCollectionViewCell *cell = (FXDCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:self.mainCellIdentifier forIndexPath:indexPath];
 
 
-	__weak typeof(self) weakSelf = self;
-
 	NSBlockOperation *cellOperation = [NSBlockOperation new];
 	__weak NSBlockOperation *weakOperation = cellOperation;
 
@@ -117,9 +115,7 @@
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
-			  __strong typeof(weakSelf) strongSelf = weakSelf;
-
-			  [strongSelf.cellOperationQueue removeOperationForKey:indexPath];
+			  [self.cellOperationQueue removeOperationForKey:indexPath];
 		  }];
 	 }];
 
