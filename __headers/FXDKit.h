@@ -31,9 +31,6 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 #import "FXDimportAdopted.h"
 
 
-#endif
-
-
 #pragma mark - Categories
 @interface NSIndexPath (Added)
 - (NSString*)stringValue;
@@ -100,6 +97,7 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 - (CGRect)screenBoundsForOrientation;
 - (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
-
 #endif
 
+
+#endif

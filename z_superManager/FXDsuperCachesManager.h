@@ -11,7 +11,7 @@
 #define prefixCached	@"_cached_"
 
 
-@interface FXDsuperCachesManager : FXDObject <NSMetadataQueryDelegate>
+@interface FXDsuperCachesManager : FXDsuperManager <NSMetadataQueryDelegate>
 
 @property (strong, nonatomic) NSMetadataQuery *ubiquitousCachesMetadataQuery;
 

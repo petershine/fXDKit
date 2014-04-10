@@ -13,7 +13,7 @@
 @end
 
 
-@interface FXDsuperAssetsManager : FXDObject
+@interface FXDsuperAssetsManager : FXDsuperManager
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 
 

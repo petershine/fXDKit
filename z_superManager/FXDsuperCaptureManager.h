@@ -14,7 +14,7 @@
 @end
 
 
-@interface FXDsuperCaptureManager : FXDObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
+@interface FXDsuperCaptureManager : FXDsuperManager <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;
 }

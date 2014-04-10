@@ -144,8 +144,8 @@
 		
 	[[FXDWindow applicationWindow] showDefaultProgressView];
 
-	NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
-	FXDLogBOOL(currentQueue == [NSOperationQueue mainQueue]);
+	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+	FXDLog_IsCurrentQueueMain;
 
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{

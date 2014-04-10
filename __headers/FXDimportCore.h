@@ -86,4 +86,6 @@
 #import "FXDResponder.h"
 
 
+typedef FXDObject FXDsuperManager;
+
 #endif

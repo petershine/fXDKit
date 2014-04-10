@@ -21,7 +21,7 @@
 //#import "FXDsuperCloudManager.h"
 
 
-@interface FXDsuperMainCoredata : FXDObject <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperMainCoredata : FXDsuperManager <NSFetchedResultsControllerDelegate> {
 
 	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;
