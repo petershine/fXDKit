@@ -148,15 +148,15 @@
 													FXDLog_ERROR;}
 
 
-	#define FXDLog_BLOCK(instance, selector)	FXDLog_EMPTY;\
+	#define FXDLog_BLOCK(instance, caller)	FXDLog_EMPTY;\
 												if ([NSThread isMainThread]) {\
 													FXDLog(@"BLOCK: [%@ %@]",\
 													[instance class],\
-													_SimpleSelector(selector));\
+													_SimpleSelector(caller));\
 												} else {\
 													FXDLog(@"BLOCK: [%@ %@] %@",\
 													[instance class],\
-													_SimpleSelector(selector),\
+													_SimpleSelector(caller),\
 													_IsMainThread);}
 
 
@@ -212,7 +212,7 @@
 	#define FXDLog_ERROR_ignored(ignoredCode)
 
 
-	#define FXDLog_BLOCK(instance, selector)
+	#define FXDLog_BLOCK(instance, caller)
 
 	#define FXDLog_REACT(keypath, value)
 
