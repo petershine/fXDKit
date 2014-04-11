@@ -88,6 +88,7 @@
 
 		 [currentQueue
 		  addOperationWithBlock:^{
+			  FXDLog_IsCurrentQueueMain;
 			  
 			  NSError *error = nil;
 			  AVKeyValueStatus valueStatus = [movieAsset statusOfValueForKey:tracksKey error:&error];

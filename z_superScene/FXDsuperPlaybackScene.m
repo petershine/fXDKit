@@ -68,7 +68,6 @@
 		
 		[self.buttonPlay fadeInFromHidden];
 	}
-
 }
 
 
