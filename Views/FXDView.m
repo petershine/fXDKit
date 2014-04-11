@@ -175,6 +175,7 @@
 }
 
 - (void)fadeOutThenHidden {
+
 	if (self.hidden) {
 		return;
 	}

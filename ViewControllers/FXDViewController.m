@@ -285,24 +285,24 @@
 	__block UIViewController *viewController = nil;
 
 	//MARK: Iterate backward
-	[self.childViewControllers
-	 enumerateObjectsWithOptions:NSEnumerationReverse
-	 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		 FXDLog(@"idx: %lu %@ %@", (unsigned long)idx, _Object(obj), _Object(viewController));
+	for (NSInteger index = [self.childViewControllers count]-1; index >= 0; index--) {
+		UIViewController *childScene = self.childViewControllers[index];
 
-		 if (viewController == nil) {
-			 if (obj) {
-				 if ([(UIViewController*)obj canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-					 viewController = (UIViewController*)obj;
-					 FXDLog(@"1.(obj) %@", _Object(viewController));
-				 }
-			 }
-			 else {
-				 viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-				 FXDLog(@"1.([super]) %@", _Object(viewController));
-			 }
-		 }
-	 }];
+		FXDLog(@"%@ %@ %@", _Variable(index), _Object(childScene), _Object(viewController));
+
+		if (viewController == nil) {
+			if (childScene) {
+				if ([(UIViewController*)childScene canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
+					viewController = (UIViewController*)childScene;
+					FXDLog(@"1.%@", _Object(viewController));
+				}
+			}
+			else {
+				viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+				FXDLog(@"1.([super]) %@", _Object(viewController));
+			}
+		}
+	}
 
 	FXDLog(@"2.%@", _Object(viewController));
 

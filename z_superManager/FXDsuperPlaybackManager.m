@@ -76,13 +76,17 @@
 
 	NSString *tracksKey = @"tracks";
 
+
+	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+	FXDLog_IsCurrentQueueMain;
+
 	[movieAsset
 	 loadValuesAsynchronouslyForKeys:@[tracksKey]
 	 completionHandler:^{
 		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
 		 FXDLogBOOL(movieAsset.isPlayable);
 
-		 [[NSOperationQueue mainQueue]
+		 [currentQueue
 		  addOperationWithBlock:^{
 			  
 			  NSError *error = nil;
@@ -161,15 +165,22 @@
 
 	weakSelf.didStartSeeking = YES;
 
+
+	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+	FXDLog_IsCurrentQueueMain;
+
 	[weakSelf.videoPlayer
 	 seekToTime:progressTime
 	 completionHandler:^(BOOL finished) {
 
 		 weakSelf.didStartSeeking = NO;
 
-		 if (finishCallback) {
-			 finishCallback(_cmd, finished, nil);
-		 }
+		 [currentQueue
+		  addOperationWithBlock:^{
+			  if (finishCallback) {
+				  finishCallback(_cmd, finished, nil);
+			  }
+		  }];
 	 }];
 }
 

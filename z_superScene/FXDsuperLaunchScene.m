@@ -57,13 +57,16 @@
 
 #pragma mark - Public
 - (void)dismissLaunchControllerWithFinishCallback:(FXDcallbackFinish)finishCallback {
+	__weak typeof(self) weakSelf = self;
+
 	[UIView
 	 animateWithDuration:durationOneSecond
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
-		 [self.view setAlpha:0.0];
-	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
+		 [weakSelf.view setAlpha:0.0];
+
+	 } completion:^(BOOL finished) {
 		 
 		 if (finishCallback) {
 			 finishCallback(_cmd, YES, nil);
