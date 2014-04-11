@@ -34,9 +34,9 @@
 	[_mainPlaybackDisplay setMainPlayer:nil];
 	[_mainPlaybackDisplay removeFromSuperview];
 
-	[_videoPlayer pause];
+	[_moviePlayer pause];
 
-	[_videoPlayer removeTimeObserver:_periodicObserver];
+	[_moviePlayer removeTimeObserver:_periodicObserver];
 	_periodicObserver = nil;
 }
 
@@ -102,11 +102,11 @@
 			  }
 
 
-			  AVPlayerItem *videoItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 
-			  self.videoPlayer = [AVPlayer playerWithPlayerItem:videoItem];
+			  self.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 
-			  [self.mainPlaybackDisplay setMainPlayer:self.videoPlayer];
+			  [self.mainPlaybackDisplay setMainPlayer:self.moviePlayer];
 
 
 			  [scene.view addSubview:self.mainPlaybackDisplay];
@@ -135,12 +135,12 @@
 	FXDLogTime(periodicintervalDefault);
 
 	weakSelf.periodicObserver =
-	[weakSelf.videoPlayer
+	[weakSelf.moviePlayer
 	 addPeriodicTimeObserverForInterval:periodicintervalDefault
 	 queue:NULL
 	 usingBlock:^(CMTime time) {
 
-		 if (weakSelf.didStartSeeking || weakSelf.videoPlayer.rate <= 0.0) {
+		 if (weakSelf.didStartSeeking || weakSelf.moviePlayer.rate <= 0.0) {
 			 return;
 		 }
 
@@ -149,6 +149,34 @@
 	 }];
 }
 
+#pragma mark -
+- (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+
+	__weak typeof(self) weakSelf = self;
+
+	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
+	CMTime duration = weakSelf.moviePlayer.currentItem.duration;
+
+	if (CMTimeCompare(currentTime, duration) == NSOrderedAscending) {
+		[weakSelf.moviePlayer play];
+
+		if (finishCallback) {
+			finishCallback(_cmd, YES, nil);
+		}
+		return;
+	}
+
+
+	[weakSelf
+	 startSeekingToProgressTime:kCMTimeZero
+	 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+		 [weakSelf.moviePlayer play];
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, finished, responseObj);
+		 }
+	 }];
+}
 
 #pragma mark -
 - (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback {
@@ -169,7 +197,7 @@
 	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
 	FXDLog_IsCurrentQueueMain;
 
-	[weakSelf.videoPlayer
+	[weakSelf.moviePlayer
 	 seekToTime:progressTime
 	 completionHandler:^(BOOL finished) {
 

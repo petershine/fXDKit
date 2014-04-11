@@ -24,7 +24,7 @@
 
 @property (nonatomic) CMTime playbackProgressTime;
 
-@property (strong, nonatomic) AVPlayer *videoPlayer;
+@property (strong, nonatomic) AVPlayer *moviePlayer;
 @property (strong, nonatomic) id periodicObserver;
 
 @property (strong, nonatomic) FXDviewVideoDisplay *mainPlaybackDisplay;
@@ -33,6 +33,8 @@
 #pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)configurePlaybackObservers;
+
+- (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 

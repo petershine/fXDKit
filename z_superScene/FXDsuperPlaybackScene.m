@@ -61,10 +61,10 @@
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	
-	FXDLogVariable(self.playbackManager.videoPlayer.rate);
+	FXDLogVariable(self.playbackManager.moviePlayer.rate);
 	
-	if (self.playbackManager.videoPlayer.rate > 0.0) {
-		[self.playbackManager.videoPlayer pause];
+	if (self.playbackManager.moviePlayer.rate > 0.0) {
+		[self.playbackManager.moviePlayer pause];
 		
 		[self.buttonPlay fadeInFromHidden];
 	}
