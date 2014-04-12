@@ -129,6 +129,7 @@
 	 }];
 }
 
+#pragma mark -
 - (void)configurePlaybackObservers {	FXDLog_DEFAULT;
 	
 	__weak typeof(self) weakSelf = self;
@@ -149,6 +150,31 @@
 
 		 FXDLog(@"PERIODIC: %@ %@", _Time(time), _Variable(weakSelf.moviePlayer.rate));
 		 weakSelf.playbackProgressTime = time;
+	 }];
+}
+
+- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
+
+	__weak typeof(self) weakSelf = self;
+
+	if (CMTimeCompare(seekedTime, weakSelf.lastSeekedTime) == NSOrderedSame) {
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
+		}
+		return;
+	}
+
+
+	weakSelf.lastSeekedTime = seekedTime;
+
+	[weakSelf.moviePlayer
+	 seekToTime:seekedTime
+	 completionHandler:^(BOOL finished) {
+		 //FXDLogTime(seekedTime);
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, finished, nil);
+		 }
 	 }];
 }
 
@@ -180,29 +206,6 @@
 		 if (finishCallback) {
 			 finishCallback(_cmd, finished, responseObj);
 		 }
-	 }];
-}
-
-#pragma mark -
-- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
-
-	__weak typeof(self) weakSelf = self;
-
-	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
-	FXDLog_IsCurrentQueueMain;
-
-	[weakSelf.moviePlayer
-	 seekToTime:seekedTime
-	 completionHandler:^(BOOL finished) {
-		 FXDLogTime(seekedTime);
-
-		 [currentQueue
-		  addOperationWithBlock:^{
-
-			  if (finishCallback) {
-				  finishCallback(_cmd, finished, nil);
-			  }
-		  }];
 	 }];
 }
 

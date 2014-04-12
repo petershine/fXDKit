@@ -7,6 +7,7 @@
 //
 
 #ifndef periodicintervalDefault
+	#warning //MARK: Make sure it's not bad for performance
 	#define periodicintervalDefault	CMTimeMake(1.0, doubleOneBillion)
 #endif
 
@@ -20,6 +21,7 @@
 
 
 @interface FXDsuperPlaybackManager : FXDsuperManager
+@property (nonatomic) CMTime lastSeekedTime;
 @property (nonatomic) CMTime playbackProgressTime;
 
 @property (strong, nonatomic) AVPlayer *moviePlayer;
@@ -30,11 +32,11 @@
 
 #pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback;
+
 - (void)configurePlaybackObservers;
+- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
-
-- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 //MARK: - Observer implementation
