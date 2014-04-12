@@ -115,8 +115,9 @@
 
 
 			  [self
-			   startSeekingToProgressTime:kCMTimeZero
+			   startSeekingToTime:kCMTimeZero
 			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+				   FXDLog_BLOCK(self, caller);
 
 				   [self configurePlaybackObservers];
 
@@ -138,16 +139,16 @@
 	weakSelf.periodicObserver =
 	[weakSelf.moviePlayer
 	 addPeriodicTimeObserverForInterval:periodicintervalDefault
-	 queue:DISPATCH_QUEUE_SERIAL
+	 queue:NULL
 	 usingBlock:^(CMTime time) {
 
-		 if (weakSelf.didStartSeeking || weakSelf.moviePlayer.rate <= 0.0) {
+		 if (weakSelf.moviePlayer.rate <= 0.0) {
 			 return;
 		 }
 
 
+		 FXDLog(@"PERIODIC: %@ %@", _Time(time), _Variable(weakSelf.moviePlayer.rate));
 		 weakSelf.playbackProgressTime = time;
-		 FXDLogTime(weakSelf.playbackProgressTime);
 	 }];
 }
 
@@ -155,9 +156,11 @@
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	__weak typeof(self) weakSelf = self;
+	FXDLogObject(weakSelf.periodicObserver);
 
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	CMTime duration = weakSelf.moviePlayer.currentItem.duration;
+	FXDLog(@"%@ %@", _Time(currentTime), _Time(duration));
 
 	if (CMTimeCompare(currentTime, duration) == NSOrderedAscending) {
 		[weakSelf.moviePlayer play];
@@ -170,7 +173,7 @@
 
 
 	[weakSelf
-	 startSeekingToProgressTime:kCMTimeZero
+	 startSeekingToTime:kCMTimeZero
 	 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 		 [weakSelf.moviePlayer play];
 
@@ -181,32 +184,21 @@
 }
 
 #pragma mark -
-- (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	__weak typeof(self) weakSelf = self;
-
-	if (weakSelf.didStartSeeking) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
-
-
-	weakSelf.didStartSeeking = YES;
-
 
 	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
 	FXDLog_IsCurrentQueueMain;
 
 	[weakSelf.moviePlayer
-	 seekToTime:progressTime
+	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
-
-		 weakSelf.didStartSeeking = NO;
+		 FXDLogTime(seekedTime);
 
 		 [currentQueue
 		  addOperationWithBlock:^{
+
 			  if (finishCallback) {
 				  finishCallback(_cmd, finished, nil);
 			  }

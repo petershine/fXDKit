@@ -20,8 +20,6 @@
 
 
 @interface FXDsuperPlaybackManager : FXDsuperManager
-@property (nonatomic) BOOL didStartSeeking;
-
 @property (nonatomic) CMTime playbackProgressTime;
 
 @property (strong, nonatomic) AVPlayer *moviePlayer;
@@ -36,7 +34,7 @@
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
-- (void)startSeekingToProgressTime:(CMTime)progressTime withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 //MARK: - Observer implementation
