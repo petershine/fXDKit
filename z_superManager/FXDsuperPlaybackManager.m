@@ -70,6 +70,9 @@
 #pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
+	__weak typeof(self) weakSelf = self;
+
+
 	AVURLAsset *movieAsset = [AVURLAsset
 							  URLAssetWithURL:movieFileURL
 							  options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
@@ -88,8 +91,7 @@
 
 		 [currentQueue
 		  addOperationWithBlock:^{
-			  FXDLog_IsCurrentQueueMain;
-			  
+
 			  NSError *error = nil;
 			  AVKeyValueStatus valueStatus = [movieAsset statusOfValueForKey:tracksKey error:&error];
 			  FXDLog_ERROR;
@@ -104,22 +106,26 @@
 
 
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+			  FXDLogVariable(movieItem.status);
+			  
+			  
+			  weakSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 
-			  self.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
-
-			  [self.mainPlaybackDisplay setMainPlayer:self.moviePlayer];
-
-
-			  [scene.view addSubview:self.mainPlaybackDisplay];
-			  [scene.view sendSubviewToBack:self.mainPlaybackDisplay];
+			  [weakSelf.mainPlaybackDisplay setMainPlayer:weakSelf.moviePlayer];
 
 
-			  [self
+			  [scene.view addSubview:weakSelf.mainPlaybackDisplay];
+			  [scene.view sendSubviewToBack:weakSelf.mainPlaybackDisplay];
+
+			  [weakSelf.mainPlaybackDisplay setFrame:weakSelf.mainPlaybackDisplay.superview.bounds];
+
+
+			  [weakSelf
 			   startSeekingToTime:kCMTimeZero
 			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 				   FXDLog_BLOCK(self, caller);
 
-				   [self configurePlaybackObservers];
+				   [weakSelf configurePlaybackObservers];
 
 				   if (finishCallback) {
 					   finishCallback(_cmd, YES, nil);
@@ -147,8 +153,7 @@
 			 return;
 		 }
 
-
-		 FXDLog(@"PERIODIC: %@ %@", _Time(time), _Variable(weakSelf.moviePlayer.rate));
+		 //FXDLog(@"PERIODIC: %@ %@", _Time(time), _Variable(weakSelf.moviePlayer.rate));
 		 weakSelf.playbackProgressTime = time;
 	 }];
 }
@@ -182,7 +187,6 @@
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	__weak typeof(self) weakSelf = self;
-	FXDLogObject(weakSelf.periodicObserver);
 
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	CMTime duration = weakSelf.moviePlayer.currentItem.duration;
