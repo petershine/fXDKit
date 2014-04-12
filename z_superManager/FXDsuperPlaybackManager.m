@@ -138,7 +138,7 @@
 	weakSelf.periodicObserver =
 	[weakSelf.moviePlayer
 	 addPeriodicTimeObserverForInterval:periodicintervalDefault
-	 queue:NULL
+	 queue:DISPATCH_QUEUE_SERIAL
 	 usingBlock:^(CMTime time) {
 
 		 if (weakSelf.didStartSeeking || weakSelf.moviePlayer.rate <= 0.0) {
@@ -147,6 +147,7 @@
 
 
 		 weakSelf.playbackProgressTime = time;
+		 FXDLogTime(weakSelf.playbackProgressTime);
 	 }];
 }
 
