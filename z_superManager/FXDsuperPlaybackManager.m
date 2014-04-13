@@ -119,18 +119,12 @@
 
 			  [weakSelf.mainPlaybackDisplay setFrame:weakSelf.mainPlaybackDisplay.superview.bounds];
 
+			  
+			  [weakSelf configurePlaybackObservers];
 
-			  [weakSelf
-			   startSeekingToTime:kCMTimeZero
-			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
-				   FXDLog_BLOCK(self, caller);
-
-				   [weakSelf configurePlaybackObservers];
-
-				   if (finishCallback) {
-					   finishCallback(_cmd, YES, nil);
-				   }
-			   }];
+			  if (finishCallback) {
+				  finishCallback(_cmd, YES, nil);
+			  }
 		  }];
 	 }];
 }
@@ -153,7 +147,7 @@
 			 return;
 		 }
 
-		 //FXDLog(@"PERIODIC: %@ %@", _Time(time), _Variable(weakSelf.moviePlayer.rate));
+
 		 weakSelf.playbackProgressTime = time;
 	 }];
 }
@@ -162,7 +156,23 @@
 
 	__weak typeof(self) weakSelf = self;
 
-	if (CMTimeCompare(seekedTime, weakSelf.lastSeekedTime) == NSOrderedSame) {
+	if (CMTimeCompare(seekedTime, weakSelf.moviePlayer.currentItem.duration) == NSOrderedDescending) {
+		//FXDLog(@"%@ %@", _Time(seekedTime), _Time(weakSelf.moviePlayer.currentItem.duration));
+		seekedTime = weakSelf.moviePlayer.currentItem.duration;
+	}
+
+
+	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
+	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
+
+	if (CMTimeCompare(currentTime, seekedTime) == NSOrderedSame) {
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
+		}
+		return;
+	}
+
+	if (CMTimeCompare(self.lastSeekedTime, seekedTime) == NSOrderedSame) {
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
 		}
@@ -170,12 +180,13 @@
 	}
 
 
-	weakSelf.lastSeekedTime = seekedTime;
+	self.lastSeekedTime = seekedTime;
 
 	[weakSelf.moviePlayer
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
-		 //FXDLogTime(seekedTime);
+		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
+		 FXDLog(@"%@", _Time(currentTime));
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, finished, nil);
