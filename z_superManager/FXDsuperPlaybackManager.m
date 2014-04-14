@@ -111,6 +111,17 @@
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 			  FXDLogVariable(movieItem.status);
 
+#warning //TODO: Alert about item status failure
+			  //TEST:
+			  /*
+			  if (movieItem.status != AVPlayerItemStatusReadyToPlay) {
+				  if (finishCallback) {
+					  finishCallback(_cmd, NO, nil);
+				  }
+				  return;
+			  }
+			   */
+
 
 			  weakSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 
@@ -121,7 +132,8 @@
 
 			  [weakSelf.mainPlaybackDisplay setFrame:weakSelf.mainPlaybackDisplay.superview.bounds];
 
-			  
+
+#warning //TODO: Check if initial seeking is necessary
 			  [weakSelf configurePlaybackObservers];
 
 			  if (finishCallback) {
@@ -169,19 +181,28 @@
 }
 
 #pragma mark -
-- (void)startSeekingToProgressedPercentage:(Float64)progressedPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
-
+- (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
 	__weak typeof(self) weakSelf = self;
 
-	CMTime seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressedPercentage);
-	//FXDLog(@"%@ %@ %@", _Variable(progressedPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
+	CMTime seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressPercentage);
+	//FXDLog(@"%@ %@ %@", _Variable(progressPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
 
 	[weakSelf startSeekingToTime:seekedTime withFinishCallback:finishCallback];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
-
 	__weak typeof(self) weakSelf = self;
+
+	if (weakSelf.moviePlayer.status != AVPlayerStatusReadyToPlay
+		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+		FXDLog_DEFAULT;
+		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
+
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
+		}
+		return;
+	}
 
 
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];

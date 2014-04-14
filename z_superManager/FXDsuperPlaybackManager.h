@@ -37,7 +37,7 @@
 
 - (void)configurePlaybackObservers;
 
-- (void)startSeekingToProgressedPercentage:(Float64)progressedPercentage withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
