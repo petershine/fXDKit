@@ -89,11 +89,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 	
 	NSInteger numberOfItems = [self numberOfItemsForScrollView:collectionView atSection:section];
-	
-	if (numberOfItems == 0) {	FXDLog_OVERRIDE;
-		FXDLogVariable(numberOfItems);
-	}
-	
+
 	return numberOfItems;
 }
 
