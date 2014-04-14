@@ -170,23 +170,18 @@
 
 #pragma mark -
 - (void)startSeekingToProgressedPercentage:(Float64)progressedPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
-	CMTime seekedTime = CMTimeMultiplyByFloat64(self.moviePlayer.currentItem.duration, progressedPercentage);
 
+	__weak typeof(self) weakSelf = self;
+
+	CMTime seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressedPercentage);
 	//FXDLog(@"%@ %@ %@", _Variable(progressedPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
 
-	[self
-	 startSeekingToTime:seekedTime
-	 withFinishCallback:finishCallback];
+	[weakSelf startSeekingToTime:seekedTime withFinishCallback:finishCallback];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	__weak typeof(self) weakSelf = self;
-
-	if (CMTimeCompare(seekedTime, weakSelf.moviePlayer.currentItem.duration) == NSOrderedDescending) {
-		//FXDLog(@"%@ %@", _Time(seekedTime), _Time(weakSelf.moviePlayer.currentItem.duration));
-		seekedTime = weakSelf.moviePlayer.currentItem.duration;
-	}
 
 
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
