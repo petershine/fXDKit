@@ -38,6 +38,9 @@
 
 	[_moviePlayer removeTimeObserver:_periodicObserver];
 	_periodicObserver = nil;
+
+	[[NSNotificationCenter defaultCenter] removeObserver:_playerItemObserver];
+	 _playerItemObserver = nil;
 }
 
 
@@ -107,12 +110,11 @@
 
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 			  FXDLogVariable(movieItem.status);
-			  
-			  
+
+
 			  weakSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 
 			  [weakSelf.mainPlaybackDisplay setMainPlayer:weakSelf.moviePlayer];
-
 
 			  [scene.view addSubview:weakSelf.mainPlaybackDisplay];
 			  [scene.view sendSubviewToBack:weakSelf.mainPlaybackDisplay];
@@ -150,6 +152,31 @@
 
 		 weakSelf.playbackProgressTime = time;
 	 }];
+
+	weakSelf.playerItemObserver =
+	[[NSNotificationCenter defaultCenter]
+	 addObserverForName:AVPlayerItemDidPlayToEndTimeNotification
+	 object:nil
+	 queue:nil
+	 usingBlock:^(NSNotification *note) {
+		 FXDLog_BLOCK(weakSelf, _cmd);
+		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
+		 CMTime duration = weakSelf.moviePlayer.currentItem.duration;
+		 FXDLog(@"%@ %@ %@", _Time(currentTime), _Time(duration), _Time(weakSelf.playbackProgressTime));
+
+		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+	 }];
+}
+
+#pragma mark -
+- (void)startSeekingToProgressedPercentage:(Float64)progressedPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
+	CMTime seekedTime = CMTimeMultiplyByFloat64(self.moviePlayer.currentItem.duration, progressedPercentage);
+
+	//FXDLog(@"%@ %@ %@", _Variable(progressedPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
+
+	[self
+	 startSeekingToTime:seekedTime
+	 withFinishCallback:finishCallback];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
@@ -185,8 +212,7 @@
 	[weakSelf.moviePlayer
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
-		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
-		 FXDLog(@"%@", _Time(currentTime));
+		 //FXDLog(@"%@", _Time([weakSelf.moviePlayer.currentItem currentTime]));
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, finished, nil);

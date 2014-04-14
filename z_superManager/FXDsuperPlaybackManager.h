@@ -8,7 +8,7 @@
 
 #ifndef periodicintervalDefault
 	#warning //MARK: Make sure it's not bad for performance
-	#define periodicintervalDefault	CMTimeMake(1.0, doubleOneBillion)
+	#define periodicintervalDefault	CMTimeMake(1, (NSInteger)doubleOneBillion)
 #endif
 
 
@@ -27,6 +27,8 @@
 @property (strong, nonatomic) AVPlayer *moviePlayer;
 @property (strong, nonatomic) id periodicObserver;
 
+@property (strong, nonatomic) id playerItemObserver;
+
 @property (strong, nonatomic) FXDviewVideoDisplay *mainPlaybackDisplay;
 
 
@@ -34,6 +36,8 @@
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)configurePlaybackObservers;
+
+- (void)startSeekingToProgressedPercentage:(Float64)progressedPercentage withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
