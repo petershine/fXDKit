@@ -40,6 +40,7 @@
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;
+	FXDAssert_IsMainThread;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

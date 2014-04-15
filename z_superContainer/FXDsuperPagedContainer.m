@@ -14,18 +14,12 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-	//GUIDE: Remove observer, Deallocate timer, Nilify delegates, etc
+- (void)dealloc {	FXDLog_DEFAULT;
+	FXDAssert_IsMainThread;
 }
 
 
 #pragma mark - Initialization
-- (void)awakeFromNib {
-	[super awakeFromNib];
-	
-	//GUIDE: Initialize BEFORE LOADING View
-}
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 		

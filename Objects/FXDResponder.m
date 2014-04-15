@@ -14,8 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-    FXDLog_SEPARATE;
+- (void)dealloc {	FXDLog_SEPARATE;
+	FXDAssert_IsMainThread;
 }
 
 
@@ -23,8 +23,8 @@
 - (instancetype)init {
 	self = [super init];
 
-	if (self) {
-        FXDLog_SEPARATE;
+	if (self) {	FXDLog_SEPARATE;
+		FXDAssert_IsMainThread;
 	}
 
 	return self;

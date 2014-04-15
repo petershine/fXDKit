@@ -15,6 +15,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
+	[_mainWebview stopLoading];
 	[_mainWebview setDelegate:nil];
 }
 
