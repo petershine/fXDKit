@@ -30,6 +30,8 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 @interface NSURL (Added)
 + (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring;
 
++ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
+
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;
 

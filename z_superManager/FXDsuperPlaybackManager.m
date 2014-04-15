@@ -180,8 +180,9 @@
 
 	CMTime seekedTime = kCMTimeZero;
 
-	if (progressPercentage > 0.0) {
-		//MARK: Be careful not to divide it by zero
+	//MARK: Be careful about validity of time
+	if (CMTimeCompare(self.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
+		&& progressPercentage > 0.0) {
 		seekedTime = CMTimeMultiplyByFloat64(self.moviePlayer.currentItem.duration, progressPercentage);
 	}
 

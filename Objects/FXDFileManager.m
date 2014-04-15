@@ -32,6 +32,17 @@
 
 #pragma mark - Category
 @implementation NSFileManager (Added)
+- (void)clearTempDirectory {	FXDLog_DEFAULT;
+
+	NSArray *temporaryFileArray = [self contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
+	FXDLogObject(temporaryFileArray);
+
+	for (NSString *temporaryFile in temporaryFileArray) {
+		[self removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), temporaryFile] error:nil];
+	}
+}
+
+#pragma mark -
 - (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL {
 	
 	NSDirectoryEnumerator *fullEnumerator =

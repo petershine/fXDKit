@@ -43,6 +43,7 @@
 
 #define alphaValue03	0.3
 #define alphaValue05	0.5
+#define alphaValue08	0.8
 
 
 #define minimumTouchableDimension	44.0
