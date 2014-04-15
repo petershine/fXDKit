@@ -13,14 +13,12 @@
 #import "FXDsuperContainer.h"
 
 @interface FXDsuperPagedContainer : FXDsuperContainer <UIPageViewControllerDataSource, UIPageViewControllerDelegate> {
-	
 	NSMutableArray *_mainDataSource;
-
 	FXDPageViewController *_mainPageController;
 }
 
+// Properties
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
-
 @property (strong, nonatomic) FXDPageViewController *mainPageController;
 
 // IBOutlets

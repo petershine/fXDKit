@@ -20,6 +20,15 @@
 
 
 #pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {	FXDLog_SEPARATE;
+		FXDAssert_IsMainThread;
+	}
+
+	return self;
+}
 
 #pragma mark - Property overriding
 

@@ -174,7 +174,7 @@
 												#keypath,\
 												value);}
 
-	#define FXDAssert_IsMainThread	NSAssert([NSThread isMainThread], selfClassSelector)
+	#define FXDAssert_IsMainThread	NSAssert([NSThread isMainThread], nil)
 
 #else
 	#define FXDLog(__FORMAT__, ...)	{}

@@ -8,10 +8,7 @@
 
 
 @interface FXDsuperContainer : FXDViewController
-
-
 // IBOutlets
-
 
 #pragma mark - Segues
 

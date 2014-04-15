@@ -111,7 +111,9 @@
 - (instancetype)init {
 	self = [super init];
 
-	if (self) {
+	if (self) {	FXDLog_SEPARATE;
+		FXDAssert_IsMainThread;
+		
 		_cameraPosition = AVCaptureDevicePositionBack;
 		_flashMode = AVCaptureFlashModeAuto;
 		_videoOrientation = AVCaptureVideoOrientationPortrait;
