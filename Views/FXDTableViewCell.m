@@ -112,8 +112,8 @@
 	}
 	else {
 		if (self.backgroundImageview) {
-			[self.backgroundImageview removeFromSuperview];
 			
+			[self.backgroundImageview removeFromSuperview];
 			self.backgroundImageview = nil;
 			
 			self.selectionStyle = UITableViewCellSelectionStyleBlue;

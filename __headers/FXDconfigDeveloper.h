@@ -174,6 +174,8 @@
 												#keypath,\
 												value);}
 
+	#define FXDAssert_IsMainThread	NSAssert([NSThread isMainThread], selfClassSelector)
+
 #else
 	#define FXDLog(__FORMAT__, ...)	{}
 
@@ -215,6 +217,8 @@
 	#define FXDLog_BLOCK(instance, caller)
 
 	#define FXDLog_REACT(keypath, value)
+
+	#define FXDAssert_IsMainThread
 
 #endif
 

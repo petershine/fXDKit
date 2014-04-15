@@ -277,7 +277,7 @@
 	FXDLog(@"%@ %@", _Object(messageViewClass), _Object(nibName));
 	
 	applicationWindow.messageView = [messageViewClass viewFromNibName:nibName];
-	applicationWindow.messageView.mainCallback = clickedButtonAtIndexBlock;
+	applicationWindow.messageView.alertCallback = clickedButtonAtIndexBlock;
 	
 	CGRect modifiedFrame = applicationWindow.messageView.frame;
 	modifiedFrame.size = applicationWindow.frame.size;

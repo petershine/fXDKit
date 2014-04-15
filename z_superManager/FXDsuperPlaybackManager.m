@@ -31,6 +31,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
+	FXDAssert_IsMainThread;
+
 	[_mainPlaybackDisplay setMainPlayer:nil];
 	[_mainPlaybackDisplay removeFromSuperview];
 
@@ -73,9 +75,6 @@
 #pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	__weak typeof(self) weakSelf = self;
-
-
 	AVURLAsset *movieAsset = [AVURLAsset
 							  URLAssetWithURL:movieFileURL
 							  options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
@@ -109,36 +108,30 @@
 
 
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
-			  FXDLogVariable(movieItem.status);
 
-#warning //TODO: Alert about item status failure
-			  //TEST:
-			  /*
-			  if (movieItem.status != AVPlayerItemStatusReadyToPlay) {
-				  if (finishCallback) {
-					  finishCallback(_cmd, NO, nil);
-				  }
-				  return;
-			  }
-			   */
+			  self.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
+
+			  [self.mainPlaybackDisplay setMainPlayer:self.moviePlayer];
+
+			  [scene.view addSubview:self.mainPlaybackDisplay];
+			  [scene.view sendSubviewToBack:self.mainPlaybackDisplay];
+
+			  [self.mainPlaybackDisplay setFrame:self.mainPlaybackDisplay.superview.bounds];
 
 
-			  weakSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
+			  __weak typeof(self) weakSelf = self;
 
-			  [weakSelf.mainPlaybackDisplay setMainPlayer:weakSelf.moviePlayer];
+			  [weakSelf
+			   startSeekingToProgressPercentage:0.0
+			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+				   FXDLog_BLOCK(weakSelf, caller);
 
-			  [scene.view addSubview:weakSelf.mainPlaybackDisplay];
-			  [scene.view sendSubviewToBack:weakSelf.mainPlaybackDisplay];
+				   [weakSelf configurePlaybackObservers];
 
-			  [weakSelf.mainPlaybackDisplay setFrame:weakSelf.mainPlaybackDisplay.superview.bounds];
-
-
-#warning //TODO: Check if initial seeking is necessary
-			  [weakSelf configurePlaybackObservers];
-
-			  if (finishCallback) {
-				  finishCallback(_cmd, YES, nil);
-			  }
+				   if (finishCallback) {
+					   finishCallback(_cmd, YES, nil);
+				   }
+			   }];
 		  }];
 	 }];
 }
@@ -148,7 +141,6 @@
 	
 	__weak typeof(self) weakSelf = self;
 
-	//MARK: Probably this would make processing slower, enlarge the interval
 	FXDLogTime(periodicintervalDefault);
 
 	weakSelf.periodicObserver =
@@ -172,9 +164,12 @@
 	 queue:nil
 	 usingBlock:^(NSNotification *note) {
 		 FXDLog_BLOCK(weakSelf, _cmd);
+
+#if ForDEVELOPER
 		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 CMTime duration = weakSelf.moviePlayer.currentItem.duration;
 		 FXDLog(@"%@ %@ %@", _Time(currentTime), _Time(duration), _Time(weakSelf.playbackProgressTime));
+#endif
 
 		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 	 }];
@@ -182,21 +177,27 @@
 
 #pragma mark -
 - (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
-	__weak typeof(self) weakSelf = self;
 
-	CMTime seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressPercentage);
-	//FXDLog(@"%@ %@ %@", _Variable(progressPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
+	CMTime seekedTime = kCMTimeZero;
 
-	[weakSelf startSeekingToTime:seekedTime withFinishCallback:finishCallback];
+	if (progressPercentage > 0.0) {
+		//MARK: Be careful not to divide it by zero
+		seekedTime = CMTimeMultiplyByFloat64(self.moviePlayer.currentItem.duration, progressPercentage);
+	}
+
+	if (progressPercentage == 0.0) {
+		FXDLog(@"%@ %@ %@", _Variable(progressPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
+	}
+
+	[self startSeekingToTime:seekedTime withFinishCallback:finishCallback];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
-	__weak typeof(self) weakSelf = self;
 
-	if (weakSelf.moviePlayer.status != AVPlayerStatusReadyToPlay
-		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+	if (self.moviePlayer.status != AVPlayerStatusReadyToPlay
+		&& self.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
 		FXDLog_DEFAULT;
-		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
+		FXDLog(@"%@ %@", _Variable(self.moviePlayer.status), _Variable(self.moviePlayer.currentItem.status));
 
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
@@ -205,7 +206,7 @@
 	}
 
 
-	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
+	CMTime currentTime = [self.moviePlayer.currentItem currentTime];
 	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
 
 	if (CMTimeCompare(currentTime, seekedTime) == NSOrderedSame) {
@@ -225,7 +226,7 @@
 
 	self.lastSeekedTime = seekedTime;
 
-	[weakSelf.moviePlayer
+	[self.moviePlayer
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
 		 //FXDLog(@"%@", _Time([weakSelf.moviePlayer.currentItem currentTime]));

@@ -176,7 +176,6 @@
 }
 
 - (NSString*)fileSizeString {
-	
 	NSNumber *fileSize = nil;
 
 	NSError *error = nil;
