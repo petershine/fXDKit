@@ -46,7 +46,7 @@
 #define alphaValue08	0.8
 
 
-#define minimumTouchableDimension	44.0
+#define dimensionMinimumTouchable	44.0
 
 
 //MARK: These can be changed dynamically
