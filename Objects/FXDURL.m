@@ -59,17 +59,6 @@
 	return isValid;
 }
 
-+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix {
-	NSString *filename = [NSString uniqueFilenameWithWithPrefix:prefix forType:(__bridge CFStringRef)filetypeVideoDefault];
-
-	NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
-
-	NSURL *movieFileURL = [NSURL fileURLWithPath:filePath];
-	FXDLogObject(movieFileURL);
-
-	return movieFileURL;
-}
-
 #pragma mark -
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {
 	NSArray *ubiquitousItemKeys =
@@ -196,5 +185,18 @@
 	
 	return formattedString;
 }
+
+#if USE_MultimediaFrameworks
++ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix {
+	NSString *filename = [NSString uniqueFilenameWithWithPrefix:prefix forType:(__bridge CFStringRef)filetypeVideoDefault];
+
+	NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+
+	NSURL *movieFileURL = [NSURL fileURLWithPath:filePath];
+	FXDLogObject(movieFileURL);
+
+	return movieFileURL;
+}
+#endif
 
 @end

@@ -7,7 +7,7 @@
 //
 
 
-@interface FXDsuperAPIclient : FXDObject {
+@interface FXDsuperAPIclient : FXDsuperManager {
 	NSString *_mainRootURLformat;
 	NSString *_mainAPIkey;
 	NSString *_mainJSONrootKey;

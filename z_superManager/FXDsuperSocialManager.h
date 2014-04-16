@@ -10,7 +10,7 @@
 #define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
 
 
-@interface FXDsuperSocialManager : FXDObject {
+@interface FXDsuperSocialManager : FXDsuperManager {
 	NSString *_typeIdentifier;
 	NSString *_reasonForConnecting;
 	NSDictionary *_initialAccessOptions;
