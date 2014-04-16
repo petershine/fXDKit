@@ -163,7 +163,7 @@
 	 object:nil
 	 queue:nil
 	 usingBlock:^(NSNotification *note) {
-		 FXDLog_BLOCK(weakSelf, _cmd);
+		 FXDLog_BLOCK([NSNotificationCenter defaultCenter], @selector(addObserverForName:object:queue:usingBlock:));
 
 #if ForDEVELOPER
 		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
