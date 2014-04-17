@@ -14,6 +14,12 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindMovie
 };
 
+#if USE_MultimediaFrameworks
+#ifndef filetypeVideoDefault
+	#define filetypeVideoDefault AVFileTypeQuickTimeMovie
+#endif
+#endif
+
 
 @interface FXDURL : NSURL
 
@@ -30,8 +36,6 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 @interface NSURL (Added)
 + (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring;
 
-+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
-
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;
 
@@ -44,5 +48,9 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 - (NSString*)followingPathInDocuments;
 
 - (NSString*)fileSizeString;
+
+#if USE_MultimediaFrameworks
++ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
+#endif
 
 @end

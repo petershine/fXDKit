@@ -7,7 +7,7 @@
 //
 
 
-@interface FXDsuperMessageManager : FXDObject <MFMailComposeViewControllerDelegate>
+@interface FXDsuperMessageManager : FXDsuperManager <MFMailComposeViewControllerDelegate>
 // Properties
 
 #pragma mark - Initialization
