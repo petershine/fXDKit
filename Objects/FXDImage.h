@@ -19,7 +19,6 @@
 
 
 #pragma mark - Category
-
 @interface UIImage (Added)
 
 + (UIImage*)bundledImageForName:(NSString*)imagename;

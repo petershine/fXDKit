@@ -15,6 +15,14 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL finished, id responseObj);
 
 typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
+typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
+	fileKindUndefined,
+	fileKindImage,
+	fileKindDocument,
+	fileKindAudio,
+	fileKindMovie
+};
+
 
 #pragma mark - Headers
 #import "FXDnumericalValues.h"
@@ -69,7 +77,7 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @interface UIColor (Added)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue;
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(CGFloat)alpha;
-+ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha;	// Use 0xFF0000 type
++ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha;
 @end
 
 
@@ -88,14 +96,16 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @end
 
 
+@interface UIScreen (Added)
++ (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
+@end
+
+
 #if USE_MultimediaFrameworks
 @interface UIDevice (Added)
 - (CGAffineTransform)affineTransformForOrientation;
 - (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
-
-- (CGRect)screenBoundsForOrientation;
-- (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 #endif
 

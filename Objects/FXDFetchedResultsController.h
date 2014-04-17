@@ -10,9 +10,7 @@
 @interface FXDFetchedResultsController : NSFetchedResultsController
 @property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> additionalDelegate;
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 
@@ -20,9 +18,9 @@
 
 @end
 
+
 #pragma mark - Category
 @interface NSFetchedResultsController (Added)
-- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
-- (FXDManagedObject*)resultObjForPredicate:(NSPredicate*)predicate;
-
+- (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
+- (NSManagedObject*)resultObjForPredicate:(NSPredicate*)predicate;
 @end

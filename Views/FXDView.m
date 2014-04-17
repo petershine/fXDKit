@@ -289,7 +289,8 @@
 #if USE_MultimediaFrameworks
 - (void)updateLayerForDeviceOrientation {
 	CGAffineTransform affineTransform = [[UIDevice currentDevice] affineTransformForOrientation];
-	CGRect screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
+
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
 	[self updateLayerForDeviceOrientationWithAffineTransform:affineTransform andWithScreenBounds:screenBounds];
 }

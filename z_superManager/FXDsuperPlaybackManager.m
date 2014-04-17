@@ -57,7 +57,7 @@
 
 	FXDLog_DEFAULT;
 
-	CGRect screenBounds = [[UIDevice currentDevice] screenBoundsForOrientation];
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
 	_mainPlaybackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
 	_mainPlaybackDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;

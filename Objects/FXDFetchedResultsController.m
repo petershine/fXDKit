@@ -30,20 +30,20 @@
 
 @end
 
-#pragma mark - Category
-@implementation FXDFetchedResultsController (Added)
-- (FXDManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {
+
+@implementation NSFetchedResultsController (Added)
+- (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {
 
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
 
-	FXDManagedObject *resultObj = [self resultObjForPredicate:predicate];
+	NSManagedObject *resultObj = [self resultObjForPredicate:predicate];
 
 	return resultObj;
 }
 
-- (FXDManagedObject*)resultObjForPredicate:(NSPredicate*)predicate {
+- (NSManagedObject*)resultObjForPredicate:(NSPredicate*)predicate {
 
-	FXDManagedObject *resultObj = nil;
+	NSManagedObject *resultObj = nil;
 
 	if ([self.fetchedObjects count] > 0) {
 		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
@@ -59,5 +59,4 @@
 
 	return resultObj;
 }
-
 @end

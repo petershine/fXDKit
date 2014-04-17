@@ -194,7 +194,7 @@
 			alpha:alpha];
 }
 
-+ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha {
++ (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha {	// Use 0xFF0000 type
 	return [UIColor
 			colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16))/255.0
 			green:((CGFloat)((rgbValue & 0xFF00) >> 8))/255.0
@@ -258,9 +258,25 @@
 }
 @end
 
+@implementation UIScreen (Added)
++ (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
+
+	CGRect screenBounds = [[self class] mainScreen].bounds;
+
+	CGFloat screenWidth = screenBounds.size.width;
+	CGFloat screenHeight = screenBounds.size.height;
+
+	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
+		screenBounds.size.width = screenHeight;
+		screenBounds.size.height = screenWidth;
+	}
+
+	return screenBounds;
+}
+@end
+
 
 #if USE_MultimediaFrameworks
-#pragma mark -
 @implementation UIDevice (Added)
 - (CGAffineTransform)affineTransformForOrientation {
 
@@ -318,28 +334,6 @@
 	}
 
 	return affineTransform;
-}
-
-#pragma mark -
-- (CGRect)screenBoundsForOrientation {
-	CGRect screenBounds = [self screenBoundsForOrientation:self.orientation];
-
-	return screenBounds;
-}
-
-- (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
-
-	CGRect screenBounds = [UIScreen mainScreen].bounds;
-
-	CGFloat screenWidth = screenBounds.size.width;
-	CGFloat screenHeight = screenBounds.size.height;
-
-	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
-		screenBounds.size.width = screenHeight;
-		screenBounds.size.height = screenWidth;
-	}
-
-	return screenBounds;
 }
 @end
 

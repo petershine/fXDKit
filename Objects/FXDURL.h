@@ -6,20 +6,6 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
-	fileKindUndefined,
-	fileKindImage,
-	fileKindDocument,
-	fileKindAudio,
-	fileKindMovie
-};
-
-#if USE_MultimediaFrameworks
-#ifndef filetypeVideoDefault
-	#define filetypeVideoDefault AVFileTypeQuickTimeMovie
-#endif
-#endif
-
 
 @interface FXDURL : NSURL
 
@@ -50,6 +36,10 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 - (NSString*)fileSizeString;
 
 #if USE_MultimediaFrameworks
+#ifndef filetypeVideoDefault
+	#define filetypeVideoDefault AVFileTypeQuickTimeMovie
+#endif
+
 + (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
 #endif
 
