@@ -16,16 +16,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {
-		FXDLog_SEPARATE;
-	}
-
-	return self;
-}
-
 + (FXDsuperGlobalManager*)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
@@ -298,7 +288,7 @@
 
 - (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	void (^ManagerDidPrepareBlock)(void) = ^(void){
+	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
 		[self incrementAppLaunchCount];
 		
 		[self configureUserDefaultsInfo];

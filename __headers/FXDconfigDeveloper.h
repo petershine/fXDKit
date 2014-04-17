@@ -70,7 +70,7 @@
 						[error userInfo]]
 
 #define _IsMainThread	[NSString\
-						stringWithFormat:@"mainQueue: %@",\
+						stringWithFormat:@"mainThread: %@",\
 						([NSThread isMainThread] ? @"YES":@"NO")]
 
 
@@ -101,12 +101,13 @@
 	#define FXDLogTime(time)			FXDLog(@"%@", _Time(time))
 	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _TimeRange(timeRange))
 
-	#define FXDLog_IsMainThread	FXDLog(@"THREAD %@", _IsMainThread)
 
-	#define FXDLog_IsCurrentQueueMain	BOOL isCurrentQueueMain =\
-										([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]);\
-										if (isCurrentQueueMain == NO) {\
-											FXDLog(@"%@ [%@ %@]", _BOOL(isCurrentQueueMain), [self class], _SimpleSelector(_cmd));}
+	#define FXDLog_IsMainThread	if ([NSThread isMainThread] == NO) {\
+									FXDLog(@"%@ [%@ %@]",\
+									_BOOL([NSThread isMainThread]),\
+									[self class],\
+									_SimpleSelector(_cmd));}
+
 
 	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
 								&& intervalRemainingBackground != DBL_MAX) {\
@@ -196,7 +197,7 @@
 	#define FXDLogTimeRange(timeRange)
 
 	#define FXDLog_IsMainThread
-	#define FXDLog_IsCurrentQueueMain
+
 
 	#define FXDLog_REMAINING
 

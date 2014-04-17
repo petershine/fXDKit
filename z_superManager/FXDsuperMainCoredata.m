@@ -335,7 +335,6 @@
 	
 	
 	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
-		//MARK: Default is to skip
 		FXDLog_IsMainThread;
 		return nil;
 	}

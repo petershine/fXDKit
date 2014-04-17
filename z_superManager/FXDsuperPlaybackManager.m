@@ -83,7 +83,7 @@
 
 
 	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
-	FXDLog_IsCurrentQueueMain;
+	FXDLog_IsMainThread;
 
 	[movieAsset
 	 loadValuesAsynchronouslyForKeys:@[tracksKey]
