@@ -6,6 +6,10 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+#ifndef TEST_loggingViewDrawing
+	#define TEST_loggingViewDrawing	FALSE
+#endif
+
 
 @interface FXDView : UIView
 @property (nonatomic) CGRect initialViewFrame;

@@ -27,7 +27,7 @@
 	warningLabel.textColor = [UIColor whiteColor];
 	warningLabel.font = [UIFont boldSystemFontOfSize:20.0];
 	warningLabel.textAlignment = NSTextAlignmentCenter;
-	warningLabel.text = selfClassSelector;
+	warningLabel.text = _ClassSelectorSelf;
 
 	[self.view.window addSubview:warningLabel];
 
@@ -123,29 +123,29 @@
 
 - (NSUInteger)supportedInterfaceOrientations {
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	FXDLog(@"%@: %@", selfClassSelector, _Variable(supportedInterface));
+	FXDLog(@"%@: %@", _ClassSelectorSelf, _Variable(supportedInterface));
 
 	return supportedInterface;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
 	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
-	FXDLog(@"%@: %@", selfClassSelector, _Variable(preferredInterfaceOrientation));
+	FXDLog(@"%@: %@", _ClassSelectorSelf, _Variable(preferredInterfaceOrientation));
 
 	return preferredInterfaceOrientation;
 }
 
 #pragma mark -
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SimpleSelector(_cmd), (long)toInterfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
+	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)toInterfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SimpleSelector(_cmd), (long)interfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
+	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)interfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SimpleSelector(_cmd), (long)fromInterfaceOrientation, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds));
+	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)fromInterfaceOrientation, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 #endif
 

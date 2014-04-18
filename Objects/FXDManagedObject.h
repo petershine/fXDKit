@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#ifndef TEST_loggingManagedObject
+	#define TEST_loggingManagedObject	FALSE
+#endif
+
 
 @interface FXDManagedObject : NSManagedObject
 

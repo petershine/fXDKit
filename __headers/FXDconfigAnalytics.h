@@ -59,12 +59,12 @@
 
 	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
 
-	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@", selfClassSelector)
+	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@", _ClassSelectorSelf)
 	#define LOGEVENT_ERROR	if(error){\
 								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
 								parameters[@"file"] = @(__FILE__);\
 								parameters[@"line"] = @(__LINE__);\
-								LOGEVENT_FULL(selfClassSelector, parameters, NO);}
+								LOGEVENT_FULL(_ClassSelectorSelf, parameters, NO);}
 
 #else
 	#define LOGEVENT(__FORMAT__, ...)	{}

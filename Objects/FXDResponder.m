@@ -64,7 +64,7 @@
 #if ForDEVELOPER
 	if (launchOptions) {
 		[FXDAlertView
-		 showAlertWithTitle:selfClassSelector
+		 showAlertWithTitle:_ClassSelectorSelf
 		 message:[launchOptions description]
 		 cancelButtonTitle:nil
 		 withAlertCallback:nil];
@@ -115,7 +115,7 @@
 
 #if ForDEVELOPER
 	[FXDAlertView
-	 showAlertWithTitle:selfClassSelector
+	 showAlertWithTitle:_ClassSelectorSelf
 	 message:[userInfo description]
 	 cancelButtonTitle:nil
 	 withAlertCallback:nil];
@@ -137,7 +137,7 @@
 	FXDLogObject(parameters);
 
 	[FXDAlertView
-	 showAlertWithTitle:selfClassSelector
+	 showAlertWithTitle:_ClassSelectorSelf
 	 message:[parameters description]
 	 cancelButtonTitle:nil
 	 withAlertCallback:nil];

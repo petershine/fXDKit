@@ -51,12 +51,6 @@
 		resultObj = [filteredArray firstObject];
 	}
 
-#if TEST_loggingResultObjFiltering
-	if (resultObj == nil || [filteredArray count] > 1) {
-		FXDLog(@"%@ %@", _Object(predicate), _Variable([filteredArray count]));
-	}
-#endif
-
 	return resultObj;
 }
 @end

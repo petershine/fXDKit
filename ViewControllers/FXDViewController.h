@@ -6,6 +6,15 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#ifndef TEST_loggingMemoryWarning
+	#define TEST_loggingMemoryWarning	FALSE
+#endif
+
+#ifndef TEST_loggingRotatingOrientation
+	#define TEST_loggingRotatingOrientation	FALSE
+#endif
+
+
 #import "FXDViewController+BarButton.h"
 
 

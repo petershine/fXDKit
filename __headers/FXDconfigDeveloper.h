@@ -10,30 +10,6 @@
 
 
 #if DEBUG & ForDEVELOPER
-	#ifndef TEST_loggingViewDrawing
-		#define TEST_loggingViewDrawing	FALSE
-	#endif
-
-	#ifndef TEST_loggingResultObjFiltering
-		#define TEST_loggingResultObjFiltering	FALSE
-	#endif
-
-	#ifndef TEST_loggingManagedObject
-		#define TEST_loggingManagedObject	FALSE
-	#endif
-
-	#ifndef TEST_loggingManagedDocumentAutoSaving
-		#define TEST_loggingManagedDocumentAutoSaving	FALSE
-	#endif
-
-	#ifndef TEST_loggingRotatingOrientation
-		#define TEST_loggingRotatingOrientation	FALSE
-	#endif
-
-	#ifndef TEST_loggingMemoryWarning
-		#define TEST_loggingMemoryWarning	FALSE
-	#endif
-
 	#define USE_FXDLog	TRUE
 
 #else
@@ -57,11 +33,7 @@
 #define _TimeRange(timeRange)	[[NSString stringWithFormat:@"%s: %@", #timeRange, ValueOfTimeRange(timeRange)] replacedSelf]
 
 
-#define _SimpleSelector(selector)	[[NSStringFromSelector(selector)\
-									componentsSeparatedByString:@":"]\
-									firstObject]
-
-#define _CurrentError	[NSString\
+#define _Error(error)	[NSString\
 						stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@",\
 						__FILE__,\
 						__LINE__,\
@@ -74,12 +46,17 @@
 						([NSThread isMainThread] ? @"YES":@"NO")]
 
 
-#define formattedClassSelector(instance, selector)	[NSString\
-													stringWithFormat:@"[%@ %@]",\
-													NSStringFromClass([instance class]),\
-													NSStringFromSelector(selector)]
+#define _SelectorShort(selector)	[[NSStringFromSelector(selector)\
+									componentsSeparatedByString:@":"]\
+									firstObject]
 
-#define selfClassSelector	formattedClassSelector(self, _cmd)
+#define _ClassSelector(instance, selector)	[NSString\
+											stringWithFormat:@"[%@ %@]",\
+											NSStringFromClass([instance class]),\
+											NSStringFromSelector(selector)]
+
+#define _ClassSelectorSelf	_ClassSelector(self, _cmd)
+
 
 
 #if USE_FXDLog
@@ -101,12 +78,14 @@
 	#define FXDLogTime(time)			FXDLog(@"%@", _Time(time))
 	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _TimeRange(timeRange))
 
+	#define FXDLogError(error)			FXDLog(@"%@", _Error(error))
+
 
 	#define FXDLog_IsMainThread	if ([NSThread isMainThread] == NO) {\
 									FXDLog(@"%@ [%@ %@]",\
 									_BOOL([NSThread isMainThread]),\
 									[self class],\
-									_SimpleSelector(_cmd));}
+									_SelectorShort(_cmd));}
 
 
 	#define FXDLog_REMAINING	if ([UIApplication sharedApplication].backgroundTimeRemaining > 0.0\
@@ -116,31 +95,31 @@
 
 	#define FXDLog_DEFAULT	FXDLog_EMPTY;\
 							if ([NSThread isMainThread]) {\
-								FXDLog(@"%@", selfClassSelector);\
+								FXDLog(@"%@", _ClassSelectorSelf);\
 							} else {\
-								FXDLog(@"%@ %@", selfClassSelector, _IsMainThread);}
+								FXDLog(@"%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@ %@ %@", selfClassSelector, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
+							FXDLog(@"%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 
-	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", selfClassSelector)
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", selfClassSelector, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
+	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", _ClassSelectorSelf)
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
-							FXDLog(@"OVERRIDE: %@", selfClassSelector)
+							FXDLog(@"OVERRIDE: %@", _ClassSelectorSelf)
 
 
 	#define FXDLog_ERROR	if (error) {\
 								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
 								parameters[@"file"] = @(__FILE__);\
 								parameters[@"line"] = @(__LINE__);\
-								FXDLog(@"ERROR: %@\n%@", selfClassSelector, parameters);}
+								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, parameters);}
 
 	#define FXDLog_ERROR_ALERT if (error) {\
 									[FXDAlertView\
-									showAlertWithTitle:selfClassSelector\
-									message:_CurrentError\
+									showAlertWithTitle:_ClassSelectorSelf\
+									message:_Error(error)\
 									cancelButtonTitle:nil\
 									withAlertCallback:nil];}
 
@@ -153,11 +132,11 @@
 												if ([NSThread isMainThread]) {\
 													FXDLog(@"BLOCK: [%@ %@]",\
 													[instance class],\
-													_SimpleSelector(caller));\
+													_SelectorShort(caller));\
 												} else {\
 													FXDLog(@"BLOCK: [%@ %@] %@",\
 													[instance class],\
-													_SimpleSelector(caller),\
+													_SelectorShort(caller),\
 													_IsMainThread);}
 
 
@@ -196,6 +175,9 @@
 	#define FXDLogTime(time)
 	#define FXDLogTimeRange(timeRange)
 
+	#define FXDLogError(error)
+
+
 	#define FXDLog_IsMainThread
 
 
@@ -220,22 +202,6 @@
 	#define FXDLog_REACT(keypath, value)
 
 	#define FXDAssert_IsMainThread
-
-#endif
-
-
-#if TEST_loggingManagedDocumentAutoSaving
-	#ifndef FXDdocLog
-		#define FXDdocLog	FXDLog
-	#endif
-
-	#ifndef FXDdocLog_DEFAULT
-		#define FXDdocLog_DEFAULT	FXDLog_DEFAULT
-	#endif
-
-#else
-	#define FXDdocLog(__FORMAT__, ...)	{}
-	#define FXDdocLog_DEFAULT
 
 #endif
 

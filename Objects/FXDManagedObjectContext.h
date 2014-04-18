@@ -6,6 +6,11 @@
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
+#ifndef TEST_loggingResultObjFiltering
+	#define TEST_loggingResultObjFiltering	FALSE
+#endif
+
+
 #ifndef limitInfiniteFetch
 	#define limitInfiniteFetch	0
 #endif
