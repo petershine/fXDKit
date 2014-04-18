@@ -166,7 +166,8 @@
 	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedPath error:&error];
 	FXDLogBOOL(didCopy);
 
-	FXDLog_ERROR;FXDLog_ERROR_ALERT;
+	FXDLog_ERROR;
+	FXDLog_ERROR_ALERT;
 
 	return didCopy;
 }
@@ -232,7 +233,8 @@
 			  FXDLog(@"2.%@", _BOOL(didConfigure));
 
 			  //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
-			  FXDLog_ERROR;FXDLog_ERROR_ALERT;
+			  FXDLog_ERROR;
+			  FXDLog_ERROR_ALERT;
 
 			  //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
 			  //TODO: prepare what to do when Core Data is not setup
@@ -534,8 +536,9 @@
 	
 	void (^ManagedContextSavingBlock)(void) = ^{
 		NSError *error = nil;
-		BOOL didSave = [managedContext save:&error];FXDLog_ERROR;
-		
+		BOOL didSave = [managedContext save:&error];
+		FXDLog_ERROR;
+
 		FXDLog_DEFAULT;
 		FXDLog(@"%@ %@", _BOOL(didSave), _Variable(managedContext.concurrencyType));
 		FXDLog(@"4.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));

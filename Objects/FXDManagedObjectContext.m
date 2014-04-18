@@ -52,7 +52,8 @@
 		
 		
 		NSError *error = nil;
-		BOOL didPerformFetch = [resultsController performFetch:&error];FXDLog_ERROR;
+		BOOL didPerformFetch = [resultsController performFetch:&error];
+		FXDLog_ERROR;
 		
 		if (didPerformFetch == NO) {
 			FXDLog(@"%@ %@", _BOOL(didPerformFetch), _Variable(self.concurrencyType));
@@ -88,7 +89,8 @@
 	if (fetchRequest) {
 
 		NSError *error = nil;
-		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];	FXDLog_ERROR;
+		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];
+		FXDLog_ERROR;
 
 #if TEST_loggingResultObjFiltering
 		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {

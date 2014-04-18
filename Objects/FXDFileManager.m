@@ -34,11 +34,16 @@
 @implementation NSFileManager (Added)
 - (void)clearTempDirectory {	FXDLog_DEFAULT;
 
-	NSArray *temporaryFileArray = [self contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
-	FXDLogObject(temporaryFileArray);
+	NSError *error = nil;
+	NSArray *clearedFileArray = [self contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error];
+	FXDLog_ERROR;
 
-	for (NSString *temporaryFile in temporaryFileArray) {
-		[self removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), temporaryFile] error:nil];
+	FXDLogObject(clearedFileArray);
+
+	for (NSString *temporaryFile in clearedFileArray) {
+		NSError *error = nil;
+		[self removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), temporaryFile] error:&error];
+		FXDLog_ERROR;
 	}
 }
 
@@ -95,7 +100,8 @@
 		id isDirectory = nil;
 
 		NSError *error = nil;
-		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERROR;
+		[nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+		FXDLog_ERROR;
 		
 		if ([isDirectory boolValue]) {	//MARK: recursively called
 			NSMutableDictionary *subInfoDictionary = [self infoDictionaryForFolderURL:nextURL];

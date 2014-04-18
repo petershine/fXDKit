@@ -238,9 +238,8 @@
 		AVCaptureDevice *audioCapture = [devices firstObject];
 
 		NSError *error = nil;
-		_deviceInputAudio = [[AVCaptureDeviceInput alloc]
-							  initWithDevice:audioCapture
-							  error:&error];FXDLog_ERROR;
+		_deviceInputAudio = [[AVCaptureDeviceInput alloc] initWithDevice:audioCapture error:&error];
+		FXDLog_ERROR;
 	}
 
 	return _deviceInputAudio;

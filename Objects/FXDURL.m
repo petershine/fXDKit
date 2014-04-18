@@ -92,10 +92,12 @@
 - (NSDictionary*)fullResourceValues {
 
 	NSError *error = nil;
-	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];FXDLog_ERROR;
+	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];
+	FXDLog_ERROR;
 
 	error = nil;
-	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];FXDLog_ERROR;
+	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];
+	FXDLog_ERROR;
 	
 	return resourceValues;	
 }
@@ -109,8 +111,8 @@
 	NSDate *attributeModificationDate = nil;
 
 	NSError *error = nil;
-	//[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];FXDLog_ERROR;
-	[self getResourceValue:&attributeModificationDate forKey:NSURLCreationDateKey error:&error];FXDLog_ERROR;
+	[self getResourceValue:&attributeModificationDate forKey:NSURLAttributeModificationDateKey error:&error];
+	FXDLog_ERROR;
 	
 	return attributeModificationDate;
 }
@@ -121,7 +123,8 @@
 	NSString *typeIdentifier = nil;
 
 	NSError *error = nil;
-	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];FXDLog_ERROR_ignored(260);
+	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];
+	FXDLog_ERROR_ignored(260);
 	
 	if ([typeIdentifier isEqual:(NSString*)kUTTypeImage]
 		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG]
@@ -179,7 +182,8 @@
 	NSNumber *fileSize = nil;
 
 	NSError *error = nil;
-	[self getResourceValue:&fileSize forKey:NSURLFileSizeKey error:&error];FXDLog_ERROR;
+	[self getResourceValue:&fileSize forKey:NSURLFileSizeKey error:&error];
+	FXDLog_ERROR;
 
 	NSString *formattedString = [fileSize byteUnitFormatted];
 	
