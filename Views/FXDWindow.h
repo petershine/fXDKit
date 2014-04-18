@@ -6,10 +6,6 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#define notificationFXDWindowShouldFadeInProgressView	@"notificationFXDWindowShouldFadeInProgressView"
-#define notificationFXDWindowShouldFadeOutProgressView	@"notificationFXDWindowShouldFadeOutProgressView"
-
-
 #ifndef classnameProgressView
 	#define classnameProgressView	@"FXDsuperProgressView"
 #endif
@@ -37,10 +33,7 @@
 
 #pragma mark - Public
 
-
 //MARK: - Observer implementation
-- (void)observedFXDWindowShouldFadeInProgressView:(NSNotification*)notification;
-- (void)observedFXDWindowShouldFadeOutProgressView:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 
@@ -52,8 +45,8 @@
 + (instancetype)instantiateDefaultWindow;
 + (instancetype)applicationWindow;
 
-- (void)prepareWithLaunchImageController:(FXDsuperLaunchScene*)launchImageController;
-- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeRootViewControllerBlock:(void(^)(void))willBecomeRootViewControllerBlock didBecomeRootViewControllerBlock:(void(^)(void))didBecomeRootViewControllerBlock finishedAnimationBlock:(void(^)(void))finishedAnimationBlock;
+- (void)prepareWindowWithLaunchScene:(FXDsuperLaunchScene*)launchScene;
+- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 @end
 

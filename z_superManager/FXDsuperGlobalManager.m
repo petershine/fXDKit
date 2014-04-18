@@ -510,14 +510,20 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogRect([UIApplication sharedApplication].statusBarFrame);
-	FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
+- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {
+
+	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
+		FXDLogRect([UIApplication sharedApplication].statusBarFrame);
+		FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
+	}
 }
 
-- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogRect([UIApplication sharedApplication].statusBarFrame);
-	FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
+- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {
+
+	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
+		FXDLogRect([UIApplication sharedApplication].statusBarFrame);
+		FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
+	}
 }
 
 #pragma mark -

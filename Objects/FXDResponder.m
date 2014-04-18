@@ -154,7 +154,7 @@
 	<#APP_PREFIX#>sceneLaunch *launchScene = [globalManager.mainStoryboard instantiateViewControllerWithIdentifier:sceneidentifierLaunch];
 
 	self.window = [FXDWindow instantiateDefaultWindow];
-	[self.window prepareWithLaunchImageController:launchScene];
+	[self.window prepareWindowWithLaunchScene:launchScene];
 	[self.window makeKeyAndVisible];
 
 	[globalManager startUsageAnalyticsWithLaunchOptions:launchOptions];

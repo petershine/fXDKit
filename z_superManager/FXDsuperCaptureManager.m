@@ -341,9 +341,13 @@
 	}
 
 
-	FXDLog_DEFAULT;
+#if ForDEVELOPER
+	if ((AVCaptureVideoOrientation)deviceOrientation != self.videoOrientation) {	FXDLog_DEFAULT;
+		FXDLog(@"%@ %@", _Variable(deviceOrientation), _Variable(self.videoOrientation));
+	}
+#endif
+
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-	FXDLogVariable(self.videoOrientation);
 
 	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
 }
