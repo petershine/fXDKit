@@ -10,28 +10,8 @@
 #define FXDKit_FXDKit_h
 
 
-#pragma mark - Types
-typedef void (^FXDcallbackFinish)(SEL caller, BOOL finished, id responseObj);
-
-typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
-
-typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
-	fileKindUndefined,
-	fileKindImage,
-	fileKindDocument,
-	fileKindAudio,
-	fileKindMovie
-};
-
-typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
-	sectionPositionOne,
-	sectionPositionTop,
-	sectionPositionMiddle,
-	sectionPositionBottom
-};
-
-
 #pragma mark - Headers
+#import "FXDdefinedTypes.h"
 #import "FXDnumericalValues.h"
 #import "FXDlocalizedStrings.h"
 #import "FXDimageNames.h"

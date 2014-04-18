@@ -109,9 +109,9 @@
 									_SimpleSelector(_cmd));}
 
 
-	#define FXDLog_REMAINING	if (intervalRemainingBackground > 0.0\
-								&& intervalRemainingBackground != DBL_MAX) {\
-									FXDLogVariable(intervalRemainingBackground);}
+	#define FXDLog_REMAINING	if ([UIApplication sharedApplication].backgroundTimeRemaining > 0.0\
+								&& [UIApplication sharedApplication].backgroundTimeRemaining != DBL_MAX) {\
+									FXDLogVariable([UIApplication sharedApplication].backgroundTimeRemaining);}
 
 
 	#define FXDLog_DEFAULT	FXDLog_EMPTY;\

@@ -31,7 +31,6 @@
 
 #define intervalOneSecond	durationOneSecond
 
-#define intervalRemainingBackground	[UIApplication sharedApplication].backgroundTimeRemaining
 
 #define radiusCorner	5.0
 #define radiusBigCorner	8.0
@@ -49,12 +48,9 @@
 #define dimensionMinimumTouchable	44.0
 
 
-//MARK: These can be changed dynamically
 #define heightStatusBar	20.0
-#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
 
 
-//MARK: Assume these are identical
 #define heightNavigationBar	44.0
 #define heightToolBar	heightNavigationBar
 

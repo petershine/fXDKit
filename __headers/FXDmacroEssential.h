@@ -94,4 +94,7 @@
 #define radianAngleForDegree(degree)	(degree*(M_PI/180.0))
 
 
+#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
+
+
 #endif
