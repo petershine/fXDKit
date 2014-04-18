@@ -8,13 +8,6 @@
 
 
 @interface FXDNumber : NSNumber
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
 
 

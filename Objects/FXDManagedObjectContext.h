@@ -20,13 +20,6 @@
 
 
 @interface FXDManagedObjectContext : NSManagedObjectContext
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
 
 

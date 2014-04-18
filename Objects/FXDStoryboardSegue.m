@@ -32,7 +32,7 @@
 
 #pragma mark - Method overriding
 - (NSString*)description {
-	NSString *descriptionString = [[super description] stringByAppendingFormat:@" source: %@ destination: %@", self.sourceViewController, self.destinationViewController];
+	NSString *descriptionString = [[super description] stringByAppendingFormat:@" %@ %@", _Object(self.sourceViewController), _Object(self.destinationViewController)];
 
 	return descriptionString;
 }

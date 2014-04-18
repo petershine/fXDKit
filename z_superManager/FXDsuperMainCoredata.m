@@ -708,49 +708,25 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(FXDFetchedResultsController*)controller {
 	
-	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
-	
-	if (strongDelegate == nil) {
-		return;
-	}
-	
-	
+	__strong id<NSFetchedResultsControllerDelegate> strongDelegate = controller.extraDelegate;
 	[strongDelegate controllerWillChangeContent:controller];
 }
 
 - (void)controllerDidChangeContent:(FXDFetchedResultsController*)controller {
 	
-	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
-	
-	if (strongDelegate == nil) {
-		return;
-	}
-	
-	
+	__strong id<NSFetchedResultsControllerDelegate> strongDelegate = controller.extraDelegate;
 	[strongDelegate controllerDidChangeContent:controller];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 	
-	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
-	
-	if (strongDelegate == nil) {
-		return;
-	}
-	
-	
+	__strong id<NSFetchedResultsControllerDelegate> strongDelegate = controller.extraDelegate;
 	[strongDelegate controller:controller didChangeSection:sectionInfo atIndex:sectionIndex forChangeType:type];
 }
 
 - (void)controller:(FXDFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 	
-	__strong typeof(controller.additionalDelegate) strongDelegate = controller.additionalDelegate;
-	
-	if (strongDelegate == nil) {
-		return;
-	}
-	
-	
+	__strong id<NSFetchedResultsControllerDelegate> strongDelegate = controller.extraDelegate;	
 	[strongDelegate controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
 }
 

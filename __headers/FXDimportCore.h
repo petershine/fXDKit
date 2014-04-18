@@ -33,6 +33,7 @@
 #import "FXDString.h"
 #import "FXDURL.h"
 #import "FXDNumber.h"
+#import "FXDDate.h"
 
 #import "FXDImage.h"
 

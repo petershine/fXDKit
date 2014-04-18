@@ -36,25 +36,6 @@
 @end
 
 
-@interface NSDate (Added)
-+ (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
-+ (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;
-
-- (NSInteger)yearValue;
-- (NSInteger)monthValue;
-- (NSInteger)dayValue;
-
-- (NSString*)shortMonthString;
-- (NSString*)weekdayString;
-
-- (NSInteger)hourValue;
-- (NSInteger)minuteValue;
-- (NSInteger)secondValue;
-
-- (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
-@end
-
-
 @interface NSOperationQueue (Added)
 + (instancetype)newSerialQueue;
 @end
@@ -87,13 +68,13 @@
 @end
 
 
-#if USE_MultimediaFrameworks
 @interface UIDevice (Added)
-- (CGAffineTransform)affineTransformForOrientation;
-- (CGAffineTransform)affineTransformForOrientationAndForPosition:(AVCaptureDevicePosition)cameraPosition;
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
+
+#if USE_MultimediaFrameworks
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
-@end
 #endif
+@end
 
 
 #endif

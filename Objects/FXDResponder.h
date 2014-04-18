@@ -8,6 +8,7 @@
 
 
 @interface FXDResponder : UIResponder <UIApplicationDelegate>
+
 @property (nonatomic) BOOL isAppLaunching;
 @property (nonatomic) BOOL didFinishLaunching;
 

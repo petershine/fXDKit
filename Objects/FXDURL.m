@@ -9,25 +9,7 @@
 #import "FXDURL.h"
 
 
-#pragma mark - Public implementation
 @implementation FXDURL
-
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
-
-#pragma mark - Public
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
 
 
@@ -65,11 +47,7 @@
 	@[NSURLIsUbiquitousItemKey,
 	  NSURLUbiquitousItemHasUnresolvedConflictsKey,
 
-#if __IPHONE_7_0
 	  NSURLUbiquitousItemDownloadingStatusKey,
-#else
-	  NSURLUbiquitousItemIsDownloadedKey,
-#endif
 
 	  NSURLUbiquitousItemIsDownloadingKey,
 	  NSURLUbiquitousItemIsUploadedKey,

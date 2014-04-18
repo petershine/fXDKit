@@ -23,10 +23,10 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	if (self.mainResultsController && self.mainResultsController.additionalDelegate == nil) {
-		[self.mainResultsController setAdditionalDelegate:self];
+	if (self.mainResultsController && self.mainResultsController.extraDelegate == nil) {
+		[self.mainResultsController setExtraDelegate:self];
 
-		FXDLogObject(self.mainResultsController.additionalDelegate);
+		FXDLogObject(self.mainResultsController.extraDelegate);
 	}
 	
 	if (self.mainScrollview) {
@@ -153,8 +153,8 @@
 	if (parent == nil) {
 		[self.cellOperationQueue resetOperationQueue];
 		
-		if (self.mainResultsController.additionalDelegate == self) {
-			[self.mainResultsController setAdditionalDelegate:nil];
+		if (self.mainResultsController.extraDelegate == self) {
+			[self.mainResultsController setExtraDelegate:nil];
 		}
 		
 		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {

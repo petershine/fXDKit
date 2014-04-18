@@ -9,26 +9,9 @@
 #import "FXDMetadataQuery.h"
 
 
-#pragma mark - Public implementation
 @implementation FXDMetadataQuery
-
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
-
-#pragma mark - Public
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
+
 
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)

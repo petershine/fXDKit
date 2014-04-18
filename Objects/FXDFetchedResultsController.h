@@ -8,7 +8,9 @@
 
 
 @interface FXDFetchedResultsController : NSFetchedResultsController
-@property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> additionalDelegate;
+
+@property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> extraDelegate;
+
 
 #pragma mark - Public
 
