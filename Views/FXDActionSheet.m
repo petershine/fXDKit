@@ -15,11 +15,10 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
 	FXDLogObject(_alertCallback);
-
 	_alertCallback = nil;
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
