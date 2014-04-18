@@ -85,7 +85,6 @@
 #pragma mark - Global controllers
 #import "FXDResponder.h"
 
-
-typedef FXDObject FXDsuperManager;
+#import "FXDsuperManager.h"
 
 #endif

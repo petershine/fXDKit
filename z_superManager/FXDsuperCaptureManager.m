@@ -111,7 +111,7 @@
 - (instancetype)init {
 	self = [super init];
 
-	if (self) {	FXDLog_SEPARATE;
+	if (self) {
 		FXDAssert_IsMainThread;
 		
 		_cameraPosition = AVCaptureDevicePositionBack;
@@ -121,12 +121,6 @@
 
 	return self;
 }
-
-#pragma mark -
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
 
 #pragma mark - Property overriding
 - (AVCaptureSession*)mainCaptureSession {

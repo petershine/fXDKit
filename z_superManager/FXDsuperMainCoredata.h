@@ -60,8 +60,6 @@
 
 
 #pragma mark - Public
-+ (instancetype)sharedInstance;
-
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
 - (BOOL)isSqliteAlreadyStored;

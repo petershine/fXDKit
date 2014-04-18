@@ -16,20 +16,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {
-		FXDLog_SEPARATE;
-	}
-
-	return self;
-}
-
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
 
 #pragma mark - Property overriding
 //MARK: Override if using extra data model

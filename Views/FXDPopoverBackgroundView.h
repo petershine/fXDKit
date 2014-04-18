@@ -25,8 +25,6 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (instancetype)sharedInstance;
-
 + (CGFloat)minimumInset;
 
 

@@ -37,10 +37,6 @@
     return self;
 }
 
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
 
 #pragma mark - Property overriding
 - (CGFloat)arrowOffset {

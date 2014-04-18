@@ -60,6 +60,7 @@
 										static id _sharedInstance = nil;\
 										dispatch_once(&once,^{\
 											_sharedInstance = [[self class] new];\
+											FXDLog(@"\n\n	%@: %@", selfClassSelector, _sharedInstance);\
 										});\
 										return _sharedInstance
 

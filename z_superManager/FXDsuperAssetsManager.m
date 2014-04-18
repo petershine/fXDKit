@@ -23,21 +23,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-	
-	if (self) {
-		FXDLog_SEPARATE;
-	}
-	
-	return self;
-}
-
-#pragma mark -
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
 
 #pragma mark - Property overriding
 - (ALAssetsLibrary*)mainAssetsLibrary {

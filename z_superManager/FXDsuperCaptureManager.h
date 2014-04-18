@@ -41,8 +41,6 @@
 
 
 #pragma mark - Initialization
-+ (instancetype)sharedInstance;
-
 
 #pragma mark - Public
 - (void)prepareCaptureManagerWithScene:(UIViewController*)scene;
