@@ -31,13 +31,13 @@
 
 @implementation NSError (Added)
 - (NSDictionary*)essentialParameters {
-	NSDictionary *parameters =
-	@{
-	  @"localizedDescription": (([self localizedDescription]) ? [self localizedDescription]:@""),
-	  @"domain":	(([self domain]) ? [self domain]:@""),
-	  @"code":	@([self code]),
-	  @"userInfo":	(([self userInfo]) ? [self userInfo]:@"")
-	  };
+	NSDictionary *parameters =	@{
+								  @"Description":	(([self localizedDescription]) ? [self localizedDescription]:@""),
+								  @"FailureReason":	(([self localizedFailureReason]) ? [self localizedFailureReason]:@""),
+								  @"Domain":		(([self domain]) ? [self domain]:@""),
+								  @"Code":			@([self code]),
+								  @"UserInfo":		(([self userInfo]) ? [self userInfo]:@"")
+								  };
 
 	return parameters;
 }

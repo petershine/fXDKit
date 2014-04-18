@@ -34,12 +34,10 @@
 
 
 #define _Error(error)	[NSString\
-						stringWithFormat:@"FILE: %s\nLINE: %d\nDescription: %@\nFailureReason: %@\nUserinfo: %@",\
+						stringWithFormat:@"FILE: %s\nLINE: %d\n%@",\
 						__FILE__,\
 						__LINE__,\
-						[error localizedDescription],\
-						[error localizedFailureReason],\
-						[error userInfo]]
+						[error essentialParameters]]
 
 #define _IsMainThread	[NSString\
 						stringWithFormat:@"mainThread: %@",\
@@ -78,8 +76,6 @@
 	#define FXDLogTime(time)			FXDLog(@"%@", _Time(time))
 	#define FXDLogTimeRange(timeRange)	FXDLog(@"%@", _TimeRange(timeRange))
 
-	#define FXDLogError(error)			FXDLog(@"%@", _Error(error))
-
 
 	#define FXDLog_IsMainThread	if ([NSThread isMainThread] == NO) {\
 									FXDLog(@"%@ [%@ %@]",\
@@ -111,10 +107,9 @@
 
 
 	#define FXDLog_ERROR	if (error) {\
-								NSMutableDictionary *parameters = [[error essentialParameters] mutableCopy];\
-								parameters[@"file"] = @(__FILE__);\
-								parameters[@"line"] = @(__LINE__);\
-								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, parameters);}
+								FXDLog_EMPTY;\
+								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, _Error(error));}\
+							LOGEVENT_ERROR
 
 	#define FXDLog_ERROR_ALERT if (error) {\
 									[FXDAlertView\
@@ -129,15 +124,15 @@
 
 
 	#define FXDLog_BLOCK(instance, caller)	FXDLog_EMPTY;\
-												if ([NSThread isMainThread]) {\
-													FXDLog(@"BLOCK: [%@ %@]",\
-													[instance class],\
-													_SelectorShort(caller));\
-												} else {\
-													FXDLog(@"BLOCK: [%@ %@] %@",\
-													[instance class],\
-													_SelectorShort(caller),\
-													_IsMainThread);}
+											if ([NSThread isMainThread]) {\
+												FXDLog(@"BLOCK: [%@ %@]",\
+												[instance class],\
+												_SelectorShort(caller));\
+											} else {\
+												FXDLog(@"BLOCK: [%@ %@] %@",\
+												[instance class],\
+												_SelectorShort(caller),\
+												_IsMainThread);}
 
 
 
@@ -175,8 +170,6 @@
 	#define FXDLogTime(time)
 	#define FXDLogTimeRange(timeRange)
 
-	#define FXDLogError(error)
-
 
 	#define FXDLog_IsMainThread
 
@@ -192,7 +185,7 @@
 	#define FXDLog_OVERRIDE
 
 
-	#define FXDLog_ERROR
+	#define FXDLog_ERROR	LOGEVENT_ERROR
 	#define FXDLog_ERROR_ALERT
 	#define FXDLog_ERROR_ignored(ignoredCode)
 
