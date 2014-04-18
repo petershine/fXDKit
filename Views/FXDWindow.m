@@ -34,13 +34,6 @@
     return self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-	
-	//MARK: Assume this should be the default;
-	self.backgroundColor = [UIColor clearColor];
-}
-
 
 #pragma mark - Property overriding
 
@@ -49,55 +42,24 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
-@end
-
-
-#pragma mark - Category
-@implementation UIWindow (Added)
-+ (instancetype)instantiateDefaultWindow {	FXDLog_SEPARATE;
-	CGRect screenBounds = [[UIScreen mainScreen] bounds];
-	FXDLogRect(screenBounds);
-
-	id defaultWindow = [[[self class] alloc] initWithFrame:screenBounds];
-	[(UIWindow*)defaultWindow setBackgroundColor:[UIColor blackColor]];
-
-	return defaultWindow;
-}
-
-+ (instancetype)applicationWindow {
-	id applicationWindow = nil;
-
-	if ([[UIApplication sharedApplication].delegate respondsToSelector:@selector(window)]) {
-		applicationWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
-	}
-
-	return applicationWindow;
-}
-
-#pragma mark -
 - (void)prepareWindowWithLaunchScene:(FXDsuperLaunchScene*)launchScene {	FXDLog_DEFAULT;
 	if (launchScene == nil) {
 		launchScene = [[FXDsuperLaunchScene alloc] initWithNibName:nil bundle:nil];
 	}
-	
+
 	CGRect modifiedFrame = launchScene.view.frame;
 	modifiedFrame.size.height = self.frame.size.height;
 	[launchScene.view setFrame:modifiedFrame];
-	
+
 	modifiedFrame = launchScene.imageviewDefault.frame;
 	modifiedFrame.origin.y = 0.0;
 	modifiedFrame.size.height = self.frame.size.height;
 	[launchScene.imageviewDefault setFrame:modifiedFrame];
-	
+
 	[self setRootViewController:launchScene];
 }
 
-- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)configureRootViewController:(UIViewController*)rootScene shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
 	if (shouldAnimate == NO) {
@@ -105,7 +67,7 @@
 			willBecomeBlock();
 		}
 
-		[self setRootViewController:rootViewController];
+		[self setRootViewController:rootScene];
 
 		if (didBecomeBlock) {
 			didBecomeBlock();
@@ -116,210 +78,188 @@
 		}
 		return;
 	}
-	
+
 
 	if (willBecomeBlock) {
 		willBecomeBlock();
 	}
 
-	UIViewController *launchController = self.rootViewController;
-	
-	[self setRootViewController:rootViewController];
+	UIViewController *launchScene = self.rootViewController;
 
-	[self addSubview:launchController.view];
-	
-	
+	[self setRootViewController:rootScene];
+
+	[self addSubview:launchScene.view];
+
+
 	if (didBecomeBlock) {
 		didBecomeBlock();
 	}
 
-	if ([launchController isKindOfClass:[FXDsuperLaunchScene class]]) {
+	if ([launchScene isKindOfClass:[FXDsuperLaunchScene class]]) {
 
-		[(FXDsuperLaunchScene*)launchController
+		[(FXDsuperLaunchScene*)launchScene
 		 dismissLaunchControllerWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
-			 FXDLog_BLOCK(launchController, caller);
+			 FXDLog_BLOCK(launchScene, caller);
+			 FXDLogBOOL(finished);
 
-			 FXDLog(@"%@ %@", _BOOL(finished), _Object(launchController));
-			 [launchController.view removeFromSuperview];
-			 
+			 [launchScene.view removeFromSuperview];
+
 			 if (finishCallback) {
 				 finishCallback(_cmd, finished, responseObj);
 			 }
 		 }];
-		
+
 		return;
 	}
-	
-	
+
+
 	[UIView
 	 animateWithDuration:durationOneSecond
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
-		 launchController.view.alpha = 0.0;
+		 launchScene.view.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
-		 FXDLog(@"animateWithDuration %@ %@", _BOOL(finished), _Object(launchController));
-		 [launchController.view removeFromSuperview];
-		 
+
+		 [launchScene.view removeFromSuperview];
+
 		 if (finishCallback) {
 			 finishCallback(_cmd, YES, nil);
 		 }
 	 }];
 }
 
-@end
-
-
-@implementation UIWindow (Progress)
-+ (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
+#pragma mark -
+- (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 
-		 FXDWindow *applicationWindow = [self applicationWindow];
-		 
-		 [NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(showDefaultProgressView) object:nil];
-		 [applicationWindow performSelector:@selector(showDefaultProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgressViewWithNibName:) object:nil];
+		 [self performSelector:@selector(showProgressViewWithNibName:) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 	 }];
 }
 
-+ (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
+- (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
-		 
-		 FXDWindow *applicationWindow = [self applicationWindow];
-		 
-		 [NSObject cancelPreviousPerformRequestsWithTarget:applicationWindow selector:@selector(hideProgressView) object:nil];
-		 [applicationWindow performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+
+		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgressView) object:nil];
+		 [self performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 	 }];
 }
 
 #pragma mark -
-- (void)showDefaultProgressView {
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
-
-	if ([applicationWindow isMemberOfClass:[FXDWindow class]] == NO) {
-		return;
-	}
-
-
-	[applicationWindow showProgressViewWithNibName:nil];
-}
-
 - (void)showProgressViewWithNibName:(NSString*)nibName {
-	
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
 
-	if ([applicationWindow isMemberOfClass:[FXDWindow class]] == NO) {
+	if (self.progressView) {
 		return;
 	}
 
-	
-	if (applicationWindow.progressView) {
-		return;
-	}
-	
 
-	Class progressViewClass = NSClassFromString(classnameProgressView);
-	FXDLog(@"%@ %@", _Object(progressViewClass), _Object(nibName));
-	
-	applicationWindow.progressView = [progressViewClass viewFromNibName:nibName];
-	
-	CGRect modifiedFrame = applicationWindow.progressView.frame;
-	modifiedFrame.size = applicationWindow.frame.size;
-	[applicationWindow.progressView setFrame:modifiedFrame];
+	self.progressView = [FXDsuperProgressView viewFromNibName:nibName];
 
-	[applicationWindow addSubview:applicationWindow.progressView];
-	[applicationWindow bringSubviewToFront:applicationWindow.progressView];
-	
-	[applicationWindow.progressView fadeInFromHidden];
+	CGRect modifiedFrame = self.progressView.frame;
+	modifiedFrame.size = self.frame.size;
+	[self.progressView setFrame:modifiedFrame];
+
+	[self addSubview:self.progressView];
+	[self bringSubviewToFront:self.progressView];
+
+	[self.progressView fadeInFromHidden];
 }
 
 - (void)hideProgressView {
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
 
-	if ([applicationWindow isMemberOfClass:[FXDWindow class]] == NO) {
+	if (self.progressView == nil) {
 		return;
 	}
 
 
-	if (applicationWindow.progressView == nil) {
-		return;
-	}
-
-
-	[applicationWindow
-	 removeAsFadeOutSubview:applicationWindow.progressView
+	[self
+	 removeAsFadeOutSubview:self.progressView
 	 afterRemovedBlock:^{
-		 applicationWindow.progressView = nil;
+		 self.progressView = nil;
 	 }];
 }
 
-@end
-
-@implementation UIWindow (Message)
+#pragma mark -
 - (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock {
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
 
-	if ([applicationWindow isMemberOfClass:[FXDWindow class]] == NO) {
-		return;
-	}
-	
-	
-	if (applicationWindow.messageView) {
+	if (self.messageView) {
 		return;
 	}
 
 
 	FXDLog_DEFAULT;
-	
-	Class messageViewClass = NSClassFromString(classnameMessageView);
-	FXDLog(@"%@ %@", _Object(messageViewClass), _Object(nibName));
-	
-	applicationWindow.messageView = [messageViewClass viewFromNibName:nibName];
-	applicationWindow.messageView.alertCallback = clickedButtonAtIndexBlock;
-	
-	CGRect modifiedFrame = applicationWindow.messageView.frame;
-	modifiedFrame.size = applicationWindow.frame.size;
-	[applicationWindow.messageView setFrame:modifiedFrame];
-	
-	
-	applicationWindow.messageView.labelTitle.text = title;
-	
-	if (applicationWindow.messageView.textviewMessage) {
-		applicationWindow.messageView.textviewMessage.text = message;
+
+	self.messageView = [FXDsuperMessageView viewFromNibName:nibName];
+	self.messageView.alertCallback = clickedButtonAtIndexBlock;
+
+	CGRect modifiedFrame = self.messageView.frame;
+	modifiedFrame.size = self.frame.size;
+	[self.messageView setFrame:modifiedFrame];
+
+
+	self.messageView.labelTitle.text = title;
+
+	if (self.messageView.textviewMessage) {
+		self.messageView.textviewMessage.text = message;
 	}
 	else {
-		applicationWindow.messageView.labelMessage_0.text = message;
+		self.messageView.labelMessage_0.text = message;
 	}
-	
-	[applicationWindow.messageView configureWithCancelButtonTitle:cancelButtonTitle withAcceptButtonTitle:acceptButtonTitle];
-	
-	
-	[applicationWindow addSubview:applicationWindow.messageView];
-	[applicationWindow bringSubviewToFront:applicationWindow.messageView];
-	
-	[applicationWindow.messageView fadeInFromHidden];
+
+	[self.messageView configureWithCancelButtonTitle:cancelButtonTitle withAcceptButtonTitle:acceptButtonTitle];
+
+
+	[self addSubview:self.messageView];
+	[self bringSubviewToFront:self.messageView];
+
+	[self.messageView fadeInFromHidden];
 }
 
 - (void)hideMessageView {
-	FXDWindow *applicationWindow = [[self class] applicationWindow];
-
-	if ([applicationWindow isMemberOfClass:[FXDWindow class]] == NO) {
+	if (self.messageView == nil) {
 		return;
 	}
 
-	
-	if (applicationWindow.messageView == nil) {
-		return;
-	}
-	
-	
-	[applicationWindow
-	 removeAsFadeOutSubview:applicationWindow.messageView
+
+	[self
+	 removeAsFadeOutSubview:self.messageView
 	 afterRemovedBlock:^{
-		 applicationWindow.messageView = nil;
+		 self.messageView = nil;
 	 }];
+}
+
+
+//MARK: - Observer implementation
+
+//MARK: - Delegate implementation
+
+@end
+
+
+#pragma mark - Category
+@implementation UIWindow (Added)
++ (instancetype)instantiateNewWindow {	FXDLog_SEPARATE;
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	FXDLogRect(screenBounds);
+
+	UIWindow *newWindow = [[[self class] alloc] initWithFrame:screenBounds];
+	newWindow.backgroundColor = [UIColor blackColor];
+
+	return newWindow;
+}
+
++ (instancetype)mainWindow {
+	UIWindow *mainWindow = nil;
+
+	if ([[UIApplication sharedApplication].delegate respondsToSelector:@selector(window)]) {
+		mainWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
+	}
+
+	return mainWindow;
 }
 
 @end

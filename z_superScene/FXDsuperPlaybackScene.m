@@ -141,7 +141,7 @@
 	self.buttonPlay.hidden = YES;
 	
 		
-	[[FXDWindow applicationWindow] showDefaultProgressView];
+	[[FXDWindow mainWindow] showProgressViewWithNibName:nil];
 
 	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
 	FXDLog_IsMainThread;
@@ -163,7 +163,7 @@
 		  addOperationWithBlock:^{
 			  [self refreshWithFullImage:fullImage];
 			  
-			  [[FXDWindow applicationWindow] hideProgressView];
+			  [[FXDWindow mainWindow] hideProgressView];
 		  }];
 	 }];
 }

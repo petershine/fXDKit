@@ -35,8 +35,8 @@
 		self.alertCallback(self, buttonIndexCancel);
 	}
 	
-	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
-	[applicationWindow hideMessageView];
+	FXDWindow *mainWindow = [FXDWindow mainWindow];
+	[mainWindow hideMessageView];
 }
 
 - (IBAction)pressedAcceptButton:(id)sender {	FXDLog_DEFAULT;
@@ -53,8 +53,8 @@
 	}];
 	
 	
-	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
-	[applicationWindow hideMessageView];
+	FXDWindow *mainWindow = [FXDWindow mainWindow];
+	[mainWindow hideMessageView];
 }
 
 #pragma mark - Public

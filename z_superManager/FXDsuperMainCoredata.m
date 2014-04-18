@@ -341,9 +341,9 @@
 #pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	
-	FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+	FXDWindow *mainWindow = [FXDWindow mainWindow];
 	
-	[applicationWindow
+	[mainWindow
 	 showMessageViewWithNibName:nil
 	 withTitle:NSLocalizedString(@"Do want to delete ALL?", nil)
 	 message:NSLocalizedString(@"Please be warned. Deleted data CAN NEVER BE RESTORED!", nil)
@@ -354,7 +354,7 @@
 		 
 		 if (buttonIndex == buttonIndexAccept) {
 			 [self
-			  enumerateAllMainEntityObjWithDefaultProgressView:YES
+			  enumerateAllMainEntityObjShouldShowProgressView:YES
 			  withEnumerationBlock:^(NSManagedObjectContext *managedContext,
 									 NSManagedObject *mainEntityObj,
 									 BOOL *shouldBreak) {
@@ -372,17 +372,17 @@
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjWithDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)enumerateAllMainEntityObjShouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {
 	
 	[self
 	 enumerateAllMainEntityObjShouldUsePrivateContext:NO
 	 shouldSaveAtTheEnd:YES
-	 withDefaultProgressView:withDefaultProgressView
+	 shouldShowProgressView:shouldShowProgressView
 	 withEnumerationBlock:enumerationBlock
 	 withFinishCallback:finishCallback];
 }
 
-- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd withDefaultProgressView:(BOOL)withDefaultProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd shouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	
 	FXDLogBOOL(shouldUsePrivateContext);
 	FXDLog(@"0.%@", _Variable(self.didStartEnumerating));
@@ -407,11 +407,11 @@
 	FXDLogVariable(self.enumeratingTaskIdentifier);
 	
 	
-	FXDWindow *applicationWindow = nil;
+	FXDWindow *mainWindow = nil;
 	
-	if (withDefaultProgressView) {
-		applicationWindow = [FXDWindow applicationWindow];
-		[applicationWindow showDefaultProgressView];
+	if (shouldShowProgressView) {
+		mainWindow = [FXDWindow mainWindow];
+		[mainWindow showProgressViewWithNibName:nil];
 	}
 	
 	
@@ -461,8 +461,8 @@
 			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL finished) {
 				  FXDLog(@"1.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
 				  
-				  if (withDefaultProgressView) {
-					  [applicationWindow hideProgressView];
+				  if (shouldShowProgressView) {
+					  [mainWindow hideProgressView];
 				  }
 				  
 				  if (shouldBreak) {
