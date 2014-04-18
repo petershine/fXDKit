@@ -6,9 +6,20 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
+#ifndef imageNavibarBackground
+	#define imageNavibarBackground	@"navibarBackground"
+#endif
+
+#ifndef imageNavibarShadow
+	#define imageNavibarShadow	@"navibarShadow"
+#endif
+
+#ifndef imageToolbarBackground
+	#define imageToolbarBackground	@"toolbarBackground"
+#endif
+
 
 @interface FXDNavigationController : UINavigationController
-
 // IBOutlets
 
 
@@ -23,9 +34,4 @@
 
 //MARK: - Delegate implementation
 
-@end
-
-
-#pragma mark - Category
-@interface UINavigationController (Added)
 @end

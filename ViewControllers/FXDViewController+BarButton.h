@@ -6,6 +6,14 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+#ifndef imageBarbuttonBackNormal
+	#define imageBarbuttonBackNormal	@"barbuttonBack"
+#endif
+
+#ifndef imageBarbuttonBackHighlighted
+	#define imageBarbuttonBackHighlighted	@"barbuttonBack_Highlighted"
+#endif
+
 
 #pragma mark - Category
 @interface UIViewController (BarButton)
