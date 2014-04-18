@@ -18,7 +18,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperAssetsManager*)sharedInstance;
++ (instancetype)sharedInstance;
 
 
 #pragma mark - Public

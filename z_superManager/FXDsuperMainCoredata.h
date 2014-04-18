@@ -60,7 +60,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperMainCoredata*)sharedInstance;
++ (instancetype)sharedInstance;
 
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;

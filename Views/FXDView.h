@@ -53,9 +53,6 @@
 
 - (void)configureForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation shouldAnimate:(BOOL)shouldAnimate forDuration:(NSTimeInterval)duration;
 
-#if USE_MultimediaFrameworks
-- (void)updateLayerForDeviceOrientation;
-#endif
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds;
 
 @end

@@ -286,41 +286,22 @@
 }
 
 #pragma mark -
-#if USE_MultimediaFrameworks
-- (void)updateLayerForDeviceOrientation {
-	CGAffineTransform affineTransform = [[UIDevice currentDevice] affineTransformForOrientation];
-
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
-	[self updateLayerForDeviceOrientationWithAffineTransform:affineTransform andWithScreenBounds:screenBounds];
-}
-#endif
-
-- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {
-#if TEST_loggingRotatingOrientation
-	FXDLog_DEFAULT;
+- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {	FXDLog_DEFAULT;
 	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
-#endif
 
 	[self.layer setAffineTransform:affineTransform];
 	[self.layer setFrame:screenBounds];
 
 	for (CALayer *sublayer in self.layer.sublayers) {
-#if TEST_loggingRotatingOrientation
 		FXDLog(@"1.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
-#endif
 		[sublayer setFrame:sublayer.superlayer.bounds];
 
-#if TEST_loggingRotatingOrientation
 		FXDLog(@"2.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
-#endif
 	}
 
 	[self setNeedsLayout];
 
-#if TEST_loggingRotatingOrientation
 	FXDLog(@"2.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
-#endif
 }
 
 @end

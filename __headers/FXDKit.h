@@ -23,6 +23,13 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindMovie
 };
 
+typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
+	sectionPositionOne,
+	sectionPositionTop,
+	sectionPositionMiddle,
+	sectionPositionBottom
+};
+
 
 #pragma mark - Headers
 #import "FXDnumericalValues.h"

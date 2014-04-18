@@ -81,8 +81,8 @@
 
 #pragma mark - Public
 - (void)startDisplayingAssetRepresentation {	FXDLog_DEFAULT;
-	FXDLogObject(self.reviewedAsset);
-	if (self.reviewedAsset == nil) {
+	FXDLogObject(self.movieAsset);
+	if (self.movieAsset == nil) {
 		return;
 	}
 	
@@ -97,7 +97,7 @@
 	
 	
 	//MARK: For Video
-	if ([[self.reviewedAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+	if ([[self.movieAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
 
 		if (self.buttonPlay == nil) {
 			self.buttonPlay = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 100.0)];
@@ -120,7 +120,7 @@
 
 		
 		if (self.playbackManager == nil) {
-			ALAssetRepresentation *defaultRepresentation = [self.reviewedAsset defaultRepresentation];
+			ALAssetRepresentation *defaultRepresentation = [self.movieAsset defaultRepresentation];
 
 			self.playbackManager = [FXDsuperPlaybackManager new];
 
@@ -148,7 +148,7 @@
 
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{
-		 ALAssetRepresentation *defaultRepresentation = [self.reviewedAsset defaultRepresentation];
+		 ALAssetRepresentation *defaultRepresentation = [self.movieAsset defaultRepresentation];
 		 
 		 CGImageRef fullResolutionImageRef = [defaultRepresentation fullResolutionImage];
 		 CGFloat scale = [[UIScreen mainScreen] scale];

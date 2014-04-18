@@ -17,7 +17,7 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCachesManager*)sharedInstance;
++ (instancetype)sharedInstance;
 
 - (NSURL*)cachedURLforItemURL:(NSURL*)itemURL;
 - (NSURL*)itemURLforCachedURL:(NSURL*)cachedURL;

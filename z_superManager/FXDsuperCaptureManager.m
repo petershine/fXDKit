@@ -123,7 +123,7 @@
 }
 
 #pragma mark -
-+ (FXDsuperCaptureManager*)sharedInstance {
++ (instancetype)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 

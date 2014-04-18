@@ -41,7 +41,7 @@
 
 
 #pragma mark - Initialization
-+ (FXDsuperCaptureManager*)sharedInstance;
++ (instancetype)sharedInstance;
 
 
 #pragma mark - Public

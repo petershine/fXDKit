@@ -8,7 +8,6 @@
 
 
 @interface FXDPopoverBackgroundView : UIPopoverBackgroundView {
-    // Primitives
 	CGFloat _arrowOffset;
 	UIPopoverArrowDirection _arrowDirection;
 }
@@ -26,7 +25,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (FXDPopoverBackgroundView*)sharedInstance;
++ (instancetype)sharedInstance;
 
 + (CGFloat)minimumInset;
 

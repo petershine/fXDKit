@@ -34,7 +34,7 @@
 }
 
 #pragma mark -
-+ (FXDsuperAssetsManager*)sharedInstance {
++ (instancetype)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 

@@ -26,7 +26,7 @@
 	return self;
 }
 
-+ (FXDsuperMainCoredata*)sharedInstance {
++ (instancetype)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 

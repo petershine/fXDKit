@@ -14,7 +14,7 @@
 @interface FXDsuperPlaybackScene : FXDsuperScrollScene
 @property (nonatomic) NSInteger previewPageIndex;
 
-@property (strong, nonatomic) ALAsset *reviewedAsset;
+@property (strong, nonatomic) ALAsset *movieAsset;
 
 @property (strong, nonatomic) FXDsuperPlaybackManager *playbackManager;
 

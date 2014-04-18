@@ -16,7 +16,7 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-+ (FXDsuperCachesManager*)sharedInstance {
++ (instancetype)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 

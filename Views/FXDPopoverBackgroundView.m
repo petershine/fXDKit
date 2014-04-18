@@ -15,10 +15,12 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	[[self class] sharedInstance].shouldHideArrowView = NO;
+	__weak FXDPopoverBackgroundView *weakInstance = [[self class] sharedInstance];
 
-	[[self class] sharedInstance].titleText = nil;
-	[[self class] sharedInstance].viewTitle = nil;
+	weakInstance.shouldHideArrowView = NO;
+
+	weakInstance.titleText = nil;
+	weakInstance.viewTitle = nil;
 }
 
 
@@ -35,7 +37,7 @@
     return self;
 }
 
-+ (FXDPopoverBackgroundView*)sharedInstance {
++ (instancetype)sharedInstance {
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -62,7 +64,8 @@
 + (CGFloat)arrowHeight {	FXDLog_OVERRIDE;
 	CGFloat arrowHeight = 22.0;
 
-	if ([[self class] sharedInstance].shouldHideArrowView) {
+	__weak FXDPopoverBackgroundView *weakInstance = [[self class] sharedInstance];
+	if (weakInstance.shouldHideArrowView) {
 		arrowHeight = 0.0;
 	}
 
@@ -72,7 +75,8 @@
 + (CGFloat)arrowBase {	FXDLog_OVERRIDE;
 	CGFloat arrowBase = 22.0;
 
-	if ([[self class] sharedInstance].shouldHideArrowView) {
+	__weak FXDPopoverBackgroundView *weakInstance = [[self class] sharedInstance];
+	if (weakInstance.shouldHideArrowView) {
 		arrowBase = 0.0;
 	}
 
@@ -134,8 +138,9 @@
 	}
 
 
-	self.titleText = [[self class] sharedInstance].titleText;
-	self.viewTitle = [[self class] sharedInstance].viewTitle;
+	__weak FXDPopoverBackgroundView *weakInstance = [[self class] sharedInstance];
+	self.titleText = weakInstance.titleText;
+	self.viewTitle = weakInstance.viewTitle;
 
 
 	if (self.viewTitle == nil && self.titleText == nil) {
