@@ -19,7 +19,6 @@
 	NSArray *_multiAccountArray;
 }
 
-// Properties
 @property (strong, nonatomic) NSString *typeIdentifier;
 @property (strong, nonatomic) NSString *reasonForConnecting;
 @property (strong, nonatomic) NSDictionary *initialAccessOptions;
@@ -33,8 +32,6 @@
 
 
 #pragma mark - Public
-+ (FXDsuperSocialManager*)sharedInstance;
-
 - (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback;

@@ -13,7 +13,6 @@
 	FXDMapView *_mainMapview;
 }
 
-// Properties
 @property (nonatomic) MKUserTrackingMode initialTrackingMode;
 @property (nonatomic) BOOL shouldResumeTracking;
 

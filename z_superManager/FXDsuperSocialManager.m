@@ -19,7 +19,7 @@
 - (instancetype)init {
 	self = [super init];
 
-	if (self) {	FXDLog_SEPARATE;
+	if (self) {
 		[[NSNotificationCenter defaultCenter]
 		 addObserver:self
 		 selector:@selector(observedACAccountStoreDidChange:)
@@ -28,9 +28,6 @@
 	}
 
 	return self;
-}
-+ (FXDsuperSocialManager*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
 }
 
 

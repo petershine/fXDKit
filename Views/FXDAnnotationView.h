@@ -9,15 +9,11 @@
 
 @interface FXDAnnotationView : MKAnnotationView
 
-// Properties
-
 // IBOutlets
-
 
 #pragma mark - IBActions
 
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

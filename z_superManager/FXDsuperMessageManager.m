@@ -14,27 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {
-    //TODO:
-}
-
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {
-        //TODO:
-	}
-
-	return self;
-}
-
-#pragma mark -
-+ (FXDsuperMessageManager*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
 
 #pragma mark - Property overriding
 
@@ -60,12 +41,12 @@
 	}
 
 	if (presentingController == nil) {
-		FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+		FXDWindow *mainWindow = [FXDWindow mainWindow];
 
-		if (applicationWindow.rootViewController) {
-			FXDLogObject(applicationWindow.rootViewController);
+		if (mainWindow.rootViewController) {
+			FXDLogObject(mainWindow.rootViewController);
 
-			presentingController = applicationWindow.rootViewController;
+			presentingController = mainWindow.rootViewController;
 		}
 	}
 

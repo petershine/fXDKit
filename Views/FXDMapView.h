@@ -9,17 +9,14 @@
 
 @interface FXDMapView : MKMapView
 
-// Properties
 @property (nonatomic) CGRect initialDisclaimerFrame;
 @property (nonatomic) CGPoint disclaimerOffset;
 
 // IBOutlets
 
-
 #pragma mark - IBActions
 
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

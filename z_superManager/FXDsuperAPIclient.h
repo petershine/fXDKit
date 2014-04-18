@@ -12,7 +12,7 @@
 	NSString *_mainAPIkey;
 	NSString *_mainJSONrootKey;
 }
-// Properties
+
 @property (strong, nonatomic) NSString *mainRootURLformat;
 @property (strong, nonatomic) NSString *mainAPIkey;
 @property (strong, nonatomic) NSString *mainJSONrootKey;

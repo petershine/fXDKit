@@ -8,11 +8,8 @@
 
 
 @interface FXDsuperMessageManager : FXDsuperManager <MFMailComposeViewControllerDelegate>
-// Properties
 
 #pragma mark - Initialization
-+ (FXDsuperMessageManager*)sharedInstance;
-
 
 #pragma mark - Public
 - (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message;
