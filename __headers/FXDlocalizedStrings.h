@@ -10,8 +10,14 @@
 #define FXDKit_FXDlocalizedStrings_h
 
 
-#define text_Cancel	@"Cancel"
-#define text_OK		@"OK"
+#ifndef text_Cancel
+	#define text_Cancel	@"Cancel"
+#endif
+
+#ifndef text_OK
+	#define text_OK		@"OK"
+#endif
+
 
 #define text_Delete		@"Delete"
 #define text_DeleteAll	@"Delete All"
