@@ -16,6 +16,10 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
++ (instancetype)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
+}
+
 
 #pragma mark - Property overriding
 - (NSInteger)appLaunchCount {

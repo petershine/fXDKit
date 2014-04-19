@@ -44,6 +44,10 @@
 @property (strong, nonatomic) id homeController;
 
 
+#pragma mark - Initialization
++ (instancetype)sharedInstance;
+
+
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback;
