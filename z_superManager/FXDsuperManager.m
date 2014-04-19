@@ -23,8 +23,14 @@
 
 
 #pragma mark - Initialization
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+		FXDLog_DEFAULT;
+	}
+
+	return self;
 }
 
 

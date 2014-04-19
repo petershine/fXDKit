@@ -59,8 +59,9 @@
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
 										static id _sharedInstance = nil;\
 										dispatch_once(&once,^{\
+											FXDLog_SEPARATE;\
 											_sharedInstance = [[self class] new];\
-											FXDLog(@"\n\n	%@: %@", _ClassSelectorSelf, _sharedInstance);\
+											FXDLogObject(_sharedInstance);\
 										});\
 										return _sharedInstance
 

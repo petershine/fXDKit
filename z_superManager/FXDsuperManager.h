@@ -9,10 +9,7 @@
 
 @interface FXDsuperManager : FXDObject
 
-
 #pragma mark - Initialization
-+ (instancetype)sharedInstance;
-
 
 #pragma mark - Public
 
