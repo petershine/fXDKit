@@ -124,6 +124,7 @@
 	}
 
 
+	//MARK: Use different sqlite file. Hide sqlitefile for production version
 	NSString *pathComponent = [NSString stringWithFormat:@".%@.sqlite", sqliteFile];
 
 #if ForDEVELOPER

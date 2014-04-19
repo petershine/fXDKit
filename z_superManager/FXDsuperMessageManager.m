@@ -66,8 +66,8 @@
 	FXDLogObject(version);
 
 #if ForDEVELOPER
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	NSArray *languages = [userDefaults objectForKey:@"AppleLanguages"];
 	NSString *currentLanguage = [languages firstObject];
 	FXDLogObject(currentLanguage);
 #endif
