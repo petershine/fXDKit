@@ -69,23 +69,12 @@
 		 cancelButtonTitle:nil
 		 withAlertCallback:nil];
 	}
-
-
-	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
-
-	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
-
-#if	USE_AdvertisementFrameworks
-	FXDLogObject([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #endif
 
-	FXDLogObject(NSUserName());
-	FXDLogObject(NSFullUserName());
 
-	FXDLogObject(NSHomeDirectory());
-	FXDLogObject(NSTemporaryDirectory());
-
-	FXDLogObject(NSOpenStepRootDirectory());
+#if	USE_AdvertisementFrameworks
+	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
+	FXDLogObject([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #endif
 
 	return YES;
@@ -113,13 +102,12 @@
 	FXDLogObject(userInfo);
 	FXDLogObject(completionHandler);
 
-#if ForDEVELOPER
 	[FXDAlertView
-	 showAlertWithTitle:_ClassSelectorSelf
-	 message:[userInfo description]
+	 showAlertWithTitle:nil
+	 message:userInfo[@"aps"][@"alert"]
 	 cancelButtonTitle:nil
 	 withAlertCallback:nil];
-#endif
+
 
 	if (completionHandler) {
 		completionHandler(UIBackgroundFetchResultNoData);
@@ -128,6 +116,7 @@
 
 #pragma mark -
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {	FXDLog_SEPARATE;
+
 #if	ForDEVELOPER
 	NSDictionary *parameters = @{@"sourceApplication":	(sourceApplication) ? sourceApplication:@"",
 								 @"annotation":	(annotation) ? annotation:@"",

@@ -285,10 +285,22 @@
 - (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
+		FXDLogObject([[NSBundle mainBundle] infoDictionary]);
+
+		FXDLogObject(NSUserName());
+		FXDLogObject(NSFullUserName());
+
+		FXDLogObject(NSHomeDirectory());
+		FXDLogObject(NSTemporaryDirectory());
+
+		FXDLogObject(NSOpenStepRootDirectory());
+
+
 		[self incrementAppLaunchCount];
 		
 		[self configureUserDefaultsInfo];
 		[self configureGlobalAppearance];
+
 		[self startObservingEssentialNotifications];
 		
 		if (finishCallback) {
