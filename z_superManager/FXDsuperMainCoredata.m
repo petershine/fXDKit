@@ -174,62 +174,66 @@
 
 #pragma mark -
 - (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {
-	
+
+	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+	FXDAssert_IsMainThread;
+
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
 		 FXDLogObject(ubiquityContainerURL);
 		 FXDLogBOOL(withCompleteProtection);
-		 
+
 		 NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 		 NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
 		 FXDLogObject(storeURL);
-		 
-		 
-		 NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithCapacity:0];
-		 options[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
-		 options[NSInferMappingModelAutomaticallyOption] = @(YES);
-		 
+
+
+		 NSMutableDictionary *storeOptions = [[NSMutableDictionary alloc] initWithCapacity:0];
+		 storeOptions[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
+		 storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
+
 		 if (ubiquityContainerURL) {	//MARK: If using iCloud
 			 //TODO: get UUID unique URL using ubiquityContainerURL instead
 			 //NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 			 NSURL *ubiquitousContentURL = ubiquityContainerURL;
 			 FXDLogObject(ubiquitousContentURL);
-			 
-			 options[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
-			 options[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
+
+			 storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
+			 storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
 		 }
-		 
+
 		 //MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
 		 if (withCompleteProtection) {
-			 options[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
+			 storeOptions[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
 		 }
-		 
-		 FXDLogObject(options);
-		 
-		 
+
+		 FXDLogObject(storeOptions);
+
+
 		 NSError *error = nil;
 		 BOOL didConfigure = [self.mainDocument
 							  configurePersistentStoreCoordinatorForURL:storeURL
 							  ofType:NSSQLiteStoreType
 							  modelConfiguration:nil
-							  storeOptions:options
+							  storeOptions:storeOptions
 							  error:&error];
-		 
+
 		 FXDLog_ERROR;
-		 
+
 		 FXDLog(@"1.%@", _BOOL(didConfigure));
-		 
+
 #if ForDEVELOPER
 		 NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
-		 
+
 		 for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
 			 FXDLogObject(persistentStore.URL);
 			 FXDLogObject([storeCoordinator metadataForPersistentStore:persistentStore]);
 		 }
 #endif
-		 
-		 [[NSOperationQueue mainQueue]
+
+		 [currentQueue
 		  addOperationWithBlock:^{
+			  FXDAssert_IsMainThread;
 			  FXDLog(@"2.%@", _BOOL(didConfigure));
 
 			  //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
