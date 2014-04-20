@@ -59,14 +59,13 @@
 #pragma mark - Category
 @implementation UIView (Added)
 + (instancetype)viewFromNibName:(NSString*)nibName {
-	id view = [self viewFromNibName:nibName withOwner:nil];
+	UIView *view = [self viewFromNibName:nibName withOwner:nil];
 	
 	return view;
 }
 
 + (instancetype)viewFromNib:(UINib*)nib {
-	
-	id view = [self viewFromNib:nib withOwner:nil];
+	UIView *view = [self viewFromNib:nib withOwner:nil];
 	
 	return view;
 }
@@ -78,7 +77,7 @@
 
 	UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
 
-	id view = [self viewFromNib:nib withOwner:ownerOrNil];
+	UIView *view = [self viewFromNib:nib withOwner:ownerOrNil];
 
 	return view;
 }
@@ -90,7 +89,7 @@
 		nib = [UINib nibWithNibName:nibName bundle:nil];
 	}
 
-	id view = nil;
+	UIView *view = nil;
 
 	NSArray *viewArray = [nib instantiateWithOwner:ownerOrNil options:nil];
 
