@@ -84,11 +84,12 @@
 }
 
 #pragma mark - StatusBar
-- (void)setNeedsStatusBarAppearanceUpdate {	FXDLog_DEFAULT;
+- (void)setNeedsStatusBarAppearanceUpdate {
 	[super setNeedsStatusBarAppearanceUpdate];
 
-	FXDLogBOOL([UIApplication sharedApplication].statusBarHidden);
-	FXDLogVariable([UIApplication sharedApplication].statusBarStyle);
+	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
+		FXDLogVariable([UIApplication sharedApplication].statusBarStyle);
+	}
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
