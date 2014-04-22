@@ -36,16 +36,14 @@
 		_oldDeviceArray = @[@"iPhone 4",
 							@"iPhone 4S"];
 
-		if ([_oldDeviceArray containsObject:self.deviceModelName]) {
-			_isDeviceOld = YES;
-		}
-		else {
-			_isDeviceOld = NO;
-		}
+		_isDeviceOld = [_oldDeviceArray containsObject:self.deviceModelName];
 
-		FXDLog_DEFAULT;
-		FXDLogObject(_oldDeviceArray);
-		FXDLogBOOL(_isDeviceOld);
+#if ForDEVELOPER
+		if (_isDeviceOld) {	FXDLog_DEFAULT;
+			FXDLogObject(_oldDeviceArray);
+			FXDLogBOOL(_isDeviceOld);
+		}
+#endif
 	}
 
 	return _isDeviceOld;
@@ -120,7 +118,7 @@
 }
 
 - (NSString*)deviceModelName {
-	if (_deviceModelName == nil) {	FXDLog_DEFAULT;
+	if (_deviceModelName == nil) {
 		
 		struct utsname systemInfo;
 		uname(&systemInfo);
@@ -167,11 +165,11 @@
 
 		_deviceModelName = commonNamesDictionary[machineName];
 
-		if (_deviceModelName == nil) {
+		if (_deviceModelName == nil) {	FXDLog_DEFAULT;
+			FXDLogObject(machineName);
+
 			_deviceModelName = machineName;
 		}
-
-		FXDLog(@"%@ %@", _Object(_deviceModelName), _Object(machineName));
 	}
 
 	return _deviceModelName;
