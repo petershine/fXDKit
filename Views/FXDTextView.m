@@ -45,20 +45,15 @@
 
 #pragma mark -  Category
 @implementation UITextView (Added)
-- (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText {
+- (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText withMaximumSize:(CGSize)maximumSize {
 
 	if (changedText == nil) {
 		changedText = self.text;
 	}
 
 
-	CGSize maximumSize = CGSizeZero;
-
-	if (self.superview) {
-		maximumSize = self.superview.frame.size;
-	}
-	else {
-		maximumSize = self.frame.size;
+	if (CGSizeEqualToSize(maximumSize, CGSizeZero)) {
+		maximumSize = CGSizeMake(self.frame.size.width, self.frame.size.width);
 	}
 
 
@@ -72,7 +67,7 @@
 
 	if (ceilf(boundingRect.size.height) > maximumSize.height) {
 
-		FXDLog(@"NO: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
+		//FXDLog(@"NO: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
 
 		return NO;
 	}
@@ -90,7 +85,7 @@
 
 	[self setFrame:boundingRect];
 
-	FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
+	//FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
 
 	return YES;
 }
