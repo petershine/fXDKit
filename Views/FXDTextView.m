@@ -45,28 +45,54 @@
 
 #pragma mark -  Category
 @implementation UITextView (Added)
-- (void)modifyHeightForAssignedText:(NSString*)assignedText {
-	if (assignedText == nil) {
-		assignedText = self.text;
-	}
-	
-	if (assignedText) {	FXDLog_DEFAULT;
-		FXDLogObject(assignedText);
-		
-		CGRect modifiedFrame = self.frame;
-		FXDLog(@"(before) %@", _Rect(modifiedFrame));
-		
-		CGSize maximumSize = CGSizeMake(modifiedFrame.size.width, 100000000.0);
-		
-		CGSize sizeForAssignedText = CGSizeZero;
+- (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText {
 
-		sizeForAssignedText = [assignedText boundingRectWithSize:maximumSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil].size;
-		
-		modifiedFrame.size.height = (sizeForAssignedText.height > self.contentSize.height) ? sizeForAssignedText.height : self.contentSize.height;
-		FXDLog(@"(after) %@", _Rect(modifiedFrame));
-				
-		[self setFrame:modifiedFrame];
+	if (changedText == nil) {
+		changedText = self.text;
 	}
+
+
+	CGSize maximumSize = CGSizeZero;
+
+	if (self.superview) {
+		maximumSize = self.superview.frame.size;
+	}
+	else {
+		maximumSize = self.frame.size;
+	}
+
+
+	CGRect boundingRect = [changedText
+						   boundingRectWithSize:CGSizeMake(maximumSize.width, INFINITY)
+						   options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
+						   attributes:@{NSFontAttributeName: self.font}
+						   context:nil];
+
+	boundingRect.size.height += (self.font.pointSize*1.5);
+
+	if (ceilf(boundingRect.size.height) > maximumSize.height) {
+
+		FXDLog(@"NO: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
+
+		return NO;
+	}
+
+
+	if (boundingRect.size.height > maximumSize.height-self.font.pointSize) {
+		boundingRect.size.height = maximumSize.height;
+	}
+
+
+	boundingRect.origin.x = self.frame.origin.x;
+	boundingRect.size.width = self.frame.size.width;
+
+	boundingRect.origin.y = (maximumSize.height -boundingRect.size.height)/2.0;
+
+	[self setFrame:boundingRect];
+
+	FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
+
+	return YES;
 }
 
 @end

@@ -24,6 +24,6 @@
 
 #pragma mark -  Category
 @interface UITextView (Added)
-- (void)modifyHeightForAssignedText:(NSString*)assignedText;
+- (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText;
 
 @end
