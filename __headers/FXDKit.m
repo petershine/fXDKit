@@ -56,6 +56,8 @@
 
 @implementation CATextLayer (Added)
 + (instancetype)newTextLayerFromTextControl:(id)textControl {
+#warning //TODO: Find the right way to maker textLayer for UITextView or other textControls
+
 	CATextLayer *textLayer = [CATextLayer new];
 
 	if ([textControl isKindOfClass:[UITextField class]] == NO
@@ -71,6 +73,7 @@
 	[textLayer setForegroundColor:[[textControl textColor] CGColor]];
 	[textLayer setFontSize:[textControl font].pointSize];
 	[textLayer setFrame:[textControl frame]];
+	
 
 	NSString *alignmentMode = kCAAlignmentNatural;
 
@@ -100,6 +103,10 @@
 	}
 
 	[textLayer setAlignmentMode:alignmentMode];
+
+	if ([textControl isKindOfClass:[UITextView class]]) {
+		textLayer.wrapped = YES;
+	}
 
 	return textLayer;
 }
