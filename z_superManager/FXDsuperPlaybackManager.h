@@ -17,6 +17,8 @@
 
 @interface FXDviewVideoDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
+
+- (void)centerAlignForMovieItem;
 @end
 
 

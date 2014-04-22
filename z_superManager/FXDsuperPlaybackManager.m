@@ -22,6 +22,45 @@
 - (void)setMainPlayer:(AVPlayer*)mainMoviePlayer {
 	[(AVPlayerLayer*)[self layer] setPlayer:mainMoviePlayer];
 }
+
+#pragma mark -
+- (void)centerAlignForMovieItem {	FXDLog_DEFAULT;
+
+	if (self.superview == nil) {
+		//MARK: Must have superview
+		return;
+	}
+
+
+	CGSize presentationSize = [self mainPlayer].currentItem.presentationSize;
+	FXDLogSize(presentationSize);
+
+	CGRect displayFrame = self.superview.bounds;
+	CGFloat aspectRatio = MAX(self.superview.bounds.size.width, self.superview.bounds.size.height)/MIN(self.superview.bounds.size.width, self.superview.bounds.size.height);
+
+	FXDLog(@"1.%@ %@", _Rect(displayFrame), _Variable(aspectRatio));
+
+	if (presentationSize.width < presentationSize.height) {
+		displayFrame.size.height = self.superview.bounds.size.height;
+
+		displayFrame.size.width = displayFrame.size.height/aspectRatio;
+	}
+	else {
+		displayFrame.size.width = self.superview.bounds.size.width;
+
+		displayFrame.size.height = displayFrame.size.width/aspectRatio;
+	}
+
+	FXDLog(@"2.%@", _Rect(displayFrame));
+
+
+	displayFrame.origin.x = (self.superview.bounds.size.width -displayFrame.size.width)/2.0;
+	displayFrame.origin.y = (self.superview.bounds.size.height -displayFrame.size.height)/2.0;
+	FXDLog(@"3.%@", _Rect(displayFrame));
+
+	
+	[self setFrame:displayFrame];
+}
 @end
 
 
@@ -58,11 +97,15 @@
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
 	_mainPlaybackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
-	_mainPlaybackDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+
+	//TEST:
+	//_mainPlaybackDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_mainPlaybackDisplay.layer;
 
-	displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+	//TEST:
+	//displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
 	return _mainPlaybackDisplay;
 }
@@ -114,7 +157,8 @@
 			  [scene.view addSubview:self.mainPlaybackDisplay];
 			  [scene.view sendSubviewToBack:self.mainPlaybackDisplay];
 
-			  [self.mainPlaybackDisplay setFrame:self.mainPlaybackDisplay.superview.bounds];
+
+			  [self.mainPlaybackDisplay centerAlignForMovieItem];
 
 
 			  __weak typeof(self) weakSelf = self;

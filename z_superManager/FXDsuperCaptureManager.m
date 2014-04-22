@@ -188,7 +188,9 @@
 
 	_mainPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
 
-	_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+	//TEST:
+	//_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+	_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
 
 	FXDLog_DEFAULT;
