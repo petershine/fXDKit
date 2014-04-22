@@ -41,6 +41,11 @@
 @end
 
 
+@interface CATextLayer (Added)
++ (instancetype)newTextLayerFromTextControl:(id)textControl;
+@end
+
+
 @interface UIColor (Added)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue;
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(CGFloat)alpha;
@@ -50,11 +55,6 @@
 
 @interface UIBarButtonItem (Added)
 - (void)customizeWithNormalImage:(UIImage*)normalImage andWithHighlightedImage:(UIImage*)highlightedImage;
-@end
-
-
-@interface UITextField (Added)
-- (CATextLayer*)textLayer;
 @end
 
 

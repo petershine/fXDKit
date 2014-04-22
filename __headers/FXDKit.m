@@ -54,6 +54,58 @@
 @end
 
 
+@implementation CATextLayer (Added)
++ (instancetype)newTextLayerFromTextControl:(id)textControl {
+	CATextLayer *textLayer = [CATextLayer new];
+
+	if ([textControl isKindOfClass:[UITextField class]] == NO
+		&& [textControl isKindOfClass:[UITextView class]] == NO) {
+		FXDLog_DEFAULT;
+		FXDLogObject(textControl);
+		return nil;
+	}
+
+
+	[textLayer setFont:(__bridge CFTypeRef)([textControl font])];
+	[textLayer setString:[textControl text]];
+	[textLayer setForegroundColor:[[textControl textColor] CGColor]];
+	[textLayer setFontSize:[textControl font].pointSize];
+	[textLayer setFrame:[textControl frame]];
+
+	NSString *alignmentMode = kCAAlignmentNatural;
+
+	switch ([textControl textAlignment]) {
+		case NSTextAlignmentLeft:
+			alignmentMode = kCAAlignmentLeft;
+			break;
+
+		case NSTextAlignmentCenter:
+			alignmentMode = kCAAlignmentCenter;
+			break;
+
+		case NSTextAlignmentRight:
+			alignmentMode = kCAAlignmentRight;
+			break;
+
+		case NSTextAlignmentJustified:
+			alignmentMode = kCAAlignmentJustified;
+			break;
+
+		case NSTextAlignmentNatural:
+			alignmentMode = kCAAlignmentNatural;
+			break;
+
+		default:
+			break;
+	}
+
+	[textLayer setAlignmentMode:alignmentMode];
+
+	return textLayer;
+}
+@end
+
+
 @implementation UIColor (Added)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue {
 	return [self colorUsingIntegersForRed:red forGreen:green forBlue:blue forAlpha:1];
@@ -87,24 +139,6 @@
 
 	[(UIButton*)self.customView setImage:normalImage forState:UIControlStateNormal];
 	[(UIButton*)self.customView setImage:highlightedImage forState:UIControlStateHighlighted];
-}
-@end
-
-
-@implementation UITextField (Added)
-- (CATextLayer*)textLayer {
-	CATextLayer *textLayer = [CATextLayer new];
-
-	[textLayer setFont:(__bridge CFTypeRef)(self.font)];
-	[textLayer setString:self.text];
-	[textLayer setForegroundColor:[self.textColor CGColor]];
-	[textLayer setFontSize:self.font.pointSize];
-	[textLayer setFrame:self.frame];
-
-	//TODO: Get string to Use textfield's own alignment
-	[textLayer setAlignmentMode:kCAAlignmentNatural];
-
-	return textLayer;
 }
 @end
 
