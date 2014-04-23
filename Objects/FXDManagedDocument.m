@@ -15,7 +15,6 @@
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
-	FXDAssert_IsMainThread;
 }
 
 
