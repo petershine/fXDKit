@@ -24,16 +24,18 @@
 }
 
 #pragma mark -
-- (void)centerAlignForMovieItem {	FXDLog_DEFAULT;
+- (void)centerAlignForPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@", _Object(self.superview), _Size(presentationSize));
 
-	if (self.superview == nil) {
-		//MARK: Must have superview
+	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
+		presentationSize = [self mainPlayer].currentItem.presentationSize;
+	}
+
+	if (self.superview == nil
+		|| (CGSizeEqualToSize(presentationSize, CGSizeZero))) {
 		return;
 	}
 
-
-	CGSize presentationSize = [self mainPlayer].currentItem.presentationSize;
-	FXDLogSize(presentationSize);
 
 	CGRect displayFrame = self.superview.bounds;
 	CGFloat aspectRatio = MAX(self.superview.bounds.size.width, self.superview.bounds.size.height)/MIN(self.superview.bounds.size.width, self.superview.bounds.size.height);
@@ -158,9 +160,6 @@
 			  [scene.view sendSubviewToBack:self.mainPlaybackDisplay];
 
 
-			  [self.mainPlaybackDisplay centerAlignForMovieItem];
-
-
 			  __weak typeof(self) weakSelf = self;
 
 			  [weakSelf
@@ -212,8 +211,16 @@
 		 CMTime duration = weakSelf.moviePlayer.currentItem.duration;
 		 FXDLog(@"%@ %@ %@", _Time(currentTime), _Time(duration), _Time(weakSelf.playbackProgressTime));
 #endif
-
 		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+	 }];
+
+
+	@weakify(self);
+	[RACObserve(self, moviePlayer.currentItem.presentationSize)
+	 subscribeNext:^(id presentationSize) {	@strongify(self);
+		 FXDLog_REACT(self.moviePlayer.currentItem.presentationSize, presentationSize);
+
+		 [self.mainPlaybackDisplay centerAlignForPresentationSize:[presentationSize CGSizeValue]];
 	 }];
 }
 
