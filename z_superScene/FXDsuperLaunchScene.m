@@ -57,7 +57,7 @@
 
 #pragma mark - Public
 - (void)dismissLaunchControllerWithFinishCallback:(FXDcallbackFinish)finishCallback {
-	__weak typeof(self) weakSelf = self;
+	__weak FXDsuperLaunchScene *weakSelf = self;
 
 	[UIView
 	 animateWithDuration:durationOneSecond

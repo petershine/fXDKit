@@ -74,7 +74,7 @@
 #pragma mark - Public
 - (void)addPreviewPageWithAddedObj:(id)addedObj {	FXDLog_DEFAULT;
 
-	__weak typeof(self) weakSelf = self;
+	__weak FXDsuperPagedContainer *weakSelf = self;
 
 	[weakSelf.mainDataSource addObject:addedObj];
 	

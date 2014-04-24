@@ -65,7 +65,7 @@
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
 	FXDLogStruct(capInsets);
 
-	__weak typeof(self) weakSelf = self;
+	__weak UIImageView *weakSelf = self;
 	
 	if (weakSelf.image) {
 		UIImage *resizeableImage = [weakSelf.image resizableImageWithCapInsets:capInsets];
@@ -73,7 +73,7 @@
 		if (resizeableImage) {
 			[[NSOperationQueue mainQueue]
 			 addOperationWithBlock:^{
-				 __strong typeof(weakSelf) strongSelf = weakSelf;
+				 __strong UIImageView *strongSelf = weakSelf;
 				 
 				 strongSelf.image = resizeableImage;
 			 }];
@@ -84,7 +84,7 @@
 //TODO: find optimal way of using layer instead of extra imageView object
 - (void)fadeInImage:(UIImage*)fadedImage {
 	
-	__weak typeof(self) weakSelf = self;
+	__weak UIImageView *weakSelf = self;
 	
 	UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, weakSelf.frame.size.width, weakSelf.frame.size.height)];
 	
@@ -105,7 +105,7 @@
 		 fadedImageview.alpha = 1.0;
 	 }
 	 completion:^(BOOL finished) {
-		 __strong typeof(weakSelf) strongSelf = weakSelf;
+		 __strong UIImageView *strongSelf = weakSelf;
 		 
 		 strongSelf.image = fadedImageview.image;
 		 

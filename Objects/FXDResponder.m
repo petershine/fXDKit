@@ -34,7 +34,7 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {	FXDLog_DEFAULT;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesBegan:touches withEvent:event];
 }
 

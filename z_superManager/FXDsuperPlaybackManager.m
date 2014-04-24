@@ -155,7 +155,7 @@
 			  [scene.view sendSubviewToBack:self.mainPlaybackDisplay];
 
 
-			  __weak typeof(self) weakSelf = self;
+			  __weak FXDsuperPlaybackManager *weakSelf = self;
 
 			  [weakSelf
 			   startSeekingToProgressPercentage:0.0
@@ -175,7 +175,7 @@
 #pragma mark -
 - (void)configurePlaybackObservers {	FXDLog_DEFAULT;
 	
-	__weak typeof(self) weakSelf = self;
+	__weak FXDsuperPlaybackManager *weakSelf = self;
 
 	FXDLogTime(periodicintervalDefault);
 
@@ -285,7 +285,7 @@
 #pragma mark -
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	__weak typeof(self) weakSelf = self;
+	__weak FXDsuperPlaybackManager *weakSelf = self;
 
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	CMTime duration = weakSelf.moviePlayer.currentItem.duration;
