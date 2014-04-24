@@ -58,7 +58,7 @@
 		modifiedFrame.size.height = modifiedFrame.size.width / aspectRatio;
 		FXDLog(@"(after) %@", _Rect(modifiedFrame));
 		
-		[self setFrame:modifiedFrame];
+		self.frame = modifiedFrame;
 	}
 }
 

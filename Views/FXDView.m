@@ -128,8 +128,7 @@
 		CGRect modifiedFrame = self.frame;
 		modifiedFrame.origin.x = (self.superview.frame.size.width -modifiedFrame.size.width)/2.0;
 		modifiedFrame.origin.y = (self.superview.frame.size.height -modifiedFrame.size.height)/2.0;
-		
-		[self setFrame:modifiedFrame];
+		self.frame = modifiedFrame;
 	}
 }
 
@@ -288,12 +287,12 @@
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {	FXDLog_DEFAULT;
 	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
 
-	[self.layer setAffineTransform:affineTransform];
-	[self.layer setFrame:screenBounds];
+	self.layer.affineTransform = affineTransform;
+	self.layer.frame = screenBounds;
 
 	for (CALayer *sublayer in self.layer.sublayers) {
 		FXDLog(@"1.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
-		[sublayer setFrame:sublayer.superlayer.bounds];
+		sublayer.frame = sublayer.superlayer.bounds;
 
 		FXDLog(@"2.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
 	}

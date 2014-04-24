@@ -126,7 +126,7 @@
 	modifiedFrame.origin.x -= coveringOffset.x;
 	modifiedFrame.origin.y -= coveringOffset.y;
 	modifiedFrame.origin.y += (heightDynamicStatusBar *coveringDirection.y);
-	[presentedScene.view setFrame:modifiedFrame];
+	presentedScene.view.frame = modifiedFrame;
 
 	
 	FXDViewController *pushedScene = nil;
@@ -157,7 +157,7 @@
 					modifiedPushedFrame.origin.x += coveringOffset.x;
 					modifiedPushedFrame.origin.y += coveringOffset.y;
 					
-					[childScene.view setFrame:modifiedPushedFrame];
+					childScene.view.frame = modifiedPushedFrame;
 				}
 			}
 		}
@@ -178,10 +178,10 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [presentedScene.view setFrame:animatedFrame];
+		 presentedScene.view.frame = animatedFrame;
 		 
 		 if (pushedScene) {
-			 [pushedScene.view setFrame:animatedPushedFrame];
+			 pushedScene.view.frame = animatedPushedFrame;
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
@@ -256,7 +256,7 @@
 					modifiedPushedFrame.origin.x -= uncoveringOffset.x;
 					modifiedPushedFrame.origin.y -= uncoveringOffset.y;
 					
-					[childScene.view setFrame:modifiedPushedFrame];
+					childScene.view.frame = modifiedPushedFrame;
 				}
 			}
 		}
@@ -293,11 +293,11 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [dismissedScene.view setFrame:animatedFrame];
+		 dismissedScene.view.frame = animatedFrame;
 		 dismissedScene.view.alpha = animatedAlpha;
 		 
 		 if (pulledScene) {
-			 [pulledScene.view setFrame:animatedPulledFrame];
+			 pulledScene.view.frame = animatedPulledFrame;
 		 }
 	 }
 	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
@@ -395,7 +395,7 @@
 			 NSInteger childIndex = [lateAddedSceneArray indexOfObject:childScene];
 			 CGRect animatedFrame = CGRectFromString(animatedFrameObjArray[childIndex]);
 			 
-			 [childScene.view setFrame:animatedFrame];
+			 childScene.view.frame = animatedFrame;
 		 }
 		 
 	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;

@@ -61,7 +61,7 @@
 	FXDLog(@"3.%@", _Rect(displayFrame));
 
 	
-	[self setFrame:displayFrame];
+	self.frame = displayFrame;
 }
 @end
 

@@ -83,7 +83,7 @@
 
 	boundingRect.origin.y = (maximumSize.height -boundingRect.size.height)/2.0;
 
-	[self setFrame:boundingRect];
+	self.frame = boundingRect;
 
 	//FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
 

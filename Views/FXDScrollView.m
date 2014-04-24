@@ -124,7 +124,7 @@
 	CGRect modifiedFrame = subView.frame;
 	modifiedFrame.origin.x = (self.contentSize.width - modifiedFrame.size.width)/2.0;
 	modifiedFrame.origin.y = (self.contentSize.height - modifiedFrame.size.height)/2.0;
-	[subView setFrame:modifiedFrame];
+	subView.frame = modifiedFrame;
 	
 	if (shouldModifyOffset) {
 		CGPoint newPosition = modifiedFrame.origin;

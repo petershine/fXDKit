@@ -68,11 +68,11 @@
 	}
 
 
-	[textLayer setFont:(__bridge CFTypeRef)([textControl font])];
-	[textLayer setString:[textControl text]];
-	[textLayer setForegroundColor:[[textControl textColor] CGColor]];
-	[textLayer setFontSize:[textControl font].pointSize];
-	[textLayer setFrame:[textControl frame]];
+	textLayer.font = (__bridge CFTypeRef)([textControl font]);
+	textLayer.string = [textControl text];
+	textLayer.foregroundColor = [[textControl textColor] CGColor];
+	textLayer.fontSize = [textControl font].pointSize;
+	textLayer.frame = [textControl frame];
 	
 
 	NSString *alignmentMode = kCAAlignmentNatural;

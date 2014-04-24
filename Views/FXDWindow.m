@@ -47,12 +47,12 @@
 
 	CGRect modifiedFrame = launchScene.view.frame;
 	modifiedFrame.size.height = self.frame.size.height;
-	[launchScene.view setFrame:modifiedFrame];
+	launchScene.view.frame = modifiedFrame;
 
 	modifiedFrame = launchScene.imageviewDefault.frame;
 	modifiedFrame.origin.y = 0.0;
 	modifiedFrame.size.height = self.frame.size.height;
-	[launchScene.imageviewDefault setFrame:modifiedFrame];
+	launchScene.imageviewDefault.frame = modifiedFrame;
 
 	[self setRootViewController:launchScene];
 }
@@ -159,7 +159,7 @@
 
 	CGRect modifiedFrame = self.progressView.frame;
 	modifiedFrame.size = self.frame.size;
-	[self.progressView setFrame:modifiedFrame];
+	self.progressView.frame = modifiedFrame;
 
 	[self addSubview:self.progressView];
 	[self bringSubviewToFront:self.progressView];
@@ -196,7 +196,7 @@
 
 	CGRect modifiedFrame = self.messageView.frame;
 	modifiedFrame.size = self.frame.size;
-	[self.messageView setFrame:modifiedFrame];
+	self.messageView.frame = modifiedFrame;
 
 
 	self.messageView.labelTitle.text = title;

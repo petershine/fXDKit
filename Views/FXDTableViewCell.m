@@ -101,7 +101,7 @@
 			
 			CGRect modifiedFrame = self.backgroundImageview.frame;
 			modifiedFrame.origin.x = (self.frame.size.width - self.backgroundImageview.frame.size.width)/2.0;
-			[self.backgroundImageview setFrame:modifiedFrame];
+			self.backgroundImageview.frame = modifiedFrame;
 
 			[self addSubview:self.backgroundImageview];
 			[self sendSubviewToBack:self.backgroundImageview];
@@ -149,8 +149,7 @@
 - (void)modifyOriginYofCellSubview:(UIView*)cellSubview {
 	CGRect modifiedFrame = cellSubview.frame;
 	modifiedFrame.origin.y = (self.frame.size.height -modifiedFrame.size.height)/2.0;
-	
-	[cellSubview setFrame:modifiedFrame];
+	cellSubview.frame = modifiedFrame;
 }
 
 @end

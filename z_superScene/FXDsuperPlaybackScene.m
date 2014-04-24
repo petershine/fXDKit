@@ -176,9 +176,8 @@
 	modifiedFrame.origin = CGPointZero;
 	modifiedFrame.size = self.imageviewPhoto.image.size;
 	
-	[self.imageviewPhoto setFrame:modifiedFrame];
-	
-	[self.mainScrollview setContentSize:modifiedFrame.size];
+	self.imageviewPhoto.frame = modifiedFrame;
+	self.mainScrollview.contentSize = modifiedFrame.size;
 	
 	
 	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];

@@ -164,7 +164,7 @@
 		CGRect modifiedFrame = button.frame;
 		modifiedFrame.origin.x += (offset.x > 0) ? offset.x : 0;
 		modifiedFrame.origin.y += (offset.y > 0) ? offset.y : 0;
-		[button setFrame:modifiedFrame];
+		button.frame = modifiedFrame;
 	}
 	else {
 		buttonGroup = [[UIView alloc] initWithFrame:CGRectMake(0, 0, onImage.size.width, onImage.size.height)];

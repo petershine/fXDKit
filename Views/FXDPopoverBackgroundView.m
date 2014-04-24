@@ -173,7 +173,7 @@
 
 		modifiedFrame.size.width = self.frame.size.width -(minimumInset*2.0);
 
-		[self.viewTitle setFrame:modifiedFrame];
+		self.viewTitle.frame = modifiedFrame;
 
 		[self addSubview:self.viewTitle];
 		[self bringSubviewToFront:self.viewTitle];
