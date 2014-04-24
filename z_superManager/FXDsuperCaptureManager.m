@@ -187,9 +187,6 @@
 
 
 	_mainPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.mainCaptureSession];
-
-	//TEST:
-	//_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 	_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
 

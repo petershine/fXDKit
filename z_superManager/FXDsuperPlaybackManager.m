@@ -100,13 +100,8 @@
 
 	_mainPlaybackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
 
-	//TEST:
-	//_mainPlaybackDisplay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_mainPlaybackDisplay.layer;
-
-	//TEST:
-	//displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
 	return _mainPlaybackDisplay;
