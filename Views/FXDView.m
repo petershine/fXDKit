@@ -239,7 +239,11 @@
 
 	UIImage *image = nil;
 
-	UIGraphicsBeginImageContextWithOptions(self.bounds.size,
+	CGSize modifiedSize = self.bounds.size;
+	modifiedSize.width *= scale;
+	modifiedSize.height *= scale;
+
+	UIGraphicsBeginImageContextWithOptions(modifiedSize,
 										   NO,	//MARK: to allow transparency
 										   scale);
 	{
