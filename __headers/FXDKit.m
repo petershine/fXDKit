@@ -73,6 +73,7 @@
 	textLayer.foregroundColor = [[textControl textColor] CGColor];
 	textLayer.fontSize = [textControl font].pointSize;
 	textLayer.frame = [textControl frame];
+	textLayer.bounds = [textControl bounds];
 	
 
 	NSString *alignmentMode = kCAAlignmentNatural;
