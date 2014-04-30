@@ -42,7 +42,7 @@
 
 
 @interface CATextLayer (Added)
-+ (instancetype)newTextLayerFromTextControl:(id)textControl;
++ (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale;
 @end
 
 

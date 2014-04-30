@@ -55,10 +55,7 @@
 
 
 @implementation CATextLayer (Added)
-+ (instancetype)newTextLayerFromTextControl:(id)textControl {
-#warning //TODO: Find the right way to maker textLayer for UITextView or other textControls
-
-	CATextLayer *textLayer = [CATextLayer new];
++ (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
 
 	if ([textControl isKindOfClass:[UITextField class]] == NO
 		&& [textControl isKindOfClass:[UITextView class]] == NO) {
@@ -68,20 +65,20 @@
 	}
 
 
-	textLayer.font = (__bridge CFTypeRef)([textControl font]);
+	CATextLayer *textLayer = [CATextLayer new];
 	textLayer.string = [textControl text];
+
+	CGRect scaledBounds = [textControl bounds];
+	scaledBounds.size.width *= renderingScale;
+	scaledBounds.size.height *= renderingScale;
+	textLayer.frame = scaledBounds;
+
+
+	textLayer.font = (__bridge CFTypeRef)([textControl font]);
+	textLayer.fontSize = [textControl font].pointSize*renderingScale;
+
 	textLayer.foregroundColor = [[textControl textColor] CGColor];
-	textLayer.fontSize = [textControl font].pointSize;
 
-
-	//TEST:
-	/*
-	textLayer.transform = CATransform3DMakeAffineTransform([(UIView*)textControl transform]);
-	textLayer.frame = [textControl frame];
-	 */
-
-	textLayer.bounds = [textControl bounds];
-	
 
 	NSString *alignmentMode = kCAAlignmentNatural;
 
@@ -115,6 +112,7 @@
 	if ([textControl isKindOfClass:[UITextView class]]) {
 		textLayer.wrapped = YES;
 	}
+	
 
 	return textLayer;
 }
