@@ -40,7 +40,7 @@
 	if ([webURL length] == 0) {
 		webURL = initialWebURLstring;
 
-		[[NSUserDefaults standardUserDefaults] setObject:webURL forKey:userdefaultIntegerAppLaunchCount];
+		[[NSUserDefaults standardUserDefaults] setObject:webURL forKey:userdefaultStringInitialWebURL];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 
