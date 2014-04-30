@@ -73,9 +73,13 @@
 	textLayer.foregroundColor = [[textControl textColor] CGColor];
 	textLayer.fontSize = [textControl font].pointSize;
 
-	textLayer.transform = CATransform3DMakeAffineTransform([(UIView*)textControl transform]);
 
+	//TEST:
+	/*
+	textLayer.transform = CATransform3DMakeAffineTransform([(UIView*)textControl transform]);
 	textLayer.frame = [textControl frame];
+	 */
+
 	textLayer.bounds = [textControl bounds];
 	
 
