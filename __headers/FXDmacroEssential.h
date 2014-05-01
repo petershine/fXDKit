@@ -92,7 +92,8 @@
 #define CMTimeForMediaSeconds(mediaSeconds)	CMTimeMakeWithSeconds(mediaSeconds, doubleOneBillion)
 
 
-#define radianAngleForDegree(degree)	(degree*(M_PI/180.0))
+#define degreeAngleForRadian(radian)	(radian*180.0/M_PI)
+#define radianAngleForDegree(degree)	(degree*M_PI/180.0)
 
 
 #define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height

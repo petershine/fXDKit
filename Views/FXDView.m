@@ -232,27 +232,33 @@
 
 #pragma mark -
 - (UIImage*)renderedImageForScreenScale {
-	return [self renderedImageForScale:[UIScreen mainScreen].scale];
+	return [self renderedImageForScale:0.0];
 }
 
 - (UIImage*)renderedImageForScale:(CGFloat)scale {
 
-	UIImage *image = nil;
+	UIImage *renderedImage = nil;
 
-	CGSize modifiedSize = self.bounds.size;
-	modifiedSize.width *= scale;
-	modifiedSize.height *= scale;
-
-	UIGraphicsBeginImageContextWithOptions(modifiedSize,
+	UIGraphicsBeginImageContextWithOptions(self.bounds.size,
 										   NO,	//MARK: to allow transparency
 										   scale);
-	{
+
+	if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
 		[self.layer renderInContext:UIGraphicsGetCurrentContext()];
-		image = UIGraphicsGetImageFromCurrentImageContext();
 	}
+	else {
+		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+
+		if (didDraw == NO) {	FXDLog_DEFAULT;
+			FXDLogBOOL(didDraw);
+		}
+	}
+
+	renderedImage = UIGraphicsGetImageFromCurrentImageContext();
+
 	UIGraphicsEndImageContext();
 
-    return image;
+    return renderedImage;
 }
 
 #pragma mark -

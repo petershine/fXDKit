@@ -199,27 +199,27 @@
 	UIGraphicsBeginImageContextWithOptions(CGSizeMake(thumbDimension, thumbDimension),
 										   NO,	//MARK: to allow transparency
 										   0.0);
-	{
-		CGContextRef currentContext = UIGraphicsGetCurrentContext();
-		CGContextClipToRect( currentContext, clippedRect);
-		CGFloat scaleFactor = thumbDimension/sideFull;
-		
-		CGFloat translatedDistance = (self.size.width -sideFull) /2.0 *scaleFactor;
-		
-		if (widthGreaterThanHeight) {
-			CGContextTranslateCTM(currentContext, -translatedDistance, 0);
-		}
-		else {
-			CGContextTranslateCTM(currentContext, 0, -translatedDistance);
-		}
-		
-		CGContextScaleCTM(currentContext, scaleFactor, scaleFactor);
-		[mainImageView.layer renderInContext:currentContext];
-		
-		thumbImage = UIGraphicsGetImageFromCurrentImageContext();
+
+	CGContextRef currentContext = UIGraphicsGetCurrentContext();
+	CGContextClipToRect( currentContext, clippedRect);
+	CGFloat scaleFactor = thumbDimension/sideFull;
+
+	CGFloat translatedDistance = (self.size.width -sideFull) /2.0 *scaleFactor;
+
+	if (widthGreaterThanHeight) {
+		CGContextTranslateCTM(currentContext, -translatedDistance, 0);
 	}
+	else {
+		CGContextTranslateCTM(currentContext, 0, -translatedDistance);
+	}
+
+	CGContextScaleCTM(currentContext, scaleFactor, scaleFactor);
+	[mainImageView.layer renderInContext:currentContext];
+
+	thumbImage = UIGraphicsGetImageFromCurrentImageContext();
+
 	UIGraphicsEndImageContext();
-	
+
 	return thumbImage;
 }
 
