@@ -232,10 +232,10 @@
 
 #pragma mark -
 - (UIImage*)renderedImageForScreenScale {
-	return [self renderedImageForScale:0.0];
+	return [self renderedImageForScale:0.0 afterScreenUpdates:YES];
 }
 
-- (UIImage*)renderedImageForScale:(CGFloat)scale {
+- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {
 
 	UIImage *renderedImage = nil;
 
@@ -247,7 +247,9 @@
 		[self.layer renderInContext:UIGraphicsGetCurrentContext()];
 	}
 	else {
-		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+		BOOL didDraw = [self
+						drawViewHierarchyInRect:self.bounds
+						afterScreenUpdates:afterScreenUpdates];
 
 		if (didDraw == NO) {	FXDLog_DEFAULT;
 			FXDLogBOOL(didDraw);

@@ -49,7 +49,7 @@
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock;
 
 - (UIImage*)renderedImageForScreenScale;
-- (UIImage*)renderedImageForScale:(CGFloat)scale;
+- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates;
 
 - (id)superViewOfClassName:(NSString*)className;
 
