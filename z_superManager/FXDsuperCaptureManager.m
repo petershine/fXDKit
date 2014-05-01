@@ -266,6 +266,11 @@
 
 #pragma mark - Public
 - (void)prepareCaptureManagerWithScene:(UIViewController*)scene {	FXDLog_DEFAULT;
+	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
+
+	[self.mainCaptureSession startRunning];
+
+
 	[self observedUIDeviceOrientationDidChange:nil];
 
 	[[NSNotificationCenter defaultCenter]
@@ -273,11 +278,6 @@
 	 selector:@selector(observedUIDeviceOrientationDidChange:)
 	 name:UIDeviceOrientationDidChangeNotification
 	 object:nil];
-
-
-	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
-
-	[self.mainCaptureSession startRunning];
 }
 
 #pragma mark -

@@ -190,7 +190,7 @@
 		 }
 
 
-		 weakSelf.playbackProgressTime = time;
+		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 	 }];
 
 	weakSelf.playerItemObserver =
