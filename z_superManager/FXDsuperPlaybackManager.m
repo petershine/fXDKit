@@ -222,27 +222,31 @@
 #pragma mark -
 - (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
 
+	__weak FXDsuperPlaybackManager *weakSelf = self;
+
 	CMTime seekedTime = kCMTimeZero;
 
 	//MARK: Be careful about validity of time
-	if (CMTimeCompare(self.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
+	if (CMTimeCompare(weakSelf.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
 		&& progressPercentage > 0.0) {
 		seekedTime = CMTimeMultiplyByFloat64(self.moviePlayer.currentItem.duration, progressPercentage);
 	}
 
 	if (progressPercentage == 0.0) {
-		FXDLog(@"%@ %@ %@", _Variable(progressPercentage), _Time(seekedTime), _Time(self.moviePlayer.currentItem.duration));
+		FXDLog(@"%@ %@ %@", _Variable(progressPercentage), _Time(seekedTime), _Time(weakSelf.moviePlayer.currentItem.duration));
 	}
 
-	[self startSeekingToTime:seekedTime withFinishCallback:finishCallback];
+	[weakSelf startSeekingToTime:seekedTime withFinishCallback:finishCallback];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
 
-	if (self.moviePlayer.status != AVPlayerStatusReadyToPlay
-		&& self.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+	__weak FXDsuperPlaybackManager *weakSelf = self;
+
+	if (weakSelf.moviePlayer.status != AVPlayerStatusReadyToPlay
+		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
 		FXDLog_DEFAULT;
-		FXDLog(@"%@ %@", _Variable(self.moviePlayer.status), _Variable(self.moviePlayer.currentItem.status));
+		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
 
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
@@ -251,7 +255,7 @@
 	}
 
 
-	CMTime currentTime = [self.moviePlayer.currentItem currentTime];
+	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
 
 	if (CMTimeCompare(currentTime, seekedTime) == NSOrderedSame) {
@@ -261,7 +265,7 @@
 		return;
 	}
 
-	if (CMTimeCompare(self.lastSeekedTime, seekedTime) == NSOrderedSame) {
+	if (CMTimeCompare(weakSelf.lastSeekedTime, seekedTime) == NSOrderedSame) {
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
 		}
@@ -269,12 +273,16 @@
 	}
 
 
-	self.lastSeekedTime = seekedTime;
+	weakSelf.lastSeekedTime = seekedTime;
 
-	[self.moviePlayer
+	[weakSelf.moviePlayer
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
 		 //FXDLog(@"%@", _Time([weakSelf.moviePlayer.currentItem currentTime]));
+
+		 if (finished) {
+			 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+		 }
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, finished, nil);
