@@ -92,26 +92,21 @@
 
 #pragma mark -
 - (NSArray*)itemCounts {
-	
-	if (_itemCounts == nil) {
-		FXDLog_OVERRIDE;
+	if (_itemCounts == nil) {	//FXDLog_OVERRIDE;
 	}
 	
 	return _itemCounts;
 }
 
 - (NSDictionary*)cellTitleDictionary {
-	
-	if (_cellTitleDictionary == nil) {
-		FXDLog_OVERRIDE;
+	if (_cellTitleDictionary == nil) {	//FXDLog_OVERRIDE;
 	}
 	
 	return _cellTitleDictionary;
 }
 
 - (NSDictionary*)cellSubTitleDictionary {
-	if (_cellSubTitleDictionary == nil) {
-		FXDLog_OVERRIDE;
+	if (_cellSubTitleDictionary == nil) {	//FXDLog_OVERRIDE;
 	}
 	
 	return _cellSubTitleDictionary;
@@ -119,18 +114,14 @@
 
 #pragma mark -
 - (NSMutableArray*)mainDataSource {
-	
-	if (_mainDataSource == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
 	}
 	
 	return _mainDataSource;
 }
 
 - (FXDFetchedResultsController*)mainResultsController {
-	
-	if (_mainResultsController == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
 	}
 	
 	return _mainResultsController;
