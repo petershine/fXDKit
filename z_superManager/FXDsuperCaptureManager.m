@@ -281,6 +281,12 @@
 }
 
 #pragma mark -
+- (void)switchCameraPosition {
+	AVCaptureDevicePosition cameraPosition = (self.cameraPosition == AVCaptureDevicePositionBack) ? AVCaptureDevicePositionFront:AVCaptureDevicePositionBack;
+
+	[self configureSessionWithCameraPosition:cameraPosition];
+}
+
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPosition {	FXDLog_DEFAULT;
 
 	self.cameraPosition = cameraPosition;

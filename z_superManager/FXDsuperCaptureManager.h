@@ -45,6 +45,7 @@
 #pragma mark - Public
 - (void)prepareCaptureManagerWithScene:(UIViewController*)scene;
 
+- (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
 
 
