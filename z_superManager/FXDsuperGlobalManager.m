@@ -443,10 +443,6 @@
 	[Flurry startSession:flurryApplicationKey withOptions:launchOptions];
 #endif
 
-#if USE_Appsee
-	[Appsee start:appseeAPIkey];
-#endif
-
 #if USE_TestFlight
 	[TestFlight takeOff:testflightAppToken];
 #endif

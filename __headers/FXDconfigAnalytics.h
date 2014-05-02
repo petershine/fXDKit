@@ -26,17 +26,9 @@
 		#define USE_TestFlight	TRUE
 	#endif
 
-	#ifndef USE_Appsee
-		#define USE_Appsee	FALSE
-	#endif
-
 #else
 	#ifndef USE_TestFlight
 		#define USE_TestFlight	FALSE
-	#endif
-
-	#ifndef USE_Appsee
-		#define USE_Appsee	TRUE
 	#endif
 
 #endif
@@ -77,7 +69,6 @@
 #endif
 
 
-
 #if	USE_TestFlight
 	#ifndef testflightAppToken
 		#warning	//TODO: Define testflightAppToken
@@ -88,16 +79,6 @@
 
 	#warning //TODO: Should add libz.dylib for TestFlight
 
-#endif
-
-
-#if USE_Appsee
-	#ifndef appseeAPIkey
-		#warning //TODO: Define appseeAPIkey
-		#define appseeAPIkey	@"appseeAPIkey"
-	#endif
-
-	#import <Appsee/Appsee.h>
 #endif
 
 
