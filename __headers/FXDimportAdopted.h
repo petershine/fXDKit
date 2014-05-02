@@ -11,11 +11,11 @@
 
 
 #ifndef USE_ReactiveCocoa
-	#define	USE_ReactiveCocoa	1
+	#define	USE_ReactiveCocoa	TRUE
 #endif
 
 #ifndef USE_AFNetworking
-	#define USE_AFNetworking	1
+	#define USE_AFNetworking	TRUE
 #endif
 
 #if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
@@ -61,11 +61,6 @@
 	@import MediaToolbox;
 
 	#import "FXDMediaItem.h"
-#endif
-
-
-#if USE_UAAppReviewManager	//https://github.com/UrbanApps/UAAppReviewManager
-	#import <UAAppReviewManager.h>
 #endif
 
 
