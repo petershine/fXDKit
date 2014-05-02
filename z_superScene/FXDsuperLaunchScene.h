@@ -26,7 +26,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)dismissLaunchControllerWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 //MARK: - Observer implementation

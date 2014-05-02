@@ -56,7 +56,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)dismissLaunchControllerWithFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	__weak FXDsuperLaunchScene *weakSelf = self;
 
 	[UIView

@@ -96,7 +96,7 @@
 	if ([launchScene isKindOfClass:[FXDsuperLaunchScene class]]) {
 
 		[(FXDsuperLaunchScene*)launchScene
-		 dismissLaunchControllerWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+		 dismissLaunchSceneWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 			 FXDLog_BLOCK(launchScene, caller);
 			 FXDLogBOOL(finished);
 
