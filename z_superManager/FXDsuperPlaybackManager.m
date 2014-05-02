@@ -243,6 +243,17 @@
 
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
+	if (CMTIME_IS_VALID(seekedTime) == NO) {
+		FXDLog_DEFAULT;
+		FXDLogBOOL(CMTIME_IS_VALID(seekedTime));
+
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
+		}
+		return;
+	}
+
+
 	if (weakSelf.moviePlayer.status != AVPlayerStatusReadyToPlay
 		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
 		FXDLog_DEFAULT;
@@ -278,7 +289,7 @@
 	[weakSelf.moviePlayer
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL finished) {
-		 //FXDLog(@"%@", _Time([weakSelf.moviePlayer.currentItem currentTime]));
+		 FXDLog(@"%@", _Time([weakSelf.moviePlayer.currentItem currentTime]));
 
 		 if (finished) {
 			 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
