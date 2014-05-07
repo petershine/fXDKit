@@ -261,10 +261,11 @@
 
 	weakSelf.lastSeekedTime = seekedTime;
 
-	[weakSelf.moviePlayer
+	[weakSelf.moviePlayer.currentItem cancelPendingSeeks];
+
+	[weakSelf.moviePlayer.currentItem
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL didFinish) {
-
 		 if (didFinish) {
 			 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 }
@@ -290,8 +291,10 @@
 			[weakSelf.moviePlayer
 			 addPeriodicTimeObserverForInterval:periodicintervalDefault
 			 queue:NULL
-			 usingBlock:^(CMTime time) {
-				 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+			 usingBlock:^(CMTime currentTime) {
+				 //TEST:
+				 //weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+				 weakSelf.playbackProgressTime = currentTime;
 			 }];
 		}
 
