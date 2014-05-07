@@ -450,8 +450,7 @@
 
 #pragma mark -
 - (BOOL)shouldUpgradeForNewAppVersion {
-	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
-	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+	NSInteger versionInteger = [[application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
 	FXDLogVariable(versionInteger);
 
 	BOOL shouldUpgrade = [self isLastVersionOlderThanVersionInteger:versionInteger];
@@ -475,8 +474,7 @@
 }
 
 - (void)updateLastUpgradedAppVersionAfterLaunch {	FXDLog_DEFAULT;
-	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
-	NSInteger versionInteger = [[version stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+	NSInteger versionInteger = [[application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
 
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
 	[[NSUserDefaults standardUserDefaults] synchronize];

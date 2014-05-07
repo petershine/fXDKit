@@ -40,10 +40,13 @@
 	#define application_BundleName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
 #endif
 
+#ifndef application_BundleVersion
+	#define application_BundleVersion	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+#endif
+
 #ifndef application_DisplayName
 	#define application_DisplayName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]
 #endif
-
 
 
 #define iosVersion6	6.0
