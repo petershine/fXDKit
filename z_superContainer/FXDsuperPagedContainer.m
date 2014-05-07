@@ -85,7 +85,7 @@
 	 setViewControllers:@[previewPage]
 	 direction:UIPageViewControllerNavigationDirectionForward
 	 animated:YES
-	 completion:^(BOOL finished) {
+	 completion:^(BOOL didFinish) {
 		 FXDLog_BLOCK(weakSelf.mainPageController, @selector(setViewControllers:direction:animated:completion:));
 	 }];
 }

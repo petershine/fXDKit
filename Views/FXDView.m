@@ -186,7 +186,7 @@
 	 animations:^{
 		 self.alpha = 0.0;
 	 }
-	 completion:^(BOOL finished) {
+	 completion:^(BOOL didFinish) {
 		 if (self.hidden == NO) {
 			 self.hidden = YES;
 		 }
@@ -206,7 +206,7 @@
 	 animations:^{
 		 subview.alpha = 1.0;
 	 }
-	 completion:^(BOOL finished) {
+	 completion:^(BOOL didFinish) {
 		 
 		 if (afterAddedBlock) {
 			 afterAddedBlock();
@@ -221,7 +221,7 @@
 	 animations:^{
 		 subview.alpha = 0.0;
 	 }
-	 completion:^(BOOL finished) {
+	 completion:^(BOOL didFinish) {
 		 [subview removeFromSuperview];
 		 
 		 if (afterRemovedBlock) {

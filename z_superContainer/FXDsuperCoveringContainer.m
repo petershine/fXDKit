@@ -184,7 +184,7 @@
 			 pushedScene.view.frame = animatedPushedFrame;
 		 }
 	 }
-	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
+	 completion:^(BOOL didFinish) {	FXDLog_DEFAULT;
 		 FXDLog_BLOCK(self, @selector(coverWithSegue:));
 		 FXDLogObject(self.childViewControllers);
 		 
@@ -300,8 +300,8 @@
 			 pulledScene.view.frame = animatedPulledFrame;
 		 }
 	 }
-	 completion:^(BOOL finished) {	FXDLog_DEFAULT;
-		 FXDLog(@"%@ %@", _BOOL(finished), _Object(pulledScene));
+	 completion:^(BOOL didFinish) {	FXDLog_DEFAULT;
+		 FXDLog(@"%@ %@", _BOOL(didFinish), _Object(pulledScene));
 		 
 		 [dismissedScene.view removeFromSuperview];
 		 [dismissedScene removeFromParentViewController];
@@ -398,7 +398,7 @@
 			 childScene.view.frame = animatedFrame;
 		 }
 		 
-	 } completion:^(BOOL finished) {	FXDLog_DEFAULT;
+	 } completion:^(BOOL didFinish) {	FXDLog_DEFAULT;
 		 for (FXDViewController *childScene in lateAddedSceneArray) {
 			 [childScene.view removeFromSuperview];
 			 [childScene removeFromParentViewController];

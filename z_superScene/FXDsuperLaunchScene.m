@@ -66,7 +66,7 @@
 	 animations:^{
 		 [weakSelf.view setAlpha:0.0];
 
-	 } completion:^(BOOL finished) {
+	 } completion:^(BOOL didFinish) {
 		 
 		 if (finishCallback) {
 			 finishCallback(_cmd, YES, nil);

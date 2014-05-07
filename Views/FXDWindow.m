@@ -96,14 +96,14 @@
 	if ([launchScene isKindOfClass:[FXDsuperLaunchScene class]]) {
 
 		[(FXDsuperLaunchScene*)launchScene
-		 dismissLaunchSceneWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+		 dismissLaunchSceneWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 			 FXDLog_BLOCK(launchScene, caller);
-			 FXDLogBOOL(finished);
+			 FXDLogBOOL(didFinish);
 
 			 [launchScene.view removeFromSuperview];
 
 			 if (finishCallback) {
-				 finishCallback(_cmd, finished, responseObj);
+				 finishCallback(_cmd, didFinish, responseObj);
 			 }
 		 }];
 
@@ -118,7 +118,7 @@
 	 animations:^{
 		 launchScene.view.alpha = 0.0;
 	 }
-	 completion:^(BOOL finished) {
+	 completion:^(BOOL didFinish) {
 
 		 [launchScene.view removeFromSuperview];
 

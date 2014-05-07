@@ -245,7 +245,7 @@
 			  //TODO: prepare what to do when Core Data is not setup
 
 			  [self
-			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 				   FXDLog_BLOCK(self, caller);
 
 				   [self startObservingCoreDataNotifications];
@@ -465,18 +465,18 @@
 			  FXDLog(@"2.%@", _Variable(self.didStartEnumerating));
 			  
 			  
-			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL finished) {
-				  FXDLog(@"1.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
+			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL didFinish) {
+				  FXDLog(@"1.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
 				  
 				  if (shouldShowProgressView) {
 					  [mainWindow hideProgressView];
 				  }
 				  
 				  if (shouldBreak) {
-					  finished = NO;
+					  didFinish = NO;
 				  }
 				  
-				  FXDLog(@"2.%@ %@", _BOOL(finished), _BOOL(shouldBreak));
+				  FXDLog(@"2.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
 				  
 				  
 				  FXDLog_REMAINING;
@@ -487,7 +487,7 @@
 				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
 				  
 				  if (finishCallback) {
-					  finishCallback(_cmd, finished, nil);
+					  finishCallback(_cmd, didFinish, nil);
 				  }
 			  };
 			  
@@ -501,8 +501,8 @@
 			  
 			  [self
 			   saveMainDocumentShouldSkipMerge:NO
-			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
-				   DidEnumerateBlock(finished);
+			   withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+				   DidEnumerateBlock(didFinish);
 			   }];
 		  }];
 	 }];
@@ -615,7 +615,7 @@
 	
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
-	 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 
 		 FXDLog_REMAINING;

@@ -10,7 +10,7 @@
 #define FreeCamera_FXDdefinedTypes_h
 
 
-typedef void (^FXDcallbackFinish)(SEL caller, BOOL finished, id responseObj);
+typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 

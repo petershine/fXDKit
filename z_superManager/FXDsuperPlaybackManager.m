@@ -159,7 +159,7 @@
 
 			  [weakSelf
 			   startSeekingToProgressPercentage:0.0
-			   withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+			   withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 				   FXDLog_BLOCK(weakSelf, caller);
 
 				   [weakSelf configurePlaybackObservers];
@@ -201,12 +201,10 @@
 	 usingBlock:^(NSNotification *note) {
 		 FXDLog_BLOCK([NSNotificationCenter defaultCenter], @selector(addObserverForName:object:queue:usingBlock:));
 
-#if ForDEVELOPER
 		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
-		 CMTime duration = weakSelf.moviePlayer.currentItem.duration;
-		 FXDLog(@"%@ %@ %@", _Time(currentTime), _Time(duration), _Time(weakSelf.playbackProgressTime));
-#endif
-		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+		 FXDLog(@"%@ %@ %@", _Time(weakSelf.playbackProgressTime), _Time(currentTime), _Time(weakSelf.moviePlayer.currentItem.duration));
+
+		 weakSelf.playbackProgressTime = currentTime;
 	 }];
 
 
@@ -288,15 +286,19 @@
 
 	[weakSelf.moviePlayer
 	 seekToTime:seekedTime
-	 completionHandler:^(BOOL finished) {
-		 FXDLog(@"%@", _Time([weakSelf.moviePlayer.currentItem currentTime]));
+	 completionHandler:^(BOOL didFinish) {
 
-		 if (finished) {
+		 if (didFinish) {
 			 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 }
+#if ForDEVELOPER
+		 else {
+			 FXDLog(@"%@ %@", _BOOL(didFinish), _Time([weakSelf.moviePlayer.currentItem currentTime]));
+		 }
+#endif
 
 		 if (finishCallback) {
-			 finishCallback(_cmd, finished, nil);
+			 finishCallback(_cmd, didFinish, nil);
 		 }
 	 }];
 }
@@ -322,11 +324,11 @@
 
 	[weakSelf
 	 startSeekingToTime:kCMTimeZero
-	 withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
+	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 [weakSelf.moviePlayer play];
 
 		 if (finishCallback) {
-			 finishCallback(_cmd, finished, responseObj);
+			 finishCallback(_cmd, didFinish, responseObj);
 		 }
 	 }];
 }

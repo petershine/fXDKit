@@ -321,7 +321,7 @@
 	[mainCoredata
 	 prepareWithUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
-	 finishCallback:^(SEL caller, BOOL finished, id responseObj) {
+	 finishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(mainCoredata, caller);
 		 
 		 ManagerDidPrepareBlock();

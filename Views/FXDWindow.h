@@ -15,7 +15,6 @@
 
 
 @interface FXDWindow : UIWindow
-
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDsuperProgressView *progressView;
 @property (strong, nonatomic) IBOutlet FXDsuperMessageView *messageView;

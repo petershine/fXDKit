@@ -104,7 +104,7 @@
 	 animations:^{
 		 fadedImageview.alpha = 1.0;
 	 }
-	 completion:^(BOOL finished) {
+	 completion:^(BOOL didFinish) {
 		 __strong UIImageView *strongSelf = weakSelf;
 		 
 		 strongSelf.image = fadedImageview.image;
