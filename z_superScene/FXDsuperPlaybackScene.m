@@ -64,7 +64,7 @@
 	FXDLogVariable(self.playbackManager.moviePlayer.rate);
 	
 	if (self.playbackManager.moviePlayer.rate > 0.0) {
-		[self.playbackManager.moviePlayer pause];
+		[self.playbackManager pauseRemovingPeriodicObserver];
 		
 		[self.buttonPlay fadeInFromHidden];
 	}

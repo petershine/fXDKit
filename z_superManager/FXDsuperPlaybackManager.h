@@ -8,7 +8,7 @@
 
 #ifndef periodicintervalDefault
 	#warning //MARK: Make sure it's not bad for performance
-	#define periodicintervalDefault	CMTimeMake(1, (NSInteger)doubleOneBillion)
+	#define periodicintervalDefault	CMTimeMake(1, 6)
 #endif
 
 
@@ -43,6 +43,7 @@
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)pauseRemovingPeriodicObserver;
 
 
 //MARK: - Observer implementation

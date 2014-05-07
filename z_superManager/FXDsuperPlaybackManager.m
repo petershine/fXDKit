@@ -157,17 +157,11 @@
 
 			  __weak FXDsuperPlaybackManager *weakSelf = self;
 
-			  [weakSelf
-			   startSeekingToProgressPercentage:0.0
-			   withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-				   FXDLog_BLOCK(weakSelf, caller);
+			  [weakSelf configurePlaybackObservers];
 
-				   [weakSelf configurePlaybackObservers];
-
-				   if (finishCallback) {
-					   finishCallback(_cmd, YES, nil);
-				   }
-			   }];
+			  if (finishCallback) {
+				  finishCallback(_cmd, YES, nil);
+			  }
 		  }];
 	 }];
 }
@@ -177,38 +171,21 @@
 	
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
-	FXDLogTime(periodicintervalDefault);
-
-	weakSelf.periodicObserver =
-	[weakSelf.moviePlayer
-	 addPeriodicTimeObserverForInterval:periodicintervalDefault
-	 queue:NULL
-	 usingBlock:^(CMTime time) {
-
-		 if (weakSelf.moviePlayer.rate <= 0.0) {
-			 return;
-		 }
-
-
-		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
-	 }];
-
 	weakSelf.playerItemObserver =
 	[[NSNotificationCenter defaultCenter]
 	 addObserverForName:AVPlayerItemDidPlayToEndTimeNotification
 	 object:nil
 	 queue:nil
 	 usingBlock:^(NSNotification *note) {
-		 FXDLog_BLOCK([NSNotificationCenter defaultCenter], @selector(addObserverForName:object:queue:usingBlock:));
+		 FXDLogObject(note);
+		 FXDLogTime(weakSelf.moviePlayer.currentItem.duration);
 
-		 CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
-		 FXDLog(@"%@ %@ %@", _Time(weakSelf.playbackProgressTime), _Time(currentTime), _Time(weakSelf.moviePlayer.currentItem.duration));
-
-		 weakSelf.playbackProgressTime = currentTime;
+		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 	 }];
 
 
 	@weakify(self);
+
 	[RACObserve(self, moviePlayer.currentItem.presentationSize)
 	 subscribeNext:^(id presentationSize) {	@strongify(self);
 		 FXDLog_REACT(self.moviePlayer.currentItem.presentationSize, presentationSize);
@@ -291,11 +268,6 @@
 		 if (didFinish) {
 			 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 }
-#if ForDEVELOPER
-		 else {
-			 FXDLog(@"%@ %@", _BOOL(didFinish), _Time([weakSelf.moviePlayer.currentItem currentTime]));
-		 }
-#endif
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, didFinish, nil);
@@ -308,16 +280,35 @@
 
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
+	FXDcallbackFinish ResumingMoviePlayer = ^(SEL caller, BOOL didFinish, id responseObj){
+		FXDLogTime(periodicintervalDefault);
+
+		weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+
+		if (weakSelf.periodicObserver == nil) {
+			weakSelf.periodicObserver =
+			[weakSelf.moviePlayer
+			 addPeriodicTimeObserverForInterval:periodicintervalDefault
+			 queue:NULL
+			 usingBlock:^(CMTime time) {
+				 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+			 }];
+		}
+
+		[weakSelf.moviePlayer play];
+
+		if (finishCallback) {
+			finishCallback(caller, didFinish, responseObj);
+		}
+	};
+
+
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	CMTime duration = weakSelf.moviePlayer.currentItem.duration;
 	FXDLog(@"%@ %@", _Time(currentTime), _Time(duration));
 
 	if (CMTimeCompare(currentTime, duration) == NSOrderedAscending) {
-		[weakSelf.moviePlayer play];
-
-		if (finishCallback) {
-			finishCallback(_cmd, YES, nil);
-		}
+		ResumingMoviePlayer(_cmd, YES, nil);
 		return;
 	}
 
@@ -325,12 +316,20 @@
 	[weakSelf
 	 startSeekingToTime:kCMTimeZero
 	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-		 [weakSelf.moviePlayer play];
-
-		 if (finishCallback) {
-			 finishCallback(_cmd, didFinish, responseObj);
-		 }
+		 ResumingMoviePlayer(_cmd, didFinish, responseObj);
 	 }];
+}
+
+- (void)pauseRemovingPeriodicObserver {	FXDLog_DEFAULT;
+	
+	__weak FXDsuperPlaybackManager *weakSelf = self;
+
+	[weakSelf.moviePlayer pause];
+
+	if (weakSelf.periodicObserver) {
+		[weakSelf.moviePlayer removeTimeObserver:weakSelf.periodicObserver];
+		weakSelf.periodicObserver = nil;
+	}
 }
 
 
