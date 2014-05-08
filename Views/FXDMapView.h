@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+@import MapKit;
+
 
 @interface FXDMapView : MKMapView
 

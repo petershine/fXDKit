@@ -6,6 +6,17 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+@import CoreLocation;
+@import MapKit;
+
+
+@interface FXDAnnotation : MKPointAnnotation
+@property (strong, nonatomic) id addedObj;
+@end
+
+#import "FXDAnnotationView.h"
+#import "FXDMapView.h"
+
 
 @interface FXDsuperGeoManager : FXDsuperManager <CLLocationManagerDelegate>
 

@@ -9,6 +9,10 @@
 #import "FXDsuperGeoManager.h"
 
 
+@implementation FXDAnnotation
+@end
+
+
 #pragma mark - Public implementation
 @implementation FXDsuperGeoManager
 

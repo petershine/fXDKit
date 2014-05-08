@@ -41,12 +41,7 @@
 #endif
 
 #if USE_LocationFrameworks
-	@import CoreLocation;
-	@import MapKit;
-
-	#import "FXDAnnotation.h"
-	#import "FXDAnnotationView.h"
-	#import "FXDMapView.h"
+	#import "FXDsuperGeoManager.h"
 #endif
 
 #if USE_MultimediaFrameworks
