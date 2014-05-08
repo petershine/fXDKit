@@ -87,5 +87,6 @@
 #import "FXDResponder.h"
 
 #import "FXDsuperManager.h"
+#import "FXDsuperGlobalManager.h"
 
 #endif
