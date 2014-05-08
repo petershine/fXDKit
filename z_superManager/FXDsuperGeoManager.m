@@ -18,8 +18,32 @@
 
 
 #pragma mark - Memory management
+- (void)dealloc {
+	FXDLog_DEFAULT;
+	[[NSNotificationCenter defaultCenter]
+	 removeObserver:self];
+}
 
 #pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+		[[NSNotificationCenter defaultCenter]
+		 addObserver:self
+		 selector:@selector(observedUIApplicationDidEnterBackground:)
+		 name:UIApplicationDidEnterBackgroundNotification
+		 object:nil];
+
+		[[NSNotificationCenter defaultCenter]
+		 addObserver:self
+		 selector:@selector(observedUIApplicationDidBecomeActive:)
+		 name:UIApplicationDidBecomeActiveNotification
+		 object:nil];
+	}
+
+	return self;
+}
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
@@ -52,17 +76,14 @@
 		//TODO: alert user reminding location service is required"
 	}
 
-	
-	FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
+
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
 	[self.mainLocationManager startUpdatingLocation];
-	[self.mainLocationManager startMonitoringSignificantLocationChanges];
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
 	[_mainLocationManager stopUpdatingLocation];
-	[_mainLocationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark -
@@ -99,6 +120,24 @@
 
 
 //MARK: - Observer implementation
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
+
+	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
+		[self.mainLocationManager stopUpdatingLocation];
+		[self.mainLocationManager startMonitoringSignificantLocationChanges];
+	}
+}
+
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLogVariable([CLLocationManager locationServicesEnabled]);
+	
+	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
+		[self.mainLocationManager startUpdatingLocation];
+		[self.mainLocationManager stopMonitoringSignificantLocationChanges];
+	}
+}
+
 
 //MARK: - Delegate implementation
 #pragma mark - CLLocationManagerDelegate
@@ -113,9 +152,23 @@
 		//MARK: Let subclass to change boolean
 
 #if ForDEVELOPER
+		self.locationUpdatingTask =
+		[[UIApplication sharedApplication]
+		 beginBackgroundTaskWithExpirationHandler:^{
+			 [[UIApplication sharedApplication] endBackgroundTask:self.locationUpdatingTask];
+			 self.locationUpdatingTask = UIBackgroundTaskInvalid;
+		 }];
+
+		FXDLogVariable(self.locationUpdatingTask);
+
 		[[UIApplication sharedApplication]
 		 localNotificationWithAlertBody:[locations lastObject]
-		 afterDelay:0.0];
+		 afterDelay:delayHalfSecond];
+
+		FXDLog_REMAINING;
+
+		[[UIApplication sharedApplication] endBackgroundTask:self.locationUpdatingTask];
+		self.locationUpdatingTask = UIBackgroundTaskInvalid;
 #endif
 	}
 }

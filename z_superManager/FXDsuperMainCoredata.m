@@ -401,17 +401,16 @@
 	
 	
 	self.didStartEnumerating = YES;
-	
-	
-	UIApplication *sharedApplication = [UIApplication sharedApplication];
-	
-	self.enumeratingTaskIdentifier = [sharedApplication
-									  beginBackgroundTaskWithExpirationHandler:^{
-										  [sharedApplication endBackgroundTask:self.enumeratingTaskIdentifier];
-										  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
-									  }];
 
-	FXDLogVariable(self.enumeratingTaskIdentifier);
+	
+	self.enumeratingTask =
+	[[UIApplication sharedApplication]
+	 beginBackgroundTaskWithExpirationHandler:^{
+		 [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTask];
+		 self.enumeratingTask = UIBackgroundTaskInvalid;
+	 }];
+
+	FXDLogVariable(self.enumeratingTask);
 	
 	
 	FXDWindow *mainWindow = nil;
@@ -481,10 +480,10 @@
 				  
 				  FXDLog_REMAINING;
 				  
-				  FXDLogVariable(self.enumeratingTaskIdentifier);
+				  FXDLogVariable(self.enumeratingTask);
 				  
-				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTaskIdentifier];
-				  self.enumeratingTaskIdentifier = UIBackgroundTaskInvalid;
+				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTask];
+				  self.enumeratingTask = UIBackgroundTaskInvalid;
 				  
 				  if (finishCallback) {
 					  finishCallback(_cmd, didFinish, nil);
@@ -605,14 +604,15 @@
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog_REMAINING;
 
-	self.savingTaskIdentifier
-	= [[UIApplication sharedApplication]
-	   beginBackgroundTaskWithExpirationHandler:^{
-		   [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
-		   self.savingTaskIdentifier = UIBackgroundTaskInvalid;
-	   }];
-	FXDLogVariable(self.savingTaskIdentifier);
+	self.dataSavingTask =
+	[[UIApplication sharedApplication]
+	 beginBackgroundTaskWithExpirationHandler:^{
+		 [[UIApplication sharedApplication] endBackgroundTask:self.dataSavingTask];
+		 self.dataSavingTask = UIBackgroundTaskInvalid;
+	 }];
 	
+	FXDLogVariable(self.dataSavingTask);
+
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
 	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
@@ -620,10 +620,10 @@
 
 		 FXDLog_REMAINING;
 
-		 FXDLogVariable(self.savingTaskIdentifier);
+		 FXDLogVariable(self.dataSavingTask);
 
-		 [[UIApplication sharedApplication] endBackgroundTask:self.savingTaskIdentifier];
-		 self.savingTaskIdentifier = UIBackgroundTaskInvalid;
+		 [[UIApplication sharedApplication] endBackgroundTask:self.dataSavingTask];
+		 self.dataSavingTask = UIBackgroundTaskInvalid;
 	 }];
 }
 

@@ -22,8 +22,8 @@
 	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;
 	
-	UIBackgroundTaskIdentifier _enumeratingTaskIdentifier;
-	UIBackgroundTaskIdentifier _savingTaskIdentifier;
+	UIBackgroundTaskIdentifier _enumeratingTask;
+	UIBackgroundTaskIdentifier _dataSavingTask;
 
 	NSString *_mainModelName;
 	FXDManagedDocument *_mainDocument;
@@ -40,8 +40,8 @@
 @property (nonatomic) BOOL shouldMergeForManagedContext;
 @property (nonatomic) BOOL didStartEnumerating;
 
-@property (nonatomic) UIBackgroundTaskIdentifier enumeratingTaskIdentifier;
-@property (nonatomic) UIBackgroundTaskIdentifier savingTaskIdentifier;
+@property (nonatomic) UIBackgroundTaskIdentifier enumeratingTask;
+@property (nonatomic) UIBackgroundTaskIdentifier dataSavingTask;
 
 @property (strong, nonatomic) NSString *mainModelName;
 @property (strong, nonatomic) FXDManagedDocument *mainDocument;
