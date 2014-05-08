@@ -30,6 +30,7 @@
 
 #pragma mark - Public
 - (void)startMainLocationManager;
+- (void)pauseMainLocationManager;
 
 - (void)maximizeLocationAccuracy;
 - (void)minimizeLocationAccuracy;

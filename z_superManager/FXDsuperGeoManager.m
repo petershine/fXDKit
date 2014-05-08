@@ -48,15 +48,21 @@
 	BOOL servicesEnabled = [CLLocationManager locationServicesEnabled];
 	FXDLogBOOL(servicesEnabled);
 
-	if (servicesEnabled) {
-		FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
-		FXDLogVariable([CLLocationManager deferredLocationUpdatesAvailable]);
-
-		[self.mainLocationManager startMonitoringSignificantLocationChanges];
-		[self.mainLocationManager startUpdatingLocation];
+	if (servicesEnabled == NO) {
+		//TODO: alert user reminding location service is required"
 	}
 
-	//TODO: alert user reminding location service is required"
+	
+	FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
+	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
+
+	[self.mainLocationManager startMonitoringSignificantLocationChanges];
+	[self.mainLocationManager startUpdatingLocation];
+}
+
+- (void)pauseMainLocationManager {	FXDLog_DEFAULT;
+	[_mainLocationManager stopMonitoringSignificantLocationChanges];
+	[_mainLocationManager stopUpdatingLocation];
 }
 
 #pragma mark -
@@ -99,11 +105,18 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 
 	if (self.initializedForAppLaunching) {
+		FXDLogBOOL(self.initializedForAppLaunching);
 		FXDLog_REMAINING;
 
 		LOGEVENT(@"SignificantLocationChanges: %@", [locations description]);
 
 		//MARK: Let subclass to change boolean
+
+#if ForDEVELOPER
+		[[UIApplication sharedApplication]
+		 localNotificationWithAlertBody:[locations lastObject]
+		 afterDelay:0.0];
+#endif
 	}
 }
 
