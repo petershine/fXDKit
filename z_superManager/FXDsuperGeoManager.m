@@ -56,13 +56,13 @@
 	FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
-	[self.mainLocationManager startMonitoringSignificantLocationChanges];
 	[self.mainLocationManager startUpdatingLocation];
+	[self.mainLocationManager startMonitoringSignificantLocationChanges];
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
-	[_mainLocationManager stopMonitoringSignificantLocationChanges];
 	[_mainLocationManager stopUpdatingLocation];
+	[_mainLocationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark -
