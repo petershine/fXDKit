@@ -232,7 +232,7 @@
 
 #pragma mark -
 - (UIImage*)renderedImageForScreenScale {
-	return [self renderedImageForScale:0.0 afterScreenUpdates:YES];
+	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
 }
 
 - (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {
