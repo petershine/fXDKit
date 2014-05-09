@@ -52,6 +52,7 @@
 		_mainLocationManager = [CLLocationManager new];
 		_mainLocationManager.activityType = CLActivityTypeOther;
 		_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
+		
 		_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
 
 		[_mainLocationManager setDelegate:self];
@@ -114,6 +115,7 @@
 		return YES;
 	}
 
+#warning //TODO: Overridden by subclass
 
 	return NO;
 }
@@ -124,9 +126,9 @@
 	FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
 
 	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
-		[self.mainLocationManager stopUpdatingLocation];
-
 		[self.mainLocationManager startMonitoringSignificantLocationChanges];
+
+		[self.mainLocationManager stopUpdatingLocation];
 	}
 }
 
@@ -143,7 +145,7 @@
 
 //MARK: - Delegate implementation
 #pragma mark - CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {	FXDLog_DEFAULT;
 
 	if (self.initializedForAppLaunching) {	FXDLog_DEFAULT;
 		FXDLogBOOL(self.initializedForAppLaunching);
@@ -152,38 +154,6 @@
 		LOGEVENT(@"SignificantLocationChanges: %@", [locations description]);
 
 		//MARK: Let subclass to change boolean
-
-
-#if ForDEVELOPER
-		UIApplication *application = [UIApplication sharedApplication];
-
-		//MARK: May need to be retained by the owner
-		__block UIBackgroundTaskIdentifier locationUpdatingTask =
-		[application
-		 beginBackgroundTaskWithExpirationHandler:^{
-
-			 dispatch_async(dispatch_get_main_queue(), ^{
-				 [application endBackgroundTask:locationUpdatingTask];
-				 locationUpdatingTask = UIBackgroundTaskInvalid;
-			 });
-		 }];
-
-		FXDLogVariable(locationUpdatingTask);
-
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
-			[application
-			 localNotificationWithAlertBody:[locations lastObject]
-			 afterDelay:0.0];
-
-			FXDLog_REMAINING;
-
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[application endBackgroundTask:locationUpdatingTask];
-				locationUpdatingTask = UIBackgroundTaskInvalid;
-			});
-		});
-#endif
 	}
 }
 

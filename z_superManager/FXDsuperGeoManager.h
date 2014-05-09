@@ -21,6 +21,8 @@
 
 @property (nonatomic) BOOL initializedForAppLaunching;
 
+@property (nonatomic) UIBackgroundTaskIdentifier locationUpdatingTask;
+
 @property (strong, nonatomic) CLLocationManager *mainLocationManager;
 
 @property (strong, nonatomic) CLLocation *lastLocation;

@@ -178,6 +178,7 @@
 }
 @end
 
+
 @implementation UIScreen (Added)
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
 
