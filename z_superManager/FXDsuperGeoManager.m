@@ -125,6 +125,7 @@
 
 	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
 		[self.mainLocationManager stopUpdatingLocation];
+
 		[self.mainLocationManager startMonitoringSignificantLocationChanges];
 	}
 }
@@ -134,6 +135,7 @@
 	
 	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
 		[self.mainLocationManager startUpdatingLocation];
+		
 		[self.mainLocationManager stopMonitoringSignificantLocationChanges];
 	}
 }
@@ -143,7 +145,7 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 
-	if (self.initializedForAppLaunching) {
+	if (self.initializedForAppLaunching) {	FXDLog_DEFAULT;
 		FXDLogBOOL(self.initializedForAppLaunching);
 		FXDLog_REMAINING;
 
@@ -151,24 +153,36 @@
 
 		//MARK: Let subclass to change boolean
 
+
 #if ForDEVELOPER
-		self.locationUpdatingTask =
-		[[UIApplication sharedApplication]
+		UIApplication *application = [UIApplication sharedApplication];
+
+		//MARK: May need to be retained by the owner
+		__block UIBackgroundTaskIdentifier locationUpdatingTask =
+		[application
 		 beginBackgroundTaskWithExpirationHandler:^{
-			 [[UIApplication sharedApplication] endBackgroundTask:self.locationUpdatingTask];
-			 self.locationUpdatingTask = UIBackgroundTaskInvalid;
+
+			 dispatch_async(dispatch_get_main_queue(), ^{
+				 [application endBackgroundTask:locationUpdatingTask];
+				 locationUpdatingTask = UIBackgroundTaskInvalid;
+			 });
 		 }];
 
-		FXDLogVariable(self.locationUpdatingTask);
+		FXDLogVariable(locationUpdatingTask);
 
-		[[UIApplication sharedApplication]
-		 localNotificationWithAlertBody:[locations lastObject]
-		 afterDelay:delayHalfSecond];
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
-		FXDLog_REMAINING;
+			[application
+			 localNotificationWithAlertBody:[locations lastObject]
+			 afterDelay:0.0];
 
-		[[UIApplication sharedApplication] endBackgroundTask:self.locationUpdatingTask];
-		self.locationUpdatingTask = UIBackgroundTaskInvalid;
+			FXDLog_REMAINING;
+
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[application endBackgroundTask:locationUpdatingTask];
+				locationUpdatingTask = UIBackgroundTaskInvalid;
+			});
+		});
 #endif
 	}
 }
