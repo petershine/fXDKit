@@ -122,30 +122,16 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogBOOL([CLLocationManager significantLocationChangeMonitoringAvailable]);
-
-	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
-		[self.mainLocationManager startMonitoringSignificantLocationChanges];
-
-		[self.mainLocationManager stopUpdatingLocation];
-	}
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogVariable([CLLocationManager locationServicesEnabled]);
-	
-	if ([CLLocationManager significantLocationChangeMonitoringAvailable]) {
-		[self.mainLocationManager startUpdatingLocation];
-		
-		[self.mainLocationManager stopMonitoringSignificantLocationChanges];
-	}
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 
 
 //MARK: - Delegate implementation
 #pragma mark - CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {	FXDLog_DEFAULT;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 
 	if (self.initializedForAppLaunching) {	FXDLog_DEFAULT;
 		FXDLogBOOL(self.initializedForAppLaunching);
