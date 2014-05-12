@@ -36,13 +36,6 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-#if TEST_loggingViewDrawing
-- (void)layoutSubviews {	FXDLog_DEFAULT;
-	[super layoutSubviews];
-
-	FXDLog(@"%@ %@", _Rect(self.frame), _Rect(self.bounds));
-}
-#endif
 
 #pragma mark - IBActions
 
@@ -291,9 +284,14 @@
 }
 
 #pragma mark -
-- (void)configureForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation shouldAnimate:(BOOL)shouldAnimate forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
+- (void)updateFrameForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
 
 }
+
+- (void)updateFrameForBounds:(CGRect)bounds withXYratio:(CGPoint)xyRatio forDuration:(NSTimeInterval)duration {
+	FXDLog_OVERRIDE;
+}
+
 
 #pragma mark -
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {	FXDLog_DEFAULT;

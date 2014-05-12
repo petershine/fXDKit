@@ -11,6 +11,7 @@
 	UILabel *_customTitleLabel;
 }
 
+@property (nonatomic) CGRect initialViewFrame;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UILabel *customTitleLabel;

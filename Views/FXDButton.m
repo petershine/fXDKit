@@ -26,6 +26,12 @@
     return self;
 }
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+
+	self.initialViewFrame = self.frame;
+}
+
 
 #pragma mark - Property overriding
 - (UILabel*)customTitleLabel {

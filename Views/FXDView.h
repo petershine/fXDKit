@@ -6,10 +6,6 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#ifndef TEST_loggingViewDrawing
-	#define TEST_loggingViewDrawing	FALSE
-#endif
-
 
 @interface FXDView : UIView
 @property (nonatomic) CGRect initialViewFrame;
@@ -55,7 +51,8 @@
 
 - (void)blinkShadowOpacity;
 
-- (void)configureForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation shouldAnimate:(BOOL)shouldAnimate forDuration:(NSTimeInterval)duration;
+- (void)updateFrameForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration;
+- (void)updateFrameForBounds:(CGRect)bounds withXYratio:(CGPoint)xyRatio forDuration:(NSTimeInterval)duration;
 
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds;
 

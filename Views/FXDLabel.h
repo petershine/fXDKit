@@ -9,8 +9,9 @@
 
 @interface FXDLabel : UILabel
 
-// IBOutlets
+@property (nonatomic) CGRect initialViewFrame;
 
+// IBOutlets
 
 #pragma mark - IBActions
 
