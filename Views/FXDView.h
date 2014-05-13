@@ -8,6 +8,7 @@
 
 
 @interface FXDView : UIView
+
 @property (nonatomic) CGRect initialViewFrame;
 
 // IBOutlets
@@ -51,8 +52,8 @@
 
 - (void)blinkShadowOpacity;
 
-- (void)updateFrameForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration shouldTransform:(BOOL)shouldTransform;
-- (void)updateFrameForBounds:(CGRect)bounds withXYratio:(CGPoint)xyRatio forDuration:(NSTimeInterval)duration shouldTransform:(BOOL)shouldTransform;
+- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
+- (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration;
 
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds;
 

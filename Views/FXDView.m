@@ -284,29 +284,29 @@
 }
 
 #pragma mark -
-- (void)updateFrameForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration shouldTransform:(BOOL)shouldTransform {	FXDLog_DEFAULT;
+- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {	FXDLog_DEFAULT;
 
-	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 	CGRect animatedFrame = self.bounds;
+	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 
 	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
 		animatedFrame.origin.x = 0.0;
 		animatedFrame.origin.y = bounds.size.height -self.bounds.size.height;
 	}
 	else {
-		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(270.0));
-
 		animatedFrame.size.width = self.bounds.size.height;
 		animatedFrame.size.height = self.bounds.size.width;
 
 		animatedFrame.origin.x = bounds.size.width -self.bounds.size.height;
 		animatedFrame.origin.y = 0.0;
+
+		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
 	}
 
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
-		 if (shouldTransform) {
+		 if (withRotation > 0.0) {
 			 self.transform = animatedTransform;
 		 }
 
@@ -314,13 +314,11 @@
 	 }];
 }
 
-- (void)updateFrameForBounds:(CGRect)bounds withXYratio:(CGPoint)xyRatio forDuration:(NSTimeInterval)duration shouldTransform:(BOOL)shouldTransform {	FXDLog_DEFAULT;
+- (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
 
-	CGRect animatedFrame = self.frame;
+	CGRect animatedFrame = self.bounds;
 	animatedFrame.origin.x = (bounds.size.width-animatedFrame.size.width)*xyRatio.x;
 	animatedFrame.origin.y = (bounds.size.height-animatedFrame.size.height)*xyRatio.y;
-
-	FXDLogRect(animatedFrame);
 
 	[UIView
 	 animateWithDuration:duration
