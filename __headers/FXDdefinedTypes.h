@@ -31,4 +31,12 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 };
 
 
+typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
+	boxCornerTopLeft,
+	boxCornerBottomLeft,
+	boxCornerBottomRight,
+	boxCornerTopRight
+};
+
+
 #endif

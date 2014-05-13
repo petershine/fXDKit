@@ -314,6 +314,72 @@
 	 }];
 }
 
+- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)portraitCornerType forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
+
+	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+		[self updateWithBoxCornerType:portraitCornerType
+							forBounds:bounds
+						  forDuration:duration];
+		return;
+	}
+
+
+	BOX_CORNER_TYPE landscapeCornerType;
+
+	switch (portraitCornerType) {
+		case boxCornerTopLeft:
+			landscapeCornerType = boxCornerBottomLeft;
+			break;
+
+		case boxCornerBottomLeft:
+			landscapeCornerType = boxCornerBottomRight;
+			break;
+
+		case boxCornerBottomRight:
+			landscapeCornerType = boxCornerTopRight;
+			break;
+
+		case boxCornerTopRight:
+			landscapeCornerType = boxCornerTopLeft;
+			break;
+
+		default:
+			break;
+	}
+
+	[self updateWithBoxCornerType:landscapeCornerType
+						forBounds:bounds
+					  forDuration:duration];
+}
+
+- (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
+
+	CGPoint xyRatio = CGPointZero;
+
+	switch (boxCornerType) {
+		case boxCornerTopLeft:
+			break;
+
+		case boxCornerBottomLeft:
+			xyRatio.y = 1.0;
+			break;
+
+		case boxCornerBottomRight:
+			xyRatio.x = 1.0;
+			xyRatio.y = 1.0;
+			break;
+
+		case boxCornerTopRight:
+			xyRatio.x = 1.0;
+			break;
+
+		default:
+			break;
+	}
+
+	[self updateWithXYratio:xyRatio forBounds:bounds forDuration:duration];
+}
+
 - (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
 
 	CGRect animatedFrame = self.bounds;
