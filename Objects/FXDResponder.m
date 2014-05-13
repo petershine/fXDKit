@@ -84,12 +84,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 
 #if ForDEVELOPER
-	NSString *deviceTokenString = [deviceToken description];
-	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
-	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
-	deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
-
-	FXDLogObject(deviceTokenString);
+	FXDLogObject(deviceToken);
 #endif
 }
 
