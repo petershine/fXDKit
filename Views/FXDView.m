@@ -383,7 +383,7 @@
 	CGRect animatedFrame = self.bounds;
 
 	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-		animatedFrame.origin.x = 0.0;
+		animatedFrame.origin.x = (bounds.size.width -self.bounds.size.width)/2.0;
 		animatedFrame.origin.y = bounds.size.height -self.bounds.size.height;
 	}
 	else {
@@ -393,7 +393,7 @@
 		animatedFrame.size.height = self.bounds.size.width;
 
 		animatedFrame.origin.x = bounds.size.width -self.bounds.size.height;
-		animatedFrame.origin.y = 0.0;
+		animatedFrame.origin.y = (bounds.size.height -self.bounds.size.width)/2.0;
 	}
 
 	[UIView
