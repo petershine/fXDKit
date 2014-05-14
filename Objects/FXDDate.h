@@ -1,9 +1,9 @@
 //
 //  FXDDate.h
-//  FreeCamera
+//
 //
 //  Created by petershine on 4/18/14.
-//  Copyright (c) 2014 Grovesoft. All rights reserved.
+//  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
 

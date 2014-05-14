@@ -284,36 +284,6 @@
 }
 
 #pragma mark -
-- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {	FXDLog_DEFAULT;
-
-	CGRect animatedFrame = self.bounds;
-	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
-
-	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-		animatedFrame.origin.x = 0.0;
-		animatedFrame.origin.y = bounds.size.height -self.bounds.size.height;
-	}
-	else {
-		animatedFrame.size.width = self.bounds.size.height;
-		animatedFrame.size.height = self.bounds.size.width;
-
-		animatedFrame.origin.x = bounds.size.width -self.bounds.size.height;
-		animatedFrame.origin.y = 0.0;
-
-		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
-	}
-
-	[UIView
-	 animateWithDuration:duration
-	 animations:^{
-		 if (withRotation > 0.0) {
-			 self.transform = animatedTransform;
-		 }
-
-		 self.frame = animatedFrame;
-	 }];
-}
-
 - (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)portraitCornerType forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
 
 	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
@@ -377,22 +347,65 @@
 			break;
 	}
 
-	[self updateWithXYratio:xyRatio forBounds:bounds forDuration:duration];
+	[self updateWithXYratio:xyRatio
+				  forBounds:bounds
+				forDuration:duration
+			   withRotation:0.0];
 }
 
-- (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
+- (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+
+	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
+
+	if (withRotation) {
+		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
+	}
 
 	CGRect animatedFrame = self.bounds;
-	animatedFrame.origin.x = (bounds.size.width-animatedFrame.size.width)*xyRatio.x;
-	animatedFrame.origin.y = (bounds.size.height-animatedFrame.size.height)*xyRatio.y;
+	animatedFrame.origin.x = (bounds.size.width-self.bounds.size.width)*xyRatio.x;
+	animatedFrame.origin.y = (bounds.size.height-self.bounds.size.height)*xyRatio.y;
 
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
+		 if (withRotation) {
+			 self.transform = animatedTransform;
+		 }
+		 
 		 self.frame = animatedFrame;
 	 }];
 }
 
+#pragma mark -
+- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {	FXDLog_DEFAULT;
+
+	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
+	CGRect animatedFrame = self.bounds;
+
+	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+		animatedFrame.origin.x = 0.0;
+		animatedFrame.origin.y = bounds.size.height -self.bounds.size.height;
+	}
+	else {
+		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
+
+		animatedFrame.size.width = self.bounds.size.height;
+		animatedFrame.size.height = self.bounds.size.width;
+
+		animatedFrame.origin.x = bounds.size.width -self.bounds.size.height;
+		animatedFrame.origin.y = 0.0;
+	}
+
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 if (withRotation > 0.0) {
+			 self.transform = animatedTransform;
+		 }
+
+		 self.frame = animatedFrame;
+	 }];
+}
 
 #pragma mark -
 - (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {	FXDLog_DEFAULT;
