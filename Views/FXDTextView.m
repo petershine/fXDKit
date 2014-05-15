@@ -57,18 +57,13 @@
 	}
 
 
-	CGRect boundingRect = [changedText
-						   boundingRectWithSize:CGSizeMake(maximumSize.width, INFINITY)
-						   options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
-						   attributes:@{NSFontAttributeName: self.font}
-						   context:nil];
+	CGRect boundingRect = [self boundingRectForChangedText:changedText
+											forMaximumSize:maximumSize];
 
 	boundingRect.size.height += (self.font.pointSize*1.5);
 
 	if (ceilf(boundingRect.size.height) > maximumSize.height) {
-
 		//FXDLog(@"NO: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
-
 		return NO;
 	}
 
@@ -88,6 +83,16 @@
 	//FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
 
 	return YES;
+}
+
+- (CGRect)boundingRectForChangedText:(NSString*)changedText forMaximumSize:(CGSize)maximumSize {
+	CGRect boundingRect = [changedText
+						   boundingRectWithSize:CGSizeMake(maximumSize.width, INFINITY)
+						   options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
+						   attributes:@{NSFontAttributeName: self.font}
+						   context:nil];
+
+	return boundingRect;
 }
 
 @end

@@ -25,5 +25,6 @@
 #pragma mark -  Category
 @interface UITextView (Added)
 - (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText withMaximumSize:(CGSize)maximumSize;
+- (CGRect)boundingRectForChangedText:(NSString*)changedText forMaximumSize:(CGSize)maximumSize;
 
 @end
