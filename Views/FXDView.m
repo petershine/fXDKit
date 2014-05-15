@@ -408,11 +408,11 @@
 }
 
 #pragma mark -
-- (void)updateLayerForDeviceOrientationWithAffineTransform:(CGAffineTransform)affineTransform andWithScreenBounds:(CGRect)screenBounds {	FXDLog_DEFAULT;
+- (void)updateLayerWithAffineTransform:(CGAffineTransform)affineTransform forBounds:(CGRect)bounds {	FXDLog_DEFAULT;
 	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
 
 	self.layer.affineTransform = affineTransform;
-	self.layer.frame = screenBounds;
+	self.layer.frame = bounds;
 
 	for (CALayer *sublayer in self.layer.sublayers) {
 		FXDLog(@"1.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
