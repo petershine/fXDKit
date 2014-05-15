@@ -45,6 +45,43 @@
 
 #pragma mark -  Category
 @implementation UITextView (Added)
+- (BOOL)verticalAlignWithChangedText:(NSString*)changedText {
+	if (changedText == nil) {
+		changedText = self.text;
+	}
+
+
+	CGRect boundingRect = [self boundingRectForChangedText:changedText
+											forMaximumSize:self.bounds.size];
+
+	CGPoint verticalOffset = CGPointMake(0.0,
+										 ((self.bounds.size.height -boundingRect.size.height)/2.0));
+	FXDLogPoint(verticalOffset);
+
+	if (verticalOffset.y < 0.0 +self.font.pointSize) {
+		[self setContentInset:UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)];
+		[self setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+
+		return NO;
+	}
+
+
+	[self setContentInset:UIEdgeInsetsMake(verticalOffset.y, 0.0, 0.0, 0.0)];
+	[self setContentOffset:CGPointMake(0.0, 0.0-verticalOffset.y) animated:NO];
+
+	return YES;
+}
+
+- (CGRect)boundingRectForChangedText:(NSString*)changedText forMaximumSize:(CGSize)maximumSize {
+	CGRect boundingRect = [changedText
+						   boundingRectWithSize:CGSizeMake(maximumSize.width, INFINITY)
+						   options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
+						   attributes:@{NSFontAttributeName: self.font}
+						   context:nil];
+
+	return boundingRect;
+}
+
 - (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText withMaximumSize:(CGSize)maximumSize {
 
 	if (changedText == nil) {
@@ -83,16 +120,6 @@
 	//FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
 
 	return YES;
-}
-
-- (CGRect)boundingRectForChangedText:(NSString*)changedText forMaximumSize:(CGSize)maximumSize {
-	CGRect boundingRect = [changedText
-						   boundingRectWithSize:CGSizeMake(maximumSize.width, INFINITY)
-						   options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
-						   attributes:@{NSFontAttributeName: self.font}
-						   context:nil];
-
-	return boundingRect;
 }
 
 @end
