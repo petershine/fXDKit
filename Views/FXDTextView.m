@@ -56,7 +56,7 @@
 
 	CGPoint verticalOffset = CGPointMake(0.0,
 										 ((self.bounds.size.height -boundingRect.size.height)/2.0));
-	FXDLogPoint(verticalOffset);
+	//FXDLogPoint(verticalOffset);
 
 	if (verticalOffset.y < 0.0 +self.font.pointSize) {
 		[self setContentInset:UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)];

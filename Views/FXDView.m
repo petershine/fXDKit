@@ -240,9 +240,8 @@
 		[self.layer renderInContext:UIGraphicsGetCurrentContext()];
 	}
 	else {
-		BOOL didDraw = [self
-						drawViewHierarchyInRect:self.bounds
-						afterScreenUpdates:afterScreenUpdates];
+		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds
+								  afterScreenUpdates:afterScreenUpdates];
 
 		if (didDraw == NO) {	FXDLog_DEFAULT;
 			FXDLogBOOL(didDraw);
