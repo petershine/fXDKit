@@ -46,6 +46,7 @@
 #pragma mark -  Category
 @implementation UITextView (Added)
 - (BOOL)verticalAlignWithChangedText:(NSString*)changedText {
+
 	if (changedText == nil) {
 		changedText = self.text;
 	}
@@ -54,20 +55,16 @@
 	CGRect boundingRect = [self boundingRectForChangedText:changedText
 											forMaximumSize:self.bounds.size];
 
-	CGPoint verticalOffset = CGPointMake(0.0,
-										 ((self.bounds.size.height -boundingRect.size.height)/2.0));
-	//FXDLogPoint(verticalOffset);
+	CGFloat verticalOffset = (self.bounds.size.height -self.font.pointSize -boundingRect.size.height)/2.0;
+	FXDLog(@"%@, %@ lines: %f %@", _Variable(verticalOffset), _Variable(self.font.pointSize), (boundingRect.size.height/self.font.pointSize), _Object(self.text));
 
-	if (verticalOffset.y < 0.0 +self.font.pointSize) {
-		[self setContentInset:UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)];
-		[self setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-
+	if (verticalOffset < 0.0) {
 		return NO;
 	}
 
 
-	[self setContentInset:UIEdgeInsetsMake(verticalOffset.y, 0.0, 0.0, 0.0)];
-	[self setContentOffset:CGPointMake(0.0, 0.0-verticalOffset.y) animated:NO];
+	self.contentInset = UIEdgeInsetsMake(verticalOffset, 0.0, 0.0, 0.0);
+	[self setContentOffset:CGPointMake(0.0, 0.0-verticalOffset) animated:NO];
 
 	return YES;
 }
@@ -80,46 +77,6 @@
 						   context:nil];
 
 	return boundingRect;
-}
-
-- (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText withMaximumSize:(CGSize)maximumSize {
-
-	if (changedText == nil) {
-		changedText = self.text;
-	}
-
-
-	if (CGSizeEqualToSize(maximumSize, CGSizeZero)) {
-		maximumSize = CGSizeMake(self.frame.size.width, self.frame.size.width);
-	}
-
-
-	CGRect boundingRect = [self boundingRectForChangedText:changedText
-											forMaximumSize:maximumSize];
-
-	boundingRect.size.height += (self.font.pointSize*1.5);
-
-	if (ceilf(boundingRect.size.height) > maximumSize.height) {
-		//FXDLog(@"NO: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
-		return NO;
-	}
-
-
-	if (boundingRect.size.height > maximumSize.height-self.font.pointSize) {
-		boundingRect.size.height = maximumSize.height;
-	}
-
-
-	boundingRect.origin.x = self.frame.origin.x;
-	boundingRect.size.width = self.frame.size.width;
-
-	boundingRect.origin.y = (maximumSize.height -boundingRect.size.height)/2.0;
-
-	self.frame = boundingRect;
-
-	//FXDLog(@"YES: %@ %@ %@", _Size(maximumSize), _Variable(self.font.pointSize), _Rect(boundingRect));
-
-	return YES;
 }
 
 @end

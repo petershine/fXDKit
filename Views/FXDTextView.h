@@ -27,6 +27,4 @@
 - (BOOL)verticalAlignWithChangedText:(NSString*)changedText;
 - (CGRect)boundingRectForChangedText:(NSString*)changedText forMaximumSize:(CGSize)maximumSize;
 
-- (BOOL)alignVerticallyAtCenterWithChangedText:(NSString*)changedText withMaximumSize:(CGSize)maximumSize;
-
 @end
