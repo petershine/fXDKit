@@ -20,7 +20,9 @@
 @interface FXDsuperGeoManager : FXDsuperManager <CLLocationManagerDelegate>
 
 @property (nonatomic) BOOL initializedForAppLaunching;
+@property (nonatomic) BOOL didStartSignificantMonitoring;
 
+@property (nonatomic) UIBackgroundTaskIdentifier monitoringTask;
 @property (nonatomic) UIBackgroundTaskIdentifier locationUpdatingTask;
 
 @property (strong, nonatomic) CLLocationManager *mainLocationManager;
@@ -38,6 +40,10 @@
 - (void)minimizeLocationAccuracy;
 
 - (BOOL)isDistantEnoughFromLastLocation;
+
+#warning //MARK: For testing significantMonitoring
+- (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
+- (void)testWithGooglePlaceApiWithNewLocation:(CLLocation*)newLocation;
 
 
 //MARK: - Observer implementation
