@@ -45,8 +45,6 @@
 	[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert);
 
 	[self updateMainAlias:nil];
-
-	[self activateLocationReporting];
 }
 
 #pragma mark -

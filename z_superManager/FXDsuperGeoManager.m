@@ -84,14 +84,6 @@
 		FXDLogBOOL(self.initializedForAppLaunching);
 		FXDLog_REMAINING;
 
-		LOGEVENT(@"SignificantLocationChanges: %@", [self.mainLocationManager description]);
-
-#if ForDEVELOPER
-		[[UIApplication sharedApplication]
-		 localNotificationWithAlertBody:@"LAUNCHED by Significant monitoring"
-		 afterDelay:0.0];
-#endif
-
 		//MARK: Let subclass to change boolean
 	}
 }
