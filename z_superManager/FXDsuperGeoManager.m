@@ -77,7 +77,7 @@
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
-	[self.mainLocationManager startUpdatingLocation];
+	[self configureUpdatingForApplicationState];
 
 
 	if (self.initializedForAppLaunching) {
@@ -86,12 +86,19 @@
 
 		LOGEVENT(@"SignificantLocationChanges: %@", [self.mainLocationManager description]);
 
+#if ForDEVELOPER
+		[[UIApplication sharedApplication]
+		 localNotificationWithAlertBody:@"LAUNCHED by Significant monitoring"
+		 afterDelay:0.0];
+#endif
+
 		//MARK: Let subclass to change boolean
 	}
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
 	[_mainLocationManager stopUpdatingLocation];
+	[_mainLocationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark -
