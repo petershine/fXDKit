@@ -36,8 +36,9 @@
 - (void)startMainLocationManager;
 - (void)pauseMainLocationManager;
 
-- (void)maximizeLocationAccuracy;
-- (void)minimizeLocationAccuracy;
+- (void)configureUpdatingForApplicationState;
+- (void)maximizeUpdatingForActiveState;
+- (void)minimizeUpdatingForBackgroundState;
 
 - (BOOL)isDistantEnoughFromLastLocation;
 

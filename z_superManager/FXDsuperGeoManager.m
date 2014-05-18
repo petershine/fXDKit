@@ -95,23 +95,23 @@
 }
 
 #pragma mark -
-- (void)maximizeLocationAccuracy {
+- (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
+	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+		[self minimizeUpdatingForBackgroundState];
+		return;
+	}
+
+	[self maximizeUpdatingForActiveState];
+}
+
+- (void)maximizeUpdatingForActiveState {
 	self.mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(self.mainLocationManager.desiredAccuracy));
 }
 
-- (void)minimizeLocationAccuracy {
-#if	ForDEVELOPER
-	UIDevice *currentDevice = [UIDevice currentDevice];
-	FXDLog(@"%@ %@", _Variable(currentDevice.batteryState), _Variable(currentDevice.batteryLevel));
-	;
-#endif
-
+- (void)minimizeUpdatingForBackgroundState {
 	self.mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-	FXDLog(@"1.%@", _Variable(self.mainLocationManager.desiredAccuracy));
-
-	self.mainLocationManager.desiredAccuracy = (kCLLocationAccuracyThreeKilometers*2.0);
-	FXDLog(@"2.%@", _Variable(self.mainLocationManager.desiredAccuracy));
+	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(self.mainLocationManager.desiredAccuracy));
 }
 
 #pragma mark -
@@ -134,7 +134,9 @@
 	[[UIApplication sharedApplication]
 	 beginBackgroundTaskWithExpirationHandler:^{
 
-		 [[UIApplication sharedApplication] endBackgroundTask:self.monitoringTask];
+		 [[UIApplication sharedApplication]
+		  endBackgroundTask:self.monitoringTask];
+
 		 self.monitoringTask = UIBackgroundTaskInvalid;
 	 }];
 
@@ -148,17 +150,21 @@
 	NSNumber *lastLongitude = [userDefaults objectForKey:@"LastLongitudeObjKey"];
 
 	if (lastTimestamp && lastLatitude && lastLongitude) {
-		CLLocation *lastMonitoredLocation = [[CLLocation alloc]
-											 initWithCoordinate:CLLocationCoordinate2DMake([lastLatitude doubleValue], [lastLongitude doubleValue])
-											 altitude:0.0
-											 horizontalAccuracy:0.0
-											 verticalAccuracy:0.0
-											 timestamp:lastTimestamp];
+		CLLocationCoordinate2D monitoredCoordinate = CLLocationCoordinate2DMake([lastLatitude doubleValue], [lastLongitude doubleValue]);
 
-		CLLocationDistance lastDistance = [newLocation distanceFromLocation:lastMonitoredLocation];
-		NSTimeInterval lastInterval = [[NSDate date] timeIntervalSinceDate:lastMonitoredLocation.timestamp];
+		CLLocation *monitoredLocation = [[CLLocation alloc]
+										 initWithCoordinate:monitoredCoordinate
+										 altitude:0.0
+										 horizontalAccuracy:0.0
+										 verticalAccuracy:0.0
+										 timestamp:lastTimestamp];
 
-		alertBody = [NSString stringWithFormat:@"TEST: MONITORED: %d m, %d s", (NSInteger)lastDistance, (NSInteger)lastInterval];
+		CLLocationDistance lastDistance = [newLocation distanceFromLocation:monitoredLocation];
+		NSTimeInterval lastInterval = [[NSDate date] timeIntervalSinceDate:monitoredLocation.timestamp];
+
+		alertBody = [NSString stringWithFormat:@"MONITORED: %ld m, %ld s",
+					 (long)lastDistance,
+					 (long)lastInterval];
 	}
 
 
@@ -186,7 +192,9 @@
 
 	FXDLog_REMAINING;
 
-	[[UIApplication sharedApplication] endBackgroundTask:self.monitoringTask];
+	[[UIApplication sharedApplication]
+	 endBackgroundTask:self.monitoringTask];
+
 	self.monitoringTask = UIBackgroundTaskInvalid;
 }
 
@@ -196,7 +204,9 @@
 	[[UIApplication sharedApplication]
 	 beginBackgroundTaskWithExpirationHandler:^{
 
-		 [[UIApplication sharedApplication] endBackgroundTask:self.monitoringTask];
+		 [[UIApplication sharedApplication]
+		  endBackgroundTask:self.monitoringTask];
+
 		 self.monitoringTask = UIBackgroundTaskInvalid;
 	 }];
 
@@ -207,10 +217,9 @@
 		NSMutableArray *unsortedPlaceArray = [[NSMutableArray alloc] initWithCapacity:0];
 
 		for (NSDictionary *placeResult in responseObject[@"results"]) {
-			CLLocation *placeLocation =
-			[[CLLocation alloc]
-			 initWithLatitude:[placeResult[@"geometry"][@"location"][@"lat"] doubleValue]
-			 longitude:[placeResult[@"geometry"][@"location"][@"lng"] doubleValue]];
+			CLLocation *placeLocation = [[CLLocation alloc]
+										 initWithLatitude:[placeResult[@"geometry"][@"location"][@"lat"] doubleValue]
+										 longitude:[placeResult[@"geometry"][@"location"][@"lng"] doubleValue]];
 
 			CLLocationDistance placeDistance = [newLocation distanceFromLocation:placeLocation];
 
@@ -227,7 +236,7 @@
 
 		if ([sortedPlaceArray count] > 0) {
 			NSDictionary *nearestPlaceDictionary = [sortedPlaceArray firstObject];
-			alertBody = [NSString stringWithFormat:@"TEST: %@: %@", nearestPlaceDictionary[@"name"], nearestPlaceDictionary[@"distance"]];
+			alertBody = [NSString stringWithFormat:@"PLACE: %@: %@", nearestPlaceDictionary[@"name"], nearestPlaceDictionary[@"distance"]];
 			FXDLogObject(alertBody);
 		}
 
@@ -247,15 +256,19 @@
 
 		FXDLog_REMAINING;
 
-		[[UIApplication sharedApplication] endBackgroundTask:self.monitoringTask];
+		[[UIApplication sharedApplication]
+		 endBackgroundTask:self.monitoringTask];
+
 		self.monitoringTask = UIBackgroundTaskInvalid;
 	};
 
 
-	static NSString * const apiFormat = @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=1000&sensor=true&key=***REMOVED***";
+	static NSString *apiFormat = @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=1000&sensor=true&key=***REMOVED***";
 
 
-	NSString *requestURLstring = [NSString stringWithFormat:apiFormat, @(newLocation.coordinate.latitude), @(newLocation.coordinate.longitude)];
+	NSString *requestURLstring = [NSString stringWithFormat:apiFormat,
+								  @(newLocation.coordinate.latitude),
+								  @(newLocation.coordinate.longitude)];
 	FXDLogObject(requestURLstring);
 
 
@@ -270,10 +283,11 @@
 	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		 NotifyingLocationUpdating(responseObject, nil);
 
-	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+	 }
+	 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		 NotifyingLocationUpdating(nil, error);
 	 }];
-	
+
 	[operation start];
 }
 
