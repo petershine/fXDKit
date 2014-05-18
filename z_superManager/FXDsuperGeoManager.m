@@ -47,18 +47,22 @@
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
-
-	if (_mainLocationManager == nil) {	FXDLog_DEFAULT;
-		_mainLocationManager = [CLLocationManager new];
-		_mainLocationManager.activityType = CLActivityTypeOther;
-		_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
-		
-		_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
-
-		[_mainLocationManager setDelegate:self];
-
-		FXDLogObject(_mainLocationManager);
+	if (_mainLocationManager) {
+		return _mainLocationManager;
 	}
+
+
+	FXDLog_DEFAULT;
+
+	_mainLocationManager = [CLLocationManager new];
+	_mainLocationManager.activityType = CLActivityTypeOther;
+	_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
+
+	_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
+
+	[_mainLocationManager setDelegate:self];
+
+	FXDLogObject(_mainLocationManager);
 
 	return _mainLocationManager;
 }
@@ -68,19 +72,22 @@
 
 #pragma mark - Public
 - (void)startMainLocationManager {	FXDLog_DEFAULT;
+
 	FXDLogVariable([CLLocationManager authorizationStatus]);
-
-	BOOL servicesEnabled = [CLLocationManager locationServicesEnabled];
-	FXDLogBOOL(servicesEnabled);
-
-	if (servicesEnabled == NO) {
-		//TODO: alert user reminding location service is required"
-	}
-
-
+	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
 	[self.mainLocationManager startUpdatingLocation];
+
+
+	if (self.initializedForAppLaunching) {
+		FXDLogBOOL(self.initializedForAppLaunching);
+		FXDLog_REMAINING;
+
+		LOGEVENT(@"SignificantLocationChanges: %@", [self.mainLocationManager description]);
+
+		//MARK: Let subclass to change boolean
+	}
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
@@ -122,25 +129,19 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {
+	FXDLog_OVERRIDE;
 }
 
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {
+	FXDLog_OVERRIDE;
 }
 
 
 //MARK: - Delegate implementation
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-
-	if (self.initializedForAppLaunching) {	FXDLog_DEFAULT;
-		FXDLogBOOL(self.initializedForAppLaunching);
-		FXDLog_REMAINING;
-
-		LOGEVENT(@"SignificantLocationChanges: %@", [locations description]);
-
-		//MARK: Let subclass to change boolean
-	}
+	FXDLog_OVERRIDE;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {	FXDLog_DEFAULT;
