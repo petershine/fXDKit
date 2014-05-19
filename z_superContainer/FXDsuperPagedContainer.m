@@ -45,14 +45,6 @@
 #pragma mark - Autorotating
 
 #pragma mark - View Appearing
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-}
-
 
 #pragma mark - Property overriding
 - (NSMutableArray*)mainDataSource {

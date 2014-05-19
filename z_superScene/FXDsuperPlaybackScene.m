@@ -24,13 +24,6 @@
 
 
 #pragma mark - Autorotating
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	
-	FXDLogRect(self.mainScrollview.frame);
-	FXDLogRect(self.imageviewPhoto.frame);
-}
-
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 	
