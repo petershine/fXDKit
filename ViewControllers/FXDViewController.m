@@ -388,10 +388,8 @@
 }
 
 #pragma mark -
-- (void)updateSubviewsForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-
+- (void)updateSubviewsForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@ %@", _Rect(bounds), _Variable(interfaceOrientation), _Variable(duration));
-
 }
 
 @end

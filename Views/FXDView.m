@@ -376,7 +376,7 @@
 }
 
 #pragma mark -
-- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {	FXDLog_DEFAULT;
+- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
 
 	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 	CGRect animatedFrame = self.bounds;

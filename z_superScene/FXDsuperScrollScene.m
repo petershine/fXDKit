@@ -68,7 +68,7 @@
 #pragma mark - Property overriding
 - (UINib*)mainCellNib {
 	if (_mainCellNib == nil) {
-		if (self.mainCellIdentifier) {	FXDLog_DEFAULT;
+		if (self.mainCellIdentifier) {
 			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
 		}
 		
