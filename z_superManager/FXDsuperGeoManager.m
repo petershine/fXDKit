@@ -77,6 +77,8 @@
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
+	[self.mainLocationManager startUpdatingLocation];
+
 	[self configureUpdatingForApplicationState];
 
 
@@ -95,6 +97,8 @@
 
 #pragma mark -
 - (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
+	FXDLogVariable([UIApplication sharedApplication].applicationState);
+	
 	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
 		[self minimizeUpdatingForBackgroundState];
 		return;
