@@ -367,12 +367,12 @@
 }
 
 #pragma mark -
-- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {
-	FXDLog_DEFAULT;
+- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLogObject(notification);
 }
 
-- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {
-	FXDLog_DEFAULT;
+- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLogObject(notification);
 }
 
 - (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
