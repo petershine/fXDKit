@@ -128,7 +128,7 @@
 
 
 	FXDLog_DEFAULT;
-	_mainCaptureSession = [AVCaptureSession new];
+	_mainCaptureSession = [[AVCaptureSession alloc] init];
 
 	NSString *captureSessionPreset = AVCaptureSessionPresetHigh;
 
@@ -247,7 +247,7 @@
 #pragma mark -
 - (AVCaptureVideoDataOutput*)dataOutputVideo {
 	if (_dataOutputVideo == nil) {
-		_dataOutputVideo = [AVCaptureVideoDataOutput new];
+		_dataOutputVideo = [[AVCaptureVideoDataOutput alloc] init];
 	}
 
 	return _dataOutputVideo;
@@ -255,7 +255,7 @@
 
 - (AVCaptureAudioDataOutput*)dataOutputAudio {
 	if (_dataOutputAudio == nil) {
-		_dataOutputAudio = [AVCaptureAudioDataOutput new];
+		_dataOutputAudio = [[AVCaptureAudioDataOutput alloc] init];
 	}
 
 	return _dataOutputAudio;

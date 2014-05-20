@@ -102,7 +102,7 @@
 	}
 
 
-	NSFetchRequest *fetchRequest = [NSFetchRequest new];
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	[fetchRequest setEntity:entity];
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	

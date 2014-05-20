@@ -115,7 +115,7 @@
 		if (self.playbackManager == nil) {
 			ALAssetRepresentation *defaultRepresentation = [self.movieAsset defaultRepresentation];
 
-			self.playbackManager = [FXDsuperPlaybackManager new];
+			self.playbackManager = [[FXDsuperPlaybackManager alloc] init];
 
 			[self.playbackManager
 			 preparePlaybackManagerWithMovieFileURL:[defaultRepresentation url]

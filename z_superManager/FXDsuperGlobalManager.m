@@ -179,7 +179,7 @@
 - (NSDateFormatter*)dateformatterUTC {
 	
 	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
-		_dateformatterUTC = [NSDateFormatter new];
+		_dateformatterUTC = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
 		[_dateformatterUTC setTimeZone:UTCtimezone];
@@ -194,7 +194,7 @@
 - (NSDateFormatter*)dateformatterLocal {
 	
 	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT;
-		_dateformatterLocal = [NSDateFormatter new];
+		_dateformatterLocal = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
 		[_dateformatterLocal setTimeZone:localTimeZone];

@@ -21,7 +21,7 @@
 - (NSMetadataQuery*)ubiquitousCachesMetadataQuery {
 	
 	if (_ubiquitousCachesMetadataQuery == nil) {	FXDLog_DEFAULT;
-		_ubiquitousCachesMetadataQuery = [NSMetadataQuery new];
+		_ubiquitousCachesMetadataQuery = [[NSMetadataQuery alloc] init];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];	// For all files
 		[_ubiquitousCachesMetadataQuery setPredicate:predicate];

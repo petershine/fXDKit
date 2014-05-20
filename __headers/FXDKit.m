@@ -46,7 +46,7 @@
 
 @implementation NSOperationQueue (Added)
 + (instancetype)newSerialQueue {
-	NSOperationQueue *serialQueue = [[self class] new];
+	NSOperationQueue *serialQueue = [[[self class] alloc] init];
 	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
 
 	return serialQueue;
@@ -65,7 +65,7 @@
 	}
 
 
-	CATextLayer *textLayer = [CATextLayer new];
+	CATextLayer *textLayer = [[CATextLayer alloc] init];
 	textLayer.string = [textControl text];
 
 	CGRect scaledBounds = [textControl bounds];
@@ -163,7 +163,7 @@
 	}
 
 
-	UILocalNotification *localNotifcation = [UILocalNotification new];
+	UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 	localNotifcation.repeatInterval = 0;
 	localNotifcation.alertBody = alertBody;
 

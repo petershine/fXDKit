@@ -20,7 +20,7 @@
 		localDate = [self date];
 	}
 
-	NSDateFormatter *dateFormatter = [NSDateFormatter new];
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
     NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:UTCtimezone];
@@ -36,7 +36,7 @@
 		UTCdate = [self date];
 	}
 
-	NSDateFormatter *dateFormatter = [NSDateFormatter new];
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
     NSTimeZone *UTCtimezone = [NSTimeZone defaultTimeZone];
     [dateFormatter setTimeZone:UTCtimezone];

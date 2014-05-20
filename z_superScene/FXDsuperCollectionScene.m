@@ -98,7 +98,7 @@
 	FXDCollectionViewCell *cell = (FXDCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:self.mainCellIdentifier forIndexPath:indexPath];
 
 
-	NSBlockOperation *cellOperation = [NSBlockOperation new];
+	NSBlockOperation *cellOperation = [[NSBlockOperation alloc] init];
 	__weak NSBlockOperation *weakOperation = cellOperation;
 
 	[cellOperation
