@@ -45,6 +45,8 @@
 #pragma mark - Public
 - (void)prepareCaptureManagerWithScene:(UIViewController*)scene;
 
+- (void)configurePreviewDisplayForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration;
+
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
 

@@ -281,6 +281,16 @@
 }
 
 #pragma mark -
+- (void)configurePreviewDisplayForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
+
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 self.mainPreviewLayer.frame = bounds;
+	 }];
+}
+
+#pragma mark -
 - (void)switchCameraPosition {
 	AVCaptureDevicePosition cameraPosition = (self.cameraPosition == AVCaptureDevicePositionBack) ? AVCaptureDevicePositionFront:AVCaptureDevicePositionBack;
 
