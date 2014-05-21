@@ -216,6 +216,42 @@
 
 
 #pragma mark - Public
+- (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
+
+#warning //TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
+	
+	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
+	FXDLogStruct(dimension);
+
+	CGSize videoSize = CGSizeMake(dimension.width, dimension.height);
+
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	if (UIDeviceOrientationIsLandscape(deviceOrientation) == NO) {
+		videoSize.width = MIN(dimension.width, dimension.height);
+		videoSize.height = MAX(dimension.width, dimension.height);
+	}
+	FXDLogSize(videoSize);
+
+
+	self.gpumovieWriter = [[FXDwriterGPU alloc] initWithMovieURL:fileURL
+															size:videoSize
+														fileType:filetypeVideoDefault
+												  outputSettings:nil];
+
+	[self.gpumovieWriter setDelegate:self];
+
+	self.gpumovieWriter.encodingLiveVideo = YES;
+	[self.gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
+	[self.gpuvideoCamera setAudioEncodingTarget:self.gpumovieWriter];
+
+
+	if (gpuimageOutput == nil) {
+		gpuimageOutput = self.gpuvideoCamera;
+	}
+
+	[gpuimageOutput addTarget:self.gpumovieWriter];
+}
 
 
 //MARK: - Observer implementation
@@ -232,15 +268,12 @@
 
 #pragma mark -
 - (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {
-
 }
 
 - (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {
-
 }
 
 - (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {
-#warning //TODO: Implement focused activities
 }
 
 

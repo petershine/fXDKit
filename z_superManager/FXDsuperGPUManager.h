@@ -35,6 +35,7 @@
 
 
 #pragma mark - Public
+- (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
 
 //MARK: - Observer implementation
