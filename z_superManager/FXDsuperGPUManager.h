@@ -23,9 +23,13 @@
 
 #import "FXDsuperCaptureManager.h"
 
-@interface FXDsuperGPUManager : FXDsuperCaptureManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate>
+@interface FXDsuperGPUManager : FXDsuperCaptureManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate> {
+	BOOL _shouldUseGPUpreview;
+}
 
 @property (nonatomic) BOOL shouldUseGPUpreview;
+
+@property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;
 
 @property (strong, nonatomic) FXDcameraGPU *gpuvideoCamera;
 @property (strong, nonatomic) FXDfiltergroupGPU *gpufilterGroup;
@@ -36,6 +40,8 @@
 
 #pragma mark - Public
 - (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
+
+- (void)cycleGPUfilters;
 
 
 //MARK: - Observer implementation
