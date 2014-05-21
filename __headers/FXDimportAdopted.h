@@ -18,6 +18,11 @@
 	#define USE_AFNetworking	TRUE
 #endif
 
+#ifndef USE_GPUImage
+	#define USE_GPUImage	FALSE
+#endif
+
+
 #if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
 	#import <ReactiveCocoa.h>
 	#import <RACEXTScope.h>
@@ -28,6 +33,14 @@
 	#import <UIKit+AFNetworking.h>
 #endif
 
+#if USE_GPUImage	//https://github.com/BradLarson/GPUImage
+	#import <GPUImage.h>
+#endif
+
+
+#if USE_LocationFrameworks
+	#import "FXDsuperGeoManager.h"
+#endif
 
 #if USE_AdvertisementFrameworks
 	@import iAd;
@@ -38,10 +51,6 @@
 	@import MessageUI;
 	@import Accounts;
 	@import Social;
-#endif
-
-#if USE_LocationFrameworks
-	#import "FXDsuperGeoManager.h"
 #endif
 
 #if USE_MultimediaFrameworks

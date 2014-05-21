@@ -330,12 +330,9 @@
 
 #pragma mark -
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
-
-	NSInteger modifiedCount = self.appLaunchCount;
-	FXDLog(@"1.%@", _Variable(modifiedCount));
-
-	_appLaunchCount = modifiedCount+1;
-	FXDLog(@"2.%@", _Variable(_appLaunchCount));
+	//MARK: Make sure value is retrieved from userDefaults first
+	_appLaunchCount = (self.appLaunchCount)+1;
+	FXDLogVariable(_appLaunchCount);
 	
 	[[NSUserDefaults standardUserDefaults] setInteger:_appLaunchCount forKey:userdefaultIntegerAppLaunchCount];
 	[[NSUserDefaults standardUserDefaults] synchronize];
