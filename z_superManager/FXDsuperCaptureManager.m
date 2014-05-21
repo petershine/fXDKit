@@ -110,8 +110,6 @@
 	self = [super init];
 
 	if (self) {
-		FXDAssert_IsMainThread;
-		
 		_cameraPosition = AVCaptureDevicePositionBack;
 		_flashMode = AVCaptureFlashModeAuto;
 		_videoOrientation = AVCaptureVideoOrientationPortrait;

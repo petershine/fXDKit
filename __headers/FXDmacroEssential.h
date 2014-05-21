@@ -92,7 +92,7 @@
 #define ValueOfTime(timeStruct)		[NSValue valueWithCMTime:timeStruct]
 #define ValueOfTimeRange(timeRange)	[NSValue valueWithCMTimeRange:timeRange]
 
-#define CMTimeForMediaSeconds(mediaSeconds)	CMTimeMakeWithSeconds(mediaSeconds, doubleOneBillion)
+#define CMTimeForMediaSeconds(mediaSeconds)	CMTimeMakeWithSeconds(mediaSeconds, doubleOneMillion)
 
 
 #define degreeAngleForRadian(radian)	(radian*180.0/M_PI)
