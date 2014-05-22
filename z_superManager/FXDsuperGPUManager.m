@@ -272,17 +272,16 @@
 
 	if (_cycledFilterNameArray == nil) {
 		_cycledFilterNameArray = [@[NSStringFromClass([GPUImageRGBFilter class]),
-									NSStringFromClass([GPUImageBulgeDistortionFilter class]),
 									NSStringFromClass([GPUImageGaussianBlurFilter class]),
 									NSStringFromClass([GPUImageGrayscaleFilter class]),
 									NSStringFromClass([GPUImageHazeFilter class]),
-									NSStringFromClass([GPUImageKuwaharaFilter class]),
 									NSStringFromClass([GPUImagePixellateFilter class]),
-									NSStringFromClass([GPUImageiOSBlurFilter class]),
 									NSStringFromClass([GPUImageAmatorkaFilter class]),
-									NSStringFromClass([GPUImageCrosshatchFilter class]),
 									NSStringFromClass([GPUImageErosionFilter class]),
-									NSStringFromClass([GPUImageGlassSphereFilter class]),
+
+									//MARK: Frame rate is terrible
+									//NSStringFromClass([GPUImageKuwaharaFilter class]),
+									
 									] mutableCopy];
 	}
 
@@ -368,16 +367,6 @@
 
 
 	self.gpuvideoCamera.outputImageOrientation = (UIInterfaceOrientation)self.videoOrientation;
-}
-
-#pragma mark -
-- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {
-}
-
-- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {
-}
-
-- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {
 }
 
 
