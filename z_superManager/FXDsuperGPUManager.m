@@ -267,25 +267,53 @@
 }
 
 #pragma mark -
-- (void)cycleGPUfilters {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Object(_gpumovieWriter), _Object(_gpuviewCaptured));
+- (void)cycleGPUfiltersForward:(BOOL)isForward {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@ %@", _Object(_gpumovieWriter), _Object(_gpuviewCaptured), _BOOL(isForward));
 
 	if (_cycledFilterNameArray == nil) {
-		_cycledFilterNameArray = [@[NSStringFromClass([GPUImageRGBFilter class]),
-									NSStringFromClass([GPUImageGaussianBlurFilter class]),
-									NSStringFromClass([GPUImageGrayscaleFilter class]),
-									NSStringFromClass([GPUImageHazeFilter class]),
-									NSStringFromClass([GPUImagePixellateFilter class]),
-									NSStringFromClass([GPUImageAmatorkaFilter class]),
-									NSStringFromClass([GPUImageErosionFilter class]),
+		_cycledFilterNameArray =
+		[@[NSStringFromClass([GPUImageRGBFilter class]),
+		   NSStringFromClass([GPUImageGaussianBlurFilter class]),
+		   NSStringFromClass([GPUImageGrayscaleFilter class]),
+		   NSStringFromClass([GPUImageHazeFilter class]),
+		   NSStringFromClass([GPUImagePixellateFilter class]),
+		   NSStringFromClass([GPUImageAmatorkaFilter class]),
+		   NSStringFromClass([GPUImageErosionFilter class]),
+		   
+		   NSStringFromClass([GPUImageAdaptiveThresholdFilter class]),
+		   NSStringFromClass([GPUImageAverageLuminanceThresholdFilter class]),
+		   NSStringFromClass([GPUImageCGAColorspaceFilter class]),
+		   NSStringFromClass([GPUImageCannyEdgeDetectionFilter class]),
+		   NSStringFromClass([GPUImageChromaKeyFilter class]),
 
-									//MARK: Frame rate is terrible
-									//NSStringFromClass([GPUImageKuwaharaFilter class]),
+		   NSStringFromClass([GPUImageClosingFilter class]),
 
-									] mutableCopy];
+		   /*
+			//MARK: Omitted
+			NSStringFromClass([GPUImage3x3ConvolutionFilter class]),
+			NSStringFromClass([GPUImage3x3TextureSamplingFilter class]),
+			NSStringFromClass([GPUImageAddBlendFilter class]),
+			NSStringFromClass([GPUImageAlphaBlendFilter class]),
+			NSStringFromClass([GPUImageBilateralFilter class]),
+			NSStringFromClass([GPUImageChromaKeyBlendFilter class]),
+			NSStringFromClass([GPUImageColorBlendFilter class]),
+			NSStringFromClass([GPUImageColorBurnBlendFilter class]),
+			NSStringFromClass([GPUImageColorInvertFilter class]),
+			NSStringFromClass([GPUImageColorDodgeBlendFilter class]),
+			NSStringFromClass([GPUImageBoxBlurFilter class]),
+			NSStringFromClass([GPUImageBrightnessFilter class]),
+			NSStringFromClass([GPUImageColorMatrixFilter class]),
+			NSStringFromClass([GPUImageColorPackingFilter class]),
+			NSStringFromClass([GPUImageContrastFilter class]),
+
+			//MARK: Frame rate is terrible
+			NSStringFromClass([GPUImageKuwaharaFilter class]),
+			*/
+
+		   ] mutableCopy];
 	}
 
-	NSString *filterName = [self.cycledFilterNameArray lastObject];
+	NSString *filterName = (isForward ? [self.cycledFilterNameArray lastObject]:[self.cycledFilterNameArray firstObject]);
 	FXDLogObject(filterName);
 
 
@@ -305,13 +333,19 @@
 
 
 	if (self.cycledFilterNameArray) {
-		[self.cycledFilterNameArray removeLastObject];
-
-		[self.cycledFilterNameArray insertObject:filterName atIndex:0];
+		if (isForward) {
+			[self.cycledFilterNameArray removeLastObject];
+			[self.cycledFilterNameArray insertObject:filterName atIndex:0];
+		}
+		else {
+			[self.cycledFilterNameArray removeObjectAtIndex:0];
+			[self.cycledFilterNameArray addObject:filterName];
+		}
 
 		FXDLogObject(self.cycledFilterNameArray);
 	}
 
+	
 	if ([filterName isEqualToString:NSStringFromClass([GPUImageRGBFilter class])]) {
 		filterName = @"Default";
 	}

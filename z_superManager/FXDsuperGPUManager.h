@@ -41,7 +41,7 @@
 #pragma mark - Public
 - (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
-- (void)cycleGPUfilters;
+- (void)cycleGPUfiltersForward:(BOOL)isForward;
 
 
 //MARK: - Observer implementation
