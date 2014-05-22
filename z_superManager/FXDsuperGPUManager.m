@@ -46,18 +46,6 @@
 
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {
-		//TEST:
-		//_shouldUseGPUpreview = [GlobalAppManager.shouldUseGPUpreview boolValue];
-		self.shouldUseGPUpreview = YES;
-		FXDLogBOOL(_shouldUseGPUpreview);
-	}
-
-	return self;
-}
 
 #pragma mark - Property overriding
 - (AVCaptureSession*)mainCaptureSession {
@@ -73,19 +61,7 @@
 }
 
 - (AVCaptureVideoPreviewLayer*)mainPreviewLayer {
-	if (self.shouldUseGPUpreview) {
-		return nil;
-	}
-
-
-	if (_mainPreviewLayer) {
-		return _mainPreviewLayer;
-	}
-
-
-	_mainPreviewLayer = [super mainPreviewLayer];
-
-	return _mainPreviewLayer;
+	return nil;
 }
 
 #pragma mark -
@@ -164,17 +140,11 @@
 	[self.gpuvideoCamera addTarget:self.gpufilterGroup];
 
 
-	if (self.shouldUseGPUpreview) {
-		[scene.view addSubview:self.gpuviewCaptured];
-		[scene.view sendSubviewToBack:self.gpuviewCaptured];
+	[scene.view addSubview:self.gpuviewCaptured];
+	[scene.view sendSubviewToBack:self.gpuviewCaptured];
 
-		[self.gpufilterGroup addTarget:self.gpuviewCaptured];
-	}
-	else {
-		[scene.view.layer insertSublayer:self.mainPreviewLayer atIndex:0];
+	[self.gpufilterGroup addTarget:self.gpuviewCaptured];
 
-		self.mainPreviewLayer.frame = self.mainPreviewLayer.superlayer.bounds;
-	}
 
 	FXDLogObject([self.gpuvideoCamera targets]);
 	FXDLogObject([self.gpufilterGroup targets]);
@@ -202,27 +172,13 @@
 #pragma mark -
 - (void)configurePreviewDisplayForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {
 
-	if (self.shouldUseGPUpreview) {
-		//MARK: Animation not working for GPUImageView
-		self.gpuviewCaptured.frame = bounds;
-		return;
-	}
-
-
-	[super configurePreviewDisplayForBounds:bounds
-					forInterfaceOrientation:interfaceOrientation
-								forDuration:duration];
+	//MARK: Animation not working for GPUImageView
+	self.gpuviewCaptured.frame = bounds;
 }
 
 #pragma mark -
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion {
-
-	if (self.shouldUseGPUpreview) {
-		[self.gpuvideoCamera rotateCamera];
-	}
-	else {
-		[super configureSessionWithCameraPosition:cameraPostion];
-	}
+	[self.gpuvideoCamera rotateCamera];
 
 	self.cameraPosition = cameraPostion;
 }

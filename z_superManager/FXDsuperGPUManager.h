@@ -23,11 +23,7 @@
 
 #import "FXDsuperCaptureManager.h"
 
-@interface FXDsuperGPUManager : FXDsuperCaptureManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate> {
-	BOOL _shouldUseGPUpreview;
-}
-
-@property (nonatomic) BOOL shouldUseGPUpreview;
+@interface FXDsuperGPUManager : FXDsuperCaptureManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate>
 
 @property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;
 
