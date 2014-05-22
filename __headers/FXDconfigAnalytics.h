@@ -76,8 +76,7 @@
 	#endif
 
 	#import "TestFlight.h"
-
-	#warning //TODO: Should add libz.dylib for TestFlight
+	//MARK: Should add libz.dylib for TestFlight
 
 #endif
 

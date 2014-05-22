@@ -231,7 +231,7 @@
 #pragma mark - Public
 - (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
 
-#warning //TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
+	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
 	
 	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
 	FXDLogStruct(dimension);

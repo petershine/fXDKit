@@ -7,7 +7,7 @@
 //
 
 #ifndef periodicintervalDefault
-	#warning //MARK: Make sure it's not bad for performance
+//MARK: Make sure it's not bad for performance
 	#define periodicintervalDefault	CMTimeMake(1, 6)
 #endif
 
