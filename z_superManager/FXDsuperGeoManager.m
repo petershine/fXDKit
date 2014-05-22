@@ -54,7 +54,7 @@
 
 	FXDLog_DEFAULT;
 
-	_mainLocationManager = [CLLocationManager new];
+	_mainLocationManager = [[CLLocationManager alloc] init];
 	_mainLocationManager.activityType = CLActivityTypeOther;
 	_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
 
@@ -125,7 +125,7 @@
 		return YES;
 	}
 
-#warning //TODO: Overridden by subclass
+	//TODO: Overridden by subclass
 
 	return NO;
 }
@@ -181,7 +181,7 @@
 
 
 	if ([alertBody length] > 0) {
-		UILocalNotification *localNotifcation = [UILocalNotification new];
+		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 		localNotifcation.repeatInterval = 0;
 		localNotifcation.hasAction = YES;
 		localNotifcation.alertBody = (alertBody) ? alertBody:[newLocation description];
@@ -248,7 +248,7 @@
 		LOGEVENT(@"%@", _Object(alertBody));
 
 
-		UILocalNotification *localNotifcation = [UILocalNotification new];
+		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 		localNotifcation.repeatInterval = 0;
 		localNotifcation.hasAction = YES;
 		localNotifcation.alertBody = (alertBody) ? alertBody:[newLocation description];

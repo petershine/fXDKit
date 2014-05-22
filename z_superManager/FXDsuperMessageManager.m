@@ -93,7 +93,7 @@
 	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
 
 	NSArray *arrayCountryCode = [NSLocale ISOCountryCodes];
-	NSMutableDictionary *dicCountryCode = [NSMutableDictionary new];
+	NSMutableDictionary *dicCountryCode = [[NSMutableDictionary alloc] initWithCapacity:0];
 
 	for(NSString *countryCode in arrayCountryCode) {
 		NSString *currentCountryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
