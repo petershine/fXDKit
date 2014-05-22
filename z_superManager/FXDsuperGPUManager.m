@@ -273,23 +273,37 @@
 	if (_cycledFilterNameArray == nil) {
 		_cycledFilterNameArray =
 		[@[NSStringFromClass([GPUImageRGBFilter class]),
-		   NSStringFromClass([GPUImageGaussianBlurFilter class]),
-		   NSStringFromClass([GPUImageGrayscaleFilter class]),
 		   NSStringFromClass([GPUImageHazeFilter class]),
 		   NSStringFromClass([GPUImagePixellateFilter class]),
-		   NSStringFromClass([GPUImageAmatorkaFilter class]),
-		   NSStringFromClass([GPUImageErosionFilter class]),
-		   
 		   NSStringFromClass([GPUImageAdaptiveThresholdFilter class]),
+		   NSStringFromClass([GPUImageAmatorkaFilter class]),
 		   NSStringFromClass([GPUImageAverageLuminanceThresholdFilter class]),
 		   NSStringFromClass([GPUImageCGAColorspaceFilter class]),
 		   NSStringFromClass([GPUImageCannyEdgeDetectionFilter class]),
 		   NSStringFromClass([GPUImageChromaKeyFilter class]),
-
 		   NSStringFromClass([GPUImageClosingFilter class]),
+
+		   NSStringFromClass([GPUImageCrosshatchFilter class]),
+		   NSStringFromClass([GPUImageDilationFilter class]),
+		   //NSStringFromClass([GPUImageDirectionalNonMaximumSuppressionFilter class]),
+		   NSStringFromClass([GPUImageEmbossFilter class]),
+		   NSStringFromClass([GPUImageErosionFilter class]),
+		   NSStringFromClass([GPUImageFalseColorFilter class]),
+		   NSStringFromClass([GPUImageGaussianBlurFilter class]),
+		   NSStringFromClass([GPUImageGrayscaleFilter class]),
 
 		   /*
 			//MARK: Omitted
+			NSStringFromClass([GPUImageGaussianBlurPositionFilter class]),
+			NSStringFromClass([GPUImageGaussianSelectiveBlurFilter class]),
+			NSStringFromClass([GPUImageGlassSphereFilter class]),
+			NSStringFromClass([GPUImageExclusionBlendFilter class]),
+			NSStringFromClass([GPUImageExposureFilter class]),
+			NSStringFromClass([GPUImageGammaFilter class]),
+			NSStringFromClass([GPUImageCropFilter class]),
+			NSStringFromClass([GPUImageDifferenceBlendFilter class]),
+			NSStringFromClass([GPUImageDissolveBlendFilter class]),
+			NSStringFromClass([GPUImageDivideBlendFilter class]),
 			NSStringFromClass([GPUImage3x3ConvolutionFilter class]),
 			NSStringFromClass([GPUImage3x3TextureSamplingFilter class]),
 			NSStringFromClass([GPUImageAddBlendFilter class]),
