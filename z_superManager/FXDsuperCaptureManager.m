@@ -373,8 +373,8 @@
 	FXDLogObject(notification);
 }
 
-- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLogObject(notification);
+- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	//FXDLog_DEFAULT;
+	//FXDLogObject(notification);
 }
 
 

@@ -281,7 +281,7 @@
 
 									//MARK: Frame rate is terrible
 									//NSStringFromClass([GPUImageKuwaharaFilter class]),
-									
+
 									] mutableCopy];
 	}
 
@@ -341,6 +341,7 @@
 	 options:UIViewAnimationOptionCurveEaseInOut
 	 animations:^{
 		 filterLabel.alpha = 1.0;
+
 	 } completion:^(BOOL finished) {
 		 GlobalAppManager.snapshotManager.snapshotOverlay.layer.contents = nil;
 
@@ -350,6 +351,7 @@
 		  options:UIViewAnimationOptionCurveEaseInOut
 		  animations:^{
 			  filterLabel.alpha = 0.0;
+
 		  } completion:^(BOOL finished) {
 			  [filterLabel removeFromSuperview];
 		  }];
