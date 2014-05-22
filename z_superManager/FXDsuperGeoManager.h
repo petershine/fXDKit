@@ -42,7 +42,7 @@
 
 - (BOOL)isDistantEnoughFromLastLocation;
 
-#warning //MARK: For testing significantMonitoring
+//MARK: For testing significantMonitoring
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 - (void)testWithGooglePlaceApiWithNewLocation:(CLLocation*)newLocation;
 
