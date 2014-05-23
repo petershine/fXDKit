@@ -19,7 +19,6 @@
 
 @interface FXDsuperGeoManager : FXDsuperManager <CLLocationManagerDelegate>
 
-@property (nonatomic) BOOL initializedForAppLaunching;
 @property (nonatomic) BOOL didStartSignificantMonitoring;
 
 @property (nonatomic) UIBackgroundTaskIdentifier monitoringTask;
@@ -33,7 +32,7 @@
 #pragma mark - Initialization
 
 #pragma mark - Public
-- (void)startMainLocationManager;
+- (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions;
 - (void)pauseMainLocationManager;
 
 - (void)configureUpdatingForApplicationState;

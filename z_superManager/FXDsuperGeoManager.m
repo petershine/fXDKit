@@ -71,7 +71,8 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startMainLocationManager {	FXDLog_DEFAULT;
+- (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+	FXDLogObject(launchOptions[UIApplicationLaunchOptionsLocationKey]);
 
 	FXDLogVariable([CLLocationManager authorizationStatus]);
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
@@ -80,14 +81,6 @@
 	[self.mainLocationManager startUpdatingLocation];
 
 	[self configureUpdatingForApplicationState];
-
-
-	if (self.initializedForAppLaunching) {
-		FXDLogBOOL(self.initializedForAppLaunching);
-		FXDLog_REMAINING;
-
-		//MARK: Let subclass to change boolean
-	}
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
@@ -107,12 +100,12 @@
 	[self maximizeUpdatingForActiveState];
 }
 
-- (void)maximizeUpdatingForActiveState {
+- (void)maximizeUpdatingForActiveState {	FXDLog_DEFAULT;
 	self.mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(self.mainLocationManager.desiredAccuracy));
 }
 
-- (void)minimizeUpdatingForBackgroundState {
+- (void)minimizeUpdatingForBackgroundState {	FXDLog_DEFAULT;
 	self.mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
 	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(self.mainLocationManager.desiredAccuracy));
 }
