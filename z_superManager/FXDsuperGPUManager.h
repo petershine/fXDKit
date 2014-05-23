@@ -24,6 +24,7 @@
 #import "FXDsuperCaptureManager.h"
 
 @interface FXDsuperGPUManager : FXDsuperCaptureManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate>
+@property (nonatomic) NSInteger lastFilterIndex;
 
 @property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;
 

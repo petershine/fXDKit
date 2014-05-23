@@ -93,6 +93,7 @@
 	FXDLog_ERROR_ALERT;
 }
 
+#warning //MARK: Be careful with the case for older version, which cannot fetch.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
 	FXDLogObject(userInfo);
 	FXDLogObject(completionHandler);

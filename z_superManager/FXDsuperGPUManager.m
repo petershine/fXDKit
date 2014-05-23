@@ -65,6 +65,176 @@
 }
 
 #pragma mark -
+- (NSMutableArray*)cycledFilterNameArray {
+	if (_cycledFilterNameArray) {
+		return _cycledFilterNameArray;
+	}
+
+	FXDLog_DEFAULT;
+
+	_cycledFilterNameArray =
+	[@[NSStringFromClass([GPUImageRGBFilter class]),
+
+	   NSStringFromClass([GPUImageiOSBlurFilter class]),
+
+	   NSStringFromClass([GPUImageAdaptiveThresholdFilter class]),
+	   NSStringFromClass([GPUImageAmatorkaFilter class]),
+	   NSStringFromClass([GPUImageAverageLuminanceThresholdFilter class]),
+
+	   NSStringFromClass([GPUImageCGAColorspaceFilter class]),
+	   NSStringFromClass([GPUImageCannyEdgeDetectionFilter class]),
+	   NSStringFromClass([GPUImageChromaKeyFilter class]),
+	   NSStringFromClass([GPUImageClosingFilter class]),
+	   NSStringFromClass([GPUImageCrosshatchFilter class]),
+
+	   NSStringFromClass([GPUImageDilationFilter class]),
+
+	   NSStringFromClass([GPUImageEmbossFilter class]),
+	   NSStringFromClass([GPUImageErosionFilter class]),
+
+	   NSStringFromClass([GPUImageFalseColorFilter class]),
+
+	   NSStringFromClass([GPUImageGaussianBlurFilter class]),
+	   NSStringFromClass([GPUImageGrayscaleFilter class]),
+	   NSStringFromClass([GPUImageHalftoneFilter class]),
+	   NSStringFromClass([GPUImageHazeFilter class]),
+	   NSStringFromClass([GPUImageHighPassFilter class]),
+
+	   NSStringFromClass([GPUImageKuwaharaRadius3Filter class]),
+
+	   NSStringFromClass([GPUImageLocalBinaryPatternFilter class]),
+	   NSStringFromClass([GPUImageLowPassFilter class]),
+	   NSStringFromClass([GPUImageLuminanceRangeFilter class]),
+	   NSStringFromClass([GPUImageLuminanceThresholdFilter class]),
+
+	   NSStringFromClass([GPUImageMissEtikateFilter class]),
+	   NSStringFromClass([GPUImageMonochromeFilter class]),
+	   NSStringFromClass([GPUImageMotionBlurFilter class]),
+
+	   NSStringFromClass([GPUImageNonMaximumSuppressionFilter class]),
+
+	   NSStringFromClass([GPUImageOpeningFilter class]),
+
+	   NSStringFromClass([GPUImagePinchDistortionFilter class]),
+	   NSStringFromClass([GPUImagePixellateFilter class]),
+	   NSStringFromClass([GPUImagePixellatePositionFilter class]),
+	   NSStringFromClass([GPUImagePolarPixellateFilter class]),
+	   NSStringFromClass([GPUImagePolkaDotFilter class]),
+	   NSStringFromClass([GPUImagePosterizeFilter class]),
+	   NSStringFromClass([GPUImagePrewittEdgeDetectionFilter class]),
+
+	   NSStringFromClass([GPUImageSepiaFilter class]),
+	   NSStringFromClass([GPUImageSharpenFilter class]),
+	   NSStringFromClass([GPUImageSketchFilter class]),
+	   NSStringFromClass([GPUImageSmoothToonFilter class]),
+	   NSStringFromClass([GPUImageSobelEdgeDetectionFilter class]),
+	   NSStringFromClass([GPUImageSoftEleganceFilter class]),
+	   NSStringFromClass([GPUImageStretchDistortionFilter class]),
+	   NSStringFromClass([GPUImageSwirlFilter class]),
+
+	   NSStringFromClass([GPUImageThresholdSketchFilter class]),
+	   NSStringFromClass([GPUImageTiltShiftFilter class]),
+	   NSStringFromClass([GPUImageToonFilter class]),
+
+
+	   NSStringFromClass([GPUImageVignetteFilter class]),
+
+	   NSStringFromClass([GPUImageXYDerivativeFilter class]),
+	   NSStringFromClass([GPUImageZoomBlurFilter class]),
+
+	   /*
+		NSStringFromClass([GPUImageUnsharpMaskFilter class]),
+		NSStringFromClass([GPUImageVoronoiConsumerFilter class]),
+		NSStringFromClass([GPUImageWhiteBalanceFilter class]),
+		NSStringFromClass([GPUImageWeakPixelInclusionFilter class]),
+		NSStringFromClass([GPUimageDirectionalSobelEdgeDetectionFilter class]),
+		NSStringFromClass([GPUImageThresholdEdgeDetectionFilter class]),
+		NSStringFromClass([GPUImageThresholdedNonMaximumSuppressionFilter class]),
+		NSStringFromClass([GPUImageToneCurveFilter class]),
+		NSStringFromClass([GPUImageTransformFilter class]),
+		NSStringFromClass([GPUImageTwoInputCrossTextureSamplingFilter class]),
+		NSStringFromClass([GPUImageTwoInputFilter class]),
+		NSStringFromClass([GPUImageTwoPassFilter class]),
+		NSStringFromClass([GPUImageTwoPassTextureSamplingFilter class]),
+		NSStringFromClass([GPUImageSaturationBlendFilter class]),
+		NSStringFromClass([GPUImageSaturationFilter class]),
+		NSStringFromClass([GPUImageScreenBlendFilter class]),
+		NSStringFromClass([GPUImageShiTomasiFeatureDetectionFilter class]),
+		NSStringFromClass([GPUImageSoftLightBlendFilter class]),
+		NSStringFromClass([GPUImageSourceOverBlendFilter class]),
+		NSStringFromClass([GPUImageSphereRefractionFilter class]),
+		NSStringFromClass([GPUImageSubtractBlendFilter class]),
+		NSStringFromClass([GPUImageSingleComponentGaussianBlurFilter class]),
+		NSStringFromClass([GPUImageRGBClosingFilter class]),
+		NSStringFromClass([GPUImageRGBDilationFilter class]),
+		NSStringFromClass([GPUImageRGBErosionFilter class]),
+		NSStringFromClass([GPUImageRGBOpeningFilter class]),
+		NSStringFromClass([GPUImageParallelCoordinateLineTransformFilter class]),
+		NSStringFromClass([GPUImagePerlinNoiseFilter class]),
+		NSStringFromClass([GPUImagePoissonBlendFilter class]),
+		NSStringFromClass([GPUImageNobleCornerDetectionFilter class]),
+		NSStringFromClass([GPUImageNormalBlendFilter class]),
+
+		NSStringFromClass([GPUImageOpacityFilter class]),
+		NSStringFromClass([GPUImageOverlayBlendFilter class]),
+		NSStringFromClass([GPUImageMosaicFilter class]),
+		NSStringFromClass([GPUImageMultiplyBlendFilter class]),
+		NSStringFromClass([GPUImageLanczosResamplingFilter class]),
+		NSStringFromClass([GPUImageLaplacianFilter class]),
+		NSStringFromClass([GPUImageLevelsFilter class]),
+		NSStringFromClass([GPUImageLightenBlendFilter class]),
+		NSStringFromClass([GPUImageLinearBurnBlendFilter class]),
+		NSStringFromClass([GPUImageLookupFilter class]),
+		NSStringFromClass([GPUImageLuminosityBlendFilter class]),
+
+		NSStringFromClass([GPUImageMaskFilter class]),
+		NSStringFromClass([GPUImageMedianFilter class]),
+		NSStringFromClass([GPUImageJFAVoronoiFilter class]),
+		NSStringFromClass([GPUImageDirectionalNonMaximumSuppressionFilter class]),
+		NSStringFromClass([GPUImageHSBFilter class]),
+		NSStringFromClass([GPUImageHardLightBlendFilter class]),
+		NSStringFromClass([GPUImageHarrisCornerDetectionFilter class]),
+		NSStringFromClass([GPUImageHighlightShadowFilter class]),
+		NSStringFromClass([GPUImageHistogramFilter class]),
+		NSStringFromClass([GPUImageHueBlendFilter class]),
+		NSStringFromClass([GPUImageGaussianBlurPositionFilter class]),
+		NSStringFromClass([GPUImageGaussianSelectiveBlurFilter class]),
+		NSStringFromClass([GPUImageGlassSphereFilter class]),
+		NSStringFromClass([GPUImageExclusionBlendFilter class]),
+		NSStringFromClass([GPUImageExposureFilter class]),
+		NSStringFromClass([GPUImageGammaFilter class]),
+		NSStringFromClass([GPUImageCropFilter class]),
+		NSStringFromClass([GPUImageDifferenceBlendFilter class]),
+		NSStringFromClass([GPUImageDissolveBlendFilter class]),
+		NSStringFromClass([GPUImageDivideBlendFilter class]),
+		NSStringFromClass([GPUImage3x3ConvolutionFilter class]),
+		NSStringFromClass([GPUImage3x3TextureSamplingFilter class]),
+		NSStringFromClass([GPUImageAddBlendFilter class]),
+		NSStringFromClass([GPUImageAlphaBlendFilter class]),
+		NSStringFromClass([GPUImageBilateralFilter class]),
+		NSStringFromClass([GPUImageChromaKeyBlendFilter class]),
+		NSStringFromClass([GPUImageColorBlendFilter class]),
+		NSStringFromClass([GPUImageColorBurnBlendFilter class]),
+		NSStringFromClass([GPUImageColorInvertFilter class]),
+		NSStringFromClass([GPUImageColorDodgeBlendFilter class]),
+		NSStringFromClass([GPUImageBoxBlurFilter class]),
+		NSStringFromClass([GPUImageBrightnessFilter class]),
+		NSStringFromClass([GPUImageColorMatrixFilter class]),
+		NSStringFromClass([GPUImageColorPackingFilter class]),
+		NSStringFromClass([GPUImageContrastFilter class]),
+
+		//MARK: Frame rate is terrible
+		NSStringFromClass([GPUImageKuwaharaFilter class]),
+		*/
+
+	   ] mutableCopy];
+
+	FXDLogVariable([_cycledFilterNameArray count]);
+
+	return _cycledFilterNameArray;
+}
+
+#pragma mark -
 - (FXDcameraGPU*)gpuvideoCamera {
 	if (_gpuvideoCamera) {
 		return _gpuvideoCamera;
@@ -226,64 +396,20 @@
 - (void)cycleGPUfiltersForward:(BOOL)isForward {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@", _Object(_gpumovieWriter), _Object(_gpuviewCaptured), _BOOL(isForward));
 
-	if (_cycledFilterNameArray == nil) {
-		_cycledFilterNameArray =
-		[@[NSStringFromClass([GPUImageRGBFilter class]),
-		   NSStringFromClass([GPUImageHazeFilter class]),
-		   NSStringFromClass([GPUImagePixellateFilter class]),
-		   NSStringFromClass([GPUImageAdaptiveThresholdFilter class]),
-		   NSStringFromClass([GPUImageAmatorkaFilter class]),
-		   NSStringFromClass([GPUImageAverageLuminanceThresholdFilter class]),
-		   NSStringFromClass([GPUImageCGAColorspaceFilter class]),
-		   NSStringFromClass([GPUImageCannyEdgeDetectionFilter class]),
-		   NSStringFromClass([GPUImageChromaKeyFilter class]),
-		   NSStringFromClass([GPUImageClosingFilter class]),
+	NSInteger nextIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
-		   NSStringFromClass([GPUImageCrosshatchFilter class]),
-		   NSStringFromClass([GPUImageDilationFilter class]),
-		   //NSStringFromClass([GPUImageDirectionalNonMaximumSuppressionFilter class]),
-		   NSStringFromClass([GPUImageEmbossFilter class]),
-		   NSStringFromClass([GPUImageErosionFilter class]),
-		   NSStringFromClass([GPUImageFalseColorFilter class]),
-		   NSStringFromClass([GPUImageGaussianBlurFilter class]),
-		   NSStringFromClass([GPUImageGrayscaleFilter class]),
-
-		   /*
-			//MARK: Omitted
-			NSStringFromClass([GPUImageGaussianBlurPositionFilter class]),
-			NSStringFromClass([GPUImageGaussianSelectiveBlurFilter class]),
-			NSStringFromClass([GPUImageGlassSphereFilter class]),
-			NSStringFromClass([GPUImageExclusionBlendFilter class]),
-			NSStringFromClass([GPUImageExposureFilter class]),
-			NSStringFromClass([GPUImageGammaFilter class]),
-			NSStringFromClass([GPUImageCropFilter class]),
-			NSStringFromClass([GPUImageDifferenceBlendFilter class]),
-			NSStringFromClass([GPUImageDissolveBlendFilter class]),
-			NSStringFromClass([GPUImageDivideBlendFilter class]),
-			NSStringFromClass([GPUImage3x3ConvolutionFilter class]),
-			NSStringFromClass([GPUImage3x3TextureSamplingFilter class]),
-			NSStringFromClass([GPUImageAddBlendFilter class]),
-			NSStringFromClass([GPUImageAlphaBlendFilter class]),
-			NSStringFromClass([GPUImageBilateralFilter class]),
-			NSStringFromClass([GPUImageChromaKeyBlendFilter class]),
-			NSStringFromClass([GPUImageColorBlendFilter class]),
-			NSStringFromClass([GPUImageColorBurnBlendFilter class]),
-			NSStringFromClass([GPUImageColorInvertFilter class]),
-			NSStringFromClass([GPUImageColorDodgeBlendFilter class]),
-			NSStringFromClass([GPUImageBoxBlurFilter class]),
-			NSStringFromClass([GPUImageBrightnessFilter class]),
-			NSStringFromClass([GPUImageColorMatrixFilter class]),
-			NSStringFromClass([GPUImageColorPackingFilter class]),
-			NSStringFromClass([GPUImageContrastFilter class]),
-
-			//MARK: Frame rate is terrible
-			NSStringFromClass([GPUImageKuwaharaFilter class]),
-			*/
-
-		   ] mutableCopy];
+	if (nextIndex < 0) {
+		nextIndex = [self.cycledFilterNameArray count]-1;
+	}
+	else if (nextIndex == [self.cycledFilterNameArray count]) {
+		nextIndex = 0;
 	}
 
-	NSString *filterName = (isForward ? [self.cycledFilterNameArray lastObject]:[self.cycledFilterNameArray firstObject]);
+	FXDLogVariable(nextIndex);
+	self.lastFilterIndex = nextIndex;
+
+
+	NSString *filterName = self.cycledFilterNameArray[nextIndex];
 	FXDLogObject(filterName);
 
 
@@ -297,25 +423,8 @@
 
 	[self.gpufilterGroup addTarget:self.gpuviewCaptured];
 
-	FXDLogObject([self.gpuvideoCamera targets]);
-	FXDLogObject([self.gpufilterGroup targets]);
-	FXDLogObject([self.gpufilterGroup.terminalFilter targets]);
 
-
-	if (self.cycledFilterNameArray) {
-		if (isForward) {
-			[self.cycledFilterNameArray removeLastObject];
-			[self.cycledFilterNameArray insertObject:filterName atIndex:0];
-		}
-		else {
-			[self.cycledFilterNameArray removeObjectAtIndex:0];
-			[self.cycledFilterNameArray addObject:filterName];
-		}
-
-		FXDLogObject(self.cycledFilterNameArray);
-	}
-
-	
+	//TEST:
 	if ([filterName isEqualToString:NSStringFromClass([GPUImageRGBFilter class])]) {
 		filterName = @"Default";
 	}
