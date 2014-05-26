@@ -36,12 +36,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_gpuvideoCamera stopCameraCapture];
-
-	[_gpuvideoCamera removeAllTargets];
-	[_gpufilterGroup removeAllTargets];
-
-	[_gpuviewCaptured removeFromSuperview];
+	[self resetGPUManager];
 }
 
 
@@ -292,10 +287,23 @@
 
 	[self.gpufilterGroup addTarget:self.gpuviewCaptured];
 
+	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex];
 
 	FXDLogObject([self.gpuvideoCamera targets]);
 	FXDLogObject([self.gpufilterGroup targets]);
 	FXDLogObject([self.gpufilterGroup.terminalFilter targets]);
+}
+
+- (void)resetGPUManager {	FXDLog_DEFAULT;
+	[_gpuvideoCamera stopCameraCapture];
+	[_gpuvideoCamera removeAllTargets];
+	_gpuvideoCamera = nil;
+
+	[_gpufilterGroup removeAllTargets];
+	_gpufilterGroup = nil;
+
+	[_gpuviewCaptured removeFromSuperview];
+	_gpuviewCaptured = nil;
 }
 
 #pragma mark -
@@ -340,22 +348,25 @@
 - (void)cycleGPUfiltersForward:(BOOL)isForward {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@", _Object(_gpumovieWriter), _Object(_gpuviewCaptured), _BOOL(isForward));
 
-	NSInteger nextIndex = self.lastFilterIndex +(isForward ? 1:(-1));
+	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
-	if (nextIndex < 0) {
-		nextIndex = [self.cycledFilterNameArray count]-1;
+	if (filterIndex < 0) {
+		filterIndex = [self.cycledFilterNameArray count]-1;
 	}
-	else if (nextIndex == [self.cycledFilterNameArray count]) {
-		nextIndex = 0;
+	else if (filterIndex == [self.cycledFilterNameArray count]) {
+		filterIndex = 0;
 	}
 
-	FXDLogVariable(nextIndex);
-	self.lastFilterIndex = nextIndex;
+	FXDLogVariable(filterIndex);
+	self.lastFilterIndex = filterIndex;
 
 
-	NSString *filterName = self.cycledFilterNameArray[nextIndex];
+	[self applyGPUfilterAtFilterIndex:filterIndex];
+}
+
+- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex {	FXDLog_DEFAULT;
+	NSString *filterName = self.cycledFilterNameArray[filterIndex];
 	FXDLogObject(filterName);
-
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
@@ -414,7 +425,6 @@
 		  }];
 	 }];
 }
-
 
 //MARK: - Observer implementation
 - (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {	FXDLog_OVERRIDE;

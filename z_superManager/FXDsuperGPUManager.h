@@ -38,10 +38,12 @@
 
 #pragma mark - Public
 - (void)prepareGPUManagerWithFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)resetGPUManager;
 
 - (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
 - (void)cycleGPUfiltersForward:(BOOL)isForward;
+- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
 
 
 //MARK: - Observer implementation
