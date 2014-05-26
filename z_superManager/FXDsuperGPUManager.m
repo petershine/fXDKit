@@ -48,23 +48,6 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (AVCaptureSession*)mainCaptureSession {
-	if (_mainCaptureSession) {
-		return _mainCaptureSession;
-	}
-
-
-	FXDLog_DEFAULT;
-	_mainCaptureSession = self.gpuvideoCamera.captureSession;
-
-	return _mainCaptureSession;
-}
-
-- (AVCaptureVideoPreviewLayer*)mainPreviewLayer {
-	return nil;
-}
-
-#pragma mark -
 - (NSMutableArray*)cycledFilterNameArray {
 	if (_cycledFilterNameArray) {
 		return _cycledFilterNameArray;
@@ -244,7 +227,7 @@
 	FXDLog_DEFAULT;
 
 	_gpuvideoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
-												   cameraPosition:self.cameraPosition];
+												   cameraPosition:AVCaptureDevicePositionBack];
 
 	[_gpuvideoCamera setDelegate:self];
 
@@ -297,21 +280,15 @@
 
 
 #pragma mark - Method overriding
-- (void)prepareCaptureManagerWithScene:(UIViewController*)scene {
-	[super prepareCaptureManagerWithScene:scene];
 
-	//MARK: To re-apply new orientation
-	[self observedUIDeviceOrientationDidChange:nil];
+#pragma mark - Public
+- (void)prepareGPUManagerWithFlashMode:(AVCaptureFlashMode)flashMode {	FXDLog_DEFAULT;
+	FXDLogVariable(flashMode);
 
-
-	[self.gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:self.flashMode];
+	[self.gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:flashMode];
 	[self.gpuvideoCamera.inputCamera addDefaultNotificationObserver:self];
 
 	[self.gpuvideoCamera addTarget:self.gpufilterGroup];
-
-
-	[scene.view addSubview:self.gpuviewCaptured];
-	[scene.view sendSubviewToBack:self.gpuviewCaptured];
 
 	[self.gpufilterGroup addTarget:self.gpuviewCaptured];
 
@@ -319,42 +296,9 @@
 	FXDLogObject([self.gpuvideoCamera targets]);
 	FXDLogObject([self.gpufilterGroup targets]);
 	FXDLogObject([self.gpufilterGroup.terminalFilter targets]);
-
-
-	@weakify(self);
-
-	[RACObserve(GlobalAppManager, shouldUseMirroredFront)
-	 subscribeNext:^(id shouldUseMirroredFront) {	@strongify(self);
-		 FXDLog_REACT(shouldUseMirroredFront, shouldUseMirroredFront);
-
-		 self.shouldUseMirroring = [shouldUseMirroredFront boolValue];
-
-		 self.gpuvideoCamera.horizontallyMirrorFrontFacingCamera = self.shouldUseMirroring;
-		 FXDLogVariable(self.gpuvideoCamera.horizontallyMirrorFrontFacingCamera);
-
-		 self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
-		 FXDLogBOOL(self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring);
-	 }];
-
-	[self.gpuvideoCamera startCameraCapture];
 }
 
 #pragma mark -
-- (void)configurePreviewDisplayForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {
-
-	//MARK: Animation not working for GPUImageView
-	self.gpuviewCaptured.frame = bounds;
-}
-
-#pragma mark -
-- (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion {
-	[self.gpuvideoCamera rotateCamera];
-
-	self.cameraPosition = cameraPostion;
-}
-
-
-#pragma mark - Public
 - (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
 
 	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
@@ -473,21 +417,22 @@
 
 
 //MARK: - Observer implementation
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
-	[super observedUIDeviceOrientationDidChange:notification];
-
-	if (self.didStartCapturing) {
-		return;
-	}
-
-
-	self.gpuvideoCamera.outputImageOrientation = (UIInterfaceOrientation)self.videoOrientation;
+- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLogObject(notification);
 }
 
+- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
+	FXDLogObject(notification);
+}
+
+- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	//FXDLog_DEFAULT;
+	//FXDLogObject(notification);
+}
 
 //MARK: - Delegate implementation
 #pragma mark - GPUImageVideoCameraDelegate
 - (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {	FXDLog_OVERRIDE;
+	FXDLogTime(CMSampleBufferGetPresentationTimeStamp(sampleBuffer));
 }
 
 #pragma mark - GPUImageMovieWriterDelegate

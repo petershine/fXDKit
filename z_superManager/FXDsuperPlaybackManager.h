@@ -12,9 +12,6 @@
 #endif
 
 
-@import AssetsLibrary;
-
-
 @interface FXDviewVideoDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 

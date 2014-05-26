@@ -34,7 +34,7 @@
 #endif
 
 #if USE_GPUImage	//https://github.com/BradLarson/GPUImage
-	#import <GPUImage.h>
+	#import "FXDsuperGPUManager.h"
 #endif
 
 
@@ -60,11 +60,17 @@
 	@import OpenGLES;
 
 	@import AVFoundation;
+	@import AssetsLibrary;
 
 	@import MediaPlayer;
 	@import MediaToolbox;
 
 	#import "FXDMediaItem.h"
+
+	#import "FXDsuperCaptureManager.h"
+
+	#import "FXDsuperPlaybackManager.h"
+	#import "FXDsuperPlaybackScene.h"
 #endif
 
 

@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Provus. All rights reserved.
 //
 
-#import "FXDsuperPlaybackManager.h"
-
 
 #import "FXDsuperScrollScene.h"
 

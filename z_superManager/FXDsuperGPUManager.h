@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+#import <GPUImage.h>
+
+
 @interface FXDcameraGPU : GPUImageVideoCamera
 @end
 
@@ -21,9 +24,7 @@
 @end
 
 
-#import "FXDsuperCaptureManager.h"
-
-@interface FXDsuperGPUManager : FXDsuperCaptureManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate>
+@interface FXDsuperGPUManager : FXDsuperManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate>
 @property (nonatomic) NSInteger lastFilterIndex;
 
 @property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;
@@ -36,6 +37,8 @@
 
 
 #pragma mark - Public
+- (void)prepareGPUManagerWithFlashMode:(AVCaptureFlashMode)flashMode;
+
 - (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
 - (void)cycleGPUfiltersForward:(BOOL)isForward;
