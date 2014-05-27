@@ -20,7 +20,6 @@
 }
 
 @property (nonatomic) BOOL didStartCapturing;
-@property (nonatomic) BOOL shouldAppendSampleBuffer;
 
 @property (nonatomic) BOOL shouldUseMirroring;
 
