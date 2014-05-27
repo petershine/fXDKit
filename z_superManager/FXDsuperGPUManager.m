@@ -19,12 +19,12 @@
 }
 @end
 
-@implementation FXDwriterGPU
+@implementation FXDimageviewGPU
 - (void)dealloc {	FXDLog_DEFAULT;
 }
 @end
 
-@implementation FXDimageviewGPU
+@implementation FXDwriterGPU
 - (void)dealloc {	FXDLog_DEFAULT;
 }
 @end
@@ -255,37 +255,15 @@
 	return _gpufilterGroup;
 }
 
-#pragma mark -
-- (FXDimageviewGPU*)gpuviewCaptured {
-	if (_gpuviewCaptured) {
-		return _gpuviewCaptured;
-	}
-
-
-	FXDLog_DEFAULT;
-
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
-	_gpuviewCaptured = [[FXDimageviewGPU alloc] initWithFrame:screenBounds];
-	_gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	_gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-
-	return _gpuviewCaptured;
-}
-
 
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGPUManagerWithFlashMode:(AVCaptureFlashMode)flashMode {	FXDLog_DEFAULT;
-	FXDLogVariable(flashMode);
-
-	[self.gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:flashMode];
+- (void)prepareGPUManager {	FXDLog_DEFAULT;
+	[self.gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
 	[self.gpuvideoCamera.inputCamera addDefaultNotificationObserver:self];
 
 	[self.gpuvideoCamera addTarget:self.gpufilterGroup];
-
-	[self.gpufilterGroup addTarget:self.gpuviewCaptured];
 
 	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex];
 
@@ -296,57 +274,16 @@
 
 - (void)resetGPUManager {	FXDLog_DEFAULT;
 	[_gpuvideoCamera stopCameraCapture];
+
 	[_gpuvideoCamera removeAllTargets];
 	_gpuvideoCamera = nil;
 
 	[_gpufilterGroup removeAllTargets];
 	_gpufilterGroup = nil;
-
-	[_gpuviewCaptured removeFromSuperview];
-	_gpuviewCaptured = nil;
-}
-
-#pragma mark -
-- (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
-
-	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
-	
-	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
-	FXDLogStruct(dimension);
-
-	CGSize videoSize = CGSizeMake(dimension.width, dimension.height);
-
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	if (UIDeviceOrientationIsLandscape(deviceOrientation) == NO) {
-		videoSize.width = MIN(dimension.width, dimension.height);
-		videoSize.height = MAX(dimension.width, dimension.height);
-	}
-	FXDLogSize(videoSize);
-
-
-	self.gpumovieWriter = [[FXDwriterGPU alloc] initWithMovieURL:fileURL
-															size:videoSize
-														fileType:filetypeVideoDefault
-												  outputSettings:nil];
-
-	[self.gpumovieWriter setDelegate:self];
-
-	self.gpumovieWriter.encodingLiveVideo = YES;
-	[self.gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
-	[self.gpuvideoCamera setAudioEncodingTarget:self.gpumovieWriter];
-
-
-	if (gpuimageOutput == nil) {
-		gpuimageOutput = self.gpuvideoCamera;
-	}
-
-	[gpuimageOutput addTarget:self.gpumovieWriter];
 }
 
 #pragma mark -
 - (void)cycleGPUfiltersForward:(BOOL)isForward {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@ %@", _Object(_gpumovieWriter), _Object(_gpuviewCaptured), _BOOL(isForward));
 
 	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
@@ -362,24 +299,11 @@
 
 
 	[self applyGPUfilterAtFilterIndex:filterIndex];
-}
-
-- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex {	FXDLog_DEFAULT;
-	NSString *filterName = self.cycledFilterNameArray[filterIndex];
-	FXDLogObject(filterName);
-
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
-	GPUImageFilter *nextFilter = [[NSClassFromString(filterName) alloc] init];
-	[nextFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
-
-	self.gpufilterGroup.initialFilters = @[nextFilter];
-	self.gpufilterGroup.terminalFilter = nextFilter;
-
-	[self.gpufilterGroup addTarget:self.gpuviewCaptured];
 
 
 	//TEST:
+	NSString *filterName = self.cycledFilterNameArray[filterIndex];
+
 	if ([filterName isEqualToString:NSStringFromClass([GPUImageRGBFilter class])]) {
 		filterName = @"Default";
 	}
@@ -426,6 +350,77 @@
 	 }];
 }
 
+- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex {	FXDLog_DEFAULT;
+	NSString *filterName = self.cycledFilterNameArray[filterIndex];
+	FXDLogObject(filterName);
+
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
+
+	GPUImageFilter *nextFilter = [[NSClassFromString(filterName) alloc] init];
+	[nextFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
+
+	self.gpufilterGroup.initialFilters = @[nextFilter];
+	self.gpufilterGroup.terminalFilter = nextFilter;
+}
+
+#pragma mark -
+- (FXDimageviewGPU*)newGPUImageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
+
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
+
+	FXDimageviewGPU *gpuviewCaptured = [[FXDimageviewGPU alloc] initWithFrame:screenBounds];
+	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+
+
+	if (gpuimageOutput == nil) {
+		gpuimageOutput = self.gpuvideoCamera;
+	}
+
+	[gpuimageOutput addTarget:gpuviewCaptured];
+
+	return gpuviewCaptured;
+}
+
+- (FXDwriterGPU*)newGPUMovieWriterForFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
+
+	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
+
+	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
+	FXDLogStruct(dimension);
+
+	CGSize videoSize = CGSizeMake(dimension.width, dimension.height);
+
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	if (UIDeviceOrientationIsLandscape(deviceOrientation) == NO) {
+		videoSize.width = MIN(dimension.width, dimension.height);
+		videoSize.height = MAX(dimension.width, dimension.height);
+	}
+	FXDLogSize(videoSize);
+
+
+	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
+									initWithMovieURL:fileURL
+									size:videoSize
+									fileType:filetypeVideoDefault
+									outputSettings:nil];
+
+	gpumovieWriter.encodingLiveVideo = YES;
+	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
+	[self.gpuvideoCamera setAudioEncodingTarget:gpumovieWriter];
+
+
+	if (gpuimageOutput == nil) {
+		gpuimageOutput = self.gpuvideoCamera;
+	}
+
+	[gpuimageOutput addTarget:gpumovieWriter];
+
+	return gpumovieWriter;
+}
+
+
 //MARK: - Observer implementation
 - (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLogObject(notification);
@@ -446,6 +441,10 @@
 }
 
 #pragma mark - GPUImageMovieWriterDelegate
+- (void)movieRecordingCompleted {	FXDLog_OVERRIDE;
+
+}
+
 - (void)movieRecordingFailedWithError:(NSError*)error {	FXDLog_OVERRIDE;
 	FXDLog_ERROR;
 }

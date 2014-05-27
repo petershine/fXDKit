@@ -15,12 +15,12 @@
 @interface FXDfiltergroupGPU : GPUImageFilterGroup
 @end
 
+@interface FXDimageviewGPU : GPUImageView
+@end
+
 @interface FXDwriterGPU : GPUImageMovieWriter
 @property (nonatomic) BOOL didStartFinishing;
 @property (nonatomic) CMTime startTime;
-@end
-
-@interface FXDimageviewGPU : GPUImageView
 @end
 
 
@@ -31,19 +31,17 @@
 
 @property (strong, nonatomic) FXDcameraGPU *gpuvideoCamera;
 @property (strong, nonatomic) FXDfiltergroupGPU *gpufilterGroup;
-@property (strong, nonatomic) FXDwriterGPU *gpumovieWriter;
-
-@property (strong, nonatomic) FXDimageviewGPU *gpuviewCaptured;
 
 
 #pragma mark - Public
-- (void)prepareGPUManagerWithFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)prepareGPUManager;
 - (void)resetGPUManager;
-
-- (void)prepareMovieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
 - (void)cycleGPUfiltersForward:(BOOL)isForward;
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
+
+- (FXDimageviewGPU*)newGPUImageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
+- (FXDwriterGPU*)newGPUMovieWriterForFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
 
 //MARK: - Observer implementation
