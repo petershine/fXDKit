@@ -19,12 +19,12 @@
 @end
 
 @interface FXDwriterGPU : GPUImageMovieWriter
-@property (nonatomic) BOOL didStartFinishing;
 @property (nonatomic) CMTime startTime;
+@property (strong, nonatomic) NSString *uniqueKey;
 @end
 
 
-@interface FXDsuperGPUManager : FXDsuperManager <GPUImageVideoCameraDelegate, GPUImageMovieWriterDelegate>
+@interface FXDsuperGPUManager : FXDsuperManager
 @property (nonatomic) NSInteger lastFilterIndex;
 
 @property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;

@@ -26,6 +26,7 @@
 
 @implementation FXDwriterGPU
 - (void)dealloc {	FXDLog_DEFAULT;
+	FXDLogObject(_uniqueKey);
 }
 @end
 
@@ -224,8 +225,6 @@
 	_gpuvideoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
 												   cameraPosition:AVCaptureDevicePositionBack];
 
-	[_gpuvideoCamera setDelegate:self];
-
 	[_gpuvideoCamera addAudioInputsAndOutputs];
 
 	return _gpuvideoCamera;
@@ -374,7 +373,7 @@
 
 
 	if (gpuimageOutput == nil) {
-		gpuimageOutput = self.gpuvideoCamera;
+		gpuimageOutput = self.gpufilterGroup;
 	}
 
 	[gpuimageOutput addTarget:gpuviewCaptured];
@@ -406,13 +405,16 @@
 									fileType:filetypeVideoDefault
 									outputSettings:nil];
 
+	gpumovieWriter.uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
+
 	gpumovieWriter.encodingLiveVideo = YES;
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
+
 	[self.gpuvideoCamera setAudioEncodingTarget:gpumovieWriter];
 
 
 	if (gpuimageOutput == nil) {
-		gpuimageOutput = self.gpuvideoCamera;
+		gpuimageOutput = self.gpufilterGroup;
 	}
 
 	[gpuimageOutput addTarget:gpumovieWriter];
@@ -435,18 +437,5 @@
 }
 
 //MARK: - Delegate implementation
-#pragma mark - GPUImageVideoCameraDelegate
-- (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {	FXDLog_OVERRIDE;
-	FXDLogTime(CMSampleBufferGetPresentationTimeStamp(sampleBuffer));
-}
-
-#pragma mark - GPUImageMovieWriterDelegate
-- (void)movieRecordingCompleted {	FXDLog_OVERRIDE;
-
-}
-
-- (void)movieRecordingFailedWithError:(NSError*)error {	FXDLog_OVERRIDE;
-	FXDLog_ERROR;
-}
 
 @end
