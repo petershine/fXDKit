@@ -272,8 +272,6 @@
 }
 
 - (void)resetGPUManager {	FXDLog_DEFAULT;
-	[_gpuvideoCamera stopCameraCapture];
-
 	[_gpuvideoCamera removeAllTargets];
 	_gpuvideoCamera = nil;
 
@@ -334,7 +332,6 @@
 		 filterLabel.alpha = 1.0;
 
 	 } completion:^(BOOL finished) {
-		 GlobalAppManager.snapshotManager.snapshotOverlay.layer.contents = nil;
 
 		 [UIView
 		  animateWithDuration:durationSlowAnimation
@@ -378,6 +375,8 @@
 
 	[gpuimageOutput addTarget:gpuviewCaptured];
 
+	FXDLogObject(gpuimageOutput.targets);
+
 	return gpuviewCaptured;
 }
 
@@ -418,6 +417,8 @@
 	}
 
 	[gpuimageOutput addTarget:gpumovieWriter];
+
+	FXDLogObject(gpuimageOutput.targets);
 
 	return gpumovieWriter;
 }
