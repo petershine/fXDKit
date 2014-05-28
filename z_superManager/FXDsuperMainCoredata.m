@@ -402,13 +402,21 @@
 	
 	self.didStartEnumerating = YES;
 
-	
-	self.enumeratingTask =
-	[[UIApplication sharedApplication]
+
+	UIApplication *application = [UIApplication sharedApplication];
+
+	__weak FXDsuperMainCoredata *weakSelf = self;
+
+	weakSelf.enumeratingTask =
+	[application
 	 beginBackgroundTaskWithExpirationHandler:^{
-		 [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTask];
-		 self.enumeratingTask = UIBackgroundTaskInvalid;
-	 }];
+		__strong FXDsuperMainCoredata *strongSelf = weakSelf;
+
+		if (strongSelf) {
+			[application endBackgroundTask:strongSelf.enumeratingTask];
+			strongSelf.enumeratingTask = UIBackgroundTaskInvalid;
+		}
+	}];
 
 	FXDLogVariable(self.enumeratingTask);
 	
@@ -477,17 +485,17 @@
 				  
 				  FXDLog(@"2.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
 				  
-				  
-				  FXDLog_REMAINING;
-				  
-				  FXDLogVariable(self.enumeratingTask);
-				  
-				  [[UIApplication sharedApplication] endBackgroundTask:self.enumeratingTask];
-				  self.enumeratingTask = UIBackgroundTaskInvalid;
-				  
 				  if (finishCallback) {
 					  finishCallback(_cmd, didFinish, nil);
 				  }
+
+
+				  FXDLog_REMAINING;
+
+				  FXDLogVariable(self.enumeratingTask);
+				  
+				  [application endBackgroundTask:self.enumeratingTask];
+				  self.enumeratingTask = UIBackgroundTaskInvalid;
 			  };
 			  
 			  
@@ -604,14 +612,24 @@
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog_REMAINING;
 
-	self.dataSavingTask =
-	[[UIApplication sharedApplication]
+	UIApplication *application = [UIApplication sharedApplication];
+
+	__weak FXDsuperMainCoredata *weakSelf = self;
+
+	weakSelf.dataSavingTask =
+	[application
 	 beginBackgroundTaskWithExpirationHandler:^{
-		 [[UIApplication sharedApplication] endBackgroundTask:self.dataSavingTask];
-		 self.dataSavingTask = UIBackgroundTaskInvalid;
+		 __strong FXDsuperMainCoredata *strongSelf = weakSelf;
+
+		 if (strongSelf) {
+			 //MARK: Should expire if the task is actually done
+			 [application endBackgroundTask:strongSelf.dataSavingTask];
+			 strongSelf.dataSavingTask = UIBackgroundTaskInvalid;
+		 }
 	 }];
 	
 	FXDLogVariable(self.dataSavingTask);
+
 
 	[self
 	 saveMainDocumentShouldSkipMerge:NO
@@ -622,7 +640,7 @@
 
 		 FXDLogVariable(self.dataSavingTask);
 
-		 [[UIApplication sharedApplication] endBackgroundTask:self.dataSavingTask];
+		 [application endBackgroundTask:self.dataSavingTask];
 		 self.dataSavingTask = UIBackgroundTaskInvalid;
 	 }];
 }

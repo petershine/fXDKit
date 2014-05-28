@@ -16,11 +16,14 @@
 @end
 
 @interface FXDimageviewGPU : GPUImageView
++ (instancetype)imageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 @end
 
 @interface FXDwriterGPU : GPUImageMovieWriter
 @property (nonatomic) CMTime startTime;
 @property (strong, nonatomic) NSString *uniqueKey;
+
++ (instancetype)movieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 @end
 
 
@@ -39,9 +42,6 @@
 
 - (void)cycleGPUfiltersForward:(BOOL)isForward;
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
-
-- (FXDimageviewGPU*)newGPUImageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
-- (FXDwriterGPU*)newGPUMovieWriterForFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 
 
 //MARK: - Observer implementation

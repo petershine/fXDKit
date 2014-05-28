@@ -22,12 +22,62 @@
 @implementation FXDimageviewGPU
 - (void)dealloc {	FXDLog_DEFAULT;
 }
+
++ (instancetype)imageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
+
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
+
+	FXDimageviewGPU *gpuviewCaptured = [[FXDimageviewGPU alloc] initWithFrame:screenBounds];
+	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+
+	[gpuimageOutput addTarget:gpuviewCaptured];
+	FXDLogObject(gpuimageOutput.targets);
+
+	return gpuviewCaptured;
+}
 @end
 
 @implementation FXDwriterGPU
 - (void)dealloc {	FXDLog_DEFAULT;
 	FXDLogObject(_uniqueKey);
 }
+
++ (instancetype)movieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
+
+	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
+
+	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
+	FXDLogStruct(dimension);
+
+	CGSize videoSize = CGSizeMake(dimension.width, dimension.height);
+
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	if (UIDeviceOrientationIsLandscape(deviceOrientation) == NO) {
+		videoSize.width = MIN(dimension.width, dimension.height);
+		videoSize.height = MAX(dimension.width, dimension.height);
+	}
+	FXDLogSize(videoSize);
+
+
+	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
+									initWithMovieURL:fileURL
+									size:videoSize
+									fileType:filetypeVideoDefault
+									outputSettings:nil];
+
+	gpumovieWriter.uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
+
+	gpumovieWriter.encodingLiveVideo = YES;
+	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
+
+	[gpuimageOutput addTarget:gpumovieWriter];
+	FXDLogObject(gpuimageOutput.targets);
+
+	return gpumovieWriter;
+}
+
 @end
 
 
@@ -357,70 +407,6 @@
 
 	self.gpufilterGroup.initialFilters = @[nextFilter];
 	self.gpufilterGroup.terminalFilter = nextFilter;
-}
-
-#pragma mark -
-- (FXDimageviewGPU*)newGPUImageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
-
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
-	FXDimageviewGPU *gpuviewCaptured = [[FXDimageviewGPU alloc] initWithFrame:screenBounds];
-	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-
-
-	if (gpuimageOutput == nil) {
-		gpuimageOutput = self.gpufilterGroup;
-	}
-
-	[gpuimageOutput addTarget:gpuviewCaptured];
-
-	FXDLogObject(gpuimageOutput.targets);
-
-	return gpuviewCaptured;
-}
-
-- (FXDwriterGPU*)newGPUMovieWriterForFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
-
-	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
-
-	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
-	FXDLogStruct(dimension);
-
-	CGSize videoSize = CGSizeMake(dimension.width, dimension.height);
-
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	if (UIDeviceOrientationIsLandscape(deviceOrientation) == NO) {
-		videoSize.width = MIN(dimension.width, dimension.height);
-		videoSize.height = MAX(dimension.width, dimension.height);
-	}
-	FXDLogSize(videoSize);
-
-
-	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
-									initWithMovieURL:fileURL
-									size:videoSize
-									fileType:filetypeVideoDefault
-									outputSettings:nil];
-
-	gpumovieWriter.uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
-
-	gpumovieWriter.encodingLiveVideo = YES;
-	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
-
-	[self.gpuvideoCamera setAudioEncodingTarget:gpumovieWriter];
-
-
-	if (gpuimageOutput == nil) {
-		gpuimageOutput = self.gpufilterGroup;
-	}
-
-	[gpuimageOutput addTarget:gpumovieWriter];
-
-	FXDLogObject(gpuimageOutput.targets);
-
-	return gpumovieWriter;
 }
 
 
