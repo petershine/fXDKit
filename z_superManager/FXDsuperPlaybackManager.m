@@ -323,7 +323,7 @@
 	 }];
 }
 
-- (void)pauseRemovingPeriodicObserver {	FXDLog_DEFAULT;
+- (void)pauseRemovingPeriodicObserver {	//FXDLog_DEFAULT;
 	
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
