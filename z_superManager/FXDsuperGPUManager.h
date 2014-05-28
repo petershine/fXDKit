@@ -45,6 +45,9 @@
 
 
 //MARK: - Observer implementation
+- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification;
+- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification;
+- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

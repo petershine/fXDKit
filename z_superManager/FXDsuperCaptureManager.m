@@ -42,16 +42,16 @@
 			self.flashMode = flashMode;
 		}
 
-		if ([self isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-			self.focusMode = AVCaptureFocusModeAutoFocus;
+		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
 		}
 
-		if ([self isExposureModeSupported:AVCaptureExposureModeAutoExpose]) {
-			self.exposureMode = AVCaptureExposureModeAutoExpose;
+		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
 		}
 
-		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeAutoWhiteBalance]) {
-			self.whiteBalanceMode = AVCaptureWhiteBalanceModeAutoWhiteBalance;
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
 		}
 
 		self.subjectAreaChangeMonitoringEnabled = YES;
@@ -72,19 +72,19 @@
 	 addObserver:observer
 	 selector:@selector(observedAVCaptureDeviceWasConnected:)
 	 name:AVCaptureDeviceWasConnectedNotification
-	 object:nil];
+	 object:self];
 
 	[notificationCenter
 	 addObserver:observer
 	 selector:@selector(observedAVCaptureDeviceWasDisconnected:)
 	 name:AVCaptureDeviceWasDisconnectedNotification
-	 object:nil];
+	 object:self];
 
 	[notificationCenter
 	 addObserver:observer
 	 selector:@selector(observedAVCaptureDeviceSubjectAreaDidChange:)
 	 name:AVCaptureDeviceSubjectAreaDidChangeNotification
-	 object:nil];
+	 object:self];
 }
 @end
 

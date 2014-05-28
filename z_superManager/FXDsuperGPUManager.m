@@ -225,6 +225,9 @@
 	_gpuvideoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
 												   cameraPosition:AVCaptureDevicePositionBack];
 
+	[_gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
+	[_gpuvideoCamera.inputCamera addDefaultNotificationObserver:self];
+
 	[_gpuvideoCamera addAudioInputsAndOutputs];
 
 	return _gpuvideoCamera;
@@ -259,9 +262,6 @@
 
 #pragma mark - Public
 - (void)prepareGPUManager {	FXDLog_DEFAULT;
-	[self.gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
-	[self.gpuvideoCamera.inputCamera addDefaultNotificationObserver:self];
-
 	[self.gpuvideoCamera addTarget:self.gpufilterGroup];
 
 	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex];
@@ -434,7 +434,30 @@
 }
 
 - (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	//FXDLog_DEFAULT;
-	//FXDLogObject(notification);
+	//TEST:
+	/*
+#if ForDEVELOPER
+	AVCaptureDevice *captureDevice = notification.object;
+
+	NSString *log = @"";
+
+	if (captureDevice.isAdjustingFocus) {
+		log = [NSString stringWithFormat:@"%@", _BOOL(captureDevice.isAdjustingFocus)];
+	}
+
+	if (captureDevice.isAdjustingExposure) {
+		log = [NSString stringWithFormat:@"%@ %@", log, _BOOL(captureDevice.isAdjustingExposure)];
+	}
+
+	if (captureDevice.isAdjustingWhiteBalance) {
+		log = [NSString stringWithFormat:@"%@ %@", log, _BOOL(captureDevice.isAdjustingWhiteBalance)];
+	}
+
+	if ([log length] > 0) {
+		FXDLog(@"%@", log);
+	}
+#endif
+	 */
 }
 
 //MARK: - Delegate implementation
