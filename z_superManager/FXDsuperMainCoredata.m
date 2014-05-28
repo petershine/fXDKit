@@ -622,7 +622,6 @@
 		 __strong FXDsuperMainCoredata *strongSelf = weakSelf;
 
 		 if (strongSelf) {
-			 //MARK: Should expire if the task is actually done
 			 [application endBackgroundTask:strongSelf.dataSavingTask];
 			 strongSelf.dataSavingTask = UIBackgroundTaskInvalid;
 		 }
