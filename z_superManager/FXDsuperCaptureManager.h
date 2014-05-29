@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+#define filternameScale		@"CILanczosScaleTransform"
+#define filternameTransform		@"CIAffineTransform"
+
 
 @interface AVCaptureDevice (Added)
 + (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
@@ -22,6 +25,7 @@
 @property (nonatomic) BOOL didStartCapturing;
 
 @property (nonatomic) BOOL shouldUseMirroring;
+
 
 @property (nonatomic) AVCaptureDevicePosition cameraPosition;
 @property (nonatomic) AVCaptureFlashMode flashMode;
@@ -48,6 +52,8 @@
 
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
+
+- (CIImage*)coreImageForCVImageBuffer:(CVImageBufferRef)imageBuffer withScale:(NSNumber*)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoOrientation:(AVCaptureVideoOrientation)videoOrientation shouldUseMirroring:(BOOL)shouldUseMirroring;
 
 
 //MARK: - Observer implementation
