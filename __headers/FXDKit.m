@@ -54,6 +54,34 @@
 @end
 
 
+@implementation CALayer (Added)
+- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
+	//MARK: Use removedOnCompletion & fillMode appropriately
+	//http://stackoverflow.com/a/14598962/259765
+	[self setOpacity:0.0];
+
+	CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
+	fadeIn.fromValue = @(0.0);
+	fadeIn.toValue = @(1.0);
+	fadeIn.beginTime = (fadeInTime > 0.0 ? fadeInTime:AVCoreAnimationBeginTimeAtZero);
+	fadeIn.duration = duration;
+	fadeIn.removedOnCompletion = NO;
+	fadeIn.fillMode = kCAFillModeForwards;
+	[self addAnimation:fadeIn forKey:@"animationFadeIn"];
+
+	CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
+	fadeOut.fromValue = @(1.0);
+	fadeOut.toValue = @(0.0);
+	fadeOut.beginTime = fadeOutTime;
+	fadeOut.duration = duration;
+	fadeOut.removedOnCompletion = NO;
+	fadeOut.fillMode = kCAFillModeForwards;
+	[self addAnimation:fadeOut forKey:@"animationFadeOut"];
+
+	FXDLog(@"%@ %@", _Variable(fadeIn.beginTime), _Variable(fadeOut.beginTime));
+}
+@end
+
 @implementation CATextLayer (Added)
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
 

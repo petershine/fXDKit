@@ -41,6 +41,10 @@
 @end
 
 
+@interface CALayer (Added)
+- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;
+@end
+
 @interface CATextLayer (Added)
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale;
 @end
