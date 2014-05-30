@@ -151,7 +151,8 @@
 		 
 		 UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
 		 FXDLog(@"%@ %@", _Variable(fullImage.imageOrientation), _Size(fullImage.size));
-		 
+
+		 FXDAssert(currentQueue);
 		 [currentQueue
 		  addOperationWithBlock:^{
 			  [self refreshWithFullImage:fullImage];

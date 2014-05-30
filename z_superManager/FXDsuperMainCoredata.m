@@ -232,6 +232,7 @@
 		 }
 #endif
 
+		 FXDAssert(currentQueue);
 		 [currentQueue
 		  addOperationWithBlock:^{
 			  FXDAssert_IsMainThread;

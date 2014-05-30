@@ -129,6 +129,7 @@
 		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
 		 FXDLogBOOL(movieAsset.isPlayable);
 
+		 FXDAssert(currentQueue);
 		 [currentQueue
 		  addOperationWithBlock:^{
 
