@@ -54,6 +54,7 @@
 @end
 
 
+#if USE_MultimediaFrameworks
 @implementation CALayer (Added)
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
 	//MARK: Use removedOnCompletion & fillMode appropriately
@@ -81,6 +82,7 @@
 	FXDLog(@"%@ %@", _Variable(fadeIn.beginTime), _Variable(fadeOut.beginTime));
 }
 @end
+#endif
 
 @implementation CATextLayer (Added)
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
