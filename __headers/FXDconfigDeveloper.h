@@ -33,6 +33,9 @@
 #define _TimeRange(timeRange)	[[NSString stringWithFormat:@"%s: %@", #timeRange, ValueOfTimeRange(timeRange)] replacedSelf]
 
 
+#define _Orientation	[NSString stringWithFormat:@"statusBarOrientation: %ld", (long)[UIApplication sharedApplication].statusBarOrientation]
+
+
 #define _Error(error)	[NSString\
 						stringWithFormat:@"FILE: %s\nLINE: %d\n%@",\
 						__FILE__,\
@@ -95,14 +98,18 @@
 							} else {\
 								FXDLog(@"%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
+	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", _ClassSelectorSelf)
 
+
+#ifdef __IPHONE_8_0
+	#define FXDLog_FRAME	FXDLog_EMPTY;\
+							FXDLog(@"%@: %@ %@ %@", _ClassSelectorSelf, _Orientation, _Rect(self.view.frame), _Rect(self.view.bounds))
+
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Orientation, _Rect(self.view.frame), _Rect(self.view.bounds))
+#else
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
 							FXDLog(@"%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 
-	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", _ClassSelectorSelf)
-#ifdef __IPHONE_8_0
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
-#else
 	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 #endif
 
@@ -182,9 +189,9 @@
 	#define FXDLog_REMAINING
 
 	#define FXDLog_DEFAULT
-	#define FXDLog_FRAME
-
 	#define FXDLog_SEPARATE
+
+	#define FXDLog_FRAME
 	#define FXDLog_SEPARATE_FRAME
 
 	#define FXDLog_OVERRIDE
