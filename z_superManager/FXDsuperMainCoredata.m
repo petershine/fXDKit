@@ -229,7 +229,7 @@
 		 }
 #endif
 
-		 [[NSOperationQueue currentQueue]
+		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 			  FXDAssert_IsMainThread;
 			  FXDLog(@"2.%@", _BOOL(didConfigure));

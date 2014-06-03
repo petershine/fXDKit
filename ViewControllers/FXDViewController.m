@@ -139,7 +139,7 @@
 	CGRect bounds = self.view.bounds;
 	UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
 	NSTimeInterval duration = [coordinator transitionDuration];
-	FXDLog(@"%@ %@ %@", _Rect(self.view.bounds), _Variable(interfaceOrientation), _Variable(duration));
+	FXDLog(@"%@ %@ %@", _Rect(bounds), _Variable(interfaceOrientation), _Variable(duration));
 #endif
 }
 #endif
