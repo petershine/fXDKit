@@ -100,7 +100,11 @@
 							FXDLog(@"%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 
 	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", _ClassSelectorSelf)
+#ifdef __IPHONE_8_0
 	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
+#else
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
+#endif
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", _ClassSelectorSelf)

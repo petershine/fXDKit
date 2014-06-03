@@ -51,6 +51,7 @@
 
 #define iosVersion6	6.0
 #define iosVersion7	7.0
+#define iosVersion8	8.0
 
 #define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
 

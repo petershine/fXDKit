@@ -49,19 +49,31 @@
 
 #pragma mark -
 - (NSInteger)yearValue {
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents year];
 }
 
 - (NSInteger)monthValue {
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents month];
 }
 
 - (NSInteger)dayValue {
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents day];
 }
@@ -99,7 +111,12 @@
 									@"Friday",
 									@"Saturday"];
 
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
+#endif
+
 
 	NSString *weekdayString = weekdayStringArray[[dateComponents weekday]];
 
@@ -108,19 +125,31 @@
 
 #pragma mark -
 - (NSInteger)hourValue {
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents hour];
 }
 
 - (NSInteger)minuteValue {
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents minute];
 }
 
 - (NSInteger)secondValue {
+#ifdef __IPHONE_8_0
 	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
+#else
+	NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents second];
 }
