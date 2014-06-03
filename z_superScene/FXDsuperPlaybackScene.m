@@ -47,10 +47,6 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-	CGRect bounds = self.view.bounds;
-	UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
-	NSTimeInterval duration = [coordinator transitionDuration];
-
 	FXDLogRect(self.mainScrollview.frame);
 	FXDLogRect(self.imageviewPhoto.frame);
 

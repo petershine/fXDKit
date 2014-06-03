@@ -113,6 +113,7 @@
 	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
 #endif
 
+
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
 							FXDLog(@"OVERRIDE: %@", _ClassSelectorSelf)
 
