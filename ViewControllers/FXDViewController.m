@@ -19,24 +19,6 @@
 
 	FXDLogObject(self.view.window);
 	FXDLogObject(self.view.superview);
-
-
-#if TEST_loggingMemoryWarning
-	UILabel *warningLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, heightStatusBar)];
-	warningLabel.backgroundColor = [UIColor redColor];
-	warningLabel.textColor = [UIColor whiteColor];
-	warningLabel.font = [UIFont boldSystemFontOfSize:20.0];
-	warningLabel.textAlignment = NSTextAlignmentCenter;
-	warningLabel.text = _ClassSelectorSelf;
-
-	[self.view.window addSubview:warningLabel];
-
-	[warningLabel
-	 performSelector:@selector(removeFromSuperview)
-	 withObject:nil
-	 afterDelay:delayOneSecond
-	 inModes:@[NSRunLoopCommonModes]];
-#endif
 }
 
 - (void)dealloc {	FXDLog_DEFAULT;	
@@ -145,6 +127,18 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)fromInterfaceOrientation, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds));
+}
+#endif
+
+#ifdef __IPHONE_8_0
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@", _Size(size), _Object(coordinator));
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+	CGRect bounds = self.view.bounds;
+	UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+	NSTimeInterval duration = [coordinator transitionDuration];
+	FXDLog(@"%@ %@ %@", _Rect(self.view.bounds), _Variable(interfaceOrientation), _Variable(duration));
 }
 #endif
 

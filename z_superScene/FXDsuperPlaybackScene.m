@@ -43,6 +43,21 @@
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
 
+#ifdef __IPHONE_8_0
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+	CGRect bounds = self.view.bounds;
+	UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+	NSTimeInterval duration = [coordinator transitionDuration];
+
+	FXDLogRect(self.mainScrollview.frame);
+	FXDLogRect(self.imageviewPhoto.frame);
+
+	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
+	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
+}
+#endif
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {
