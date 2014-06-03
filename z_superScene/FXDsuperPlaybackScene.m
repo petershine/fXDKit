@@ -136,8 +136,6 @@
 		
 	[[FXDWindow mainWindow] showProgressViewWithNibName:nil];
 
-	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
-	FXDLog_IsMainThread;
 
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{
@@ -152,8 +150,7 @@
 		 UIImage *fullImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:scale orientation:(UIImageOrientation)assetOrientation];
 		 FXDLog(@"%@ %@", _Variable(fullImage.imageOrientation), _Size(fullImage.size));
 
-		 FXDAssert(currentQueue);
-		 [currentQueue
+		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 			  [self refreshWithFullImage:fullImage];
 			  

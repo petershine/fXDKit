@@ -120,17 +120,13 @@
 	NSString *tracksKey = @"tracks";
 
 
-	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
-	FXDLog_IsMainThread;
-
 	[movieAsset
 	 loadValuesAsynchronouslyForKeys:@[tracksKey]
 	 completionHandler:^{
 		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
 		 FXDLogBOOL(movieAsset.isPlayable);
 
-		 FXDAssert(currentQueue);
-		 [currentQueue
+		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 
 			  NSError *error = nil;

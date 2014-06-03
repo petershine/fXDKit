@@ -176,9 +176,6 @@
 #pragma mark -
 - (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {
 
-	__weak NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
-	FXDAssert_IsMainThread;
-
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
 		 FXDLogObject(ubiquityContainerURL);
@@ -232,8 +229,7 @@
 		 }
 #endif
 
-		 FXDAssert(currentQueue);
-		 [currentQueue
+		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
 			  FXDAssert_IsMainThread;
 			  FXDLog(@"2.%@", _BOOL(didConfigure));
