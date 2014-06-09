@@ -133,7 +133,6 @@
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@", _Size(size), _Object(coordinator));
-	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
 #if	ForDEVELOPER
 	CGRect bounds = self.view.bounds;

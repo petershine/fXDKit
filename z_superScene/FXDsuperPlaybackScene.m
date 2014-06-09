@@ -26,7 +26,11 @@
 #pragma mark - Autorotating
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
-	
+
+#if	TEST_autoLayout
+	return;
+#endif
+
 	FXDLogRect(self.mainScrollview.frame);
 	FXDLogRect(self.imageviewPhoto.frame);
 	
@@ -43,17 +47,6 @@
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
 
-#ifdef __IPHONE_8_0
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-	FXDLogRect(self.mainScrollview.frame);
-	FXDLogRect(self.imageviewPhoto.frame);
-
-	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
-	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
-}
-#endif
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {

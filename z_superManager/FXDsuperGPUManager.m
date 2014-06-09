@@ -274,6 +274,7 @@
 
 	_gpuvideoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
 												   cameraPosition:AVCaptureDevicePositionBack];
+	[_gpuvideoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
 	[_gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
 	[_gpuvideoCamera.inputCamera addDefaultNotificationObserver:self];
@@ -369,10 +370,6 @@
 	FXDWindow *applicationWindow = [FXDWindow mainWindow];
 	[applicationWindow addSubview:filterLabel];
 
-	[filterLabel updateWithXYratio:CGPointMake(0.5, 0.5)
-						 forBounds:applicationWindow.bounds
-					   forDuration:0.0
-					  withRotation:0.0];
 
 	[UIView
 	 animateWithDuration:durationSlowAnimation
