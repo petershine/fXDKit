@@ -289,8 +289,7 @@
 			 addPeriodicTimeObserverForInterval:periodicintervalDefault
 			 queue:NULL
 			 usingBlock:^(CMTime currentTime) {
-				 //TEST:
-				 //weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+
 				 weakSelf.playbackProgressTime = currentTime;
 			 }];
 		}
