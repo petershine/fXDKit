@@ -53,6 +53,7 @@
 #define iosVersion7	7.0
 #define iosVersion8	8.0
 
+#define SYSTEM_VERSION_sameOrHigher(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] >= versionNumber)
 #define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
 
 #define SCREEN_SIZE_35inch	(MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) <= height35inch)
