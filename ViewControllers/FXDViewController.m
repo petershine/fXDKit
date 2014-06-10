@@ -118,15 +118,18 @@
 #pragma mark -
 #warning //MARK: Deprecated for iOS 8
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
+
+	//MARK: Until iOS 8 is officially released
+	[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:[self transitionCoordinator]];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	//MARK: Until iOS 8 is officially released
-	//TEST:
-	//[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:nil];
+	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 #ifdef __IPHONE_8_0
@@ -134,9 +137,8 @@
 
 #if	ForDEVELOPER
 	CGRect bounds = self.view.bounds;
-	NSTimeInterval duration = [coordinator transitionDuration];
 
-	FXDLog(@"%@ %@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds), _Variable(duration));
+	FXDLog(@"%@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds));
 #endif
 }
 #endif
@@ -373,9 +375,8 @@
 
 #if	ForDEVELOPER
 	CGRect bounds = self.view.bounds;
-	NSTimeInterval duration = [coordinator transitionDuration];
 
-	FXDLog(@"%@ %@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds), _Variable(duration));
+	FXDLog(@"%@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds));
 #endif
 }
 #endif

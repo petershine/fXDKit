@@ -56,8 +56,9 @@
 - (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration;
 - (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 
-- (void)updateForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
+- (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 
+//TODO: Deprecate
 - (void)updateLayerWithAffineTransform:(CGAffineTransform)affineTransform forBounds:(CGRect)screenBounds;
 
 @end

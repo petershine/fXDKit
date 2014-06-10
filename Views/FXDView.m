@@ -346,10 +346,7 @@
 			break;
 	}
 
-	[self updateWithXYratio:xyRatio
-				  forBounds:bounds
-				forDuration:duration
-			   withRotation:0.0];
+	[self updateWithXYratio:xyRatio forBounds:bounds forDuration:duration withRotation:0.0];
 }
 
 - (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
@@ -376,14 +373,14 @@
 }
 
 #pragma mark -
-- (void)updateForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+- (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
 
 	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 	CGRect animatedFrame = self.bounds;
 
-	if (bounds.size.width < bounds.size.height) {
-		animatedFrame.origin.x = (bounds.size.width -self.bounds.size.width)/2.0;
-		animatedFrame.origin.y = bounds.size.height -self.bounds.size.height;
+	if (size.width < size.height) {
+		animatedFrame.origin.x = (size.width -self.bounds.size.width)/2.0;
+		animatedFrame.origin.y = size.height -self.bounds.size.height;
 	}
 	else {
 		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
@@ -391,8 +388,8 @@
 		animatedFrame.size.width = self.bounds.size.height;
 		animatedFrame.size.height = self.bounds.size.width;
 
-		animatedFrame.origin.x = bounds.size.width -self.bounds.size.height;
-		animatedFrame.origin.y = (bounds.size.height -self.bounds.size.width)/2.0;
+		animatedFrame.origin.x = size.width -self.bounds.size.height;
+		animatedFrame.origin.y = (size.height -self.bounds.size.width)/2.0;
 	}
 
 	[UIView
@@ -415,7 +412,7 @@
 
 	for (CALayer *sublayer in self.layer.sublayers) {
 		FXDLog(@"1.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
-		sublayer.frame = sublayer.superlayer.bounds;
+		sublayer.frame = self.layer.bounds;
 
 		FXDLog(@"2.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
 	}

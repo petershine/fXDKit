@@ -93,7 +93,6 @@
 			
 			[self.buttonPlay setBackgroundColor:[UIColor blackColor]];
 			
-			self.buttonPlay.autoresizingMask = UIViewAnimationTransitionNone;
 			self.buttonPlay.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
 			
 			self.buttonPlay.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0);
