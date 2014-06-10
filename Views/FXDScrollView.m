@@ -45,13 +45,19 @@
 
 #pragma mark - Category
 @implementation UIScrollView (Added)
-- (void)configureZoomValueForImageView:(UIImageView*)imageView shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;
-	FXDLogSize(self.bounds.size);
+- (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;
+
+	if (CGSizeEqualToSize(size, CGSizeZero)) {
+		size = self.bounds.size;
+	}
+
+	FXDLogSize(size);
 	FXDLogSize(imageView.image.size);
+
 	
 	// calculate min/max zoomscale
-	CGFloat xScale = self.bounds.size.width  / imageView.image.size.width;
-	CGFloat yScale = self.bounds.size.height / imageView.image.size.height;
+	CGFloat xScale = size.width  / imageView.image.size.width;
+	CGFloat yScale = size.height / imageView.image.size.height;
 	FXDLog(@"%@, %@", _Variable(xScale), _Variable(yScale));
 	
 	
@@ -74,9 +80,14 @@
 }
 
 #pragma mark -
-- (void)configureContentInsetForSubview:(UIView*)subview {
-	CGFloat horizontalInset = (self.frame.size.width -subview.frame.size.width)/2.0;
-	CGFloat verticalInset = (self.frame.size.height -subview.frame.size.height)/2.0;
+- (void)configureContentInsetForSubview:(UIView*)subview forSize:(CGSize)size {
+	if (CGSizeEqualToSize(size, CGSizeZero)) {
+		size = self.bounds.size;
+	}
+
+
+	CGFloat horizontalInset = (size.width -subview.frame.size.width)/2.0;
+	CGFloat verticalInset = (size.height -subview.frame.size.height)/2.0;
 	
 	if (horizontalInset < 0.0) {
 		horizontalInset = 0.0;

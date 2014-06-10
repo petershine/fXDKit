@@ -24,7 +24,7 @@
 }
 
 #pragma mark -
-- (void)centerAlignForPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+- (void)centerAlignForPresentationSize:(CGSize)presentationSize  forDisplaySize:(CGSize)displaySize {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@", _Object(self.superview), _Size(presentationSize));
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
@@ -37,18 +37,23 @@
 	}
 
 
-	CGRect displayFrame = self.superview.bounds;
-	CGFloat aspectRatio = MAX(self.superview.bounds.size.width, self.superview.bounds.size.height)/MIN(self.superview.bounds.size.width, self.superview.bounds.size.height);
+	if (CGSizeEqualToSize(displaySize, CGSizeZero)) {
+		displaySize = self.superview.bounds.size;
+	}
+
+
+	CGRect displayFrame = CGRectMake(0, 0, displaySize.width, displaySize.height);
+	CGFloat aspectRatio = MAX(displaySize.width, displaySize.height)/MIN(displaySize.width, displaySize.height);
 
 	FXDLog(@"1.%@ %@", _Rect(displayFrame), _Variable(aspectRatio));
 
 	if (presentationSize.width < presentationSize.height) {
-		displayFrame.size.height = self.superview.bounds.size.height;
+		displayFrame.size.height = displaySize.height;
 
 		displayFrame.size.width = displayFrame.size.height/aspectRatio;
 	}
 	else {
-		displayFrame.size.width = self.superview.bounds.size.width;
+		displayFrame.size.width = displaySize.width;
 
 		displayFrame.size.height = displayFrame.size.width/aspectRatio;
 	}
@@ -56,8 +61,8 @@
 	FXDLog(@"2.%@", _Rect(displayFrame));
 
 
-	displayFrame.origin.x = (self.superview.bounds.size.width -displayFrame.size.width)/2.0;
-	displayFrame.origin.y = (self.superview.bounds.size.height -displayFrame.size.height)/2.0;
+	displayFrame.origin.x = (displaySize.width -displayFrame.size.width)/2.0;
+	displayFrame.origin.y = (displaySize.height -displayFrame.size.height)/2.0;
 	FXDLog(@"3.%@", _Rect(displayFrame));
 
 	
@@ -187,7 +192,7 @@
 	 subscribeNext:^(id presentationSize) {	@strongify(self);
 		 FXDLog_REACT(self.moviePlayer.currentItem.presentationSize, presentationSize);
 
-		 [self.mainPlaybackDisplay centerAlignForPresentationSize:[presentationSize CGSizeValue]];
+		 [self.mainPlaybackDisplay centerAlignForPresentationSize:[presentationSize CGSizeValue] forDisplaySize:CGSizeZero];
 	 }];
 }
 

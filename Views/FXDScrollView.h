@@ -23,9 +23,9 @@
 
 #pragma mark - Category
 @interface UIScrollView (Added)
-- (void)configureZoomValueForImageView:(UIImageView*)imageView shouldAnimate:(BOOL)shouldAnimate;
+- (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate;
 
-- (void)configureContentInsetForSubview:(UIView*)subview;
+- (void)configureContentInsetForSubview:(UIView*)subview forSize:(CGSize)size;
 - (void)configureContentInsetForClippingFrame:(CGRect)overlayRect;
 
 - (void)configureContentSizeForSubview:(UIView*)subview;

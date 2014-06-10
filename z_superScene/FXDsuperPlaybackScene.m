@@ -30,8 +30,8 @@
 	FXDLogRect(self.mainScrollview.frame);
 	FXDLogRect(self.imageviewPhoto.frame);
 
-	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
-	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
+	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto forSize:CGSizeZero shouldAnimate:[coordinator transitionDuration]];
+	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto forSize:CGSizeZero];
 }
 
 #pragma mark - View Appearing
@@ -72,8 +72,8 @@
 
 	FXDLogObject(self.imageviewPhoto.image);
 	if (self.imageviewPhoto.image) {	//MARK: Skip if reusing this instance when changing direction
-		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
-		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
+		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto forSize:CGSizeZero shouldAnimate:NO];
+		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto forSize:CGSizeZero];
 
 		return;
 	}
@@ -160,8 +160,8 @@
 	self.mainScrollview.contentSize = modifiedFrame.size;
 	
 	
-	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:NO];
-	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
+	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto forSize:CGSizeZero shouldAnimate:NO];
+	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto forSize:CGSizeZero];
 }
 
 
@@ -174,7 +174,7 @@
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-	[scrollView configureContentInsetForSubview:self.imageviewPhoto];
+	[scrollView configureContentInsetForSubview:self.imageviewPhoto forSize:CGSizeZero];
 }
 
 @end

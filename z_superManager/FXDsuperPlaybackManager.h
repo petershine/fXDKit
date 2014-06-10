@@ -15,7 +15,7 @@
 @interface FXDviewVideoDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
-- (void)centerAlignForPresentationSize:(CGSize)presentationSize;
+- (void)centerAlignForPresentationSize:(CGSize)presentationSize forDisplaySize:(CGSize)displaySize;
 @end
 
 
