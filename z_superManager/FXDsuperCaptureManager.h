@@ -48,7 +48,7 @@
 #pragma mark - Public
 - (void)prepareCaptureManagerWithScene:(UIViewController*)scene;
 
-- (void)configurePreviewDisplayForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration;
+- (void)configurePreviewDisplayForSize:(CGSize)size forDuration:(NSTimeInterval)duration;
 
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;

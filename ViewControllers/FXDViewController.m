@@ -123,29 +123,25 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
 	//MARK: Until iOS 8 is officially released
 	[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:[self transitionCoordinator]];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
+#pragma mark -
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
-
-#if	ForDEVELOPER
-	CGRect bounds = self.view.bounds;
-
-	FXDLog(@"%@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds));
-#endif
+	FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
 }
 #endif
 
-- (id <UIViewControllerTransitionCoordinator>)transitionCoordinator {	FXDLog_DEFAULT;
+- (id <UIViewControllerTransitionCoordinator>)transitionCoordinator {	//FXDLog_DEFAULT;
 	id <UIViewControllerTransitionCoordinator> coordinator = [super transitionCoordinator];
-	FXDLogObject(coordinator);
+	//FXDLogObject(coordinator);
 
 	return coordinator;
 }
@@ -372,12 +368,7 @@
 #warning //TODO: Remove categorized implementation when iOS 8 is officially released
 #else
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
-
-#if	ForDEVELOPER
-	CGRect bounds = self.view.bounds;
-
-	FXDLog(@"%@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds));
-#endif
+	FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
 }
 #endif
 

@@ -283,11 +283,11 @@
 }
 
 #pragma mark -
-- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)portraitCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
+- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)portraitCornerType forSize:(CGSize)size forDuration:(NSTimeInterval)duration {
 
-	if (bounds.size.width < bounds.size.height) {
+	if (size.width < size.height) {
 		[self updateWithBoxCornerType:portraitCornerType
-							forBounds:bounds
+							  forSize:size
 						  forDuration:duration];
 		return;
 	}
@@ -317,11 +317,11 @@
 	}
 
 	[self updateWithBoxCornerType:landscapeCornerType
-						forBounds:bounds
+						  forSize:size
 					  forDuration:duration];
 }
 
-- (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
+- (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forSize:(CGSize)size forDuration:(NSTimeInterval)duration {
 
 	CGPoint xyRatio = CGPointZero;
 
@@ -346,25 +346,32 @@
 			break;
 	}
 
-	[self updateWithXYratio:xyRatio forBounds:bounds forDuration:duration withRotation:0.0];
+	[self updateWithXYratio:xyRatio forSize:size forDuration:duration withRotation:0.0];
 }
 
-- (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+#pragma mark -
+- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+
+	if ([[self constraints] count] > 0) {	FXDLog_DEFAULT;
+		FXDLogObject([self constraints]);
+		return;
+	}
+
 
 	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 
-	if (withRotation) {
+	if (withRotation > 0.0) {
 		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
 	}
 
 	CGRect animatedFrame = self.bounds;
-	animatedFrame.origin.x = (bounds.size.width-self.bounds.size.width)*xyRatio.x;
-	animatedFrame.origin.y = (bounds.size.height-self.bounds.size.height)*xyRatio.y;
+	animatedFrame.origin.x = (size.width-self.bounds.size.width)*xyRatio.x;
+	animatedFrame.origin.y = (size.height-self.bounds.size.height)*xyRatio.y;
 
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
-		 if (withRotation) {
+		 if (withRotation > 0.0) {
 			 self.transform = animatedTransform;
 		 }
 		 
@@ -373,12 +380,29 @@
 }
 
 #pragma mark -
+- (void)updateForClippedDimension:(CGFloat)clippedDimension forSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+
+	CGSize clippedSize = CGSizeZero;
+
+	clippedSize.width = (size.width < size.height) ? size.width:clippedDimension;
+	clippedSize.height = (size.width < size.height) ? clippedDimension:size.height;
+
+	[self updateForSize:clippedSize forDuration:duration withRotation:withRotation];
+}
+
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+
+	if ([[self constraints] count] > 0) {	FXDLog_DEFAULT;
+		FXDLogObject([self constraints]);
+		return;
+	}
+
 
 	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 	CGRect animatedFrame = self.bounds;
 
 	if (size.width < size.height) {
+
 		animatedFrame.origin.x = (size.width -self.bounds.size.width)/2.0;
 		animatedFrame.origin.y = size.height -self.bounds.size.height;
 	}

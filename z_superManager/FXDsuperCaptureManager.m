@@ -279,12 +279,12 @@
 }
 
 #pragma mark -
-- (void)configurePreviewDisplayForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
+- (void)configurePreviewDisplayForSize:(CGSize)size forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
-		 self.mainPreviewLayer.frame = bounds;
+		 self.mainPreviewLayer.frame = CGRectMake(0, 0, size.width, size.height);
 	 }];
 }
 
