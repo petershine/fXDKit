@@ -6,11 +6,6 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#ifndef TEST_loggingRotatingOrientation
-	#define TEST_loggingRotatingOrientation	FALSE
-#endif
-
-
 #import "FXDViewController+BarButton.h"
 
 
@@ -46,6 +41,8 @@
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
-- (void)configureSceneForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration;
-
+#ifdef __IPHONE_8_0
+#else
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator;
+#endif
 @end

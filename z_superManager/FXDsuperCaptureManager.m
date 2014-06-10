@@ -279,7 +279,7 @@
 }
 
 #pragma mark -
-- (void)configurePreviewDisplayForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
+- (void)configurePreviewDisplayForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 
 	[UIView
 	 animateWithDuration:duration

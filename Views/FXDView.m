@@ -283,9 +283,9 @@
 }
 
 #pragma mark -
-- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)portraitCornerType forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
+- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)portraitCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration {
 
-	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+	if (bounds.size.width < bounds.size.height) {
 		[self updateWithBoxCornerType:portraitCornerType
 							forBounds:bounds
 						  forDuration:duration];
@@ -376,12 +376,12 @@
 }
 
 #pragma mark -
-- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+- (void)updateForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
 
 	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
 	CGRect animatedFrame = self.bounds;
 
-	if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+	if (bounds.size.width < bounds.size.height) {
 		animatedFrame.origin.x = (bounds.size.width -self.bounds.size.width)/2.0;
 		animatedFrame.origin.y = bounds.size.height -self.bounds.size.height;
 	}

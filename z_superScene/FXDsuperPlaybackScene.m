@@ -24,29 +24,15 @@
 
 
 #pragma mark - Autorotating
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
-
-#if	TEST_autoLayout
-	return;
-#endif
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
 	FXDLogRect(self.mainScrollview.frame);
 	FXDLogRect(self.imageviewPhoto.frame);
-	
+
 	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto shouldAnimate:YES];
 	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
 }
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-	FXDLogRect(self.mainScrollview.frame);
-	FXDLogRect(self.imageviewPhoto.frame);
-	
-	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto];
-}
-
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {

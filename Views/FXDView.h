@@ -52,11 +52,11 @@
 
 - (void)blinkShadowOpacity;
 
-- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)boxCornerType forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration;
+- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)boxCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration;
 - (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration;
 - (void)updateWithXYratio:(CGPoint)xyRatio forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 
-- (void)updateForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
+- (void)updateForBounds:(CGRect)bounds forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 
 - (void)updateLayerWithAffineTransform:(CGAffineTransform)affineTransform forBounds:(CGRect)screenBounds;
 

@@ -95,7 +95,6 @@
 
 
 #pragma mark - Autorotating
-#if TEST_loggingRotatingOrientation
 - (BOOL)shouldAutorotate {
 	BOOL shouldAutorotate = [super shouldAutorotate];
 
@@ -117,32 +116,37 @@
 }
 
 #pragma mark -
+#warning //MARK: Deprecated for iOS 8
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)toInterfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)interfaceOrientation, _Variable(duration), _Rect(self.view.frame), _Rect(self.view.bounds));
+	//MARK: Until iOS 8 is officially released
+	[self viewWillTransitionToSize:self.view.bounds.size
+		 withTransitionCoordinator:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	FXDLog(@"[%@ %@: %ld] %@ %@ %@", [self class], _SelectorShort(_cmd), (long)fromInterfaceOrientation, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds));
 }
-#endif
 
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Size(size), _Object(coordinator));
 
 #if	ForDEVELOPER
 	CGRect bounds = self.view.bounds;
-	UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
 	NSTimeInterval duration = [coordinator transitionDuration];
-	FXDLog(@"%@ %@ %@", _Rect(bounds), _Variable(interfaceOrientation), _Variable(duration));
+
+	FXDLog(@"%@ %@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds), _Variable(duration));
 #endif
 }
 #endif
 
+- (id <UIViewControllerTransitionCoordinator>)transitionCoordinator {	FXDLog_DEFAULT;
+	id <UIViewControllerTransitionCoordinator> coordinator = [super transitionCoordinator];
+	FXDLogObject(coordinator);
+
+	return coordinator;
+}
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
@@ -198,26 +202,6 @@
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
 	[super didMoveToParentViewController:parent];
-}
-
-#pragma mark -
-- (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL))completion {
-
-	[super
-	 transitionFromViewController:fromViewController
-	 toViewController:toViewController
-	 duration:duration
-	 options:options
-	 animations:animations
-	 completion:completion];
-}
-
-- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {
-	[super beginAppearanceTransition:isAppearing animated:animated];
-}
-
-- (void)endAppearanceTransition {
-	[super endAppearanceTransition];
 }
 
 
@@ -382,9 +366,18 @@
 	return sceneView;
 }
 
-#pragma mark -
-- (void)configureSceneForBounds:(CGRect)bounds forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@ %@", _Rect(bounds), _Variable(interfaceOrientation), _Variable(duration));
+#ifdef __IPHONE_8_0
+#warning //TODO: Remove categorized implementation when iOS 8 is officially released
+#else
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
+
+#if	ForDEVELOPER
+	CGRect bounds = self.view.bounds;
+	NSTimeInterval duration = [coordinator transitionDuration];
+
+	FXDLog(@"%@ %@ %@ %@", _Size(size), _Object(coordinator), _Rect(bounds), _Variable(duration));
+#endif
 }
+#endif
 
 @end
