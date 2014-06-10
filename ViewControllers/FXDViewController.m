@@ -121,12 +121,12 @@
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-	//MARK: Until iOS 8 is officially released
-	[self viewWillTransitionToSize:self.view.bounds.size
-		 withTransitionCoordinator:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	//MARK: Until iOS 8 is officially released
+	//TEST:
+	//[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:nil];
 }
 
 #ifdef __IPHONE_8_0
