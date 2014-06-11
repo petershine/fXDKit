@@ -17,29 +17,35 @@
 @implementation UIImage (Added)
 + (UIImage*)bundledImageForName:(NSString*)imageName {
 	UIImage *bundledImage = [UIImage imageNamed:imageName];
+
+	if (bundledImage) {
+		return bundledImage;
+	}
+
 	
 	//MARK: To load from .jpg, use specific scale value for retina
-	if (bundledImage == nil) {
-		NSString *scaledImageName = nil;
-		
-		if ([UIScreen mainScreen].scale >= 2.0) {
-			scaledImageName = [imageName stringByAppendingString:@"@2x"];
-		}
-		else {
-			scaledImageName = imageName;
-		}
-		
-		scaledImageName = [scaledImageName stringByAppendingString:@".jpg"];
-		
-		bundledImage = [UIImage imageNamed:scaledImageName];
+	NSString *scaledImageName = nil;
+
+	if ([UIScreen mainScreen].scale >= 2.0) {
+		scaledImageName = [imageName stringByAppendingString:@"@2x"];
 	}
+	else {
+		scaledImageName = imageName;
+	}
+
+	scaledImageName = [scaledImageName stringByAppendingString:@".jpg"];
+
+	bundledImage = [UIImage imageNamed:scaledImageName];
+
+	if (bundledImage) {
+		return bundledImage;
+	}
+
 
 	//MARK: If scale value added name is not working try normal name
-	if (bundledImage == nil) {
-		imageName = [imageName stringByAppendingString:@".jpg"];
+	imageName = [imageName stringByAppendingString:@".jpg"];
 
-		bundledImage = [UIImage imageNamed:imageName];
-	}
+	bundledImage = [UIImage imageNamed:imageName];
 
 	
 #if ForDEVELOPER

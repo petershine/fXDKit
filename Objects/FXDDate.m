@@ -51,19 +51,16 @@
 - (NSInteger)yearValue {
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
-#endif
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents year];
 }
@@ -71,20 +68,16 @@
 - (NSInteger)monthValue {
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
-#endif
-
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents month];
 }
@@ -92,19 +85,16 @@
 - (NSInteger)dayValue {
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
-#endif
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents day];
 }
@@ -145,20 +135,16 @@
 
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
-#endif
-
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
+#endif
 
 
 	NSString *weekdayString = weekdayStringArray[[dateComponents weekday]];
@@ -170,19 +156,16 @@
 - (NSInteger)hourValue {
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
-#endif
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents hour];
 }
@@ -190,19 +173,16 @@
 - (NSInteger)minuteValue {
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMinute fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
-#endif
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents minute];
 }
@@ -210,19 +190,16 @@
 - (NSInteger)secondValue {
 	NSDateComponents *dateComponents = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 #ifdef __IPHONE_8_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitSecond fromDate:self];
-#else
-		dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
-#endif
 	}
 	else {
-#if __IPHONE_8_0
-#else
 		dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
-#endif
 	}
+#else
+	dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
+#endif
 
 	return [dateComponents second];
 }
