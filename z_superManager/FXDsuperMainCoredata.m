@@ -44,12 +44,12 @@
 #pragma mark -
 - (NSString*)mainSqlitePathComponent {
 
+	//MARK: Use different name for better controlling between developer build and release build
 	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
-		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
+		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@.sqlite", self.mainModelName];
 
-	#if !ForDEVELOPER
-		//MARK: Use different name for better controlling between developer build and release build
-		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@", _mainSqlitePathComponent];
+	#if ForDEVELOPER
+		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
 	#endif
 
 		FXDLogObject(_mainSqlitePathComponent);

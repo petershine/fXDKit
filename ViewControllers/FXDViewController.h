@@ -9,11 +9,6 @@
 #import "FXDViewController+BarButton.h"
 
 
-@interface FXDcoordinatorTransition : FXDObject <UIViewControllerTransitionCoordinator>
-
-@end
-
-
 @interface FXDViewController : UIViewController
 @property (nonatomic) BOOL didFinishInitialAppearing;
 

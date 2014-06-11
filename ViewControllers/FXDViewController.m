@@ -8,9 +8,6 @@
 
 #import "FXDViewController.h"
 
-@implementation FXDcoordinatorTransition
-@end
-
 
 #pragma mark - Public implementation
 @implementation FXDViewController
@@ -128,12 +125,7 @@
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
 	//MARK: Until iOS 8 is officially released
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		//
-	}
-	else {
-		[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:nil];
-	}
+	[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -144,15 +136,14 @@
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 
-#if ForDEVELOPER
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 #warning //TODO: Utilize targetTransform effectively for better rotation
 		FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
 	}
 	else {
 		FXDLog(@"%@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]));
 	}
-#endif
 }
 #endif
 

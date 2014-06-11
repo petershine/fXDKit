@@ -54,12 +54,11 @@
 		 name:NSMetadataQueryDidUpdateNotification
 		 object:_ubiquitousCachesMetadataQuery];
 		
-#if ForDEVELOPER
 		BOOL didStart = [_ubiquitousCachesMetadataQuery startQuery];
-		FXDLogBOOL(didStart);
-#else
-		[_ubiquitousCachesMetadataQuery startQuery];
-#endif
+
+		if (didStart == NO) {
+			FXDLogBOOL(didStart);
+		}
 	}
 
 	return _ubiquitousCachesMetadataQuery;
@@ -194,25 +193,22 @@
 			 BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];
 			 FXDLog_ERROR_ignored(260);
 			 
-#if ForDEVELOPER
 			 BOOL didStartDownloading = NO;
 			 BOOL didRemove = NO;
-#endif
 			 
 			 if (isReachable == NO) {
-#if ForDEVELOPER
 				 didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
-#else
-				 [fileManager removeItemAtURL:cachedURL error:&error];
-#endif
-				 
+
+				 if (didRemove == NO) {
+					 FXDLogBOOL(didRemove);
+				 }
+
 				 if (error && [error code] != 4 && [error code] != 260) {
 					 FXDLog_ERROR;
 				 }
 				 
-#if ForDEVELOPER
+
 				 FXDLog(@"%@ %@ %@ %@ %@", _BOOL(didStartDownloading), _BOOL(isReachable), _Object([itemURL followingPathInDocuments]), _BOOL(didRemove), _Object([cachedURL followingPathAfterPathComponent:pathcomponentCaches]));
-#endif
 				 continue;
 			 }
 			 
@@ -225,12 +221,12 @@
 			 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
 
 			 if (isDownloaded == NO && isDownloading == NO) {
-#if ForDEVELOPER
 				 didStartDownloading = [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
-#else
-				 [fileManager startDownloadingUbiquitousItemAtURL:cachedURL error:&error];
-#endif
-				 
+
+				 if (didStartDownloading == NO) {
+					 FXDLogBOOL(didStartDownloading);
+				 }
+
 				 if ([error code] == 512) {
 					 if (alertTitle == nil) {
 						 NSError *underlyingError = ([([error userInfo])[@"NSUnderlyingError"] userInfo])[@"NSUnderlyingError"];
