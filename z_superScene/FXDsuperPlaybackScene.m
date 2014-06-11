@@ -30,8 +30,25 @@
 	FXDLogRect(self.mainScrollview.frame);
 	FXDLogRect(self.imageviewPhoto.frame);
 
-	[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto forSize:CGSizeZero shouldAnimate:[coordinator transitionDuration]];
-	[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto forSize:CGSizeZero];
+	void (^AnimatingBlock)(id <UIViewControllerTransitionCoordinatorContext>context) =
+	^(id <UIViewControllerTransitionCoordinatorContext>context){
+		[self.mainScrollview configureZoomValueForImageView:self.imageviewPhoto forSize:CGSizeZero shouldAnimate:[coordinator transitionDuration]];
+		[self.mainScrollview configureContentInsetForSubview:self.imageviewPhoto forSize:CGSizeZero];
+	};
+
+
+	if (coordinator == nil) {
+		AnimatingBlock(nil);
+		return;
+	}
+
+
+	[coordinator
+	 animateAlongsideTransition:AnimatingBlock
+	 completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+
+		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
+	 }];
 }
 
 #pragma mark - View Appearing
