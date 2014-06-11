@@ -24,7 +24,7 @@
 }
 
 #pragma mark -
-- (void)centerAlignForPresentationSize:(CGSize)presentationSize  forDisplaySize:(CGSize)displaySize {
+- (void)centerAlignForPresentationSize:(CGSize)presentationSize  forDisplaySize:(CGSize)displaySize forDuration:(NSTimeInterval)duration {
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
 		presentationSize = [self mainPlayer].currentItem.presentationSize;
@@ -67,8 +67,12 @@
 	displayFrame.origin.y = (displaySize.height -displayFrame.size.height)/2.0;
 	FXDLog(@"3.%@", _Rect(displayFrame));
 
-	
-	self.frame = displayFrame;
+
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 self.frame = displayFrame;
+	 }];
 }
 @end
 
@@ -194,7 +198,10 @@
 	 subscribeNext:^(id presentationSize) {	@strongify(self);
 		 FXDLog_REACT(self.moviePlayer.currentItem.presentationSize, presentationSize);
 
-		 [self.mainPlaybackDisplay centerAlignForPresentationSize:[presentationSize CGSizeValue] forDisplaySize:CGSizeZero];
+		 [self.mainPlaybackDisplay
+		  centerAlignForPresentationSize:[presentationSize CGSizeValue]
+		  forDisplaySize:CGSizeZero
+		  forDuration:0.0];
 	 }];
 }
 

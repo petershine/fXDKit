@@ -135,7 +135,15 @@
 #pragma mark -
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
+
+#if ForDEVELOPER
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
+	}
+	else {
+		FXDLog(@"%@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]));
+	}
+#endif
 }
 #endif
 

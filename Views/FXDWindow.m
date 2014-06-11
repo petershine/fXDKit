@@ -241,7 +241,7 @@
 #pragma mark - Category
 @implementation UIWindow (Added)
 + (instancetype)instantiateNewWindow {	FXDLog_SEPARATE;
-	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	CGRect screenBounds = [UIScreen mainScreen].bounds;
 	FXDLogRect(screenBounds);
 
 	UIWindow *newWindow = [[[self class] alloc] initWithFrame:screenBounds];
