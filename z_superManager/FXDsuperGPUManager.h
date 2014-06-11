@@ -40,7 +40,7 @@
 - (void)prepareGPUManager;
 - (void)resetGPUManager;
 
-- (void)cycleGPUfiltersForward:(BOOL)isForward;
+- (void)cycleGPUfiltersForward:(BOOL)isForward withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
 
 

@@ -331,7 +331,7 @@
 }
 
 #pragma mark -
-- (void)cycleGPUfiltersForward:(BOOL)isForward {	FXDLog_DEFAULT;
+- (void)cycleGPUfiltersForward:(BOOL)isForward withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
@@ -349,48 +349,9 @@
 	[self applyGPUfilterAtFilterIndex:filterIndex];
 
 
-	//TEST:
-	NSString *filterName = self.cycledFilterNameArray[filterIndex];
-
-	if ([filterName isEqualToString:NSStringFromClass([GPUImageRGBFilter class])]) {
-		filterName = @"Default";
+	if (finishCallback) {
+		finishCallback(_cmd, YES, @(filterIndex));
 	}
-
-	filterName = [filterName stringByReplacingOccurrencesOfString:@"GPUImage" withString:@""];
-	filterName = [filterName stringByReplacingOccurrencesOfString:@"Filter" withString:@""];
-
-	UILabel *filterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
-	filterLabel.text = filterName;
-	filterLabel.font = [UIFont boldSystemFontOfSize:20.0];
-	filterLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue08];
-	filterLabel.textColor = [UIColor whiteColor];
-	filterLabel.textAlignment = NSTextAlignmentCenter;
-
-	filterLabel.alpha = 0.0;
-	FXDWindow *applicationWindow = [FXDWindow mainWindow];
-	[applicationWindow addSubview:filterLabel];
-
-
-	[UIView
-	 animateWithDuration:durationSlowAnimation
-	 delay:0.0
-	 options:UIViewAnimationOptionCurveEaseInOut
-	 animations:^{
-		 filterLabel.alpha = 1.0;
-
-	 } completion:^(BOOL finished) {
-
-		 [UIView
-		  animateWithDuration:durationSlowAnimation
-		  delay:0.0
-		  options:UIViewAnimationOptionCurveEaseInOut
-		  animations:^{
-			  filterLabel.alpha = 0.0;
-
-		  } completion:^(BOOL finished) {
-			  [filterLabel removeFromSuperview];
-		  }];
-	 }];
 }
 
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex {	FXDLog_DEFAULT;
