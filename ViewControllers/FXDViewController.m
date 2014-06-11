@@ -121,11 +121,19 @@
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
 	//MARK: Until iOS 8 is officially released
-	[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:nil];
+	CGSize size = self.view.bounds.size;
+
+	if (self.parentViewController) {
+		FXDLog(@"1.%@", _Size(size));
+		size = self.parentViewController.view.bounds.size;
+		FXDLog(@"2.%@", _Size(size));
+	}
+
+	[self viewWillTransitionToSize:size withTransitionCoordinator:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
