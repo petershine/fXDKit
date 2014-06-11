@@ -123,13 +123,13 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
+
+	//MARK: Until iOS 8 is officially released
+	[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:[self transitionCoordinator]];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-	//MARK: Until iOS 8 is officially released
-	[self viewWillTransitionToSize:self.view.bounds.size withTransitionCoordinator:[self transitionCoordinator]];
 }
 
 #pragma mark -

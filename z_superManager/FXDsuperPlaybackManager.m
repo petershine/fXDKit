@@ -24,8 +24,7 @@
 }
 
 #pragma mark -
-- (void)centerAlignForPresentationSize:(CGSize)presentationSize  forDisplaySize:(CGSize)displaySize {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Object(self.superview), _Size(presentationSize));
+- (void)centerAlignForPresentationSize:(CGSize)presentationSize  forDisplaySize:(CGSize)displaySize {
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
 		presentationSize = [self mainPlayer].currentItem.presentationSize;
@@ -36,6 +35,9 @@
 		return;
 	}
 
+
+	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@", _Object(self.superview), _Size(presentationSize));
 
 	if (CGSizeEqualToSize(displaySize, CGSizeZero)) {
 		displaySize = self.superview.bounds.size;
