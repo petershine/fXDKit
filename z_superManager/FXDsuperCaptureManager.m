@@ -263,7 +263,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareCaptureManagerWithScene:(UIViewController*)scene {	FXDLog_DEFAULT;
+- (void)prepareCaptureManager {	FXDLog_DEFAULT;
 	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
 
 	[self.mainCaptureSession startRunning];
@@ -276,16 +276,6 @@
 	 selector:@selector(observedUIDeviceOrientationDidChange:)
 	 name:UIDeviceOrientationDidChangeNotification
 	 object:nil];
-}
-
-#pragma mark -
-- (void)configurePreviewDisplayForSize:(CGSize)size forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-
-	[UIView
-	 animateWithDuration:duration
-	 animations:^{
-		 self.mainPreviewLayer.frame = CGRectMake(0, 0, size.width, size.height);
-	 }];
 }
 
 #pragma mark -

@@ -12,7 +12,7 @@
 #endif
 
 
-@interface FXDviewVideoDisplay : FXDView
+@interface FXDviewAssetDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
 - (void)centerAlignForPresentationSize:(CGSize)presentationSize forDisplaySize:(CGSize)displaySize forDuration:(NSTimeInterval)duration;
@@ -28,11 +28,11 @@
 
 @property (strong, nonatomic) id playerItemObserver;
 
-@property (strong, nonatomic) FXDviewVideoDisplay *mainPlaybackDisplay;
+@property (strong, nonatomic) FXDviewAssetDisplay *mainPlaybackDisplay;
 
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)configurePlaybackObservers;
 

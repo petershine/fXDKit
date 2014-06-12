@@ -68,9 +68,7 @@
 	#import "FXDMediaItem.h"
 
 	#import "FXDsuperCaptureManager.h"
-
 	#import "FXDsuperPlaybackManager.h"
-	#import "FXDsuperPlaybackScene.h"
 #endif
 
 

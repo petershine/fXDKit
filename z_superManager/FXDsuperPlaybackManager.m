@@ -9,7 +9,7 @@
 #import "FXDsuperPlaybackManager.h"
 
 
-@implementation FXDviewVideoDisplay
+@implementation FXDviewAssetDisplay
 + (Class)layerClass {
 	return [AVPlayerLayer class];
 }
@@ -99,7 +99,7 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (FXDviewVideoDisplay*)mainPlaybackDisplay {
+- (FXDviewAssetDisplay*)mainPlaybackDisplay {
 	if (_mainPlaybackDisplay) {
 		return _mainPlaybackDisplay;
 	}
@@ -109,7 +109,7 @@
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
-	_mainPlaybackDisplay = [[FXDviewVideoDisplay alloc] initWithFrame:screenBounds];
+	_mainPlaybackDisplay = [[FXDviewAssetDisplay alloc] initWithFrame:screenBounds];
 
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_mainPlaybackDisplay.layer;
@@ -122,7 +122,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withScene:(UIViewController*)scene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	AVURLAsset *movieAsset = [AVURLAsset
 							  URLAssetWithURL:movieFileURL
@@ -158,10 +158,7 @@
 			  self.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 
 			  [self.mainPlaybackDisplay setMainPlayer:self.moviePlayer];
-
-			  [scene.view addSubview:self.mainPlaybackDisplay];
-			  [scene.view sendSubviewToBack:self.mainPlaybackDisplay];
-
+			  
 
 			  __weak FXDsuperPlaybackManager *weakSelf = self;
 
