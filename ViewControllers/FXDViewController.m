@@ -103,7 +103,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations {
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	FXDLog(@"%@: %@", _ClassSelectorSelf, _Variable(supportedInterface));
+	//FXDLog(@"%@: %@", _ClassSelectorSelf, _Variable(supportedInterface));
 
 	return supportedInterface;
 }
