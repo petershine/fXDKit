@@ -127,7 +127,7 @@
 	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
 	
 	if (didCancel) {
-		FXDLog(@"%@ %@", _BOOL(didCancel), indexPath);
+		//FXDLog(@"%@ %@", _BOOL(didCancel), indexPath);
 	}
 }
 
