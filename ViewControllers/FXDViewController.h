@@ -41,8 +41,11 @@
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
+
 #ifdef __IPHONE_8_0
+#warning //TODO: Remove categorized implementation when iOS 8 is officially released
 #else
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator;
 #endif
+
 @end

@@ -142,11 +142,12 @@
 
 #pragma mark -
 #ifdef __IPHONE_8_0
+#warning //TODO: Utilize targetTransform effectively for better rotation
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 		[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-#warning //TODO: Utilize targetTransform effectively for better rotation
+
 		FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
 	}
 	else {
@@ -381,7 +382,6 @@
 }
 
 #ifdef __IPHONE_8_0
-#warning //TODO: Remove categorized implementation when iOS 8 is officially released
 #else
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]));
