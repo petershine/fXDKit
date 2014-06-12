@@ -187,19 +187,6 @@
 
 		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 	 }];
-
-
-	@weakify(self);
-
-	[RACObserve(self, moviePlayer.currentItem.presentationSize)
-	 subscribeNext:^(id presentationSize) {	@strongify(self);
-		 FXDLog_REACT(self.moviePlayer.currentItem.presentationSize, presentationSize);
-
-		 [self.mainPlaybackDisplay
-		  centerAlignForPresentationSize:[presentationSize CGSizeValue]
-		  forDisplaySize:CGSizeZero
-		  forDuration:0.0];
-	 }];
 }
 
 #pragma mark -
