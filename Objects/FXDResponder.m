@@ -72,8 +72,11 @@
 #endif
 
 
-#if	USE_AdvertisementFrameworks
+#if	ForDEVELOPER
 	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
+#endif
+
+#if USE_AdvertisementFrameworks
 	FXDLogObject([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #endif
 
