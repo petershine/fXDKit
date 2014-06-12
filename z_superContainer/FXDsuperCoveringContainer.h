@@ -22,8 +22,6 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 @end
 
 
-#import "FXDsuperContainer.h"
-
 @interface FXDsuperCoveringContainer : FXDsuperContainer
 
 @property (nonatomic) NSUInteger minimumChildCount;
