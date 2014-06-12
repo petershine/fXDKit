@@ -81,7 +81,6 @@
 	}
 }
 
-//TODO: find optimal way of using layer instead of extra imageView object
 - (void)fadeInImage:(UIImage*)fadedImage {
 	
 	__weak UIImageView *weakSelf = self;

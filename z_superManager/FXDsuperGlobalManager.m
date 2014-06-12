@@ -207,70 +207,70 @@
 }
 
 #pragma mark -
-- (id)rootController {
-	if (_rootController == nil) {
+- (id)initialScene {
+	if (_initialScene == nil) {
 		if (self.mainStoryboard) {
-			_rootController = [self.mainStoryboard instantiateInitialViewController];
+			_initialScene = [self.mainStoryboard instantiateInitialViewController];
 		}
 
 		FXDLog_DEFAULT;
-		FXDLogObject(_rootController);
+		FXDLogObject(_initialScene);
 	}
 
-	return _rootController;
+	return _initialScene;
 }
 
-- (id)homeController {
-	if (_homeController) {
-		return _homeController;
+- (id)homeScene {
+	if (_homeScene) {
+		return _homeScene;
 	}
 	
 	
 	FXDLog_DEFAULT;
 	
-	NSArray *addedControllers = nil;
+	NSArray *addedSceneArray = nil;
 	
-	if ([self.rootController respondsToSelector:@selector(viewControllers)]) {
-		addedControllers = [self.rootController performSelector:@selector(viewControllers)];
+	if ([self.initialScene respondsToSelector:@selector(viewControllers)]) {
+		addedSceneArray = [self.initialScene performSelector:@selector(viewControllers)];
 	}
-	else if ([self.rootController respondsToSelector:@selector(childViewControllers)]) {
-		addedControllers = [self.rootController performSelector:@selector(childViewControllers)];
+	else if ([self.initialScene respondsToSelector:@selector(childViewControllers)]) {
+		addedSceneArray = [self.initialScene performSelector:@selector(childViewControllers)];
 	}
 	
-	FXDLogVariable([addedControllers count]);
+	FXDLogVariable([addedSceneArray count]);
 	
-	if ([addedControllers count] == 0) {
-		_homeController = self.rootController;
-		FXDLogObject(self.rootController);
+	if ([addedSceneArray count] == 0) {
+		_homeScene = self.initialScene;
+		FXDLogObject(self.initialScene);
 		
-		return _homeController;
+		return _homeScene;
 	}
 	
 	
-	if ([self.rootController isKindOfClass:[UITabBarController class]] == NO) {
-		_homeController = [addedControllers firstObject];
-		FXDLogObject([addedControllers firstObject]);
+	if ([self.initialScene isKindOfClass:[UITabBarController class]] == NO) {
+		_homeScene = [addedSceneArray firstObject];
+		FXDLogObject([addedSceneArray firstObject]);
 		
-		return _homeController;
+		return _homeScene;
 	}
 	
 	
-	id subContainerController = [addedControllers firstObject];
+	id subContainer = [addedSceneArray firstObject];
 	
-	if ([subContainerController isKindOfClass:[UINavigationController class]]) {
-		UINavigationController *navigationController = (UINavigationController*)subContainerController;
+	if ([subContainer isKindOfClass:[UINavigationController class]]) {
+		UINavigationController *navigationContainer = (UINavigationController*)subContainer;
 		
-		if ([navigationController.viewControllers count] > 0) {
-			_homeController = [(navigationController.viewControllers) firstObject];
-			FXDLogObject([(navigationController.viewControllers) firstObject]);
+		if ([navigationContainer.viewControllers count] > 0) {
+			_homeScene = [(navigationContainer.viewControllers) firstObject];
+			FXDLogObject([(navigationContainer.viewControllers) firstObject]);
 		}
 	}
 	else {
-		_homeController = subContainerController;
-		FXDLogObject(subContainerController);
+		_homeScene = subContainer;
+		FXDLogObject(subContainer);
 	}
 	
-	return _homeController;
+	return _homeScene;
 }
 
 #pragma mark - Method overriding

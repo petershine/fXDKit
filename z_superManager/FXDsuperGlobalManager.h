@@ -40,8 +40,8 @@
 @property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
 @property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
 
-@property (strong, nonatomic) id rootController;
-@property (strong, nonatomic) id homeController;
+@property (strong, nonatomic) id initialScene;
+@property (strong, nonatomic) id homeScene;
 
 
 #pragma mark - Initialization
