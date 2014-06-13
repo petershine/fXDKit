@@ -193,18 +193,21 @@
 	}
 
 
-	UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
-	localNotifcation.repeatInterval = 0;
-	localNotifcation.alertBody = alertBody;
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
+		 UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
+		 localNotifcation.repeatInterval = 0;
+		 localNotifcation.alertBody = alertBody;
 
-	if (delay > 0.0) {
-		localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
+		 if (delay > 0.0) {
+			 localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
 
-		[self scheduleLocalNotification:localNotifcation];
-	}
-	else {
-		[self presentLocalNotificationNow:localNotifcation];
-	}
+			 [self scheduleLocalNotification:localNotifcation];
+		 }
+		 else {
+			 [self presentLocalNotificationNow:localNotifcation];
+		 }
+	 }];
 }
 @end
 
