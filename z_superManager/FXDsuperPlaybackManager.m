@@ -14,6 +14,18 @@
 	return [AVPlayerLayer class];
 }
 
++ (instancetype)assetDisplay {	FXDLog_DEFAULT;
+
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
+
+	FXDviewAssetDisplay *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
+
+	AVPlayerLayer *displayLayer = (AVPlayerLayer*)assetDisplay.layer;
+	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+
+	return assetDisplay;
+}
+
 #pragma mark -
 - (AVPlayer*)mainPlayer {
 	return [(AVPlayerLayer*)[self layer] player];
@@ -107,13 +119,7 @@
 
 	FXDLog_DEFAULT;
 
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
-	_mainPlaybackDisplay = [[FXDviewAssetDisplay alloc] initWithFrame:screenBounds];
-
-
-	AVPlayerLayer *displayLayer = (AVPlayerLayer*)_mainPlaybackDisplay.layer;
-	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+	_mainPlaybackDisplay = [FXDviewAssetDisplay assetDisplay];
 
 	return _mainPlaybackDisplay;
 }

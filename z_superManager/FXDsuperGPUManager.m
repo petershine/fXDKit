@@ -27,7 +27,7 @@
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
-	FXDimageviewGPU *gpuviewCaptured = [[FXDimageviewGPU alloc] initWithFrame:screenBounds];
+	FXDimageviewGPU *gpuviewCaptured = [[[self class] alloc] initWithFrame:screenBounds];
 	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
 
