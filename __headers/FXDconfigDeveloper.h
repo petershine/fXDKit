@@ -128,7 +128,10 @@
 									showAlertWithTitle:_ClassSelectorSelf\
 									message:_Error(error)\
 									cancelButtonTitle:nil\
-									withAlertCallback:nil];}
+									withAlertCallback:nil];\
+									[[UIApplication sharedApplication]\
+									 localNotificationWithAlertBody:_Error(error)\
+									 afterDelay:0.0];}
 
 	#define FXDLog_ERROR_ignored(ignoredCode)	if (error\
 												&& [error code] != ignoredCode){\
