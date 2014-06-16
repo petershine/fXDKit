@@ -32,6 +32,16 @@
     return self;
 }
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+
+	[[NSNotificationCenter defaultCenter]
+	 addObserver:self
+	 selector:@selector(observedUIDeviceOrientationDidChange:)
+	 name:UIDeviceOrientationDidChangeNotification
+	 object:nil];
+}
+
 
 #pragma mark - Property overriding
 
@@ -232,6 +242,11 @@
 
 
 //MARK: - Observer implementation
+- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
+	FXDLog_OVERRIDE;
+	FXDLogObject(notification);
+}
+
 
 //MARK: - Delegate implementation
 

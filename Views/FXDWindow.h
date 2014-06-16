@@ -37,6 +37,7 @@
 
 
 //MARK: - Observer implementation
+- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 
