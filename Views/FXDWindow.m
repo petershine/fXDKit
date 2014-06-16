@@ -243,8 +243,16 @@
 
 //MARK: - Observer implementation
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
+
+	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+
+	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
+		return;
+	}
+
+
 	FXDLog_OVERRIDE;
-	FXDLogObject(notification);
+	FXDLogVariable(deviceOrientation);
 }
 
 

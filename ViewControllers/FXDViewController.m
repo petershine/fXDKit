@@ -74,21 +74,21 @@
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
 	UIStatusBarAnimation updateAnimation = [super preferredStatusBarUpdateAnimation];
-	FXDLogVariable(updateAnimation);
+	//FXDLogVariable(updateAnimation);
 
 	return updateAnimation;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
 	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
-	FXDLogVariable(statusBarStyle);
+	//FXDLogVariable(statusBarStyle);
 
 	return statusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
 	BOOL prefers = [super prefersStatusBarHidden];
-	FXDLogBOOL(prefers);
+	//FXDLogBOOL(prefers);
 
 	return prefers;
 }
@@ -124,16 +124,11 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
-	//MARK: Until iOS 8 is officially released
-	CGSize size = self.view.bounds.size;
-
-	if (self.parentViewController) {
-		FXDLog(@"1.%@", _Size(size));
-		size = self.parentViewController.view.bounds.size;
-		FXDLog(@"2.%@", _Size(size));
-	}
-
-	[self viewWillTransitionToSize:size withTransitionCoordinator:[self transitionCoordinator]];
+	[self
+	 rotateForSize:self.view.bounds.size
+	 forTransform:CGAffineTransformIdentity
+	 forDuration:duration
+	 withFinishCallback:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -142,17 +137,37 @@
 
 #pragma mark -
 #ifdef __IPHONE_8_0
-#warning //TODO: Utilize targetTransform effectively for better rotation
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+	CGAffineTransform targetTransform = CGAffineTransformIdentity;
 
-		FXDLog(@"%@ %@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]), _Transform([coordinator targetTransform]));
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		targetTransform = [coordinator targetTransform];
+
+		[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 	}
-	else {
-		FXDLog(@"%@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]));
+
+
+	void (^AnimatingBlock)(id <UIViewControllerTransitionCoordinatorContext>context) =
+	^(id <UIViewControllerTransitionCoordinatorContext>context){
+
+		[self
+		 rotateForSize:size
+		 forTransform:targetTransform
+		 forDuration:[coordinator transitionDuration]
+		 withFinishCallback:nil];
+	};
+
+
+	if (coordinator == nil) {
+		AnimatingBlock(nil);
+		return;
 	}
+
+
+	[coordinator
+	 animateAlongsideTransition:AnimatingBlock
+	 completion:nil];
 }
 #endif
 
@@ -368,11 +383,14 @@
 	return sceneView;
 }
 
-#ifdef __IPHONE_8_0
-#else
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@ %@", _Size(size), _Rect(self.view.bounds), _Variable([coordinator transitionDuration]));
+#pragma mark -
+- (void)rotateForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
+
+	if (finishCallback) {
+		finishCallback(_cmd, YES, nil);
+	}
 }
-#endif
+
 
 @end
