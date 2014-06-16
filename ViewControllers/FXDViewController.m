@@ -133,7 +133,7 @@
 		FXDLog(@"2.%@", _Size(size));
 	}
 
-	[self viewWillTransitionToSize:size withTransitionCoordinator:nil];
+	[self viewWillTransitionToSize:size withTransitionCoordinator:[self transitionCoordinator]];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -223,6 +223,7 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+
 
 #pragma mark - Segues
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
