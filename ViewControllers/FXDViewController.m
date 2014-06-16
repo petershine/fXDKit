@@ -166,12 +166,6 @@
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewWillAppear:animated];
-
-#if ForDEVELOPER
-	if (self.didFinishInitialAppearing) {
-		FXDLogBOOL(self.didFinishInitialAppearing);
-	}
-#endif
 }
 
 #if TEST_loggingViewDrawing
@@ -186,14 +180,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewDidAppear:animated];
-
-#if ForDEVELOPER
-	if (self.didFinishInitialAppearing == NO) {
-		FXDLog(@"didFinishInitialAppearing: YES");
-	}
-#endif
-
-	self.didFinishInitialAppearing = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
