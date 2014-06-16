@@ -345,9 +345,7 @@
 #pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	
-	FXDWindow *mainWindow = [FXDWindow mainWindow];
-	
-	[mainWindow
+	[(FXDWindow*)[UIApplication mainWindow]
 	 showMessageViewWithNibName:nil
 	 withTitle:NSLocalizedString(@"Do want to delete ALL?", nil)
 	 message:NSLocalizedString(@"Please be warned. Deleted data WILL NEVER BE RESTORED!", nil)
@@ -421,7 +419,7 @@
 	FXDWindow *mainWindow = nil;
 	
 	if (shouldShowProgressView) {
-		mainWindow = [FXDWindow mainWindow];
+		mainWindow = (FXDWindow*)[UIApplication mainWindow];
 		[mainWindow showProgressViewWithNibName:nil];
 	}
 	

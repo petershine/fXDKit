@@ -46,6 +46,5 @@
 #pragma mark - Category
 @interface UIWindow (Added)
 + (instancetype)instantiateNewWindow;
-+ (instancetype)mainWindow;
 
 @end

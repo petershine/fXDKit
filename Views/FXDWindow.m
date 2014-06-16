@@ -250,14 +250,4 @@
 	return newWindow;
 }
 
-+ (instancetype)mainWindow {
-	UIWindow *mainWindow = nil;
-
-	if ([[UIApplication sharedApplication].delegate respondsToSelector:@selector(window)]) {
-		mainWindow = [[UIApplication sharedApplication].delegate performSelector:@selector(window)];
-	}
-
-	return mainWindow;
-}
-
 @end

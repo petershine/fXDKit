@@ -187,6 +187,16 @@
 
 
 @implementation UIApplication (Added)
++ (UIWindow*)mainWindow {
+	UIWindow *mainWindow = nil;
+
+	if ([[[self class] sharedApplication].delegate respondsToSelector:@selector(window)]) {
+		mainWindow = [[[self class] sharedApplication].delegate performSelector:@selector(window)];
+	}
+
+	return mainWindow;
+}
+
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {
 		return;

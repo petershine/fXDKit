@@ -14,7 +14,7 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
+- (void)dealloc {	//FXDLog_DEFAULT;
 	[self resetOperationQueue];
 }
 

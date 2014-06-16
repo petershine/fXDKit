@@ -65,6 +65,8 @@
 
 
 @interface UIApplication (Added)
++ (UIWindow*)mainWindow;
+
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
 
