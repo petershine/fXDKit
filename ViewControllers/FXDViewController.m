@@ -91,15 +91,16 @@
 
 
 #pragma mark - Autorotating
-- (BOOL)shouldAutorotate {
+- (BOOL)shouldAutorotate {	FXDLog_DEFAULT;
 	BOOL shouldAutorotate = [super shouldAutorotate];
+	FXDLogBOOL(shouldAutorotate);
 
 	return shouldAutorotate;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {	//FXDLog_DEFAULT;
-	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	//FXDLogVariable(supportedInterface);
+- (NSUInteger)supportedInterfaceOrientations {	FXDLog_DEFAULT;
+	NSUInteger supportedInterface = [super supportedInterfaceOrientations];
+	FXDLogVariable(supportedInterface);
 
 	return supportedInterface;
 }
@@ -133,6 +134,7 @@
 #pragma mark -
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
+	FXDLogObject(coordinator);
 
 	CGAffineTransform targetTransform = CGAffineTransformIdentity;
 
