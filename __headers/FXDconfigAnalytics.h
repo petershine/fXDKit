@@ -21,19 +21,6 @@
 #endif
 
 
-#if DEBUG
-	#ifndef USE_TestFlight
-		#define USE_TestFlight	TRUE
-	#endif
-
-#else
-	#ifndef USE_TestFlight
-		#define USE_TestFlight	FALSE
-	#endif
-
-#endif
-
-
 #if USE_Flurry
 	#ifndef flurryApplicationKey
 		#warning //TODO: Define flurryApplicationKey
@@ -65,18 +52,6 @@
 
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_ERROR
-
-#endif
-
-
-#if	USE_TestFlight
-	#ifndef testflightAppToken
-		#warning	//TODO: Define testflightAppToken
-		#define testflightAppToken	@"testflightAppToken"
-	#endif
-
-	#import "TestFlight.h"
-	//MARK: Should add libz.dylib for TestFlight
 
 #endif
 
