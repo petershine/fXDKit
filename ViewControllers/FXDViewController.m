@@ -27,19 +27,22 @@
 
 
 #pragma mark - Initialization
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_DEFAULT;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
 		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
+
+		BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
+
+		FXDLog(@"%@ %@", _BOOL(fileExists), _Object(resourcePath));
 		
-		if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
+		if (fileExists) {
 			nibNameOrNil = filename;
 		}
-		else {
-			FXDLog(@"NO fileExistsAtPath:%@", _Object(resourcePath));
-		}
 	}
+
+	FXDLog(@"%@ %@", _Object(nibNameOrNil), _Object(nibBundleOrNil));
 
 	
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
