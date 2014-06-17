@@ -124,10 +124,9 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
-	[self
-	 rotateForSize:self.view.bounds.size
-	 forTransform:CGAffineTransformIdentity
-	 forDuration:duration
+	[self rotateForSize:self.view.bounds.size
+		   forTransform:CGAffineTransformIdentity
+			forDuration:duration
 	 withFinishCallback:nil];
 }
 
@@ -142,32 +141,30 @@
 	CGAffineTransform targetTransform = CGAffineTransformIdentity;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		targetTransform = [coordinator targetTransform];
-
 		[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+		targetTransform = [coordinator targetTransform];
 	}
 
 
-	void (^AnimatingBlock)(id <UIViewControllerTransitionCoordinatorContext>context) =
-	^(id <UIViewControllerTransitionCoordinatorContext>context){
-
+	if (coordinator == nil) {
 		[self
 		 rotateForSize:size
 		 forTransform:targetTransform
 		 forDuration:[coordinator transitionDuration]
 		 withFinishCallback:nil];
-	};
-
-
-	if (coordinator == nil) {
-		AnimatingBlock(nil);
 		return;
 	}
 
 
 	[coordinator
-	 animateAlongsideTransition:AnimatingBlock
-	 completion:nil];
+	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+		 [self
+		  rotateForSize:size
+		  forTransform:targetTransform
+		  forDuration:[coordinator transitionDuration]
+		  withFinishCallback:nil];
+	 } completion:nil];
 }
 #endif
 
@@ -183,7 +180,6 @@
 	[super viewWillAppear:animated];
 }
 
-#if TEST_loggingViewDrawing
 - (void)viewWillLayoutSubviews {	FXDLog_FRAME;
 	[super viewWillLayoutSubviews];
 }
@@ -191,7 +187,6 @@
 - (void)viewDidLayoutSubviews {	FXDLog_FRAME;
 	[super viewDidLayoutSubviews];
 }
-#endif
 
 - (void)viewDidAppear:(BOOL)animated {	FXDLog_FRAME;
 	[super viewDidAppear:animated];
