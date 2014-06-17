@@ -46,6 +46,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
+		[self.mainTableview setDelegate:nil];
 		[self.mainTableview setDataSource:nil];
 	}
 	

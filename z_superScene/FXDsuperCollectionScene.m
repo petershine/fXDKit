@@ -47,6 +47,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
+		[self.mainCollectionview setDelegate:nil];
 		[self.mainCollectionview setDataSource:nil];
 	}
 	
