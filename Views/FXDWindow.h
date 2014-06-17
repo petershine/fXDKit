@@ -47,4 +47,6 @@
 @interface UIWindow (Added)
 + (instancetype)instantiateNewWindow;
 
+- (void)windowTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
+
 @end

@@ -40,7 +40,6 @@
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
-- (void)rotateForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback;
-
+- (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
 
 @end

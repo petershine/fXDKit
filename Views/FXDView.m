@@ -112,10 +112,10 @@
 - (void)reframeToBeAtTheCenterOfSuperview {	FXDLog_DEFAULT;
 	
 	if (self.superview) {
-		CGRect modifiedFrame = self.frame;
-		modifiedFrame.origin.x = (self.superview.frame.size.width -modifiedFrame.size.width)/2.0;
-		modifiedFrame.origin.y = (self.superview.frame.size.height -modifiedFrame.size.height)/2.0;
-		self.frame = modifiedFrame;
+		[self updateWithXYratio:CGPointMake(0.5, 0.5)
+						forSize:self.superview.frame.size
+					forDuration:0.0
+				   forTransform:self.transform];
 	}
 }
 
@@ -340,23 +340,17 @@
 			break;
 	}
 
-	[self updateWithXYratio:xyRatio forSize:size forDuration:duration withRotation:0.0];
+	[self updateWithXYratio:xyRatio forSize:size forDuration:duration forTransform:self.transform];
 }
 
 #pragma mark -
-- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
+- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forDuration:(NSTimeInterval)duration forTransform:(CGAffineTransform)transform {
 
 	if ([[self constraints] count] > 0) {	FXDLog_DEFAULT;
 		FXDLogObject([self constraints]);
 		return;
 	}
 
-
-	CGAffineTransform animatedTransform = CGAffineTransformIdentity;
-
-	if (withRotation > 0.0) {
-		animatedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(withRotation));
-	}
 
 	CGRect animatedFrame = self.bounds;
 	animatedFrame.origin.x = (size.width-self.bounds.size.width)*xyRatio.x;
@@ -365,10 +359,7 @@
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
-		 if (withRotation > 0.0) {
-			 self.transform = animatedTransform;
-		 }
-		 
+		 self.transform = transform;
 		 self.frame = animatedFrame;
 	 }];
 }

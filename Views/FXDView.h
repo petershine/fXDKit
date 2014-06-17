@@ -53,7 +53,8 @@
 - (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)boxCornerType forSize:(CGSize)size forDuration:(NSTimeInterval)duration;
 - (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forSize:(CGSize)size forDuration:(NSTimeInterval)duration;
 
-- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
+- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forDuration:(NSTimeInterval)duration forTransform:(CGAffineTransform)transform;
+
 - (void)updateForClippedDimension:(CGFloat)clippedDimension forSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 

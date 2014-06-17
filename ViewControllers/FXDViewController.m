@@ -121,10 +121,9 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
-	[self rotateForSize:self.view.bounds.size
+	[self sceneTransitionForSize:self.view.bounds.size
 		   forTransform:CGAffineTransformIdentity
-			forDuration:duration
-	 withFinishCallback:nil];
+					 forDuration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -146,22 +145,18 @@
 
 
 	if (coordinator == nil) {
-		[self
-		 rotateForSize:size
-		 forTransform:targetTransform
-		 forDuration:[coordinator transitionDuration]
-		 withFinishCallback:nil];
+		[self sceneTransitionForSize:size
+						forTransform:targetTransform
+						 forDuration:[coordinator transitionDuration]];
 		return;
 	}
 
 
 	[coordinator
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		 [self
-		  rotateForSize:size
-		  forTransform:targetTransform
-		  forDuration:[coordinator transitionDuration]
-		  withFinishCallback:nil];
+		 [self sceneTransitionForSize:size
+						 forTransform:targetTransform
+						  forDuration:[coordinator transitionDuration]];
 	 } completion:nil];
 }
 #endif
@@ -377,12 +372,8 @@
 }
 
 #pragma mark -
-- (void)rotateForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
-
-	if (finishCallback) {
-		finishCallback(_cmd, YES, nil);
-	}
 }
 
 

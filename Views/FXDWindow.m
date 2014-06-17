@@ -277,4 +277,9 @@
 	return newWindow;
 }
 
+#pragma mark -
+- (void)windowTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
+}
+
 @end

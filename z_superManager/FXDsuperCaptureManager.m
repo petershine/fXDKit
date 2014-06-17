@@ -399,7 +399,6 @@
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-		//MARK: Use same orientation as last time
 		deviceOrientation = (UIDeviceOrientation)self.videoOrientation;
 	}
 
