@@ -113,7 +113,6 @@
 }
 
 #pragma mark -
-#warning //MARK: Deprecated for iOS 8
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
