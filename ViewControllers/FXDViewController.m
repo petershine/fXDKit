@@ -33,11 +33,11 @@
 		NSString *filename = NSStringFromClass([self class]);
 		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
 
-		BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
+		BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 
-		FXDLog(@"%@ %@", _BOOL(fileExists), _Object(resourcePath));
+		FXDLog(@"%@ %@", _BOOL(nibExists), _Object(resourcePath));
 		
-		if (fileExists) {
+		if (nibExists) {
 			nibNameOrNil = filename;
 		}
 	}

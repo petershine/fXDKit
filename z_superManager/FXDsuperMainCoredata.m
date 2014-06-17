@@ -106,7 +106,7 @@
 #pragma mark - Public
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
 
-	if ([self isSqliteAlreadyStored]) {
+	if ([self doesStoredSqliteExist]) {
 		return;
 	}
 
@@ -119,7 +119,7 @@
 
 - (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
 
-	if ([self isSqliteAlreadyStored]) {
+	if ([self doesStoredSqliteExist]) {
 		return;
 	}
 
@@ -137,23 +137,23 @@
 	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
 }
 
-- (BOOL)isSqliteAlreadyStored {
-	NSString *storedSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
-	FXDLogObject(storedSqlitePath);
+- (BOOL)doesStoredSqliteExist {
+	NSString *storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+	FXDLogObject(storedPath);
 
-	BOOL isAlreadyStored = [[NSFileManager defaultManager] fileExistsAtPath:storedSqlitePath];
-	FXDLogBOOL(isAlreadyStored);
+	BOOL storedSqliteExists = [[NSFileManager defaultManager] fileExistsAtPath:storedPath];
+	FXDLogBOOL(storedSqliteExists);
 
-	return isAlreadyStored;
+	return storedSqliteExists;
 }
 
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 
-	BOOL sqliteFileExists = [fileManager fileExistsAtPath:sqlitePath];
-	FXDLogBOOL(sqliteFileExists);
+	BOOL sqliteExists = [fileManager fileExistsAtPath:sqlitePath];
+	FXDLogBOOL(sqliteExists);
 
-	if (sqliteFileExists == NO) {
+	if (sqliteExists == NO) {
 		return NO;
 	}
 

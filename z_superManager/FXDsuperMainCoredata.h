@@ -58,7 +58,7 @@
 #pragma mark - Public
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
-- (BOOL)isSqliteAlreadyStored;
+- (BOOL)doesStoredSqliteExist;
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath;
 
 - (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback;
