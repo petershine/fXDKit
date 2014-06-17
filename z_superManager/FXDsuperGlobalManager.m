@@ -541,7 +541,7 @@
 }
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {
 }
-- (void)observedUIApplicationDidReceiveMemoryWarning:(NSNotification*)notification {
+- (void)observedUIApplicationDidReceiveMemoryWarning:(NSNotification*)notification {	FXDLog_SEPARATE;
 }
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {
 }

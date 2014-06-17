@@ -14,13 +14,6 @@
 
 
 #pragma mark - Memory management
-- (void)didReceiveMemoryWarning {	FXDLog_DEFAULT;
-	[super didReceiveMemoryWarning];
-
-	FXDLogObject(self.view.window);
-	FXDLogObject(self.view.superview);
-}
-
 - (void)dealloc {	FXDLog_DEFAULT;	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -183,11 +176,11 @@
 	[super viewWillAppear:animated];
 }
 
-- (void)viewWillLayoutSubviews {	FXDLog_FRAME;
+- (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 }
 
-- (void)viewDidLayoutSubviews {	FXDLog_FRAME;
+- (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
 }
 
