@@ -98,20 +98,13 @@
 							} else {\
 								FXDLog(@"%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
-	#define FXDLog_SEPARATE			FXDLog(@"\n\n	%@", _ClassSelectorSelf)
+	#define FXDLog_SEPARATE		FXDLog(@"\n\n	%@", _ClassSelectorSelf)
 
 
-#ifdef __IPHONE_8_0
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@ %@ %@", _ClassSelectorSelf, _Orientation, _Rect(self.view.frame), _Rect(self.view.bounds))
+							FXDLog(@"%@: %@ %@", _ClassSelectorSelf, _Rect(self.view.frame), _Rect(self.view.bounds))
 
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Orientation, _Rect(self.view.frame), _Rect(self.view.bounds))
-#else
-	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
-
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@ %@", _ClassSelectorSelf, _Variable(self.interfaceOrientation), _Rect(self.view.frame), _Rect(self.view.bounds))
-#endif
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@", _ClassSelectorSelf, _Rect(self.view.frame), _Rect(self.view.bounds))
 
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
@@ -140,11 +133,13 @@
 
 	#define FXDLog_BLOCK(instance, caller)	FXDLog_EMPTY;\
 											if ([NSThread isMainThread]) {\
-												FXDLog(@"BLOCK: [%@ %@]",\
+												FXDLog(@"%@: ^[%@ %@]",\
+												_ClassSelectorSelf,\
 												[instance class],\
 												_SelectorShort(caller));\
 											} else {\
-												FXDLog(@"BLOCK: [%@ %@] %@",\
+												FXDLog(@"%@: ^[%@ %@] %@",\
+												_ClassSelectorSelf,\
 												[instance class],\
 												_SelectorShort(caller),\
 												_IsMainThread);}

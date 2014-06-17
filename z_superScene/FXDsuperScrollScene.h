@@ -7,8 +7,8 @@
 //
 
 
-#ifndef scaleControllerDismissingOffset
-	#define scaleControllerDismissingOffset	0.275
+#ifndef scaleSceneDismissingOffset
+	#define scaleSceneDismissingOffset	0.275
 #endif
 
 

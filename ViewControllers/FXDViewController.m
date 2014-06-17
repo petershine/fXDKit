@@ -101,16 +101,16 @@
 	return shouldAutorotate;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (NSUInteger)supportedInterfaceOrientations {	FXDLog_DEFAULT;
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	//FXDLog(@"%@: %@", _ClassSelectorSelf, _Variable(supportedInterface));
+	FXDLogVariable(supportedInterface);
 
 	return supportedInterface;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_DEFAULT;
 	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
-	FXDLog(@"%@: %@", _ClassSelectorSelf, _Variable(preferredInterfaceOrientation));
+	FXDLogVariable(preferredInterfaceOrientation);
 
 	return preferredInterfaceOrientation;
 }
@@ -176,7 +176,7 @@
 }
 
 #pragma mark - View Appearing
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_FRAME;
+- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewWillAppear:animated];
 }
 
@@ -188,7 +188,7 @@
 	[super viewDidLayoutSubviews];
 }
 
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_FRAME;
+- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewDidAppear:animated];
 }
 
@@ -202,11 +202,11 @@
 
 #pragma mark -
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-#if ForDEVELOPER
+
 	if (parent == nil) {	FXDLog_DEFAULT;
 		FXDLogObject(parent);
 	}
-#endif
+
 
 	[super willMoveToParentViewController:parent];
 }
