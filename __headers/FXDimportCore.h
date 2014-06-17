@@ -63,13 +63,11 @@
 #import "FXDImageView.h"
 #import "FXDTableViewCell.h"
 #import "FXDCollectionViewCell.h"
-#import "FXDLabel.h"
 
 #import "FXDAlertView.h"
 #import "FXDActionSheet.h"
 
 #import "FXDScrollView.h"
-#import "FXDCollectionView.h"
 
 #import "FXDWindow.h"
 

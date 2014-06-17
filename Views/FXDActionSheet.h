@@ -8,6 +8,7 @@
 
 
 @interface FXDActionSheet : UIActionSheet <UIActionSheetDelegate>
+
 @property (copy) FXDcallbackAlert alertCallback;
 
 
