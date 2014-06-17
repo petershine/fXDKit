@@ -32,7 +32,7 @@
     return self;
 }
 
-- (void)awakeFromNib {
+- (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 
 	[[NSNotificationCenter defaultCenter]
@@ -46,6 +46,10 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+- (void)makeKeyAndVisible {	FXDLog_SEPARATE;
+	[super makeKeyAndVisible];
+}
+
 
 #pragma mark - IBActions
 

@@ -52,7 +52,7 @@
 }
 
 #pragma mark -
-- (void)awakeFromNib {
+- (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 	
 	FXDLog(@"%@, %@", _Object(self.storyboard), _Object(self.nibName));
@@ -101,9 +101,9 @@
 	return shouldAutorotate;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {	FXDLog_DEFAULT;
+- (NSUInteger)supportedInterfaceOrientations {	//FXDLog_DEFAULT;
 	BOOL supportedInterface = [super supportedInterfaceOrientations];
-	FXDLogVariable(supportedInterface);
+	//FXDLogVariable(supportedInterface);
 
 	return supportedInterface;
 }

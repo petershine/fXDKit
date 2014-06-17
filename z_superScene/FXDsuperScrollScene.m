@@ -15,6 +15,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
+	[_mainScrollview setDelegate:nil];
+	
 	[_cellOperationQueue resetOperationQueue];
 }
 

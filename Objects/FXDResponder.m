@@ -14,22 +14,8 @@
 
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_SEPARATE;
-	FXDAssert_IsMainThread;
-}
-
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {	FXDLog_SEPARATE;
-		FXDAssert_IsMainThread;
-	}
-
-	return self;
-}
-
 
 #pragma mark - Property overriding
 

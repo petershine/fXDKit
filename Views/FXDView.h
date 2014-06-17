@@ -9,8 +9,6 @@
 
 @interface FXDView : UIView
 
-@property (nonatomic) CGRect initialViewFrame;
-
 // IBOutlets
 
 #pragma mark - IBActions
