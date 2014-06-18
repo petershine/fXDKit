@@ -114,8 +114,8 @@
 	if (self.superview) {
 		[self updateWithXYratio:CGPointMake(0.5, 0.5)
 						forSize:self.superview.frame.size
-					forDuration:0.0
-				   forTransform:self.transform];
+				   forTransform:self.transform
+					forDuration:0.0];
 	}
 }
 
@@ -340,11 +340,14 @@
 			break;
 	}
 
-	[self updateWithXYratio:xyRatio forSize:size forDuration:duration forTransform:self.transform];
+	[self updateWithXYratio:xyRatio
+					forSize:size
+			   forTransform:self.transform
+				forDuration:duration];
 }
 
 #pragma mark -
-- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forDuration:(NSTimeInterval)duration forTransform:(CGAffineTransform)transform {
+- (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {
 
 	if ([[self constraints] count] > 0) {	FXDLog_DEFAULT;
 		FXDLogObject([self constraints]);

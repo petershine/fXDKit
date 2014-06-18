@@ -77,6 +77,7 @@
 
 
 @interface UIDevice (Added)
++ (CGAffineTransform)forcedTransformForDeviceOrientation;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
 
 #if USE_MultimediaFrameworks

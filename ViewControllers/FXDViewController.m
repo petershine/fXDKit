@@ -121,7 +121,7 @@
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
 	[self sceneTransitionForSize:self.view.bounds.size
-		   forTransform:CGAffineTransformIdentity
+					forTransform:[UIDevice forcedTransformForDeviceOrientation]
 					 forDuration:duration];
 }
 
@@ -134,29 +134,18 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 	FXDLogObject(coordinator);
 
-	CGAffineTransform targetTransform = CGAffineTransformIdentity;
-
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-		targetTransform = [coordinator targetTransform];
-	}
-
-
-	if (coordinator == nil) {
-		[self sceneTransitionForSize:size
-						forTransform:targetTransform
-						 forDuration:[coordinator transitionDuration]];
-		return;
-	}
-
+	CGAffineTransform targetTransform = [coordinator targetTransform];
+	FXDAssert(coordinator);
 
 	[coordinator
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 [self sceneTransitionForSize:size
 						 forTransform:targetTransform
 						  forDuration:[coordinator transitionDuration]];
-	 } completion:nil];
+	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
+		 FXDLog(@"%@ %@ %@", _Variable([context percentComplete]), _Variable([context completionVelocity]), _Object([context containerView]));
+	 }];
 }
 #endif
 
