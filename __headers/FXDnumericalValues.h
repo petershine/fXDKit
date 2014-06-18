@@ -63,6 +63,7 @@
 #define limitConcurrentOperationCount	1
 
 
-#define angleLandscapeRotation	270.0
+#define rotationAngleLandscapeLeft	90.0
+#define rotationAngleLandscapeRight	270.0
 
 #endif
