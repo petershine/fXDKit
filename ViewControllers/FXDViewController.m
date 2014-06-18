@@ -120,15 +120,9 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
-	[UIView
-	 animateWithDuration:duration
-	 animations:^{
-		 [self sceneTransitionForSize:self.view.bounds.size
-						 forTransform:CGAffineTransformIdentity
-						  forDuration:duration];
-	 } completion:^(BOOL finished) {
-		 [self didFinishSceneTransitionAfterDuration:duration];
-	 }];
+	[self sceneTransitionForSize:self.view.bounds.size
+					forTransform:CGAffineTransformIdentity
+					 forDuration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -150,8 +144,6 @@
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
 		 FXDLog(@"%@ %@", _Variable([context percentComplete]), _Variable([context completionVelocity]));
-
-		 [self didFinishSceneTransitionAfterDuration:[coordinator transitionDuration]];
 	 }];
 }
 #endif
@@ -362,10 +354,6 @@
 #pragma mark -
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
-}
-
-- (void)didFinishSceneTransitionAfterDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
-	FXDLogVariable(duration);
 }
 
 @end
