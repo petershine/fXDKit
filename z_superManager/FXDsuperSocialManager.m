@@ -494,15 +494,17 @@
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
 		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
-		FXDLog(@"httpResponse: %@ : %@", _Variable(statusCode), _Object(statusCodeDescription));
 
+		if (statusCodeDescription) {}
 		FXDLogObject([(NSHTTPURLResponse*)urlResponse allHeaderFields]);
+		FXDLog(@"%@ : %@", _Variable(statusCode), _Object(statusCodeDescription));
 	}
 
 	FXDLog(@"responseData %@ bytes", _Variable([responseData length]));
 
 	if ([responseData length] > 0) {
 		id jsonObj = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
+		if (jsonObj) {}
 		FXDLog(@"%@\n %@", _Object([jsonObj class]), jsonObj);
 	}
 }
