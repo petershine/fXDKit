@@ -42,4 +42,6 @@
 
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
 
+- (void)didFinishSceneTransitionAfterDuration:(NSTimeInterval)duration;
+
 @end

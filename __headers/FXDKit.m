@@ -243,14 +243,14 @@
 @implementation UIDevice (Added)
 + (CGAffineTransform)forcedTransformForDeviceOrientation {
 
+	CGAffineTransform forcedTransform = CGAffineTransformIdentity;
+
 	UIDeviceOrientation deviceOrientation = [[self class] currentDevice].orientation;
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-		return CGAffineTransformIdentity;
+		return forcedTransform;
 	}
 
-
-	CGAffineTransform forcedTransform = CGAffineTransformIdentity;
 
 	switch (deviceOrientation) {
 		case UIDeviceOrientationLandscapeLeft:
@@ -259,10 +259,6 @@
 
 		case UIDeviceOrientationLandscapeRight:
 			forcedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(rotationAngleLandscapeRight));
-			break;
-
-		case UIDeviceOrientationPortraitUpsideDown:
-			forcedTransform = CGAffineTransformMakeRotation( ( -90 * M_PI ) / 180 );
 			break;
 
 		default: {

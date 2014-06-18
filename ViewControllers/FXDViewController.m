@@ -91,23 +91,23 @@
 
 
 #pragma mark - Autorotating
-- (BOOL)shouldAutorotate {	FXDLog_DEFAULT;
+- (BOOL)shouldAutorotate {	//FXDLog_DEFAULT;
 	BOOL shouldAutorotate = [super shouldAutorotate];
-	FXDLogBOOL(shouldAutorotate);
+	//FXDLogBOOL(shouldAutorotate);
 
 	return shouldAutorotate;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {	FXDLog_DEFAULT;
+- (NSUInteger)supportedInterfaceOrientations {	//FXDLog_DEFAULT;
 	NSUInteger supportedInterface = [super supportedInterfaceOrientations];
-	FXDLogVariable(supportedInterface);
+	//FXDLogVariable(supportedInterface);
 
 	return supportedInterface;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	FXDLog_DEFAULT;
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_DEFAULT;
 	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
-	FXDLogVariable(preferredInterfaceOrientation);
+	//FXDLogVariable(preferredInterfaceOrientation);
 
 	return preferredInterfaceOrientation;
 }
@@ -120,9 +120,15 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
 
-	[self sceneTransitionForSize:self.view.bounds.size
-					forTransform:[UIDevice forcedTransformForDeviceOrientation]
-					 forDuration:duration];
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 [self sceneTransitionForSize:self.view.bounds.size
+						 forTransform:CGAffineTransformIdentity
+						  forDuration:duration];
+	 } completion:^(BOOL finished) {
+		 [self didFinishSceneTransitionAfterDuration:duration];
+	 }];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -132,29 +138,23 @@
 #pragma mark -
 #ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
-	FXDLogObject(coordinator);
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-	CGAffineTransform targetTransform = [coordinator targetTransform];
 	FXDAssert(coordinator);
-
 	[coordinator
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 [self sceneTransitionForSize:size
-						 forTransform:targetTransform
+						 forTransform:[coordinator targetTransform]
 						  forDuration:[coordinator transitionDuration]];
+
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
-		 FXDLog(@"%@ %@ %@", _Variable([context percentComplete]), _Variable([context completionVelocity]), _Object([context containerView]));
+		 FXDLog(@"%@ %@", _Variable([context percentComplete]), _Variable([context completionVelocity]));
+
+		 [self didFinishSceneTransitionAfterDuration:[coordinator transitionDuration]];
 	 }];
 }
 #endif
-
-- (id <UIViewControllerTransitionCoordinator>)transitionCoordinator {	//FXDLog_DEFAULT;
-	id <UIViewControllerTransitionCoordinator> coordinator = [super transitionCoordinator];
-	//FXDLogObject(coordinator);
-
-	return coordinator;
-}
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
@@ -364,5 +364,8 @@
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
 
+- (void)didFinishSceneTransitionAfterDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
+	FXDLogVariable(duration);
+}
 
 @end
