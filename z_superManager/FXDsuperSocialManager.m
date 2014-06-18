@@ -487,19 +487,9 @@
 }
 
 
-#if ForDEVELOPER
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {	FXDLog_DEFAULT;
 	FXDLog_ERROR;
-
-#if ForDEVELOPER
-	if (error && [[error localizedDescription] length] > 0) {
-		[FXDAlertView
-		 showAlertWithTitle:nil
-		 message:[error localizedDescription]
-		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
-	}
-#endif
+	FXDLog_ERROR_ALERT;
 
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
@@ -516,14 +506,13 @@
 		FXDLog(@"%@\n %@", _Object([jsonObj class]), jsonObj);
 	}
 }
-#endif
 
 
 //MARK: - Observer implementation
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
-#if	ForDEVELOPER
 	FXDLogObject(notification);
 
+#if	ForDEVELOPER
 	ACAccountStore *accountStore = [notification object];
 
 	for (ACAccount *account in accountStore.accounts) {

@@ -40,9 +40,8 @@
 
 - (SLComposeViewController*)socialComposeControllerForServiceIdentifier:(NSString*)serviceIdentifier withInitialText:(NSString*)initialText withImageArray:(NSArray*)imageArray withURLarray:(NSArray*)URLarray;
 
-#if ForDEVELOPER
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
-#endif
+
 
 //MARK: - Observer implementation
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification;

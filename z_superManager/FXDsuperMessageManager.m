@@ -62,7 +62,7 @@
 - (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
 	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
-	NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+	NSString *version = application_BundleVersion;
 	FXDLogObject(version);
 
 #if ForDEVELOPER
