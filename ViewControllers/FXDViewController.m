@@ -318,6 +318,7 @@
 }
 
 - (IBAction)dismissSceneWithAnimation:(id)sender {	FXDLog_OVERRIDE;
+	FXDLog(@"%@ %@", _Object(self.parentViewController), _Object(self.presentingViewController));
 
 	if (self.parentViewController) {
 		[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
@@ -354,6 +355,46 @@
 #pragma mark -
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
+}
+
+#pragma mark -
+- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {
+	__weak UIViewController *weakSelf = self;
+
+	[weakSelf addChildViewController:scene];
+	scene.view.alpha = 0.0;
+
+	[weakSelf.view addSubview:scene.view];
+	[scene didMoveToParentViewController:weakSelf];
+
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 scene.view.alpha = 1.0;
+	 }
+	 completion:^(BOOL finished) {
+		 if (finishCallback) {
+			 finishCallback(_cmd, finished, nil);
+		 }
+	 }];
+}
+
+- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {
+	[scene willMoveToParentViewController:nil];
+
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 scene.view.alpha = 0.0;
+	 }
+	 completion:^(BOOL finished) {
+		 [scene.view removeFromSuperview];
+		 [scene removeFromParentViewController];
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, finished, nil);
+		 }
+	 }];
 }
 
 @end
