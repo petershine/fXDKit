@@ -241,6 +241,16 @@
 
 
 @implementation UIDevice (Added)
++ (UIDeviceOrientation)validDeviceOrientation {
+	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
+
+	if (UIDeviceOrientationIsValidInterfaceOrientation(validOrientation) == NO) {
+		validOrientation = UIDeviceOrientationPortrait;
+	}
+
+	return validOrientation;
+}
+
 + (CGAffineTransform)forcedTransformForDeviceOrientation {
 
 	CGAffineTransform forcedTransform = CGAffineTransformIdentity;
