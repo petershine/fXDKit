@@ -6,21 +6,21 @@
 - (NSString*)stringValue {
 	NSString *indexPathString = @"";
 
-	for (NSInteger i = 0; i < [self length]; i++) {
+	for (NSInteger i = 0; i < self.length; i++) {
 		NSUInteger index = [self indexAtPosition:i];
 
 		if (index == NSNotFound) {
 			break;
 		}
 
-		if ([indexPathString length] > 0) {
+		if (indexPathString.length > 0) {
 			indexPathString = [indexPathString stringByAppendingString:@"_"];
 		}
 
 		indexPathString = [indexPathString stringByAppendingFormat:@"%lu", (unsigned long)index];
 	}
 
-	if ([indexPathString length] == 0) {
+	if (indexPathString.length == 0) {
 		indexPathString = nil;
 	}
 

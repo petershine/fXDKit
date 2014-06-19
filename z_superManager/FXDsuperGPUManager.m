@@ -397,7 +397,7 @@
 		log = [NSString stringWithFormat:@"%@ %@", log, _BOOL(captureDevice.isAdjustingWhiteBalance)];
 	}
 
-	if ([log length] > 0) {
+	if (log.length > 0) {
 		FXDLog(@"%@", log);
 	}
 #endif

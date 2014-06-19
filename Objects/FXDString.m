@@ -48,8 +48,8 @@
 	NSInteger longestLength = 0;
 	
 	for (NSString *component in components) {
-		if ([component length] > longestLength) {
-			longestLength = [component length];
+		if (component.length > longestLength) {
+			longestLength = component.length;
 		}
 	}
 	
@@ -58,16 +58,16 @@
 	for (NSString *component in components) {
 		NSString *modifiedComponent = component;
 		
-		if ([component length] < longestLength) {
+		if (component.length < longestLength) {
 			
-			NSInteger addedSpaceLength = longestLength -[component length];
+			NSInteger addedSpaceLength = longestLength -component.length;
 			
 			for (NSInteger i = 0 ; i < addedSpaceLength; i++) {
 				modifiedComponent = [modifiedComponent stringByAppendingString:@" "];
 			}
 		}
 		
-		if ([alignedParagraph length] > 0) {
+		if (alignedParagraph.length > 0) {
 			alignedParagraph = [alignedParagraph stringByAppendingString:@"\n"];
 		}
 		
