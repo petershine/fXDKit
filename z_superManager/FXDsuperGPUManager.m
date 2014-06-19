@@ -258,7 +258,7 @@
 
 	   ] mutableCopy];
 
-	FXDLogVariable([_cycledFilterNameArray count]);
+	FXDLogVariable(_cycledFilterNameArray.count);
 
 	return _cycledFilterNameArray;
 }
@@ -336,9 +336,9 @@
 	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
 	if (filterIndex < 0) {
-		filterIndex = [self.cycledFilterNameArray count]-1;
+		filterIndex = self.cycledFilterNameArray.count-1;
 	}
-	else if (filterIndex == [self.cycledFilterNameArray count]) {
+	else if (filterIndex == self.cycledFilterNameArray.count) {
 		filterIndex = 0;
 	}
 

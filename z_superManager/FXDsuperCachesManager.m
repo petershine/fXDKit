@@ -87,7 +87,7 @@
 		NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:[itemURL URLByDeletingLastPathComponent]];
 		
 		if (cachedFolderURL) {
-			NSString *filePathComponent = [itemURL lastPathComponent];
+			NSString *filePathComponent = itemURL.lastPathComponent;
 			filePathComponent = [NSString stringWithFormat:@"%@%@", prefixCached, filePathComponent];
 			
 			cachedURL = [cachedFolderURL URLByAppendingPathComponent:filePathComponent];
@@ -115,7 +115,7 @@
 		NSURL *folderURL = [self folderURLforCachedFolderURL:[cachedURL URLByDeletingLastPathComponent]];
 		
 		if (folderURL) {
-			NSString *filePathComponent = [cachedURL lastPathComponent];
+			NSString *filePathComponent = cachedURL.lastPathComponent;
 			filePathComponent = [filePathComponent stringByReplacingOccurrencesOfString:prefixCached withString:@""];
 			
 			itemURL = [folderURL URLByAppendingPathComponent:filePathComponent];
@@ -143,7 +143,7 @@
 	
 	NSData *imageData = UIImagePNGRepresentation(thumbImage);
 	
-	NSString *thumbItemPath = [appSearhPath_Caches stringByAppendingPathComponent:[cachedURL lastPathComponent]];
+	NSString *thumbItemPath = [appSearhPath_Caches stringByAppendingPathComponent:cachedURL.lastPathComponent];
 	
 	BOOL didCreate = [fileManager createFileAtPath:thumbItemPath contents:imageData attributes:nil];
 

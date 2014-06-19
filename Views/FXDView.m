@@ -349,7 +349,7 @@
 #pragma mark -
 - (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {
 
-	if ([[self constraints] count] > 0) {	FXDLog_DEFAULT;
+	if ([self constraints].count > 0) {	FXDLog_DEFAULT;
 		FXDLogObject([self constraints]);
 		return;
 	}
@@ -380,7 +380,7 @@
 
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
 
-	if ([[self constraints] count] > 0) {	FXDLog_DEFAULT;
+	if ([self constraints].count > 0) {	FXDLog_DEFAULT;
 		FXDLogObject([self constraints]);
 		return;
 	}

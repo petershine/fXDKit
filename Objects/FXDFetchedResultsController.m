@@ -45,7 +45,7 @@
 
 	NSManagedObject *resultObj = nil;
 
-	if ([self.fetchedObjects count] > 0) {
+	if (self.fetchedObjects.count > 0) {
 		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
 
 		resultObj = [filteredArray firstObject];

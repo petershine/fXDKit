@@ -250,7 +250,7 @@
 	__block UIViewController *viewController = nil;
 
 	//MARK: Iterate backward
-	for (NSInteger index = [self.childViewControllers count]-1; index >= 0; index--) {
+	for (NSInteger index = self.childViewControllers.count-1; index >= 0; index--) {
 		UIViewController *childScene = self.childViewControllers[index];
 
 		FXDLog(@"%@ %@ %@", _Variable(index), _Object(childScene), _Object(viewController));

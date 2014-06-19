@@ -69,7 +69,7 @@
 
 	NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	
-	infoDictionary[@"folderName"] = [folderURL lastPathComponent];
+	infoDictionary[@"folderName"] = folderURL.lastPathComponent;
 	
 	
 	NSDirectoryEnumerator *enumerator = [self limitedEnumeratorForRootURL:folderURL];
@@ -89,7 +89,7 @@
 		if ([isDirectory boolValue]) {	//MARK: recursively called
 			NSMutableDictionary *subInfoDictionary = [self infoDictionaryForFolderURL:nextURL];
 			
-			if (subInfoDictionary && [subInfoDictionary count] > 0) {
+			if (subInfoDictionary && subInfoDictionary.count > 0) {
 				if (itemArray == nil) {
 					itemArray = [[NSMutableArray alloc] initWithCapacity:0];
 				}
@@ -102,13 +102,13 @@
 				itemArray = [[NSMutableArray alloc] initWithCapacity:0];
 			}
 			
-			[itemArray addObject:[nextURL lastPathComponent]];
+			[itemArray addObject:nextURL.lastPathComponent];
 		}
 		
 		nextURL = [enumerator nextObject];
 	}
 	
-	if (itemArray && [itemArray count] > 0) {
+	if (itemArray && itemArray.count > 0) {
 		infoDictionary[@"items"] = itemArray;
 	}
 	

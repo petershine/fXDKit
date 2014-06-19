@@ -31,9 +31,9 @@
 
 	SEL action = nil;
 
-	FXDLogVariable([self.navigationController.viewControllers count]);
+	FXDLogVariable(self.navigationController.viewControllers.count);
 
-	if ([self.navigationController.viewControllers count] > 1) {	// If there is more than 1 navigated interfaces
+	if (self.navigationController.viewControllers.count > 1) {	// If there is more than 1 navigated interfaces
 		action = @selector(popSceneWithAnimation:);
 
 		FXDLog(@"%@, %@", _Object(highlightedImage), _Object(normalImage));

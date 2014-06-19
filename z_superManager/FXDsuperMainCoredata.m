@@ -677,7 +677,7 @@
 	NSString *mainStoreUUID = nil;
 	NSInteger mainStoreIndex = 0;	//MARK: Assume first one is the mainStore
 	
-	if ([[[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores] count] > 0) {
+	if ([[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores].count > 0) {
 		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][mainStoreIndex];
 		mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
 		
@@ -686,7 +686,7 @@
 	
 	NSString *notifyingStoreUUID = nil;
 	
-	if ([[[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores] count] > 0) {
+	if ([[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores].count > 0) {
 		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][mainStoreIndex];
 		notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
 		

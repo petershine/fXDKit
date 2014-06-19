@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.minimumChildCount = [self.childViewControllers count];
+	self.minimumChildCount = self.childViewControllers.count;
 	FXDLogVariable(self.minimumChildCount);
 }
 
@@ -133,7 +133,7 @@
 	CGRect animatedPushedFrame = CGRectZero;
 		
 	if ([presentedScene shouldCoverAbove] == NO
-		&& [self.childViewControllers count] > self.minimumChildCount) {
+		&& self.childViewControllers.count > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
 		NSInteger destinationIndex = [self.childViewControllers indexOfObject:presentedScene];
@@ -232,7 +232,7 @@
 	CGRect animatedPulledFrame = CGRectZero;
 	
 	if ([dismissedScene shouldCoverAbove] == NO
-		&& [self.childViewControllers count] > self.minimumChildCount) {
+		&& self.childViewControllers.count > self.minimumChildCount) {
 		//MARK: Including newly added child, the count should be bigger than one
 		
 		NSInteger sourceIndex = [self.childViewControllers indexOfObject:dismissedScene];
@@ -314,7 +314,7 @@
 
 - (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	//MARK: Assume direction is only vertical
-	if ([self.childViewControllers count] == 0) {
+	if (self.childViewControllers.count == 0) {
 
 		if (finishCallback) {
 			finishCallback(_cmd, YES, nil);
@@ -335,7 +335,7 @@
 	}
 	
 	
-	if ([lateAddedSceneArray count] == 0) {
+	if (lateAddedSceneArray.count == 0) {
 		lateAddedSceneArray = nil;
 
 		if (finishCallback) {

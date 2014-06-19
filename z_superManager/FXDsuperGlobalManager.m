@@ -237,9 +237,9 @@
 		addedSceneArray = [self.initialScene performSelector:@selector(childViewControllers)];
 	}
 	
-	FXDLogVariable([addedSceneArray count]);
+	FXDLogVariable(addedSceneArray.count);
 	
-	if ([addedSceneArray count] == 0) {
+	if (addedSceneArray.count == 0) {
 		_homeScene = self.initialScene;
 		FXDLogObject(self.initialScene);
 		
@@ -260,7 +260,7 @@
 	if ([subContainer isKindOfClass:[UINavigationController class]]) {
 		UINavigationController *navigationContainer = (UINavigationController*)subContainer;
 		
-		if ([navigationContainer.viewControllers count] > 0) {
+		if (navigationContainer.viewControllers.count > 0) {
 			_homeScene = [(navigationContainer.viewControllers) firstObject];
 			FXDLogObject([(navigationContainer.viewControllers) firstObject]);
 		}

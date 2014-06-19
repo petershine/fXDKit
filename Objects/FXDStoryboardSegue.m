@@ -73,7 +73,7 @@
 		fullDescription[@"popoverController"] = [self performSelector:@selector(popoverController)];
 	}
 
-	if ([fullDescription count] == 0) {
+	if (fullDescription.count == 0) {
 		fullDescription = nil;
 	}
 	else {

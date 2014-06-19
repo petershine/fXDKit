@@ -75,8 +75,8 @@
 		FXDLog_ERROR;
 
 #if TEST_loggingResultObjFiltering
-		if (fetchedObjArray == nil || [fetchedObjArray count] == 0) {
-			FXDLog(@"%@ %@ %@", _Variable([fetchedObjArray count]), _Variable(self.concurrencyType), _IsMainThread);
+		if (fetchedObjArray == nil || fetchedObjArray.count == 0) {
+			FXDLog(@"%@ %@ %@", _Variable(fetchedObjArray.count), _Variable(self.concurrencyType), _IsMainThread);
 		}
 #endif
 	}

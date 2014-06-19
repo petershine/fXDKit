@@ -199,13 +199,13 @@
 	NSInteger numberOfSections = 1;
 	
 	if (self.mainResultsController) {
-		numberOfSections = [[self.mainResultsController sections] count];
+		numberOfSections = self.mainResultsController.sections.count;
 	}
 	else if (self.mainDataSource) {
 		//MARK: Assume it's just one array
 	}
 	else if (self.itemCounts) {
-		numberOfSections = [self.itemCounts count];
+		numberOfSections = self.itemCounts.count;
 	}
 	
 	return numberOfSections;
@@ -216,12 +216,12 @@
 	NSUInteger numberOfItems = 0;
 	
 	if (self.mainResultsController) {
-		NSUInteger fetchedCount = [self.mainResultsController.fetchedObjects count];
+		NSUInteger fetchedCount = self.mainResultsController.fetchedObjects.count;
 		
 #if ForDEVELOPER
 		NSArray *sections = self.mainResultsController.sections;
 		
-		if (section < [sections count]) {
+		if (section < sections.count) {
 			id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
 			
 			numberOfItems = [sectionInfo numberOfObjects];
@@ -235,7 +235,7 @@
 #endif
 	}
 	else if (self.mainDataSource) {
-		numberOfItems = [self.mainDataSource count];
+		numberOfItems = self.mainDataSource.count;
 	}
 	else if (self.itemCounts) {
 		numberOfItems = [(self.itemCounts)[section] integerValue];
