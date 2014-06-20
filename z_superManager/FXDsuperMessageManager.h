@@ -12,8 +12,8 @@
 #pragma mark - Initialization
 
 #pragma mark - Public
-- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message;
-- (MFMailComposeViewController*)preparedMailComposeInterface;
-- (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message;
+- (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingScene usingImage:(UIImage*)image usingMessage:(NSString*)message;
+- (MFMailComposeViewController*)emailSceneWithMailBody;
+- (MFMailComposeViewController*)emailSceneForSharingImage:(UIImage*)image usingMessage:(NSString*)message;
 
 @end

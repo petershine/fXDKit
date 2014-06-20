@@ -22,7 +22,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)presentEmailController:(MFMailComposeViewController*)emailController forPresentingController:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
+- (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 
 
 	if ([MFMailComposeViewController canSendMail] == NO) {
@@ -31,12 +31,12 @@
 	}
 
 
-	if (emailController == nil) {
+	if (emailScene == nil) {
 		if (image || message) {
-			emailController = [self preparedMailComposeInterfaceForSharingUsingImage:image usingMessage:message];
+			emailScene = [self emailSceneForSharingImage:image usingMessage:message];
 		}
 		else {
-			emailController = [self preparedMailComposeInterface];
+			emailScene = [self emailSceneWithMailBody];
 		}
 	}
 
@@ -51,15 +51,15 @@
 	}
 
 
-	[emailController setMailComposeDelegate:self];
+	[emailScene setMailComposeDelegate:self];
 
 	[presentingController
-	 presentViewController:emailController
+	 presentViewController:emailScene
 	 animated:YES
 	 completion:nil];
 }
 
-- (MFMailComposeViewController*)preparedMailComposeInterface {	FXDLog_DEFAULT;
+- (MFMailComposeViewController*)emailSceneWithMailBody {	FXDLog_DEFAULT;
 	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
 	NSString *version = application_BundleVersion;
@@ -83,55 +83,44 @@
 
 	NSString *displayName = application_DisplayName;
 
-	NSString *subjectString = [NSString stringWithFormat:@"[%@]", displayName];
+	NSString *subjectLine = [NSString stringWithFormat:@"[%@]", displayName];
 
 	NSString *lineSeparator = @"_______________________________";
-	NSString *stringAppVersion = [NSString stringWithFormat:@"%@ %@", subjectString, version];
-
-	NSString *stringDevice = [NSString stringWithFormat:@"%@ %@", [GlobalAppManager deviceModelName], [[UIDevice currentDevice] systemVersion]];
-
-	NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-
-	NSArray *arrayCountryCode = [NSLocale ISOCountryCodes];
-	NSMutableDictionary *dicCountryCode = [[NSMutableDictionary alloc] initWithCapacity:0];
-
-	for(NSString *countryCode in arrayCountryCode) {
-		NSString *currentCountryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
-		dicCountryCode[countryCode] = currentCountryName;
-	}
-
-	NSString *stringKey = [[[NSLocale currentLocale] localeIdentifier] substringWithRange:NSMakeRange(3, 2)];
-	NSString *returnString = [NSString stringWithFormat:@"%@", dicCountryCode[stringKey]];
-
-	NSString *stringCountry = [NSString stringWithFormat:@"%@", returnString];
+	NSString *appVersionLine = [NSString stringWithFormat:@"%@ %@", subjectLine, version];
 
 
-	NSString *mailBodyString = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n%@\n", lineSeparator, stringAppVersion, stringDevice, stringCountry];
+	struct utsname systemInfo;
+	uname(&systemInfo);
 
-	FXDLogObject(mailBodyString);
+	NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+	NSString *machineNameLine = [NSString stringWithFormat:@"%@ %@", machineName, [UIDevice currentDevice].systemVersion];
 
-	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailController setSubject:subjectString];
-	[emailController setToRecipients:toRecipients];
-	[emailController setMessageBody:mailBodyString isHTML:NO];
+	NSString *mailBody = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n", lineSeparator, appVersionLine, machineNameLine];
 
-	return emailController;
+	FXDLogObject(mailBody);
+
+	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
+	[emailScene setSubject:subjectLine];
+	[emailScene setToRecipients:toRecipients];
+	[emailScene setMessageBody:mailBody isHTML:NO];
+
+	return emailScene;
 }
 
-- (MFMailComposeViewController*)preparedMailComposeInterfaceForSharingUsingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
+- (MFMailComposeViewController*)emailSceneForSharingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 
-	MFMailComposeViewController *emailController = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
-	[emailController setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayName]];
+	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
+	[emailScene setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayName]];
 
 	if (image) {
-		[emailController addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];
+		[emailScene addAttachmentData:UIImageJPEGRepresentation(image, 1.0) mimeType:@"image/jpeg" fileName:@"sharedImage"];
 	}
 
 	if (message) {
-		[emailController setMessageBody:message isHTML:NO];
+		[emailScene setMessageBody:message isHTML:NO];
 	}
 
-	return emailController;
+	return emailScene;
 }
 
 
