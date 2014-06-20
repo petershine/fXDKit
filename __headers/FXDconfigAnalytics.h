@@ -14,12 +14,6 @@
 	#define USE_Flurry	TRUE
 #endif
 
-#if USE_Flurry & ForDEVELOPER
-	#ifndef USE_FlurryWithLogging
-		#define USE_FlurryWithLogging	FALSE
-	#endif
-#endif
-
 
 #if USE_Flurry
 	#ifndef flurryApplicationKey

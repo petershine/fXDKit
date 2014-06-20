@@ -16,45 +16,28 @@
 #endif
 
 #ifndef application_AppStoreID
-	#if	!DEBUG
-		#warning //TODO: Define application_AppStoreID
-	#endif
-
+	#warning //TODO: Define application_AppStoreID
 	#define application_AppStoreID	@"000000000"
 #endif
 
 #ifndef application_ContactEmail
-	#if	!DEBUG
-		#warning //TODO: Define application_ContactEmail
-	#endif
-
+	#warning //TODO: Define application_ContactEmail
 	#define application_ContactEmail	@"app@company.com"
 #endif
 
 
-#ifndef application_BundleIdentifier
-	#define application_BundleIdentifier	[[NSBundle mainBundle] bundleIdentifier]
-#endif
-
-#ifndef application_BundleName
-	#define application_BundleName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
-#endif
-
-#ifndef application_BundleVersion
-	#define application_BundleVersion	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
-#endif
-
-#ifndef application_DisplayName
-	#define application_DisplayName	[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]
-#endif
+#define application_BundleIdentifier	[NSBundle mainBundle].bundleIdentifier
+#define application_BundleName			[NSBundle mainBundle].infoDictionary[@"CFBundleName"]
+#define application_BundleVersion		[NSBundle mainBundle].infoDictionary[@"CFBundleVersion"]
+#define application_DisplayName			[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
 
 
 #define iosVersion6	6.0
 #define iosVersion7	7.0
 #define iosVersion8	8.0
 
-#define SYSTEM_VERSION_sameOrHigher(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] >= versionNumber)
-#define SYSTEM_VERSION_lowerThan(versionNumber)	([[[UIDevice currentDevice] systemVersion] floatValue] < versionNumber)
+#define SYSTEM_VERSION_sameOrHigher(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue >= versionNumber)
+#define SYSTEM_VERSION_lowerThan(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue < versionNumber)
 
 #define SCREEN_SIZE_35inch	(MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) <= height35inch)
 
@@ -101,7 +84,7 @@
 #define radianAngleForDegree(degree)	(degree*M_PI/180.0)
 
 
-#define heightDynamicStatusBar	[[UIApplication sharedApplication] statusBarFrame].size.height
+#define heightDynamicStatusBar	[UIApplication sharedApplication].statusBarFrame.size.height
 
 
 #endif

@@ -427,11 +427,6 @@
 
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
 #if USE_Flurry
-	#if ForDEVELOPER
-	[Flurry setShowErrorInLogEnabled:[@(USE_FlurryWithLogging) boolValue]];
-	[Flurry setDebugLogEnabled:[@(USE_FlurryWithLogging) boolValue]];
-	#endif
-
 	[Flurry setSecureTransportEnabled:YES];
 	[Flurry setCrashReportingEnabled:YES];
 
