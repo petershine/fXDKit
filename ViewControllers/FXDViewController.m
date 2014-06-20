@@ -360,6 +360,13 @@
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
 
+- (CGRect)animatedFrameForTransform:(CGAffineTransform)transform forSize:(CGSize)size forDeviceOrientation:(UIDeviceOrientation)deviceOrientation forXYratio:(CGPoint)xyRatio {
+	//MARK: Make sure to use frame here to use transformed rect
+	CGRect animatedFrame = CGRectApplyAffineTransform(self.view.bounds, transform);
+
+	return animatedFrame;
+}
+
 #pragma mark -
 - (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {
 	__weak UIViewController *weakSelf = self;
