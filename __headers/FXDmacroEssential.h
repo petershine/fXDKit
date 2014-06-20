@@ -46,8 +46,7 @@
 
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
 										static id _sharedInstance = nil;\
-										dispatch_once(&once,^{\
-											FXDLog_SEPARATE;\
+										dispatch_once(&once,^{FXDLog_SEPARATE;\
 											_sharedInstance = [[[self class] alloc] init];\
 											FXDLogObject(_sharedInstance);\
 										});\

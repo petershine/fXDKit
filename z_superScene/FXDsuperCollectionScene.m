@@ -110,7 +110,7 @@
 		 }
 
 
-		 [[NSOperationQueue mainQueue]
+		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
 			  [self.cellOperationQueue removeOperationForKey:indexPath];
 		  }];

@@ -9,10 +9,13 @@
 #import "FXDViewController+BarButton.h"
 
 
-@interface FXDViewController : UIViewController
+@interface FXDViewController : UIViewController {
+	FXDcallbackFinish _dismissedCallback;
+}
+
+@property (copy, nonatomic) FXDcallbackFinish dismissedCallback;
 
 // IBOutlets
-
 
 #pragma mark - Segues
 
