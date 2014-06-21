@@ -370,7 +370,8 @@
 #pragma mark -
 - (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)finishCallback {
 
-	if ([scene isKindOfClass:[FXDViewController class]]) {
+	if ([scene isKindOfClass:[FXDViewController class]]
+		&& dismissedCallback) {
 		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
 	}
 
@@ -397,7 +398,8 @@
 
 - (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)finishCallback {
 
-	if ([scene isKindOfClass:[FXDViewController class]]) {
+	if ([scene isKindOfClass:[FXDViewController class]]
+		&& dismissedCallback) {
 		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
 	}
 
