@@ -285,10 +285,9 @@
 	FXDLogObject(identifier);
 
 	UIStoryboardSegue *segue =
-	[super
-	 segueForUnwindingToViewController:toViewController
-	 fromViewController:fromViewController
-	 identifier:identifier];
+	[super segueForUnwindingToViewController:toViewController
+						  fromViewController:fromViewController
+								  identifier:identifier];
 
 	FXDLogObject(segue);
 
@@ -361,7 +360,7 @@
 }
 
 - (CGRect)animatedFrameForTransform:(CGAffineTransform)transform forSize:(CGSize)size forDeviceOrientation:(UIDeviceOrientation)deviceOrientation forXYratio:(CGPoint)xyRatio {
-	//MARK: Make sure to use frame here to use transformed rect
+
 	CGRect animatedFrame = CGRectApplyAffineTransform(self.view.bounds, transform);
 
 	return animatedFrame;
