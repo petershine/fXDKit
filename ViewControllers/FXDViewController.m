@@ -368,7 +368,13 @@
 }
 
 #pragma mark -
-- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)finishCallback {
+
+	if ([scene isKindOfClass:[FXDViewController class]]) {
+		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
+	}
+
+
 	__weak UIViewController *weakSelf = self;
 
 	[weakSelf addChildViewController:scene];
@@ -389,7 +395,13 @@
 	 }];
 }
 
-- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)finishCallback {
+
+	if ([scene isKindOfClass:[FXDViewController class]]) {
+		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
+	}
+
+
 	[scene willMoveToParentViewController:nil];
 
 	[UIView
