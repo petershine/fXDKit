@@ -81,7 +81,7 @@
 	//MARK: iosVersion8
 	if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
 		FXDLogSelector(@selector(requestAlwaysAuthorization));
-		[self.mainLocationManager requestAlwaysAuthorization];
+		[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
 	}
 
 	[self.mainLocationManager startUpdatingLocation];
@@ -176,7 +176,6 @@
 	[userDefaults synchronize];
 
 	FXDLogObject(alertBody);
-	LOGEVENT(@"%@", _Object(alertBody));
 
 
 	if ([alertBody length] > 0) {
@@ -186,7 +185,6 @@
 		localNotifcation.alertBody = (alertBody) ? alertBody:[newLocation description];
 		localNotifcation.soundName = UILocalNotificationDefaultSoundName;
 		localNotifcation.applicationIconBadgeNumber = ([UIApplication sharedApplication].applicationIconBadgeNumber+1);
-		LOGEVENT(@"%@", _Variable(localNotifcation.applicationIconBadgeNumber));
 
 		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
 	}
@@ -244,7 +242,6 @@
 
 
 		FXDLogObject(alertBody);
-		LOGEVENT(@"%@", _Object(alertBody));
 
 
 		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
