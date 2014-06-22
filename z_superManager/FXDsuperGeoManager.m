@@ -78,6 +78,12 @@
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
+	//MARK: iosVersion8
+	if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+		FXDLogSelector(@selector(requestAlwaysAuthorization));
+		[self.mainLocationManager requestAlwaysAuthorization];
+	}
+
 	[self.mainLocationManager startUpdatingLocation];
 
 	[self configureUpdatingForApplicationState];
