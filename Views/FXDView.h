@@ -60,4 +60,6 @@
 
 - (void)updateLayerWithAffineTransform:(CGAffineTransform)affineTransform forBounds:(CGRect)screenBounds;
 
+- (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view;
+
 @end

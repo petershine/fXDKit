@@ -434,4 +434,16 @@
 	FXDLog(@"2.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
 }
 
+#pragma mark -
+- (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view {
+	CGRect converted = [self convertRect:rect toView:view];
+
+	converted.origin.x -= marginDefault;
+	converted.origin.y -= marginDefault;
+	converted.size.width += marginDefault*2.0;
+	converted.size.height += marginDefault*2.0;
+
+	return [NSValue valueWithCGRect:converted];
+}
+
 @end
