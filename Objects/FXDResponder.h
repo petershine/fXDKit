@@ -12,13 +12,9 @@
 @property (nonatomic) BOOL isAppLaunching;
 @property (nonatomic) BOOL didFinishLaunching;
 
-@property (nonatomic) UIBackgroundTaskIdentifier mainBackgroundTaskIdentifier;
-
 @property (strong, nonatomic) FXDWindow *window;
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 
