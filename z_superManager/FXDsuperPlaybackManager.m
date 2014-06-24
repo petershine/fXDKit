@@ -193,7 +193,7 @@
 		 FXDLogObject(note);
 		 FXDLogTime(weakSelf.moviePlayer.currentItem.duration);
 
-		 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+		 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	 }];
 }
 
@@ -270,7 +270,7 @@
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL didFinish) {
 		 if (didFinish) {
-			 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+			 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 }
 
 		 if (finishCallback) {
@@ -287,7 +287,7 @@
 	FXDcallbackFinish ResumingMoviePlayer = ^(SEL caller, BOOL didFinish, id responseObj){
 		FXDLogTime(periodicintervalDefault);
 
-		weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+		weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 
 		if (weakSelf.periodicObserver == nil) {
 			weakSelf.periodicObserver =
@@ -296,7 +296,7 @@
 			 queue:NULL
 			 usingBlock:^(CMTime currentTime) {
 
-				 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
+				 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 			 }];
 		}
 

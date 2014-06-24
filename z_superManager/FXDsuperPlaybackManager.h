@@ -21,7 +21,7 @@
 
 
 @interface FXDsuperPlaybackManager : FXDsuperManager
-@property (nonatomic) CMTime playbackProgressTime;
+@property (nonatomic) CMTime playbackCurrentTime;
 @property (nonatomic) CMTime lastSeekedTime;
 
 @property (strong, nonatomic) AVPlayer *moviePlayer;
