@@ -170,6 +170,8 @@
 
 			  [weakSelf configurePlaybackObservers];
 
+			  [weakSelf startSeekingToTime:kCMTimeZero withFinishCallback:nil];
+
 			  if (finishCallback) {
 				  finishCallback(_cmd, YES, nil);
 			  }
@@ -294,7 +296,7 @@
 			 queue:NULL
 			 usingBlock:^(CMTime currentTime) {
 
-				 weakSelf.playbackProgressTime = currentTime;
+				 weakSelf.playbackProgressTime = [weakSelf.moviePlayer.currentItem currentTime];
 			 }];
 		}
 
