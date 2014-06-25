@@ -281,7 +281,6 @@
 
 #pragma mark -
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
-
 	__weak FXDsuperPlaybackManager *weakSelf = self;
 
 	FXDcallbackFinish ResumingMoviePlayer = ^(SEL caller, BOOL didFinish, id responseObj){

@@ -6,9 +6,13 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#ifndef periodicintervalDefault
 //MARK: Make sure it's not bad for performance
-	#define periodicintervalDefault	CMTimeMake(1, 6)
+#ifndef periodicintervalDivisor
+	#define periodicintervalDivisor	3
+#endif
+
+#ifndef periodicintervalDefault
+	#define periodicintervalDefault	CMTimeMultiplyByRatio(CMTimeMake(1, 3), 1, periodicintervalDivisor)
 #endif
 
 

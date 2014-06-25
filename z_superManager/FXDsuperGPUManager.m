@@ -378,7 +378,6 @@
 }
 
 - (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	//FXDLog_DEFAULT;
-	//TEST:
 	/*
 #if ForDEVELOPER
 	AVCaptureDevice *captureDevice = notification.object;
