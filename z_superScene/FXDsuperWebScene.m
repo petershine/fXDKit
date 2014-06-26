@@ -93,13 +93,6 @@
 #pragma mark - Public
 - (void)loadWebURLstring:(NSString*)webURLstring {	FXDLog_DEFAULT;
 
-	BOOL isValid = [NSURL validateWebURLstringOrModifyURLstring:&webURLstring];
-
-	if (isValid == NO) {
-		return;
-	}
-
-
 	FXDLogBOOL(self.mainWebview.isLoading);
 
 	if (self.mainWebview.isLoading) {

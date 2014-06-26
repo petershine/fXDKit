@@ -15,33 +15,6 @@
 
 #pragma mark - Category
 @implementation NSURL (Added)
-+ (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring {	FXDLog_DEFAULT;
-
-	if ([*webURLstring length] == 0) {
-		return NO;
-	}
-
-
-	if ([*webURLstring rangeOfString:@"http://"].length == 0) {
-		*webURLstring = [@"http://%@" stringByAppendingString:*webURLstring];
-	}
-
-
-	//TODO: Find the right regex to include port number
-	return YES;
-
-
-	NSString *testRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
-	NSPredicate *testPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", testRegEx];
-
-	BOOL isValid = [testPredicate evaluateWithObject:*webURLstring];
-
-	FXDLog(@"%@ %@", _BOOL(isValid), _Object(*webURLstring));
-
-	return isValid;
-}
-
-#pragma mark -
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {
 	NSArray *ubiquitousItemKeys =
 	@[NSURLIsUbiquitousItemKey,

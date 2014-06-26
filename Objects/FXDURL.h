@@ -21,8 +21,6 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 
 #pragma mark - Category
 @interface NSURL (Added)
-+ (BOOL)validateWebURLstringOrModifyURLstring:(NSString**)webURLstring;
-
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;
 
