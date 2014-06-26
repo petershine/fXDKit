@@ -167,7 +167,17 @@
 
 #pragma mark -
 - (CGFloat)horizontalProgress {
-	return (self.contentOffset.x +self.contentInset.left)/self.contentSize.width;
+	//MARK: Need to find the correct calculation, considering contentInset
+	CGFloat totalWidth = self.contentSize.width +self.contentInset.left +self.contentInset.right;
+
+	if (totalWidth > self.bounds.size.width) {
+		totalWidth -= self.bounds.size.width;
+	}
+
+	CGFloat progress = (self.contentOffset.x +self.contentInset.left)/totalWidth;
+	FXDLogVariable(progress);
+
+	return progress;
 }
 
 @end
