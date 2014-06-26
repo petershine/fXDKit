@@ -36,4 +36,6 @@
 
 - (BOOL)isScrollingCurrently;
 
+- (CGFloat)horizontalProgress;
+
 @end

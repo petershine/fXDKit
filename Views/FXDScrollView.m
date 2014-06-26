@@ -165,4 +165,9 @@
 	return (self.isDragging && self.isDecelerating && !self.isTracking);
 }
 
+#pragma mark -
+- (CGFloat)horizontalProgress {
+	return (self.contentOffset.x +self.contentInset.left)/self.contentSize.width;
+}
+
 @end

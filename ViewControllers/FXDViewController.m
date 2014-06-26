@@ -195,6 +195,10 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+- (void)prepareForInterfaceBuilder {	FXDLog_DEFAULT;
+	[super prepareForInterfaceBuilder];
+	
+}
 
 
 #pragma mark - Segues

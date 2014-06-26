@@ -78,6 +78,11 @@
 }
 
 - (BOOL)cancelOperationForKey:(id)operationKey {
+	if (operationKey == nil) {
+		return NO;
+	}
+
+	
 	NSOperation *operation = self.operationDictionary[operationKey];
 	[operation cancel];
 
