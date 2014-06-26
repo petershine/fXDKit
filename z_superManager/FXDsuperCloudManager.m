@@ -29,7 +29,7 @@
 			_ubiquitousDocumentsURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentDocuments];
 		}
 		
-		FXDLog(@"_ubiquitousDocumentsURL: %@", _ubiquitousDocumentsURL);
+		FXDLogObject(_ubiquitousDocumentsURL);
 	}
 
 	return _ubiquitousDocumentsURL;
@@ -42,7 +42,7 @@
 			_ubiquitousCachesURL = [self.ubiquityContainerURL URLByAppendingPathComponent:pathcomponentCaches];
 		}
 		
-		FXDLog(@"_ubiquitousCachesURL: %@", _ubiquitousCachesURL);
+		FXDLogObject(_ubiquitousCachesURL);
 	}
 
 	return _ubiquitousCachesURL;
@@ -93,7 +93,7 @@
 		 object:_cloudDocumentsQuery];
 
 		BOOL didStart = [_cloudDocumentsQuery startQuery];
-		FXDLog(@"didStart: %d", didStart);
+		FXDLogBOOL(didStart);
 		
 		if (didStart) {}
 	}
@@ -115,7 +115,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startUpdatingUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)startUpdatingUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self
@@ -127,12 +127,12 @@
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
 	self.ubiquityIdentityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
-	FXDLog(@"ubiquityIdentityToken: %@", self.ubiquityIdentityToken);
+	FXDLogObject(self.ubiquityIdentityToken);
 
 	id updatedIdentityTokenData = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
-	FXDLog(@"updatedIdentityTokenData: %@", updatedIdentityTokenData);
+	FXDLogObject(updatedIdentityTokenData);
 
-	FXDLog(@"self.ubiquityIdentityToken isEqual:updatedIdentityTokenData: %d", [self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
+	FXDLogBOOL([self.ubiquityIdentityToken isEqual:updatedIdentityTokenData]);
 
 
 	//TODO: learn about how to handle ubiquityIdentityToken changed
@@ -157,10 +157,10 @@
 	[userDefaults synchronize];
 
 
-	FXDLog(@"shouldRequestUbiquityContatinerURL: %d", shouldRequestUbiquityContatinerURL);
+	FXDLogBOOL(shouldRequestUbiquityContatinerURL);
 
 	if (shouldRequestUbiquityContatinerURL == NO) {
-		[self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
+		[self failedToUpdateUbiquityContainerURLwithFinishCallback:finishCallback];
 		return;
 	}
 
@@ -173,7 +173,7 @@
 		savedContainerURL = [NSURL URLWithString:containerURLstring];
 	}
 	
-	FXDLog(@"savedContainerURL: %@", savedContainerURL);
+	FXDLogObject(savedContainerURL);
 	
 	if (savedContainerURL) {
 		_ubiquitousDocumentsURL = nil;
@@ -182,7 +182,7 @@
 		self.ubiquityContainerURL = savedContainerURL;
 	}
 	
-	FXDLog(@"self.ubiquityContainerURL: %@", self.ubiquityContainerURL);
+	FXDLogObject(self.ubiquityContainerURL);
 	
 	
 	__block NSURL *activeUbiquityContainerURL = nil;
@@ -191,7 +191,7 @@
 	 addOperationWithBlock:^{
 		 
 		 activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-		 FXDLog(@"activeUbiquityContainerURL: %@", activeUbiquityContainerURL);
+		 FXDLogObject(activeUbiquityContainerURL);
 		 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
@@ -218,23 +218,23 @@
 				  }
 				  [userDefaults synchronize];
 				  
-				  [self activatedUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
+				  [self activatedUbiquityContainerURLwithFinishCallback:finishCallback];
 			  }
 			  else {
 				  [userDefaults synchronize];
 				  
-				  [self failedToUpdateUbiquityContainerURLwithDidFinishBlock:didFinishBlock];
+				  [self failedToUpdateUbiquityContainerURLwithFinishCallback:finishCallback];
 			  }
 		  }];
 	 }];
 }
 
-- (void)activatedUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)activatedUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 #if ForDEVELOPER
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	FXDLog(@"\nubiquityContainerURL:\n%@", [fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
-	FXDLog(@"\nappDirectory_Caches:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
-	FXDLog(@"\nappDirectory_Document:\n%@", [fileManager infoDictionaryForFolderURL:appDirectory_Document]);
+	FXDLogObject([fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
+	FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
+	FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 #endif
 	
 	[self startObservingCloudDocumentsQueryNotifications];
@@ -245,33 +245,26 @@
 	[self enumerateUbiquitousDocumentsAtFolderURL:nil withDidEnumerateBlock:nil];
 #endif
 
-#if USE_LocalDirectoryWatcher
-	[self startWatchingLocalDirectoryChange];
-#endif
-	
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
 	
-	if (didFinishBlock) {
-		didFinishBlock(YES);
+	if (finishCallback) {
+		finishCallback(_cmd, YES, nil);
 	}
 }
 
-- (void)failedToUpdateUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock {	FXDLog_DEFAULT;
+- (void)failedToUpdateUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	[FXDAlertView
-	 showAlertWithTitle:NSLocalizedString(alert_PleaseEnableiCloud, nil)
+	 showAlertWithTitle:NSLocalizedString(@"Please enable iCloud", nil)
 	 message:nil
-	 clickedButtonAtIndexBlock:nil
-	 cancelButtonTitle:nil];
+	 cancelButtonTitle:nil
+	 withAlertCallback:nil];
 
-#if USE_LocalDirectoryWatcher
-	[self startWatchingLocalDirectoryChange];
-#endif
-	
-	
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:nil];
 	
-	if (didFinishBlock) {
-		didFinishBlock(NO);
+	if (finishCallback) {
+		finishCallback(_cmd, NO, nil);
 	}
 }
 
@@ -281,11 +274,6 @@
 	if (self.cloudDocumentsQuery.isStarted) {
 		//TODO:
 	}
-}
-
-- (void)startWatchingLocalDirectoryChange {	FXDLog_DEFAULT;
-	self.localDirectoryWatcher = [DirectoryWatcher watchFolderWithPath:appSearhPath_Document delegate:self];
-	
 }
 
 #pragma mark -
@@ -314,7 +302,7 @@
 		NSError *error = nil;
 		BOOL didSetUbiquitous = [fileManager setUbiquitous:YES itemAtURL:itemURL destinationURL:destinationURL error:&error];
 		
-		FXDLog(@"didSetUbiquitous: %d %@ %@", didSetUbiquitous, itemURL, destinationURL);
+		FXDLog(@"%@ %@ %@", _BOOL(didSetUbiquitous), _Object(itemURL), _Object(destinationURL));
 		
 		if (error || didSetUbiquitous == NO) {
 			[self handleFailedLocalItemURL:itemURL withDestinationURL:destinationURL withResultError:error];
@@ -385,7 +373,7 @@
 	}
 	
 	if (alertTitle) {	FXDLog_DEFAULT;
-		FXDLog(@"alertTitle: %@", alertTitle);
+		FXDLogObject(alertTitle);
 	}
 }
 
@@ -428,7 +416,7 @@
 			 BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 			 
 			 if (didEvict) {
-				 FXDLog(@"AUTO CLEANING didEvict: YES %@", [itemURL followingPathInDocuments]);
+				 FXDLog(@"AUTO CLEANING %@ %@", _BOOL(didEvict), _Object([itemURL followingPathInDocuments]));
 				 
 				 [self.collectedURLarray removeObject:itemURL];
 			 }
@@ -449,7 +437,8 @@
 	id isDirectory = nil;
 
 	NSError *error = nil;
-	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
+	[itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+	FXDLog_ERROR_ignored(260);
 	
 	if ([isDirectory boolValue]) {
 		return didEvict;
@@ -473,7 +462,7 @@
 	
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
-		 FXDWindow *applicationWindow = [FXDWindow applicationWindow];
+		 FXDWindow *applicationWindow = (FXDWindow*)[UIApplication mainWindow];
 		 applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
 	 }];
 	
@@ -498,7 +487,7 @@
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLog(@"notification: %@", notification);
+	FXDLogObject(notification);
 }
 
 #pragma mark -
@@ -507,7 +496,7 @@
 }
 
 - (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLog(@"didFinishFirstGathering: %d", self.didFinishFirstGathering);
+	FXDLogBOOL(self.didFinishFirstGathering);
 	
 	if (self.didFinishFirstGathering == NO) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudDocumentsQueryDidGatherObjects object:notification.object userInfo:notification.userInfo];
@@ -515,9 +504,9 @@
 }
 
 - (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
-	FXDLog(@"1.didFinishFirstGathering: %d", self.didFinishFirstGathering);
+	FXDLog(@"1.%@", _BOOL(self.didFinishFirstGathering));
 	self.didFinishFirstGathering = YES;
-	FXDLog(@"2.didFinishFirstGathering: %d", self.didFinishFirstGathering);
+	FXDLog(@"2.%@", _BOOL(self.didFinishFirstGathering));
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudDocumentsQueryDidFinishGathering object:notification.object userInfo:notification.userInfo];
 }
@@ -530,7 +519,7 @@
 	 addOperationWithBlock:^{
 		 
 		 BOOL isTransferring = [metadataQuery isQueryResultsTransferringWithLogString:nil];
-		 FXDLog(@"isTransferring: %d", isTransferring);
+		 FXDLogBOOL(isTransferring);
 		 
 		 //TODO: distinguish uploading and downloading and finished updating
 		 [[NSOperationQueue mainQueue]
@@ -558,11 +547,6 @@
 
 //MARK: - Delegate implementation
 #pragma mark - NSMetadataQueryDelegate
-
-#pragma mark - DirectoryWatcherDelegate
-- (void)directoryDidChange:(DirectoryWatcher*)folderWatcher {	//FXDLog_DEFAULT;
-	[self enumerateLocalDirectory];
-}
 
 
 @end

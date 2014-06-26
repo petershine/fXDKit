@@ -61,14 +61,16 @@
 			 id parentDirectoryURL = nil;
 			 
 			 NSError *error = nil;
-			 [itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];FXDLog_ERRORexcept(260);
+			 [itemURL getResourceValue:&parentDirectoryURL forKey:NSURLParentDirectoryURLKey error:&error];
+			 FXDLog_ERROR_ignored(260);
 			 
 			 if (parentDirectoryURL && [[parentDirectoryURL absoluteString] isEqualToString:[folderURL absoluteString]]) {
 				 
 				 id isHidden = nil;
 				 
 				 NSError *error = nil;
-				 [itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];FXDLog_ERRORexcept(260);
+				 [itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
+				 FXDLog_ERROR_ignored(260);
 				 
 				 if ([isHidden boolValue] == NO) {
 					 metadataItemArray[[itemURL absoluteString]] = metadataItem;
@@ -126,7 +128,8 @@
 			 id isDirectory = nil;
 			 
 			 NSError *error = nil;
-			 [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];FXDLog_ERRORexcept(260);
+			 [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+			 FXDLog_ERROR_ignored(260);
 			 
 			 if ([isDirectory boolValue]) {
 				 [subfolderURLarray addObject:nextURL];

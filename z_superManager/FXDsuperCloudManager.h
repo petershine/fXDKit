@@ -26,27 +26,20 @@
 
 
 #ifndef USE_UbiquitousDocuments
-	#define USE_UbiquitousDocuments	0
-#endif
-
-#ifndef USE_LocalDirectoryWatcher
-	#define USE_LocalDirectoryWatcher	0
+	#define USE_UbiquitousDocuments	FALSE
 #endif
 
 #ifndef USE_DownloadingEvictedFilesInitially
-	#define USE_DownloadingEvictedFilesInitially	0
+	#define USE_DownloadingEvictedFilesInitially	FALSE
 #endif
 
 
 #ifndef TEST_loggingTransferringPercentage
-	#define TEST_loggingTransferringPercentage	0
+	#define TEST_loggingTransferringPercentage	FALSE
 #endif
 
 
-#import "DirectoryWatcher.h"
-
-
-@interface FXDsuperCloudManager : FXDObject <NSMetadataQueryDelegate, DirectoryWatcherDelegate> {
+@interface FXDsuperCloudManager : FXDObject <NSMetadataQueryDelegate> {
 	BOOL _didFinishFirstGathering;
 	id _ubiquityIdentityToken;
 	
@@ -55,7 +48,6 @@
 	NSURL *_ubiquitousCachesURL;
 	
 	NSMetadataQuery *_cloudDocumentsQuery;
-	DirectoryWatcher *_localDirectoryWatcher;
 
 	NSOperationQueue *_evictingQueue;
 		
@@ -72,7 +64,6 @@
 @property (strong, nonatomic) NSURL *ubiquitousCachesURL;
 
 @property (strong, nonatomic) NSMetadataQuery *cloudDocumentsQuery;
-@property (strong, nonatomic) DirectoryWatcher *localDirectoryWatcher;
 
 @property (strong, nonatomic) NSOperationQueue *evictingQueue;
 
@@ -82,12 +73,11 @@
 #pragma mark - Public
 + (FXDsuperCloudManager*)sharedInstance;
 
-- (void)startUpdatingUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
-- (void)activatedUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
-- (void)failedToUpdateUbiquityContainerURLwithDidFinishBlock:(FXDblockDidFinish)didFinishBlock;
+- (void)startUpdatingUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)activatedUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)failedToUpdateUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)startObservingCloudDocumentsQueryNotifications;
-- (void)startWatchingLocalDirectoryChange;
 
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent;
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
