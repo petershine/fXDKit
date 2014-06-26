@@ -11,11 +11,11 @@
 
 
 #ifndef USE_ReactiveCocoa
-	#define	USE_ReactiveCocoa	TRUE
+	#define	USE_ReactiveCocoa	FALSE
 #endif
 
 #ifndef USE_AFNetworking
-	#define USE_AFNetworking	TRUE
+	#define USE_AFNetworking	FALSE
 #endif
 
 #ifndef USE_GPUImage
@@ -62,7 +62,6 @@
 	@import AVFoundation;
 	@import AssetsLibrary;
 
-	@import MediaPlayer;
 	@import MediaToolbox;
 
 	#import "FXDMediaItem.h"

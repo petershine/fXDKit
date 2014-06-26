@@ -6,6 +6,13 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
+typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
+	boxCornerTopLeft,
+	boxCornerBottomLeft,
+	boxCornerBottomRight,
+	boxCornerTopRight
+};
+
 
 @interface FXDView : UIView
 

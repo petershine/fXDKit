@@ -11,7 +11,7 @@
 
 
 #ifndef USE_Flurry
-	#define USE_Flurry	TRUE
+	#define USE_Flurry	FALSE
 #endif
 
 
