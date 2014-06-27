@@ -11,10 +11,12 @@
 
 
 #ifndef USE_ReactiveCocoa
+	#warning //TODO: Decide if ReactiveCocoa is used
 	#define	USE_ReactiveCocoa	FALSE
 #endif
 
 #ifndef USE_AFNetworking
+	#warning //TODO: Decide if AFNetworking is used
 	#define USE_AFNetworking	FALSE
 #endif
 

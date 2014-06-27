@@ -195,10 +195,12 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+#ifdef __IPHONE_8_0
 - (void)prepareForInterfaceBuilder {	FXDLog_DEFAULT;
 	[super prepareForInterfaceBuilder];
 	
 }
+#endif
 
 
 #pragma mark - Segues
