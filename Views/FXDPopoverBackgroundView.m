@@ -25,6 +25,11 @@
 
 
 #pragma mark - Initialization
++ (instancetype)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
+}
+
+#pragma mark -
 - (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 
@@ -35,11 +40,6 @@
     }
 
     return self;
-}
-
-#pragma mark -
-+ (instancetype)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
 }
 
 

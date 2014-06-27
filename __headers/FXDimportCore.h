@@ -29,6 +29,7 @@
 
 #pragma mark - Objects
 #import "FXDObject.h"
+#import "FXDsuperManager.h"
 
 #import "FXDString.h"
 #import "FXDURL.h"
@@ -84,7 +85,5 @@
 #pragma mark - Global controllers
 #import "FXDResponder.h"
 
-#import "FXDsuperManager.h"
-#import "FXDsuperGlobalManager.h"
 
 #endif

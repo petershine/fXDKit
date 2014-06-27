@@ -20,6 +20,11 @@
 
 
 #pragma mark - Initialization
++ (instancetype)sharedInstance {
+	IMPLEMENTATION_sharedInstance;
+}
+
+#pragma mark -
 - (instancetype)init {
 	self = [super init];
 

@@ -6,13 +6,14 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-@protocol FXDsuperManagerProtocol <NSObject>
+#warning //MARK: Necessary for inheriting sharedInstance initializer
+@protocol FXDprotocolInitializer <NSObject>
 @required
 + (instancetype)sharedInstance;
 @end
 
 
-@interface FXDsuperManager : FXDObject <FXDsuperManagerProtocol>
+@interface FXDsuperManager : FXDObject <FXDprotocolInitializer>
 
 #pragma mark - Initialization
 
