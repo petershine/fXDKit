@@ -21,6 +21,7 @@
 #endif
 
 #ifndef USE_GPUImage
+	#warning //TODO: Decide if GPUImage is used
 	#define USE_GPUImage	FALSE
 #endif
 
