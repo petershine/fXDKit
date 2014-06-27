@@ -96,7 +96,10 @@
 							} else {\
 								FXDLog(@"%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
-	#define FXDLog_SEPARATE		FXDLog(@"\n\n	%@", _ClassSelectorSelf)
+	#define FXDLog_SEPARATE	if ([NSThread isMainThread]) {\
+								FXDLog(@"\n\n	%@", _ClassSelectorSelf);\
+							} else {\
+								FXDLog(@"\n\n	%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\

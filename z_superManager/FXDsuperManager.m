@@ -20,8 +20,8 @@
 
 
 #pragma mark - Initialization
+#warning //MARK: Subclass should implement its own sharedInstance
 + (instancetype)sharedInstance {	FXDLog_OVERRIDE;
-	#warning //MARK: Subclass should implement its own sharedInstance
 	IMPLEMENTATION_sharedInstance;
 }
 
@@ -30,7 +30,7 @@
 	self = [super init];
 
 	if (self) {
-		FXDLog_DEFAULT;
+		FXDLog_SEPARATE;
 	}
 
 	return self;
