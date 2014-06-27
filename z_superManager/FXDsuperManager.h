@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#warning //MARK: Necessary for inheriting sharedInstance initializer
 @protocol FXDprotocolInitializer <NSObject>
 @required
 + (instancetype)sharedInstance;
