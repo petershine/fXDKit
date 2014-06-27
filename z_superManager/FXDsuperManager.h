@@ -6,8 +6,13 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+@protocol FXDsuperManagerProtocol <NSObject>
+@required
++ (instancetype)sharedInstance;
+@end
 
-@interface FXDsuperManager : FXDObject
+
+@interface FXDsuperManager : FXDObject <FXDsuperManagerProtocol>
 
 #pragma mark - Initialization
 

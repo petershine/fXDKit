@@ -45,8 +45,6 @@
 
 
 #pragma mark - Initialization
-+ (instancetype)sharedInstance;
-
 
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback;
