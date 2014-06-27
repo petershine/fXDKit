@@ -11,10 +11,8 @@
 
 #if DEBUG & ForDEVELOPER
 	#define USE_FXDLog	TRUE
-
 #else
 	#define USE_FXDLog	FALSE
-
 #endif
 
 
