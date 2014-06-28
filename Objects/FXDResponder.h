@@ -7,7 +7,7 @@
 //
 
 
-@interface FXDResponder : UIResponder <UIApplicationDelegate>
+@interface FXDResponder : UIResponder <UIApplicationDelegate, NSObjectProtocol>
 
 @property (nonatomic) BOOL isAppLaunching;
 @property (nonatomic) BOOL didFinishLaunching;

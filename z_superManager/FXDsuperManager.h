@@ -12,6 +12,8 @@
 @end
 
 
+#import "FXDObject.h"
+
 @interface FXDsuperManager : FXDObject <FXDprotocolInitializer>
 
 #pragma mark - Initialization

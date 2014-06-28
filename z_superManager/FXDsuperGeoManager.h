@@ -12,10 +12,13 @@
 #import "FXDAnnotationView.h"
 #import "FXDMapView.h"
 
+
 @interface FXDAnnotation : MKPointAnnotation
 @property (strong, nonatomic) id addedObj;
 @end
 
+
+#import "FXDsuperManager.h"
 
 @interface FXDsuperGeoManager : FXDsuperManager <CLLocationManagerDelegate>
 

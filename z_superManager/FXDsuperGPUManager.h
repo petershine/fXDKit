@@ -27,6 +27,8 @@
 @end
 
 
+#import "FXDsuperManager.h"
+
 @interface FXDsuperGPUManager : FXDsuperManager
 @property (nonatomic) NSInteger lastFilterIndex;
 

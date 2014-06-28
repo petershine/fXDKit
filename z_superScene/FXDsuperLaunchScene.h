@@ -15,6 +15,8 @@
 #endif
 
 
+#import "FXDViewController.h"
+
 @interface FXDsuperLaunchScene : FXDViewController
 
 // IBOutlets

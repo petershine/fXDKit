@@ -6,11 +6,12 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-
 #ifndef scaleSceneDismissingOffset
 	#define scaleSceneDismissingOffset	0.275
 #endif
 
+
+#import "FXDViewController.h"
 
 @interface FXDsuperScrollScene : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
