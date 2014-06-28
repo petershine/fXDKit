@@ -353,8 +353,9 @@
 	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
 	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
 		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
-		 
-		 if (buttonIndex == buttonIndexAccept) {
+
+		 //MARK: Assume buttonIndex == 1: is Accept
+		 if (buttonIndex == 1) {
 			 [self
 			  enumerateAllMainEntityObjShouldShowProgressView:YES
 			  withEnumerationBlock:^(NSManagedObjectContext *managedContext,

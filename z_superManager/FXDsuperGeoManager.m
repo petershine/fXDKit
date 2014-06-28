@@ -9,10 +9,6 @@
 #import "FXDsuperGeoManager.h"
 
 
-@implementation FXDAnnotation
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperGeoManager
 
@@ -191,98 +187,6 @@
 	 endBackgroundTask:self.monitoringTask];
 
 	self.monitoringTask = UIBackgroundTaskInvalid;
-}
-
-- (void)testWithGooglePlaceApiWithNewLocation:(CLLocation*)newLocation {
-
-	self.monitoringTask =
-	[[UIApplication sharedApplication]
-	 beginBackgroundTaskWithExpirationHandler:^{
-
-		 [[UIApplication sharedApplication]
-		  endBackgroundTask:self.monitoringTask];
-
-		 self.monitoringTask = UIBackgroundTaskInvalid;
-	 }];
-
-
-	void (^NotifyingLocationUpdating)(id, NSError*) = ^(NSDictionary *responseObject, NSError *error){
-		FXDLog_ERROR;
-
-		NSMutableArray *unsortedPlaceArray = [[NSMutableArray alloc] initWithCapacity:0];
-
-		for (NSDictionary *placeResult in responseObject[@"results"]) {
-			CLLocation *placeLocation = [[CLLocation alloc]
-										 initWithLatitude:[placeResult[@"geometry"][@"location"][@"lat"] doubleValue]
-										 longitude:[placeResult[@"geometry"][@"location"][@"lng"] doubleValue]];
-
-			CLLocationDistance placeDistance = [newLocation distanceFromLocation:placeLocation];
-
-			[unsortedPlaceArray addObject:@{@"name":	placeResult[@"name"],
-											@"distance": @(placeDistance)}];
-		}
-
-
-		NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]];
-		NSArray *sortedPlaceArray = [unsortedPlaceArray sortedArrayUsingDescriptors:sortDescriptors];
-
-
-		NSString *alertBody = nil;
-
-		if ([sortedPlaceArray count] > 0) {
-			NSDictionary *nearestPlaceDictionary = [sortedPlaceArray firstObject];
-			alertBody = [NSString stringWithFormat:@"PLACE: %@: %@", nearestPlaceDictionary[@"name"], nearestPlaceDictionary[@"distance"]];
-			FXDLogObject(alertBody);
-		}
-
-
-		FXDLogObject(alertBody);
-
-
-		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
-		localNotifcation.repeatInterval = 0;
-		localNotifcation.hasAction = YES;
-		localNotifcation.alertBody = (alertBody) ? alertBody:[newLocation description];
-		localNotifcation.soundName = UILocalNotificationDefaultSoundName;
-
-		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
-
-
-		FXDLog_REMAINING;
-
-		[[UIApplication sharedApplication]
-		 endBackgroundTask:self.monitoringTask];
-
-		self.monitoringTask = UIBackgroundTaskInvalid;
-	};
-
-
-	static NSString *apiFormat = @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=1000&sensor=true&key=***REMOVED***";
-
-
-	NSString *requestURLstring = [NSString stringWithFormat:apiFormat,
-								  @(newLocation.coordinate.latitude),
-								  @(newLocation.coordinate.longitude)];
-	FXDLogObject(requestURLstring);
-
-
-	NSURL *requestURL = [NSURL URLWithString:requestURLstring];
-	NSURLRequest *apiRequest = [NSURLRequest requestWithURL:requestURL];
-
-
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:apiRequest];
-	operation.responseSerializer = [AFJSONResponseSerializer serializer];
-
-	[operation
-	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		 NotifyingLocationUpdating(responseObject, nil);
-
-	 }
-	 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		 NotifyingLocationUpdating(nil, error);
-	 }];
-
-	[operation start];
 }
 
 

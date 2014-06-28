@@ -7,12 +7,13 @@
 //
 
 
-@interface FXDResponder : UIResponder <UIApplicationDelegate, NSObjectProtocol>
+@interface FXDResponder : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic) BOOL isAppLaunching;
 @property (nonatomic) BOOL didFinishLaunching;
 
-@property (strong, nonatomic) FXDWindow *window;
+@property (strong, nonatomic) UIWindow *window;
+
 
 #pragma mark - Public
 

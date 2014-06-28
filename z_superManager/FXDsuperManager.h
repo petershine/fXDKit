@@ -6,15 +6,14 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+
 @protocol FXDprotocolInitializer <NSObject>
 @required
 + (instancetype)sharedInstance;
 @end
 
 
-#import "FXDObject.h"
-
-@interface FXDsuperManager : FXDObject <FXDprotocolInitializer>
+@interface FXDsuperManager : NSObject <FXDprotocolInitializer>
 
 #pragma mark - Initialization
 

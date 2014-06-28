@@ -9,7 +9,6 @@
 #define	userdefaultStringInitialWebURL	@"InitialWebURLstringKey"
 
 #ifndef initialWebURLstring
-//TODO: Define initialWebURLstring
 	#define initialWebURLstring	@"http://www.google.com"
 #endif
 

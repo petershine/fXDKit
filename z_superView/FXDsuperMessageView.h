@@ -10,8 +10,7 @@
 #define buttonIndexAccept	1
 
 
-@class FXDsuperProgressView;
-
+#import "FXDsuperProgressView.h"
 
 @interface FXDsuperMessageView : FXDsuperProgressView
 

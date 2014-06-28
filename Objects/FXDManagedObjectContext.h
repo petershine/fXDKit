@@ -24,6 +24,9 @@
 #endif
 
 
+@import CoreData;
+
+
 @interface FXDManagedObjectContext : NSManagedObjectContext
 @end
 

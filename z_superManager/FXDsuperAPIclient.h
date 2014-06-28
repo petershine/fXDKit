@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
+#import <AFNetworking.h>
+#import <UIKit+AFNetworking.h>
+
 
 @interface FXDsuperAPIclient : FXDsuperManager {
 	NSString *_mainRootURLformat;

@@ -6,9 +6,8 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-#import "FXDsuperProgressView.h"
-#import "FXDsuperMessageView.h"
-
+@class FXDsuperProgressView;
+@class FXDsuperMessageView;
 
 @class FXDsuperLaunchScene;
 

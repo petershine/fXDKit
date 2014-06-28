@@ -9,6 +9,10 @@
 #import "FXDAnnotationView.h"
 
 
+@implementation FXDAnnotation
+@end
+
+
 #pragma mark - Public implementation
 @implementation FXDAnnotationView
 

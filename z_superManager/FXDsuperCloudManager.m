@@ -451,7 +451,8 @@
 	if (isUbiquitousItem == NO) {
 		return didEvict;
 	}
-	
+
+#warning //TODO: Implement progress reporting
 	/*
 	id isUploaded = nil;
 	id isDownloaded = nil;
@@ -459,12 +460,14 @@
 	[itemURL getResourceValue:&isUploaded forKey:NSURLUbiquitousItemIsUploadedKey error:&error];FXDLog_ERROR;
 	[itemURL getResourceValue:&isDownloaded forKey:NSURLUbiquitousItemIsDownloadedKey error:&error];FXDLog_ERROR;
 	 */
-	
+
+	/*
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 		 FXDWindow *applicationWindow = (FXDWindow*)[UIApplication mainWindow];
 		 applicationWindow.progressView.labelMessage_1.text = [itemURL lastPathComponent];
 	 }];
+	 */
 	
 	//if ([isUploaded boolValue] && [isDownloaded boolValue]) {
 		/*

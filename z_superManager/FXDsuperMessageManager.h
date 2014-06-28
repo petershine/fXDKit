@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+@import MessageUI;
+
 
 @interface FXDsuperMessageManager : FXDsuperManager <MFMailComposeViewControllerDelegate>
 

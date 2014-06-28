@@ -11,6 +11,9 @@
 #endif
 
 
+@import CoreData;
+
+
 @interface FXDManagedObject : NSManagedObject
 
 #pragma mark - Public

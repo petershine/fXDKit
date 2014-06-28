@@ -10,6 +10,11 @@
 #define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
 
 
+@import Social;
+@import Accounts;
+@import CoreLocation;
+
+
 @interface FXDsuperSocialManager : FXDsuperManager {
 	NSString *_typeIdentifier;
 	NSString *_reasonForConnecting;

@@ -11,8 +11,6 @@
 #endif
 
 
-#import "FXDViewController.h"
-
 @interface FXDsuperScrollScene : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
 	NSString *_mainCellIdentifier;

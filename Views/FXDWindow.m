@@ -8,6 +8,9 @@
 
 #import "FXDWindow.h"
 
+#import "FXDsuperProgressView.h"
+#import "FXDsuperMessageView.h"
+
 #import "FXDsuperLaunchScene.h"
 
 

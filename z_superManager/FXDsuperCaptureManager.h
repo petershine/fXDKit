@@ -10,6 +10,9 @@
 #define filternameTransform		@"CIAffineTransform"
 
 
+@import AVFoundation;
+
+
 @interface AVCaptureDevice (Added)
 + (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
 - (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;

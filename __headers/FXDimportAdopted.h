@@ -37,29 +37,23 @@
 #endif
 
 #if USE_GPUImage	//https://github.com/BradLarson/GPUImage
-	#import "FXDsuperGPUManager.h"
+	#import <GPUImage.h>
 #endif
 
 
 #if USE_LocationFrameworks
+	@import CoreLocation;
+	@import MapKit;
+
+	#import "FXDMapView.h"
+	#import "FXDAnnotationView.h"
 	#import "FXDsuperGeoManager.h"
 #endif
 
-#if USE_AdvertisementFrameworks
-	@import iAd;
-	@import AdSupport;
-#endif
-
-#if USE_SocialFrameworks
-	@import MessageUI;
-	@import Accounts;
-	@import Social;
-#endif
 
 #if USE_MultimediaFrameworks
 	@import CoreMedia;
 	@import CoreVideo;
-	@import CoreGraphics;
 	@import OpenGLES;
 
 	@import AVFoundation;
@@ -67,10 +61,38 @@
 
 	@import MediaToolbox;
 
-	#import "FXDMediaItem.h"
+	#ifndef filetypeVideoDefault
+		#define filetypeVideoDefault AVFileTypeQuickTimeMovie
+	#endif
 
+@interface CALayer (MultimediaFrameworks)
+- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;
+@end
+
+@interface NSURL (MultimediaFrameworks)
++ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
+@end
+
+@interface UIDevice (MultimediaFrameworks)
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
+@end
+
+	#import "FXDMediaItem.h"
 	#import "FXDsuperCaptureManager.h"
 	#import "FXDsuperPlaybackManager.h"
+
+#endif
+
+
+#if USE_SocialFrameworks
+@import MessageUI;
+@import Accounts;
+@import Social;
+#endif
+
+#if USE_AdvertisementFrameworks
+@import iAd;
+@import AdSupport;
 #endif
 
 

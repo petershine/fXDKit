@@ -9,16 +9,6 @@
 @import CoreLocation;
 @import MapKit;
 
-#import "FXDAnnotationView.h"
-#import "FXDMapView.h"
-
-
-@interface FXDAnnotation : MKPointAnnotation
-@property (strong, nonatomic) id addedObj;
-@end
-
-
-#import "FXDsuperManager.h"
 
 @interface FXDsuperGeoManager : FXDsuperManager <CLLocationManagerDelegate>
 
@@ -46,7 +36,6 @@
 
 //MARK: For testing significantMonitoring
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
-- (void)testWithGooglePlaceApiWithNewLocation:(CLLocation*)newLocation;
 
 
 //MARK: - Observer implementation

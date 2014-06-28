@@ -9,6 +9,11 @@
 @import MapKit;
 
 
+@interface FXDAnnotation : MKPointAnnotation
+@property (strong, nonatomic) id addedObj;
+@end
+
+
 @interface FXDAnnotationView : MKAnnotationView
 
 // IBOutlets

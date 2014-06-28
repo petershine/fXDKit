@@ -1,6 +1,12 @@
+//
+//  FXDimportCore.m
+//  fXDKit
+//
+//  Created by petershine on 6/28/14.
+//  Copyright (c) 2014 fXceed. All rights reserved.
+//
 
-#import "FXDKit.h"
-
+#import "FXDimportCore.h"
 
 @implementation NSIndexPath (Added)
 - (NSString*)stringValue {
@@ -53,36 +59,6 @@
 }
 @end
 
-
-#if USE_MultimediaFrameworks
-@implementation CALayer (Added)
-- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
-	//MARK: Use removedOnCompletion & fillMode appropriately
-	//http://stackoverflow.com/a/14598962/259765
-	[self setOpacity:0.0];
-
-	CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
-	fadeIn.fromValue = @(0.0);
-	fadeIn.toValue = @(1.0);
-	fadeIn.beginTime = (fadeInTime > 0.0 ? fadeInTime:AVCoreAnimationBeginTimeAtZero);
-	fadeIn.duration = duration;
-	fadeIn.removedOnCompletion = NO;
-	fadeIn.fillMode = kCAFillModeForwards;
-	[self addAnimation:fadeIn forKey:@"animationFadeIn"];
-
-	CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
-	fadeOut.fromValue = @(1.0);
-	fadeOut.toValue = @(0.0);
-	fadeOut.beginTime = fadeOutTime;
-	fadeOut.duration = duration;
-	fadeOut.removedOnCompletion = NO;
-	fadeOut.fillMode = kCAFillModeForwards;
-	[self addAnimation:fadeOut forKey:@"animationFadeOut"];
-
-	FXDLog(@"%@ %@", _Variable(fadeIn.beginTime), _Variable(fadeOut.beginTime));
-}
-@end
-#endif
 
 @implementation CATextLayer (Added)
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
@@ -142,7 +118,7 @@
 	if ([textControl isKindOfClass:[UITextView class]]) {
 		textLayer.wrapped = YES;
 	}
-	
+
 
 	return textLayer;
 }
@@ -304,26 +280,8 @@
 			break;
 		}
 	}
-
+	
 	return affineTransform;
 }
 
-#if USE_MultimediaFrameworks
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition {
-
-	CGAffineTransform affineTransform = [self affineTransformForOrientation:deviceOrientation];
-
-	if (deviceOrientation == UIDeviceOrientationLandscapeLeft
-		&& cameraPosition == AVCaptureDevicePositionFront) {
-		affineTransform = CGAffineTransformMakeRotation( ( -180 * M_PI ) / 180 );
-	}
-	else if (deviceOrientation == UIDeviceOrientationLandscapeRight
-		&& cameraPosition == AVCaptureDevicePositionFront) {
-		affineTransform = CGAffineTransformMakeRotation( 0 / 180 );
-	}
-
-	return affineTransform;
-}
-#endif
 @end
-

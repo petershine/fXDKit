@@ -21,6 +21,9 @@
 #endif
 
 
+@import CoreData;
+
+
 @interface FXDManagedDocument : UIManagedDocument
 
 #pragma mark - Public

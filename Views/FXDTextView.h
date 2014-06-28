@@ -6,7 +6,6 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-
 @interface FXDTextView : UITextView
 
 // IBOutlets

@@ -14,12 +14,5 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
-typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
-	sectionPositionOne,
-	sectionPositionTop,
-	sectionPositionMiddle,
-	sectionPositionBottom
-};
-
 
 #endif

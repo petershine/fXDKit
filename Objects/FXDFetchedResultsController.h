@@ -6,11 +6,12 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
+@import CoreData;
+
 
 @interface FXDFetchedResultsController : NSFetchedResultsController
 
 @property (weak, nonatomic) id<NSFetchedResultsControllerDelegate> extraDelegate;
-
 
 #pragma mark - Public
 

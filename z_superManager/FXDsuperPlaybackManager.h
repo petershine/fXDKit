@@ -16,6 +16,9 @@
 #endif
 
 
+@import AVFoundation;
+
+
 @interface FXDviewAssetDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 + (instancetype)assetDisplay;

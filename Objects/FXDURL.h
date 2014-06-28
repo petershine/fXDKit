@@ -34,12 +34,4 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 
 - (NSString*)fileSizeString;
 
-#if USE_MultimediaFrameworks
-#ifndef filetypeVideoDefault
-	#define filetypeVideoDefault AVFileTypeQuickTimeMovie
-#endif
-
-+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
-#endif
-
 @end

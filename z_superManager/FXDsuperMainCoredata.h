@@ -17,6 +17,9 @@
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
 
+@import CoreData;
+
+
 @interface FXDsuperMainCoredata : FXDsuperManager <NSFetchedResultsControllerDelegate> {
 
 	BOOL _shouldMergeForManagedContext;

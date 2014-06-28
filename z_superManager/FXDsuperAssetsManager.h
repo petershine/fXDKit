@@ -8,6 +8,7 @@
 
 @import AssetsLibrary;
 
+
 @interface ALAsset (Added)
 - (id)valueForKey:(NSString *)key;
 @end
