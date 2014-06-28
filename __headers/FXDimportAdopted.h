@@ -61,6 +61,9 @@
 
 	@import MediaToolbox;
 
+	#import "FXDMediaItem.h"
+
+
 	#ifndef filetypeVideoDefault
 		#define filetypeVideoDefault AVFileTypeQuickTimeMovie
 	#endif
@@ -76,11 +79,6 @@
 @interface UIDevice (MultimediaFrameworks)
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
 @end
-
-	#import "FXDMediaItem.h"
-	#import "FXDsuperCaptureManager.h"
-	#import "FXDsuperPlaybackManager.h"
-
 #endif
 
 
