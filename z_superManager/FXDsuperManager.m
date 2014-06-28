@@ -20,7 +20,6 @@
 
 
 #pragma mark - Initialization
-#warning //MARK: Subclass should implement its own sharedInstance
 + (instancetype)sharedInstance {	FXDLog_OVERRIDE;
 	IMPLEMENTATION_sharedInstance;
 }

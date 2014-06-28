@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+@import Foundation;
+@import UIKit;
 
+
+#warning //MARK: Subclass should implement its own sharedInstance
 @protocol FXDprotocolInitializer <NSObject>
 @required
 + (instancetype)sharedInstance;
