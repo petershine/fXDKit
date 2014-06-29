@@ -21,5 +21,4 @@
 
 - (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator;
 
-- (NSString*)replacedSelf;
 @end

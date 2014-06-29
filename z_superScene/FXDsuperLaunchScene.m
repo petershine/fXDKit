@@ -19,13 +19,9 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
+	//MARK: Just use default asset name
 	if (self.imageviewDefault && self.imageviewDefault.image == nil) {
-		if (SCREEN_SIZE_35inch) {
-			self.imageviewDefault.image = [UIImage bundledImageForName:imageDefaulLaunch];
-		}
-		else {
-			self.imageviewDefault.image = [UIImage bundledImageForName:imageDefaulLaunch568h];
-		}
+		self.imageviewDefault.image = [UIImage bundledImageForName:@"LaunchImage"];
 	}
 }
 

@@ -125,7 +125,7 @@
 	CGRect modifiedFrame = presentedScene.view.frame;
 	modifiedFrame.origin.x -= coveringOffset.x;
 	modifiedFrame.origin.y -= coveringOffset.y;
-	modifiedFrame.origin.y += (heightDynamicStatusBar *coveringDirection.y);
+	modifiedFrame.origin.y += ([UIApplication sharedApplication].statusBarFrame.size.height *coveringDirection.y);
 	presentedScene.view.frame = modifiedFrame;
 
 	

@@ -9,29 +9,26 @@
 #define FXDKit_FXDconfigDeveloper_h
 
 
-#if DEBUG & ForDEVELOPER
+#if ForDEVELOPER
 	#define USE_FXDLog	TRUE
 #else
 	#define USE_FXDLog	FALSE
 #endif
 
 
-#define _Object(object)		[[NSString stringWithFormat:@"%s: %@", #object, object] replacedSelf]
-#define _Struct(struct)		[[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]] replacedSelf]
-#define _Variable(variable)	[[NSString stringWithFormat:@"%s: %@", #variable, @(variable)] replacedSelf]
-#define _BOOL(boolean)		[[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")] replacedSelf]
-#define _Selector(selector)	[[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)] replacedSelf]
+#define _Object(object)		[NSString stringWithFormat:@"%s: %@", #object, object]
+#define _Struct(struct)		[NSString stringWithFormat:@"%s: %@", #struct, [NSValue valueWithBytes:&struct objCType:@encode(typeof(struct))]]
+#define _Variable(variable)	[NSString stringWithFormat:@"%s: %@", #variable, @(variable)]
+#define _BOOL(boolean)		[NSString stringWithFormat:@"%s: %@", #boolean, (boolean ? @"YES":@"NO")]
+#define _Selector(selector)	[NSString stringWithFormat:@"%s: %@", #selector, NSStringFromSelector(selector)]
 
-#define _Point(point)			[[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)] replacedSelf]
-#define _Size(size)				[[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)] replacedSelf]
-#define _Rect(rect)				[[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)] replacedSelf]
-#define _Transform(transform)	[[NSString stringWithFormat:@"%s: %@", #transform, NSStringFromCGAffineTransform(transform)] replacedSelf]
+#define _Point(point)			[NSString stringWithFormat:@"%s: %@", #point, NSStringFromCGPoint(point)]
+#define _Size(size)				[NSString stringWithFormat:@"%s: %@", #size, NSStringFromCGSize(size)]
+#define _Rect(rect)				[NSString stringWithFormat:@"%s: %@", #rect, NSStringFromCGRect(rect)]
+#define _Transform(transform)	[NSString stringWithFormat:@"%s: %@", #transform, NSStringFromCGAffineTransform(transform)]
 
-#define _Time(time)				[[NSString stringWithFormat:@"%s: %@", #time, ValueOfTime(time)] replacedSelf]
-#define _TimeRange(timeRange)	[[NSString stringWithFormat:@"%s: %@", #timeRange, ValueOfTimeRange(timeRange)] replacedSelf]
-
-
-#define _Orientation	[NSString stringWithFormat:@"statusBarOrientation: %ld", (long)[UIApplication sharedApplication].statusBarOrientation]
+#define _Time(time)				[NSString stringWithFormat:@"%s: %@", #time, ValueOfTime(time)]
+#define _TimeRange(timeRange)	[NSString stringWithFormat:@"%s: %@", #timeRange, ValueOfTimeRange(timeRange)]
 
 
 #define _Error(error)	[NSString\

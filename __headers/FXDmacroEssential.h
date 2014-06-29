@@ -32,16 +32,9 @@
 #define application_DisplayName			[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
 
 
-#define iosVersion6	6.0
-#define iosVersion7	7.0
 #define iosVersion8	8.0
 
 #define SYSTEM_VERSION_sameOrHigher(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue >= versionNumber)
-#define SYSTEM_VERSION_lowerThan(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue < versionNumber)
-
-#define SCREEN_SIZE_35inch	(MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) <= height35inch)
-
-#define DEVICE_IDIOM_iPad	(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
 
 
 #define IMPLEMENTATION_sharedInstance	static dispatch_once_t once;\
@@ -70,7 +63,6 @@
 
 
 #define NSIndexPathMake(section, row)	[NSIndexPath indexPathForRow:row inSection:section]
-#define NSIndexPathString(section, row)	[NSIndexPathMake(section, row) stringValue]
 
 
 #define ValueOfTime(timeStruct)		[NSValue valueWithCMTime:timeStruct]
@@ -81,9 +73,6 @@
 
 #define degreeAngleForRadian(radian)	(radian*180.0/M_PI)
 #define radianAngleForDegree(degree)	(degree*M_PI/180.0)
-
-
-#define heightDynamicStatusBar	[UIApplication sharedApplication].statusBarFrame.size.height
 
 
 #endif

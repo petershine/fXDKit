@@ -72,12 +72,12 @@
 	FXDLogObject(currentLanguage);
 #endif
 
-	NSString *mailAddr = NSLocalizedString(application_ContactEmail, nil);
+	NSString *contactEmail = NSLocalizedString(application_ContactEmail, nil);
 
 	NSArray *toRecipients = nil;
 
-	if (mailAddr) {
-		toRecipients = @[mailAddr];
+	if (contactEmail) {
+		toRecipients = @[contactEmail];
 	}
 
 

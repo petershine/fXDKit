@@ -42,7 +42,7 @@
 + (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
 	NSString *storyboardName = NSStringFromClass([self class]);
 	
-	if (DEVICE_IDIOM_iPad) {
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		storyboardName = [storyboardName stringByAppendingString:@"_iPad"];
 	}
 

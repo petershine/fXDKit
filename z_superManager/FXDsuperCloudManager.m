@@ -246,7 +246,9 @@
 #endif
 
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL object:self.ubiquityContainerURL];
+	[[NSNotificationCenter defaultCenter]
+	 postNotificationName:notificationCloudManagerDidUpdateUbiquityContainerURL
+	 object:self.ubiquityContainerURL];
 	
 	if (finishCallback) {
 		finishCallback(_cmd, YES, nil);

@@ -6,14 +6,6 @@
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
-#ifndef imageDefaulLaunch
-	#define imageDefaulLaunch	@"Default"
-#endif
-
-#ifndef imageDefaulLaunch568h
-	#define imageDefaulLaunch568h	@"Default-568h"
-#endif
-
 
 @interface FXDsuperLaunchScene : FXDViewController
 

@@ -39,10 +39,6 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Categories
-@interface NSIndexPath (Added)
-- (NSString*)stringValue;
-@end
-
 
 @interface NSError (Added)
 - (NSDictionary*)essentialParameters;

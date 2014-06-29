@@ -230,8 +230,8 @@
 										   NO,	//MARK: to allow transparency
 										   scale);
 
-	if (SYSTEM_VERSION_lowerThan(iosVersion7)) {
-		[self.layer renderInContext:UIGraphicsGetCurrentContext()];
+	if ([self.layer respondsToSelector:@selector(renderInContext:)]) {
+		[self.layer performSelector:@selector(renderInContext:) withObject:(__bridge id)UIGraphicsGetCurrentContext()];
 	}
 	else {
 		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds

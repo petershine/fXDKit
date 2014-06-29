@@ -55,9 +55,6 @@
 #define heightToolBar	heightNavigationBar
 
 
-#define height35inch	480.0
-#define height40inch	568.0
-
 #define marginDefault	8.0
 
 #define limitConcurrentOperationCount	1
