@@ -6,22 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef TEST_loggingManagedObject
-	#define TEST_loggingManagedObject	FALSE
-#endif
-
-
 @import CoreData;
 
 
 @interface FXDManagedObject : NSManagedObject
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
 
 

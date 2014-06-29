@@ -9,13 +9,6 @@
 #import "FXDsuperAssetsManager.h"
 
 
-@implementation ALAsset (Added)
-- (id)valueForKey:(NSString *)key {
-	return [self valueForProperty:key];
-}
-@end
-
-
 #pragma mark - Public implementation
 @implementation FXDsuperAssetsManager
 

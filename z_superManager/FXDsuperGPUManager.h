@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+@import AVFoundation;
+
 #import <GPUImage.h>
 
 
@@ -28,7 +30,6 @@
 
 
 #import "FXDsuperManager.h"
-
 @interface FXDsuperGPUManager : FXDsuperManager
 @property (nonatomic) NSInteger lastFilterIndex;
 

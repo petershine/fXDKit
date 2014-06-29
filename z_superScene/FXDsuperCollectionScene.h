@@ -8,7 +8,6 @@
 
 
 #import "FXDsuperTableScene.h"
-
 @interface FXDsuperCollectionScene : FXDsuperTableScene <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 // IBOutlets

@@ -27,15 +27,12 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 
 #pragma mark - IBActions
 
-
 #pragma mark - Public
 - (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage;
-
 
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
-
 
 @end
 

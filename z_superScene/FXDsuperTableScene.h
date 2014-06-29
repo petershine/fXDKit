@@ -8,7 +8,6 @@
 
 
 #import "FXDsuperScrollScene.h"
-
 @interface FXDsuperTableScene : FXDsuperScrollScene <UITableViewDataSource, UITableViewDelegate>
 
 // IBOutlets

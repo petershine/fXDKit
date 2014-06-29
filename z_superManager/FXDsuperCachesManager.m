@@ -288,7 +288,3 @@
 //MARK: - Delegate implementation
 
 @end
-
-#pragma mark - Category
-@implementation FXDsuperCachesManager (Added)
-@end

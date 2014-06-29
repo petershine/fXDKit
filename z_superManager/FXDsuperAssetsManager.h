@@ -9,11 +9,6 @@
 @import AssetsLibrary;
 
 
-@interface ALAsset (Added)
-- (id)valueForKey:(NSString *)key;
-@end
-
-
 #import "FXDsuperManager.h"
 @interface FXDsuperAssetsManager : FXDsuperManager
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;

@@ -11,7 +11,7 @@
 	FXDcallbackFinish _dismissedCallback;
 }
 
-@property (copy, nonatomic) FXDcallbackFinish dismissedCallback;
+@property (copy) FXDcallbackFinish dismissedCallback;
 
 @end
 

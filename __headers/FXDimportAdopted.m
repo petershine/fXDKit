@@ -70,4 +70,89 @@
 }
 @end
 
+@implementation AVCaptureDevice (MultimediaFrameworks)
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode {
+
+	AVCaptureDevice *videoCaptureDevice = nil;
+
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+	for (AVCaptureDevice *device in devices) {
+
+		if ([device position] != cameraPosition) {
+			continue;
+		}
+
+
+		videoCaptureDevice = device;
+		break;
+	}
+
+	FXDLog_DEFAULT;
+	[videoCaptureDevice applyDefaultConfigurationWithFlashMode:flashMode];
+
+	return videoCaptureDevice;
+}
+
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode {
+	NSError *error = nil;
+
+	if ([self lockForConfiguration:&error]) {
+
+		if ([self isFlashModeSupported:flashMode]) {
+			self.flashMode = flashMode;
+		}
+
+		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+		}
+
+		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+		}
+
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+		}
+
+		self.subjectAreaChangeMonitoringEnabled = YES;
+
+		[self unlockForConfiguration];
+	}
+
+	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@ %@ %@ %@", _Variable(self.flashMode), _Variable(self.focusMode), _Variable(self.exposureMode), _Variable(self.whiteBalanceMode), _BOOL(self.subjectAreaChangeMonitoringEnabled));
+
+	FXDLog_ERROR;
+}
+
+- (void)addDefaultNotificationObserver:(id)observer {	FXDLog_DEFAULT;
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter
+	 addObserver:observer
+	 selector:@selector(observedAVCaptureDeviceWasConnected:)
+	 name:AVCaptureDeviceWasConnectedNotification
+	 object:self];
+
+	[notificationCenter
+	 addObserver:observer
+	 selector:@selector(observedAVCaptureDeviceWasDisconnected:)
+	 name:AVCaptureDeviceWasDisconnectedNotification
+	 object:self];
+
+	[notificationCenter
+	 addObserver:observer
+	 selector:@selector(observedAVCaptureDeviceSubjectAreaDidChange:)
+	 name:AVCaptureDeviceSubjectAreaDidChangeNotification
+	 object:self];
+}
+@end
+
+@implementation ALAsset (MultimediaFrameworks)
+- (id)valueForKey:(NSString *)key {
+	return [self valueForProperty:key];
+}
+@end
+
 #endif

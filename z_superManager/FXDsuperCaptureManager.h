@@ -13,13 +13,6 @@
 @import AVFoundation;
 
 
-@interface AVCaptureDevice (Added)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)addDefaultNotificationObserver:(id)observer;
-@end
-
-
 #import "FXDsuperManager.h"
 @interface FXDsuperCaptureManager : FXDsuperManager <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;

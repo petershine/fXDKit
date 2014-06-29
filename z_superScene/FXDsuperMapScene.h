@@ -12,7 +12,6 @@
 
 
 #import "FXDsuperTableScene.h"
-
 @interface FXDsuperMapScene : FXDsuperTableScene <MKMapViewDelegate> {
 	FXDMapView *_mainMapview;
 }

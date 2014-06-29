@@ -11,7 +11,6 @@
 
 
 #import "FXDsuperProgressView.h"
-
 @interface FXDsuperMessageView : FXDsuperProgressView
 
 @property (nonatomic) BOOL didPressAcceptButton;

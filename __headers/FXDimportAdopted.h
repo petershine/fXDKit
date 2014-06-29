@@ -41,6 +41,17 @@
 #endif
 
 
+#if USE_AdvertisementFrameworks
+	@import iAd;
+	@import AdSupport;
+#endif
+
+#if USE_SocialFrameworks
+	@import MessageUI;
+	@import Accounts;
+	@import Social;
+#endif
+
 #if USE_LocationFrameworks
 	@import CoreLocation;
 	@import MapKit;
@@ -50,7 +61,6 @@
 	#import "FXDsuperGeoManager.h"
 #endif
 
-
 #if USE_MultimediaFrameworks
 	@import CoreMedia;
 	@import CoreVideo;
@@ -59,6 +69,7 @@
 	@import AVFoundation;
 	@import AssetsLibrary;
 
+	@import MediaPlayer;
 	@import MediaToolbox;
 
 	#import "FXDMediaItem.h"
@@ -79,18 +90,17 @@
 @interface UIDevice (MultimediaFrameworks)
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
 @end
-#endif
 
+@interface AVCaptureDevice (MultimediaFrameworks)
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)addDefaultNotificationObserver:(id)observer;
+@end
 
-#if USE_SocialFrameworks
-	@import MessageUI;
-	@import Accounts;
-	@import Social;
-#endif
+@interface ALAsset (MultimediaFrameworks)
+- (id)valueForKey:(NSString *)key;
+@end
 
-#if USE_AdvertisementFrameworks
-	@import iAd;
-	@import AdSupport;
 #endif
 
 

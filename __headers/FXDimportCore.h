@@ -22,10 +22,11 @@
 @import SystemConfiguration;
 @import MobileCoreServices;
 
+@import CoreGraphics;
+@import CoreImage;
+
 @import QuartzCore;
 @import ImageIO;
-
-@import CoreGraphics;
 
 
 #pragma mark - Callbacks
@@ -131,8 +132,6 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 #pragma mark - ViewControllers
 #import "FXDViewController.h"
 #import "FXDNavigationController.h"
-#import "FXDPopoverController.h"
-#import "FXDPageViewController.h"
 
 
 #pragma mark - Global controllers
