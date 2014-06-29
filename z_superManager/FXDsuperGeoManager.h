@@ -10,6 +10,7 @@
 @import MapKit;
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperGeoManager : FXDsuperManager <CLLocationManagerDelegate>
 
 @property (nonatomic) BOOL didStartSignificantMonitoring;

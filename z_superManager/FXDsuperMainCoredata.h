@@ -20,6 +20,7 @@
 @import CoreData;
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperMainCoredata : FXDsuperManager <NSFetchedResultsControllerDelegate> {
 
 	BOOL _shouldMergeForManagedContext;

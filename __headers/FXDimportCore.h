@@ -16,8 +16,8 @@
 #import <Availability.h>
 #import <TargetConditionals.h>
 
-@import Foundation;
 @import UIKit;
+@import Foundation;
 
 @import SystemConfiguration;
 @import MobileCoreServices;
@@ -26,6 +26,11 @@
 @import ImageIO;
 
 @import CoreGraphics;
+
+
+#pragma mark - Callbacks
+typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
+typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Categories
@@ -81,8 +86,6 @@
 
 
 #pragma mark - Objects
-#import "FXDsuperManager.h"
-
 #import "FXDString.h"
 #import "FXDURL.h"
 #import "FXDNumber.h"
@@ -109,6 +112,7 @@
 
 #pragma mark - Views
 #import "FXDView.h"
+#import "FXDWindow.h"
 
 #import "FXDButton.h"
 #import "FXDTextView.h"
@@ -120,8 +124,6 @@
 #import "FXDActionSheet.h"
 
 #import "FXDScrollView.h"
-
-#import "FXDWindow.h"
 
 #import "FXDPopoverBackgroundView.h"
 
@@ -135,6 +137,5 @@
 
 #pragma mark - Global controllers
 #import "FXDResponder.h"
-
 
 #endif

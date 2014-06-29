@@ -27,6 +27,7 @@
 #import "UALocationService.h"
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperPushManager : FXDsuperManager
 
 #pragma mark - Initialization

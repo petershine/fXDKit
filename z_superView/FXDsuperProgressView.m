@@ -28,7 +28,7 @@
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 		 
-		 self.labelCanceling.text = NSLocalizedString(text_Canceling, nil);
+		 self.labelCanceling.text = NSLocalizedString(@"Canceling...", nil);
 	 }];
 }
 

@@ -349,8 +349,8 @@
 	 showMessageViewWithNibName:nil
 	 withTitle:NSLocalizedString(@"Do want to delete ALL?", nil)
 	 message:NSLocalizedString(@"Please be warned. Deleted data WILL NEVER BE RESTORED!", nil)
-	 cancelButtonTitle:NSLocalizedString(text_Cancel, nil)
-	 acceptButtonTitle:NSLocalizedString(text_DeleteAll, nil)
+	 cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+	 acceptButtonTitle:NSLocalizedString(@"Delete All", nil)
 	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
 		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
 

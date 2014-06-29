@@ -47,7 +47,7 @@
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 		 
-		self.labelAccepting.text = NSLocalizedString(text_Accepting, nil);
+		self.labelAccepting.text = NSLocalizedString(@"OK", nil);
 	}];
 	
 	
@@ -59,7 +59,7 @@
 	
 	if (acceptButtonTitle) {
 		if (cancelButtonTitle == nil) {
-			cancelButtonTitle = NSLocalizedString(text_Cancel, nil);
+			cancelButtonTitle = NSLocalizedString(@"Cancel", nil);
 		}
 	}
 	else {
@@ -71,7 +71,7 @@
 		[self.buttonCancel setCenter:modifiedCenter];
 		
 		if (cancelButtonTitle == nil) {
-			cancelButtonTitle = NSLocalizedString(text_OK, nil);
+			cancelButtonTitle = NSLocalizedString(@"OK", nil);
 		}
 	}
 	

@@ -10,6 +10,7 @@
 #import <UIKit+AFNetworking.h>
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperAPIclient : FXDsuperManager {
 	NSString *_mainRootURLformat;
 	NSString *_mainAPIkey;

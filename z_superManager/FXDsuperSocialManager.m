@@ -314,7 +314,7 @@
 		  withFinishCallback:finishCallback];
 	 }];
 	
-	[actionSheet addButtonWithTitle:NSLocalizedString(text_Cancel, nil)];
+	[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
 	actionSheet.cancelButtonIndex = 0;
 	
 	for (ACAccount *account in self.multiAccountArray) {
@@ -331,7 +331,7 @@
 		}
 	}
 	
-	[actionSheet addButtonWithTitle:NSLocalizedString(text_SignOut, nil)];
+	[actionSheet addButtonWithTitle:NSLocalizedString(@"Sign Out", nil)];
 	actionSheet.destructiveButtonIndex = [self.multiAccountArray count]+1;
 	
 	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;

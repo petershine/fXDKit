@@ -39,6 +39,7 @@
 #endif
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperCloudManager : FXDsuperManager <NSMetadataQueryDelegate> {
 	BOOL _didFinishFirstGathering;
 	id _ubiquityIdentityToken;

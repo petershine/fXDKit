@@ -20,6 +20,7 @@
 @end
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperCaptureManager : FXDsuperManager <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;

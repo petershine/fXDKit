@@ -15,6 +15,7 @@
 @import CoreLocation;
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperSocialManager : FXDsuperManager {
 	NSString *_typeIdentifier;
 	NSString *_reasonForConnecting;

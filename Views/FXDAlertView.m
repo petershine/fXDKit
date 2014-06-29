@@ -62,7 +62,7 @@
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 	
 	if (cancelButtonTitle == nil) {
-		cancelButtonTitle = NSLocalizedString(text_OK, nil);
+		cancelButtonTitle = NSLocalizedString(@"OK", nil);
 	}
 
 	self = [super

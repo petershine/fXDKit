@@ -6,27 +6,12 @@
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDViewController+BarButton.h"
-
 
 @interface FXDViewController : UIViewController {
 	FXDcallbackFinish _dismissedCallback;
 }
 
 @property (copy, nonatomic) FXDcallbackFinish dismissedCallback;
-
-// IBOutlets
-
-#pragma mark - Segues
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end
 

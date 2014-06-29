@@ -11,9 +11,7 @@
 
 
 #pragma mark - Headers
-#import "FXDdefinedTypes.h"
 #import "FXDnumericalValues.h"
-#import "FXDlocalizedStrings.h"
 
 #import "FXDmacroEssential.h"
 

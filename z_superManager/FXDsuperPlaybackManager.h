@@ -27,6 +27,7 @@
 @end
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperPlaybackManager : FXDsuperManager
 @property (nonatomic) CMTime playbackCurrentTime;
 @property (nonatomic) CMTime lastSeekedTime;

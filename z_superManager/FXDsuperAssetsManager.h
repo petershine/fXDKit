@@ -14,6 +14,7 @@
 @end
 
 
+#import "FXDsuperManager.h"
 @interface FXDsuperAssetsManager : FXDsuperManager
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 
