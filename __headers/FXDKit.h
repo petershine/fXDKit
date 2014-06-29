@@ -9,14 +9,15 @@
 #ifndef FXDKit_FXDKit_h
 #define FXDKit_FXDKit_h
 
+@import Foundation;
+@import UIKit;
 
 #pragma mark - Headers
-#import "FXDnumericalValues.h"
-
-#import "FXDmacroEssential.h"
-
-#import "FXDconfigAnalytics.h"
 #import "FXDconfigDeveloper.h"
+#import "FXDconfigAnalytics.h"
+
+#import "FXDnumericalValues.h"
+#import "FXDmacroEssential.h"
 
 #import "FXDimportCore.h"
 #import "FXDimportAdopted.h"

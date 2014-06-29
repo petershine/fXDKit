@@ -55,7 +55,7 @@
 			 didCollectBlock(collectedItemArray);
 		 }
 	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		 FXDLog_ERROR;LOGEVENT_ERROR;
+		 FXDLog_ERROR;
 
 		 if (error && [error localizedDescription]) {
 			 [FXDAlertView

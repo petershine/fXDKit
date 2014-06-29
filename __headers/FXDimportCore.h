@@ -16,8 +16,6 @@
 #import <Availability.h>
 #import <TargetConditionals.h>
 
-@import UIKit;
-@import Foundation;
 
 @import SystemConfiguration;
 @import MobileCoreServices;

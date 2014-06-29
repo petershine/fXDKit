@@ -56,13 +56,13 @@
 
 
 #if USE_FXDLog
-	#define FXDLog	NSLog
+	#define FXDLog(__FORMAT__, ...)	NSLog(__FORMAT__, ##__VA_ARGS__)
 
 	#define FXDLog_EMPTY	FXDLog(@" ")
 
 	#define FXDLogObject(object)		FXDLog(@"%@", _Object(object))
 	#define FXDLogStruct(struct)		FXDLog(@"%@", _Struct(struct))
-	#define FXDLogVariable(variable)			FXDLog(@"%@", _Variable(variable))
+	#define FXDLogVariable(variable)	FXDLog(@"%@", _Variable(variable))
 	#define FXDLogBOOL(boolean)			FXDLog(@"%@", _BOOL(boolean))
 	#define FXDLogSelector(selector)	FXDLog(@"%@", _Selector(selector))
 
@@ -112,7 +112,6 @@
 	#define FXDLog_ERROR	if (error) {\
 								FXDLog_EMPTY;\
 								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, _Error(error));}\
-							LOGEVENT_ERROR
 
 	#define FXDLog_ERROR_ALERT if (error) {\
 									[FXDAlertView\
@@ -194,7 +193,7 @@
 	#define FXDLog_OVERRIDE
 
 
-	#define FXDLog_ERROR	LOGEVENT_ERROR
+	#define FXDLog_ERROR
 	#define FXDLog_ERROR_ALERT
 	#define FXDLog_ERROR_ignored(ignoredCode)
 

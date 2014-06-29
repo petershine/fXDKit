@@ -31,24 +31,7 @@
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 	FXDLogObject(launchOptions);
 
-#if ForDEVELOPER
-	if (launchOptions) {
-		[FXDAlertView
-		 showAlertWithTitle:_ClassSelectorSelf
-		 message:[launchOptions description]
-		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
-	}
-#endif
-
-
-#if	ForDEVELOPER
 	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
-#endif
-
-#if USE_AdvertisementFrameworks
-	FXDLogObject([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
-#endif
 
 	return YES;
 }

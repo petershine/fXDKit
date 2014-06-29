@@ -208,11 +208,6 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {	FXDLog_DEFAULT;
 	FXDLogVariable(status);
-
-#if	USE_Flurry
-	NSDictionary *parameters = @{@"authorizationStatus": @(status)};
-	LOGEVENT_FULL(@"didChangeAuthorizationStatus", parameters, NO);
-#endif
 }
 
 @end
