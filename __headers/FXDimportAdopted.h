@@ -46,12 +46,6 @@
 	@import AdSupport;
 #endif
 
-#if USE_SocialFrameworks
-	@import MessageUI;
-	@import Accounts;
-	@import Social;
-#endif
-
 #if USE_LocationFrameworks
 	@import CoreLocation;
 	@import MapKit;

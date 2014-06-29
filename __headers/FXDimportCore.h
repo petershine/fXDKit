@@ -28,6 +28,10 @@
 @import QuartzCore;
 @import ImageIO;
 
+@import MessageUI;
+@import Accounts;
+@import Social;
+
 
 #pragma mark - Callbacks
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
