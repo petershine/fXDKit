@@ -452,7 +452,7 @@
 		return didEvict;
 	}
 
-#warning //TODO: Implement progress reporting
+	//TODO: Implement progress reporting
 	/*
 	id isUploaded = nil;
 	id isDownloaded = nil;
