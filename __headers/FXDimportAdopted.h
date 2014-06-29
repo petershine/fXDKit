@@ -58,7 +58,6 @@
 
 	#import "FXDMapView.h"
 	#import "FXDAnnotationView.h"
-	#import "FXDsuperGeoManager.h"
 #endif
 
 #if USE_MultimediaFrameworks
