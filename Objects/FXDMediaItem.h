@@ -13,7 +13,6 @@
 @end
 
 
-#pragma mark - Category
 @interface MPMediaItem (Added)
 - (NSDictionary*)propertiesDictionary;
 

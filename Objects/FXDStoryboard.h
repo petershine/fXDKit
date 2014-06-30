@@ -8,17 +8,9 @@
 
 
 @interface FXDStoryboard : UIStoryboard
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
 
 
-#pragma mark - Category
 @interface UIStoryboard (Added)
 + (UIStoryboard*)storyboardWithDefaultName;
 

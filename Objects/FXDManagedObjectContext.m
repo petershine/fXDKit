@@ -53,14 +53,10 @@
 								withPredicate:predicate
 								withLimit:limit];
 
-	NSManagedObject *firstObj = [fetchedObjArray firstObject];
-
-	return firstObj;
+	return fetchedObjArray.firstObject;
 }
 
 - (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
-
-	NSArray *fetchedObjArray = nil;
 
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
@@ -68,25 +64,21 @@
 									withPredicate:predicate
 									withLimit:limit];
 
-	if (fetchRequest) {
-
-		NSError *error = nil;
-		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];
-		FXDLog_ERROR;
-
-#if TEST_loggingResultObjFiltering
-		if (fetchedObjArray == nil || fetchedObjArray.count == 0) {
-			FXDLog(@"%@ %@ %@", _Variable(fetchedObjArray.count), _Variable(self.concurrencyType), _IsMainThread);
-		}
-#endif
+	if (fetchRequest == nil) {
+		return nil;
 	}
+
+
+	NSError *error = nil;
+	NSArray *fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];
+	FXDLog_ERROR;
 
 	return fetchedObjArray;
 }
 
 - (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
 
-	NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: entityName: %@, sortDescriptors: %@", entityName, sortDescriptors);
+	NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: %@, %@", _Object(entityName), _Object(sortDescriptors));
 	
 	if (entityName == nil || sortDescriptors == nil) {
 		return nil;
@@ -95,7 +87,7 @@
 
 	NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self];
 
-	NSAssert1(entityName, @"MUST NOT be nil: entityName: %@", entityName);
+	NSAssert1(entityName, @"MUST NOT be nil: %@", _Object(entityName));
 
 	if (entity == nil) {
 		return nil;
@@ -107,9 +99,6 @@
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
 	if (predicate) {
-#if TEST_loggingResultObjFiltering
-		FXDLogObject(predicate);
-#endif
 		[fetchRequest setPredicate:predicate];
 	}
 	

@@ -11,14 +11,13 @@
 @end
 
 
-#pragma mark - Category
 @interface NSMetadataQuery (Added)
 - (BOOL)isQueryResultsTransferring;
 @end
 
 
 @interface NSMetadataItem (Added)
-- (double)transferPercentage;
+- (Float64)transferPercentage;
 
 - (NSString*)unicodeAbsoluteString;
 - (NSDate*)attributeModificationDate;

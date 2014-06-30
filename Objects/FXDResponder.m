@@ -57,7 +57,6 @@
 	 cancelButtonTitle:nil
 	 withAlertCallback:nil];
 
-
 	if (completionHandler) {
 		completionHandler(UIBackgroundFetchResultNoData);
 	}
@@ -92,8 +91,6 @@
 
 #pragma mark -
 - (void)applicationDidBecomeActive:(UIApplication *)application {	FXDLog_SEPARATE;
-
-	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
 		FXDLogBOOL(self.isAppLaunching);
 		return;
@@ -107,29 +104,21 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {	FXDLog_SEPARATE;
-
+	if (self.isAppLaunching) {
+		FXDLogBOOL(self.isAppLaunching);
+	}
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application	{FXDLog_SEPARATE;
-
-	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
 		FXDLogBOOL(self.isAppLaunching);
-		return;
 	}
-
-
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {	FXDLog_SEPARATE;
-
-	//MARK: To prevent app being affected when state is being changed during launching
 	if (self.isAppLaunching) {
 		FXDLogBOOL(self.isAppLaunching);
-		return;
 	}
-
-
 }
 
 @end

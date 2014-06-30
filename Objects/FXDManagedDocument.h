@@ -20,16 +20,9 @@
 
 #endif
 
-
 @import CoreData;
 
 
 @interface FXDManagedDocument : UIManagedDocument
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
+

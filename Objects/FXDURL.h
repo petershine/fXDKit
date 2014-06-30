@@ -19,7 +19,6 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 @end
 
 
-#pragma mark - Category
 @interface NSURL (Added)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;

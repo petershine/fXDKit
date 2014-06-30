@@ -79,19 +79,19 @@
 	return alignedParagraph;
 }
 
-- (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator {
-	NSArray *comps = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-	NSMutableArray *nonemptyComps = [[NSMutableArray alloc] init];
+- (NSString*)stringByCompressingWhitespaceTo:(NSString*)seperator; {
 
-	// only copy non-empty entries
-	for (NSString *oneComp in comps) {
-		if (([oneComp isEqualToString:@""] == NO)) {
-			[nonemptyComps addObject:oneComp];
+	NSArray *separated = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+	NSMutableArray *combined = [[NSMutableArray alloc] init];
+
+	for (NSString *component in separated) {
+		if ((component.length > 0)) {
+			[combined addObject:component];
 		}
-
 	}
 
-	return [nonemptyComps componentsJoinedByString:seperator];  // already marked as autoreleased
+	return [combined componentsJoinedByString:seperator];
 }
 
 @end

@@ -11,7 +11,6 @@
 @end
 
 
-#pragma mark - Category
 @interface NSFileManager (Added)
 - (void)clearTempDirectory;
 

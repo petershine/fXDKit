@@ -27,7 +27,6 @@
 	return self;
 }
 
-
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
@@ -41,9 +40,7 @@
 	FXDLogObject(self);
 }
 
-
 #pragma mark - Public
-
 
 //MARK: - Observer implementation
 

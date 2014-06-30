@@ -6,11 +6,6 @@
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
-#ifndef TEST_loggingResultObjFiltering
-	#define TEST_loggingResultObjFiltering	FALSE
-#endif
-
-
 #ifndef limitInfiniteFetch
 	#define limitInfiniteFetch	0
 #endif
@@ -23,7 +18,6 @@
 	#define sizeDefaultBatch	20
 #endif
 
-
 @import CoreData;
 
 
@@ -31,7 +25,6 @@
 @end
 
 
-#pragma mark - Category
 @interface NSManagedObjectContext (Added)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit;
 

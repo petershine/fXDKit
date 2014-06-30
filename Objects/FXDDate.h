@@ -11,7 +11,6 @@
 @end
 
 
-#pragma mark - Categories
 @interface NSDate (Added)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;

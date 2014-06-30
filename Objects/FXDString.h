@@ -11,7 +11,6 @@
 @end
 
 
-#pragma mark - Category
 @interface NSString (Added)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue;
 + (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(CFStringRef)type;
@@ -19,6 +18,6 @@
 
 - (NSString*)leftAlignedParagraph;
 
-- (NSString *)stringByCompressingWhitespaceTo:(NSString *)seperator;
+- (NSString*)stringByCompressingWhitespaceTo:(NSString*)seperator;
 
 @end

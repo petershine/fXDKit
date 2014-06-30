@@ -13,7 +13,6 @@
 @end
 
 
-#pragma mark - Category
 @interface NSManagedObject (Added)
 - (void)setValuesForKeysWithDictionary:(NSDictionary*)keyedValues dateFormatter:(NSDateFormatter*)dateFormatter;
 

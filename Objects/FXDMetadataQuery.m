@@ -52,7 +52,7 @@
 
 
 @implementation NSMetadataItem (Added)
-- (double)transferPercentage {
+- (Float64)transferPercentage {
 	Float64 transferPercentage = 0.0;
 		
 	BOOL isDownloading = NO;
