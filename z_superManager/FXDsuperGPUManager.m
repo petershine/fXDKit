@@ -277,7 +277,6 @@
 	[_gpuvideoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
 	[_gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
-	[_gpuvideoCamera.inputCamera addDefaultNotificationObserver:self];
 
 	[_gpuvideoCamera addAudioInputsAndOutputs];
 

@@ -47,6 +47,7 @@
 
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
+- (void)addObserverToCaptureDevice:(AVCaptureDevice**)captureDevice;
 
 - (CIImage*)coreImageForCVImageBuffer:(CVImageBufferRef)imageBuffer withScale:(NSNumber*)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoOrientation:(AVCaptureVideoOrientation)videoOrientation shouldUseMirroring:(BOOL)shouldUseMirroring;
 

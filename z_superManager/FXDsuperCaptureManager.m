@@ -121,7 +121,9 @@
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
 											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
 											 withFlashMode:self.flashMode];
-		[backVideoCapture addDefaultNotificationObserver:self];
+
+		[self addObserverToCaptureDevice:&backVideoCapture];
+
 
 		NSError *error = nil;
 		_deviceInputBack = [[AVCaptureDeviceInput alloc] initWithDevice:backVideoCapture error:&error];
@@ -137,7 +139,9 @@
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
 											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
 											  withFlashMode:self.flashMode];
-		[frontVideoCapture addDefaultNotificationObserver:self];
+
+		[self addObserverToCaptureDevice:&frontVideoCapture];
+		
 
 		NSError *error = nil;
 		_deviceInputFront = [[AVCaptureDeviceInput alloc] initWithDevice:frontVideoCapture error:&error];
@@ -245,6 +249,29 @@
 	[self.mainCaptureSession commitConfiguration];
 
 	FXDLog(@"3.%@", _Object(self.mainCaptureSession.inputs));
+}
+
+- (void)addObserverToCaptureDevice:(AVCaptureDevice**)captureDevice {	FXDLog_DEFAULT;
+
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedAVCaptureDeviceWasConnected:)
+	 name:AVCaptureDeviceWasConnectedNotification
+	 object:*captureDevice];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedAVCaptureDeviceWasDisconnected:)
+	 name:AVCaptureDeviceWasDisconnectedNotification
+	 object:*captureDevice];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedAVCaptureDeviceSubjectAreaDidChange:)
+	 name:AVCaptureDeviceSubjectAreaDidChangeNotification
+	 object:*captureDevice];
 }
 
 #pragma mark -

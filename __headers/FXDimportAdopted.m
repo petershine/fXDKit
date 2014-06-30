@@ -10,6 +10,7 @@
 
 
 #if USE_MultimediaFrameworks
+
 @implementation CALayer (MultimediaFrameworks)
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
 	//MARK: Use removedOnCompletion & fillMode appropriately
