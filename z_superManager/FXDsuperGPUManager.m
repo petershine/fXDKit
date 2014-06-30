@@ -330,7 +330,7 @@
 }
 
 #pragma mark -
-- (void)cycleGPUfiltersForward:(BOOL)isForward withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)cycleGPUfiltersForward:(BOOL)isForward withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
@@ -348,8 +348,8 @@
 	[self applyGPUfilterAtFilterIndex:filterIndex];
 
 
-	if (finishCallback) {
-		finishCallback(_cmd, YES, @(filterIndex));
+	if (callback) {
+		callback(_cmd, YES, @(filterIndex));
 	}
 }
 

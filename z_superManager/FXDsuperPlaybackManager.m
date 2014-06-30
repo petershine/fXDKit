@@ -128,7 +128,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	AVURLAsset *movieAsset = [AVURLAsset
 							  URLAssetWithURL:movieFileURL
@@ -152,8 +152,8 @@
 			  FXDLogVariable(valueStatus);
 
 			  if (valueStatus != AVKeyValueStatusLoaded) {
-				  if (finishCallback) {
-					  finishCallback(_cmd, NO, nil);
+				  if (callback) {
+					  callback(_cmd, NO, nil);
 				  }
 				  return;
 			  }
@@ -172,8 +172,8 @@
 
 			  [weakSelf startSeekingToTime:kCMTimeZero withFinishCallback:nil];
 
-			  if (finishCallback) {
-				  finishCallback(_cmd, YES, nil);
+			  if (callback) {
+				  callback(_cmd, YES, nil);
 			  }
 		  }];
 	 }];

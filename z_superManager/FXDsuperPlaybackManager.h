@@ -41,7 +41,7 @@
 
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;
 
 - (void)configurePlaybackObservers;
 
