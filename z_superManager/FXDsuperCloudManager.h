@@ -6,15 +6,10 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define notificationCloudManagerDidUpdateUbiquityContainerURL	@"notificationCloudManagerDidUpdateUbiquityContainerURL"
-
 #define notificationCloudDocumentsQueryDidGatherObjects		@"notificationCloudDocumentsQueryDidGatherObjects"
 #define notificationCloudDocumentsQueryDidFinishGathering	@"notificationCloudDocumentsQueryDidFinishGathering"
 #define notificationCloudDocumentsQueryDidUpdate		@"notificationCloudDocumentsQueryDidUpdate"
 #define notificationCloudDocumentsQueryIsTransferring	@"notificationCloudDocumentsQueryIsTransferring"
-
-#define notificationCloudManagerDidEnumerateUbiquitousMetadataItems	@"notificationCloudManagerDidEnumerateUbiquitousMetadataItems"
-#define notificationCloudManagerDidEnumerateUbiquitousDocuments	@"notificationCloudManagerDidEnumerateUbiquitousDocuments"
 
 
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
@@ -23,20 +18,6 @@
 #define objkeyUbiquitousFolders			@"objkeyUbiquitousFolders"
 #define objkeyUbiquitousFiles			@"objkeyUbiquitousFiles"
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
-
-
-#ifndef USE_UbiquitousDocuments
-	#define USE_UbiquitousDocuments	FALSE
-#endif
-
-#ifndef USE_DownloadingEvictedFilesInitially
-	#define USE_DownloadingEvictedFilesInitially	FALSE
-#endif
-
-
-#ifndef TEST_loggingTransferringPercentage
-	#define TEST_loggingTransferringPercentage	FALSE
-#endif
 
 
 #import "FXDsuperManager.h"
@@ -74,8 +55,8 @@
 #pragma mark - Public
 + (FXDsuperCloudManager*)sharedInstance;
 
-- (void)startUpdatingUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)activatedUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)startUpdatingUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)activatedUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)failedToUpdateUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)startObservingCloudDocumentsQueryNotifications;
@@ -87,6 +68,9 @@
 - (void)startEvictingCollectedURLarray;
 - (BOOL)evictUploadedUbiquitousItemURL:(NSURL*)itemURL;
 
+- (void)enumerateMetadataItemsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback;
+- (void)enumerateDocumentsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback;
+
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification;
@@ -97,15 +81,5 @@
 - (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
-
-@end
-
-
-#pragma mark - Category
-@interface FXDsuperCloudManager (Enumerating)
-#pragma mark - Public
-- (void)enumerateUbiquitousMetadataItemsAtFolderURL:(NSURL*)folderURL withDidEnumerateBlock:(void(^)(BOOL finished, NSDictionary *userInfo))didEnumerateBlock;
-- (void)enumerateUbiquitousDocumentsAtFolderURL:(NSURL*)folderURL withDidEnumerateBlock:(void(^)(BOOL finished, NSDictionary *userInfo))didEnumerateBlock;
-- (void)enumerateLocalDirectory;
 
 @end

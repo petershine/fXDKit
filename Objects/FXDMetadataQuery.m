@@ -15,19 +15,12 @@
 
 #pragma mark - Category
 @implementation NSMetadataQuery (Added)
-- (BOOL)isQueryResultsTransferringWithLogString:(NSString*)logString {
+- (BOOL)isQueryResultsTransferring {
 	
 	BOOL isTransferring = NO;
 
-#if TEST_loggingTransferringPercentage
-	Float64 percentage = 0.0;
-#endif
-	
 	for (NSMetadataItem *metadataItem in [self results]) {
-#if TEST_loggingTransferringPercentage
-		logString = @"";
-#endif
-		
+
 		BOOL isDownloaded = NO;
 		BOOL isUploaded = NO;
 		
@@ -42,16 +35,6 @@
 				isTransferring = YES;
 			}
 			
-#if TEST_loggingTransferringPercentage
-			logString = [logString stringByAppendingFormat:@"isUploaded: %d", isUploaded];
-			
-			if (isTransferring) {
-				NSNumber *percentUploaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemPercentUploadedKey];
-				percentage = [percentUploaded doubleValue];
-				
-				logString = [logString stringByAppendingFormat:@" uploading: %@", percentUploaded];
-			}
-#endif
 		}
 		else if (isDownloaded == NO) {
 			id isDownloading = [metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey];
@@ -59,30 +42,11 @@
 			if ([isDownloading boolValue]) {
 				isTransferring = YES;
 			}
-#if TEST_loggingTransferringPercentage
-			logString = [logString stringByAppendingFormat:@"isDownloaded: %d", isDownloaded];
-			
-			if (isTransferring) {
-				NSNumber *percentDownloaded = [metadataItem valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-				percentage = [percentDownloaded doubleValue];
-				
-				logString = [logString stringByAppendingFormat:@" downloading %@", percentDownloaded];
-			}
-#endif
 		}
-		
-#if TEST_loggingTransferringPercentage
-		if (isTransferring && percentage > 0.0 && logString.length > 0) {
-			NSString *itemName = [metadataItem valueForAttribute:NSMetadataItemFSNameKey];
-			
-			FXDLog(@"%@ %@", _Object(itemName), logString);
-		}
-#endif
 	}
 	
 	return isTransferring;
 }
-
 
 @end
 

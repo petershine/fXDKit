@@ -274,10 +274,11 @@
 	
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{
-		 BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferringWithLogString:nil];
+		 BOOL isTransferring = [self.ubiquitousCachesMetadataQuery isQueryResultsTransferring];
 		 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
+			  
 			  if (isTransferring == NO) {
 				  [self enumerateCachesMetadataQueryResults];
 			  }

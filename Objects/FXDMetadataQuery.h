@@ -13,7 +13,7 @@
 
 #pragma mark - Category
 @interface NSMetadataQuery (Added)
-- (BOOL)isQueryResultsTransferringWithLogString:(NSString*)logString;
+- (BOOL)isQueryResultsTransferring;
 @end
 
 
