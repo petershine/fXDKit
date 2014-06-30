@@ -18,9 +18,7 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-//MARK: Override if using extra data model
 - (NSString*)mainModelName {
-	
 	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
 		_mainModelName = application_BundleIdentifier;
 		FXDLogObject(_mainModelName);
@@ -30,7 +28,6 @@
 }
 
 - (FXDManagedDocument*)mainDocument {
-	
 	if (_mainDocument == nil) {	FXDLog_DEFAULT;
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
 
@@ -83,19 +80,6 @@
 	}
 
 	return _mainSortDescriptors;
-}
-
-#pragma mark -
-- (NSFetchedResultsController*)mainResultsController {
-	if (_mainResultsController == nil) {	FXDLog_DEFAULT;
-		_mainResultsController = [self.mainDocument.managedObjectContext
-								  resultsControllerForEntityName:self.mainEntityName
-								  withSortDescriptors:self.mainSortDescriptors
-								  withPredicate:nil
-								  withLimit:limitInfiniteFetch];
-	}
-
-	return _mainResultsController;
 }
 
 
@@ -353,22 +337,25 @@
 		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
 
 		 //MARK: Assume buttonIndex == 1: is Accept
-		 if (buttonIndex == 1) {
-			 [self
-			  enumerateAllMainEntityObjShouldShowProgressView:YES
-			  withEnumerationBlock:^(NSManagedObjectContext *managedContext,
-									 NSManagedObject *mainEntityObj,
-									 BOOL *shouldBreak) {
-				  
-				  //TODO: Implement shouldBreak different, making this block to return boolean
-				  if (*shouldBreak) {
-					  FXDLogBOOL(*shouldBreak);
-				  }
-				  
-				  [managedContext deleteObject:mainEntityObj];
-				  
-			  } withFinishCallback:finishCallback];
+		 if (buttonIndex != 1) {
+			 return;
 		 }
+
+
+		 [self
+		  enumerateAllMainEntityObjShouldShowProgressView:YES
+		  withEnumerationBlock:^(NSManagedObjectContext *managedContext,
+								 NSManagedObject *mainEntityObj,
+								 BOOL *shouldBreak) {
+
+			  //TODO: Implement shouldBreak different, making this block to return boolean
+			  if (*shouldBreak) {
+				  FXDLogBOOL(*shouldBreak);
+			  }
+
+			  [managedContext deleteObject:mainEntityObj];
+
+		  } withFinishCallback:finishCallback];
 	 }];
 }
 

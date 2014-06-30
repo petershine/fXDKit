@@ -37,8 +37,6 @@
 
 	NSString *_mainEntityName;
 	NSArray *_mainSortDescriptors;
-	
-	NSFetchedResultsController *_mainResultsController;
 }
 
 @property (nonatomic) BOOL shouldMergeForManagedContext;
@@ -55,8 +53,6 @@
 
 @property (strong, nonatomic) NSString *mainEntityName;
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
-
-@property (strong, nonatomic) NSFetchedResultsController *mainResultsController;
 
 
 #pragma mark - Public
