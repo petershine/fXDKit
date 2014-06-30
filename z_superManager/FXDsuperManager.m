@@ -29,7 +29,7 @@
 	self = [super init];
 
 	if (self) {
-		FXDLog_SEPARATE;
+		FXDLog_DEFAULT;
 	}
 
 	return self;

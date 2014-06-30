@@ -53,8 +53,6 @@
 
 
 #pragma mark - Public
-+ (FXDsuperCloudManager*)sharedInstance;
-
 - (void)startUpdatingUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)activatedUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)failedToUpdateUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;

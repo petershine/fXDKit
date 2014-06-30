@@ -16,10 +16,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-+ (FXDsuperCloudManager*)sharedInstance {
-	IMPLEMENTATION_sharedInstance;
-}
-
 
 #pragma mark - Property overriding
 - (NSURL*)ubiquitousDocumentsURL {
@@ -115,7 +111,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startUpdatingUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)startUpdatingUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self
@@ -160,7 +156,7 @@
 	FXDLogBOOL(shouldRequestUbiquityContatinerURL);
 
 	if (shouldRequestUbiquityContatinerURL == NO) {
-		[self failedToUpdateUbiquityContainerURLwithFinishCallback:finishCallback];
+		[self failedToUpdateUbiquityContainerURLwithFinishCallback:callback];
 		return;
 	}
 
@@ -188,7 +184,7 @@
 	__block NSURL *activeUbiquityContainerURL = nil;
 	
 	[[NSOperationQueue new]
-	 addOperationWithBlock:^{
+	 addOperationWithBlock:^{	FXDLog_DEFAULT;
 		 
 		 activeUbiquityContainerURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
 		 FXDLogObject(activeUbiquityContainerURL);
@@ -199,9 +195,10 @@
 			  if (activeUbiquityContainerURL == nil) {
 				  [userDefaults synchronize];
 
-				  [self failedToUpdateUbiquityContainerURLwithFinishCallback:finishCallback];
+				  [self failedToUpdateUbiquityContainerURLwithFinishCallback:callback];
 				  return;
 			  }
+
 
 
 			  if (self.ubiquityContainerURL) {
@@ -216,6 +213,7 @@
 			  _ubiquitousCachesURL = nil;
 
 			  self.ubiquityContainerURL = activeUbiquityContainerURL;
+			  FXDLogObject(self.ubiquityContainerURL);
 
 
 			  NSString *containerURLString = [self.ubiquityContainerURL absoluteString];
@@ -226,12 +224,12 @@
 			  [userDefaults synchronize];
 
 			  [self activatedUbiquityContainerURLwithDocuments:withUbiquitousDocuments
-											withFinishCallback:finishCallback];
+											withFinishCallback:callback];
 		  }];
 	 }];
 }
 
-- (void)activatedUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)activatedUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 #if ForDEVELOPER
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	FXDLogObject([fileManager infoDictionaryForFolderURL:self.ubiquityContainerURL]);
@@ -248,8 +246,8 @@
 		[self enumerateDocumentsAtFolderURL:nil withCallback:nil];
 	}
 
-	if (finishCallback) {
-		finishCallback(_cmd, YES, self.ubiquityContainerURL);
+	if (callback) {
+		callback(_cmd, YES, self.ubiquityContainerURL);
 	}
 }
 

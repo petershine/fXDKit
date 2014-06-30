@@ -106,18 +106,21 @@
 - (void)applicationWillResignActive:(UIApplication *)application {	FXDLog_SEPARATE;
 	if (self.isAppLaunching) {
 		FXDLogBOOL(self.isAppLaunching);
+		return;
 	}
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application	{FXDLog_SEPARATE;
 	if (self.isAppLaunching) {
 		FXDLogBOOL(self.isAppLaunching);
+		return;
 	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {	FXDLog_SEPARATE;
 	if (self.isAppLaunching) {
 		FXDLogBOOL(self.isAppLaunching);
+		return;
 	}
 }
 
