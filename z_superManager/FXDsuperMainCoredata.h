@@ -30,10 +30,10 @@
 	UIBackgroundTaskIdentifier _dataSavingTask;
 
 	NSString *_mainModelName;
-	FXDManagedDocument *_mainDocument;
-	
-	NSString *_mainSqlitePathComponent;
 	NSString *_mainUbiquitousContentName;
+	
+	FXDManagedDocument *_mainDocument;
+	NSString *_mainSqlitePathComponent;
 
 	NSString *_mainEntityName;
 	NSArray *_mainSortDescriptors;
@@ -46,10 +46,10 @@
 @property (nonatomic) UIBackgroundTaskIdentifier dataSavingTask;
 
 @property (strong, nonatomic) NSString *mainModelName;
-@property (strong, nonatomic) FXDManagedDocument *mainDocument;
-
-@property (strong, nonatomic) NSString *mainSqlitePathComponent;
 @property (strong, nonatomic) NSString *mainUbiquitousContentName;
+
+@property (strong, nonatomic) FXDManagedDocument *mainDocument;
+@property (strong, nonatomic) NSString *mainSqlitePathComponent;
 
 @property (strong, nonatomic) NSString *mainEntityName;
 @property (strong, nonatomic) NSArray *mainSortDescriptors;

@@ -20,6 +20,7 @@
 #pragma mark - Property overriding
 - (NSString*)mainModelName {
 	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
+#warning //MARK: Use different name for different coredata
 		_mainModelName = application_BundleIdentifier;
 		FXDLogObject(_mainModelName);
 	}
@@ -27,6 +28,19 @@
 	return _mainModelName;
 }
 
+- (NSString*)mainUbiquitousContentName {
+	if (_mainUbiquitousContentName == nil) {	FXDLog_OVERRIDE;
+#warning //MARK: Use different name for different coredata
+		_mainUbiquitousContentName = [self.mainModelName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+		***REMOVED***
+
+		FXDLogObject(_mainUbiquitousContentName);
+	}
+
+	return _mainUbiquitousContentName;
+}
+
+#pragma mark -
 - (FXDManagedDocument*)mainDocument {
 	if (_mainDocument == nil) {	FXDLog_DEFAULT;
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
@@ -34,15 +48,14 @@
 		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
 		FXDLogObject(_mainDocument);
 	}
-	
+
 	return _mainDocument;
 }
 
-#pragma mark -
 - (NSString*)mainSqlitePathComponent {
 
 	//MARK: Use different name for better controlling between developer build and release build
-	if (_mainSqlitePathComponent == nil) {	FXDLog_DEFAULT;
+	if (_mainSqlitePathComponent == nil) {	FXDLog_OVERRIDE;
 		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@.sqlite", self.mainModelName];
 
 	#if ForDEVELOPER
@@ -53,16 +66,6 @@
 	}
 	
 	return _mainSqlitePathComponent;
-}
-
-- (NSString*)mainUbiquitousContentName {
-	if (_mainUbiquitousContentName == nil) {	FXDLog_DEFAULT;
-
-		_mainUbiquitousContentName = [NSString stringWithFormat:@"ubiquitousContent.%@", self.mainModelName];
-		FXDLogObject(_mainUbiquitousContentName);
-	}
-	
-	return _mainUbiquitousContentName;
 }
 
 #pragma mark -
@@ -172,10 +175,8 @@
 		 storeOptions[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
 		 storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
 
-		 if (ubiquityContainerURL) {	//MARK: If using iCloud
-			 //TODO: get UUID unique URL using ubiquityContainerURL instead
-			 //NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
-			 NSURL *ubiquitousContentURL = ubiquityContainerURL;
+		 if (ubiquityContainerURL) {
+			 NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
 			 FXDLogObject(ubiquitousContentURL);
 
 			 storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
