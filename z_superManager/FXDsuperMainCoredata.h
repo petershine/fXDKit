@@ -21,7 +21,7 @@
 
 
 #import "FXDsuperManager.h"
-@interface FXDsuperMainCoredata : FXDsuperManager <NSFetchedResultsControllerDelegate> {
+@interface FXDsuperMainCoredata : FXDsuperManager {
 
 	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;
@@ -38,7 +38,7 @@
 	NSString *_mainEntityName;
 	NSArray *_mainSortDescriptors;
 	
-	FXDFetchedResultsController *_mainResultsController;
+	NSFetchedResultsController *_mainResultsController;
 }
 
 @property (nonatomic) BOOL shouldMergeForManagedContext;
@@ -56,7 +56,7 @@
 @property (strong, nonatomic) NSString *mainEntityName;
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
 
-@property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
+@property (strong, nonatomic) NSFetchedResultsController *mainResultsController;
 
 
 #pragma mark - Public

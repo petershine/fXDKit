@@ -11,7 +11,6 @@
 
 @property (strong, nonatomic) NSMutableDictionary *operationDictionary;
 
-
 #pragma mark - Public
 - (void)resetOperationQueue;
 
@@ -21,9 +20,9 @@
 - (void)removeOperationForKey:(id)operationKey;
 - (BOOL)cancelOperationForKey:(id)operationKey;
 
+@end
 
-//MARK: - Observer implementation
 
-//MARK: - Delegate implementation
-
+@interface NSOperationQueue (Added)
++ (instancetype)newSerialQueue;
 @end

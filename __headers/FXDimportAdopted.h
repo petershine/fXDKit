@@ -87,7 +87,6 @@
 @interface AVCaptureDevice (MultimediaFrameworks)
 + (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
 - (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)addDefaultNotificationObserver:(id)observer;
 @end
 
 @interface ALAsset (MultimediaFrameworks)

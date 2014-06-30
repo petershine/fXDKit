@@ -21,7 +21,7 @@
 	NSArray *_itemCounts;
 	
 	NSMutableArray *_mainDataSource;
-	FXDFetchedResultsController *_mainResultsController;
+	NSFetchedResultsController *_mainResultsController;
 	
 	FXDOperationQueue *_cellOperationQueue;
 	
@@ -43,7 +43,7 @@
 @property (strong, nonatomic) NSDictionary *cellSubTitleDictionary;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
-@property (strong, nonatomic) FXDFetchedResultsController *mainResultsController;
+@property (strong, nonatomic) NSFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) FXDOperationQueue *cellOperationQueue;
 

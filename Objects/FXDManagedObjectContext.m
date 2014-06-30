@@ -15,31 +15,31 @@
 
 #pragma mark - Category
 @implementation NSManagedObjectContext (Added)
-- (FXDFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
-	FXDFetchedResultsController *resultsController = nil;
-	
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
 									withSortDescriptors:sortDescriptors
 									withPredicate:predicate
 									withLimit:limit];
-	
-	if (fetchRequest) {
-		resultsController = [[FXDFetchedResultsController alloc]
-							 initWithFetchRequest:fetchRequest
-							 managedObjectContext:self
-							 sectionNameKeyPath:nil
-							 cacheName:entityName];
-		
-		
-		NSError *error = nil;
-		BOOL didPerformFetch = [resultsController performFetch:&error];
-		FXDLog_ERROR;
-		
-		if (didPerformFetch == NO) {
-			FXDLog(@"%@ %@", _BOOL(didPerformFetch), _Variable(self.concurrencyType));
-		}
+
+	if (fetchRequest == nil) {
+		return nil;
+	}
+
+
+	NSFetchedResultsController *resultsController = [[NSFetchedResultsController alloc]
+													 initWithFetchRequest:fetchRequest
+													 managedObjectContext:self
+													 sectionNameKeyPath:nil
+													 cacheName:entityName];
+
+	NSError *error = nil;
+	BOOL didPerformFetch = [resultsController performFetch:&error];
+	FXDLog_ERROR;
+
+	if (didPerformFetch == NO) {
+		FXDLog(@"%@ %@", _BOOL(didPerformFetch), _Variable(self.concurrencyType));
 	}
 
 	return resultsController;

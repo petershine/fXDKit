@@ -89,9 +89,18 @@
 	return [operation isCancelled];
 }
 
-
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation
 
+@end
+
+
+@implementation NSOperationQueue (Added)
++ (instancetype)newSerialQueue {
+	NSOperationQueue *serialQueue = [[[self class] alloc] init];
+	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
+
+	return serialQueue;
+}
 @end

@@ -20,6 +20,8 @@
 @import SystemConfiguration;
 @import MobileCoreServices;
 
+@import CoreData;
+
 @import CoreGraphics;
 @import CoreImage;
 
@@ -43,8 +45,9 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @end
 
 
-@interface NSOperationQueue (Added)
-+ (instancetype)newSerialQueue;
+@interface NSFetchedResultsController (Added)
+- (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
+- (NSManagedObject*)resultObjForPredicate:(NSPredicate*)predicate;
 @end
 
 
@@ -97,7 +100,6 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 #import "FXDStoryboardSegue.h"
 #import "FXDStoryboard.h"
 
-#import "FXDFetchedResultsController.h"
 #import "FXDManagedDocument.h"
 #import "FXDManagedObject.h"
 #import "FXDManagedObjectContext.h"

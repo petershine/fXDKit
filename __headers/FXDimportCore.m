@@ -10,25 +10,16 @@
 
 @implementation NSError (Added)
 - (NSDictionary*)essentialParameters {
-	NSDictionary *parameters =	@{
-								  @"Description":	(([self localizedDescription]) ? [self localizedDescription]:@""),
-								  @"FailureReason":	(([self localizedFailureReason]) ? [self localizedFailureReason]:@""),
-								  @"Domain":		(([self domain]) ? [self domain]:@""),
-								  @"Code":			@([self code]),
-								  @"UserInfo":		(([self userInfo]) ? [self userInfo]:@"")
-								  };
+	NSDictionary *parameters =
+	@{
+	  @"Description":	(([self localizedDescription]) ? [self localizedDescription]:@""),
+	  @"FailureReason":	(([self localizedFailureReason]) ? [self localizedFailureReason]:@""),
+	  @"Domain":		(([self domain]) ? [self domain]:@""),
+	  @"Code":			@([self code]),
+	  @"UserInfo":		(([self userInfo]) ? [self userInfo]:@"")
+	  };
 
 	return parameters;
-}
-@end
-
-
-@implementation NSOperationQueue (Added)
-+ (instancetype)newSerialQueue {
-	NSOperationQueue *serialQueue = [[[self class] alloc] init];
-	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
-
-	return serialQueue;
 }
 @end
 
@@ -94,6 +85,31 @@
 
 
 	return textLayer;
+}
+@end
+
+
+@implementation NSFetchedResultsController (Added)
+- (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {
+
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
+
+	NSManagedObject *resultObj = [self resultObjForPredicate:predicate];
+
+	return resultObj;
+}
+
+- (NSManagedObject*)resultObjForPredicate:(NSPredicate*)predicate {
+
+	NSManagedObject *resultObj = nil;
+
+	if (self.fetchedObjects.count > 0) {
+		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
+
+		resultObj = [filteredArray firstObject];
+	}
+
+	return resultObj;
 }
 @end
 

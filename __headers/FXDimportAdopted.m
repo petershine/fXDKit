@@ -126,28 +126,6 @@
 
 	FXDLog_ERROR;
 }
-
-- (void)addDefaultNotificationObserver:(id)observer {	FXDLog_DEFAULT;
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-
-	[notificationCenter
-	 addObserver:observer
-	 selector:@selector(observedAVCaptureDeviceWasConnected:)
-	 name:AVCaptureDeviceWasConnectedNotification
-	 object:self];
-
-	[notificationCenter
-	 addObserver:observer
-	 selector:@selector(observedAVCaptureDeviceWasDisconnected:)
-	 name:AVCaptureDeviceWasDisconnectedNotification
-	 object:self];
-
-	[notificationCenter
-	 addObserver:observer
-	 selector:@selector(observedAVCaptureDeviceSubjectAreaDidChange:)
-	 name:AVCaptureDeviceSubjectAreaDidChangeNotification
-	 object:self];
-}
 @end
 
 @implementation ALAsset (MultimediaFrameworks)
