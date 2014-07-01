@@ -42,7 +42,7 @@
 
 @implementation NSURL (MultimediaFrameworks)
 + (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix {
-	NSString *filename = [NSString uniqueFilenameWithWithPrefix:prefix forType:(__bridge CFStringRef)filetypeVideoDefault];
+	NSString *filename = [NSString uniqueFilenameWithWithPrefix:prefix forType:(__bridge CFStringRef)AVFileTypeQuickTimeMovie];
 
 	NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
 

@@ -9,7 +9,6 @@
 @import AssetsLibrary;
 
 
-#import "FXDsuperModule.h"
 @interface FXDsuperAssetsManager : FXDsuperModule
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 

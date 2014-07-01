@@ -16,7 +16,6 @@
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
-#import "FXDsuperModule.h"
 @interface FXDmoduleQuery : FXDsuperModule <NSMetadataQueryDelegate> {
 	BOOL _didFinishFirstGathering;
 

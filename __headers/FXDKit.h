@@ -16,8 +16,8 @@
 #import "FXDconfigDeveloper.h"
 #import "FXDconfigAnalytics.h"
 
-#import "FXDnumericalValues.h"
-#import "FXDmacroEssential.h"
+#import "FXDmacroValue.h"
+#import "FXDmacroFunction.h"
 
 #import "FXDimportEssential.h"
 #import "FXDimportAdopted.h"

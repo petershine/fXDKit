@@ -67,11 +67,6 @@
 
 	#import "FXDMediaItem.h"
 
-
-	#ifndef filetypeVideoDefault
-		#define filetypeVideoDefault AVFileTypeQuickTimeMovie
-	#endif
-
 @interface CALayer (MultimediaFrameworks)
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;
 @end

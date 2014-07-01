@@ -1,13 +1,13 @@
 //
-//  FXDnumericalValues.h
+//  FXDmacroValue.h
 //
 //
 //  Created by petershine on 3/16/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef FXDKit_FXDnumericalValues_h
-#define FXDKit_FXDnumericalValues_h
+#ifndef FXDKit_FXDmacroValue_h
+#define FXDKit_FXDmacroValue_h
 
 
 #define integerNotDefined	-1

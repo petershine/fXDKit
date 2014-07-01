@@ -1,13 +1,13 @@
 //
-//  FXDmacroEssential.h
+//  FXDmacroFunction.h
 //
 //
 //  Created by petershine on 7/18/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#ifndef FXDKit_FXDmacroEssential_h
-#define FXDKit_FXDmacroEssential_h
+#ifndef FXDKit_FXDmacroFunction_h
+#define FXDKit_FXDmacroFunction_h
 
 
 #ifndef GlobalAppManager

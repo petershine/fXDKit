@@ -20,7 +20,6 @@
 @import CoreData;
 
 
-#import "FXDsuperModule.h"
 @interface FXDsuperMainCoredata : FXDsuperModule {
 
 	BOOL _shouldMergeForManagedContext;

@@ -18,6 +18,7 @@
 	#define sizeDefaultBatch	20
 #endif
 
+
 @import CoreData;
 
 
