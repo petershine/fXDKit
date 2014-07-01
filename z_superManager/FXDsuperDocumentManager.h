@@ -1,9 +1,9 @@
 //
-//  FXDsuperMetadataManager.h
-//  FreeCamera
+//  FXDsuperDocumentManager.h
+//
 //
 //  Created by petershine on 7/1/14.
-//  Copyright (c) 2014 Grovesoft. All rights reserved.
+//  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
 #define notificationCloudDocumentsQueryDidGatherObjects		@"notificationCloudDocumentsQueryDidGatherObjects"
@@ -16,7 +16,8 @@
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
-@interface FXDsuperMetadataManager : FXDsuperManager <NSMetadataQueryDelegate> {
+#import "FXDsuperManager.h"
+@interface FXDsuperDocumentManager : FXDsuperManager <NSMetadataQueryDelegate> {
 	BOOL _didFinishFirstGathering;
 
 	NSMetadataQuery *_cloudDocumentsQuery;

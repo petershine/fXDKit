@@ -1,15 +1,15 @@
 //
-//  FXDsuperMetadataManager.m
-//  FreeCamera
+//  FXDsuperDocumentManager.m
+//
 //
 //  Created by petershine on 7/1/14.
-//  Copyright (c) 2014 Grovesoft. All rights reserved.
+//  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperMetadataManager.h"
+#import "FXDsuperDocumentManager.h"
 
 
-@implementation FXDsuperMetadataManager
+@implementation FXDsuperDocumentManager
 
 #pragma mark - Memory management
 
