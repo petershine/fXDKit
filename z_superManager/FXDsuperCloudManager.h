@@ -6,77 +6,31 @@
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#define notificationCloudDocumentsQueryDidGatherObjects		@"notificationCloudDocumentsQueryDidGatherObjects"
-#define notificationCloudDocumentsQueryDidFinishGathering	@"notificationCloudDocumentsQueryDidFinishGathering"
-#define notificationCloudDocumentsQueryDidUpdate		@"notificationCloudDocumentsQueryDidUpdate"
-#define notificationCloudDocumentsQueryIsTransferring	@"notificationCloudDocumentsQueryIsTransferring"
-
-
-#define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
 #define userdefaultObjSavedUbiquityIdentityToken	@"SavedUbiquityIdentityTokenObjKey"
-
-#define objkeyUbiquitousFolders			@"objkeyUbiquitousFolders"
-#define objkeyUbiquitousFiles			@"objkeyUbiquitousFiles"
-#define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
+#define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
 
 
 #import "FXDsuperManager.h"
 @interface FXDsuperCloudManager : FXDsuperManager <NSMetadataQueryDelegate> {
-	BOOL _didFinishFirstGathering;
-	id _ubiquityIdentityToken;
-	
-	NSURL *_ubiquityContainerURL;
-	NSURL *_ubiquitousDocumentsURL;
-	NSURL *_ubiquitousCachesURL;
-	
-	NSMetadataQuery *_cloudDocumentsQuery;
+	FXDcallbackFinish _statusCallback;
 
-	NSOperationQueue *_evictingQueue;
-		
-	NSMutableArray *_collectedURLarray;
+	NSString *_containerIdentifier;
+	NSURL *_containerURL;
 }
 
-// Properties
-@property (nonatomic) BOOL didFinishFirstGathering;
+//MARK: can be deallocated dynamically for reacting only once
+@property (copy) FXDcallbackFinish statusCallback;
 
-@property (strong, nonatomic) id ubiquityIdentityToken;
-
-@property (strong, nonatomic) NSURL *ubiquityContainerURL;
-@property (strong, nonatomic) NSURL *ubiquitousDocumentsURL;
-@property (strong, nonatomic) NSURL *ubiquitousCachesURL;
-
-@property (strong, nonatomic) NSMetadataQuery *cloudDocumentsQuery;
-
-@property (strong, nonatomic) NSOperationQueue *evictingQueue;
-
-@property (strong, nonatomic) NSMutableArray *collectedURLarray;
+@property (strong, nonatomic) NSString *containerIdentifier;
+@property (strong, nonatomic) NSURL *containerURL;
 
 
 #pragma mark - Public
-- (void)startUpdatingUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)activatedUbiquityContainerURLwithDocuments:(BOOL)withUbiquitousDocuments withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)failedToUpdateUbiquityContainerURLwithFinishCallback:(FXDcallbackFinish)finishCallback;
-
-- (void)startObservingCloudDocumentsQueryNotifications;
-
-- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atCurrentFolderURL:(NSURL*)currentFolderURL withSeparatorPathComponent:(NSString*)separatorPathComponent;
-- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
-
-- (void)updateCollectedURLarrayWithMetadataItem:(NSMetadataItem*)metadataItem;
-- (void)startEvictingCollectedURLarray;
-- (BOOL)evictUploadedUbiquitousItemURL:(NSURL*)itemURL;
-
-- (void)enumerateMetadataItemsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback;
-- (void)enumerateDocumentsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback;
+- (void)prepareContainerURLwithIdentifier:(NSString*)containerIdentifier withStatusCallback:(FXDcallbackFinish)statusCallback;
 
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification;
-
-- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification;
-- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification;
-- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification;
-- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification;
 
 //MARK: - Delegate implementation
 

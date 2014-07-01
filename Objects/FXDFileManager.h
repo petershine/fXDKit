@@ -19,4 +19,8 @@
 
 - (NSMutableDictionary*)infoDictionaryForFolderURL:(NSURL*)folderURL;
 
+- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atFolderURL:(NSURL*)folderURL;
+- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
+
+
 @end
