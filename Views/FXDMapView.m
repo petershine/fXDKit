@@ -72,7 +72,7 @@
 
 
 #pragma mark - Category
-@implementation MKMapView (Added)
+@implementation MKMapView (Essential)
 
 - (id)disclaimerView {
     id disclaimerView = nil;

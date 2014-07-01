@@ -11,7 +11,7 @@
 @end
 
 
-@interface NSDate (Added)
+@interface NSDate (Essential)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;
 

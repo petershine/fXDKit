@@ -12,7 +12,7 @@
 
 
 #pragma mark - Category
-@interface UIImage (Added)
+@interface UIImage (Essential)
 
 + (UIImage*)bundledImageForName:(NSString*)imagename;
 

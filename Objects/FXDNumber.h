@@ -11,7 +11,7 @@
 @end
 
 
-@interface NSNumber (Added)
+@interface NSNumber (Essential)
 - (NSString*)byteUnitFormatted;
 - (NSString*)timerUnitFormatted;
 

@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation NSNumber (Added)
+@implementation NSNumber (Essential)
 - (NSString*)byteUnitFormatted {
 	
 	NSString *formattedString = nil;

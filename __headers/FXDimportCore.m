@@ -8,7 +8,7 @@
 
 #import "FXDimportCore.h"
 
-@implementation NSError (Added)
+@implementation NSError (Essential)
 - (NSDictionary*)essentialParameters {
 	NSDictionary *parameters =
 	@{
@@ -24,7 +24,7 @@
 @end
 
 
-@implementation CATextLayer (Added)
+@implementation CATextLayer (Essential)
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
 
 	if ([textControl isKindOfClass:[UITextField class]] == NO
@@ -89,7 +89,7 @@
 @end
 
 
-@implementation NSFetchedResultsController (Added)
+@implementation NSFetchedResultsController (Essential)
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue {
 
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", attributeKey, attributeValue];
@@ -114,7 +114,7 @@
 @end
 
 
-@implementation UIColor (Added)
+@implementation UIColor (Essential)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue {
 	return [self colorUsingIntegersForRed:red forGreen:green forBlue:blue forAlpha:1];
 }
@@ -137,7 +137,7 @@
 @end
 
 
-@implementation UIBarButtonItem (Added)
+@implementation UIBarButtonItem (Essential)
 - (void)customizeWithNormalImage:(UIImage*)normalImage andWithHighlightedImage:(UIImage*)highlightedImage {
 
 	if (self.customView == nil) {
@@ -151,7 +151,7 @@
 @end
 
 
-@implementation UIApplication (Added)
+@implementation UIApplication (Essential)
 + (UIWindow*)mainWindow {
 	UIWindow *mainWindow = nil;
 
@@ -187,7 +187,7 @@
 @end
 
 
-@implementation UIScreen (Added)
+@implementation UIScreen (Essential)
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
 
 	CGRect screenBounds = [[self class] mainScreen].bounds;
@@ -205,7 +205,7 @@
 @end
 
 
-@implementation UIDevice (Added)
+@implementation UIDevice (Essential)
 + (UIDeviceOrientation)validDeviceOrientation {
 	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
 

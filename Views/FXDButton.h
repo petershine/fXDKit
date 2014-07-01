@@ -27,7 +27,7 @@
 @end
 
 
-@interface UIButton (Added)
+@interface UIButton (Essential)
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
 - (void)replaceBackgroundImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
 @end

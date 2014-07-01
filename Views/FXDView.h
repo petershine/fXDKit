@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 
 
 #pragma mark - Category
-@interface UIView (Added)
+@interface UIView (Essential)
 + (instancetype)viewFromNibName:(NSString*)nibName;
 + (instancetype)viewFromNib:(UINib*)nib;
 

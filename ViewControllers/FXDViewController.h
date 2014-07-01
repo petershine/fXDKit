@@ -17,7 +17,7 @@
 
 
 #pragma mark - Category
-@interface UIViewController (Added)
+@interface UIViewController (Essential)
 
 #pragma mark - IBActions
 - (IBAction)popToRootSceneWithAnimation:(id)sender;

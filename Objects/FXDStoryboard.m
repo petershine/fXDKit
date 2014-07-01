@@ -38,7 +38,7 @@
 @end
 
 #pragma mark - Category
-@implementation UIStoryboard (Added)
+@implementation UIStoryboard (Essential)
 + (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
 	NSString *storyboardName = NSStringFromClass([self class]);
 	

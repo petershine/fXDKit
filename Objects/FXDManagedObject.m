@@ -31,7 +31,7 @@
 
 
 #pragma mark - Category
-@implementation NSManagedObject (Added)
+@implementation NSManagedObject (Essential)
 - (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter {
     NSDictionary *attributes = [[self entity] attributesByName];
 	

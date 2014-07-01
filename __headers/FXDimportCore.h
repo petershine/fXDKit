@@ -40,47 +40,47 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 #pragma mark - Categories
 
-@interface NSError (Added)
+@interface NSError (Essential)
 - (NSDictionary*)essentialParameters;
 @end
 
 
-@interface NSFetchedResultsController (Added)
+@interface NSFetchedResultsController (Essential)
 - (NSManagedObject*)resultObjForAttributeKey:(NSString*)attributeKey andForAttributeValue:(id)attributeValue;
 - (NSManagedObject*)resultObjForPredicate:(NSPredicate*)predicate;
 @end
 
 
-@interface CATextLayer (Added)
+@interface CATextLayer (Essential)
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale;
 @end
 
 
-@interface UIColor (Added)
+@interface UIColor (Essential)
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue;
 + (UIColor*)colorUsingIntegersForRed:(NSInteger)red forGreen:(NSInteger)green forBlue:(NSInteger)blue forAlpha:(CGFloat)alpha;
 + (UIColor*)colorUsingHEX:(NSInteger)rgbValue forAlpha:(CGFloat)alpha;
 @end
 
 
-@interface UIBarButtonItem (Added)
+@interface UIBarButtonItem (Essential)
 - (void)customizeWithNormalImage:(UIImage*)normalImage andWithHighlightedImage:(UIImage*)highlightedImage;
 @end
 
 
-@interface UIApplication (Added)
+@interface UIApplication (Essential)
 + (UIWindow*)mainWindow;
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
 
 
-@interface UIScreen (Added)
+@interface UIScreen (Essential)
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 
 
-@interface UIDevice (Added)
+@interface UIDevice (Essential)
 + (UIDeviceOrientation)validDeviceOrientation;
 + (CGAffineTransform)forcedTransformForDeviceOrientation;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;

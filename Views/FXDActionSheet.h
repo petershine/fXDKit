@@ -27,5 +27,5 @@
 
 
 #pragma mark - Category
-@interface UIActionSheet (Added)
+@interface UIActionSheet (Essential)
 @end

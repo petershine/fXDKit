@@ -44,7 +44,7 @@
 
 
 #pragma mark - Category
-@implementation UIView (Added)
+@implementation UIView (Essential)
 + (instancetype)viewFromNibName:(NSString*)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];
 	

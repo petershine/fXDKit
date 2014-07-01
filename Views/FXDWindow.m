@@ -269,7 +269,7 @@
 
 
 #pragma mark - Category
-@implementation UIWindow (Added)
+@implementation UIWindow (Essential)
 + (instancetype)instantiateNewWindow {	FXDLog_SEPARATE;
 	CGRect screenBounds = [UIScreen mainScreen].bounds;
 	FXDLogRect(screenBounds);

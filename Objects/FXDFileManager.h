@@ -11,7 +11,7 @@
 @end
 
 
-@interface NSFileManager (Added)
+@interface NSFileManager (Essential)
 - (void)clearTempDirectory;
 
 - (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL;

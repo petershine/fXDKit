@@ -44,7 +44,7 @@
 
 
 #pragma mark -  Category
-@implementation UITextView (Added)
+@implementation UITextView (Essential)
 - (BOOL)verticalAlignWithChangedText:(NSString*)changedText {
 
 	if (changedText == nil) {

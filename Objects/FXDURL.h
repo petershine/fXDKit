@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 @end
 
 
-@interface NSURL (Added)
+@interface NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;
 

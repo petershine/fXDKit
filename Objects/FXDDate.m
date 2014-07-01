@@ -14,7 +14,7 @@
 
 
 #pragma mark - Categories
-@implementation NSDate (Added)
+@implementation NSDate (Essential)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate {
 	if (localDate == nil) {
 		localDate = [self date];

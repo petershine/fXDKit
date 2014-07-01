@@ -66,7 +66,7 @@
 @end
 
 
-@implementation UIButton (Added)
+@implementation UIButton (Essential)
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
 	
 	void (^ResizeForState)(UIControlState) = ^(UIControlState state){

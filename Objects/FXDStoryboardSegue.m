@@ -50,7 +50,7 @@
 
 
 #pragma mark - Category
-@implementation UIStoryboardSegue (Added)
+@implementation UIStoryboardSegue (Essential)
 - (NSDictionary*)fullDescription {
 	NSMutableDictionary *fullDescription = [[NSMutableDictionary alloc] initWithCapacity:0];
 

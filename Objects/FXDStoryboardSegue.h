@@ -12,7 +12,7 @@
 
 
 #pragma mark - Category
-@interface UIStoryboardSegue (Added)
+@interface UIStoryboardSegue (Essential)
 - (NSDictionary*)fullDescription;
 
 - (BOOL)shouldUseNavigationPush;

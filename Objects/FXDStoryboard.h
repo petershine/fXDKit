@@ -11,7 +11,7 @@
 @end
 
 
-@interface UIStoryboard (Added)
+@interface UIStoryboard (Essential)
 + (UIStoryboard*)storyboardWithDefaultName;
 
 @end

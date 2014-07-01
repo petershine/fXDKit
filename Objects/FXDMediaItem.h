@@ -13,7 +13,7 @@
 @end
 
 
-@interface MPMediaItem (Added)
+@interface MPMediaItem (Essential)
 - (NSDictionary*)propertiesDictionary;
 
 - (UIImage*)artworkImageWithSize:(CGSize)size;

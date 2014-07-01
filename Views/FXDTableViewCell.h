@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 
 
 #pragma mark -  Category
-@interface UITableViewCell (Added)
+@interface UITableViewCell (Essential)
 - (void)customizeWithMainImage:(UIImage*)mainImage withHighlightedMainImage:(UIImage*)highlightedMainImage;
 
 - (void)modifySizeOfCellSubview:(UIView*)cellSubview;

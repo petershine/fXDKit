@@ -39,5 +39,5 @@
 
 
 #pragma mark - Category
-@interface UIPopoverBackgroundView (Added)
+@interface UIPopoverBackgroundView (Essential)
 @end

@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation UIImage (Added)
+@implementation UIImage (Essential)
 + (UIImage*)bundledImageForName:(NSString*)imageName {
 	UIImage *bundledImage = [UIImage imageNamed:imageName];
 

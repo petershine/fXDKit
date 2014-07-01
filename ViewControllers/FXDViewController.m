@@ -314,7 +314,7 @@
 
 
 #pragma mark - Category
-@implementation UIViewController (Added)
+@implementation UIViewController (Essential)
 
 #pragma mark - IBActions
 - (IBAction)popToRootSceneWithAnimation:(id)sender {

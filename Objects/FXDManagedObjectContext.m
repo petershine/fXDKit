@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation NSManagedObjectContext (Added)
+@implementation NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSFetchRequest *fetchRequest = [self

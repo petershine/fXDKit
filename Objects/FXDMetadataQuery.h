@@ -11,12 +11,12 @@
 @end
 
 
-@interface NSMetadataQuery (Added)
+@interface NSMetadataQuery (Essential)
 - (BOOL)isQueryResultsTransferring;
 @end
 
 
-@interface NSMetadataItem (Added)
+@interface NSMetadataItem (Essential)
 - (Float64)transferPercentage;
 
 - (NSString*)unicodeAbsoluteString;

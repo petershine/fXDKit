@@ -22,7 +22,7 @@
 @end
 
 #pragma mark - Category
-@interface UIScrollView (Added)
+@interface UIScrollView (Essential)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate;
 
 - (void)configureContentInsetForSubview:(UIView*)subview forSize:(CGSize)size;

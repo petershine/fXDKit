@@ -28,5 +28,5 @@
 
 
 #pragma mark - Category
-@interface UIAlertView (Added)
+@interface UIAlertView (Essential)
 @end

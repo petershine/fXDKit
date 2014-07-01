@@ -23,6 +23,6 @@
 @end
 
 
-@interface NSOperationQueue (Added)
+@interface NSOperationQueue (Essential)
 + (instancetype)newSerialQueue;
 @end

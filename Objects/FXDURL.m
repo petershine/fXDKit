@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation NSURL (Added)
+@implementation NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {
 	NSArray *ubiquitousItemKeys =
 	@[NSURLIsUbiquitousItemKey,

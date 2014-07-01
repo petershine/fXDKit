@@ -96,7 +96,7 @@
 @end
 
 
-@implementation NSOperationQueue (Added)
+@implementation NSOperationQueue (Essential)
 + (instancetype)newSerialQueue {
 	NSOperationQueue *serialQueue = [[[self class] alloc] init];
 	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];

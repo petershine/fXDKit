@@ -49,7 +49,7 @@
 
 
 #pragma mark - Category
-@implementation MKAnnotationView (Added)
+@implementation MKAnnotationView (Essential)
 - (instancetype)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage shouldChangeOffset:(BOOL)shouldChangeOffset {
 	
 	//MARK: Need to use self, since this is an added category

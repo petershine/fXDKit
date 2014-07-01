@@ -23,7 +23,7 @@
 @end
 
 #pragma mark - Category
-@interface UIImageView (Added)
+@interface UIImageView (Essential)
 - (void)modifyHeightForContainedImage;
 
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;

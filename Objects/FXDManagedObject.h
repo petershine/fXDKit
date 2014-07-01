@@ -13,7 +13,7 @@
 @end
 
 
-@interface NSManagedObject (Added)
+@interface NSManagedObject (Essential)
 - (void)setValuesForKeysWithDictionary:(NSDictionary*)keyedValues dateFormatter:(NSDateFormatter*)dateFormatter;
 
 @end

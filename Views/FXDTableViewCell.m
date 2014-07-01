@@ -130,7 +130,7 @@
 
 
 #pragma mark -  Category
-@implementation UITableViewCell (Added)
+@implementation UITableViewCell (Essential)
 - (void)customizeWithMainImage:(UIImage*)mainImage withHighlightedMainImage:(UIImage*)highlightedMainImage {
 	
 	self.imageView.image = mainImage;

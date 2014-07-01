@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation NSFileManager (Added)
+@implementation NSFileManager (Essential)
 - (void)clearTempDirectory {	FXDLog_DEFAULT;
 
 	NSError *error = nil;

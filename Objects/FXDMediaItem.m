@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation MPMediaItem (Added)
+@implementation MPMediaItem (Essential)
 - (NSDictionary*)propertiesDictionary {
 	NSMutableDictionary *propertiesDictionary = nil;
 	

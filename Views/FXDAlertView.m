@@ -95,5 +95,5 @@
 
 
 #pragma mark - Category
-@implementation UIAlertView (Added)
+@implementation UIAlertView (Essential)
 @end

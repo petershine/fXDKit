@@ -14,7 +14,7 @@
 
 
 #pragma mark - Category
-@implementation NSMetadataQuery (Added)
+@implementation NSMetadataQuery (Essential)
 - (BOOL)isQueryResultsTransferring {
 	
 	BOOL isTransferring = NO;
@@ -51,7 +51,7 @@
 @end
 
 
-@implementation NSMetadataItem (Added)
+@implementation NSMetadataItem (Essential)
 - (Float64)transferPercentage {
 	Float64 transferPercentage = 0.0;
 		

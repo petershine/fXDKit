@@ -44,7 +44,7 @@
 @end
 
 #pragma mark - Category
-@implementation UIScrollView (Added)
+@implementation UIScrollView (Essential)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;
 
 	if (CGSizeEqualToSize(size, CGSizeZero)) {

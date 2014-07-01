@@ -28,7 +28,7 @@
 
 
 #pragma mark - Category
-@interface MKMapView (Added)
+@interface MKMapView (Essential)
 - (id)disclaimerView;
 
 - (BOOL)isHorizontal;
