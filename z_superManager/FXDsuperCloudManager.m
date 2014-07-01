@@ -66,46 +66,41 @@
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-	id currentIdentityToken = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
-	FXDLogObject(currentIdentityToken);
-	FXDLogBOOL([currentIdentityToken isEqual:fileManager.ubiquityIdentityToken]);
+	id identityToken = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
+	FXDLogObject(identityToken);
+	FXDLogBOOL([identityToken isEqual:fileManager.ubiquityIdentityToken]);
 
-	if (currentIdentityToken == nil
-		|| [currentIdentityToken isEqual:fileManager.ubiquityIdentityToken] == NO) {
+	if (identityToken == nil
+		|| [identityToken isEqual:fileManager.ubiquityIdentityToken] == NO) {
 
-		currentIdentityToken = fileManager.ubiquityIdentityToken;
+		identityToken = fileManager.ubiquityIdentityToken;
 
-		NSData *archivedToken = [NSKeyedArchiver archivedDataWithRootObject:currentIdentityToken];
+		NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:identityToken];
 
-		[userDefaults setObject:archivedToken forKey:userdefaultObjSavedUbiquityIdentityToken];
+		[userDefaults setObject:archivedData forKey:userdefaultObjSavedUbiquityIdentityToken];
 		[userDefaults synchronize];
 	}
 
 
-	//MARK: Initially, assign containerURL;
-	__block NSURL *currentContainerURL = [NSURL URLWithString:[userDefaults objectForKey:userdefaultStringSavedUbiquityContainerURL]];
-	FXDLogObject(currentContainerURL);
-
-	if (currentContainerURL) {
-		self.containerURL = [currentContainerURL copy];
-	}
+	self.containerURL = [NSURL URLWithString:[userDefaults objectForKey:userdefaultStringSavedUbiquityContainerURL]];
+	FXDLogObject(self.containerURL);
 
 
 	[[NSOperationQueue new]
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
 		 FXDLogObject(self.containerIdentifier);
 
-		 currentContainerURL = [fileManager URLForUbiquityContainerIdentifier:self.containerIdentifier];
+		 NSURL *ubiquityContainerURL = [fileManager URLForUbiquityContainerIdentifier:self.containerIdentifier];
+		 FXDLogObject(ubiquityContainerURL);
 
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
-			  FXDLogObject(currentContainerURL);
 			  FXDLogObject(self.containerURL);
 
-			  FXDLogBOOL([[currentContainerURL absoluteString] isEqualToString:[self.containerURL absoluteString]]);
+			  FXDLogBOOL([[ubiquityContainerURL absoluteString] isEqualToString:[self.containerURL absoluteString]]);
 
-			  if (currentContainerURL == nil && self.containerURL == nil) {
+			  if (ubiquityContainerURL == nil && self.containerURL == nil) {
 				  [FXDAlertView
 				   showAlertWithTitle:NSLocalizedString(@"iCloud cannot be activated currently", nil)
 				   message:nil
@@ -119,11 +114,11 @@
 			  }
 
 
-			  [userDefaults setObject:[currentContainerURL absoluteString] forKey:userdefaultStringSavedUbiquityContainerURL];
+			  [userDefaults setObject:[ubiquityContainerURL absoluteString] forKey:userdefaultStringSavedUbiquityContainerURL];
 			  [userDefaults synchronize];
 
 
-			  self.containerURL = [currentContainerURL copy];
+			  self.containerURL = ubiquityContainerURL;
 
 #if ForDEVELOPER
 			  FXDLogObject([fileManager infoDictionaryForFolderURL:self.containerURL]);
