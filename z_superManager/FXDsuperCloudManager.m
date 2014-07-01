@@ -13,7 +13,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	_statusCallback = NULL;
+	_statusCallback = nil;
 }
 
 
