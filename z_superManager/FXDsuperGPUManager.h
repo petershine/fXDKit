@@ -25,7 +25,7 @@
 @property (nonatomic) CMTime startTime;
 @property (strong, nonatomic) NSString *uniqueKey;
 
-+ (instancetype)movieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 @end
 
 

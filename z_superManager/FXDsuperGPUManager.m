@@ -43,23 +43,11 @@
 	FXDLogObject(_uniqueKey);
 }
 
-+ (instancetype)movieWriterWithFormatDescription:(CMFormatDescriptionRef)formatDescription withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
 
-	//TODO: Must distinguish between different size from the last movieWriter, especially for Front/Back camera changing
-
-	CMVideoDimensions dimension = CMVideoFormatDescriptionGetDimensions(formatDescription);
-	FXDLogStruct(dimension);
-
-	CGSize videoSize = CGSizeMake(dimension.width, dimension.height);
-
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	if (UIDeviceOrientationIsLandscape(deviceOrientation) == NO) {
-		videoSize.width = MIN(dimension.width, dimension.height);
-		videoSize.height = MAX(dimension.width, dimension.height);
-	}
 	FXDLogSize(videoSize);
-
+	FXDLogObject(fileURL);
+	FXDLogObject(gpuimageOutput);
 
 	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
 									initWithMovieURL:fileURL
