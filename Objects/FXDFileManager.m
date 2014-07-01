@@ -66,6 +66,11 @@
 }
 
 - (NSMutableDictionary*)infoDictionaryForFolderURL:(NSURL*)folderURL {
+	
+	if (folderURL == nil) {
+		return nil;
+	}
+
 
 	NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	

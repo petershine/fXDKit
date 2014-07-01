@@ -217,6 +217,16 @@
 
 			  [self startObservingCoreDataNotifications];
 
+
+#if ForDEVELOPER
+			  if (ubiquityContainerURL) {
+				  NSFileManager *fileManager = [NSFileManager defaultManager];
+				  FXDLogObject([fileManager infoDictionaryForFolderURL:ubiquityContainerURL]);
+				  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
+				  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Document]);
+			  }
+#endif
+
 			  if (finishCallback) {
 				  finishCallback(_cmd, didConfigure, nil);
 			  }

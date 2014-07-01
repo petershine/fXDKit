@@ -129,13 +129,9 @@
 
 			  self.containerURL = ubiquityContainerURL;
 
-#if ForDEVELOPER
 			  FXDLogObject([fileManager infoDictionaryForFolderURL:self.containerURL]);
-			  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
-			  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Document]);
-#endif
 
-			  [self notifyCallbackWithContainerURL:ubiquityContainerURL
+			  [self notifyCallbackWithContainerURL:self.containerURL
 						   shouldAddObserver:(notification == nil)];
 		  }];
 	 }];
