@@ -166,11 +166,8 @@
 	storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
 
 	if (ubiquityContainerURL) {
-		NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
-		FXDLogObject(ubiquitousContentURL);
-
 		storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
-		storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
+		storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquityContainerURL;
 	}
 
 	//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
