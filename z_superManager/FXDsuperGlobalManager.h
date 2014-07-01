@@ -15,8 +15,8 @@
 #import "FXDsuperMainCoredata.h"
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperGlobalManager : FXDsuperManager {
+#import "FXDsuperModule.h"
+@interface FXDsuperGlobalManager : FXDsuperModule {
 	NSInteger _appLaunchCount;
 	BOOL _isDeviceOld;
 

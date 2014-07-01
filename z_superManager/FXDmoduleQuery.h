@@ -1,5 +1,5 @@
 //
-//  FXDsuperDocumentManager.h
+//  FXDmoduleQuery.h
 //
 //
 //  Created by petershine on 7/1/14.
@@ -16,8 +16,8 @@
 #define objkeyUbiquitousMetadataItems	@"objkeyUbiquitousMetadataItems"
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperDocumentManager : FXDsuperManager <NSMetadataQueryDelegate> {
+#import "FXDsuperModule.h"
+@interface FXDmoduleQuery : FXDsuperModule <NSMetadataQueryDelegate> {
 	BOOL _didFinishFirstGathering;
 
 	NSMetadataQuery *_cloudDocumentsQuery;

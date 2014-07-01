@@ -10,8 +10,8 @@
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperCloudManager : FXDsuperManager <NSMetadataQueryDelegate> {
+#import "FXDsuperModule.h"
+@interface FXDsuperCloudManager : FXDsuperModule <NSMetadataQueryDelegate> {
 	FXDcallbackFinish _statusCallback;
 
 	NSString *_containerIdentifier;

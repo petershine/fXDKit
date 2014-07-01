@@ -9,8 +9,8 @@
 @import MessageUI;
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperMessageManager : FXDsuperManager <MFMailComposeViewControllerDelegate>
+#import "FXDsuperModule.h"
+@interface FXDsuperMessageManager : FXDsuperModule <MFMailComposeViewControllerDelegate>
 
 #pragma mark - Initialization
 

@@ -209,7 +209,7 @@
 
 	if (alertTitle) {	FXDLog_DEFAULT;
 		FXDLogObject(alertTitle);
-#warning //TODO: Handle error with alert of notification
+		//TODO: Handle error with alert of notification
 	}
 }
 

@@ -20,7 +20,6 @@
 #pragma mark - Property overriding
 - (NSString*)mainModelName {
 	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
-#warning //MARK: Use different name for different coredata
 		_mainModelName = application_BundleIdentifier;
 		FXDLogObject(_mainModelName);
 	}
@@ -30,7 +29,6 @@
 
 - (NSString*)mainUbiquitousContentName {
 	if (_mainUbiquitousContentName == nil) {	FXDLog_OVERRIDE;
-#warning //MARK: Use different name for different coredata
 		_mainUbiquitousContentName = [self.mainModelName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
 		***REMOVED***
 

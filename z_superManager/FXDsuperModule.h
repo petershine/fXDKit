@@ -1,5 +1,5 @@
 //
-//  FXDsuperManager.h
+//  FXDsuperModule.h
 //
 //
 //  Created by petershine on 4/18/14.
@@ -10,14 +10,14 @@
 @import UIKit;
 
 
-#warning //MARK: Subclass should implement its own sharedInstance
+//MARK: Subclass should implement its own sharedInstance
 @protocol FXDprotocolInitializer <NSObject>
 @required
 + (instancetype)sharedInstance;
 @end
 
 
-@interface FXDsuperManager : NSObject <FXDprotocolInitializer>
+@interface FXDsuperModule : NSObject <FXDprotocolInitializer>
 
 #pragma mark - Initialization
 

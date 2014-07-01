@@ -1,15 +1,15 @@
 //
-//  FXDsuperDocumentManager.m
+//  FXDmoduleQuery.m
 //
 //
 //  Created by petershine on 7/1/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperDocumentManager.h"
+#import "FXDmoduleQuery.h"
 
 
-@implementation FXDsuperDocumentManager
+@implementation FXDmoduleQuery
 
 #pragma mark - Memory management
 

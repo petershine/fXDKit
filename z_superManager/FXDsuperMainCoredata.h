@@ -20,8 +20,8 @@
 @import CoreData;
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperMainCoredata : FXDsuperManager {
+#import "FXDsuperModule.h"
+@interface FXDsuperMainCoredata : FXDsuperModule {
 
 	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;

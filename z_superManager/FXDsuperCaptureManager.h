@@ -13,8 +13,8 @@
 @import AVFoundation;
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperCaptureManager : FXDsuperManager <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
+#import "FXDsuperModule.h"
+@interface FXDsuperCaptureManager : FXDsuperModule <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;
 }
