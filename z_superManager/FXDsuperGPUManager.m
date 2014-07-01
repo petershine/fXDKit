@@ -45,7 +45,7 @@
 
 + (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
 
-	FXDLogSize(videoSize);
+	FXDLog(@"%@ %f", _Size(videoSize), (MAX(videoSize.width, videoSize.height)/MIN(videoSize.width, videoSize.height)));
 	FXDLogObject(fileURL);
 	FXDLogObject(gpuimageOutput);
 
