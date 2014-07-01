@@ -1,13 +1,13 @@
 //
-//  FXDimportCore.h
+//  FXDimportEssential.h
 //
 //
 //  Created by petershine on 3/22/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#ifndef FXDKit_FXDimportCore_h
-#define FXDKit_FXDimportCore_h
+#ifndef FXDKit_FXDimportEssential_h
+#define FXDKit_FXDimportEssential_h
 
 #import <objc/runtime.h>
 #import <stdarg.h>

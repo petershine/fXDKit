@@ -19,7 +19,7 @@
 #import "FXDnumericalValues.h"
 #import "FXDmacroEssential.h"
 
-#import "FXDimportCore.h"
+#import "FXDimportEssential.h"
 #import "FXDimportAdopted.h"
 
 #endif
