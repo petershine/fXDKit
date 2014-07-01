@@ -27,6 +27,8 @@
 #pragma mark - Public
 - (void)prepareContainerURLwithIdentifier:(NSString*)containerIdentifier withStatusCallback:(FXDcallbackFinish)statusCallback;
 
+- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver;
+
 
 //MARK: - Observer implementation
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification;

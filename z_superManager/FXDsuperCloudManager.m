@@ -32,14 +32,25 @@
 	_containerIdentifier = containerIdentifier;
 	_statusCallback = statusCallback;
 
-	
-	[self observedNSUbiquityIdentityDidChange:nil];
 
-	[[NSNotificationCenter defaultCenter]
-	 addObserver:self
-	 selector:@selector(observedNSUbiquityIdentityDidChange:)
-	 name:NSUbiquityIdentityDidChangeNotification
-	 object:nil];
+	[self observedNSUbiquityIdentityDidChange:nil];
+}
+
+#pragma mark -
+- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver {	FXDLog_DEFAULT;
+
+	//MARK: Assume if notification is nil, observer should be added
+	if (shouldAddObserver) {
+		[[NSNotificationCenter defaultCenter]
+		 addObserver:self
+		 selector:@selector(observedNSUbiquityIdentityDidChange:)
+		 name:NSUbiquityIdentityDidChangeNotification
+		 object:nil];
+	}
+
+	if (_statusCallback) {
+		_statusCallback(_cmd, (containerURL != nil), containerURL);
+	}
 }
 
 
@@ -57,9 +68,8 @@
 		 cancelButtonTitle:nil
 		 withAlertCallback:nil];
 
-		if (_statusCallback) {
-			_statusCallback(_cmd, NO, nil);
-		}
+		[self notifyCallbackWithContainerURL:nil
+						   shouldAddObserver:(notification == nil)];
 		return;
 	}
 
@@ -95,7 +105,7 @@
 
 
 		 [[NSOperationQueue mainQueue]
-		  addOperationWithBlock:^{
+		  addOperationWithBlock:^{	FXDLog_DEFAULT;
 			  FXDLogObject(self.containerURL);
 
 			  FXDLogBOOL([[ubiquityContainerURL absoluteString] isEqualToString:[self.containerURL absoluteString]]);
@@ -107,9 +117,8 @@
 				   cancelButtonTitle:nil
 				   withAlertCallback:nil];
 
-				  if (_statusCallback) {
-					  _statusCallback(_cmd, NO, nil);
-				  }
+				  [self notifyCallbackWithContainerURL:nil
+									 shouldAddObserver:(notification == nil)];
 				  return;
 			  }
 
@@ -126,9 +135,8 @@
 			  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Document]);
 #endif
 
-			  if (_statusCallback) {
-				  _statusCallback(_cmd, YES, self.containerURL);
-			  }
+			  [self notifyCallbackWithContainerURL:ubiquityContainerURL
+						   shouldAddObserver:(notification == nil)];
 		  }];
 	 }];
 }

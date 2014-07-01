@@ -51,13 +51,12 @@
 }
 
 - (NSString*)mainSqlitePathComponent {
-
 	//MARK: Use different name for better controlling between developer build and release build
 	if (_mainSqlitePathComponent == nil) {	FXDLog_OVERRIDE;
-		_mainSqlitePathComponent = [NSString stringWithFormat:@".%@.sqlite", self.mainModelName];
+		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
 
 	#if ForDEVELOPER
-		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
+		_mainSqlitePathComponent = [NSString stringWithFormat:@"DEV_%@.sqlite", self.mainModelName];
 	#endif
 
 		FXDLogObject(_mainSqlitePathComponent);
@@ -107,12 +106,7 @@
 	}
 
 
-	//MARK: Use different sqlite file. Hide sqlitefile for production version
-	NSString *pathComponent = [NSString stringWithFormat:@".%@.sqlite", sqliteFile];
-
-#if ForDEVELOPER
-	pathComponent = [NSString stringWithFormat:@"%@.sqlite", sqliteFile];
-#endif
+	NSString *pathComponent = [NSString stringWithFormat:@"%@.sqlite", sqliteFile];
 
 	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
 	FXDLogObject(oldSqlitePath);
@@ -157,87 +151,84 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	[[NSOperationQueue new]
-	 addOperationWithBlock:^{	FXDLog_DEFAULT;
-		 FXDLogObject(ubiquityContainerURL);
-		 FXDLogBOOL(withCompleteProtection);
+	FXDLogObject(ubiquityContainerURL);
+	FXDLogBOOL(withCompleteProtection);
 
-		 NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-		 NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
-		 FXDLogObject(storeURL);
+	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
+	FXDLogObject(storeURL);
 
 
-		 NSMutableDictionary *storeOptions = [[NSMutableDictionary alloc] initWithCapacity:0];
-		 storeOptions[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
-		 storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
+	NSMutableDictionary *storeOptions = [[NSMutableDictionary alloc] initWithCapacity:0];
+	storeOptions[NSMigratePersistentStoresAutomaticallyOption] = @(YES);
+	storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
 
-		 if (ubiquityContainerURL) {
-			 NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
-			 FXDLogObject(ubiquitousContentURL);
+	if (ubiquityContainerURL) {
+		NSURL *ubiquitousContentURL = [ubiquityContainerURL URLByAppendingPathComponent:self.mainUbiquitousContentName];
+		FXDLogObject(ubiquitousContentURL);
 
-			 storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
-			 storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
-		 }
+		storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
+		storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquitousContentURL;
+	}
 
-		 //MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
-		 if (withCompleteProtection) {
-			 storeOptions[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
-		 }
+	//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
+	if (withCompleteProtection) {
+		storeOptions[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
+	}
 
-		 FXDLogObject(storeOptions);
+	FXDLogObject(storeOptions);
 
 
-		 NSError *error = nil;
-		 BOOL didConfigure = [self.mainDocument
-							  configurePersistentStoreCoordinatorForURL:storeURL
-							  ofType:NSSQLiteStoreType
-							  modelConfiguration:nil
-							  storeOptions:storeOptions
-							  error:&error];
+	NSError *error = nil;
+	BOOL didConfigure = [self.mainDocument
+						 configurePersistentStoreCoordinatorForURL:storeURL
+						 ofType:NSSQLiteStoreType
+						 modelConfiguration:nil
+						 storeOptions:storeOptions
+						 error:&error];
 
-		 FXDLog_ERROR;
+	FXDLog_ERROR;
 
-		 FXDLog(@"1.%@", _BOOL(didConfigure));
+	FXDLog(@"1.%@", _BOOL(didConfigure));
 
 #if ForDEVELOPER
-		 NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
+	NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
 
-		 for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
-			 FXDLogObject(persistentStore.URL);
-			 FXDLogObject([storeCoordinator metadataForPersistentStore:persistentStore]);
-		 }
+	for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
+		FXDLogObject(persistentStore.URL);
+		FXDLogObject([storeCoordinator metadataForPersistentStore:persistentStore]);
+	}
 #endif
 
-		 [[NSOperationQueue mainQueue]
-		  addOperationWithBlock:^{
-			  FXDAssert_IsMainThread;
-			  FXDLog(@"2.%@", _BOOL(didConfigure));
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
+		 FXDAssert_IsMainThread;
+		 FXDLog(@"2.%@", _BOOL(didConfigure));
 
-			  //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
-			  FXDLog_ERROR;
-			  FXDLog_ERROR_ALERT;
+		 //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+		 FXDLog_ERROR;
+		 FXDLog_ERROR_ALERT;
 
-			  //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
-			  //TODO: prepare what to do when Core Data is not setup
+		 //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
+		 //TODO: prepare what to do when Core Data is not setup
 
-			  [self
-			   upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-				   FXDLog_BLOCK(self, caller);
+		 [self
+		  upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+			  FXDLog_BLOCK(self, caller);
 
-				   [self startObservingCoreDataNotifications];
+			  [self startObservingCoreDataNotifications];
 
-				   if (finishCallback) {
-					   finishCallback(_cmd, didConfigure, nil);
-				   }
-			   }];
+			  if (finishCallback) {
+				  finishCallback(_cmd, didConfigure, nil);
+			  }
 		  }];
 	 }];
 }
 
 #pragma mark -
-- (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_OVERRIDE;
 	//TODO: Learn about NSMigrationPolicy implementation
 
 	if (finishCallback) {
