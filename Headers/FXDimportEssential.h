@@ -88,6 +88,8 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Objects
+#import "FXDsuperModule.h"
+
 #import "FXDString.h"
 #import "FXDURL.h"
 #import "FXDNumber.h"
@@ -136,7 +138,5 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 #pragma mark - Global controllers
 #import "FXDResponder.h"
-
-#import "FXDsuperModule.h"
 
 #endif

@@ -11,13 +11,13 @@
 
 
 //MARK: Subclass should implement its own sharedInstance
-@protocol FXDprotocolInitializer <NSObject>
+@protocol FXDprotocolShared <NSObject>
 @required
 + (instancetype)sharedInstance;
 @end
 
 
-@interface FXDsuperModule : NSObject <FXDprotocolInitializer>
+@interface FXDsuperModule : NSObject
 
 #pragma mark - Initialization
 

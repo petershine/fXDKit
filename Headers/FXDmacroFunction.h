@@ -10,9 +10,9 @@
 #define FXDKit_FXDmacroFunction_h
 
 
-#ifndef GlobalAppManager
-	#warning //TODO: Must define app's own GlobalAppManager
-	#define GlobalAppManager	((FXDmoduleGlobal*)[FXDmoduleGlobal sharedInstance])
+#ifndef GlobalModule
+	#warning //TODO: Must define app's own GlobalModule
+	#define GlobalModule	((FXDmoduleGlobal*)[FXDmoduleGlobal sharedInstance])
 #endif
 
 #ifndef application_AppStoreID

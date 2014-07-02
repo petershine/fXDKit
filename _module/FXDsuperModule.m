@@ -9,9 +9,7 @@
 #import "FXDsuperModule.h"
 
 
-
 @implementation FXDsuperModule
-
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
@@ -20,11 +18,6 @@
 
 
 #pragma mark - Initialization
-+ (instancetype)sharedInstance {	FXDLog_OVERRIDE;
-	IMPLEMENTATION_sharedInstance;
-}
-
-#pragma mark -
 - (instancetype)init {
 	self = [super init];
 
