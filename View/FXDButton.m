@@ -9,23 +9,11 @@
 #import "FXDButton.h"
 
 
-
 @implementation FXDButton
-
 
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-
-    if (self) {
-		[self awakeFromNib];
-    }
-
-    return self;
-}
-
 
 #pragma mark - Property overriding
 - (UILabel*)customTitleLabel {
@@ -53,6 +41,7 @@
 	[self addSubview:_customTitleLabel];
 	[self bringSubviewToFront:_customTitleLabel];
 }
+
 
 #pragma mark - Method overriding
 

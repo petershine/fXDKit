@@ -25,14 +25,7 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageview;
 
 
-#pragma mark - IBActions
-
-#pragma mark - Public
 - (void)customizeBackgroundWithImage:(UIImage*)image withHighlightedImage:(UIImage*)highlightedImage;
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end
 

@@ -12,21 +12,8 @@
 @property (copy) FXDcallbackAlert alertCallback;
 
 
-#pragma mark - IBActions
-
-#pragma mark - Public
 + (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
 
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
 
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
-@end
-
-
-#pragma mark - Category
-@interface UIAlertView (Essential)
 @end

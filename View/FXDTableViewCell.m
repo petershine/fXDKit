@@ -121,7 +121,6 @@
 	}
 }
 
-
 //MARK: - Observer implementation
 
 //MARK: - Delegate implementation

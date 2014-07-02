@@ -87,8 +87,9 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @end
 
 
-#pragma mark - Objects
+#pragma mark - Object
 #import "FXDsuperModule.h"
+#import "FXDResponder.h"
 
 #import "FXDString.h"
 #import "FXDURL.h"
@@ -113,7 +114,7 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 #import "FXDOperationQueue.h"
 
 
-#pragma mark - Views
+#pragma mark - View
 #import "FXDView.h"
 #import "FXDWindow.h"
 
@@ -131,12 +132,8 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 #import "FXDPopoverBackgroundView.h"
 
 
-#pragma mark - ViewControllers
+#pragma mark - ViewController
 #import "FXDViewController.h"
-#import "FXDNavigationController.h"
 
-
-#pragma mark - Global controllers
-#import "FXDResponder.h"
 
 #endif

@@ -9,9 +9,7 @@
 #import "FXDActionSheet.h"
 
 
-
 @implementation FXDActionSheet
-
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
@@ -85,9 +83,4 @@
 	}
 }
 
-@end
-
-
-#pragma mark - Category
-@implementation UIActionSheet (Essential)
 @end

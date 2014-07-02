@@ -9,9 +9,7 @@
 #import "FXDPopoverBackgroundView.h"
 
 
-
 @implementation FXDPopoverBackgroundView
-
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
@@ -33,7 +31,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 
-    if (self) {	//MARK: Cannot use awakeFromNib
+	//MARK: Cannot use awakeFromNib
+    if (self) {
 #if ForDEVELOPER
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValue05];
 #endif
@@ -193,9 +192,4 @@
 
 //MARK: - Delegate implementation
 
-@end
-
-
-#pragma mark - Category
-@implementation UIPopoverBackgroundView (Essential)
 @end

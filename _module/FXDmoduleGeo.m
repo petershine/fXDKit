@@ -9,9 +9,7 @@
 #import "FXDmoduleGeo.h"
 
 
-
 @implementation FXDmoduleGeo
-
 
 #pragma mark - Memory management
 

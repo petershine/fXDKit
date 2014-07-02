@@ -8,10 +8,10 @@
 
 #import "FXDResponder.h"
 
+#import "FXDAlertView.h"
 
 
 @implementation FXDResponder
-
 
 #pragma mark - Memory management
 

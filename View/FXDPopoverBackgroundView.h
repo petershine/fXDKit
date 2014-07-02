@@ -35,8 +35,3 @@
 //MARK: - Delegate implementation
 
 @end
-
-
-#pragma mark - Category
-@interface UIPopoverBackgroundView (Essential)
-@end

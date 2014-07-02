@@ -13,38 +13,7 @@
 @end
 
 
-
 @implementation FXDAnnotationView
-
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-- (instancetype)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
-	
-	if (self) {
-		[self awakeFromNib];
-	}
-	
-	return self;
-}
-
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
-
 @end
 
 
@@ -56,15 +25,6 @@
 	self = [self initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
-		[self awakeFromNib];
-		
-		
-#ifdef imgeDefaultPinAnnotation
-		if (defaultImage == nil) {
-			defaultImage = imgeDefaultPinAnnotation;
-		}
-#endif
-		
 		self.image = defaultImage;
 		
 		if (defaultImage && shouldChangeOffset) {

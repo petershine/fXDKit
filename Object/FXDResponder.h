@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
+@class FXDAlertView;
+
 
 @interface FXDResponder : UIResponder <UIApplicationDelegate>
 

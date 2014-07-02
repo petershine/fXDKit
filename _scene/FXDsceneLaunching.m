@@ -16,14 +16,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (void)viewDidLoad {
-	[super viewDidLoad];
-
-	//MARK: Just use default asset name
-	if (self.imageviewDefault && self.imageviewDefault.image == nil) {
-		self.imageviewDefault.image = [UIImage bundledImageForName:@"LaunchImage"];
-	}
-}
 
 #pragma mark - StatusBar
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
@@ -52,7 +44,7 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)callback {
 	__weak FXDsceneLaunching *weakSelf = self;
 
 	[UIView
@@ -64,8 +56,8 @@
 
 	 } completion:^(BOOL didFinish) {
 		 
-		 if (finishCallback) {
-			 finishCallback(_cmd, YES, nil);
+		 if (callback) {
+			 callback(_cmd, YES, nil);
 		 }
 	 }];
 }

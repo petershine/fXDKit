@@ -12,9 +12,6 @@
 @property (copy) FXDcallbackAlert alertCallback;
 
 
-#pragma mark - IBActions
-
-#pragma mark - Public
 - (instancetype)initWithTitle:(NSString *)title withButtonTitleArray:(NSArray*)buttonTitleArray cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
 
 
@@ -23,9 +20,4 @@
 
 //MARK: - Delegate implementation
 
-@end
-
-
-#pragma mark - Category
-@interface UIActionSheet (Essential)
 @end

@@ -8,18 +8,8 @@
 
 
 @interface FXDScrollView : UIScrollView
-
-// IBOutlets
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
+
 
 #pragma mark - Category
 @interface UIScrollView (Essential)

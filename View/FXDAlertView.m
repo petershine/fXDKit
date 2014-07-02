@@ -9,7 +9,6 @@
 #import "FXDAlertView.h"
 
 
-
 @implementation FXDAlertView
 
 
@@ -21,16 +20,6 @@
 
 
 #pragma mark - Initialization
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-
-    if (self) {
-		[self awakeFromNib];
-    }
-
-    return self;
-}
-
 
 #pragma mark - Property overriding
 
@@ -66,12 +55,11 @@
 		cancelButtonTitle = NSLocalizedString(@"OK", nil);
 	}
 
-	self = [super
-			initWithTitle:title
-			message:message
-			delegate:nil
-			cancelButtonTitle:cancelButtonTitle
-			otherButtonTitles:nil];
+	self = [super initWithTitle:title
+						message:message
+					   delegate:nil
+			  cancelButtonTitle:cancelButtonTitle
+			  otherButtonTitles:nil];
 
 	if (self) {
 		self.alertCallback = alertCallback;
@@ -92,9 +80,4 @@
 	}
 }
 
-@end
-
-
-#pragma mark - Category
-@implementation UIAlertView (Essential)
 @end

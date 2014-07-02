@@ -9,9 +9,7 @@
 #import "FXDStoryboardSegue.h"
 
 
-
 @implementation FXDStoryboardSegue
-
 
 #pragma mark - Memory management
 
@@ -21,30 +19,31 @@
 	self = [super initWithIdentifier:identifier source:source destination:destination];
 
 	if (self) {
-		//TODO:
+		FXDLogObject(identifier);
+		FXDLogObject(source);
+		FXDLogObject(destination);
 	}
 
 	return self;
 }
 
+
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
 - (NSString*)description {
-	NSString *descriptionString = [[super description] stringByAppendingFormat:@" %@ %@", _Object(self.sourceViewController), _Object(self.destinationViewController)];
+	NSString *description = [super description];
 
-	return descriptionString;
+	description = [description stringByAppendingFormat:@" %@ %@",
+				   _Object(self.sourceViewController),
+				   _Object(self.destinationViewController)];
+
+	return description;
 }
 
 - (void)perform {	FXDLog_DEFAULT;
 	FXDLogObject(self);
 }
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end
 

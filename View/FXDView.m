@@ -10,20 +10,6 @@
 
 
 @implementation FXDView
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-	
-    if (self) {
-		[self awakeFromNib];
-	}
-	
-    return self;
-}
-
 @end
 
 
