@@ -1,5 +1,5 @@
 //
-//  FXDsuperPushManager.h
+//  FXDmodulePush.h
 //
 //
 //  Created by petershine on 4/30/14.
@@ -7,17 +7,23 @@
 //
 
 #ifndef urbanairshipDevelopmentKey
+	#warning //TODO: Define urbanairshipDevelopmentKey
+	#define urbanairshipDevelopmentKey	@""
 #endif
 
 #ifndef urbanairshipDevelopmentSecret
+	#warning //TODO: Define urbanairshipDevelopmentSecret
+	#define urbanairshipDevelopmentSecret	@""
 #endif
 
 #ifndef urbanairshipProductionKey
-#warning //TODO: Define urbanairshipProductionKey
+	#warning //TODO: Define urbanairshipProductionKey
+	#define urbanairshipProductionKey	@""
 #endif
 
 #ifndef urbanairshipProductionSecret
-#warning //TODO: Define urbanairshipProductionSecret
+	#warning //TODO: Define urbanairshipProductionSecret
+	#define urbanairshipProductionSecret	@""
 #endif
 
 
@@ -27,7 +33,7 @@
 #import "UALocationService.h"
 
 
-@interface FXDsuperPushManager : FXDsuperModule
+@interface FXDmodulePush : FXDsuperModule
 
 #pragma mark - Initialization
 
