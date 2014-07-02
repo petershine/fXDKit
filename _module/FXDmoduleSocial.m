@@ -264,7 +264,7 @@
 
 	FXDLogObject(self.multiAccountArray);
 	
-	if ([self.multiAccountArray count] == 0) {
+	if (self.multiAccountArray.count == 0) {
 		_multiAccountArray = nil;
 
 		NSString *alertTitle = nil;
@@ -330,7 +330,7 @@
 	}
 	
 	[actionSheet addButtonWithTitle:NSLocalizedString(@"Sign Out", nil)];
-	actionSheet.destructiveButtonIndex = [self.multiAccountArray count]+1;
+	actionSheet.destructiveButtonIndex = self.multiAccountArray.count+1;
 	
 	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 	[actionSheet showInView:presentingView];
@@ -465,7 +465,7 @@
 		}
 	}
 
-	if ([imageArray count] > 0) {
+	if (imageArray.count > 0) {
 		for (UIImage *image in imageArray) {
 			if ([socialComposeController addImage:image] == NO) {
 				FXDLogObject(image);
@@ -473,7 +473,7 @@
 		}
 	}
 
-	if ([URLarray count] > 0) {
+	if (URLarray.count > 0) {
 		for (NSURL *url in URLarray) {
 			if ([socialComposeController addURL:url] == NO) {
 				FXDLogObject(url);
