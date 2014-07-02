@@ -13,7 +13,7 @@
 @end
 
 
-#pragma mark - Public implementation
+
 @implementation FXDAnnotationView
 
 

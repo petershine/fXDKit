@@ -9,7 +9,7 @@
 #import "FXDsceneTable.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsceneTable	
 
 

@@ -9,7 +9,7 @@
 #import "FXDsceneScroll.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsceneScroll
 
 

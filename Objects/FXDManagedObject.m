@@ -9,7 +9,7 @@
 #import "FXDManagedObject.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDManagedObject
 
 

@@ -1,15 +1,15 @@
 //
-//  FXDsuperCloudManager.m
+//  FXDmoduleCloud.m
 //
 //
 //  Created by petershine on 6/25/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCloudManager.h"
+#import "FXDmoduleCloud.h"
 
 
-@implementation FXDsuperCloudManager
+@implementation FXDmoduleCloud
 
 #pragma mark - Memory management
 - (void)dealloc {
@@ -37,7 +37,7 @@
 }
 
 #pragma mark -
-- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver {	FXDLog_DEFAULT;
+- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver withAlertBody:(NSString*)alertBody {	FXDLog_DEFAULT;
 
 	//MARK: Assume if notification is nil, observer should be added
 	if (shouldAddObserver) {
@@ -46,6 +46,14 @@
 		 selector:@selector(observedNSUbiquityIdentityDidChange:)
 		 name:NSUbiquityIdentityDidChangeNotification
 		 object:nil];
+	}
+
+	if (alertBody.length > 0) {
+		[FXDAlertView
+		 showAlertWithTitle:alertBody
+		 message:nil
+		 cancelButtonTitle:nil
+		 withAlertCallback:nil];
 	}
 
 	if (_statusCallback) {
@@ -62,14 +70,10 @@
 	FXDLogObject(fileManager.ubiquityIdentityToken);
 
 	if (fileManager.ubiquityIdentityToken == nil) {
-		[FXDAlertView
-		 showAlertWithTitle:NSLocalizedString(@"Please enable iCloud", nil)
-		 message:nil
-		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
-
-		[self notifyCallbackWithContainerURL:nil
-						   shouldAddObserver:(notification == nil)];
+		[self
+		 notifyCallbackWithContainerURL:nil
+		 shouldAddObserver:(notification == nil)
+		 withAlertBody:NSLocalizedString(@"Please enable iCloud", nil)];
 		return;
 	}
 
@@ -111,14 +115,10 @@
 			  FXDLogBOOL([[ubiquityContainerURL absoluteString] isEqualToString:[self.containerURL absoluteString]]);
 
 			  if (ubiquityContainerURL == nil && self.containerURL == nil) {
-				  [FXDAlertView
-				   showAlertWithTitle:NSLocalizedString(@"iCloud cannot be activated currently", nil)
-				   message:nil
-				   cancelButtonTitle:nil
-				   withAlertCallback:nil];
-
-				  [self notifyCallbackWithContainerURL:nil
-									 shouldAddObserver:(notification == nil)];
+				  [self
+				   notifyCallbackWithContainerURL:nil
+				   shouldAddObserver:(notification == nil)
+				   withAlertBody:NSLocalizedString(@"iCloud cannot be activated currently", nil)];
 				  return;
 			  }
 
@@ -131,8 +131,10 @@
 
 			  FXDLogObject([fileManager infoDictionaryForFolderURL:self.containerURL]);
 
-			  [self notifyCallbackWithContainerURL:self.containerURL
-						   shouldAddObserver:(notification == nil)];
+			  [self
+			   notifyCallbackWithContainerURL:self.containerURL
+			   shouldAddObserver:(notification == nil)
+			   withAlertBody:nil];
 		  }];
 	 }];
 }

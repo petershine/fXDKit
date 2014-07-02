@@ -9,7 +9,7 @@
 #import "FXDOperationQueue.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDOperationQueue
 
 

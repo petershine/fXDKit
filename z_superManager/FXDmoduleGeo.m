@@ -1,16 +1,16 @@
 //
-//  FXDsuperGeoManager.m
+//  FXDmoduleGeo.m
 //
 //
 //  Created by petershine on 4/30/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperGeoManager.h"
+#import "FXDmoduleGeo.h"
 
 
-#pragma mark - Public implementation
-@implementation FXDsuperGeoManager
+
+@implementation FXDmoduleGeo
 
 
 #pragma mark - Memory management

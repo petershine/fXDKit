@@ -1,16 +1,16 @@
 //
-//  FXDsuperMessageManager.m
+//  FXDmoduleMessage.m
 //
 //
 //  Created by petershine on 3/18/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperMessageManager.h"
+#import "FXDmoduleMessage.h"
 
 
-#pragma mark - Public implementation
-@implementation FXDsuperMessageManager
+
+@implementation FXDmoduleMessage
 
 
 #pragma mark - Memory management

@@ -9,9 +9,7 @@
 #import "FXDView.h"
 
 
-#pragma mark - Public implementation
 @implementation FXDView
-
 
 #pragma mark - Memory management
 
@@ -25,20 +23,6 @@
 	
     return self;
 }
-
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end
 

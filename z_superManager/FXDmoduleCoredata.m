@@ -1,16 +1,16 @@
 //
-//  FXDsuperMainCoredata.m
+//  FXDmoduleCoredata.m
 //
 //
 //  Created by petershine on 3/16/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperMainCoredata.h"
+#import "FXDmoduleCoredata.h"
 
 
-#pragma mark - Public implementation
-@implementation FXDsuperMainCoredata
+
+@implementation FXDmoduleCoredata
 
 
 #pragma mark - Memory management
@@ -386,12 +386,12 @@
 
 	UIApplication *application = [UIApplication sharedApplication];
 
-	__weak FXDsuperMainCoredata *weakSelf = self;
+	__weak FXDmoduleCoredata *weakSelf = self;
 
 	weakSelf.enumeratingTask =
 	[application
 	 beginBackgroundTaskWithExpirationHandler:^{
-		__strong FXDsuperMainCoredata *strongSelf = weakSelf;
+		__strong FXDmoduleCoredata *strongSelf = weakSelf;
 
 		if (strongSelf) {
 			[application endBackgroundTask:strongSelf.enumeratingTask];
@@ -595,12 +595,12 @@
 
 	UIApplication *application = [UIApplication sharedApplication];
 
-	__weak FXDsuperMainCoredata *weakSelf = self;
+	__weak FXDmoduleCoredata *weakSelf = self;
 
 	weakSelf.dataSavingTask =
 	[application
 	 beginBackgroundTaskWithExpirationHandler:^{
-		 __strong FXDsuperMainCoredata *strongSelf = weakSelf;
+		 __strong FXDmoduleCoredata *strongSelf = weakSelf;
 
 		 if (strongSelf) {
 			 [application endBackgroundTask:strongSelf.dataSavingTask];

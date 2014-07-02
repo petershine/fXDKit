@@ -1,16 +1,16 @@
 //
-//  FXDsuperAssetsManager.m
+//  FXDmoduleAssets.m
 //
 //
 //  Created by petershine on 5/2/13.
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#import "FXDsuperAssetsManager.h"
+#import "FXDmoduleAssets.h"
 
 
-#pragma mark - Public implementation
-@implementation FXDsuperAssetsManager
+
+@implementation FXDmoduleAssets
 
 
 #pragma mark - Memory management

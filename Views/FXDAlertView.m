@@ -9,7 +9,7 @@
 #import "FXDAlertView.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDAlertView
 
 

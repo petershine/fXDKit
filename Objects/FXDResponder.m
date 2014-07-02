@@ -9,7 +9,7 @@
 #import "FXDResponder.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDResponder
 
 

@@ -9,7 +9,7 @@
 #import "FXDTextView.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDTextView
 
 

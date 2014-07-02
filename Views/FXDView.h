@@ -15,17 +15,6 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 
 
 @interface FXDView : UIView
-
-// IBOutlets
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-
 @end
 
 

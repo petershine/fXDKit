@@ -1,17 +1,15 @@
 //
-//  FXDsuperGlobalManager.m
+//  FXDmoduleGlobal.m
 //
 //
 //  Created by petershine on 10/4/11.
 //  Copyright 2011 fXceed. All rights reserved.
 //
 
-#import "FXDsuperGlobalManager.h"
+#import "FXDmoduleGlobal.h"
 
 
-#pragma mark - Public implementation
-@implementation FXDsuperGlobalManager
-
+@implementation FXDmoduleGlobal
 
 #pragma mark - Memory management
 
@@ -280,7 +278,7 @@
 	 withFinishCallback:finishCallback];
 }
 
-- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
 		FXDLogObject([[NSBundle mainBundle] infoDictionary]);

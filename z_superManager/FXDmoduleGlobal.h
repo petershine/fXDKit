@@ -1,5 +1,5 @@
 //
-//  FXDsuperGlobalManager.h
+//  FXDmoduleGlobal.h
 //
 //
 //  Created by petershine on 10/4/11.
@@ -12,10 +12,10 @@
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
 
 
-#import "FXDsuperMainCoredata.h"
+#import "FXDmoduleCoredata.h"
 
 
-@interface FXDsuperGlobalManager : FXDsuperModule {
+@interface FXDmoduleGlobal : FXDsuperModule {
 	NSInteger _appLaunchCount;
 	BOOL _isDeviceOld;
 
@@ -48,7 +48,7 @@
 
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)prepareGlobalManagerWithMainCoredata:(FXDsuperMainCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)incrementAppLaunchCount;
 

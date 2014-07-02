@@ -9,7 +9,7 @@
 #import "FXDCollectionViewLayout.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDCollectionViewLayout
 
 

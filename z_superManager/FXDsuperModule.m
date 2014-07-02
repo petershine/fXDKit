@@ -9,7 +9,7 @@
 #import "FXDsuperModule.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsuperModule
 
 

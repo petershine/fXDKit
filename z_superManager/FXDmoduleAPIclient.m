@@ -1,14 +1,14 @@
 //
-//  FXDsuperAPIclient.m
+//  FXDmoduleAPIclient.m
 //
 //
 //  Created by petershine on 10/8/13.
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#import "FXDsuperAPIclient.h"
+#import "FXDmoduleAPIclient.h"
 
-@implementation FXDsuperAPIclient
+@implementation FXDmoduleAPIclient
 #pragma mark - Property overriding
 - (NSString*)mainRootURLformat {
 	if (_mainRootURLformat == nil) {

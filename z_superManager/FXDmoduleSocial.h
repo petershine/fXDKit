@@ -1,5 +1,5 @@
 //
-//  FXDsuperSocialManager.h
+//  FXDmoduleSocial.h
 //
 //
 //  Created by petershine on 5/3/12.
@@ -15,7 +15,7 @@
 @import CoreLocation;
 
 
-@interface FXDsuperSocialManager : FXDsuperModule {
+@interface FXDmoduleSocial : FXDsuperModule {
 	NSString *_typeIdentifier;
 	NSString *_reasonForConnecting;
 	NSDictionary *_initialAccessOptions;
@@ -72,7 +72,7 @@
 #define objkeyTwitterDisplayCoordinates	@"display_coordinates"
 
 
-@interface FXDsuperTwitterManager : FXDsuperSocialManager
+@interface FXDsuperTwitterManager : FXDmoduleSocial
 - (void)twitterUserShowWithScreenName:(NSString*)screenName;
 - (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude;
 @end
@@ -104,6 +104,6 @@
 #define objkeyFacebookCategory	@"category"
 
 
-@interface FXDsuperFacebookManager : FXDsuperSocialManager
+@interface FXDsuperFacebookManager : FXDmoduleSocial
 - (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId;
 @end

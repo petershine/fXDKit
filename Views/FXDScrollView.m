@@ -9,7 +9,7 @@
 #import "FXDScrollView.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDScrollView
 
 

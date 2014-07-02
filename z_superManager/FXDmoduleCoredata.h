@@ -1,5 +1,5 @@
 //
-//  FXDsuperMainCoredata.h
+//  FXDmoduleCoredata.h
 //
 //
 //  Created by petershine on 3/16/12.
@@ -20,7 +20,7 @@
 @import CoreData;
 
 
-@interface FXDsuperMainCoredata : FXDsuperModule {
+@interface FXDmoduleCoredata : FXDsuperModule {
 
 	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;

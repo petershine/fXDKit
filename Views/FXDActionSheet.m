@@ -9,7 +9,7 @@
 #import "FXDActionSheet.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDActionSheet
 
 

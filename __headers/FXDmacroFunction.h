@@ -12,7 +12,7 @@
 
 #ifndef GlobalAppManager
 	#warning //TODO: Must define app's own GlobalAppManager
-	#define GlobalAppManager	((FXDsuperGlobalManager*)[FXDsuperGlobalManager sharedInstance])
+	#define GlobalAppManager	((FXDmoduleGlobal*)[FXDmoduleGlobal sharedInstance])
 #endif
 
 #ifndef application_AppStoreID

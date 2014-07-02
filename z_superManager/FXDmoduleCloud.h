@@ -1,5 +1,5 @@
 //
-//  FXDsuperCloudManager.h
+//  FXDmoduleCloud.h
 //
 //
 //  Created by petershine on 6/25/12.
@@ -10,7 +10,7 @@
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
 
 
-@interface FXDsuperCloudManager : FXDsuperModule <NSMetadataQueryDelegate> {
+@interface FXDmoduleCloud : FXDsuperModule {
 	FXDcallbackFinish _statusCallback;
 
 	NSString *_containerIdentifier;
@@ -27,7 +27,7 @@
 #pragma mark - Public
 - (void)prepareContainerURLwithIdentifier:(NSString*)containerIdentifier withStatusCallback:(FXDcallbackFinish)statusCallback;
 
-- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver;
+- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver withAlertBody:(NSString*)alertBody;
 
 
 //MARK: - Observer implementation

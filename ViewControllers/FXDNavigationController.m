@@ -9,7 +9,7 @@
 #import "FXDNavigationController.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDNavigationController
 
 

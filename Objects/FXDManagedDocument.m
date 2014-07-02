@@ -9,7 +9,7 @@
 #import "FXDManagedDocument.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDManagedDocument
 
 

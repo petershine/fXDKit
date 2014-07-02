@@ -9,7 +9,7 @@
 #import "FXDImageView.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDImageView
 
 

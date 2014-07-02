@@ -9,7 +9,7 @@
 #import "FXDsceneCollection.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsceneCollection
 
 

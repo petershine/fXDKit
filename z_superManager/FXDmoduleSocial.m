@@ -1,16 +1,16 @@
 //
-//  FXDsuperSocialManager.m
+//  FXDmoduleSocial.m
 //
 //
 //  Created by petershine on 5/3/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperSocialManager.h"
+#import "FXDmoduleSocial.h"
 
 
-#pragma mark - Public implementation
-@implementation FXDsuperSocialManager
+
+@implementation FXDmoduleSocial
 
 
 #pragma mark - Memory management
@@ -528,7 +528,7 @@
 @end
 
 
-@implementation FXDsuperTwitterManager : FXDsuperSocialManager
+@implementation FXDsuperTwitterManager : FXDmoduleSocial
 - (NSString*)typeIdentifier {
 	if (_typeIdentifier == nil) {
 		_typeIdentifier = ACAccountTypeIdentifierTwitter;
@@ -612,7 +612,7 @@
 @end
 
 
-@implementation FXDsuperFacebookManager : FXDsuperSocialManager
+@implementation FXDsuperFacebookManager : FXDmoduleSocial
 - (NSString*)typeIdentifier {
 	if (_typeIdentifier == nil) {
 		_typeIdentifier = ACAccountTypeIdentifierFacebook;

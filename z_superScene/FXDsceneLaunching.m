@@ -9,7 +9,7 @@
 #import "FXDsceneLaunching.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsceneLaunching
 
 

@@ -69,7 +69,7 @@
 @end
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsuperGPUManager
 
 

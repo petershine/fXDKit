@@ -9,7 +9,7 @@
 #import "FXDPopoverBackgroundView.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDPopoverBackgroundView
 
 

@@ -9,7 +9,7 @@
 #import "FXDMapView.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDMapView
 
 

@@ -9,7 +9,7 @@
 #import "FXDsuperCaptureManager.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDsuperCaptureManager
 
 

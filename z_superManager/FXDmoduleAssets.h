@@ -1,5 +1,5 @@
 //
-//  FXDsuperAssetsManager.h
+//  FXDmoduleAssets.h
 //
 //
 //  Created by petershine on 5/2/13.
@@ -9,7 +9,7 @@
 @import AssetsLibrary;
 
 
-@interface FXDsuperAssetsManager : FXDsuperModule
+@interface FXDmoduleAssets : FXDsuperModule
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 
 

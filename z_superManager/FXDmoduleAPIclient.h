@@ -1,5 +1,5 @@
 //
-//  FXDsuperAPIclient.h
+//  FXDmoduleAPIclient.h
 //
 //
 //  Created by petershine on 10/8/13.
@@ -10,7 +10,7 @@
 #import <UIKit+AFNetworking.h>
 
 
-@interface FXDsuperAPIclient : FXDsuperModule {
+@interface FXDmoduleAPIclient : FXDsuperModule {
 	NSString *_mainRootURLformat;
 	NSString *_mainAPIkey;
 	NSString *_mainJSONrootKey;

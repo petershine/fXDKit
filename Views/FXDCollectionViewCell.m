@@ -9,7 +9,7 @@
 #import "FXDCollectionViewCell.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDCollectionViewCell
 
 

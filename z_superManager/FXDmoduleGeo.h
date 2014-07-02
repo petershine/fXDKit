@@ -1,5 +1,5 @@
 //
-//  FXDsuperGeoManager.h
+//  FXDmoduleGeo.h
 //
 //
 //  Created by petershine on 4/30/14.
@@ -10,7 +10,7 @@
 @import MapKit;
 
 
-@interface FXDsuperGeoManager : FXDsuperModule <CLLocationManagerDelegate>
+@interface FXDmoduleGeo : FXDsuperModule <CLLocationManagerDelegate>
 
 @property (nonatomic) BOOL didStartSignificantMonitoring;
 

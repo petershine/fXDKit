@@ -9,7 +9,7 @@
 #import "FXDViewController.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDViewController
 
 

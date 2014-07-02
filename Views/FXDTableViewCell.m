@@ -9,7 +9,7 @@
 #import "FXDTableViewCell.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDTableViewCell
 
 

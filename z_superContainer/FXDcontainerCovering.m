@@ -26,7 +26,7 @@
 @end
 
 
-#pragma mark - Public implementation
+
 @implementation FXDcontainerCovering
 
 

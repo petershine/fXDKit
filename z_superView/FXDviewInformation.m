@@ -9,7 +9,7 @@
 #import "FXDviewInformation.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDviewInformation
 
 

@@ -9,7 +9,7 @@
 #import "FXDButton.h"
 
 
-#pragma mark - Public implementation
+
 @implementation FXDButton
 
 
