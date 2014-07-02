@@ -9,9 +9,7 @@
 #import "FXDmoduleSocial.h"
 
 
-
 @implementation FXDmoduleSocial
-
 
 #pragma mark - Memory management
 
@@ -528,7 +526,7 @@
 @end
 
 
-@implementation FXDsuperTwitterManager : FXDmoduleSocial
+@implementation FXDmoduleTwitter : FXDmoduleSocial
 - (NSString*)typeIdentifier {
 	if (_typeIdentifier == nil) {
 		_typeIdentifier = ACAccountTypeIdentifierTwitter;
@@ -612,7 +610,7 @@
 @end
 
 
-@implementation FXDsuperFacebookManager : FXDmoduleSocial
+@implementation FXDmoduleFacebook : FXDmoduleSocial
 - (NSString*)typeIdentifier {
 	if (_typeIdentifier == nil) {
 		_typeIdentifier = ACAccountTypeIdentifierFacebook;

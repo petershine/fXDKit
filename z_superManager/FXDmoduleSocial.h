@@ -36,7 +36,6 @@
 @property (strong, nonatomic) ACAccount *currentMainAccount;
 
 
-#pragma mark - Public
 - (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback;
@@ -72,7 +71,7 @@
 #define objkeyTwitterDisplayCoordinates	@"display_coordinates"
 
 
-@interface FXDsuperTwitterManager : FXDmoduleSocial
+@interface FXDmoduleTwitter : FXDmoduleSocial
 - (void)twitterUserShowWithScreenName:(NSString*)screenName;
 - (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude;
 @end
@@ -104,6 +103,6 @@
 #define objkeyFacebookCategory	@"category"
 
 
-@interface FXDsuperFacebookManager : FXDmoduleSocial
+@interface FXDmoduleFacebook : FXDmoduleSocial
 - (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId;
 @end

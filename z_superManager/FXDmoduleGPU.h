@@ -1,5 +1,5 @@
 //
-//  FXDsuperGPUManager.h
+//  FXDmoduleGPU.h
 //
 //
 //  Created by petershine on 5/21/14.
@@ -29,7 +29,7 @@
 @end
 
 
-@interface FXDsuperGPUManager : FXDsuperModule
+@interface FXDmoduleGPU : FXDsuperModule
 @property (nonatomic) NSInteger lastFilterIndex;
 
 @property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;

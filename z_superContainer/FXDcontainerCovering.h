@@ -15,10 +15,10 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 };
 
 
-@interface FXDsegueCover : FXDsuperTransitionSegue
+@interface FXDsegueCover : FXDStoryboardSegue
 @end
 
-@interface FXDsegueUncover : FXDsuperTransitionSegue
+@interface FXDsegueUncover : FXDStoryboardSegue
 @end
 
 
@@ -35,11 +35,6 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 @property (strong, nonatomic) IBOutlet FXDView *mainToolbar;
 
 
-#pragma mark - Segues
-
-#pragma mark - IBActions
-
-#pragma mark - Public
 - (void)coverWithSegue:(FXDsegueCover*)coveringSegue;
 - (void)uncoverWithSegue:(FXDsegueUncover*)uncoveringSegue;
 - (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)finishCallback;
@@ -50,10 +45,6 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 - (COVERING_OFFSET)coveringOffsetForDirectionType:(COVER_DIRECTION_TYPE)coverDirectionType;
 - (COVERING_DIRECTION)coveringDirectionForDirectionType:(COVER_DIRECTION_TYPE)coverDirectionType;
 
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end
 

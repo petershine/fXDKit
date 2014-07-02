@@ -1,12 +1,12 @@
 //
-//  FXDsuperPlaybackManager.m
+//  FXDmodulePlayback.m
 //
 //
 //  Created by petershine on 2/3/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperPlaybackManager.h"
+#import "FXDmodulePlayback.h"
 
 
 @implementation FXDviewAssetDisplay
@@ -90,7 +90,7 @@
 
 
 
-@implementation FXDsuperPlaybackManager
+@implementation FXDmodulePlayback
 
 
 #pragma mark - Memory management
@@ -166,7 +166,7 @@
 			  [self.mainPlaybackDisplay setMainPlayer:self.moviePlayer];
 			  
 
-			  __weak FXDsuperPlaybackManager *weakSelf = self;
+			  __weak FXDmodulePlayback *weakSelf = self;
 
 			  [weakSelf configurePlaybackObservers];
 
@@ -182,7 +182,7 @@
 #pragma mark -
 - (void)configurePlaybackObservers {	FXDLog_DEFAULT;
 	
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	weakSelf.playerItemObserver =
 	[[NSNotificationCenter defaultCenter]
@@ -200,7 +200,7 @@
 #pragma mark -
 - (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
 
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	CMTime seekedTime = kCMTimeZero;
 
@@ -219,7 +219,7 @@
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
 
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	if (CMTIME_IS_VALID(seekedTime) == NO) {
 		FXDLog_DEFAULT;
@@ -281,7 +281,7 @@
 
 #pragma mark -
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	FXDcallbackFinish ResumingMoviePlayer = ^(SEL caller, BOOL didFinish, id responseObj){
 		FXDLogTime(periodicintervalDefault);
@@ -326,7 +326,7 @@
 
 - (void)pauseRemovingPeriodicObserver {	//FXDLog_DEFAULT;
 	
-	__weak FXDsuperPlaybackManager *weakSelf = self;
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	[weakSelf.moviePlayer pause];
 

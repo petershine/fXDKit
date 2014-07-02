@@ -1,12 +1,12 @@
 //
-//  FXDsuperGPUManager.m
+//  FXDmoduleGPU.m
 //
 //
 //  Created by petershine on 5/21/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperGPUManager.h"
+#import "FXDmoduleGPU.h"
 
 
 @implementation FXDcameraGPU
@@ -70,7 +70,7 @@
 
 
 
-@implementation FXDsuperGPUManager
+@implementation FXDmoduleGPU
 
 
 #pragma mark - Memory management

@@ -9,9 +9,7 @@
 #import "FXDmoduleAssets.h"
 
 
-
 @implementation FXDmoduleAssets
-
 
 #pragma mark - Memory management
 

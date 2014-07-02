@@ -1,5 +1,5 @@
 //
-//  FXDsuperPlaybackManager.h
+//  FXDmodulePlayback.h
 //
 //
 //  Created by petershine on 2/3/14.
@@ -27,7 +27,7 @@
 @end
 
 
-@interface FXDsuperPlaybackManager : FXDsuperModule
+@interface FXDmodulePlayback : FXDsuperModule
 @property (nonatomic) CMTime playbackCurrentTime;
 @property (nonatomic) CMTime lastSeekedTime;
 

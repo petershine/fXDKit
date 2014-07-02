@@ -13,9 +13,6 @@
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;
 
 
-#pragma mark - Initialization
-
-#pragma mark - Public
 - (void)startObservingAssetsLibraryNotifications;
 
 - (void)groupsArrayWithTypes:(ALAssetsGroupType)types withFinishCallback:(FXDcallbackFinish)finishCallback;
