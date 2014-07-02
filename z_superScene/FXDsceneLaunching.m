@@ -1,16 +1,16 @@
 //
-//  FXDsuperLaunchScene.m
+//  FXDsceneLaunching.m
 //
 //
 //  Created by petershine on 12/17/12.
 //  Copyright (c) 2012 fXceed All rights reserved.
 //
 
-#import "FXDsuperLaunchScene.h"
+#import "FXDsceneLaunching.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperLaunchScene
+@implementation FXDsceneLaunching
 
 
 #pragma mark - Memory management
@@ -53,7 +53,7 @@
 
 #pragma mark - Public
 - (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)finishCallback {
-	__weak FXDsuperLaunchScene *weakSelf = self;
+	__weak FXDsceneLaunching *weakSelf = self;
 
 	[UIView
 	 animateWithDuration:durationOneSecond

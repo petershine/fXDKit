@@ -6,22 +6,19 @@
 //  Copyright (c) 2011 fXceed. All rights reserved.
 //
 
-@class FXDsuperProgressView;
-@class FXDsuperMessageView;
+@class FXDviewInformation;
 
-@class FXDsuperLaunchScene;
+@class FXDsceneLaunching;
 
 
 @interface FXDWindow : UIWindow
 // IBOutlets
-@property (strong, nonatomic) IBOutlet FXDsuperProgressView *progressView;
-@property (strong, nonatomic) IBOutlet FXDsuperMessageView *messageView;
-
+@property (strong, nonatomic) IBOutlet FXDviewInformation *informationView;
 
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)prepareWindowWithLaunchScene:(FXDsuperLaunchScene*)launchScene;
+- (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene;
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
@@ -29,9 +26,6 @@
 
 - (void)showProgressViewWithNibName:(NSString*)nibName;
 - (void)hideProgressView;
-
-- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock;
-- (void)hideMessageView;
 
 
 //MARK: - Observer implementation

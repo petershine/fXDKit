@@ -85,22 +85,6 @@
 	 failureBlock:^(NSError *error) {
 		 FXDLog_ERROR;
 		 
-		 /*
-		  ALBmanagerAssets__73-[FXDsuperAssetsManager prepareSavedPhotosAssetsGroupWithFinishCallback:]_block_invoke41
-		  file: /Users/thckbrws/Desktop/_WORK_Provus/_PROJECT/PhotoAlbum/_Submodules/FXDKit_PhotoAlbum/z_superManager/FXDsuperAssetsManager.m
-		  line: 105
-		  
-		  localizedDescription: User denied access
-		  domain: ALAssetsLibraryErrorDomain
-		  code: -3311
-		  userInfo:
-		  {
-		  NSLocalizedDescription = "User denied access";
-		  NSLocalizedFailureReason = "The user has denied the application access to their media.";
-		  NSUnderlyingError = "Error Domain=ALAssetsLibraryErrorDomain Code=-3311 \"The operation couldn\U2019t be completed. (ALAssetsLibraryErrorDomain error -3311.)\"";
-		  }
-		  */
-		 
 		 if (finishCallback) {
 			 finishCallback(_cmd, NO, collectedGroupsArray);
 		 }

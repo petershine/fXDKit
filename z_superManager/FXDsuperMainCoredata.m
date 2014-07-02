@@ -322,19 +322,19 @@
 }
 
 #pragma mark -
-- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {
-	
-	[(FXDWindow*)[UIApplication mainWindow]
-	 showMessageViewWithNibName:nil
-	 withTitle:NSLocalizedString(@"Do want to delete ALL?", nil)
-	 message:NSLocalizedString(@"Please be warned. Deleted data WILL NEVER BE RESTORED!", nil)
+- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+	FXDAlertView *alertView =
+	[[FXDAlertView alloc]
+	 initWithTitle:nil
+	 message:nil
 	 cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-	 acceptButtonTitle:NSLocalizedString(@"Delete All", nil)
-	 clickedButtonAtIndexBlock:^(id alertObj, NSInteger buttonIndex) {
+	 withAlertCallback:^(FXDAlertView *alertObj, NSInteger buttonIndex) {
 		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
 
-		 //MARK: Assume buttonIndex == 1: is Accept
-		 if (buttonIndex != 1) {
+		 if (buttonIndex == alertObj.cancelButtonIndex) {
+			 if (finishCallback) {
+				 finishCallback(_cmd, NO, nil);
+			 }
 			 return;
 		 }
 
@@ -345,7 +345,6 @@
 								 NSManagedObject *mainEntityObj,
 								 BOOL *shouldBreak) {
 
-			  //TODO: Implement shouldBreak different, making this block to return boolean
 			  if (*shouldBreak) {
 				  FXDLogBOOL(*shouldBreak);
 			  }
@@ -354,6 +353,10 @@
 
 		  } withFinishCallback:finishCallback];
 	 }];
+
+	[alertView addButtonWithTitle:NSLocalizedString(@"Delete All", nil)];
+
+	[alertView show];
 }
 
 #pragma mark -

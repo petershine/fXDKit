@@ -1,5 +1,5 @@
 //
-//  FXDsuperWebScene.h
+//  FXDsceneWeb.h
 //
 //
 //  Created by petershine on 2/5/14.
@@ -13,8 +13,8 @@
 #endif
 
 
-#import "FXDsuperScrollScene.h"
-@interface FXDsuperWebScene : FXDsuperScrollScene <UIWebViewDelegate>
+#import "FXDsceneScroll.h"
+@interface FXDsceneWeb : FXDsceneScroll <UIWebViewDelegate>
 @property (strong, nonatomic) NSURLRequest *initialWebRequest;
 
 // IBOutlets

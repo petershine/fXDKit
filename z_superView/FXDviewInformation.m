@@ -1,16 +1,16 @@
 //
-//  FXDsuperProgressView.m
+//  FXDviewInformation.m
 //
 //
 //  Created by petershine on 1/9/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperProgressView.h"
+#import "FXDviewInformation.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperProgressView
+@implementation FXDviewInformation
 
 
 #pragma mark - Memory management
@@ -22,15 +22,6 @@
 #pragma mark - Method overriding
 
 #pragma mark - IBActions
-- (IBAction)pressedCancelButton:(id)sender {	FXDLog_DEFAULT;
-	self.didPressCancelButton = YES;
-
-	[[NSOperationQueue mainQueue]
-	 addOperationWithBlock:^{
-		 
-		 self.labelCanceling.text = NSLocalizedString(@"Canceling...", nil);
-	 }];
-}
 
 #pragma mark - Public
 

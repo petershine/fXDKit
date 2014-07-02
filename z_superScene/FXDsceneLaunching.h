@@ -1,5 +1,5 @@
 //
-//  FXDsuperLaunchScene.h
+//  FXDsceneLaunching.h
 //
 //
 //  Created by petershine on 12/17/12.
@@ -7,7 +7,7 @@
 //
 
 
-@interface FXDsuperLaunchScene : FXDViewController
+@interface FXDsceneLaunching : FXDViewController
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;

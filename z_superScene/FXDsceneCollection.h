@@ -1,5 +1,5 @@
 //
-//  FXDsuperCollectionScene.h
+//  FXDsceneCollection.h
 //
 //
 //  Created by petershine on 2/6/13.
@@ -7,8 +7,8 @@
 //
 
 
-#import "FXDsuperTableScene.h"
-@interface FXDsuperCollectionScene : FXDsuperTableScene <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+#import "FXDsceneTable.h"
+@interface FXDsceneCollection : FXDsceneTable <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UICollectionView *mainCollectionview;

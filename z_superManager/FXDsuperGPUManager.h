@@ -29,8 +29,7 @@
 @end
 
 
-#import "FXDsuperManager.h"
-@interface FXDsuperGPUManager : FXDsuperManager
+@interface FXDsuperGPUManager : FXDsuperModule
 @property (nonatomic) NSInteger lastFilterIndex;
 
 @property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;

@@ -1,17 +1,17 @@
 //
-//  FXDsuperCoveringContainer.m
+//  FXDcontainerCovering.m
 //
 //
 //  Created by petershine on 10/18/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCoveringContainer.h"
+#import "FXDcontainerCovering.h"
 
 
 @implementation FXDsegueCover
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperCoveringContainer *coveringContainer = [self mainContainerOfClass:[FXDsuperCoveringContainer class]];
+	FXDcontainerCovering *coveringContainer = [self mainContainerOfClass:[FXDcontainerCovering class]];
 
 	[coveringContainer coverWithSegue:self];
 }
@@ -19,7 +19,7 @@
 
 @implementation FXDsegueUncover
 - (void)perform {	FXDLog_DEFAULT;
-	FXDsuperCoveringContainer *coveringContainer = [self mainContainerOfClass:[FXDsuperCoveringContainer class]];
+	FXDcontainerCovering *coveringContainer = [self mainContainerOfClass:[FXDcontainerCovering class]];
 
 	[coveringContainer uncoverWithSegue:self];
 }
@@ -27,7 +27,7 @@
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCoveringContainer
+@implementation FXDcontainerCovering
 
 
 #pragma mark - Memory management

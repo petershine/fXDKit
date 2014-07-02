@@ -52,7 +52,7 @@
 	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
 									initWithMovieURL:fileURL
 									size:videoSize
-									fileType:filetypeVideoDefault
+									fileType:AVFileTypeQuickTimeMovie
 									outputSettings:nil];
 
 	gpumovieWriter.uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];

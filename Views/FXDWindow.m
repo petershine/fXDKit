@@ -8,10 +8,9 @@
 
 #import "FXDWindow.h"
 
-#import "FXDsuperProgressView.h"
-#import "FXDsuperMessageView.h"
+#import "FXDviewInformation.h"
 
-#import "FXDsuperLaunchScene.h"
+#import "FXDsceneLaunching.h"
 
 
 #pragma mark - Public implementation
@@ -57,9 +56,9 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)prepareWindowWithLaunchScene:(FXDsuperLaunchScene*)launchScene {	FXDLog_DEFAULT;
+- (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene {	FXDLog_DEFAULT;
 	if (launchScene == nil) {
-		launchScene = [[FXDsuperLaunchScene alloc] initWithNibName:nil bundle:nil];
+		launchScene = [[FXDsceneLaunching alloc] initWithNibName:nil bundle:nil];
 	}
 
 	CGRect modifiedFrame = launchScene.view.frame;
@@ -110,9 +109,9 @@
 		didBecomeBlock();
 	}
 
-	if ([launchScene isKindOfClass:[FXDsuperLaunchScene class]]) {
+	if ([launchScene isKindOfClass:[FXDsceneLaunching class]]) {
 
-		[(FXDsuperLaunchScene*)launchScene
+		[(FXDsceneLaunching*)launchScene
 		 dismissLaunchSceneWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 			 FXDLog_BLOCK(launchScene, caller);
 			 FXDLogBOOL(didFinish);
@@ -167,83 +166,34 @@
 #pragma mark -
 - (void)showProgressViewWithNibName:(NSString*)nibName {
 
-	if (self.progressView) {
+	if (self.informationView) {
 		return;
 	}
 
 
-	self.progressView = [FXDsuperProgressView viewFromNibName:nibName];
+	self.informationView = [FXDviewInformation viewFromNibName:nibName];
 
-	CGRect modifiedFrame = self.progressView.frame;
+	CGRect modifiedFrame = self.informationView.frame;
 	modifiedFrame.size = self.frame.size;
-	self.progressView.frame = modifiedFrame;
+	self.informationView.frame = modifiedFrame;
 
-	[self addSubview:self.progressView];
-	[self bringSubviewToFront:self.progressView];
+	[self addSubview:self.informationView];
+	[self bringSubviewToFront:self.informationView];
 
-	[self.progressView fadeInFromHidden];
+	[self.informationView fadeInFromHidden];
 }
 
 - (void)hideProgressView {
 
-	if (self.progressView == nil) {
+	if (self.informationView == nil) {
 		return;
 	}
 
 
 	[self
-	 removeAsFadeOutSubview:self.progressView
+	 removeAsFadeOutSubview:self.informationView
 	 afterRemovedBlock:^{
-		 self.progressView = nil;
-	 }];
-}
-
-#pragma mark -
-- (void)showMessageViewWithNibName:(NSString*)nibName withTitle:(NSString*)title message:(NSString*)message  cancelButtonTitle:(NSString*)cancelButtonTitle acceptButtonTitle:(NSString*)acceptButtonTitle  clickedButtonAtIndexBlock:(FXDcallbackAlert)clickedButtonAtIndexBlock {
-
-	if (self.messageView) {
-		return;
-	}
-
-
-	FXDLog_DEFAULT;
-
-	self.messageView = [FXDsuperMessageView viewFromNibName:nibName];
-	self.messageView.alertCallback = clickedButtonAtIndexBlock;
-
-	CGRect modifiedFrame = self.messageView.frame;
-	modifiedFrame.size = self.frame.size;
-	self.messageView.frame = modifiedFrame;
-
-
-	self.messageView.labelTitle.text = title;
-
-	if (self.messageView.textviewMessage) {
-		self.messageView.textviewMessage.text = message;
-	}
-	else {
-		self.messageView.labelMessage_0.text = message;
-	}
-
-	[self.messageView configureWithCancelButtonTitle:cancelButtonTitle withAcceptButtonTitle:acceptButtonTitle];
-
-
-	[self addSubview:self.messageView];
-	[self bringSubviewToFront:self.messageView];
-
-	[self.messageView fadeInFromHidden];
-}
-
-- (void)hideMessageView {
-	if (self.messageView == nil) {
-		return;
-	}
-
-
-	[self
-	 removeAsFadeOutSubview:self.messageView
-	 afterRemovedBlock:^{
-		 self.messageView = nil;
+		 self.informationView = nil;
 	 }];
 }
 

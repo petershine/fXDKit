@@ -60,7 +60,8 @@
 
 #pragma mark -
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
-	
+
+	//MARK: Assume this is the condition for simple alerting withour choice
 	if (cancelButtonTitle == nil) {
 		cancelButtonTitle = NSLocalizedString(@"OK", nil);
 	}

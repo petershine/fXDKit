@@ -1,16 +1,16 @@
 //
-//  FXDsuperMapScene.m
+//  FXDsceneMap.m
 //
 //
 //  Created by petershine on 4/24/12.
 //  Copyright (c) 2012 fXceed. All rights reserved.
 //
 
-#import "FXDsuperMapScene.h"
+#import "FXDsceneMap.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperMapScene
+@implementation FXDsceneMap
 
 
 #pragma mark - Memory management

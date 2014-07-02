@@ -1,16 +1,16 @@
 //
-//  FXDsuperWebScene.m
+//  FXDsceneWeb.m
 //
 //
 //  Created by petershine on 2/5/14.
 //  Copyright (c) 2014 fXceed. All rights reserved.
 //
 
-#import "FXDsuperWebScene.h"
+#import "FXDsceneWeb.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperWebScene
+@implementation FXDsceneWeb
 
 
 #pragma mark - Memory management

@@ -1,5 +1,5 @@
 //
-//  FXDsuperMapScene.h
+//  FXDsceneMap.h
 //
 //
 //  Created by petershine on 4/24/12.
@@ -11,8 +11,8 @@
 #import "FXDMapView.h"
 
 
-#import "FXDsuperTableScene.h"
-@interface FXDsuperMapScene : FXDsuperTableScene <MKMapViewDelegate> {
+#import "FXDsceneTable.h"
+@interface FXDsceneMap : FXDsceneTable <MKMapViewDelegate> {
 	FXDMapView *_mainMapview;
 }
 

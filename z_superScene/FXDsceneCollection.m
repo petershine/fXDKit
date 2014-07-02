@@ -1,16 +1,16 @@
 //
-//  FXDsuperCollectionScene.m
+//  FXDsceneCollection.m
 //
 //
 //  Created by petershine on 2/6/13.
 //  Copyright (c) 2013 fXceed. All rights reserved.
 //
 
-#import "FXDsuperCollectionScene.h"
+#import "FXDsceneCollection.h"
 
 
 #pragma mark - Public implementation
-@implementation FXDsuperCollectionScene
+@implementation FXDsceneCollection
 
 
 #pragma mark - Memory management

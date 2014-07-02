@@ -1,5 +1,5 @@
 //
-//  FXDsuperCoveringContainer.h
+//  FXDcontainerCovering.h
 //
 //
 //  Created by petershine on 10/18/12.
@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 @end
 
 
-@interface FXDsuperCoveringContainer : FXDViewController
+@interface FXDcontainerCovering : FXDViewController
 
 @property (nonatomic) NSUInteger minimumChildCount;
 @property (nonatomic) BOOL shouldFadeOutUncovering;
