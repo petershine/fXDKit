@@ -60,17 +60,17 @@
 	}
 
 
-	UAPush *urbanPushManager = [UAPush shared];
-	FXDLogObject(urbanPushManager);
+	UAPush *urbanPushModule = [UAPush shared];
+	FXDLogObject(urbanPushModule);
 
-	if (urbanPushManager == nil) {
+	if (urbanPushModule == nil) {
 		return;
 	}
 
 
-	FXDLog(@"1.%@", _Object(urbanPushManager.alias));
-	urbanPushManager.alias = aliasString;
-	FXDLog(@"2.%@", _Object(urbanPushManager.alias));
+	FXDLog(@"1.%@", _Object(urbanPushModule.alias));
+	urbanPushModule.alias = aliasString;
+	FXDLog(@"2.%@", _Object(urbanPushModule.alias));
 }
 
 - (void)activateLocationReporting {	FXDLog_DEFAULT
