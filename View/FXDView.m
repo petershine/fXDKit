@@ -3,10 +3,6 @@
 #import "FXDView.h"
 
 
-@implementation FXDView
-@end
-
-
 @implementation UIView (Essential)
 + (instancetype)viewFromNibName:(NSString*)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];

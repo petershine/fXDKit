@@ -30,6 +30,6 @@
 
 
 @interface UIWindow (Essential)
-+ (instancetype)instantiateNewWindow;
++ (instancetype)newDefaultWindow;
 
 @end

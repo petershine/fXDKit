@@ -201,14 +201,13 @@
 	FXDLogVariable(deviceOrientation);
 }
 
-
 #pragma mark - Delegate
 
 @end
 
 
 @implementation UIWindow (Essential)
-+ (instancetype)instantiateNewWindow {	FXDLog_SEPARATE;
++ (instancetype)newDefaultWindow {	FXDLog_SEPARATE;
 	CGRect screenBounds = [UIScreen mainScreen].bounds;
 	FXDLogRect(screenBounds);
 

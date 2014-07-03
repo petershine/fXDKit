@@ -25,6 +25,7 @@
 	self.disclaimerOffset = CGPointZero;
 }
 
+
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding

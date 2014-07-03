@@ -14,7 +14,7 @@
 @import AVFoundation;
 
 
-@interface FXDviewAssetDisplay : FXDView
+@interface FXDviewAssetDisplay : UIView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 + (instancetype)assetDisplay;
 

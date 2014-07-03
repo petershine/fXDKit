@@ -2,10 +2,6 @@
 #import "FXDKit.h"
 
 
-@interface FXDScrollView : UIScrollView
-@end
-
-
 @interface UIScrollView (Essential)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate;
 
