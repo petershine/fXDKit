@@ -3,76 +3,58 @@
 #import "FXDImageView.h"
 
 
-@implementation FXDImageView
-@end
-
-
 @implementation UIImageView (Essential)
 - (void)modifyHeightForContainedImage {	FXDLog_DEFAULT;
-	FXDLogObject(self.image);
-	
-	self.contentMode = UIViewContentModeScaleAspectFit;
-	
-	if (self.image) {
-		CGFloat aspectRatio = (CGFloat)self.image.size.width / (CGFloat)self.image.size.height;
-		
-		CGRect modifiedFrame = self.frame;
-		FXDLog(@"(before) %@", _Rect(modifiedFrame));
-		
-		modifiedFrame.size.height = modifiedFrame.size.width / aspectRatio;
-		FXDLog(@"(after) %@", _Rect(modifiedFrame));
-		
-		self.frame = modifiedFrame;
+
+	__weak UIImageView *weakSelf = self;
+
+	weakSelf.contentMode = UIViewContentModeScaleAspectFit;
+
+	FXDLogObject(weakSelf.image);
+	if (weakSelf.image == nil) {
+		return;
 	}
+
+
+	CGFloat aspectRatio = weakSelf.image.size.width/weakSelf.image.size.height;
+
+	CGRect modifiedFrame = weakSelf.frame;
+	FXDLog(@"1.%@", _Rect(modifiedFrame));
+
+	modifiedFrame.size.height = modifiedFrame.size.width/aspectRatio;
+	FXDLog(@"2.%@", _Rect(modifiedFrame));
+
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
+		 __strong UIImageView *strongSelf = weakSelf;
+
+		 strongSelf.frame = modifiedFrame;
+	 }];
 }
 
-- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
+- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	FXDLog_DEFAULT;
 	FXDLogStruct(capInsets);
 
 	__weak UIImageView *weakSelf = self;
-	
-	if (weakSelf.image) {
-		UIImage *resizeableImage = [weakSelf.image resizableImageWithCapInsets:capInsets];
 
-		if (resizeableImage) {
-			[[NSOperationQueue mainQueue]
-			 addOperationWithBlock:^{
-				 __strong UIImageView *strongSelf = weakSelf;
-				 
-				 strongSelf.image = resizeableImage;
-			 }];
-		}
+	FXDLogObject(weakSelf.image);
+	if (weakSelf.image == nil) {
+		return;
 	}
-}
 
-- (void)fadeInImage:(UIImage*)fadedImage {
-	
-	__weak UIImageView *weakSelf = self;
-	
-	UIImageView *fadedImageview = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, weakSelf.frame.size.width, weakSelf.frame.size.height)];
-	
-	fadedImageview.contentMode = weakSelf.contentMode;
-	fadedImageview.backgroundColor = [UIColor clearColor];
-	
-	fadedImageview.alpha = 0.0;
-	
-	fadedImageview.image = fadedImage;
-	
-	[weakSelf addSubview:fadedImageview];
-	
-	[UIView
-	 animateWithDuration:durationQuickAnimation
-	 delay:0.0
-	 options:UIViewAnimationOptionCurveEaseIn
-	 animations:^{
-		 fadedImageview.alpha = 1.0;
-	 }
-	 completion:^(BOOL didFinish) {
+
+	UIImage *resizeableImage = [weakSelf.image resizableImageWithCapInsets:capInsets];
+
+	if (resizeableImage == nil) {
+		return;
+	}
+
+
+	[[NSOperationQueue mainQueue]
+	 addOperationWithBlock:^{
 		 __strong UIImageView *strongSelf = weakSelf;
-		 
-		 strongSelf.image = fadedImageview.image;
-		 
-		 [fadedImageview removeFromSuperview];
+
+		 strongSelf.image = resizeableImage;
 	 }];
 }
 
