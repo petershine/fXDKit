@@ -11,6 +11,9 @@
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
+- (void)observedUIApplicationDidReceiveMemoryWarning:(NSNotification*)notification;
+- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification;
+
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
 @end
 
