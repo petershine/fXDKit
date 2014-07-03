@@ -12,7 +12,6 @@
 #import "FXDTextView.h"
 #import "FXDImageView.h"
 #import "FXDTableViewCell.h"
-#import "FXDCollectionViewCell.h"
 
 #import "FXDAlertView.h"
 #import "FXDActionSheet.h"
