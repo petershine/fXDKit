@@ -11,7 +11,6 @@
 
 
 #pragma mark - Observer
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 
 #pragma mark - Delegate
 

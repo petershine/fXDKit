@@ -9,32 +9,9 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 	FXDLogObject(_alertCallback);
 	_alertCallback = nil;
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 #pragma mark - Initialization
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-	
-    if (self) {
-		[self awakeFromNib];
-    }
-	
-    return self;
-}
-
-- (void)awakeFromNib {
-	[super awakeFromNib];
-
-	[[NSNotificationCenter defaultCenter]
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
-}
-
 
 #pragma mark - Property overriding
 
@@ -60,13 +37,6 @@
 }
 
 #pragma mark - Observer
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
-	if (self.alertCallback) {
-		self.alertCallback(self, self.cancelButtonIndex);
-	}
-	
-	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
-}
 
 #pragma mark - Delegate
 - (void)actionSheet:(FXDActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

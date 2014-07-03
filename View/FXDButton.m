@@ -3,51 +3,6 @@
 #import "FXDButton.h"
 
 
-@implementation FXDButton
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Property overriding
-- (UILabel*)customTitleLabel {
-	
-	if (_customTitleLabel == nil) {
-		_customTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
-		
-		_customTitleLabel.textAlignment = NSTextAlignmentCenter;
-		
-		_customTitleLabel.backgroundColor = [UIColor clearColor];
-		_customTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-		
-		[self addSubview:_customTitleLabel];
-		[self bringSubviewToFront:_customTitleLabel];
-	}
-	
-	return _customTitleLabel;
-}
-
-- (void)setCustomTitleLabel:(UILabel *)customTitleLabel {
-	[_customTitleLabel removeFromSuperview];
-	_customTitleLabel = nil;
-	
-	_customTitleLabel = customTitleLabel;
-	[self addSubview:_customTitleLabel];
-	[self bringSubviewToFront:_customTitleLabel];
-}
-
-
-#pragma mark - Method overriding
-
-#pragma mark - Public
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
-@end
-
-
 @implementation UIButton (Essential)
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {
 	
