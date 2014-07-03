@@ -298,6 +298,7 @@
 
 #pragma mark - Observer
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
+
 	if (self.didStartCapturing) {
 		return;
 	}
