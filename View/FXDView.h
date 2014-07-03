@@ -1,10 +1,6 @@
-//
-//  FXDView.h
-//
-//
-//  Created by petershine on 10/12/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 	boxCornerTopLeft,
@@ -16,7 +12,6 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 
 @interface FXDView : UIView
 @end
-
 
 
 @interface UIView (Essential)

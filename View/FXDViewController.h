@@ -1,10 +1,5 @@
-//
-//  FXDViewController.h
-//
-//
-//  Created by petershine on 10/4/11.
-//  Copyright 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDViewController : UIViewController {
@@ -16,16 +11,14 @@
 @end
 
 
-
 @interface UIViewController (Essential)
 
-#pragma mark - IBActions
 - (IBAction)popToRootSceneWithAnimation:(id)sender;
 - (IBAction)popSceneWithAnimation:(id)sender;
 
 - (IBAction)dismissSceneWithAnimation:(id)sender;
 
-#pragma mark - Public
+
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;

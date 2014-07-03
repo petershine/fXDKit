@@ -1,10 +1,4 @@
-//
-//  FXDPopoverBackgroundView.m
-//
-//
-//  Created by petershine on 11/21/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDPopoverBackgroundView.h"
 
@@ -20,7 +14,6 @@
 	weakInstance.titleText = nil;
 	weakInstance.viewTitle = nil;
 }
-
 
 #pragma mark - Initialization
 + (instancetype)sharedInstance {
@@ -179,14 +172,12 @@
 	}
 }
 
-
 #pragma mark - IBActions
 
 #pragma mark - Public
 + (CGFloat)minimumInset {	FXDLog_OVERRIDE;
 	return 0.0;
 }
-
 
 #pragma mark - Observer
 

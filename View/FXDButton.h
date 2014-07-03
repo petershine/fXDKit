@@ -1,10 +1,5 @@
-//
-//  FXDButton.h
-//
-//
-//  Created by petershine on 10/12/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDButton : UIButton {
@@ -20,4 +15,5 @@
 @interface UIButton (Essential)
 - (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
 - (void)replaceBackgroundImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets;
+
 @end

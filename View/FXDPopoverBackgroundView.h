@@ -1,10 +1,5 @@
-//
-//  FXDPopoverBackgroundView.h
-//
-//
-//  Created by petershine on 11/21/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDPopoverBackgroundView : UIPopoverBackgroundView <FXDprotocolShared> {
@@ -22,16 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewArrow;
 
 
-#pragma mark - IBActions
-
-#pragma mark - Initialization
-
-#pragma mark - Public
 + (CGFloat)minimumInset;
-
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
 
 @end

@@ -1,10 +1,4 @@
-//
-//  FXDButton.m
-//
-//
-//  Created by petershine on 10/12/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDButton.h"
 
@@ -46,7 +40,6 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-
 
 #pragma mark - Observer
 

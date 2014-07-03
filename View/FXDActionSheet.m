@@ -1,10 +1,4 @@
-//
-//  FXDActionSheet.m
-//
-//
-//  Created by petershine on 2/13/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDActionSheet.h"
 
@@ -64,7 +58,6 @@
 	
 	return self;
 }
-
 
 #pragma mark - Observer
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;

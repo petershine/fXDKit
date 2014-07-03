@@ -1,10 +1,4 @@
-//
-//  FXDTextView.m
-//
-//
-//  Created by petershine on 10/30/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDTextView.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark -  Category
 @implementation UITextView (Essential)
 - (BOOL)verticalAlignWithChangedText:(NSString*)changedText {
 

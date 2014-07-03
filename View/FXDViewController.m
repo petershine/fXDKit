@@ -1,17 +1,9 @@
-//
-//  FXDViewController.m
-//
-//
-//  Created by petershine on 10/4/11.
-//  Copyright 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDViewController.h"
 
 
-
 @implementation FXDViewController
-
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
@@ -300,22 +292,10 @@
 	return segue;
 }
 
-	 
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
 @end
 
 
-
 @implementation UIViewController (Essential)
-
 #pragma mark - IBActions
 - (IBAction)popToRootSceneWithAnimation:(id)sender {
 	[self.navigationController popToRootViewControllerAnimated:YES];

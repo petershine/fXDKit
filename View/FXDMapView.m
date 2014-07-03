@@ -1,17 +1,9 @@
-//
-//  FXDMapView.m
-//
-//
-//  Created by petershine on 5/25/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDMapView.h"
 
 
-
 @implementation FXDMapView
-
 
 #pragma mark - Memory management
 
@@ -32,7 +24,6 @@
 	self.initialDisclaimerFrame = [[self disclaimerView] frame];
 	self.disclaimerOffset = CGPointZero;
 }
-
 
 #pragma mark - Property overriding
 
@@ -58,18 +49,15 @@
 	}
 }
 
-
 #pragma mark - IBActions
 
 #pragma mark - Public
-
 
 #pragma mark - Observer
 
 #pragma mark - Delegate
 
 @end
-
 
 
 @implementation MKMapView (Essential)

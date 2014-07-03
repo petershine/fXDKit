@@ -1,10 +1,6 @@
-//
-//  FXDMapView.h
-//
-//
-//  Created by petershine on 5/25/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @import MapKit;
 
@@ -14,18 +10,7 @@
 @property (nonatomic) CGRect initialDisclaimerFrame;
 @property (nonatomic) CGPoint disclaimerOffset;
 
-// IBOutlets
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
 @end
-
 
 
 @interface MKMapView (Essential)

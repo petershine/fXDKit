@@ -1,15 +1,9 @@
-//
-//  FXDImageView.h
-//
-//
-//  Created by petershine on 2/1/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDImageView : UIImageView
 @end
-
 
 
 @interface UIImageView (Essential)

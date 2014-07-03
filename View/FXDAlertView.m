@@ -1,23 +1,15 @@
-//
-//  FXDAlertView.m
-//
-//
-//  Created by petershine on 2/13/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDAlertView.h"
 
 
 @implementation FXDAlertView
 
-
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
 	FXDLogObject(_alertCallback);
 	_alertCallback = nil;
 }
-
 
 #pragma mark - Initialization
 
@@ -68,7 +60,6 @@
 
 	return self;
 }
-
 
 #pragma mark - Observer
 

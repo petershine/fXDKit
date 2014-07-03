@@ -1,10 +1,4 @@
-//
-//  FXDWindow.m
-//
-//
-//  Created by petershine on 11/6/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDWindow.h"
 
@@ -41,14 +35,12 @@
 	 object:nil];
 }
 
-
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
 - (void)makeKeyAndVisible {	FXDLog_SEPARATE;
 	[super makeKeyAndVisible];
 }
-
 
 #pragma mark - IBActions
 
@@ -213,7 +205,6 @@
 #pragma mark - Delegate
 
 @end
-
 
 
 @implementation UIWindow (Essential)

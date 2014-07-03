@@ -1,10 +1,6 @@
-//
-//  FXDWindow.h
-//
-//
-//  Created by petershine on 11/6/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @class FXDviewInformation;
 
@@ -15,9 +11,7 @@
 // IBOutlets
 @property (strong, nonatomic) IBOutlet FXDviewInformation *informationView;
 
-#pragma mark - IBActions
 
-#pragma mark - Public
 - (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene;
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
@@ -27,14 +21,12 @@
 - (void)showProgressViewWithNibName:(NSString*)nibName;
 - (void)hideProgressView;
 
-
 #pragma mark - Observer
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
 
 #pragma mark - Delegate
 
 @end
-
 
 
 @interface UIWindow (Essential)

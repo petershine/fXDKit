@@ -1,17 +1,9 @@
-//
-//  FXDTableViewCell.m
-//
-//
-//  Created by petershine on 10/19/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDTableViewCell.h"
 
 
-
 @implementation FXDTableViewCell
-
 
 #pragma mark - Memory management
 
@@ -49,7 +41,6 @@
 		[self modifyOriginYofCellSubview:self.accessoryView];
 	}
 }
-
 
 #pragma mark - Property overriding
 
@@ -128,7 +119,6 @@
 @end
 
 
-#pragma mark -  Category
 @implementation UITableViewCell (Essential)
 - (void)customizeWithMainImage:(UIImage*)mainImage withHighlightedMainImage:(UIImage*)highlightedMainImage {
 	

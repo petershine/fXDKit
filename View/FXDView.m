@@ -1,17 +1,10 @@
-//
-//  FXDView.m
-//
-//
-//  Created by petershine on 10/12/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDView.h"
 
 
 @implementation FXDView
 @end
-
 
 
 @implementation UIView (Essential)

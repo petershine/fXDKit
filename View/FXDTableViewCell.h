@@ -1,10 +1,6 @@
-//
-//  FXDTableViewCell.h
-//
-//
-//  Created by petershine on 10/19/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 	sectionPositionOne,
@@ -30,7 +26,6 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 @end
 
 
-#pragma mark -  Category
 @interface UITableViewCell (Essential)
 - (void)customizeWithMainImage:(UIImage*)mainImage withHighlightedMainImage:(UIImage*)highlightedMainImage;
 

@@ -1,10 +1,6 @@
-//
-//  FXDAnnotationView.h
-//
-//
-//  Created by petershine on 5/11/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @import MapKit;
 
@@ -16,7 +12,6 @@
 
 @interface FXDAnnotationView : MKAnnotationView
 @end
-
 
 
 @interface MKAnnotationView (Essential)
