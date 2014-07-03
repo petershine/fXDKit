@@ -2,10 +2,6 @@
 #import "FXDKit.h"
 
 
-@interface FXDString : NSString
-@end
-
-
 @interface NSString (Essential)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue;
 + (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(CFStringRef)type;

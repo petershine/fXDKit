@@ -18,10 +18,6 @@
 @import CoreData;
 
 
-@interface FXDManagedObjectContext : NSManagedObjectContext
-@end
-
-
 @interface NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit;
 

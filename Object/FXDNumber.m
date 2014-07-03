@@ -3,10 +3,6 @@
 #import "FXDNumber.h"
 
 
-@implementation FXDNumber
-@end
-
-
 @implementation NSNumber (Essential)
 - (NSString*)byteUnitFormatted {
 	

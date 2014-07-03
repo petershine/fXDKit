@@ -2,10 +2,6 @@
 #import "FXDKit.h"
 
 
-@interface FXDDate : NSDate
-@end
-
-
 @interface NSDate (Essential)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;

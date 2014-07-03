@@ -2,10 +2,6 @@
 #import "FXDKit.h"
 
 
-@interface FXDMetadataQuery : NSMetadataQuery
-@end
-
-
 @interface NSMetadataQuery (Essential)
 - (BOOL)isQueryResultsTransferring;
 @end

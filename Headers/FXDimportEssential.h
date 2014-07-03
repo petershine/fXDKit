@@ -57,6 +57,11 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @end
 
 
+@interface UIStoryboard (Essential)
++ (UIStoryboard*)storyboardWithDefaultName;
+@end
+
+
 @interface UIBarButtonItem (Essential)
 - (void)customizeWithNormalImage:(UIImage*)normalImage andWithHighlightedImage:(UIImage*)highlightedImage;
 @end

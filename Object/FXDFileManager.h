@@ -2,10 +2,6 @@
 #import "FXDKit.h"
 
 
-@interface FXDFileManager : NSFileManager
-@end
-
-
 @interface NSFileManager (Essential)
 - (void)clearTempDirectory;
 

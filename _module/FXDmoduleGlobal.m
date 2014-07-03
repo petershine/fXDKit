@@ -40,10 +40,10 @@
 }
 
 #pragma mark -
-- (FXDStoryboard*)mainStoryboard {
+- (UIStoryboard*)mainStoryboard {
 	if (_mainStoryboard == nil) {
 		if (self.mainStoryboardName) {
-			_mainStoryboard = (FXDStoryboard*)[FXDStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
+			_mainStoryboard = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
 #if ForDEVELOPER
 		else {

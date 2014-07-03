@@ -5,10 +5,6 @@
 @import MediaPlayer;
 
 
-@interface FXDMediaItem : MPMediaItem
-@end
-
-
 @interface MPMediaItem (Essential)
 - (NSDictionary*)propertiesDictionary;
 

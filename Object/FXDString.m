@@ -3,10 +3,6 @@
 #import "FXDString.h"
 
 
-@implementation FXDString
-@end
-
-
 @implementation NSString (Essential)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue {
 	//MARK: Use 32 as the string length

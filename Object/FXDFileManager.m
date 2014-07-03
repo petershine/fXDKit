@@ -3,10 +3,6 @@
 #import "FXDFileManager.h"
 
 
-@implementation FXDFileManager
-@end
-
-
 @implementation NSFileManager (Essential)
 - (void)clearTempDirectory {	FXDLog_DEFAULT;
 

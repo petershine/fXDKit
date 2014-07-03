@@ -3,10 +3,6 @@
 #import "FXDURL.h"
 
 
-@implementation FXDURL
-@end
-
-
 @implementation NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {
 	NSArray *ubiquitousItemKeys =

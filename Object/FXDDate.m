@@ -3,10 +3,6 @@
 #import "FXDDate.h"
 
 
-@implementation FXDDate
-@end
-
-
 @implementation NSDate (Essential)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate {
 	if (localDate == nil) {

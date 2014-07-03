@@ -2,10 +2,6 @@
 #import "FXDKit.h"
 
 
-@interface FXDImage : UIImage
-@end
-
-
 @interface UIImage (Essential)
 
 + (UIImage*)bundledImageForName:(NSString*)imagename;

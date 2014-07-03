@@ -3,10 +3,6 @@
 #import "FXDMetadataQuery.h"
 
 
-@implementation FXDMetadataQuery
-@end
-
-
 @implementation NSMetadataQuery (Essential)
 - (BOOL)isQueryResultsTransferring {
 	

@@ -3,10 +3,6 @@
 #import "FXDMediaItem.h"
 
 
-@implementation FXDMediaItem
-@end
-
-
 @implementation MPMediaItem (Essential)
 - (NSDictionary*)propertiesDictionary {
 	NSMutableDictionary *propertiesDictionary = nil;

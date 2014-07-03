@@ -11,10 +11,6 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 };
 
 
-@interface FXDURL : NSURL
-@end
-
-
 @interface NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
 - (NSDictionary*)fullResourceValues;

@@ -3,10 +3,6 @@
 #import "FXDManagedObjectContext.h"
 
 
-@implementation FXDManagedObjectContext
-@end
-
-
 @implementation NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 

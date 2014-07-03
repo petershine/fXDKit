@@ -3,11 +3,6 @@
 #import "FXDManagedObject.h"
 
 
-@implementation FXDManagedObject
-@end
-
-
-
 @implementation NSManagedObject (Essential)
 - (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter {
     NSDictionary *attributes = [[self entity] attributesByName];

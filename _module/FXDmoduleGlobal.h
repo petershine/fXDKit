@@ -16,7 +16,7 @@
 	BOOL _isDeviceOld;
 
 	NSString *_mainStoryboardName;
-	FXDStoryboard *_mainStoryboard;
+	UIStoryboard *_mainStoryboard;
 
 	NSArray *_oldDeviceArray;
 }
@@ -24,8 +24,8 @@
 @property (nonatomic, readonly) NSInteger appLaunchCount;
 @property (nonatomic) BOOL isDeviceOld;
 
-@property (strong, nonatomic) FXDStoryboard *mainStoryboard;
 @property (strong, nonatomic) NSString *mainStoryboardName;
+@property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
 @property (strong, nonatomic, readonly) NSArray *oldDeviceArray;
 

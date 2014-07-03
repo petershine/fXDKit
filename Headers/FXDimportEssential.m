@@ -23,8 +23,7 @@
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
 
 	if ([textControl isKindOfClass:[UITextField class]] == NO
-		&& [textControl isKindOfClass:[UITextView class]] == NO) {
-		FXDLog_DEFAULT;
+		&& [textControl isKindOfClass:[UITextView class]] == NO) {	FXDLog_DEFAULT;
 		FXDLogObject(textControl);
 		return nil;
 	}
@@ -128,6 +127,23 @@
 			green:((CGFloat)((rgbValue & 0xFF00) >> 8))/255.0
 			blue:((CGFloat)(rgbValue & 0xFF))/255.0
 			alpha:alpha];
+}
+@end
+
+
+@implementation UIStoryboard (Essential)
++ (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
+	NSString *storyboardName = NSStringFromClass([self class]);
+
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		storyboardName = [storyboardName stringByAppendingString:@"_iPad"];
+	}
+
+	FXDLogObject(storyboardName);
+
+	UIStoryboard *storyboard = [self storyboardWithName:storyboardName bundle:nil];
+
+	return storyboard;
 }
 @end
 

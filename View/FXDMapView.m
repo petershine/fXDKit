@@ -50,14 +50,6 @@
 	}
 }
 
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
 @end
 
 
