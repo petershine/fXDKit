@@ -7,9 +7,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_mainScrollview setDelegate:nil];
-	
-	[_cellOperationQueue resetOperationQueue];
+	[_cellOperationQueue resetOperationQueueAndDictionary:nil];
 }
 
 
@@ -120,10 +118,10 @@
 }
 
 #pragma mark -
-- (FXDOperationQueue*)cellOperationQueue {
+- (NSOperationQueue*)cellOperationQueue {
 	
 	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
-		_cellOperationQueue = [FXDOperationQueue newSerialQueue];
+		_cellOperationQueue = [NSOperationQueue newSerialQueue];
 	}
 	
 	return _cellOperationQueue;
@@ -134,7 +132,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
-		[self.cellOperationQueue resetOperationQueue];
+		[self.cellOperationQueue resetOperationQueueAndDictionary:nil];
 		
 		if (self.mainResultsController.delegate == self) {
 			self.mainResultsController.delegate = nil;
@@ -178,7 +176,7 @@
 	}
 	
 
-	didCancel = [self.cellOperationQueue cancelOperationForKey:operationKey];	
+	didCancel = [self.cellOperationQueue cancelOperationForKey:operationKey withDictionary:nil];
 	
 	return didCancel;
 }

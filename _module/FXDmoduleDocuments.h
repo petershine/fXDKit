@@ -10,7 +10,7 @@
 
 #import "FXDmoduleQuery.h"
 @interface FXDmoduleDocuments : FXDmoduleQuery
-@property (strong, nonatomic) FXDOperationQueue *evictingQueue;
+@property (strong, nonatomic) NSOperationQueue *evictingQueue;
 
 
 - (void)startEvictingURLarray:(NSArray*)URLarray;

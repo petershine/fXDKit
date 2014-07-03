@@ -3,40 +3,26 @@
 #import "FXDOperationQueue.h"
 
 
-@implementation FXDOperationQueue
+@implementation NSOperationQueue (Essential)
++ (instancetype)newSerialQueue {
+	NSOperationQueue *serialQueue = [[[self class] alloc] init];
+	[serialQueue setMaxConcurrentOperationCount:1];
 
-#pragma mark - Memory management
-- (void)dealloc {	//FXDLog_DEFAULT;
-	[self resetOperationQueue];
+	return serialQueue;
 }
 
-
-#pragma mark - Initialization
-
-#pragma mark - Property overriding
-- (NSMutableDictionary*)operationDictionary {
-	if (_operationDictionary == nil) {
-		_operationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-	}
-
-	return _operationDictionary;
-}
-
-
-#pragma mark - Method overriding
-
-#pragma mark - Public
-- (void)resetOperationQueue {
-	[_operationDictionary removeAllObjects];
+#pragma mark -
+- (void)resetOperationQueueAndDictionary:(NSMutableDictionary*)operationDictionary {
+	[operationDictionary removeAllObjects];
 	[self cancelAllOperations];
 }
 
 #pragma mark -
-- (BOOL)shouldEnqueOperationForKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers {
+- (BOOL)shouldEnqueOperationForKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers withDictionary:(NSMutableDictionary*)operationDictionary {
 
 	BOOL shouldEnque = YES;
 
-	if ([self.operationDictionary objectForKey:operationKey]) {
+	if ([operationDictionary objectForKey:operationKey]) {
 		shouldEnque = NO;
 	}
 
@@ -45,54 +31,40 @@
 	}
 
 
-	for (NSString *key in [self.operationDictionary allKeys]) {
+	for (NSString *key in [operationDictionary allKeys]) {
 		if ([operationKey isEqualToString:key]) {
 			shouldEnque = NO;
 			continue;
 		}
 
 
-		[self cancelOperationForKey:key];
+		[self cancelOperationForKey:key withDictionary:operationDictionary];
 	}
 
 	return shouldEnque;
 }
 
 #pragma mark -
-- (void)enqueOperation:(NSOperation*)operation forKey:(id)operationKey {
-	[self.operationDictionary setObject:operation forKey:operationKey];
+- (void)enqueOperation:(NSOperation*)operation forKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+	[operationDictionary setObject:operation forKey:operationKey];
 	[self addOperation:operation];
 }
 
-- (void)removeOperationForKey:(id)operationKey {
-	[self cancelOperationForKey:operationKey];
-	[self.operationDictionary removeObjectForKey:operationKey];
+- (void)removeOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+	[self cancelOperationForKey:operationKey withDictionary:operationDictionary];
+	[operationDictionary removeObjectForKey:operationKey];
 }
 
-- (BOOL)cancelOperationForKey:(id)operationKey {
+- (BOOL)cancelOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
 	if (operationKey == nil) {
 		return NO;
 	}
 
-	
-	NSOperation *operation = self.operationDictionary[operationKey];
+
+	NSOperation *operation = operationDictionary[operationKey];
 	[operation cancel];
 
 	return [operation isCancelled];
 }
 
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
-@end
-
-
-@implementation NSOperationQueue (Essential)
-+ (instancetype)newSerialQueue {
-	NSOperationQueue *serialQueue = [[[self class] alloc] init];
-	[serialQueue setMaxConcurrentOperationCount:1];
-
-	return serialQueue;
-}
 @end

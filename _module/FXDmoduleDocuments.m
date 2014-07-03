@@ -13,7 +13,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_evictingQueue resetOperationQueue];
+	[_evictingQueue resetOperationQueueAndDictionary:nil];
 }
 
 #pragma mark - Initialization
@@ -30,9 +30,9 @@
 }
 
 #pragma mark -
-- (FXDOperationQueue*)evictingQueue {
+- (NSOperationQueue*)evictingQueue {
 	if (_evictingQueue == nil) {	FXDLog_DEFAULT;
-		_evictingQueue = [FXDOperationQueue newSerialQueue];
+		_evictingQueue = [NSOperationQueue newSerialQueue];
 	}
 
 	return _evictingQueue;

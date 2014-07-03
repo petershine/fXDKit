@@ -102,11 +102,11 @@
 
 		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
-			  [self.cellOperationQueue removeOperationForKey:indexPath];
+			  [self.cellOperationQueue removeOperationForKey:indexPath withDictionary:nil];
 		  }];
 	 }];
 
-	[self.cellOperationQueue enqueOperation:cellOperation forKey:indexPath];
+	[self.cellOperationQueue enqueOperation:cellOperation forKey:indexPath withDictionary:nil];
 
 	
 	return cell;
