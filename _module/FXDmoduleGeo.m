@@ -8,6 +8,28 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+#warning //TODO: Make sure subclass does adding by itself
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedUIApplicationDidEnterBackground:)
+		 name:UIApplicationDidEnterBackgroundNotification
+		 object:nil];
+
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedUIApplicationDidBecomeActive:)
+		 name:UIApplicationDidBecomeActiveNotification
+		 object:nil];
+	}
+
+	return self;
+}
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
@@ -42,30 +64,26 @@
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
-	//MARK: iosVersion8
-	if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-		FXDLogSelector(@selector(requestAlwaysAuthorization));
-		[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
+	CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
+
+#ifdef __IPHONE_8_0
+	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+#else
+	if (status != kCLAuthorizationStatusAuthorized) {
+#endif
+		FXDLogObject([UIDevice currentDevice].systemVersion);
+
+		if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+			[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
+			return;
+		}
 	}
+
 
 	[self.mainLocationManager startUpdatingLocation];
 
 	[self configureUpdatingForApplicationState];
-
-
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
-
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidBecomeActive:)
-	 name:UIApplicationDidBecomeActiveNotification
-	 object:nil];
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
@@ -179,15 +197,32 @@
 
 
 #pragma mark - Observer
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
+}
 
 #pragma mark - Delegate
 //MARK: CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-	FXDLog_OVERRIDE;
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
+	FXDLogVariable(authorizationStatus);
+
+#ifdef __IPHONE_8_0
+	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+#else
+	if (status != kCLAuthorizationStatusAuthorized) {
+#endif
+		[self pauseMainLocationManager];
+		return;
+	}
+
+
+	[self startMainLocationManagerWithLaunchOptions:nil];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {	FXDLog_DEFAULT;
-	FXDLogVariable(status);
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+	FXDLog_OVERRIDE;
 }
 
 @end

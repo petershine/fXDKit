@@ -20,10 +20,11 @@
 }
 
 - (NSString*)mainUbiquitousContentName {
-	if (_mainUbiquitousContentName == nil) {	FXDLog_OVERRIDE;
+	if (_mainUbiquitousContentName == nil) {
 		_mainUbiquitousContentName = [self.mainModelName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
 		***REMOVED***
 
+		FXDLog_OVERRIDE;
 		FXDLogObject(_mainUbiquitousContentName);
 	}
 
@@ -44,13 +45,14 @@
 
 - (NSString*)mainSqlitePathComponent {
 	//MARK: Use different name for better controlling between developer build and release build
-	if (_mainSqlitePathComponent == nil) {	FXDLog_OVERRIDE;
+	if (_mainSqlitePathComponent == nil) {
 		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
 
 	#if ForDEVELOPER
 		_mainSqlitePathComponent = [NSString stringWithFormat:@"DEV_%@.sqlite", self.mainModelName];
 	#endif
 
+		FXDLog_OVERRIDE;
 		FXDLogObject(_mainSqlitePathComponent);
 	}
 	
@@ -91,13 +93,15 @@
 	[self storeCopiedItemFromSqlitePath:bundledSqlitePath toStoredPath:nil];
 }
 
-- (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
+- (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {
 
 	if ([self doesStoredSqliteExist]) {
 		return;
 	}
 
 
+	FXDLog_DEFAULT;
+	
 	NSString *pathComponent = [NSString stringWithFormat:@"%@.sqlite", sqliteFile];
 
 	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
@@ -191,38 +195,35 @@
 	}
 #endif
 
-	[[NSOperationQueue mainQueue]
-	 addOperationWithBlock:^{
-		 FXDAssert_IsMainThread;
-		 FXDLog(@"2.%@", _BOOL(didConfigure));
+	FXDAssert_IsMainThread;
+	FXDLog(@"2.%@", _BOOL(didConfigure));
 
-		 //MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
-		 FXDLog_ERROR;
-		 FXDLog_ERROR_ALERT;
+	//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+	FXDLog_ERROR;
+	FXDLog_ERROR_ALERT;
 
-		 //TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
-		 //TODO: prepare what to do when Core Data is not setup
+	//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
+	//TODO: prepare what to do when Core Data is not setup
 
-		 [self
-		  upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-			  FXDLog_BLOCK(self, caller);
+	[self
+	 upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+		 FXDLog_BLOCK(self, caller);
 
-			  [self startObservingCoreDataNotifications];
+		 [self startObservingCoreDataNotifications];
 
 
 #if ForDEVELOPER
-			  if (ubiquityContainerURL) {
-				  NSFileManager *fileManager = [NSFileManager defaultManager];
-				  FXDLogObject([fileManager infoDictionaryForFolderURL:ubiquityContainerURL]);
-				  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
-				  FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Document]);
-			  }
+		 if (ubiquityContainerURL) {
+			 NSFileManager *fileManager = [NSFileManager defaultManager];
+			 FXDLogObject([fileManager infoDictionaryForFolderURL:ubiquityContainerURL]);
+			 FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Caches]);
+			 FXDLogObject([fileManager infoDictionaryForFolderURL:appDirectory_Document]);
+		 }
 #endif
 
-			  if (finishCallback) {
-				  finishCallback(_cmd, didConfigure, nil);
-			  }
-		  }];
+		 if (finishCallback) {
+			 finishCallback(_cmd, didConfigure, nil);
+		 }
 	 }];
 }
 
@@ -244,7 +245,6 @@
 	 selector:@selector(observedUIApplicationWillTerminate:)
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
-	
 	
 	[notificationCenter
 	 addObserver:self

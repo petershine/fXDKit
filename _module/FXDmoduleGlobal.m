@@ -274,7 +274,7 @@
 	 withFinishCallback:finishCallback];
 }
 
-- (void)prepareGlobalManagerWithMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)prepareGlobalManagerWithMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
 		FXDLogObject([[NSBundle mainBundle] infoDictionary]);

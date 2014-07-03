@@ -87,16 +87,17 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:_playerItemObserver];
+	_playerItemObserver = nil;
+
+	_periodicObserver = nil;
+
 	[_mainPlaybackDisplay setMainPlayer:nil];
 	[_mainPlaybackDisplay removeFromSuperview];
 
 	[_moviePlayer pause];
 
 	[_moviePlayer removeTimeObserver:_periodicObserver];
-	_periodicObserver = nil;
-
-	[[NSNotificationCenter defaultCenter] removeObserver:_playerItemObserver];
-	 _playerItemObserver = nil;
 }
 
 #pragma mark - Initialization

@@ -42,7 +42,7 @@
 }
 
 #pragma mark -
-- (void)awakeFromNib {	FXDLog_DEFAULT;
+- (void)awakeFromNib {	FXDLog_SEPARATE;
 	[super awakeFromNib];
 	
 	FXDLog(@"%@, %@", _Object(self.storyboard), _Object(self.nibName));
