@@ -448,7 +448,7 @@
 @end
 
 
-#pragma mark - Category
+
 @implementation FXDViewController (Covering)
 
 #pragma mark - Public

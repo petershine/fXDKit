@@ -1,10 +1,4 @@
-//
-//  FXDStoryboardSegue.m
-//
-//
-//  Created by petershine on 5/27/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDStoryboardSegue.h"
 
@@ -27,7 +21,6 @@
 	return self;
 }
 
-
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
@@ -48,7 +41,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation UIStoryboardSegue (Essential)
 - (NSDictionary*)fullDescription {
 	NSMutableDictionary *fullDescription = [[NSMutableDictionary alloc] initWithCapacity:0];

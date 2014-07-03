@@ -1,17 +1,9 @@
-//
-//  FXDStoryboard.m
-//
-//
-//  Created by petershine on 4/24/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDStoryboard.h"
 
 
-
 @implementation FXDStoryboard
-
 
 #pragma mark - Memory management
 
@@ -28,7 +20,6 @@
 	return instantiatedViewController;
 }
 
-
 #pragma mark - Public
 
 #pragma mark - Observer
@@ -37,7 +28,7 @@
 
 @end
 
-#pragma mark - Category
+
 @implementation UIStoryboard (Essential)
 + (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
 	NSString *storyboardName = NSStringFromClass([self class]);

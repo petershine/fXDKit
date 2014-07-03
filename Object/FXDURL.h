@@ -1,10 +1,6 @@
-//
-//  FXDURL.h
-//
-//
-//  Created by petershine on 7/10/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindUndefined,

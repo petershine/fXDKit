@@ -11,7 +11,7 @@
 @end
 
 
-#pragma mark - Category
+
 @interface UIImageView (Essential)
 - (void)modifyHeightForContainedImage;
 

@@ -1,10 +1,4 @@
-//
-//  FXDImage.m
-//
-//
-//  Created by petershine on 11/7/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDImage.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation UIImage (Essential)
 + (UIImage*)bundledImageForName:(NSString*)imageName {
 	UIImage *bundledImage = [UIImage imageNamed:imageName];

@@ -16,7 +16,7 @@
 @end
 
 
-#pragma mark - Category
+
 @interface UIViewController (Essential)
 
 #pragma mark - IBActions

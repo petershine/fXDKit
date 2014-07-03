@@ -11,7 +11,7 @@
 @end
 
 
-#pragma mark - Category
+
 @interface UIScrollView (Essential)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate;
 

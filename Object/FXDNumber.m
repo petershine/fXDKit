@@ -1,10 +1,4 @@
-//
-//  FXDNumber.m
 
-//
-//  Created by petershine on 8/30/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
 
 #import "FXDNumber.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation NSNumber (Essential)
 - (NSString*)byteUnitFormatted {
 	

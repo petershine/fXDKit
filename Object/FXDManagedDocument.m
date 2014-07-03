@@ -1,22 +1,13 @@
-//
-//  FXDManagedDocument.m
-//
-//
-//  Created by petershine on 7/25/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
 
 #import "FXDManagedDocument.h"
 
 
-
 @implementation FXDManagedDocument
-
 
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
 }
-
 
 #pragma mark - Initialization
 
@@ -187,7 +178,6 @@
 
 
 #pragma mark - Public
-
 
 #pragma mark - Observer
 

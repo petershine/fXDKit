@@ -13,7 +13,7 @@
 @end
 
 
-#pragma mark - Category
+
 @implementation UIView (Essential)
 + (instancetype)viewFromNibName:(NSString*)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];

@@ -13,7 +13,7 @@
 @end
 
 
-#pragma mark - Category
+
 @implementation UIImageView (Essential)
 - (void)modifyHeightForContainedImage {	FXDLog_DEFAULT;
 	FXDLogObject(self.image);

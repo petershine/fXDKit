@@ -1,10 +1,5 @@
-//
-//  FXDFileManager.h
-//
-//
-//  Created by petershine on 7/9/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDFileManager : NSFileManager
@@ -21,6 +16,5 @@
 
 - (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atFolderURL:(NSURL*)folderURL;
 - (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destionationURL withResultError:(NSError*)error;
-
 
 @end

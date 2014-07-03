@@ -1,10 +1,6 @@
-//
-//  FXDResponder.h
-//
-//
-//  Created by petershine on 1/13/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @class FXDAlertView;
 

@@ -1,10 +1,5 @@
-//
-//  FXDNumber.h
-//
-//
-//  Created by petershine on 8/30/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDNumber : NSNumber

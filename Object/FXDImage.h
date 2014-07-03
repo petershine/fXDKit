@@ -1,17 +1,11 @@
-//
-//  FXDImage.h
-//
-//
-//  Created by petershine on 11/7/11.
-//  Copyright (c) 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDImage : UIImage
 @end
 
 
-#pragma mark - Category
 @interface UIImage (Essential)
 
 + (UIImage*)bundledImageForName:(NSString*)imagename;

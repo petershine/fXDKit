@@ -1,10 +1,4 @@
-//
-//  FXDMediaItem.m
-//
-//
-//  Created by petershine on 4/24/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDMediaItem.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation MPMediaItem (Essential)
 - (NSDictionary*)propertiesDictionary {
 	NSMutableDictionary *propertiesDictionary = nil;

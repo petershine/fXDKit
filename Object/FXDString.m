@@ -1,10 +1,4 @@
-//
-//  FXDString.m
-//
-//
-//  Created by petershine on 3/1/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDString.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation NSString (Essential)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue {
 	//MARK: Use 32 as the string length

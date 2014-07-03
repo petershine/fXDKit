@@ -313,7 +313,7 @@
 @end
 
 
-#pragma mark - Category
+
 @implementation UIViewController (Essential)
 
 #pragma mark - IBActions

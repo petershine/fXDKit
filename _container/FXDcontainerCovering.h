@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 @end
 
 
-#pragma mark - Category
+
 @interface FXDViewController (Covering)
 
 #pragma mark - Public

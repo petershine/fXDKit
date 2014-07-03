@@ -1,10 +1,5 @@
-//
-//  FXDDate.h
-//
-//
-//  Created by petershine on 4/18/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDDate : NSDate
@@ -27,4 +22,5 @@
 - (NSInteger)secondValue;
 
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
+
 @end

@@ -1,10 +1,4 @@
-//
-//  FXDResponder.m
-//
-//
-//  Created by petershine on 1/13/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDResponder.h"
 
@@ -23,11 +17,10 @@
 
 #pragma mark - Public
 
-
 #pragma mark - Observer
 
 #pragma mark - Delegate
-#pragma mark - UIApplicationDelegate
+//MARK: UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 	FXDLogObject(launchOptions);
 

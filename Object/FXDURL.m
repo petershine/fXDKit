@@ -1,10 +1,4 @@
-//
-//  FXDURL.m
-//
-//
-//  Created by petershine on 7/10/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDURL.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {
 	NSArray *ubiquitousItemKeys =

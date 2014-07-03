@@ -1,17 +1,9 @@
-//
-//  FXDOperationQueue.m
-//
-//
-//  Created by petershine on 4/8/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDOperationQueue.h"
 
 
-
 @implementation FXDOperationQueue
-
 
 #pragma mark - Memory management
 - (void)dealloc {	//FXDLog_DEFAULT;

@@ -71,7 +71,7 @@
 @end
 
 
-#pragma mark - Category
+
 @implementation MKMapView (Essential)
 
 - (id)disclaimerView {

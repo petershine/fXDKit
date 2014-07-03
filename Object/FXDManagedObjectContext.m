@@ -1,10 +1,4 @@
-//
-//  FXDManagedObjectContext.m
-//
-//
-//  Created by petershine on 10/5/12.
-//  Copyright (c) 2012 fXceed All rights reserved.
-//
+
 
 #import "FXDManagedObjectContext.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
 

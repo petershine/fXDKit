@@ -1,10 +1,4 @@
-//
-//  FXDMetadataQuery.m
-//
-//
-//  Created by petershine on 7/10/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDMetadataQuery.h"
 
@@ -13,7 +7,6 @@
 @end
 
 
-#pragma mark - Category
 @implementation NSMetadataQuery (Essential)
 - (BOOL)isQueryResultsTransferring {
 	

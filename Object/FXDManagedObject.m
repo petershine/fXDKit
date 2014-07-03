@@ -1,36 +1,13 @@
-//
-//  FXDManagedObject.m
-//
-//
-//  Created by petershine on 3/16/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDManagedObject.h"
 
 
-
 @implementation FXDManagedObject
-
-
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
-
-#pragma mark - Public
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
 @end
 
 
-#pragma mark - Category
+
 @implementation NSManagedObject (Essential)
 - (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter {
     NSDictionary *attributes = [[self entity] attributesByName];

@@ -36,7 +36,7 @@
 @end
 
 
-#pragma mark - Category
+
 @interface UIWindow (Essential)
 + (instancetype)instantiateNewWindow;
 

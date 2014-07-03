@@ -1,17 +1,11 @@
-//
-//  FXDStoryboardSegue.h
-//
-//
-//  Created by petershine on 5/27/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDStoryboardSegue : UIStoryboardSegue
 @end
 
 
-#pragma mark - Category
 @interface UIStoryboardSegue (Essential)
 - (NSDictionary*)fullDescription;
 
