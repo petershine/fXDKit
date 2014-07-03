@@ -1,17 +1,9 @@
-//
-//  FXDmoduleCoredata.m
-//
-//
-//  Created by petershine on 3/16/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleCoredata.h"
 
 
-
 @implementation FXDmoduleCoredata
-
 
 #pragma mark - Memory management
 
@@ -585,7 +577,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
 	//MARK: Re-consider about saving context here
 }
@@ -707,6 +699,6 @@
 }
 
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

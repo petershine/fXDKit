@@ -1,17 +1,9 @@
-//
-//  FXDmoduleCaches.m
-//
-//
-//  Created by petershine on 8/13/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleCaches.h"
 
 
-
 @implementation FXDmoduleCaches
-
 
 #pragma mark - Memory management
 
@@ -30,7 +22,6 @@
 
 	return _mainMetadataQuery;
 }
-
 
 #pragma mark - Method overriding
 
@@ -202,8 +193,5 @@
 	 }];
 }
 
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

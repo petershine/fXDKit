@@ -1,12 +1,8 @@
-//
-//  FXDmoduleGlobal.m
-//
-//
-//  Created by petershine on 10/4/11.
-//  Copyright 2011 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleGlobal.h"
+
+#import "FXDmoduleCoredata.h"
 
 
 @implementation FXDmoduleGlobal
@@ -501,7 +497,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {
 
 	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
@@ -545,7 +541,7 @@
 - (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification {
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 
 @end

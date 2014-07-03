@@ -70,9 +70,9 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 - (void)alertView:(FXDAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 	if (alertView.alertCallback) {

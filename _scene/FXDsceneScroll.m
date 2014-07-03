@@ -1,17 +1,9 @@
-//
-//  FXDsceneScroll.m
-//
-//
-//  Created by petershine on 2/5/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
 
 #import "FXDsceneScroll.h"
 
 
-
 @implementation FXDsceneScroll
-
 
 #pragma mark - Memory management
 - (void)dealloc {
@@ -267,10 +259,10 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
-#pragma mark - NSFetchedResultsControllerDelegate
+#pragma mark - Delegate
+//MARK: NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController*)controller {
 	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
 		[self.mainScrollview performSelector:@selector(beginUpdates)];
@@ -319,8 +311,7 @@
 	}
 }
 
-
-#pragma mark - UIScrollViewDelegate
+//MARK: UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
 	
 	if (self.shouldDismissingByPullingDown == NO) {

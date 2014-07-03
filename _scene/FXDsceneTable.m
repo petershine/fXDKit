@@ -1,24 +1,15 @@
-//
-//  FXDsceneTable.m
-//
-//
-//  Created by petershine on 1/20/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDsceneTable.h"
 
 
-
 @implementation FXDsceneTable	
-
 
 #pragma mark - Memory management
 - (void)dealloc {
 	[_mainTableview setDelegate:nil];
 	[_mainTableview setDataSource:nil];
 }
-
 
 #pragma mark - Initialization
 
@@ -40,7 +31,6 @@
 	
 	return _mainScrollview;
 }
-
 
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -66,7 +56,6 @@
 	
 	[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 }
-
 
 #pragma mark - IBActions
 
@@ -133,39 +122,19 @@
 #pragma mark -
 - (UIImage*)mainImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *mainImage = nil;
-	
-#if imagenameformatSettingsCellMainOff
-	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOff, indexPath.section, indexPath.row];
-	
-	mainImage = [UIImage bundledImageForName:imageName];
-#endif
-		
+
 	return mainImage;
 }
 
 - (UIImage*)highlightedMainImageForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	UIImage *highlightedMainImage = nil;
-	
-#if imagenameformatSettingsCellMainOn	
-	NSString *imageName = [NSString stringWithFormat:imagenameformatSettingsCellMainOn, indexPath.section, indexPath.row];
-	
-	highlightedMainImage = [UIImage bundledImageForName:imageName];
-#endif
-		
+
 	return highlightedMainImage;
 }
 
 - (UIView*)accessoryViewForTableCellAtIndexPath:(NSIndexPath*)indexPath {
 	id accessoryView = nil;
-	
-#if imagenameSettingsCellArrowOff
-	accessoryView = [[UIImageView alloc] initWithImage:imagenameSettingsCellArrowOff];
-	
-	#if imagenameSettingsCellArrowOn
-		[(UIImageView*)accessoryView setHighlightedImage:imagenameSettingsCellArrowOn];
-	#endif
-#endif
-	
+
 	if (accessoryView) {
 		if ([(UIImageView*)accessoryView image] == nil) {
 			accessoryView = nil;
@@ -184,11 +153,10 @@
 	return sectionDividingView;
 }
 
+#pragma mark - Observer
 
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-#pragma mark - UITableViewDataSource
+#pragma mark - Delegate
+//MARK: UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	NSInteger numberOfSections = [self numberOfSectionsForScrollView:tableView];
 	
@@ -218,7 +186,7 @@
 }
 
 
-#pragma mark - UITableViewDelegate
+//MARK: UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	
 	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];

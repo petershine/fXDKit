@@ -1,36 +1,15 @@
-//
-//  FXDsceneMap.m
-//
-//
-//  Created by petershine on 4/24/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDsceneMap.h"
 
+#import "FXDMapView.h"
 
 
 @implementation FXDsceneMap
 
-
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (void)viewDidLoad {
-	[super viewDidLoad];
-
-	//MARK: Not useful for subclass
-	/*
-	if (self.mainMapview.delegate == nil) {
-		[self.mainMapview setDelegate:self];
-	}
-	
-	if (self.shouldResumeTracking) {
-		[self resumeTrackingUser];
-	}
-	 */
-}
-
 
 #pragma mark - Autorotating
 
@@ -56,10 +35,10 @@
 	}
 }
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
-#pragma mark - MKMapViewDelegate
+#pragma mark - Delegate
+//MARK: MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
 	
 	if (self.shouldResumeTracking) {	//MARK: Keep canceling until scrolling is stopped

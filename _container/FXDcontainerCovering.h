@@ -1,10 +1,6 @@
-//
-//  FXDcontainerCovering.h
-//
-//
-//  Created by petershine on 10/18/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 typedef CGPoint COVERING_OFFSET;
 typedef CGPoint COVERING_DIRECTION;
@@ -44,7 +40,6 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 
 - (COVERING_OFFSET)coveringOffsetForDirectionType:(COVER_DIRECTION_TYPE)coverDirectionType;
 - (COVERING_DIRECTION)coveringDirectionForDirectionType:(COVER_DIRECTION_TYPE)coverDirectionType;
-
 
 @end
 

@@ -66,7 +66,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {	FXDLog_DEFAULT;
 	if (self.alertCallback) {
 		self.alertCallback(self, self.cancelButtonIndex);
@@ -75,7 +75,7 @@
 	[self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:NO];
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 - (void)actionSheet:(FXDActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	
 	if (actionSheet.alertCallback) {

@@ -1,10 +1,4 @@
-//
-//  FXDconfigAnalytics.h
-//
-//
-//  Created by petershine on 4/30/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
 
 #ifndef FXDKit_FXDconfigAnalytics_h
 #define FXDKit_FXDconfigAnalytics_h

@@ -1,32 +1,23 @@
-//
-//  FXDmoduleAPIclient.m
-//
-//
-//  Created by petershine on 10/8/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleAPIclient.h"
 
 @implementation FXDmoduleAPIclient
 #pragma mark - Property overriding
 - (NSString*)mainRootURLformat {
-	if (_mainRootURLformat == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainRootURLformat == nil) {	FXDLog_OVERRIDE;
 	}
 	return _mainRootURLformat;
 }
 
 - (NSString*)mainAPIkey {
-	if (_mainAPIkey == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainAPIkey == nil) {	FXDLog_OVERRIDE;
 	}
 	return _mainAPIkey;
 }
 
 - (NSString*)mainJSONrootKey {
-	if (_mainJSONrootKey == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainJSONrootKey == nil) {	FXDLog_OVERRIDE;
 	}
 	return _mainJSONrootKey;
 }

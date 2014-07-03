@@ -1,10 +1,4 @@
-//
-//  FXDmoduleDocuments.m
-//
-//
-//  Created by petershine on 7/1/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleDocuments.h"
 
@@ -43,7 +37,6 @@
 
 	return _evictingQueue;
 }
-
 
 #pragma mark - Method overriding
 
@@ -229,6 +222,6 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
 @end

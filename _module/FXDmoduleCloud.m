@@ -1,10 +1,4 @@
-//
-//  FXDmoduleCloud.m
-//
-//
-//  Created by petershine on 6/25/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleCloud.h"
 
@@ -15,7 +9,6 @@
 - (void)dealloc {
 	_statusCallback = nil;
 }
-
 
 #pragma mark - Initialization
 
@@ -62,7 +55,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
 
@@ -139,6 +132,6 @@
 	 }];
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

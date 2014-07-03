@@ -1,10 +1,4 @@
-//
-//  FXDmoduleSocial.m
-//
-//
-//  Created by petershine on 5/3/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleSocial.h"
 
@@ -31,29 +25,25 @@
 
 #pragma mark - Property overriding
 - (NSString*)typeIdentifier {
-	if (_typeIdentifier == nil) {
-		FXDLog_OVERRIDE;
+	if (_typeIdentifier == nil) {	FXDLog_OVERRIDE;
 	}
 	return _typeIdentifier;
 }
 
 - (NSString*)reasonForConnecting {
-	if (_reasonForConnecting == nil) {
-		FXDLog_OVERRIDE;
+	if (_reasonForConnecting == nil) {	FXDLog_OVERRIDE;
 	}
 	return _reasonForConnecting;
 }
 
 - (NSDictionary*)initialAccessOptions {
-	if (_initialAccessOptions == nil) {
-		FXDLog_OVERRIDE;
+	if (_initialAccessOptions == nil) {	FXDLog_OVERRIDE;
 	}
 	return _initialAccessOptions;
 }
 
 - (NSDictionary*)additionalAccessOptions {
-	if (_additionalAccessOptions == nil) {
-		FXDLog_OVERRIDE;
+	if (_additionalAccessOptions == nil) {	FXDLog_OVERRIDE;
 	}
 	return _additionalAccessOptions;
 }
@@ -508,7 +498,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
 
@@ -521,7 +511,7 @@
 #endif
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 	
 @end
 

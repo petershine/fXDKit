@@ -1,10 +1,4 @@
-//
-//  FXDmoduleQuery.m
-//
-//
-//  Created by petershine on 7/2/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleQuery.h"
 
@@ -32,7 +26,6 @@
 
 	return _mainMetadataQuery;
 }
-
 
 #pragma mark - Method overriding
 
@@ -75,7 +68,7 @@
 	}
 }
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
 
@@ -108,7 +101,7 @@
 	}
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end
 

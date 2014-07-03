@@ -1,10 +1,5 @@
-//
-//  FXDviewInformation.h
-//
-//
-//  Created by petershine on 1/9/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @interface FXDviewInformation : FXDView
@@ -18,14 +13,5 @@
 
 @property (strong, nonatomic) IBOutlet UISlider *sliderProgress;
 @property (strong, nonatomic) IBOutlet UIProgressView *indicatorProgress;
-
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

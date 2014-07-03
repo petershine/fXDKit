@@ -1,10 +1,4 @@
-//
-//  FXDimportAdopted.h
-//
-//
-//  Created by petershine on 1/13/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #ifndef FXDKit_FXDimportAdopted_h
 #define FXDKit_FXDimportAdopted_h
@@ -65,28 +59,29 @@
 	@import MediaPlayer;
 	@import MediaToolbox;
 
+
+	@interface CALayer (MultimediaFrameworks)
+	- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;
+	@end
+
+	@interface NSURL (MultimediaFrameworks)
+	+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
+	@end
+
+	@interface UIDevice (MultimediaFrameworks)
+	- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
+	@end
+
+	@interface AVCaptureDevice (MultimediaFrameworks)
+	+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
+	- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
+	@end
+
+	@interface ALAsset (MultimediaFrameworks)
+	- (id)valueForKey:(NSString *)key;
+	@end
+
 	#import "FXDMediaItem.h"
-
-@interface CALayer (MultimediaFrameworks)
-- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;
-@end
-
-@interface NSURL (MultimediaFrameworks)
-+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
-@end
-
-@interface UIDevice (MultimediaFrameworks)
-- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
-@end
-
-@interface AVCaptureDevice (MultimediaFrameworks)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
-@end
-
-@interface ALAsset (MultimediaFrameworks)
-- (id)valueForKey:(NSString *)key;
-@end
 
 #endif
 

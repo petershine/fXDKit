@@ -1,10 +1,4 @@
-//
-//  FXDmacroFunction.h
-//
-//
-//  Created by petershine on 7/18/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #ifndef FXDKit_FXDmacroFunction_h
 #define FXDKit_FXDmacroFunction_h

@@ -1,12 +1,7 @@
-//
-//  FXDmodulePlayback.h
-//
-//
-//  Created by petershine on 2/3/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
 
-//MARK: Make sure it's not bad for performance
+#import "FXDKit.h"
+
+
 #ifndef periodicintervalDivisor
 	#define periodicintervalDivisor	3
 #endif
@@ -39,7 +34,6 @@
 @property (strong, nonatomic) FXDviewAssetDisplay *mainPlaybackDisplay;
 
 
-#pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;
 
 - (void)configurePlaybackObservers;
@@ -49,10 +43,5 @@
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)pauseRemovingPeriodicObserver;
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

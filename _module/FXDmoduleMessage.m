@@ -1,17 +1,9 @@
-//
-//  FXDmoduleMessage.m
-//
-//
-//  Created by petershine on 3/18/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleMessage.h"
 
 
-
 @implementation FXDmoduleMessage
-
 
 #pragma mark - Memory management
 
@@ -123,8 +115,10 @@
 	return emailScene;
 }
 
+#pragma mark - Observer
 
-#pragma mark - MFMailComposeViewControllerDelegate
+#pragma mark - Delegate
+//MARK: MFMailComposeViewControllerDelegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {	FXDLog_DEFAULT;
 
 	FXDLogVariable(result);
@@ -133,10 +127,5 @@
 
 	[controller dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

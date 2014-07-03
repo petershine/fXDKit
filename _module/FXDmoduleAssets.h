@@ -1,10 +1,6 @@
-//
-//  FXDmoduleAssets.h
-//
-//
-//  Created by petershine on 5/2/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @import AssetsLibrary;
 
@@ -19,9 +15,9 @@
 - (void)assetsArrayFromGroup:(ALAssetsGroup*)group withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedALAssetsLibraryChanged:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

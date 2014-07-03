@@ -1,9 +1,4 @@
-//
-//  FXDconfigDeveloper.h
-//
-//  Created by petershine on 10/4/11.
-//  Copyright 2011 fXceed. All rights reserved.
-//
+
 
 #ifndef FXDKit_FXDconfigDeveloper_h
 #define FXDKit_FXDconfigDeveloper_h

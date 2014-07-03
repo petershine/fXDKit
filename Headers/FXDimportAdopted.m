@@ -1,10 +1,4 @@
-//
-//  FXDimportAdopted.m
-//  fXDKit
-//
-//  Created by petershine on 6/28/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDimportAdopted.h"
 

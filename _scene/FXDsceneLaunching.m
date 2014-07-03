@@ -1,17 +1,9 @@
-//
-//  FXDsceneLaunching.m
-//
-//
-//  Created by petershine on 12/17/12.
-//  Copyright (c) 2012 fXceed All rights reserved.
-//
+
 
 #import "FXDsceneLaunching.h"
 
 
-
 @implementation FXDsceneLaunching
-
 
 #pragma mark - Memory management
 
@@ -61,10 +53,5 @@
 		 }
 	 }];
 }
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

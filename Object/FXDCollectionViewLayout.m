@@ -104,8 +104,8 @@
 
 #pragma mark - Public
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

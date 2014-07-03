@@ -1,24 +1,15 @@
-//
-//  FXDsceneCollection.m
-//
-//
-//  Created by petershine on 2/6/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
 
 #import "FXDsceneCollection.h"
 
 
-
 @implementation FXDsceneCollection
-
 
 #pragma mark - Memory management
 - (void)dealloc {
 	[_mainCollectionview setDelegate:nil];
 	[_mainCollectionview setDataSource:nil];
 }
-
 
 #pragma mark - Initialization
 
@@ -75,11 +66,10 @@
 
 #pragma mark - Public
 
+#pragma mark - Observer
 
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
-#pragma mark - UICollectionViewDataSource
+#pragma mark - Delegate
+//MARK: UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 	
 	NSInteger numberOfSections = [self numberOfSectionsForScrollView:collectionView];
@@ -122,7 +112,7 @@
 	return cell;
 }
 
-#pragma mark - UICollectionViewDelegate
+//MARK: UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
 	
 	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
@@ -132,6 +122,6 @@
 	}
 }
 
-#pragma mark - UICollectionViewDelegateFlowLayout
+//MARK: UICollectionViewDelegateFlowLayout
 
 @end

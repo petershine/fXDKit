@@ -1,10 +1,6 @@
-//
-//  FXDmoduleGPU.h
-//
-//
-//  Created by petershine on 5/21/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @import AVFoundation;
 
@@ -38,7 +34,6 @@
 @property (strong, nonatomic) FXDfiltergroupGPU *gpufilterGroup;
 
 
-#pragma mark - Public
 - (void)prepareGPUManager;
 - (void)resetGPUManager;
 
@@ -46,11 +41,11 @@
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification;
 - (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification;
 - (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

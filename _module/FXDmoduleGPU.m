@@ -1,10 +1,4 @@
-//
-//  FXDmoduleGPU.m
-//
-//
-//  Created by petershine on 5/21/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleGPU.h"
 
@@ -69,15 +63,12 @@
 @end
 
 
-
 @implementation FXDmoduleGPU
-
 
 #pragma mark - Memory management
 - (void)dealloc {
 	[self resetGPUManager];
 }
-
 
 #pragma mark - Initialization
 
@@ -355,7 +346,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLogObject(notification);
 }
@@ -390,6 +381,6 @@
 	 */
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

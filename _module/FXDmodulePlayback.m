@@ -1,10 +1,4 @@
-//
-//  FXDmodulePlayback.m
-//
-//
-//  Created by petershine on 2/3/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmodulePlayback.h"
 
@@ -89,9 +83,7 @@
 @end
 
 
-
 @implementation FXDmodulePlayback
-
 
 #pragma mark - Memory management
 - (void)dealloc {
@@ -106,7 +98,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:_playerItemObserver];
 	 _playerItemObserver = nil;
 }
-
 
 #pragma mark - Initialization
 
@@ -123,7 +114,6 @@
 
 	return _mainPlaybackDisplay;
 }
-
 
 #pragma mark - Method overriding
 
@@ -335,10 +325,5 @@
 		weakSelf.periodicObserver = nil;
 	}
 }
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

@@ -1,10 +1,4 @@
-//
-//  FXDmacroValue.h
-//
-//
-//  Created by petershine on 3/16/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #ifndef FXDKit_FXDmacroValue_h
 #define FXDKit_FXDmacroValue_h
@@ -56,8 +50,6 @@
 
 
 #define marginDefault	8.0
-
-#define limitConcurrentOperationCount	1
 
 
 #define rotationAngleLandscapeLeft	90.0

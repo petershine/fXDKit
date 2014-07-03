@@ -1,17 +1,9 @@
-//
-//  FXDmoduleCapture.m
-//
-//
-//  Created by petershine on 3/6/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleCapture.h"
 
 
-
 @implementation FXDmoduleCapture
-
 
 #pragma mark - Memory management
 - (void)dealloc {	
@@ -23,7 +15,6 @@
 		[_mainCaptureSession removeInput:deviceInput];
 	}
 }
-
 
 #pragma mark - Initialization
 - (instancetype)init {
@@ -183,7 +174,6 @@
 	return _dataOutputAudio;
 }
 
-
 #pragma mark - Method overriding
 
 #pragma mark - Public
@@ -335,8 +325,7 @@
 	return [transformFilter valueForKey:kCIOutputImageKey];
 }
 
-
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
 	if (self.didStartCapturing) {
 		return;
@@ -375,7 +364,7 @@
 }
 
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 
 @end

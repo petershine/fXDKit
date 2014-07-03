@@ -1,10 +1,6 @@
-//
-//  FXDmoduleGeo.h
-//
-//
-//  Created by petershine on 4/30/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 @import CoreLocation;
 @import MapKit;
@@ -22,9 +18,6 @@
 @property (strong, nonatomic) CLLocation *lastLocation;
 
 
-#pragma mark - Initialization
-
-#pragma mark - Public
 - (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions;
 - (void)pauseMainLocationManager;
 
@@ -37,9 +30,8 @@
 //MARK: For testing significantMonitoring
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 
+#pragma mark - Observer
 
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

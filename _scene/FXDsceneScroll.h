@@ -1,10 +1,6 @@
-//
-//  FXDsceneScroll.h
-//
-//
-//  Created by petershine on 2/5/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 #ifndef scaleSceneDismissingOffset
 	#define scaleSceneDismissingOffset	0.275
@@ -51,11 +47,6 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;
 
 
-#pragma mark - Segues
-
-#pragma mark - IBActions
-
-#pragma mark - Public
 - (void)registerMainCellNib;
 
 - (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
@@ -64,10 +55,5 @@
 - (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
 
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView;
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end

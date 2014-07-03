@@ -15,9 +15,9 @@
 - (instancetype)initWithTitle:(NSString *)title withButtonTitleArray:(NSArray*)buttonTitleArray cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

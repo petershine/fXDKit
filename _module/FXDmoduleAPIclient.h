@@ -1,10 +1,6 @@
-//
-//  FXDmoduleAPIclient.h
-//
-//
-//  Created by petershine on 10/8/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 #import <AFNetworking.h>
 #import <UIKit+AFNetworking.h>
@@ -21,7 +17,6 @@
 @property (strong, nonatomic) NSString *mainJSONrootKey;
 
 
-#pragma mark - Public
 - (void)collectingRequestWithQueryText:(NSString*)queryText withDidCollectBlock:(void(^)(NSMutableArray* collectedItemArray))didCollectBlock;
 - (NSURLRequest*)requestWithQueryText:(NSString*)queryText;
 - (NSMutableArray*)collectedItemArrayFromJSONobj:(id)jsonObj;

@@ -1,24 +1,15 @@
-//
-//  FXDsceneWeb.m
-//
-//
-//  Created by petershine on 2/5/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDsceneWeb.h"
 
 
-
 @implementation FXDsceneWeb
-
 
 #pragma mark - Memory management
 - (void)dealloc {
 	[_mainWebview stopLoading];
 	[_mainWebview setDelegate:nil];
 }
-
 
 #pragma mark - Initialization
 - (void)viewDidLoad {
@@ -55,7 +46,6 @@
 
 	return _mainScrollview;
 }
-
 
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -112,10 +102,10 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
-#pragma mark - UIWebViewDelegate
+#pragma mark - Delegate
+//MARK: UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 
 	FXDLogVariable(navigationType);

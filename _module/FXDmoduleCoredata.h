@@ -1,10 +1,5 @@
-//
-//  FXDmoduleCoredata.h
-//
-//
-//  Created by petershine on 3/16/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 //MARK: For subclass to define names or keys
 /* SAMPLE:
@@ -54,7 +49,6 @@
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
 
 
-#pragma mark - Public
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
 - (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
 - (BOOL)doesStoredSqliteExist;
@@ -74,12 +68,11 @@
 - (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd shouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
-//MARK: Saving methods
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
 
@@ -91,6 +84,6 @@
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

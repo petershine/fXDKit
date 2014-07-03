@@ -1,10 +1,5 @@
-//
-//  FXDmoduleQuery.h
-//
-//
-//  Created by petershine on 7/2/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
 
 
 @protocol FXDMetadataQueryDelegate <NSMetadataQueryDelegate>

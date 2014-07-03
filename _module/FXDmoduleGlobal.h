@@ -1,10 +1,6 @@
-//
-//  FXDmoduleGlobal.h
-//
-//
-//  Created by petershine on 10/4/11.
-//  Copyright 2011 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 #define userdefaultIntegerAppLaunchCount			@"AppLaunchCountIntegerKey"
 #define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
@@ -12,7 +8,7 @@
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
 
 
-#import "FXDmoduleCoredata.h"
+@class FXDmoduleCoredata;
 
 
 @interface FXDmoduleGlobal : FXDsuperModule {
@@ -44,9 +40,6 @@
 @property (strong, nonatomic) id homeScene;
 
 
-#pragma mark - Initialization
-
-#pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)prepareGlobalManagerWithMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback;
 
@@ -69,7 +62,7 @@
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification;
 - (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification;
 
@@ -85,7 +78,7 @@
 - (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification;
 - (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end
 

@@ -1,17 +1,9 @@
-//
-//  FXDviewInformation.m
-//
-//
-//  Created by petershine on 1/9/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDviewInformation.h"
 
 
-
 @implementation FXDviewInformation
-
 
 #pragma mark - Memory management
 
@@ -25,9 +17,8 @@
 
 #pragma mark - Public
 
+#pragma mark - Observer
 
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

@@ -24,9 +24,9 @@
 #pragma mark - Public
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 	FXDLogObject(launchOptions);

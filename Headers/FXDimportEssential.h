@@ -1,10 +1,4 @@
-//
-//  FXDimportEssential.h
-//
-//
-//  Created by petershine on 3/22/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #ifndef FXDKit_FXDimportEssential_h
 #define FXDKit_FXDimportEssential_h
@@ -85,55 +79,6 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 + (CGAffineTransform)forcedTransformForDeviceOrientation;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
-
-
-#pragma mark - Object
-#import "FXDsuperModule.h"
-#import "FXDResponder.h"
-
-#import "FXDString.h"
-#import "FXDURL.h"
-#import "FXDNumber.h"
-#import "FXDDate.h"
-
-#import "FXDImage.h"
-
-#import "FXDCollectionViewLayout.h"
-
-#import "FXDStoryboardSegue.h"
-#import "FXDStoryboard.h"
-
-#import "FXDManagedDocument.h"
-#import "FXDManagedObject.h"
-#import "FXDManagedObjectContext.h"
-
-#import "FXDFileManager.h"
-
-#import "FXDMetadataQuery.h"
-
-#import "FXDOperationQueue.h"
-
-
-#pragma mark - View
-#import "FXDView.h"
-#import "FXDWindow.h"
-
-#import "FXDButton.h"
-#import "FXDTextView.h"
-#import "FXDImageView.h"
-#import "FXDTableViewCell.h"
-#import "FXDCollectionViewCell.h"
-
-#import "FXDAlertView.h"
-#import "FXDActionSheet.h"
-
-#import "FXDScrollView.h"
-
-#import "FXDPopoverBackgroundView.h"
-
-
-#pragma mark - ViewController
-#import "FXDViewController.h"
 
 
 #endif

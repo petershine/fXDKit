@@ -1,10 +1,4 @@
-//
-//  FXDmoduleAssets.m
-//
-//
-//  Created by petershine on 5/2/13.
-//  Copyright (c) 2013 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleAssets.h"
 
@@ -112,7 +106,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedALAssetsLibraryChanged:(NSNotification *)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
 	
@@ -124,6 +118,6 @@
 	 */
 }
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end

@@ -1,10 +1,6 @@
-//
-//  FXDmoduleSocial.h
-//
-//
-//  Created by petershine on 5/3/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 #define userdefaultObjMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
 #define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
@@ -47,10 +43,10 @@
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end
 

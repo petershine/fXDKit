@@ -1,10 +1,4 @@
-//
-//  FXDmoduleGeo.m
-//
-//
-//  Created by petershine on 4/30/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmoduleGeo.h"
 
@@ -188,7 +182,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {
 	FXDLog_OVERRIDE;
 }
@@ -198,8 +192,8 @@
 }
 
 
-//MARK: - Delegate implementation
-#pragma mark - CLLocationManagerDelegate
+#pragma mark - Delegate
+//MARK: CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 	FXDLog_OVERRIDE;
 }

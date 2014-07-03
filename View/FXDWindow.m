@@ -195,7 +195,7 @@
 }
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
 
 	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
@@ -210,7 +210,7 @@
 }
 
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end
 

@@ -89,9 +89,9 @@
 	return [operation isCancelled];
 }
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end
 
@@ -99,7 +99,7 @@
 @implementation NSOperationQueue (Essential)
 + (instancetype)newSerialQueue {
 	NSOperationQueue *serialQueue = [[[self class] alloc] init];
-	[serialQueue setMaxConcurrentOperationCount:limitConcurrentOperationCount];
+	[serialQueue setMaxConcurrentOperationCount:1];
 
 	return serialQueue;
 }

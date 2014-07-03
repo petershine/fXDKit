@@ -28,10 +28,10 @@
 - (void)hideProgressView;
 
 
-//MARK: - Observer implementation
+#pragma mark - Observer
 - (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
 
-//MARK: - Delegate implementation
+#pragma mark - Delegate
 
 @end
 

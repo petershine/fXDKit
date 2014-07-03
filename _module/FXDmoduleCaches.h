@@ -1,10 +1,6 @@
-//
-//  FXDmoduleCaches.h
-//
-//
-//  Created by petershine on 8/13/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
+#import "FXDKit.h"
+
 
 #define prefixCached	@"_cached_"
 
@@ -22,6 +18,5 @@
 - (void)addNewThumbImage:(UIImage*)thumbImage toCachedURL:(NSURL*)cachedURL;
 
 - (void)enumerateMetadataQueryResultsWithCallback:(FXDcallbackFinish)callback;
-
 
 @end

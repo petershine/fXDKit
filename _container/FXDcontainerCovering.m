@@ -1,10 +1,4 @@
-//
-//  FXDcontainerCovering.m
-//
-//
-//  Created by petershine on 10/18/12.
-//  Copyright (c) 2012 fXceed. All rights reserved.
-//
+
 
 #import "FXDcontainerCovering.h"
 
@@ -26,9 +20,7 @@
 @end
 
 
-
 @implementation FXDcontainerCovering
-
 
 #pragma mark - Memory management
 
@@ -39,7 +31,6 @@
 	self.minimumChildCount = self.childViewControllers.count;
 	FXDLogVariable(self.minimumChildCount);
 }
-
 
 #pragma mark - Autorotating
 
@@ -75,7 +66,6 @@
 	return canAnimate;
 }
 
-
 #pragma mark - Segues
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_DEFAULT;
 
@@ -87,7 +77,6 @@
 
 	return uncoveringSegue;
 }
-
 
 #pragma mark - IBActions
 
@@ -312,14 +301,13 @@
 	 }];
 }
 
-- (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)callback {
 	//MARK: Assume direction is only vertical
 	if (self.childViewControllers.count == 0) {
 
-		if (finishCallback) {
-			finishCallback(_cmd, YES, nil);
+		if (callback) {
+			callback(_cmd, YES, nil);
 		}
-
 		return;
 	}
 
@@ -338,10 +326,9 @@
 	if (lateAddedSceneArray.count == 0) {
 		lateAddedSceneArray = nil;
 
-		if (finishCallback) {
-			finishCallback(_cmd, YES, nil);
+		if (callback) {
+			callback(_cmd, YES, nil);
 		}
-
 		return;
 	}
 
@@ -390,29 +377,30 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveLinear
 	 animations:^{
-		 
+
 		 for (FXDViewController *childScene in lateAddedSceneArray) {
 			 NSInteger childIndex = [lateAddedSceneArray indexOfObject:childScene];
 			 CGRect animatedFrame = CGRectFromString(animatedFrameObjArray[childIndex]);
-			 
+
 			 childScene.view.frame = animatedFrame;
 		 }
-		 
-	 } completion:^(BOOL didFinish) {	FXDLog_DEFAULT;
+
+	 }
+	 completion:^(BOOL didFinish) {	FXDLog_DEFAULT;
 		 for (FXDViewController *childScene in lateAddedSceneArray) {
 			 [childScene.view removeFromSuperview];
 			 [childScene removeFromParentViewController];
 		 }
-		 
+
 		 lateAddedSceneArray = nil;
 		 animatedFrameObjArray = nil;
-		 
+
 		 FXDLog(@"2.%@", _Object(self.childViewControllers));
-		 
+
 		 self.isUncovering = NO;
-		 
-		 if (finishCallback) {
-			 finishCallback(_cmd, YES, nil);
+
+		 if (callback) {
+			 callback(_cmd, YES, nil);
 		 }
 	 }];
 }
@@ -456,11 +444,6 @@
 	
 	return coveringDirection;
 }
-
-
-//MARK: - Observer implementation
-
-//MARK: - Delegate implementation
 
 @end
 
