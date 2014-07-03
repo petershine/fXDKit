@@ -38,6 +38,7 @@
 	return _evictingQueue;
 }
 
+
 #pragma mark - Method overriding
 
 #pragma mark - Public

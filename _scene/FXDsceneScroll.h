@@ -20,6 +20,7 @@
 	NSFetchedResultsController *_mainResultsController;
 	
 	NSOperationQueue *_cellOperationQueue;
+	NSMutableDictionary *_cellOperationDictionary;
 	
 	UIScrollView *_mainScrollview;
 }
@@ -42,6 +43,7 @@
 @property (strong, nonatomic) NSFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
+@property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
 // IBOutlets
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;

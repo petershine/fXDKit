@@ -7,7 +7,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_cellOperationQueue resetOperationQueueAndDictionary:nil];
+	[_cellOperationQueue resetOperationQueueAndDictionary:_cellOperationDictionary];
 }
 
 
@@ -119,7 +119,6 @@
 
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
-	
 	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
 		_cellOperationQueue = [NSOperationQueue newSerialQueue];
 	}
@@ -127,12 +126,19 @@
 	return _cellOperationQueue;
 }
 
+- (NSMutableDictionary*)cellOperationDictionary {
+	if (_cellOperationDictionary == nil) {	FXDLog_DEFAULT;
+		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+	}
+
+	return _cellOperationDictionary;
+}
 
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
-		[self.cellOperationQueue resetOperationQueueAndDictionary:nil];
+		[self.cellOperationQueue resetOperationQueueAndDictionary:self.cellOperationDictionary];
 		
 		if (self.mainResultsController.delegate == self) {
 			self.mainResultsController.delegate = nil;
@@ -176,7 +182,7 @@
 	}
 	
 
-	didCancel = [self.cellOperationQueue cancelOperationForKey:operationKey withDictionary:nil];
+	didCancel = [self.cellOperationQueue cancelOperationForKey:operationKey withDictionary:self.cellOperationDictionary];
 	
 	return didCancel;
 }
