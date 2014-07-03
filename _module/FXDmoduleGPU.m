@@ -345,42 +345,4 @@
 	self.gpufilterGroup.terminalFilter = nextFilter;
 }
 
-
-#pragma mark - Observer
-- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogObject(notification);
-}
-
-- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogObject(notification);
-}
-
-- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification {	//FXDLog_DEFAULT;
-	/*
-#if ForDEVELOPER
-	AVCaptureDevice *captureDevice = notification.object;
-
-	NSString *log = @"";
-
-	if (captureDevice.isAdjustingFocus) {
-		log = [NSString stringWithFormat:@"%@", _BOOL(captureDevice.isAdjustingFocus)];
-	}
-
-	if (captureDevice.isAdjustingExposure) {
-		log = [NSString stringWithFormat:@"%@ %@", log, _BOOL(captureDevice.isAdjustingExposure)];
-	}
-
-	if (captureDevice.isAdjustingWhiteBalance) {
-		log = [NSString stringWithFormat:@"%@ %@", log, _BOOL(captureDevice.isAdjustingWhiteBalance)];
-	}
-
-	if (log.length > 0) {
-		FXDLog(@"%@", log);
-	}
-#endif
-	 */
-}
-
-#pragma mark - Delegate
-
 @end

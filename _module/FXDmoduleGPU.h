@@ -40,12 +40,4 @@
 - (void)cycleGPUfiltersForward:(BOOL)isForward withCallback:(FXDcallbackFinish)finishCallback;
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
 
-
-#pragma mark - Observer
-- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification;
-- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification;
-- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification;
-
-#pragma mark - Delegate
-
 @end

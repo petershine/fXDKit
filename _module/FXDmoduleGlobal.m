@@ -293,8 +293,6 @@
 		[self configureUserDefaultsInfo];
 		[self configureGlobalAppearance];
 
-		[self startObservingEssentialNotifications];
-		
 		if (finishCallback) {
 			finishCallback(_cmd, YES, nil);
 		}
@@ -329,92 +327,13 @@
 }
 
 #pragma mark -
-- (void)configureUserDefaultsInfo {	FXDLog_DEFAULT;
+- (void)configureUserDefaultsInfo {	FXDLog_OVERRIDE;
 }
 
-- (void)configureGlobalAppearance {	FXDLog_DEFAULT;
+- (void)configureGlobalAppearance {	FXDLog_OVERRIDE;
 }
 
-- (void)startObservingEssentialNotifications {	FXDLog_DEFAULT;
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	
-	//UIApplicationStatusBar:
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationWillChangeStatusBarFrame:)
-	 name:UIApplicationWillChangeStatusBarFrameNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidChangeStatusBarFrame:)
-	 name:UIApplicationDidChangeStatusBarFrameNotification
-	 object:nil];
-
-	//UIApplicationState:
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationWillResignActive:)
-	 name:UIApplicationWillResignActiveNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
-
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationWillEnterForeground:)
-	 name:UIApplicationWillEnterForegroundNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidBecomeActive:)
-	 name:UIApplicationDidBecomeActiveNotification
-	 object:nil];
-
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidReceiveMemoryWarning:)
-	 name:UIApplicationDidReceiveMemoryWarningNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationWillTerminate:)
-	 name:UIApplicationWillTerminateNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationSignificantTimeChange:)
-	 name:UIApplicationSignificantTimeChangeNotification
-	 object:nil];
-	
-	//NSUserDefaults:
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedNSUserDefaultsDidChange:)
-	 name:NSUserDefaultsDidChangeNotification
-	 object:nil];
-	
-	//UIDeviceBattery:
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIDeviceBatteryStateDidChange:)
-	 name:UIDeviceBatteryStateDidChangeNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIDeviceBatteryLevelDidChange:)
-	 name:UIDeviceBatteryLevelDidChangeNotification
-	 object:nil];
-}
-
+#pragma mark -
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
 	FXDLogBOOL([@(USE_Flurry) boolValue]);
 	
@@ -495,53 +414,5 @@
 	
 	return localDate;
 }
-
-
-#pragma mark - Observer
-- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification {
-
-	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
-		FXDLogRect([UIApplication sharedApplication].statusBarFrame);
-		FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
-	}
-}
-
-- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification {
-
-	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
-		FXDLogRect([UIApplication sharedApplication].statusBarFrame);
-		FXDLogObject([notification userInfo][UIApplicationStatusBarFrameUserInfoKey]);
-	}
-}
-
-#pragma mark -
-//MARK: Override to implement accordingly
-- (void)observedUIApplicationWillResignActive:(NSNotification*)notification {
-}
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {
-}
-- (void)observedUIApplicationWillEnterForeground:(NSNotification*)notification {
-}
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {
-}
-- (void)observedUIApplicationDidReceiveMemoryWarning:(NSNotification*)notification {	FXDLog_SEPARATE;
-}
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {
-}
-- (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification {
-}
-
-#pragma mark -
-- (void)observedNSUserDefaultsDidChange:(NSNotification *)notification {
-}
-
-#pragma mark -
-- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification {
-}
-- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification {
-}
-
-#pragma mark - Delegate
-
 
 @end

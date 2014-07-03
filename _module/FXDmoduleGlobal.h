@@ -47,7 +47,6 @@
 
 - (void)configureUserDefaultsInfo;
 - (void)configureGlobalAppearance;
-- (void)startObservingEssentialNotifications;
 
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions;
 
@@ -60,25 +59,6 @@
 - (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
 - (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
-
-
-#pragma mark - Observer
-- (void)observedUIApplicationWillChangeStatusBarFrame:(NSNotification*)notification;
-- (void)observedUIApplicationDidChangeStatusBarFrame:(NSNotification*)notification;
-
-- (void)observedUIApplicationWillResignActive:(NSNotification*)notification;
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
-- (void)observedUIApplicationWillEnterForeground:(NSNotification*)notification;
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
-- (void)observedUIApplicationSignificantTimeChange:(NSNotification*)notification;
-
-- (void)observedNSUserDefaultsDidChange:(NSNotification*)notification;
-
-- (void)observedUIDeviceBatteryStateDidChange:(NSNotification*)notification;
-- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification;
-
-#pragma mark - Delegate
 
 @end
 

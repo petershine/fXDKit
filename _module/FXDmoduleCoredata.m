@@ -241,12 +241,6 @@
 	
 	[notificationCenter
 	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
-	
-	[notificationCenter
-	 addObserver:self
 	 selector:@selector(observedUIApplicationWillTerminate:)
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
@@ -578,10 +572,6 @@
 
 
 #pragma mark - Observer
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {FXDLog_DEFAULT;
-	//MARK: Re-consider about saving context here
-}
-
 - (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLog_REMAINING;
 

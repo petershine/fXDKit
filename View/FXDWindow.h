@@ -21,11 +21,6 @@
 - (void)showProgressViewWithNibName:(NSString*)nibName;
 - (void)hideProgressView;
 
-#pragma mark - Observer
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
-
-#pragma mark - Delegate
-
 @end
 
 

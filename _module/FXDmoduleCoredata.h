@@ -73,9 +73,6 @@
 
 
 #pragma mark - Observer
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
-
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification;
 
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;

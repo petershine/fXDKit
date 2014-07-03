@@ -58,7 +58,7 @@
 	 name:NSMetadataQueryDidUpdateNotification
 	 object:self.mainMetadataQuery];
 
-	BOOL didStart = [_mainMetadataQuery startQuery];
+	BOOL didStart = [self.mainMetadataQuery startQuery];
 	FXDLogBOOL(didStart);
 
 	if (didStart) {}

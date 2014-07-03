@@ -32,17 +32,6 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingAssetsLibraryNotifications {	FXDLog_DEFAULT;
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-	
-	[defaultCenter
-	 addObserver:self
-	 selector:@selector(observedALAssetsLibraryChanged:)
-	 name:ALAssetsLibraryChangedNotification
-	 object:nil];
-}
-
-#pragma mark -
 - (void)groupsArrayWithTypes:(ALAssetsGroupType)types withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	
 	if (self.mainAssetsLibrary == nil) {
@@ -104,20 +93,5 @@
 		 }
 	 }];
 }
-
-
-#pragma mark - Observer
-- (void)observedALAssetsLibraryChanged:(NSNotification *)notification {	FXDLog_DEFAULT;
-	FXDLogObject(notification);
-	
-	/*
-	extern NSString *const ALAssetLibraryUpdatedAssetsKey __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_6_0);
-	extern NSString *const ALAssetLibraryInsertedAssetGroupsKey __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_6_0);
-	extern NSString *const ALAssetLibraryUpdatedAssetGroupsKey __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_6_0);
-	extern NSString *const ALAssetLibraryDeletedAssetGroupsKey __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_6_0);
-	 */
-}
-
-#pragma mark - Delegate
 
 @end

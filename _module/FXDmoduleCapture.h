@@ -39,18 +39,7 @@
 
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
-- (void)addObserverToCaptureDevice:(AVCaptureDevice**)captureDevice;
 
 - (CIImage*)coreImageForCVImageBuffer:(CVImageBufferRef)imageBuffer withScale:(NSNumber*)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoOrientation:(AVCaptureVideoOrientation)videoOrientation shouldUseMirroring:(BOOL)shouldUseMirroring;
-
-
-#pragma mark - Observer
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
-
-- (void)observedAVCaptureDeviceWasConnected:(NSNotification*)notification;
-- (void)observedAVCaptureDeviceWasDisconnected:(NSNotification*)notification;
-- (void)observedAVCaptureDeviceSubjectAreaDidChange:(NSNotification*)notification;
-
-#pragma mark - Delegate
 
 @end

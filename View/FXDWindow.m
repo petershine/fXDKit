@@ -10,30 +10,10 @@
 @implementation FXDWindow
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)dealloc {	FXDLog_DEFAULT;
 }
 
 #pragma mark - Initialization
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-	
-    if (self) {
-		[self awakeFromNib];
-    }
-	
-    return self;
-}
-
-- (void)awakeFromNib {	FXDLog_DEFAULT;
-	[super awakeFromNib];
-
-	[[NSNotificationCenter defaultCenter]
-	 addObserver:self
-	 selector:@selector(observedUIDeviceOrientationDidChange:)
-	 name:UIDeviceOrientationDidChangeNotification
-	 object:nil];
-}
 
 #pragma mark - Property overriding
 
@@ -185,23 +165,6 @@
 		 self.informationView = nil;
 	 }];
 }
-
-
-#pragma mark - Observer
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
-
-	UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-
-	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-		return;
-	}
-
-
-	FXDLog_OVERRIDE;
-	FXDLogVariable(deviceOrientation);
-}
-
-#pragma mark - Delegate
 
 @end
 

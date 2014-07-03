@@ -30,8 +30,4 @@
 //MARK: For testing significantMonitoring
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 
-#pragma mark - Observer
-
-#pragma mark - Delegate
-
 @end

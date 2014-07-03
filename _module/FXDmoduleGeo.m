@@ -8,25 +8,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {
-		[[NSNotificationCenter defaultCenter]
-		 addObserver:self
-		 selector:@selector(observedUIApplicationDidEnterBackground:)
-		 name:UIApplicationDidEnterBackgroundNotification
-		 object:nil];
-
-		[[NSNotificationCenter defaultCenter]
-		 addObserver:self
-		 selector:@selector(observedUIApplicationDidBecomeActive:)
-		 name:UIApplicationDidBecomeActiveNotification
-		 object:nil];
-	}
-
-	return self;
-}
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
@@ -70,6 +51,21 @@
 	[self.mainLocationManager startUpdatingLocation];
 
 	[self configureUpdatingForApplicationState];
+
+
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidBecomeActive:)
+	 name:UIApplicationDidBecomeActiveNotification
+	 object:nil];
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
@@ -183,14 +179,6 @@
 
 
 #pragma mark - Observer
-- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification {
-	FXDLog_OVERRIDE;
-}
-
-- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {
-	FXDLog_OVERRIDE;
-}
-
 
 #pragma mark - Delegate
 //MARK: CLLocationManagerDelegate

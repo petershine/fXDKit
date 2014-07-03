@@ -179,8 +179,8 @@
 	 addObserverForName:AVPlayerItemDidPlayToEndTimeNotification
 	 object:nil
 	 queue:nil
-	 usingBlock:^(NSNotification *note) {
-		 FXDLogObject(note);
+	 usingBlock:^(NSNotification *notification) {
+		 FXDLogObject(notification);
 		 FXDLogTime(weakSelf.moviePlayer.currentItem.duration);
 
 		 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
