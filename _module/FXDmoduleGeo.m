@@ -65,13 +65,20 @@
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
 	CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
+	BOOL isAuthorized = YES;
 
 #ifdef __IPHONE_8_0
 	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
 		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+		isAuthorized = NO;
+	}
 #else
-	if (status != kCLAuthorizationStatusAuthorized) {
+	if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
+		isAuthorized = NO;
+	}
 #endif
+
+	if (isAuthorized == NO) {
 		FXDLogObject([UIDevice currentDevice].systemVersion);
 
 		if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
@@ -207,12 +214,20 @@
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
 	FXDLogVariable(authorizationStatus);
 
+	BOOL isAuthorized = YES;
+
 #ifdef __IPHONE_8_0
 	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
 		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+		isAuthorized = NO;
+	}
 #else
-	if (status != kCLAuthorizationStatusAuthorized) {
+	if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
+		isAuthorized = NO;
+	}
 #endif
+
+	if (isAuthorized == NO) {
 		[self pauseMainLocationManager];
 		return;
 	}
