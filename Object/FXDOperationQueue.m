@@ -72,7 +72,7 @@
 	NSOperation *operation = operationDictionary[operationKey];
 	[operation cancel];
 
-	return [operation isCancelled];
+	return operation.isCancelled;
 }
 
 @end
