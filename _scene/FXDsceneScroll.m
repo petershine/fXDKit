@@ -120,7 +120,7 @@
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
-		_cellOperationQueue = [NSOperationQueue newSerialQueue];
+		_cellOperationQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 	}
 	
 	return _cellOperationQueue;

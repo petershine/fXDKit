@@ -128,8 +128,10 @@
 }
 
 - (void)enumerateMetadataQueryResultsWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
-	
-	[[NSOperationQueue new]
+
+	NSOperationQueue *enumeratingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
+
+	[enumeratingQueue
 	 addOperationWithBlock:^{
 
 		 NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -137,16 +139,16 @@
 		 for (NSMetadataItem *metadataItem in self.mainMetadataQuery.results) {
 
 			 NSURL *cachedURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
-			 
+
 			 NSURL *itemURL = [self itemURLforCachedURL:cachedURL];
 
 			 NSError *error = nil;
 			 BOOL isReachable = [itemURL checkResourceIsReachableAndReturnError:&error];
 			 FXDLog_ERROR_ignored(260);
-			 
+
 			 BOOL didStartDownloading = NO;
 			 BOOL didRemove = NO;
-			 
+
 			 if (isReachable == NO) {
 				 NSError *error = nil;
 				 didRemove = [fileManager removeItemAtURL:cachedURL error:&error];
@@ -158,16 +160,16 @@
 				 if (error && [error code] != 4 && [error code] != 260) {
 					 FXDLog_ERROR;
 				 }
-				 
+
 
 				 FXDLog(@"%@ %@ %@ %@ %@", _BOOL(didStartDownloading), _BOOL(isReachable), _Object([itemURL followingPathInDocuments]), _BOOL(didRemove), _Object([cachedURL followingPathAfterPathComponent:pathcomponentCaches]));
 				 continue;
 			 }
-			 
-			 
+
+
 			 BOOL isDownloaded = NO;
 			 BOOL isDownloading = NO;
-			 
+
 			 id value = [metadataItem valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
 			 isDownloaded = (value == NSMetadataUbiquitousItemDownloadingStatusDownloaded);
 			 isDownloading = [[metadataItem valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey] boolValue];
@@ -183,8 +185,8 @@
 				 FXDLog_ERROR;
 			 }
 		 }
-		 
-		 [[NSOperationQueue mainQueue]
+
+		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
 			  if (callback) {
 				  callback(_cmd, YES, nil);

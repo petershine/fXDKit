@@ -32,7 +32,7 @@
 #pragma mark -
 - (NSOperationQueue*)evictingQueue {
 	if (_evictingQueue == nil) {	FXDLog_DEFAULT;
-		_evictingQueue = [NSOperationQueue newSerialQueue];
+		_evictingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 	}
 
 	return _evictingQueue;
@@ -52,9 +52,13 @@
 
 	[self.mainMetadataQuery disableUpdates];
 
+
 	__block NSMutableArray *itemURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 
-	[[NSOperationQueue new]
+
+	NSOperationQueue *enumeratingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
+
+	[enumeratingQueue
 	 addOperationWithBlock:^{
 
 		 for (NSUInteger idx = 0; idx < [self.mainMetadataQuery resultCount]; idx++) {
@@ -89,7 +93,7 @@
 		 }
 
 		 
-		 [[NSOperationQueue mainQueue]
+		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
 			  [self.mainMetadataQuery enableUpdates];
 
@@ -113,7 +117,10 @@
 	__block NSMutableArray *folderURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 	__block NSMutableArray *fileURLarray = [[NSMutableArray alloc] initWithCapacity:0];
 
-	[[NSOperationQueue new]
+
+	NSOperationQueue *enumeratingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
+
+	[enumeratingQueue
 	 addOperationWithBlock:^{
 		 NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] limitedEnumeratorForRootURL:folderURL];
 
@@ -137,7 +144,7 @@
 		 }
 
 
-		 [[NSOperationQueue mainQueue]
+		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
 			  FXDinfoEnumerated *enumeratedInfo = [[FXDinfoEnumerated alloc] init];
 			  enumeratedInfo.folderURLarray = [folderURLarray copy];

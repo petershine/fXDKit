@@ -137,7 +137,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -146,8 +146,8 @@
 	FXDLogObject(typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
+		if (callback) {
+			callback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -157,10 +157,9 @@
 	FXDLogVariable(self.mainAccountType.accessGranted);
 
 	void (^GrantedAccess)(void) = ^(void){
-		[self
-		 showActionSheetInPresentingView:presentingView
+		[self showActionSheetInPresentingView:presentingView
 		 forSelectingAccountForTypeIdentifier:typeIdentifier
-		 withFinishCallback:finishCallback];
+						   withFinishCallback:callback];
 	};
 
 	void (^DeniedAccess)(void) = ^(void){
@@ -181,8 +180,8 @@
 
 		_mainAccountType = nil;
 
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
+		if (callback) {
+			callback(_cmd, NO, nil);
 		}
 	};
 

@@ -5,8 +5,16 @@
 
 @implementation NSOperationQueue (Essential)
 + (instancetype)newSerialQueue {
+	return [self newSerialQueueWithName:nil];
+}
+
++ (instancetype)newSerialQueueWithName:(NSString*)queueName {
 	NSOperationQueue *serialQueue = [[[self class] alloc] init];
 	serialQueue.maxConcurrentOperationCount = 1;
+
+	if (queueName) {
+		serialQueue.name = queueName;
+	}
 
 	return serialQueue;
 }

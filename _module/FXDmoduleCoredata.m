@@ -399,8 +399,10 @@
 	__block BOOL shouldBreak = NO;
 	
 	NSManagedObjectContext *managedContext = (shouldUsePrivateContext) ? self.mainDocument.managedObjectContext.parentContext:self.mainDocument.managedObjectContext;
+
+	NSOperationQueue *managedContextSavingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 	
-	[[NSOperationQueue new]
+	[managedContextSavingQueue
 	 addOperationWithBlock:^{
 		 
 		 NSArray *fetchedObjArray = [managedContext
@@ -432,7 +434,7 @@
 			 FXDLog_REMAINING;
 		 }
 		 
-		 [[NSOperationQueue mainQueue]
+		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
 			  FXDLog(@"1.%@", _Variable(self.didStartEnumerating));
 			  self.didStartEnumerating = NO;

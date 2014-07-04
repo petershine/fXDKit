@@ -93,7 +93,9 @@
 	FXDLogObject(self.containerURL);
 
 
-	[[NSOperationQueue new]
+	NSOperationQueue *containerURLupdatingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
+
+	[containerURLupdatingQueue
 	 addOperationWithBlock:^{	FXDLog_DEFAULT;
 		 FXDLogObject(self.containerIdentifier);
 

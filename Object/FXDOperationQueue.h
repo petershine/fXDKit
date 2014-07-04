@@ -4,6 +4,7 @@
 
 @interface NSOperationQueue (Essential)
 + (instancetype)newSerialQueue;
++ (instancetype)newSerialQueueWithName:(NSString*)queueName;
 
 - (void)resetOperationQueueAndDictionary:(NSMutableDictionary*)operationDictionary;
 
