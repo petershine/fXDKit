@@ -6,7 +6,7 @@
 @implementation NSOperationQueue (Essential)
 + (instancetype)newSerialQueue {
 	NSOperationQueue *serialQueue = [[[self class] alloc] init];
-	[serialQueue setMaxConcurrentOperationCount:1];
+	serialQueue.maxConcurrentOperationCount = 1;
 
 	return serialQueue;
 }
