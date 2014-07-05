@@ -80,12 +80,14 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {	FXDLog_DEFAULT;
+- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {
 
 	if ([self doesStoredSqliteExist]) {
 		return;
 	}
 
+
+	FXDLog_DEFAULT;
 
 	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
 	FXDLogObject(bundledSqlitePath);
@@ -110,7 +112,7 @@
 	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
 }
 
-- (BOOL)doesStoredSqliteExist {
+- (BOOL)doesStoredSqliteExist {	FXDLog_DEFAULT;
 	NSString *storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
 	FXDLogObject(storedPath);
 
@@ -120,7 +122,7 @@
 	return storedSqliteExists;
 }
 
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {	FXDLog_DEFAULT;
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 
 	BOOL sqliteExists = [fileManager fileExistsAtPath:sqlitePath];
