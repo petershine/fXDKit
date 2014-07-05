@@ -353,7 +353,7 @@
 }
 
 #pragma mark -
-- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)callback {
 
 	if ([scene isKindOfClass:[FXDViewController class]]
 		&& dismissedCallback) {
@@ -375,13 +375,13 @@
 		 scene.view.alpha = 1.0;
 	 }
 	 completion:^(BOOL finished) {
-		 if (finishCallback) {
-			 finishCallback(_cmd, finished, nil);
+		 if (callback) {
+			 callback(_cmd, finished, nil);
 		 }
 	 }];
 }
 
-- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)callback {
 
 	if ([scene isKindOfClass:[FXDViewController class]]
 		&& dismissedCallback) {
@@ -400,8 +400,8 @@
 		 [scene.view removeFromSuperview];
 		 [scene removeFromParentViewController];
 
-		 if (finishCallback) {
-			 finishCallback(_cmd, finished, nil);
+		 if (callback) {
+			 callback(_cmd, finished, nil);
 		 }
 	 }];
 }
