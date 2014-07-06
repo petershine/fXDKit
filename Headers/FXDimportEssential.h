@@ -3,6 +3,9 @@
 #ifndef FXDKit_FXDimportEssential_h
 #define FXDKit_FXDimportEssential_h
 
+#import "FXDKit.h"
+
+
 #import <objc/runtime.h>
 #import <stdarg.h>
 #import <sys/utsname.h>
@@ -26,13 +29,6 @@
 @import Accounts;
 @import Social;
 
-
-#pragma mark - Callbacks
-typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
-typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
-
-
-#pragma mark - Categories
 
 @interface NSError (Essential)
 - (NSDictionary*)essentialParameters;

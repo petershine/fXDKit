@@ -4,6 +4,10 @@
 
 @import AssetsLibrary;
 
+@interface ALAsset (MultimediaFrameworks)
+- (id)valueForKey:(NSString *)key;
+@end
+
 
 @interface FXDmoduleAssets : FXDsuperModule
 

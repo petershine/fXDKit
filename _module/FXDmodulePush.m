@@ -1,17 +1,9 @@
-//
-//  FXDmodulePush.m
-//
-//
-//  Created by petershine on 4/30/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
 
 #import "FXDmodulePush.h"
 
 
-#pragma mark - Public implementation
 @implementation FXDmodulePush
-
 
 #pragma mark - Memory management
 

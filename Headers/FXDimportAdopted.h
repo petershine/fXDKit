@@ -3,21 +3,7 @@
 #ifndef FXDKit_FXDimportAdopted_h
 #define FXDKit_FXDimportAdopted_h
 
-
-#ifndef USE_ReactiveCocoa
-	#warning //TODO: Decide if ReactiveCocoa is used
-	#define	USE_ReactiveCocoa	FALSE
-#endif
-
-#ifndef USE_AFNetworking
-	#warning //TODO: Decide if AFNetworking is used
-	#define USE_AFNetworking	FALSE
-#endif
-
-#ifndef USE_GPUImage
-	#warning //TODO: Decide if GPUImage is used
-	#define USE_GPUImage	FALSE
-#endif
+#import "FXDKit.h"
 
 
 #if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
@@ -34,11 +20,6 @@
 	#import <GPUImage.h>
 #endif
 
-
-#if USE_AdvertisementFrameworks
-	@import iAd;
-	@import AdSupport;
-#endif
 
 #if USE_LocationFrameworks
 	@import CoreLocation;
@@ -70,15 +51,6 @@
 
 	@interface UIDevice (MultimediaFrameworks)
 	- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
-	@end
-
-	@interface AVCaptureDevice (MultimediaFrameworks)
-	+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
-	- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
-	@end
-
-	@interface ALAsset (MultimediaFrameworks)
-	- (id)valueForKey:(NSString *)key;
 	@end
 
 	#import "FXDMediaItem.h"

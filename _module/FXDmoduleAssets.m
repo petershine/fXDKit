@@ -3,6 +3,13 @@
 #import "FXDmoduleAssets.h"
 
 
+@implementation ALAsset (MultimediaFrameworks)
+- (id)valueForKey:(NSString *)key {
+	return [self valueForProperty:key];
+}
+@end
+
+
 @implementation FXDmoduleAssets
 
 #pragma mark - Memory management

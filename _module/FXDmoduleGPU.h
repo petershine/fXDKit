@@ -1,11 +1,13 @@
 
 #import "FXDKit.h"
 
-
 @import AVFoundation;
 
-#import <GPUImage.h>
 
+@class FXDmoduleCapture;
+
+
+#import <GPUImage.h>
 
 @interface FXDcameraGPU : GPUImageVideoCamera
 @end

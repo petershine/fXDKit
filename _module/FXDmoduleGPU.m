@@ -2,6 +2,8 @@
 
 #import "FXDmoduleGPU.h"
 
+#import "FXDmoduleCapture.h"
+
 
 @implementation FXDcameraGPU
 - (void)dealloc {	FXDLog_DEFAULT;

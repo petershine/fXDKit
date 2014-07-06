@@ -1,10 +1,7 @@
-//
-//  FXDmodulePush.h
-//
-//
-//  Created by petershine on 4/30/14.
-//  Copyright (c) 2014 fXceed. All rights reserved.
-//
+
+
+#import "FXDKit.h"
+
 
 #ifndef urbanairshipDevelopmentKey
 	#warning //TODO: Define urbanairshipDevelopmentKey
@@ -35,17 +32,11 @@
 
 @interface FXDmodulePush : FXDsuperModule
 
-#pragma mark - Initialization
 
-#pragma mark - Public
 - (void)preparePushManager;
 
 - (void)updateMainAlias:(NSString*)aliasString;
 - (void)activateLocationReporting;
 
-
-#pragma mark - Observer
-
-#pragma mark - Delegate
 
 @end

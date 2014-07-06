@@ -1,12 +1,17 @@
 
 #import "FXDKit.h"
 
+@import AVFoundation;
+
 
 #define filternameScale		@"CILanczosScaleTransform"
 #define filternameTransform		@"CIAffineTransform"
 
 
-@import AVFoundation;
+@interface AVCaptureDevice (MultimediaFrameworks)
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
+- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
+@end
 
 
 @interface FXDmoduleCapture : FXDsuperModule <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {

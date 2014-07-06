@@ -1,6 +1,8 @@
 
 #import "FXDKit.h"
 
+@import AVFoundation;
+
 
 #ifndef periodicintervalDivisor
 	#define periodicintervalDivisor	3
@@ -9,9 +11,6 @@
 #ifndef periodicintervalDefault
 	#define periodicintervalDefault	CMTimeMultiplyByRatio(CMTimeMake(1, 3), 1, periodicintervalDivisor)
 #endif
-
-
-@import AVFoundation;
 
 
 @interface FXDviewAssetDisplay : UIView
