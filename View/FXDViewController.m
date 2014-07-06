@@ -137,7 +137,7 @@
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
-		 FXDLog(@"%@ %@", _Variable([context percentComplete]), _Variable([context completionVelocity]));
+		 FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
 	 }];
 }
 #endif
