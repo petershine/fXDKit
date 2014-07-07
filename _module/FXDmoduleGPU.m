@@ -19,11 +19,10 @@
 - (void)dealloc {	FXDLog_DEFAULT;
 }
 
-+ (instancetype)imageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
++ (instancetype)imageviewForBounds:(CGRect)bounds withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
+	FXDLogRect(bounds);
 
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
-	FXDimageviewGPU *gpuviewCaptured = [[[self class] alloc] initWithFrame:screenBounds];
+	FXDimageviewGPU *gpuviewCaptured = [[[self class] alloc] initWithFrame:bounds];
 	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
 
@@ -186,9 +185,6 @@
 		filterIndex = 0;
 	}
 
-	FXDLogVariable(filterIndex);
-	self.lastFilterIndex = filterIndex;
-
 
 	[self applyGPUfilterAtFilterIndex:filterIndex];
 
@@ -199,6 +195,9 @@
 }
 
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex {	FXDLog_DEFAULT;
+	FXDLogVariable(filterIndex);
+	self.lastFilterIndex = filterIndex;
+	
 	NSString *filterName = self.cycledFilterNameArray[filterIndex];
 	FXDLogObject(filterName);
 

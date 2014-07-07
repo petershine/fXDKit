@@ -16,7 +16,7 @@
 @end
 
 @interface FXDimageviewGPU : GPUImageView
-+ (instancetype)imageviewWithGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
++ (instancetype)imageviewForBounds:(CGRect)bounds withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
 @end
 
 @interface FXDwriterGPU : GPUImageMovieWriter
