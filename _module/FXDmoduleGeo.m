@@ -78,9 +78,10 @@
 	}
 #endif
 
-
+	FXDLogBOOL(isAuthorized);
+	FXDLogObject([UIDevice currentDevice].systemVersion);
+	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
 	if (isAuthorized == NO) {
-		FXDLogObject([UIDevice currentDevice].systemVersion);
 
 #warning //TODO: Make sure "NSLocationAlwaysUsageDescription" is described, in info.plist as raw info
 		if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
