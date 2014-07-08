@@ -12,7 +12,7 @@
 @interface FXDcameraGPU : GPUImageVideoCamera
 @end
 
-@interface FXDfiltergroupGPU : GPUImageFilterGroup
+@interface FXDfilterGPU : GPUImageFilter
 @end
 
 @interface FXDimageviewGPU : GPUImageView
@@ -27,13 +27,21 @@
 @end
 
 
-@interface FXDmoduleGPU : FXDsuperModule
+@interface FXDmoduleGPU : FXDsuperModule {
+	NSInteger _lastFilterIndex;
+
+	NSMutableArray *_filterNameArray;
+
+	FXDcameraGPU *_videoCamera;
+	FXDfilterGPU *_cameraFilter;
+}
+
 @property (nonatomic) NSInteger lastFilterIndex;
 
-@property (strong, nonatomic) NSMutableArray *cycledFilterNameArray;
+@property (strong, nonatomic) NSMutableArray *filterNameArray;
 
-@property (strong, nonatomic) FXDcameraGPU *gpuvideoCamera;
-@property (strong, nonatomic) FXDfiltergroupGPU *gpufilterGroup;
+@property (strong, nonatomic) FXDcameraGPU *videoCamera;
+@property (strong, nonatomic) FXDfilterGPU *cameraFilter;
 
 
 - (void)prepareGPUManager;

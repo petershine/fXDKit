@@ -6,19 +6,12 @@
 
 
 @implementation FXDcameraGPU
-- (void)dealloc {	FXDLog_DEFAULT;
-}
 @end
 
-@implementation FXDfiltergroupGPU
-- (void)dealloc {	FXDLog_DEFAULT;
-}
+@implementation FXDfilterGPU
 @end
 
 @implementation FXDimageviewGPU
-- (void)dealloc {	FXDLog_DEFAULT;
-}
-
 + (instancetype)imageviewForBounds:(CGRect)bounds withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
 	FXDLogRect(bounds);
 
@@ -74,14 +67,14 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (NSMutableArray*)cycledFilterNameArray {
-	if (_cycledFilterNameArray) {
-		return _cycledFilterNameArray;
+- (NSMutableArray*)filterNameArray {
+	if (_filterNameArray) {
+		return _filterNameArray;
 	}
 
 	FXDLog_DEFAULT;
 
-	_cycledFilterNameArray =
+	_filterNameArray =
 	[@[NSStringFromClass([GPUImageRGBFilter class]),
 
 	   NSStringFromClass([GPUImageAmatorkaFilter class]),
@@ -102,53 +95,42 @@
 
 	   ] mutableCopy];
 
-	FXDLogVariable(_cycledFilterNameArray.count);
+	FXDLogVariable(_filterNameArray.count);
 
-	return _cycledFilterNameArray;
+	return _filterNameArray;
 }
 
 #pragma mark -
-- (FXDcameraGPU*)gpuvideoCamera {
-	if (_gpuvideoCamera) {
-		return _gpuvideoCamera;
+- (FXDcameraGPU*)videoCamera {
+	if (_videoCamera) {
+		return _videoCamera;
 	}
 
 
 	FXDLog_DEFAULT;
 
-	_gpuvideoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
+	_videoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
 												   cameraPosition:AVCaptureDevicePositionBack];
-	[_gpuvideoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
+	[_videoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
-	[_gpuvideoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
+	[_videoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
 
-	[_gpuvideoCamera addAudioInputsAndOutputs];
+	[_videoCamera addAudioInputsAndOutputs];
 
-	return _gpuvideoCamera;
+	return _videoCamera;
 }
 
-- (FXDfiltergroupGPU*)gpufilterGroup {
-	if (_gpufilterGroup) {
-		return _gpufilterGroup;
+- (FXDfilterGPU*)cameraFilter {
+	if (_cameraFilter) {
+		return _cameraFilter;
 	}
 
 
 	FXDLog_DEFAULT;
 
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
+	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex];
 
-	GPUImageRGBFilter *normalFilter = [[GPUImageRGBFilter alloc] init];
-	[normalFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
-
-	_gpufilterGroup = [[FXDfiltergroupGPU alloc] init];
-	[_gpufilterGroup addFilter:normalFilter];
-
-	_gpufilterGroup.initialFilters = @[normalFilter];
-	_gpufilterGroup.terminalFilter = normalFilter;
-
-	FXDLogObject(_gpufilterGroup);
-
-	return _gpufilterGroup;
+	return _cameraFilter;
 }
 
 
@@ -156,21 +138,19 @@
 
 #pragma mark - Public
 - (void)prepareGPUManager {	FXDLog_DEFAULT;
-	[self.gpuvideoCamera addTarget:self.gpufilterGroup];
+	//MARK: Make sure camera and filter are initialized here
+	[self.videoCamera addTarget:self.cameraFilter];
 
-	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex];
-
-	FXDLogObject([self.gpuvideoCamera targets]);
-	FXDLogObject([self.gpufilterGroup targets]);
-	FXDLogObject([self.gpufilterGroup.terminalFilter targets]);
+	FXDLogObject([self.videoCamera targets]);
+	FXDLogObject([self.cameraFilter targets]);
 }
 
 - (void)resetGPUManager {	FXDLog_DEFAULT;
-	[_gpuvideoCamera removeAllTargets];
-	_gpuvideoCamera = nil;
+	[_videoCamera removeAllTargets];
+	_videoCamera = nil;
 
-	[_gpufilterGroup removeAllTargets];
-	_gpufilterGroup = nil;
+	[_cameraFilter removeAllTargets];
+	_cameraFilter = nil;
 }
 
 #pragma mark -
@@ -179,9 +159,9 @@
 	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
 
 	if (filterIndex < 0) {
-		filterIndex = self.cycledFilterNameArray.count-1;
+		filterIndex = self.filterNameArray.count-1;
 	}
-	else if (filterIndex == self.cycledFilterNameArray.count) {
+	else if (filterIndex == self.filterNameArray.count) {
 		filterIndex = 0;
 	}
 
@@ -198,16 +178,22 @@
 	FXDLogVariable(filterIndex);
 	self.lastFilterIndex = filterIndex;
 	
-	NSString *filterName = self.cycledFilterNameArray[filterIndex];
+	NSString *filterName = self.filterNameArray[filterIndex];
 	FXDLogObject(filterName);
+
+
+	[_videoCamera removeTarget:_cameraFilter];
+
+	[_cameraFilter removeAllTargets];
+	_cameraFilter = nil;
+
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
-	GPUImageFilter *nextFilter = [[NSClassFromString(filterName) alloc] init];
-	[nextFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
+	_cameraFilter = [[NSClassFromString(filterName) alloc] init];
+	[_cameraFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
 
-	self.gpufilterGroup.initialFilters = @[nextFilter];
-	self.gpufilterGroup.terminalFilter = nextFilter;
+	[_videoCamera addTarget:_cameraFilter];
 }
 
 @end
