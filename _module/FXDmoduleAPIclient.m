@@ -3,6 +3,11 @@
 #import "FXDmoduleAPIclient.h"
 
 @implementation FXDmoduleAPIclient
+
+#pragma mark - Memory management
+
+#pragma mark - Initialization
+
 #pragma mark - Property overriding
 - (NSString*)mainRootURLformat {
 	if (_mainRootURLformat == nil) {	FXDLog_OVERRIDE;
