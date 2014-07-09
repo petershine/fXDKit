@@ -95,9 +95,9 @@
 
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@ %@", _ClassSelectorSelf, _Rect(self.view.frame), _Rect(self.view.bounds))
+							FXDLog(@"%@: %@", _ClassSelectorSelf, _Rect(self.view.frame))
 
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@ %@", _ClassSelectorSelf, _Rect(self.view.frame), _Rect(self.view.bounds))
+	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@", _ClassSelectorSelf, _Rect(self.view.frame))
 
 
 	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
