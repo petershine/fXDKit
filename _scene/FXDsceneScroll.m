@@ -182,7 +182,9 @@
 	}
 	
 
-	didCancel = [self.cellOperationQueue cancelOperationForKey:operationKey withDictionary:self.cellOperationDictionary];
+	didCancel = [self.cellOperationQueue
+				 removeOperationForKey:operationKey
+				 withDictionary:self.cellOperationDictionary];
 	
 	return didCancel;
 }

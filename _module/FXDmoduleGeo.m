@@ -13,6 +13,7 @@
 
 	if (self) {
 #warning //TODO: Make sure subclass does adding by itself
+
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
 		[notificationCenter
@@ -81,13 +82,15 @@
 	FXDLogBOOL(isAuthorized);
 	FXDLogObject([UIDevice currentDevice].systemVersion);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
-	if (isAuthorized == NO) {
-
 #warning //TODO: Make sure "NSLocationAlwaysUsageDescription" is described, in info.plist as raw info
+
+	if (isAuthorized == NO) {
+#ifdef __IPHONE_8_0
 		if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
 			[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
 			return;
 		}
+#endif
 	}
 
 
@@ -239,8 +242,7 @@
 	[self startMainLocationManagerWithLaunchOptions:nil];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-	FXDLog_OVERRIDE;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {	FXDLog_OVERRIDE;
 }
 
 @end

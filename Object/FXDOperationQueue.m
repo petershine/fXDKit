@@ -21,8 +21,9 @@
 
 #pragma mark -
 - (void)resetOperationQueueAndDictionary:(NSMutableDictionary*)operationDictionary {
-	[operationDictionary removeAllObjects];
 	[self cancelAllOperations];
+
+	[operationDictionary removeAllObjects];
 }
 
 #pragma mark -
@@ -39,6 +40,8 @@
 	}
 
 
+	NSMutableArray *removedKeyArray = [[NSMutableArray alloc] initWithCapacity:0];
+
 	for (NSString *key in [operationDictionary allKeys]) {
 		if ([operationKey isEqualToString:key]) {
 			shouldEnque = NO;
@@ -47,7 +50,11 @@
 
 
 		[self cancelOperationForKey:key withDictionary:operationDictionary];
+
+		[removedKeyArray addObject:key];
 	}
+
+	[operationDictionary removeObjectsForKeys:removedKeyArray];
 
 	return shouldEnque;
 }
@@ -58,16 +65,17 @@
 	[self addOperation:operation];
 }
 
-- (void)removeOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
-	[self cancelOperationForKey:operationKey withDictionary:operationDictionary];
+- (BOOL)removeOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+	BOOL didRemove = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
 	[operationDictionary removeObjectForKey:operationKey];
+
+	return didRemove;
 }
 
 - (BOOL)cancelOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
 	if (operationKey == nil) {
 		return NO;
 	}
-
 
 	NSOperation *operation = operationDictionary[operationKey];
 	[operation cancel];
