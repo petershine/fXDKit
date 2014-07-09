@@ -20,7 +20,7 @@
 	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
 
 	[gpuimageOutput addTarget:gpuviewCaptured];
-	FXDLogObject(gpuimageOutput.targets);
+	FXDLogObject([gpuimageOutput targets]);
 
 	return gpuviewCaptured;
 }
@@ -49,7 +49,7 @@
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
 
 	[gpuimageOutput addTarget:gpumovieWriter];
-	FXDLogObject(gpuimageOutput.targets);
+	FXDLogObject([gpuimageOutput targets]);
 
 	return gpumovieWriter;
 }
@@ -110,7 +110,7 @@
 	FXDLog_DEFAULT;
 
 	_videoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
-												   cameraPosition:AVCaptureDevicePositionBack];
+												cameraPosition:AVCaptureDevicePositionBack];
 	[_videoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
 	[_videoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
@@ -140,9 +140,6 @@
 - (void)prepareGPUManager {	FXDLog_DEFAULT;
 	//MARK: Make sure camera and filter are initialized here
 	[self.videoCamera addTarget:self.cameraFilter];
-
-	FXDLogObject([self.videoCamera targets]);
-	FXDLogObject([self.cameraFilter targets]);
 }
 
 - (void)resetGPUManager {	FXDLog_DEFAULT;
