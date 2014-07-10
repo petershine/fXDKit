@@ -62,19 +62,17 @@
 			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
 		}
 		
-#if ForDEVELOPER
+
 		if (_mainCellNib) {	FXDLog_DEFAULT;
 			FXDLogObject(_mainCellNib);
 		}
-#endif
 	}
 	
 	return _mainCellNib;
 }
 
 - (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainCellIdentifier == nil) {	FXDLog_OVERRIDE;
 	}
 	
 	return _mainCellIdentifier;
@@ -84,21 +82,18 @@
 - (NSArray*)itemCounts {
 	if (_itemCounts == nil) {	//FXDLog_OVERRIDE;
 	}
-	
 	return _itemCounts;
 }
 
 - (NSDictionary*)cellTitleDictionary {
 	if (_cellTitleDictionary == nil) {	//FXDLog_OVERRIDE;
 	}
-	
 	return _cellTitleDictionary;
 }
 
 - (NSDictionary*)cellSubTitleDictionary {
 	if (_cellSubTitleDictionary == nil) {	//FXDLog_OVERRIDE;
 	}
-	
 	return _cellSubTitleDictionary;
 }
 
@@ -106,20 +101,18 @@
 - (NSMutableArray*)mainDataSource {
 	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
 	}
-	
 	return _mainDataSource;
 }
 
 - (NSFetchedResultsController*)mainResultsController {
 	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
 	}
-	
 	return _mainResultsController;
 }
 
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
-	if (_cellOperationQueue == nil) {	FXDLog_DEFAULT;
+	if (_cellOperationQueue == nil) {	//FXDLog_DEFAULT;
 		_cellOperationQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 	}
 	
@@ -127,7 +120,7 @@
 }
 
 - (NSMutableDictionary*)cellOperationDictionary {
-	if (_cellOperationDictionary == nil) {	FXDLog_DEFAULT;
+	if (_cellOperationDictionary == nil) {	//FXDLog_DEFAULT;
 		_cellOperationDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
 	}
 
