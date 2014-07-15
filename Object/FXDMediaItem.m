@@ -78,29 +78,4 @@
 	return artworkImage;
 }
 
-#pragma mark -
-- (NSNumber*)propertyPersistentID {
-	return [self valueForProperty:MPMediaItemPropertyPersistentID];
-}
-
-- (NSString*)propertyTitle {
-	return [self valueForProperty:MPMediaItemPropertyTitle];
-}
-
-- (NSString*)propertyArtist {
-	return [self valueForProperty:MPMediaItemPropertyArtist];
-}
-
-- (NSString*)propertyAlbumTitle {
-	return [self valueForProperty:MPMediaItemPropertyAlbumTitle];
-}
-
-- (NSString*)propertyGenre {
-	return [self valueForProperty:MPMediaItemPropertyGenre];
-}
-
-- (NSNumber*)propertyPlaybackDuration {
-	return [self valueForProperty:MPMediaItemPropertyPlaybackDuration];
-}
-
 @end

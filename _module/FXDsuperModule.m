@@ -14,7 +14,8 @@
 - (instancetype)init {
 	self = [super init];
 
-	if (self) {	FXDLog_DEFAULT;
+	if (self) {
+		FXDLog_DEFAULT;
 	}
 
 	return self;
