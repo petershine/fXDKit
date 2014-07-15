@@ -13,7 +13,7 @@
 @interface FXDsceneWeb : FXDsceneScroll <UIWebViewDelegate>
 @property (strong, nonatomic) NSURLRequest *initialWebRequest;
 
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet UIWebView *mainWebview;
 
 

@@ -5,8 +5,12 @@
 @import MediaPlayer;
 
 
-@interface MPMusicPlayerController (ForLowerVersion)
+@interface MPMusicPlayerController (Added)
 + (instancetype)deviceMusicPlayer;
+@end
+
+
+@interface MPMediaLibrary (Added)
 @end
 
 
@@ -16,9 +20,13 @@
 @property (nonatomic) MPMediaItem *nowPlayingItem;
 
 
-- (void)startObservingMusicPlayerNotifications;
+- (void)startObservingPlayerNotifications;
+- (void)startObservingLibraryNotifications;
+
 
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification;
 - (void)observedMPMusicPlayerControllerNowPlayingItemDidChange:(NSNotification*)notification;
+
+- (void)observedMPMediaLibraryDidChange:(NSNotification*)notification;
 
 @end

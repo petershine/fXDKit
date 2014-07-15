@@ -8,7 +8,7 @@
 
 
 @interface FXDWindow : UIWindow
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet FXDviewInformation *informationView;
 
 

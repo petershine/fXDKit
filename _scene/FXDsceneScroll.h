@@ -45,7 +45,7 @@
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;
 
 

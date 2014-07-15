@@ -10,7 +10,7 @@
 @property (nonatomic) BOOL shouldHideArrowView;
 @property (strong, nonatomic) NSString *titleText;
 
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet UIView *viewBackground;
 @property (strong, nonatomic) IBOutlet UIView *viewTitle;
 

@@ -2,12 +2,14 @@
 
 #import "FXDmoduleMusic.h"
 
-@implementation MPMusicPlayerController (ForLowerVersion)
+@implementation MPMusicPlayerController (Added)
 + (instancetype)deviceMusicPlayer {
 	MPMusicPlayerController *musicPlayer = nil;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+#ifdef __IPHONE_8_0
 		musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+#endif
 	}
 	else {
 		musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
@@ -18,23 +20,43 @@
 @end
 
 
+@implementation MPMediaLibrary (Added)
+@end
+
+
 @implementation FXDmoduleMusic
 
 #pragma mark - Memory management
 - (void)dealloc {
 	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
 	[musicPlayer endGeneratingPlaybackNotifications];
+
+	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
+	[mediaLibrary endGeneratingLibraryChangeNotifications];
 }
 
 
 #pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+		MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
+
+		self.playbackState = musicPlayer.playbackState;
+		self.nowPlayingItem = musicPlayer.nowPlayingItem;
+	}
+
+	return self;
+}
+
 
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingMusicPlayerNotifications {	FXDLog_DEFAULT;
+- (void)startObservingPlayerNotifications {	FXDLog_DEFAULT;
 	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -54,6 +76,21 @@
 	[musicPlayer beginGeneratingPlaybackNotifications];
 }
 
+- (void)startObservingLibraryNotifications {	FXDLog_DEFAULT;
+	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
+
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedMPMediaLibraryDidChange:)
+	 name:MPMediaLibraryDidChangeNotification
+	 object:mediaLibrary];
+
+	[mediaLibrary beginGeneratingLibraryChangeNotifications];
+}
+
+
 #pragma mark - Observer
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification {
 
@@ -65,6 +102,28 @@
 
 	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
 	self.nowPlayingItem = musicPlayer.nowPlayingItem;
+}
+
+#pragma mark -
+- (void)observedMPMediaLibraryDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
+	FXDLogObject(notification);
+
+	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
+	FXDLogObject(mediaLibrary.lastModifiedDate);
+
+
+	MPMediaQuery *mediaQuery = [MPMediaQuery playlistsQuery];
+
+	//FXDLogObject(mediaQuery.items);
+	FXDLogVariable(mediaQuery.collections.count);
+	FXDLogVariable(mediaQuery.groupingType);
+
+	for (MPMediaPlaylist *playlist in mediaQuery.collections) {
+
+		if ([MPMediaPlaylist canFilterByProperty:MPMediaPlaylistPropertyName]) {
+			FXDLog(@"%@\t%@", _Variable(playlist.items.count), [playlist valueForProperty:MPMediaPlaylistPropertyName]);
+		}
+	}
 }
 
 #pragma mark - Delegate

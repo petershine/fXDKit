@@ -4,7 +4,7 @@
 
 @interface FXDviewInformation : UIView
 
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;

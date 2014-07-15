@@ -5,7 +5,7 @@
 #import "FXDsceneScroll.h"
 @interface FXDsceneTable : FXDsceneScroll <UITableViewDataSource, UITableViewDelegate>
 
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet UITableView *mainTableview;
 
 

@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 @property (nonatomic) BOOL isCovering;
 @property (nonatomic) BOOL isUncovering;
 
-// IBOutlets
+
 @property (strong, nonatomic) IBOutlet UIView *mainNavigationbar;
 @property (strong, nonatomic) IBOutlet UIView *mainToolbar;
 
