@@ -562,7 +562,11 @@
 		 defaultRequest.account = self.currentMainAccount;
 
 		 [defaultRequest
-		  performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
+		  performRequestWithHandler:^(NSData *responseData,
+									  NSHTTPURLResponse *urlResponse,
+									  NSError *error) {
+			  FXDLog_BLOCK(defaultRequest, @selector(performRequestWithHandler:));
+
 #if ForDEVELOPER
 			  [self evaluateResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif
@@ -597,7 +601,11 @@
 		 defaultRequest.account = self.currentMainAccount;
 
 		 [defaultRequest
-		  performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
+		  performRequestWithHandler:^(NSData *responseData,
+									  NSHTTPURLResponse *urlResponse,
+									  NSError *error) {
+			  FXDLog_BLOCK(defaultRequest, @selector(performRequestWithHandler:));
+
 #if ForDEVELOPER
 			  [self evaluateResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif
@@ -664,7 +672,11 @@
 		 defaultRequest.account = self.currentMainAccount;
 
 		 [defaultRequest
-		  performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {	FXDLog_DEFAULT;
+		  performRequestWithHandler:^(NSData *responseData,
+									  NSHTTPURLResponse *urlResponse,
+									  NSError *error) {
+			  FXDLog_BLOCK(defaultRequest, @selector(performRequestWithHandler:));
+
 #if ForDEVELOPER
 			  [self evaluateResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
 #endif
