@@ -44,6 +44,7 @@
 }
 
 - (NSString*)mainSqlitePathComponent {
+	
 	//MARK: Use different name for better controlling between developer build and release build
 	if (_mainSqlitePathComponent == nil) {
 		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
@@ -204,8 +205,14 @@
 	FXDLog_ERROR;
 	FXDLog_ERROR_ALERT;
 
-	//TODO: learn how to handle ubiquitousToken change, and migrate to new persistentStore
-	//TODO: prepare what to do when Core Data is not setup
+
+	FXDLogObject([UIManagedDocument persistentStoreName]);
+
+	FXDLogObject(self.mainDocument.modelConfiguration);
+	FXDLogObject(self.mainDocument.managedObjectModel);
+	FXDLogObject(self.mainDocument.managedObjectModel.versionIdentifiers);
+	FXDLogObject(self.mainDocument.managedObjectModel.entityVersionHashesByName);
+
 
 	[self
 	 upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
