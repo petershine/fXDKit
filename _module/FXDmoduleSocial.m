@@ -502,10 +502,19 @@
 	FXDLogObject(notification);
 
 #if	ForDEVELOPER
+	FXDLogObject(self.typeIdentifier);
+
 	ACAccountStore *accountStore = [notification object];
 
 	for (ACAccount *account in accountStore.accounts) {
-		FXDLog(@"%@ %@ %@", _Object(account.accountType.accountTypeDescription), _Object(account.username), _BOOL(account.accountType.accessGranted));
+		ACAccountType *accountType = account.accountType;
+
+		FXDLogObject(account.accountType.identifier);
+		FXDLogObject(account.accountType.accountTypeDescription);
+
+		FXDLogBOOL(accountType.accessGranted);
+
+		FXDLog(@"%@ %@ %@ %@", account.username, _Object(accountType.identifier), _Object(accountType.accountTypeDescription), _BOOL(account.accountType.accessGranted));
 	}
 #endif
 }
