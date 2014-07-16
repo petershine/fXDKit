@@ -442,6 +442,7 @@
 			 
 			 FXDLog_REMAINING;
 		 }
+
 		 
 		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
@@ -450,7 +451,7 @@
 			  FXDLog(@"2.%@", _Variable(self.didStartEnumerating));
 			  
 			  
-			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL didFinish) {
+			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL didFinish) {	FXDLog_DEFAULT;
 				  FXDLog(@"1.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
 				  
 				  if (shouldShowProgressView) {
