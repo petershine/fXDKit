@@ -84,7 +84,11 @@
 	FXDLogBOOL(isAuthorized);
 	FXDLogObject([UIDevice currentDevice].systemVersion);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
+	
+#if	ForDEVELOPER
 #warning //TODO: Make sure "NSLocationAlwaysUsageDescription" is described, in info.plist as raw info
+	NSAssert([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, nil);
+#endif
 
 	if (isAuthorized == NO) {
 		if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {

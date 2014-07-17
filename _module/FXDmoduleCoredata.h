@@ -55,6 +55,11 @@
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath;
 
 #warning //TODO: Add option for selecting xcdatamodel
+/*
+ NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"PopToo2015" withExtension:@"momd"];
+ _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+ return _managedObjectModel;
+ */
 //http://stackoverflow.com/questions/16146289/is-it-possilbe-to-have-mutliple-core-data-model-files-to-one-single-xcode-projec
 - (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback;
 

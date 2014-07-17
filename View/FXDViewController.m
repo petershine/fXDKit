@@ -127,7 +127,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-	FXDAssert(coordinator);
+	NSAssert(coordinator, nil);
 	[coordinator
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 [self sceneTransitionForSize:size

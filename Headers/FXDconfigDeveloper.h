@@ -152,7 +152,6 @@
 												value);}
 
 	#define FXDAssert_IsMainThread	NSAssert([NSThread isMainThread], nil)
-	#define FXDAssert(queue)	NSAssert(queue, nil)
 
 #else
 	#define FXDLog(__FORMAT__, ...)	{}
@@ -198,7 +197,6 @@
 	#define FXDLog_REACT(keypath, value)
 
 	#define FXDAssert_IsMainThread
-	#define FXDAssert(queue)
 
 #endif
 
