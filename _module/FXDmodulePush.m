@@ -34,12 +34,14 @@
 
     [UAirship takeOff:config];
 
-#ifdef __IPHONE_8_0
-	//enabledRemoteNotificationTypes is not supported in iOS 8.0 and later.
-	//registerForRemoteNotificationTypes: is not supported in iOS 8.0 and later.
-#else
-	[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert);
-#endif
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		//enabledRemoteNotificationTypes is not supported in iOS 8.0 and later.
+		//registerForRemoteNotificationTypes: is not supported in iOS 8.0 and later.
+	}
+	else {
+		[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert);
+
+	}
 }
 
 #pragma mark -

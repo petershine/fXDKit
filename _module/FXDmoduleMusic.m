@@ -7,9 +7,7 @@
 	MPMusicPlayerController *musicPlayer = nil;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-#ifdef __IPHONE_8_0
 		musicPlayer = [MPMusicPlayerController systemMusicPlayer];
-#endif
 	}
 	else {
 		musicPlayer = [MPMusicPlayerController iPodMusicPlayer];

@@ -68,16 +68,18 @@
 	CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
 	BOOL isAuthorized = YES;
 
-#ifdef __IPHONE_8_0
-	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
-		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
-		isAuthorized = NO;
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+			&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+			isAuthorized = NO;
+		}
 	}
-#else
-	if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
-		isAuthorized = NO;
+	else {
+		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
+			isAuthorized = NO;
+		}
 	}
-#endif
+
 
 	FXDLogBOOL(isAuthorized);
 	FXDLogObject([UIDevice currentDevice].systemVersion);
@@ -85,12 +87,12 @@
 #warning //TODO: Make sure "NSLocationAlwaysUsageDescription" is described, in info.plist as raw info
 
 	if (isAuthorized == NO) {
-#ifdef __IPHONE_8_0
-		if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-			[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
-			return;
+		if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+			if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+				[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
+				return;
+			}
 		}
-#endif
 	}
 
 
@@ -222,16 +224,18 @@
 
 	BOOL isAuthorized = YES;
 
-#ifdef __IPHONE_8_0
-	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
-		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
-		isAuthorized = NO;
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+			&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+			isAuthorized = NO;
+		}
 	}
-#else
-	if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
-		isAuthorized = NO;
+	else {
+		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
+			isAuthorized = NO;
+		}
 	}
-#endif
+
 
 	if (isAuthorized == NO) {
 		[self pauseMainLocationManager];
