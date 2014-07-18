@@ -23,6 +23,8 @@
 - (void)startObservingPlayerNotifications;
 - (void)startObservingLibraryNotifications;
 
+- (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID;
+
 
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification;
 - (void)observedMPMusicPlayerControllerNowPlayingItemDidChange:(NSNotification*)notification;

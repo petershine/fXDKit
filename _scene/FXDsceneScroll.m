@@ -16,7 +16,7 @@
 	[super viewDidLoad];
 
 	if (self.mainResultsController && self.mainResultsController.delegate == nil) {
-		[self.mainResultsController setDelegate:self];
+		self.mainResultsController.delegate = self;
 	}
 	
 	if (self.mainScrollview) {
@@ -24,7 +24,7 @@
 		FXDLogObject(self.mainScrollview);
 
 		if (self.mainScrollview.delegate == nil) {
-			[self.mainScrollview setDelegate:self];
+			self.mainScrollview.delegate = self;
 		}
 
 		FXDLogObject(self.mainScrollview.delegate);

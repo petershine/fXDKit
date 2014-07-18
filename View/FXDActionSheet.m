@@ -29,8 +29,8 @@
 			  otherButtonTitles:nil];
 	
 	if (self) {
+		self.delegate = self;
 		self.alertCallback = alertCallback;
-		[self setDelegate:self];
 	}
 	
 	return self;

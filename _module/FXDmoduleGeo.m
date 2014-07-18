@@ -24,7 +24,7 @@
 
 	_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
 
-	[_mainLocationManager setDelegate:self];
+	_mainLocationManager.delegate = self;
 
 	FXDLogObject(_mainLocationManager);
 
