@@ -124,6 +124,7 @@
 }
 
 #pragma mark -
+#ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
@@ -139,7 +140,7 @@
 		 FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
 	 }];
 }
-
+#endif
 
 #pragma mark - View Appearing
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
@@ -185,10 +186,12 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
+#ifdef __IPHONE_8_0
 - (void)prepareForInterfaceBuilder {	FXDLog_DEFAULT;
 	[super prepareForInterfaceBuilder];
 	
 }
+#endif
 
 
 #pragma mark - Segues
