@@ -6,10 +6,6 @@
 @implementation FXDsceneTable	
 
 #pragma mark - Memory management
-- (void)dealloc {
-	[_mainTableview setDelegate:nil];
-	[_mainTableview setDataSource:nil];
-}
 
 #pragma mark - Initialization
 
@@ -36,8 +32,8 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
-		[self.mainTableview setDelegate:nil];
-		[self.mainTableview setDataSource:nil];
+		self.mainTableview.delegate = nil;
+		self.mainTableview.dataSource = nil;
 	}
 	
 	[super willMoveToParentViewController:parent];

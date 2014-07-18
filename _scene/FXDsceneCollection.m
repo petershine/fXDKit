@@ -6,10 +6,6 @@
 @implementation FXDsceneCollection
 
 #pragma mark - Memory management
-- (void)dealloc {
-	[_mainCollectionview setDelegate:nil];
-	[_mainCollectionview setDataSource:nil];
-}
 
 #pragma mark - Initialization
 
@@ -19,8 +15,7 @@
 
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
-	
-	if (_mainScrollview == nil) {	FXDLog_DEFAULT;
+	if (_mainScrollview == nil) {
 		
 		if (self.mainCollectionview) {
 			_mainScrollview = self.mainCollectionview;			
@@ -33,13 +28,12 @@
 	return _mainScrollview;
 }
 
-
 #pragma mark - Method overriding
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 	
 	if (parent == nil) {
-		[self.mainCollectionview setDelegate:nil];
-		[self.mainCollectionview setDataSource:nil];
+		self.mainCollectionview.delegate = nil;
+		self.mainCollectionview.dataSource = nil;
 	}
 	
 	[super willMoveToParentViewController:parent];
