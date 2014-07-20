@@ -268,13 +268,14 @@
 #pragma mark - Public
 - (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback {
 	[self
-	 prepareGlobalManagerWithMainCoredata:nil
+	 prepareGlobalManagerWithMOMDfilename:nil
+	 withMainCoredata:nil
 	 withUbiquityContainerURL:nil
 	 withCompleteProtection:NO
 	 withFinishCallback:finishCallback];
 }
 
-- (void)prepareGlobalManagerWithMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)prepareGlobalManagerWithMOMDfilename:(NSString*)MOMDfilename withMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
 		FXDLogObject([[NSBundle mainBundle] infoDictionary]);
@@ -307,7 +308,8 @@
 	
 	
 	[mainCoredata
-	 prepareWithUbiquityContainerURL:ubiquityContainerURL
+	 prepareWithMOMDfilename:MOMDfilename
+	 withUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
 	 finishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(mainCoredata, caller);

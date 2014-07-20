@@ -25,8 +25,6 @@
 
 	NSString *_mainModelName;
 	NSString *_mainUbiquitousContentName;
-	
-	FXDManagedDocument *_mainDocument;
 	NSString *_mainSqlitePathComponent;
 
 	NSString *_mainEntityName;
@@ -41,12 +39,12 @@
 
 @property (strong, nonatomic) NSString *mainModelName;
 @property (strong, nonatomic) NSString *mainUbiquitousContentName;
-
-@property (strong, nonatomic) FXDManagedDocument *mainDocument;
 @property (strong, nonatomic) NSString *mainSqlitePathComponent;
 
 @property (strong, nonatomic) NSString *mainEntityName;
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
+
+@property (strong, nonatomic) FXDManagedDocument *mainDocument;
 
 
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
@@ -61,7 +59,7 @@
  return _managedObjectModel;
  */
 //http://stackoverflow.com/questions/16146289/is-it-possilbe-to-have-mutliple-core-data-model-files-to-one-single-xcode-projec
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback;
+- (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)startObservingCoreDataNotifications;

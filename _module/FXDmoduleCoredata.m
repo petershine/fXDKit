@@ -11,8 +11,10 @@
 
 #pragma mark - Property overriding
 - (NSString*)mainModelName {
-	if (_mainModelName == nil) {	FXDLog_OVERRIDE;
+	if (_mainModelName == nil) {
 		_mainModelName = application_BundleIdentifier;
+
+		FXDLog_OVERRIDE;
 		FXDLogObject(_mainModelName);
 	}
 
@@ -29,18 +31,6 @@
 	}
 
 	return _mainUbiquitousContentName;
-}
-
-#pragma mark -
-- (FXDManagedDocument*)mainDocument {
-	if (_mainDocument == nil) {	FXDLog_DEFAULT;
-		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
-
-		_mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
-		FXDLogObject(_mainDocument);
-	}
-
-	return _mainDocument;
 }
 
 - (NSString*)mainSqlitePathComponent {
@@ -150,10 +140,12 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
+	FXDLogObject(MOMDfilename);
 	FXDLogObject(ubiquityContainerURL);
 	FXDLogBOOL(withCompleteProtection);
+
 
 	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 	NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
@@ -175,6 +167,15 @@
 	}
 
 	FXDLogObject(storeOptions);
+
+
+	NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
+
+	FXDLog_DEFAULT;
+	self.mainDocument = nil;
+	self.mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
+	self.mainDocument.MOMDfilename = MOMDfilename;
+	FXDLogObject(self.mainDocument);
 
 
 	NSError *error = nil;
