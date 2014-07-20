@@ -40,7 +40,7 @@
 @property (strong, nonatomic) id homeScene;
 
 
-- (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withCoredataModule:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withCallback:(FXDcallbackFinish)callback;
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)callback;
 
 - (void)incrementAppLaunchCount;
 

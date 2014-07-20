@@ -12,23 +12,6 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (NSManagedObjectModel*)managedObjectModel {	FXDLog_DEFAULT;
-	FXDLogObject(self.MOMDfilename);
-
-	if (self.MOMDfilename.length == 0) {
-		return [super managedObjectModel];
-	}
-
-
-#warning	//MARK: Make sure merging is done correctly manually
-	NSBundle *bundle = [NSBundle mainBundle];
-	NSString *modelPath = [bundle pathForResource:self.MOMDfilename ofType:@"momd"];
-
-	NSManagedObjectModel *mainModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:modelPath]];
-
-	return mainModel;
-}
-
 
 #pragma mark - Method overriding
 - (void)openWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;

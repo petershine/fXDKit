@@ -266,47 +266,27 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withCoredataModule:(FXDmoduleCoredata*)coredataModule withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withCallback:(FXDcallbackFinish)callback {
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)callback {
+	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
-	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
-		FXDLogObject([[NSBundle mainBundle] infoDictionary]);
+	FXDLogObject(NSUserName());
+	FXDLogObject(NSFullUserName());
 
-		FXDLogObject(NSUserName());
-		FXDLogObject(NSFullUserName());
+	FXDLogObject(NSHomeDirectory());
+	FXDLogObject(NSTemporaryDirectory());
 
-		FXDLogObject(NSHomeDirectory());
-		FXDLogObject(NSTemporaryDirectory());
-
-		FXDLogObject(NSOpenStepRootDirectory());
+	FXDLogObject(NSOpenStepRootDirectory());
 
 
-		[self incrementAppLaunchCount];
-		
-		[self configureUserDefaultsInfo];
-		[self configureGlobalAppearance];
+	[self incrementAppLaunchCount];
 
-		if (callback) {
-			callback(_cmd, YES, nil);
-		}
-	};
-	
-	
-	if (coredataModule == nil) {
-		ManagerDidPrepareBlock();
-		
-		return;
+	[self configureUserDefaultsInfo];
+	[self configureGlobalAppearance];
+
+
+	if (callback) {
+		callback(_cmd, YES, nil);
 	}
-	
-	
-	[coredataModule
-	 prepareWithMOMDfilename:MOMDfilename
-	 withUbiquityContainerURL:ubiquityContainerURL
-	 withCompleteProtection:withCompleteProtection
-	 finishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-		 FXDLog_BLOCK(coredataModule, caller);
-		 
-		 ManagerDidPrepareBlock();
-	 }];
 }
 
 #pragma mark -

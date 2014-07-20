@@ -140,11 +140,23 @@
 }
 
 #pragma mark -
-- (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
-	FXDLogObject(MOMDfilename);
+	if (managedDocument == nil) {
+		FXDLog(@"CHECK bundle has more than 1 momd");
+
+		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
+
+#warning //MARK: Models Merge manually
+		managedDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
+	}
+
+
 	FXDLogObject(ubiquityContainerURL);
 	FXDLogBOOL(withCompleteProtection);
+	FXDLogObject(managedDocument);
+
+	self.mainDocument = managedDocument;
 
 
 	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -169,13 +181,6 @@
 	FXDLogObject(storeOptions);
 
 
-	NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
-
-	self.mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
-	self.mainDocument.MOMDfilename = MOMDfilename;
-	FXDLogObject(self.mainDocument);
-
-
 	NSError *error = nil;
 	BOOL didConfigure = [self.mainDocument
 						 configurePersistentStoreCoordinatorForURL:storeURL
@@ -183,7 +188,6 @@
 						 modelConfiguration:nil
 						 storeOptions:storeOptions
 						 error:&error];
-
 	FXDLog_ERROR;
 
 	FXDLog(@"1.%@", _BOOL(didConfigure));
@@ -228,8 +232,8 @@
 		 }
 #endif
 
-		 if (finishCallback) {
-			 finishCallback(_cmd, didConfigure, nil);
+		 if (callback) {
+			 callback(_cmd, didConfigure, nil);
 		 }
 	 }];
 }
