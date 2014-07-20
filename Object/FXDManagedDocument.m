@@ -12,6 +12,21 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
+- (NSManagedObjectModel*)managedObjectModel {
+	if (self.manuallyInitializedModel) {
+		return self.manuallyInitializedModel;
+	}
+
+	return [super managedObjectModel];
+}
+
+#pragma mark -
+- (NSManagedObjectModel*)manuallyInitializedModel {
+	if (_manuallyInitializedModel == nil) {	FXDLog_OVERRIDE;
+	}
+	return _manuallyInitializedModel;
+}
+
 
 #pragma mark - Method overriding
 - (void)openWithCompletionHandler:(void (^)(BOOL success))completionHandler {	FXDLog_DEFAULT;
