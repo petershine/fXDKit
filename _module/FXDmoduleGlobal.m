@@ -266,16 +266,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalManagerAtLaunchWithFinishCallback:(FXDcallbackFinish)finishCallback {
-	[self
-	 prepareGlobalManagerWithMOMDfilename:nil
-	 withMainCoredata:nil
-	 withUbiquityContainerURL:nil
-	 withCompleteProtection:NO
-	 withFinishCallback:finishCallback];
-}
-
-- (void)prepareGlobalManagerWithMOMDfilename:(NSString*)MOMDfilename withMainCoredata:(FXDmoduleCoredata*)mainCoredata withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withCoredataModule:(FXDmoduleCoredata*)coredataModule withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withCallback:(FXDcallbackFinish)callback {
 
 	void (^ManagerDidPrepareBlock)(void) = ^(void){	FXDLog_SEPARATE;
 		FXDLogObject([[NSBundle mainBundle] infoDictionary]);
@@ -294,25 +285,25 @@
 		[self configureUserDefaultsInfo];
 		[self configureGlobalAppearance];
 
-		if (finishCallback) {
-			finishCallback(_cmd, YES, nil);
+		if (callback) {
+			callback(_cmd, YES, nil);
 		}
 	};
 	
 	
-	if (mainCoredata == nil) {
+	if (coredataModule == nil) {
 		ManagerDidPrepareBlock();
 		
 		return;
 	}
 	
 	
-	[mainCoredata
+	[coredataModule
 	 prepareWithMOMDfilename:MOMDfilename
 	 withUbiquityContainerURL:ubiquityContainerURL
 	 withCompleteProtection:withCompleteProtection
 	 finishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-		 FXDLog_BLOCK(mainCoredata, caller);
+		 FXDLog_BLOCK(coredataModule, caller);
 		 
 		 ManagerDidPrepareBlock();
 	 }];

@@ -171,8 +171,6 @@
 
 	NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
 
-	FXDLog_DEFAULT;
-	self.mainDocument = nil;
 	self.mainDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
 	self.mainDocument.MOMDfilename = MOMDfilename;
 	FXDLogObject(self.mainDocument);
