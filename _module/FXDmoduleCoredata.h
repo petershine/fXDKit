@@ -23,9 +23,9 @@
 	UIBackgroundTaskIdentifier _enumeratingTask;
 	UIBackgroundTaskIdentifier _dataSavingTask;
 
-	NSString *_mainModelName;
-	NSString *_mainUbiquitousContentName;
-	NSString *_mainSqlitePathComponent;
+	NSString *_coredataName;
+	NSString *_ubiquitousContentName;
+	NSString *_sqlitePathComponent;
 
 	NSString *_mainEntityName;
 	NSArray *_mainSortDescriptors;
@@ -37,9 +37,9 @@
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTask;
 @property (nonatomic) UIBackgroundTaskIdentifier dataSavingTask;
 
-@property (strong, nonatomic) NSString *mainModelName;
-@property (strong, nonatomic) NSString *mainUbiquitousContentName;
-@property (strong, nonatomic) NSString *mainSqlitePathComponent;
+@property (strong, nonatomic) NSString *coredataName;
+@property (strong, nonatomic) NSString *ubiquitousContentName;
+@property (strong, nonatomic) NSString *sqlitePathComponent;
 
 @property (strong, nonatomic) NSString *mainEntityName;
 @property (strong, nonatomic) NSArray *mainSortDescriptors;
@@ -52,13 +52,7 @@
 - (BOOL)doesStoredSqliteExist;
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath;
 
-#warning //TODO: Add option for selecting xcdatamodel
-/*
- NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"PopToo2015" withExtension:@"momd"];
- _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
- return _managedObjectModel;
- */
-//http://stackoverflow.com/questions/16146289/is-it-possilbe-to-have-mutliple-core-data-model-files-to-one-single-xcode-projec
+
 - (void)prepareWithMOMDfilename:(NSString*)MOMDfilename withUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection finishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback;

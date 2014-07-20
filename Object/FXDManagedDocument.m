@@ -20,6 +20,7 @@
 	}
 
 
+#warning	//MARK: Make sure merging is done correctly manually
 	NSBundle *bundle = [NSBundle mainBundle];
 	NSString *modelPath = [bundle pathForResource:self.MOMDfilename ofType:@"momd"];
 

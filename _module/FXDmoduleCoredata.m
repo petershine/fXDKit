@@ -10,44 +10,44 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (NSString*)mainModelName {
-	if (_mainModelName == nil) {
-		_mainModelName = application_BundleIdentifier;
+- (NSString*)coredataName {
+	if (_coredataName == nil) {
+		_coredataName = application_BundleIdentifier;
 
 		FXDLog_OVERRIDE;
-		FXDLogObject(_mainModelName);
+		FXDLogObject(_coredataName);
 	}
 
-	return _mainModelName;
+	return _coredataName;
 }
 
-- (NSString*)mainUbiquitousContentName {
-	if (_mainUbiquitousContentName == nil) {
-		_mainUbiquitousContentName = [self.mainModelName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+- (NSString*)ubiquitousContentName {
+	if (_ubiquitousContentName == nil) {
+		_ubiquitousContentName = [self.coredataName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
 		***REMOVED***
 
 		FXDLog_OVERRIDE;
-		FXDLogObject(_mainUbiquitousContentName);
+		FXDLogObject(_ubiquitousContentName);
 	}
 
-	return _mainUbiquitousContentName;
+	return _ubiquitousContentName;
 }
 
-- (NSString*)mainSqlitePathComponent {
+- (NSString*)sqlitePathComponent {
 	
 	//MARK: Use different name for better controlling between developer build and release build
-	if (_mainSqlitePathComponent == nil) {
-		_mainSqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.mainModelName];
+	if (_sqlitePathComponent == nil) {
+		_sqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.coredataName];
 
 	#if ForDEVELOPER
-		_mainSqlitePathComponent = [NSString stringWithFormat:@"DEV_%@.sqlite", self.mainModelName];
+		_sqlitePathComponent = [NSString stringWithFormat:@"DEV_%@.sqlite", self.coredataName];
 	#endif
 
 		FXDLog_OVERRIDE;
-		FXDLogObject(_mainSqlitePathComponent);
+		FXDLogObject(_sqlitePathComponent);
 	}
 	
-	return _mainSqlitePathComponent;
+	return _sqlitePathComponent;
 }
 
 #pragma mark -
@@ -104,7 +104,7 @@
 }
 
 - (BOOL)doesStoredSqliteExist {	FXDLog_DEFAULT;
-	NSString *storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+	NSString *storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.sqlitePathComponent];
 	FXDLogObject(storedPath);
 
 	BOOL storedSqliteExists = [[NSFileManager defaultManager] fileExistsAtPath:storedPath];
@@ -125,7 +125,7 @@
 
 
 	if (storedPath == nil) {
-		storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.mainSqlitePathComponent];
+		storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.sqlitePathComponent];
 	}
 
 	NSError *error = nil;
@@ -148,7 +148,7 @@
 
 
 	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-	NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.mainSqlitePathComponent];
+	NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.sqlitePathComponent];
 	FXDLogObject(storeURL);
 
 
@@ -157,7 +157,7 @@
 	storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
 
 	if (ubiquityContainerURL) {
-		storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.mainUbiquitousContentName;
+		storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.ubiquitousContentName;
 		storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquityContainerURL;
 	}
 
@@ -169,7 +169,7 @@
 	FXDLogObject(storeOptions);
 
 
-	NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.mainModelName]];
+	NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
 
 	FXDLog_DEFAULT;
 	self.mainDocument = nil;
@@ -210,9 +210,8 @@
 	FXDLogObject([UIManagedDocument persistentStoreName]);
 
 	FXDLogObject(self.mainDocument.modelConfiguration);
-	FXDLogObject(self.mainDocument.managedObjectModel);
 	FXDLogObject(self.mainDocument.managedObjectModel.versionIdentifiers);
-	FXDLogObject(self.mainDocument.managedObjectModel.entityVersionHashesByName);
+	FXDLogObject(self.mainDocument.managedObjectModel.entities);
 
 
 	[self
