@@ -11,6 +11,7 @@
 
 
 @interface MPMediaLibrary (Added)
+- (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID;
 @end
 
 
@@ -22,8 +23,6 @@
 
 - (void)startObservingPlayerNotifications;
 - (void)startObservingLibraryNotifications;
-
-- (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID;
 
 
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification;

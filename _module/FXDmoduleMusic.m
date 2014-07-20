@@ -19,6 +19,24 @@
 
 
 @implementation MPMediaLibrary (Added)
+- (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID {
+	FXDLogObject(persistentID);
+
+	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
+	FXDLogObject(mediaLibrary.lastModifiedDate);
+
+
+	MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:persistentID
+																		   forProperty:MPMediaEntityPropertyPersistentID];
+	FXDLogObject(predicate);
+
+	MPMediaQuery *mediaQuery = [[MPMediaQuery alloc] initWithFilterPredicates:[NSSet setWithObject:predicate]];
+	FXDLogObject(mediaQuery);
+
+	FXDLogObject(mediaQuery.items);
+
+	return mediaQuery.items.firstObject;
+}
 @end
 
 
@@ -88,25 +106,6 @@
 	[mediaLibrary beginGeneratingLibraryChangeNotifications];
 }
 
-#pragma mark -
-- (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID {	FXDLog_DEFAULT;
-	FXDLogObject(persistentID);
-
-	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
-	FXDLogObject(mediaLibrary.lastModifiedDate);
-
-
-	MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:persistentID
-																		   forProperty:MPMediaEntityPropertyPersistentID];
-	FXDLogObject(predicate);
-
-	MPMediaQuery *mediaQuery = [[MPMediaQuery alloc] initWithFilterPredicates:[NSSet setWithObject:predicate]];
-	FXDLogObject(mediaQuery);
-
-	FXDLogObject(mediaQuery.items);
-
-	return mediaQuery.items.firstObject;
-}
 
 #pragma mark - Observer
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification {
