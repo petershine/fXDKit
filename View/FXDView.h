@@ -50,3 +50,8 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 - (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view;
 
 @end
+
+
+@interface UIView (MotionEffect)
+- (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
+@end
