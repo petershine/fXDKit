@@ -185,11 +185,8 @@
 	_cameraFilter = nil;
 
 
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
-
 	_cameraFilter = [[NSClassFromString(filterName) alloc] init];
-	//[_cameraFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
-
+	
 	[_videoCamera addTarget:_cameraFilter];
 }
 
