@@ -16,14 +16,14 @@
 @end
 
 @interface FXDimageviewGPU : GPUImageView
-+ (instancetype)imageviewForBounds:(CGRect)bounds withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
++ (instancetype)imageviewForBounds:(CGRect)bounds withImageFilter:(GPUImageFilter*)gpuimageFilter;
 @end
 
 @interface FXDwriterGPU : GPUImageMovieWriter
 @property (nonatomic) CMTime startTime;
 @property (strong, nonatomic) NSString *uniqueKey;
 
-+ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter;
 @end
 
 

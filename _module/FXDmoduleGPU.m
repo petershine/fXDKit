@@ -12,15 +12,15 @@
 @end
 
 @implementation FXDimageviewGPU
-+ (instancetype)imageviewForBounds:(CGRect)bounds withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
++ (instancetype)imageviewForBounds:(CGRect)bounds withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
 	FXDLogRect(bounds);
 
 	FXDimageviewGPU *gpuviewCaptured = [[[self class] alloc] initWithFrame:bounds];
 	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
 
-	[gpuimageOutput addTarget:gpuviewCaptured];
-	FXDLogObject([gpuimageOutput targets]);
+	[gpuimageFilter addTarget:gpuviewCaptured];
+	FXDLogObject([gpuimageFilter targets]);
 
 	return gpuviewCaptured;
 }
@@ -31,11 +31,11 @@
 	FXDLogObject(_uniqueKey);
 }
 
-+ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withGPUImageOutput:(GPUImageOutput*)gpuimageOutput {	FXDLog_DEFAULT;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
 
 	FXDLog(@"%@ %f", _Size(videoSize), (MAX(videoSize.width, videoSize.height)/MIN(videoSize.width, videoSize.height)));
 	FXDLogObject(fileURL);
-	FXDLogObject(gpuimageOutput);
+	FXDLogObject(gpuimageFilter);
 
 	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
 									initWithMovieURL:fileURL
@@ -48,8 +48,8 @@
 	gpumovieWriter.encodingLiveVideo = YES;
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
 
-	[gpuimageOutput addTarget:gpumovieWriter];
-	FXDLogObject([gpuimageOutput targets]);
+	[gpuimageFilter addTarget:gpumovieWriter];
+	FXDLogObject([gpuimageFilter targets]);
 
 	return gpumovieWriter;
 }
@@ -188,7 +188,7 @@
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
 	_cameraFilter = [[NSClassFromString(filterName) alloc] init];
-	[_cameraFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
+	//[_cameraFilter forceProcessingAtSizeRespectingAspectRatio:screenBounds.size];
 
 	[_videoCamera addTarget:_cameraFilter];
 }

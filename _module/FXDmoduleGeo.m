@@ -51,7 +51,7 @@
 			&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
 			isAuthorized = NO;
 		}
-#endif
+		#endif
 	}
 	else {
 		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
@@ -71,10 +71,10 @@
 
 	if (isAuthorized == NO) {
 		if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-			if ([self.mainLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-				[self.mainLocationManager performSelector:@selector(requestAlwaysAuthorization)];
-				return;
-			}
+			#if __IPHONE_8_0
+			[self.mainLocationManager requestAlwaysAuthorization];
+			#endif
+			return;
 		}
 	}
 
@@ -230,7 +230,7 @@
 			&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
 			isAuthorized = NO;
 		}
-#endif
+		#endif
 	}
 	else {
 		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
