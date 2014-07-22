@@ -395,7 +395,8 @@
 }
 
 #pragma mark -
-- (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {
+- (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {	FXDLog_DEFAULT;
+	FXDLogObject(typeIdentifier);
 
 	if (self.currentMainAccount.username == nil) {
 		[self.mainAccountStore
@@ -553,6 +554,9 @@
 	[self
 	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierTwitter
 	 withRequestingBlock:^(BOOL shouldRequest){
+		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
+		 FXDLogBOOL(shouldRequest);
+
 		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserShow];
 
 		 NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
@@ -585,6 +589,9 @@
 	[self
 	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierTwitter
 	 withRequestingBlock:^(BOOL shouldRequest){
+		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
+		 FXDLogBOOL(shouldRequest);
+
 		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 
 		 NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText
@@ -655,6 +662,9 @@
 	[self
 	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierFacebook
 	 withRequestingBlock:^(BOOL shouldRequest){
+		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
+		 FXDLogBOOL(shouldRequest);
+		 
 		 NSURL *requestURL = nil;
 
 		 if ([facebookUserId length] > 0) {
