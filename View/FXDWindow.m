@@ -39,7 +39,7 @@
 	modifiedFrame.size.height = self.frame.size.height;
 	launchScene.imageviewDefault.frame = modifiedFrame;
 
-	[self setRootViewController:launchScene];
+	self.rootViewController = launchScene;
 }
 
 - (void)configureRootViewController:(UIViewController*)rootScene shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;

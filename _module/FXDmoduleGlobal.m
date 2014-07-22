@@ -266,7 +266,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)callback {
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
 	FXDLogObject(NSUserName());
