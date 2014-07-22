@@ -65,7 +65,6 @@
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
 	
 #if	ForDEVELOPER
-#warning //TODO: Make sure "NSLocationAlwaysUsageDescription" is described, in info.plist as raw info
 	NSAssert([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, nil);
 #endif
 

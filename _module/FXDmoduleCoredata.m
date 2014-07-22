@@ -147,7 +147,7 @@
 
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
 
-#warning //MARK: Models Merge manually
+#warning //MARK: Models may merge manually
 		managedDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
 	}
 
