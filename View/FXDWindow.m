@@ -127,8 +127,8 @@
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 
-		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgressView) object:nil];
-		 [self performSelector:@selector(hideProgressView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideInformationView) object:nil];
+		 [self performSelector:@selector(hideInformationView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 	 }];
 }
 
@@ -185,7 +185,7 @@
 	[self.informationView fadeInFromHidden];
 }
 
-- (void)hideProgressView {
+- (void)hideInformationView {
 
 	if (self.informationView == nil) {
 		return;
@@ -196,6 +196,52 @@
 	 removeAsFadeOutSubview:self.informationView
 	 afterRemovedBlock:^{
 		 self.informationView = nil;
+	 }];
+}
+
+#pragma mark -
+- (void)temporaryAlertWithText:(NSString*)alertText {
+
+	UILabel *temporaryAlertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320.0, 44.0)];
+	temporaryAlertLabel.text = alertText;
+
+	temporaryAlertLabel.font = [UIFont boldSystemFontOfSize:20.0];
+	temporaryAlertLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue08];
+	temporaryAlertLabel.textColor = [UIColor whiteColor];
+	temporaryAlertLabel.textAlignment = NSTextAlignmentCenter;
+
+	temporaryAlertLabel.autoresizingMask = UIViewAutoresizingNone;
+	temporaryAlertLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin;
+
+	temporaryAlertLabel.userInteractionEnabled = NO;
+
+	temporaryAlertLabel.alpha = 0.0;
+
+
+	[self addSubview:temporaryAlertLabel];
+	[temporaryAlertLabel reframeToBeAtTheCenterOfSuperview];
+
+
+	[UIView
+	 animateWithDuration:durationSlowAnimation
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseInOut
+	 animations:^{
+		 temporaryAlertLabel.alpha = 1.0;
+	 }
+	 completion:^(BOOL finished) {
+
+		 [UIView
+		  animateWithDuration:durationSlowAnimation
+		  delay:0.0
+		  options:UIViewAnimationOptionCurveEaseInOut
+		  animations:^{
+			  temporaryAlertLabel.alpha = 0.0;
+
+		  }
+		  completion:^(BOOL finished) {
+			  [temporaryAlertLabel removeFromSuperview];
+		  }];
 	 }];
 }
 

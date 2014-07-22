@@ -19,7 +19,9 @@
 - (void)hideInformationViewAfterDelay:(NSTimeInterval)delay;
 
 - (void)showInformationViewWithClassName:(NSString*)className;
-- (void)hideProgressView;
+- (void)hideInformationView;
+
+- (void)temporaryAlertWithText:(NSString*)alertText;
 
 @end
 

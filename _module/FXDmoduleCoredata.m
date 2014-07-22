@@ -457,7 +457,7 @@
 				  FXDLog(@"1.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
 				  
 				  if (shouldShowProgressView) {
-					  [mainWindow hideProgressView];
+					  [mainWindow hideInformationView];
 				  }
 				  
 				  if (shouldBreak) {
