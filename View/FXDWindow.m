@@ -202,7 +202,7 @@
 #pragma mark -
 - (void)temporaryAlertWithText:(NSString*)alertText {
 
-	UILabel *temporaryAlertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320.0, 44.0)];
+	UILabel *temporaryAlertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, heightNavigationBar)];
 	temporaryAlertLabel.text = alertText;
 
 	temporaryAlertLabel.font = [UIFont boldSystemFontOfSize:20.0];
