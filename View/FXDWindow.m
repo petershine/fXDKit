@@ -114,16 +114,16 @@
 }
 
 #pragma mark -
-- (void)showProgressViewAfterDelay:(NSTimeInterval)delay {
+- (void)showInformationViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 
-		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgressViewWithNibName:) object:nil];
-		 [self performSelector:@selector(showProgressViewWithNibName:) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showInformationViewWithClassName:) object:nil];
+		 [self performSelector:@selector(showInformationViewWithClassName:) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 	 }];
 }
 
-- (void)hideProgressViewAfterDelay:(NSTimeInterval)delay {
+- (void)hideInformationViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 
@@ -133,14 +133,47 @@
 }
 
 #pragma mark -
-- (void)showProgressViewWithNibName:(NSString*)nibName {
+- (void)showInformationViewWithClassName:(NSString*)className {
 
 	if (self.informationView) {
 		return;
 	}
 
 
-	self.informationView = [FXDviewInformation viewFromNibName:nibName];
+	if (className == nil) {
+		className = NSStringFromClass([FXDviewInformation class]);
+	}
+
+
+	Class informationClass = NSClassFromString(className);
+	NSAssert([informationClass isSubclassOfClass:[FXDviewInformation class]], nil);
+
+	if (informationClass == nil) {
+		return;
+	}
+
+
+	UINib *nib = [UINib nibWithNibName:className bundle:nil];
+
+	if (nib == nil) {
+		return;
+	}
+
+
+	NSArray *viewArray = [nib instantiateWithOwner:nil options:nil];
+
+	for (id subview in viewArray) {	//Assumes there is only one root object
+
+		if ([informationClass isSubclassOfClass:[subview class]]) {
+			self.informationView = (FXDviewInformation*)subview;
+			break;
+		}
+	}
+
+	if (self.informationView == nil) {
+		return;
+	}
+
 
 	CGRect modifiedFrame = self.informationView.frame;
 	modifiedFrame.size = self.frame.size;

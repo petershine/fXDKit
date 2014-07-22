@@ -403,7 +403,7 @@
 	
 	if (shouldShowProgressView) {
 		mainWindow = (FXDWindow*)[UIApplication mainWindow];
-		[mainWindow showProgressViewWithNibName:nil];
+		[mainWindow showInformationViewWithClassName:nil];
 	}
 	
 	

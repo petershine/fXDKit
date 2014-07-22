@@ -15,10 +15,10 @@
 - (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene;
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
-- (void)showProgressViewAfterDelay:(NSTimeInterval)delay;
-- (void)hideProgressViewAfterDelay:(NSTimeInterval)delay;
+- (void)showInformationViewAfterDelay:(NSTimeInterval)delay;
+- (void)hideInformationViewAfterDelay:(NSTimeInterval)delay;
 
-- (void)showProgressViewWithNibName:(NSString*)nibName;
+- (void)showInformationViewWithClassName:(NSString*)className;
 - (void)hideProgressView;
 
 @end
