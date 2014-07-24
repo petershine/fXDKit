@@ -12,6 +12,9 @@
 @end
 
 @implementation FXDimageviewGPU
+- (void)dealloc {	FXDLog_DEFAULT;
+}
+
 + (instancetype)imageviewForBounds:(CGRect)bounds withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
 	FXDLogRect(bounds);
 
