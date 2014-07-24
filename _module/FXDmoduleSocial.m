@@ -12,7 +12,9 @@
 	self = [super init];
 
 	if (self) {
-		[[NSNotificationCenter defaultCenter]
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedACAccountStoreDidChange:)
 		 name:ACAccountStoreDidChangeNotification

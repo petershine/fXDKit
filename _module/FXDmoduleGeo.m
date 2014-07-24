@@ -8,6 +8,27 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
+- (instancetype)init {
+	self = [super init];
+
+	if (self) {
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedUIApplicationDidEnterBackground:)
+		 name:UIApplicationDidEnterBackgroundNotification
+		 object:nil];
+
+		[notificationCenter
+		 addObserver:self
+		 selector:@selector(observedUIApplicationDidBecomeActive:)
+		 name:UIApplicationDidBecomeActiveNotification
+		 object:nil];
+	}
+
+	return self;
+}
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
@@ -81,32 +102,16 @@
 	[self.mainLocationManager startUpdatingLocation];
 
 	[self configureUpdatingForApplicationState];
-
-
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidEnterBackground:)
-	 name:UIApplicationDidEnterBackgroundNotification
-	 object:nil];
-
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIApplicationDidBecomeActive:)
-	 name:UIApplicationDidBecomeActiveNotification
-	 object:nil];
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
 	[_mainLocationManager stopUpdatingLocation];
 	[_mainLocationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark -
 - (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
+	//MARK: Optionally called by subclass
 	FXDLogVariable([UIApplication sharedApplication].applicationState);
 	
 	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
@@ -118,20 +123,20 @@
 }
 
 - (void)maximizeUpdatingForActiveState {	FXDLog_DEFAULT;
-	self.mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(self.mainLocationManager.desiredAccuracy));
+	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(_mainLocationManager.desiredAccuracy));
 }
 
 - (void)minimizeUpdatingForBackgroundState {	FXDLog_DEFAULT;
-	self.mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(self.mainLocationManager.desiredAccuracy));
+	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(_mainLocationManager.desiredAccuracy));
 }
 
 #pragma mark -
 - (BOOL)isDistantEnoughFromLastLocation {
 
 	if (self.lastLocation == nil) {
-		self.lastLocation = self.mainLocationManager.location;
+		self.lastLocation = _mainLocationManager.location;
 		return YES;
 	}
 

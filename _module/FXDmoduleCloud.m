@@ -34,7 +34,9 @@
 
 	//MARK: Assume if notification is nil, observer should be added
 	if (shouldAddObserver) {
-		[[NSNotificationCenter defaultCenter]
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+		[notificationCenter
 		 addObserver:self
 		 selector:@selector(observedNSUbiquityIdentityDidChange:)
 		 name:NSUbiquityIdentityDidChangeNotification

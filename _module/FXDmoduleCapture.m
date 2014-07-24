@@ -237,7 +237,10 @@
 
 	[self observedUIDeviceOrientationDidChange:nil];
 
-	[[NSNotificationCenter defaultCenter]
+
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	
+	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedUIDeviceOrientationDidChange:)
 	 name:UIDeviceOrientationDidChangeNotification
