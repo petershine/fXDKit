@@ -220,9 +220,6 @@
 	 upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 
-		 [self startObservingCoreDataNotifications];
-
-
 #if ForDEVELOPER
 		 if (ubiquityContainerURL) {
 			 NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -235,6 +232,11 @@
 		 if (callback) {
 			 callback(_cmd, didConfigure, nil);
 		 }
+
+
+#warning //MARK: Careful with order of operations
+		 [self startObservingCoreDataNotifications];
+		 [self startReactiveObserving];
 	 }];
 }
 
@@ -247,6 +249,7 @@
 	}
 }
 
+#pragma mark -
 - (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
 	
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -291,6 +294,10 @@
 	 selector:@selector(observedNSManagedObjectContextDidSave:)
 	 name:NSManagedObjectContextDidSaveNotification
 	 object:notifyingContext];
+}
+
+- (void)startReactiveObserving {	FXDLog_OVERRIDE;
+
 }
 
 #pragma mark -
