@@ -55,3 +55,13 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 @interface UIView (MotionEffect)
 - (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
 @end
+
+
+@interface FXDviewGlowing : UIView
+@property (strong, nonatomic) UIColor *glowingColor;
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
+@end
+
+@interface UIView (Glowing)
+- (void)addGlowingSubview:(FXDviewGlowing*)glowingSubview;
+@end
