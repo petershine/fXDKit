@@ -236,7 +236,6 @@
 
 #warning //MARK: Careful with order of operations
 		 [self startObservingCoreDataNotifications];
-		 [self startReactiveObserving];
 	 }];
 }
 
