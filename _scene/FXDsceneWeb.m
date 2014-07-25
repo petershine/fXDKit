@@ -8,7 +8,7 @@
 #pragma mark - Memory management
 - (void)dealloc {
 	[_mainWebview stopLoading];
-	[_mainWebview setDelegate:nil];
+	_mainWebview.delegate = nil;
 }
 
 #pragma mark - Initialization
@@ -38,6 +38,17 @@
 	[self loadWebURLstring:webURL];
 }
 
+#pragma mark -
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	if (parent == nil) {
+		[self.mainWebview stopLoading];
+		self.mainWebview.delegate = nil;
+	}
+
+	[super willMoveToParentViewController:parent];
+}
+
+
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
 	if (_mainScrollview == nil) {
@@ -48,14 +59,6 @@
 }
 
 #pragma mark - Method overriding
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	if (parent == nil) {
-		[self.mainWebview stopLoading];
-	}
-
-	[super willMoveToParentViewController:parent];
-}
-
 
 #pragma mark - Segues
 
@@ -116,7 +119,6 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
-
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;

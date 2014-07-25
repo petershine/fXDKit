@@ -12,6 +12,16 @@
 #pragma mark - Autorotating
 
 #pragma mark - View Appearing
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+
+	if (parent == nil) {
+		self.mainCollectionview.delegate = nil;
+		self.mainCollectionview.dataSource = nil;
+	}
+
+	[super willMoveToParentViewController:parent];
+}
+
 
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
@@ -29,17 +39,6 @@
 }
 
 #pragma mark - Method overriding
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	
-	if (parent == nil) {
-		self.mainCollectionview.delegate = nil;
-		self.mainCollectionview.dataSource = nil;
-	}
-	
-	[super willMoveToParentViewController:parent];
-}
-
-#pragma mark -
 - (void)registerMainCellNib {
 	
 	if (self.mainCellNib == nil && self.mainCellIdentifier == nil) {

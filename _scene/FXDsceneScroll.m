@@ -54,6 +54,23 @@
 #pragma mark - Autorotating
 
 #pragma mark - View Appearing
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+
+	if (parent == nil) {
+		[self.cellOperationQueue resetOperationQueueAndDictionary:self.cellOperationDictionary];
+
+		if (self.mainResultsController.delegate == self) {
+			self.mainResultsController.delegate = nil;
+		}
+
+		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
+			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
+		}
+	}
+
+	[super willMoveToParentViewController:parent];
+}
+
 
 #pragma mark - Property overriding
 - (UINib*)mainCellNib {
@@ -128,23 +145,6 @@
 }
 
 #pragma mark - Method overriding
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	
-	if (parent == nil) {
-		[self.cellOperationQueue resetOperationQueueAndDictionary:self.cellOperationDictionary];
-		
-		if (self.mainResultsController.delegate == self) {
-			self.mainResultsController.delegate = nil;
-		}
-		
-		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
-			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
-		}
-	}
-	
-	[super willMoveToParentViewController:parent];
-}
-
 
 #pragma mark - Segues
 
