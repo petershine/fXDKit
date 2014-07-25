@@ -66,7 +66,10 @@
 }
 
 - (BOOL)removeOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
-	BOOL didRemove = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
+	//TEST: May not have to cancel when removing is decided
+	//BOOL didRemove = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
+	BOOL didRemove = YES;
+	
 	[operationDictionary removeObjectForKey:operationKey];
 
 	return didRemove;

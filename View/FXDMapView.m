@@ -59,7 +59,6 @@
 	//MARK: 32768x32768: 1073741824 is the reasonable, maximum count of grids
 #warning //TODO: Translate the value to screen grid size CGRect, CGSize
 
-
 	self.initialDisclaimerFrame = [[self disclaimerView] frame];
 	self.disclaimerOffset = CGPointZero;
 }
