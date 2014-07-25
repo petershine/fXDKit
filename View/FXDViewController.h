@@ -13,9 +13,6 @@
 
 @interface UIViewController (Essential)
 
-- (IBAction)popToRootSceneWithAnimation:(id)sender;
-- (IBAction)popSceneWithAnimation:(id)sender;
-
 - (IBAction)dismissSceneWithAnimation:(id)sender;
 
 

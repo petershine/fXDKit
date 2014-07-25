@@ -297,14 +297,6 @@
 
 @implementation UIViewController (Essential)
 #pragma mark - IBActions
-- (IBAction)popToRootSceneWithAnimation:(id)sender {
-	[self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (IBAction)popSceneWithAnimation:(id)sender {
-	[self.navigationController popViewControllerAnimated:YES];
-}
-
 - (IBAction)dismissSceneWithAnimation:(id)sender {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@", _Object(self.parentViewController), _Object(self.presentingViewController));
 
