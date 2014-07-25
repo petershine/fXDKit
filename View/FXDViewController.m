@@ -297,7 +297,7 @@
 
 @implementation UIViewController (Essential)
 #pragma mark - IBActions
-- (IBAction)dismissSceneWithAnimation:(id)sender {	FXDLog_OVERRIDE;
+- (IBAction)dismissSceneForEventSender:(id)sender {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@", _Object(self.parentViewController), _Object(self.presentingViewController));
 
 	if (self.parentViewController) {

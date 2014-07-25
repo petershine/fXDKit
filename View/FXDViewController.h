@@ -13,7 +13,7 @@
 
 @interface UIViewController (Essential)
 
-- (IBAction)dismissSceneWithAnimation:(id)sender;
+- (IBAction)dismissSceneForEventSender:(id)sender;
 
 
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
