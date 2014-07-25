@@ -171,15 +171,16 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 
 	if (parent == nil) {	FXDLog_DEFAULT;
-		FXDLogObject(parent);
 	}
-
 
 	[super willMoveToParentViewController:parent];
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
 	[super didMoveToParentViewController:parent];
+
+	if (parent) {	FXDLog_DEFAULT;
+	}
 }
 
 
@@ -361,11 +362,11 @@
 	}
 
 
-	__weak UIViewController *weakSelf = self;
-
-	[weakSelf addChildViewController:scene];
 	scene.view.alpha = 0.0;
 
+	__weak UIViewController *weakSelf = self;
+	
+	[weakSelf addChildViewController:scene];
 	[weakSelf.view addSubview:scene.view];
 	[scene didMoveToParentViewController:weakSelf];
 
