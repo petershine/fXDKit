@@ -96,6 +96,9 @@
 
 	   NSStringFromClass([GPUImageXYDerivativeFilter class]),
 
+#warning //TODO: Test with more filters.
+#warning //TODO: Find the way to apply filter AFTER recording
+
 	   ] mutableCopy];
 
 	FXDLogVariable(_filterNameArray.count);
