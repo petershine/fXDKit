@@ -21,44 +21,6 @@
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 
-	FXDLog(@"%@", _Object(MKStringFromMapRect(MKMapRectWorld)));
-
-
-	__block MKMapRect quarterRect = MKMapRectWorld;
-
-	__block NSUInteger dividedBy = 1;
-
-
-	CLLocationDistance distance = MKMetersBetweenMapPoints(MKMapPointMake(0, 0),
-														   MKMapPointMake(MKMapRectWorld.size.width, MKMapRectWorld.size.height));
-
-	FXDLog(@"%@ %@ %@", _Variable(dividedBy), _Object(MKStringFromMapRect(MKMapRectWorld)), _Variable(distance));
-
-	void (^FourthRect)(MKMapRect*) = ^(MKMapRect *dividedRect){
-
-		MKMapRect modifiedRect = *dividedRect;
-		modifiedRect.size.width /= 2.0;
-		modifiedRect.size.height /= 2.0;
-
-		*dividedRect = modifiedRect;
-		dividedBy *= 2;
-
-		CLLocationDistance distance = MKMetersBetweenMapPoints(MKMapPointMake(0, 0),
-															   MKMapPointMake(modifiedRect.size.width, modifiedRect.size.height));
-
-		FXDLog(@"%ux%u: %u %@ %@", dividedBy, dividedBy, (dividedBy*dividedBy), _Object(MKStringFromMapRect(*dividedRect)), _Variable(distance));
-	};
-
-
-	while (quarterRect.size.width >= 0.1
-		   || quarterRect.size.height >= 0.1) {
-
-		FourthRect(&quarterRect);
-	}
-
-	//MARK: 32768x32768: 1073741824 is the reasonable, maximum count of grids
-#warning //TODO: Translate the value to screen grid size CGRect, CGSize
-
 	self.initialDisclaimerFrame = [[self disclaimerView] frame];
 	self.disclaimerOffset = CGPointZero;
 }

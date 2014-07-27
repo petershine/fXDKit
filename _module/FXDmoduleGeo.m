@@ -256,3 +256,84 @@
 }
 
 @end
+
+
+@implementation FXDmoduleTile
+
+- (void)prepareTileModule {	FXDLog_DEFAULT;
+
+	Float64 dividedBy = 1.0;
+
+	MKMapRect tileMapRect = MKMapRectWorld;
+
+	CLLocationDistance diagonalDistance = MKMetersBetweenMapPoints(MKMapPointMake(0, 0),
+																   MKMapPointMake(tileMapRect.size.width,
+																				  tileMapRect.size.height));
+
+	FXDLog(@"%ux%u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, MKStringFromMapRect(tileMapRect), _Variable(diagonalDistance));
+
+	do {
+		dividedBy += 1.0;
+
+		tileMapRect = MKMapRectWorld;
+
+		if ((NSUInteger)tileMapRect.size.width % (NSUInteger)dividedBy != 0) {
+			continue;
+		}
+
+
+		tileMapRect.size.width /= dividedBy;
+		tileMapRect.size.height /= dividedBy;
+
+		diagonalDistance = MKMetersBetweenMapPoints(MKMapPointMake(0, 0),
+													MKMapPointMake(tileMapRect.size.width,
+																   tileMapRect.size.height));
+
+
+		FXDLog(@"%ux%u = %u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, (NSUInteger)(dividedBy*dividedBy), MKStringFromMapRect(tileMapRect), _Variable(diagonalDistance));
+
+	} while ((NSUInteger)diagonalDistance > 1190);
+
+	self.tileMapRect = tileMapRect;
+	
+
+	dividedBy = 1.0;
+
+	CGRect tileCGRect = [UIScreen mainScreen].bounds;
+
+	FXDLog(@"%u: %@", (NSUInteger)dividedBy, _Rect(tileCGRect));
+
+	do {
+		dividedBy += 1.0;
+
+		tileCGRect = [UIScreen mainScreen].bounds;
+
+		if ((NSUInteger)tileCGRect.size.width % (NSUInteger)dividedBy != 0
+			|| (NSUInteger)tileCGRect.size.height % (NSUInteger)dividedBy != 0) {
+			continue;
+		}
+
+
+		tileCGRect.size.width /= dividedBy;
+		tileCGRect.size.height /= dividedBy;
+
+		FXDLog(@"%u: %@", (NSUInteger)dividedBy, _Rect(tileCGRect));
+
+	} while (tileCGRect.size.width > 40.0 && tileCGRect.size.height > 40.0);
+
+	tileCGRect.size.width = MIN(tileCGRect.size.width, tileCGRect.size.height);
+	tileCGRect.size.height = tileCGRect.size.width;
+
+	FXDLog(@"%@ %@ %@", _Variable(diagonalDistance), MKStringFromMapRect(tileMapRect), _Rect(tileCGRect));
+
+
+	NSInteger minMultiplier = (NSInteger)dividedBy;
+	NSInteger maxMultiplier = ceil((MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)/tileCGRect.size.width));
+	FXDLog(@"%@ %@", _Variable(minMultiplier), _Variable(maxMultiplier));
+
+
+	MKMapRect screenMapRect = MKMapRectMake(0, 0, tileMapRect.size.width*minMultiplier, tileMapRect.size.height*minMultiplier);
+	FXDLog(@"%@", _Object(MKStringFromMapRect(screenMapRect)));
+}
+
+@end

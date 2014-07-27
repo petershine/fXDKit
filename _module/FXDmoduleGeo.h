@@ -31,3 +31,16 @@
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 
 @end
+
+
+//TEST: with more tile size
+
+@interface FXDmoduleTile : FXDsuperModule
+
+@property (nonatomic) MKMapRect tileMapRect;
+@property (nonatomic) MKMapRect screenMapRect;
+
+
+- (void)prepareTileModule;
+
+@end
