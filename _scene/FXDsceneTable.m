@@ -46,14 +46,13 @@
 		[super registerMainCellNib];
 		return;
 	}
-	
-	
-	FXDLog_DEFAULT;
-	
-	[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 
+
+	FXDLog_DEFAULT;
 	FXDLogObject(self.mainCellNib);
 	FXDLogObject(self.mainCellIdentifier);
+	
+	[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 }
 
 
