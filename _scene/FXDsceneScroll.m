@@ -157,32 +157,6 @@
 }
 
 #pragma mark -
-- (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex {
-	
-	BOOL didCancel = NO;
-	
-	id operationKey = nil;
-	
-	if (indexPath) {
-		operationKey = indexPath;
-	}
-	else if (rowIndex != integerNotDefined) {
-		operationKey = NSIndexPathMake(0, rowIndex);
-	}
-	
-	if (operationKey == nil) {
-		return didCancel;
-	}
-	
-
-	didCancel = [self.cellOperationQueue
-				 removeOperationForKey:operationKey
-				 withDictionary:self.cellOperationDictionary];
-	
-	return didCancel;
-}
-
-#pragma mark -
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView {
 	
 	NSInteger numberOfSections = 1;

@@ -51,6 +51,9 @@
 	FXDLog_DEFAULT;
 	
 	[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
+
+	FXDLogObject(self.mainCellNib);
+	FXDLogObject(self.mainCellIdentifier);
 }
 
 
@@ -166,6 +169,7 @@
 	return numberOfRows;
 }
 
+#pragma mark -
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	FXDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.mainCellIdentifier];
@@ -186,7 +190,9 @@
 //MARK: UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	
-	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
+	BOOL didCancel = [self.cellOperationQueue
+					  cancelOperationForKey:indexPath
+					  withDictionary:self.cellOperationDictionary];
 
 	if (didCancel) {
 		//FXDLog(@"%@ %@", _BOOL(didCancel), _Object(indexPath));

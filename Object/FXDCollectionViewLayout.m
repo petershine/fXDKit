@@ -3,15 +3,19 @@
 #import "FXDCollectionViewLayout.h"
 
 
+@implementation FXDCollectionViewLayoutAttributes
++ (instancetype)layoutAttributesForCellWithIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;
+	FXDLogObject(indexPath);
+
+	id attributes = [super layoutAttributesForCellWithIndexPath:indexPath];
+	FXDLogObject(attributes);
+
+	return attributes;
+}
+@end
+
 @implementation FXDCollectionViewLayout
 
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
 + (Class)layoutAttributesClass {	FXDLog_DEFAULT;
 	// override this method to provide a custom class to be used when instantiating instances of UICollectionViewLayoutAttributes
 	Class attributesClass = [super layoutAttributesClass];
@@ -51,6 +55,7 @@
 	FXDLogObject(indexPath);
 
 	UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:indexPath];
+	FXDLogObject(attributes);
 
 	return attributes;
 }

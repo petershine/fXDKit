@@ -28,7 +28,7 @@
 	if (_mainScrollview == nil) {
 		
 		if (self.mainCollectionview) {
-			_mainScrollview = self.mainCollectionview;			
+			_mainScrollview = self.mainCollectionview;
 		}
 		else {
 			_mainScrollview = [super mainScrollview];
@@ -48,8 +48,11 @@
 	
 	
 	FXDLog_DEFAULT;
-	
+
 	[self.mainCollectionview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
+
+	FXDLogObject(self.mainCellNib);
+	FXDLogObject(self.mainCellIdentifier);
 }
 
 
@@ -91,7 +94,7 @@
 		 if (weakOperation && weakOperation.isCancelled == NO) {
 			 //TODO:
 		 }
-
+		 
 
 		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
@@ -112,8 +115,10 @@
 
 //MARK: UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-	
-	BOOL didCancel = [self cancelQueuedCellOperationAtIndexPath:indexPath orRowIndex:integerNotDefined];
+
+	BOOL didCancel = [self.cellOperationQueue
+					  cancelOperationForKey:indexPath
+					  withDictionary:self.cellOperationDictionary];
 	
 	if (didCancel) {
 		//FXDLog(@"%@ %@", _BOOL(didCancel), indexPath);

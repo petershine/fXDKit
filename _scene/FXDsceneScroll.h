@@ -51,8 +51,6 @@
 
 - (void)registerMainCellNib;
 
-- (BOOL)cancelQueuedCellOperationAtIndexPath:(NSIndexPath*)indexPath orRowIndex:(NSInteger)rowIndex;
-
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
 - (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
 
