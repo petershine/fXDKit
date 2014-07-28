@@ -20,6 +20,16 @@
 	return attributesClass;
 }
 
++ (Class)invalidationContextClass NS_AVAILABLE_IOS(7_0) {
+	// override this method to provide a custom class to be used for invalidation contexts
+
+	Class contextClass = [super invalidationContextClass];
+	FXDLogObject(contextClass);
+
+	return contextClass;
+}
+
+#pragma mark -
 - (void)prepareLayout {	FXDLog_DEFAULT;
 	// The collection view calls -prepareLayout once at its first layout as the first message to the layout instance.
 	// The collection view calls -prepareLayout again after layout is invalidated and before requerying the layout information.
@@ -63,6 +73,7 @@
 	return attributes;
 }
 
+#pragma mark -
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {	FXDLog_DEFAULT;
 	// return YES to cause the collection view to requery the layout for geometry information
 
@@ -74,6 +85,15 @@
 	return shouldInvalidate;
 }
 
+- (UICollectionViewLayoutInvalidationContext *)invalidationContextForBoundsChange:(CGRect)newBounds NS_AVAILABLE_IOS(7_0) {	FXDLog_DEFAULT;
+	FXDLogRect(newBounds);
+
+	UICollectionViewLayoutInvalidationContext *invalidationContext = [super invalidationContextForBoundsChange:newBounds];
+
+	return invalidationContext;
+}
+
+#pragma mark -
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {	FXDLog_DEFAULT;
 	// return a point at which to rest after scrolling - for layouts that want snap-to-point scrolling behavior
 
@@ -85,6 +105,18 @@
 	return contentOffset;
 }
 
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset NS_AVAILABLE_IOS(7_0) {
+	// a layout can return the content offset to be applied during transition or update animations
+
+	FXDLog(@"%@", _Point(proposedContentOffset));
+
+	CGPoint contentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
+	FXDLogPoint(contentOffset);
+
+	return contentOffset;
+}
+
+#pragma mark -
 - (CGSize)collectionViewContentSize {	FXDLog_DEFAULT;
 	// Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
 	CGSize contentSize = [super collectionViewContentSize];
