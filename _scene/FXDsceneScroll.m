@@ -154,6 +154,8 @@
 - (void)registerMainCellNib {	FXDLog_OVERRIDE;
 	FXDLogObject(self.mainCellIdentifier);
 	FXDLogObject(self.mainCellNib);
+	
+	FXDLogObject(self.mainScrollview);
 }
 
 #pragma mark -

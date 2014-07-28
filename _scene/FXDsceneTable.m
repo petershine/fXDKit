@@ -42,7 +42,8 @@
 #pragma mark - Method overriding
 - (void)registerMainCellNib {
 	
-	if (self.mainCellNib == nil && self.mainCellIdentifier == nil) {
+	if ((self.mainCellNib == nil && self.mainCellIdentifier == nil)
+		|| self.mainTableview == nil) {
 		[super registerMainCellNib];
 		return;
 	}
@@ -51,7 +52,8 @@
 	FXDLog_DEFAULT;
 	FXDLogObject(self.mainCellNib);
 	FXDLogObject(self.mainCellIdentifier);
-	
+
+	FXDLogObject(self.mainTableview);
 	[self.mainTableview registerNib:self.mainCellNib forCellReuseIdentifier:self.mainCellIdentifier];
 }
 
