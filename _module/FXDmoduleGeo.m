@@ -292,7 +292,7 @@
 
 		FXDLog(@"%ux%u = %u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, (NSUInteger)(dividedBy*dividedBy), MKStringFromMapRect(tileMapRect), _Variable(diagonalDistance));
 
-	} while ((NSUInteger)diagonalDistance > 1190);
+	} while ((NSUInteger)diagonalDistance > (NSUInteger)distanceDiagonalFirstTenKilo);
 
 	self.tileMapRect = tileMapRect;
 	
@@ -319,7 +319,7 @@
 
 		FXDLog(@"%u: %@", (NSUInteger)dividedBy, _Rect(tileCGRect));
 
-	} while (tileCGRect.size.width > 40.0 && tileCGRect.size.height > 40.0);
+	} while (tileCGRect.size.width > dimensionMinimumTile && tileCGRect.size.height > dimensionMinimumTile);
 
 	tileCGRect.size.width = MIN(tileCGRect.size.width, tileCGRect.size.height);
 	tileCGRect.size.height = tileCGRect.size.width;
@@ -332,8 +332,11 @@
 	FXDLog(@"%@ %@", _Variable(minMultiplier), _Variable(maxMultiplier));
 
 
-	MKMapRect screenMapRect = MKMapRectMake(0, 0, tileMapRect.size.width*minMultiplier, tileMapRect.size.height*minMultiplier);
-	FXDLog(@"%@", _Object(MKStringFromMapRect(screenMapRect)));
+	self.screenMapRect = MKMapRectMake(0,
+									   0,
+									   self.tileMapRect.size.width*minMultiplier,
+									   self.tileMapRect.size.height*minMultiplier);
+	FXDLog(@"%@", _Object(MKStringFromMapRect(self.screenMapRect)));
 }
 
 @end

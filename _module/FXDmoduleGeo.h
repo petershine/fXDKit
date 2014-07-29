@@ -33,7 +33,10 @@
 @end
 
 
-//TEST: with more tile size
+#define distanceDiagonalSecondTenKilo	2383.0
+#define distanceDiagonalFirstTenKilo	1190.0
+#define dimensionMinimumTile	40.0
+
 
 @interface FXDmoduleTile : FXDsuperModule
 
