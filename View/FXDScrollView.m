@@ -139,4 +139,32 @@
 	return progress;
 }
 
+#pragma mark -
+- (CGPoint)snappedOffsetFromContentOffset:(CGPoint)contentOffset withMinimumOffset:(CGPoint)minimumOffset shouldUpdate:(BOOL)shouldUpdate {
+
+	//MARK: Be careful with left inset adding and subtracting
+
+	CGPoint snappedOffset = contentOffset;
+	snappedOffset.x += self.contentInset.left;
+
+
+	NSInteger snappedIndex = (snappedOffset.x/minimumOffset.x);
+
+	snappedOffset.x = snappedIndex*minimumOffset.x;
+
+
+	if (fabs(contentOffset.x+self.contentInset.left-snappedOffset.x) > (minimumOffset.x/2.0)) {
+		snappedOffset.x = (snappedIndex+1)*minimumOffset.x;
+	}
+
+
+	snappedOffset.x -= self.contentInset.left;
+
+	if (shouldUpdate) {
+		[self setContentOffset:snappedOffset animated:YES];
+	}
+
+	return snappedOffset;
+}
+
 @end

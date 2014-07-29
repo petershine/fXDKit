@@ -18,4 +18,6 @@
 
 - (CGFloat)horizontalProgress;
 
+- (CGPoint)snappedOffsetFromContentOffset:(CGPoint)contentOffset withMinimumOffset:(CGPoint)minimumOffset shouldUpdate:(BOOL)shouldUpdate;
+
 @end
