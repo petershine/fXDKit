@@ -89,7 +89,7 @@
 }
 
 - (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {	FXDLog_OVERRIDE;
+	if (_mainCellIdentifier == nil) {	//FXDLog_OVERRIDE;
 	}
 	
 	return _mainCellIdentifier;
