@@ -35,6 +35,7 @@
 	if (mediaQuery.items.count > 1) {
 		MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 		FXDLogObject(mediaLibrary.lastModifiedDate);
+
 		FXDLogObject(predicate);
 		FXDLogObject(mediaQuery.items);
 	}
