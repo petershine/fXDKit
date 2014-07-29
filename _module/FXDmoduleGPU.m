@@ -12,9 +12,6 @@
 @end
 
 @implementation FXDimageviewGPU
-- (void)dealloc {	FXDLog_DEFAULT;
-}
-
 + (instancetype)imageviewForBounds:(CGRect)bounds withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
 	FXDLogRect(bounds);
 
@@ -30,10 +27,6 @@
 @end
 
 @implementation FXDwriterGPU
-- (void)dealloc {	FXDLog_DEFAULT;
-	FXDLogObject(_uniqueKey);
-}
-
 + (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
 
 	FXDLog(@"%@ %f", _Size(videoSize), (MAX(videoSize.width, videoSize.height)/MIN(videoSize.width, videoSize.height)));
@@ -56,7 +49,6 @@
 
 	return gpumovieWriter;
 }
-
 @end
 
 
@@ -64,7 +56,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[self resetGPUManager];
+	[self resetGPUmodule];
 }
 
 #pragma mark - Initialization
@@ -143,12 +135,12 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGPUManager {	FXDLog_DEFAULT;
+- (void)prepareGPUmodule {	FXDLog_DEFAULT;
 	//MARK: Make sure camera and filter are initialized here
 	[self.videoCamera addTarget:self.cameraFilter];
 }
 
-- (void)resetGPUManager {	FXDLog_DEFAULT;
+- (void)resetGPUmodule {	FXDLog_DEFAULT;
 	[_videoCamera removeAllTargets];
 	_videoCamera = nil;
 

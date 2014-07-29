@@ -44,8 +44,8 @@
 @property (strong, nonatomic) FXDfilterGPU *cameraFilter;
 
 
-- (void)prepareGPUManager;
-- (void)resetGPUManager;
+- (void)prepareGPUmodule;
+- (void)resetGPUmodule;
 
 - (void)cycleGPUfiltersForward:(BOOL)isForward withCallback:(FXDcallbackFinish)finishCallback;
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
