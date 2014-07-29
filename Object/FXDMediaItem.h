@@ -1,7 +1,7 @@
 
-#import "FXDKit.h"
-
 @import MediaPlayer;
+
+#import "FXDKit.h"
 
 
 @interface MPMediaItem (Essential)

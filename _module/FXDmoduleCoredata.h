@@ -1,5 +1,8 @@
 
+@import CoreData;
+
 #import "FXDKit.h"
+
 
 //MARK: For subclass to define names or keys
 /* SAMPLE:
@@ -10,9 +13,6 @@
 //MARK: Logging options
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
-
-
-@import CoreData;
 
 
 @interface FXDmoduleCoredata : FXDsuperModule {

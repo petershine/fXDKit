@@ -1,8 +1,7 @@
 
-#import "FXDKit.h"
-
-
 @import CoreData;
+
+#import "FXDKit.h"
 
 
 @interface FXDManagedDocument : UIManagedDocument {

@@ -1,8 +1,7 @@
 
-#import "FXDKit.h"
-
-
 @import MessageUI;
+
+#import "FXDKit.h"
 
 
 @interface FXDmoduleMessage : FXDsuperModule <MFMailComposeViewControllerDelegate>

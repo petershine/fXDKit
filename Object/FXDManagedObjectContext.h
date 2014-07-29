@@ -1,4 +1,6 @@
 
+@import CoreData;
+
 #import "FXDKit.h"
 
 
@@ -13,9 +15,6 @@
 #ifndef sizeDefaultBatch
 	#define sizeDefaultBatch	20
 #endif
-
-
-@import CoreData;
 
 
 @interface NSManagedObjectContext (Essential)

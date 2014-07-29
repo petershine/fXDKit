@@ -1,8 +1,8 @@
 
+@import MapKit;
+
 #import "FXDKit.h"
 
-
-@import MapKit;
 
 @class FXDMapView;
 

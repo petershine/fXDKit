@@ -1,7 +1,7 @@
 
-#import "FXDKit.h"
-
 @import AVFoundation;
+
+#import "FXDKit.h"
 
 
 #define filternameScale		@"CILanczosScaleTransform"

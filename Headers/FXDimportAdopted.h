@@ -3,8 +3,6 @@
 #ifndef FXDKit_FXDimportAdopted_h
 #define FXDKit_FXDimportAdopted_h
 
-#import "FXDKit.h"
-
 
 #if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
 	#import <ReactiveCocoa.h>
@@ -56,6 +54,9 @@
 	#import "FXDMediaItem.h"
 
 #endif
+
+
+#import "FXDKit.h"
 
 
 #endif

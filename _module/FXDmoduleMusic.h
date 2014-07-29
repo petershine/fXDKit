@@ -1,8 +1,7 @@
 
+@import MediaPlayer;
 
 #import "FXDKit.h"
-
-@import MediaPlayer;
 
 
 @interface MPMusicPlayerController (Added)

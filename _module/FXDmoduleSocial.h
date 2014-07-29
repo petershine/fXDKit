@@ -1,14 +1,13 @@
 
+@import Social;
+@import Accounts;
+@import CoreLocation;
+
 #import "FXDKit.h"
 
 
 #define userdefaultObjMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
 #define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
-
-
-@import Social;
-@import Accounts;
-@import CoreLocation;
 
 
 @interface FXDmoduleSocial : FXDsuperModule {

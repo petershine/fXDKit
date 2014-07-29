@@ -1,8 +1,8 @@
 
+@import AssetsLibrary;
+
 #import "FXDKit.h"
 
-
-@import AssetsLibrary;
 
 @interface ALAsset (MultimediaFrameworks)
 - (id)valueForKey:(NSString *)key;

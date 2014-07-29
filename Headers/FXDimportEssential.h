@@ -3,9 +3,6 @@
 #ifndef FXDKit_FXDimportEssential_h
 #define FXDKit_FXDimportEssential_h
 
-#import "FXDKit.h"
-
-
 #import <objc/runtime.h>
 #import <stdarg.h>
 #import <sys/utsname.h>
@@ -28,6 +25,8 @@
 @import MessageUI;
 @import Accounts;
 @import Social;
+
+#import "FXDKit.h"
 
 
 @interface NSError (Essential)
