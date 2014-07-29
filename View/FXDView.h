@@ -57,11 +57,11 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 @end
 
 
-@interface FXDviewGlowing : UIView
+@interface FXDsubviewGlowing : UIView
 @property (strong, nonatomic) UIColor *glowingColor;
 - (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
 @end
 
 @interface UIView (Glowing)
-- (void)addGlowingSubview:(FXDviewGlowing*)glowingSubview;
+- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;
 @end

@@ -2,14 +2,14 @@
 #import "FXDKit.h"
 
 
-@class FXDviewInformation;
+@class FXDsubviewInformation;
 
 @class FXDsceneLaunching;
 
 
 @interface FXDWindow : UIWindow
 
-@property (strong, nonatomic) IBOutlet FXDviewInformation *informationView;
+@property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
 
 
 - (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene;

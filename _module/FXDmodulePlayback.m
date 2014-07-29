@@ -3,7 +3,7 @@
 #import "FXDmodulePlayback.h"
 
 
-@implementation FXDviewAssetDisplay
+@implementation FXDsubviewAssetDisplay
 + (Class)layerClass {
 	return [AVPlayerLayer class];
 }
@@ -12,7 +12,7 @@
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
 
-	FXDviewAssetDisplay *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
+	FXDsubviewAssetDisplay *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)assetDisplay.layer;
 	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
@@ -103,7 +103,7 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (FXDviewAssetDisplay*)mainPlaybackDisplay {
+- (FXDsubviewAssetDisplay*)mainPlaybackDisplay {
 	if (_mainPlaybackDisplay) {
 		return _mainPlaybackDisplay;
 	}
@@ -111,7 +111,7 @@
 
 	FXDLog_DEFAULT;
 
-	_mainPlaybackDisplay = [FXDviewAssetDisplay assetDisplay];
+	_mainPlaybackDisplay = [FXDsubviewAssetDisplay assetDisplay];
 
 	return _mainPlaybackDisplay;
 }

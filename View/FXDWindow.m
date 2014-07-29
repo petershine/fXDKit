@@ -2,7 +2,7 @@
 
 #import "FXDWindow.h"
 
-#import "FXDviewInformation.h"
+#import "FXDsubviewInformation.h"
 
 #import "FXDsceneLaunching.h"
 
@@ -135,18 +135,18 @@
 #pragma mark -
 - (void)showInformationViewWithClassName:(NSString*)className {
 
-	if (self.informationView) {
+	if (self.informationSubview) {
 		return;
 	}
 
 
 	if (className == nil) {
-		className = NSStringFromClass([FXDviewInformation class]);
+		className = NSStringFromClass([FXDsubviewInformation class]);
 	}
 
 
 	Class informationClass = NSClassFromString(className);
-	NSAssert([informationClass isSubclassOfClass:[FXDviewInformation class]], nil);
+	NSAssert([informationClass isSubclassOfClass:[FXDsubviewInformation class]], nil);
 
 	if (informationClass == nil) {
 		return;
@@ -165,37 +165,37 @@
 	for (id subview in viewArray) {	//Assumes there is only one root object
 
 		if ([informationClass isSubclassOfClass:[subview class]]) {
-			self.informationView = (FXDviewInformation*)subview;
+			self.informationSubview = (FXDsubviewInformation*)subview;
 			break;
 		}
 	}
 
-	if (self.informationView == nil) {
+	if (self.informationSubview == nil) {
 		return;
 	}
 
 
-	CGRect modifiedFrame = self.informationView.frame;
+	CGRect modifiedFrame = self.informationSubview.frame;
 	modifiedFrame.size = self.frame.size;
-	self.informationView.frame = modifiedFrame;
+	self.informationSubview.frame = modifiedFrame;
 
-	[self addSubview:self.informationView];
-	[self bringSubviewToFront:self.informationView];
+	[self addSubview:self.informationSubview];
+	[self bringSubviewToFront:self.informationSubview];
 
-	[self.informationView fadeInFromHidden];
+	[self.informationSubview fadeInFromHidden];
 }
 
 - (void)hideInformationView {
 
-	if (self.informationView == nil) {
+	if (self.informationSubview == nil) {
 		return;
 	}
 
 
 	[self
-	 removeAsFadeOutSubview:self.informationView
+	 removeAsFadeOutSubview:self.informationSubview
 	 afterRemovedBlock:^{
-		 self.informationView = nil;
+		 self.informationSubview = nil;
 	 }];
 }
 

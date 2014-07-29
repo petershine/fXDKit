@@ -13,7 +13,7 @@
 #endif
 
 
-@interface FXDviewAssetDisplay : UIView
+@interface FXDsubviewAssetDisplay : UIView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 + (instancetype)assetDisplay;
 
@@ -30,7 +30,7 @@
 
 @property (strong, nonatomic) id playerItemObserver;
 
-@property (strong, nonatomic) FXDviewAssetDisplay *mainPlaybackDisplay;
+@property (strong, nonatomic) FXDsubviewAssetDisplay *mainPlaybackDisplay;
 
 
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;

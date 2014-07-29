@@ -434,7 +434,7 @@
 @end
 
 
-@implementation FXDviewGlowing
+@implementation FXDsubviewGlowing
 - (instancetype)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
 
@@ -524,10 +524,10 @@
 
 
 @implementation UIView (Glowing)
-- (void)addGlowingSubview:(FXDviewGlowing*)glowingSubview {
+- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview {
 
 	if (glowingSubview == nil) {
-		glowingSubview = [[FXDviewGlowing alloc]
+		glowingSubview = [[FXDsubviewGlowing alloc]
 						  initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)
 						  withGlowingColor:nil];
 	}

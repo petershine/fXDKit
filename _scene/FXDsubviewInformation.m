@@ -1,9 +1,9 @@
 
 
-#import "FXDviewInformation.h"
+#import "FXDsubviewInformation.h"
 
 
-@implementation FXDviewInformation
+@implementation FXDsubviewInformation
 
 #pragma mark - Memory management
 
