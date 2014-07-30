@@ -270,7 +270,7 @@
 																   MKMapPointMake(tileMapRect.size.width,
 																				  tileMapRect.size.height));
 
-	FXDLog(@"%ux%u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, MKStringFromMapRect(tileMapRect), _Variable(diagonalDistance));
+	FXDLog(@"%ux%u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
 
 	do {
 		dividedBy += 1.0;
@@ -289,10 +289,12 @@
 													MKMapPointMake(tileMapRect.size.width,
 																   tileMapRect.size.height));
 
+		//TEST:
+		MKMapSize testedSize = MKMapSizeMake(tileMapRect.size.width*dividedBy, tileMapRect.size.height*dividedBy);
 
-		FXDLog(@"%ux%u = %u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, (NSUInteger)(dividedBy*dividedBy), MKStringFromMapRect(tileMapRect), _Variable(diagonalDistance));
+		FXDLog(@"%ux%u = %u: %@ %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, (NSUInteger)(dividedBy*dividedBy), MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance), _BOOL(MKMapSizeEqualToSize(testedSize, MKMapSizeWorld)));
 
-	} while ((NSUInteger)diagonalDistance > (NSUInteger)distanceDiagonalFirstTenKilo);
+	} while ((NSUInteger)diagonalDistance > (NSUInteger)distanceDiagonalFirstKilo);
 
 	self.tileMapRect = tileMapRect;
 	

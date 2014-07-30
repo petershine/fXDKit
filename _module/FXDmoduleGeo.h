@@ -32,8 +32,10 @@
 @end
 
 
-#define distanceDiagonalSecondTenKilo	2383.0
-#define distanceDiagonalFirstTenKilo	1190.0
+#warning //TODO: distance value is x10 of real meters
+#define distanceDiagonalTenthKilo	1190.0
+#define distanceDiagonalFirstKilo	148.0
+
 #define dimensionMinimumTile	40.0
 
 
