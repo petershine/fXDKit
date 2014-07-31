@@ -10,12 +10,10 @@
 #endif
 
 #ifndef application_AppStoreID
-	#warning //TODO: Define application_AppStoreID
 	#define application_AppStoreID	@"000000000"
 #endif
 
 #ifndef application_ContactEmail
-	#warning //TODO: Define application_ContactEmail
 	#define application_ContactEmail	@"app@company.com"
 #endif
 

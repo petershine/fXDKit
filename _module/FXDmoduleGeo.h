@@ -32,7 +32,7 @@
 @end
 
 
-#warning //TODO: distance value is x10 of real meters
+//MARK: distance value is x10 of real meters
 #define distanceDiagonalTenthKilo	1190.0
 #define distanceDiagonalFirstKilo	148.0
 
