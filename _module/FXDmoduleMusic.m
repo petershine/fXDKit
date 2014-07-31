@@ -111,6 +111,10 @@
 	[mediaLibrary beginGeneratingLibraryChangeNotifications];
 }
 
+#pragma mark -
+- (void)startReactiveObserving {	FXDLog_OVERRIDE;
+
+}
 
 #pragma mark - Observer
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification {

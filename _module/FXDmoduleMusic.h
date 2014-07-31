@@ -23,6 +23,8 @@
 - (void)startObservingPlayerNotifications;
 - (void)startObservingLibraryNotifications;
 
+- (void)startReactiveObserving;
+
 
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification;
 - (void)observedMPMusicPlayerControllerNowPlayingItemDidChange:(NSNotification*)notification;
