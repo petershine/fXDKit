@@ -8,27 +8,22 @@
 
 
 #ifndef USE_ReactiveCocoa
-	#warning //TODO: Decide if ReactiveCocoa is used
 	#define	USE_ReactiveCocoa	FALSE
 #endif
 
 #ifndef USE_AFNetworking
-	#warning //TODO: Decide if AFNetworking is used
 	#define USE_AFNetworking	FALSE
 #endif
 
 #ifndef USE_GPUImage
-	#warning //TODO: Decide if GPUImage is used
 	#define USE_GPUImage	FALSE
 #endif
 
 #ifndef USE_LocationFrameworks
-	#warning //TODO: Decide if LocationFrameworks is used
 	#define USE_LocationFrameworks	FALSE
 #endif
 
 #ifndef USE_MultimediaFrameworks
-	#warning //TODO: Decide if MultimediaFrameworks is used
 	#define USE_MultimediaFrameworks	FALSE
 #endif
 
