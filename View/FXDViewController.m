@@ -143,6 +143,22 @@
 #endif
 
 #pragma mark - View Appearing
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+
+	if (parent == nil) {	FXDLog_DEFAULT;
+	}
+
+	[super willMoveToParentViewController:parent];
+}
+
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+	[super didMoveToParentViewController:parent];
+
+	if (parent) {	FXDLog_DEFAULT;
+	}
+}
+
+#pragma mark -
 - (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
 	[super viewWillAppear:animated];
 }
@@ -165,22 +181,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
-}
-
-#pragma mark -
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-
-	if (parent == nil) {	FXDLog_DEFAULT;
-	}
-
-	[super willMoveToParentViewController:parent];
-}
-
-- (void)didMoveToParentViewController:(UIViewController *)parent {
-	[super didMoveToParentViewController:parent];
-
-	if (parent) {	FXDLog_DEFAULT;
-	}
 }
 
 

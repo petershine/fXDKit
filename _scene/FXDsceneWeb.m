@@ -40,6 +40,7 @@
 
 #pragma mark -
 - (void)willMoveToParentViewController:(UIViewController *)parent {
+
 	if (parent == nil) {
 		[self.mainWebview stopLoading];
 		self.mainWebview.delegate = nil;
