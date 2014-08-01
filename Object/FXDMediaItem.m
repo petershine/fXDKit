@@ -68,6 +68,12 @@
 #pragma mark -
 - (UIImage*)artworkImageWithSize:(CGSize)size {
 	UIImage *artworkImage = nil;
+
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+		artworkImage = [self.artwork imageWithSize:size];
+		return artworkImage;
+	}
+	
 	
 	MPMediaItemArtwork *artwork = [self valueForProperty:MPMediaItemPropertyArtwork];
 	

@@ -55,7 +55,6 @@
 	if (_mainEntityName == nil) {	FXDLog_OVERRIDE;
 		//SAMPLE: _mainEntityName = entityname<#DefaultClass#>
 	}
-
 	return _mainEntityName;
 }
 
@@ -63,7 +62,6 @@
 	if (_mainSortDescriptors == nil) {	FXDLog_OVERRIDE;
 		//SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 	}
-
 	return _mainSortDescriptors;
 }
 
@@ -143,7 +141,7 @@
 - (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	if (managedDocument == nil) {
-		FXDLog(@"CHECK bundle has more than 1 momd");
+		FXDLog(@"CHECK if bundle has more than 1 momd");
 
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
 
@@ -380,6 +378,9 @@
 	
 	//TODO: Decide if returning is not appropriate
 	if (self.didStartEnumerating) {
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
+		}
 		return;
 	}
 	
@@ -417,9 +418,9 @@
 	
 	NSManagedObjectContext *managedContext = (shouldUsePrivateContext) ? self.mainDocument.managedObjectContext.parentContext:self.mainDocument.managedObjectContext;
 
-	NSOperationQueue *managedContextSavingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
+	NSOperationQueue *enumeratingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 	
-	[managedContextSavingQueue
+	[enumeratingQueue
 	 addOperationWithBlock:^{
 		 
 		 NSArray *fetchedObjArray = [managedContext
@@ -494,7 +495,7 @@
 			  
 			  
 			  [self
-			   saveMainDocumentShouldSkipMerge:NO
+			   saveMainDocumentShouldMerge:YES
 			   withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 				   DidEnumerateBlock(didFinish);
 			   }];
@@ -558,21 +559,11 @@
 	}
 }
 
-- (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
+- (void)saveMainDocumentShouldMerge:(BOOL)shouldMerge withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
 	
-	FXDLogBOOL(shouldSkipMerge);
-	FXDLog(@"1.%@", _Variable(self.mainDocument.documentState));
-	FXDLog(@"1.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
-	
-	if (shouldSkipMerge) {
-		self.shouldMergeForManagedContext = NO;
-	}
-	else {
-		self.shouldMergeForManagedContext = YES;
-	}
-	
-	FXDLogBOOL(self.shouldMergeForManagedContext);
-	
+	FXDLogBOOL(shouldMerge);
+	FXDLogVariable(self.mainDocument.documentState);
+	FXDLogBOOL([self.mainDocument hasUnsavedChanges]);
 	
 	[self.mainDocument
 	 saveToURL:self.mainDocument.fileURL
@@ -581,8 +572,8 @@
 		 FXDLog_BLOCK(self.mainDocument, @selector(saveToURL:forSaveOperation:completionHandler:));
 		 FXDLogBOOL(success);
 		 
-		 FXDLog(@"2.%@", _Variable(self.mainDocument.documentState));
-		 FXDLog(@"2.%@", _BOOL([self.mainDocument hasUnsavedChanges]));
+		 FXDLogVariable(self.mainDocument.documentState);
+		 FXDLogBOOL([self.mainDocument hasUnsavedChanges]);
 		 
 		 if (finishCallback) {
 			 finishCallback(_cmd, success, nil);
@@ -614,7 +605,7 @@
 
 
 	[self
-	 saveMainDocumentShouldSkipMerge:NO
+	 saveMainDocumentShouldMerge:YES
 	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 
@@ -682,21 +673,14 @@
 	}
 	
 	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);
-	
-	FXDLog(@"1.%@", _BOOL(self.shouldMergeForManagedContext));
-	
-	if (mainStoreUUID && notifyingStoreUUID && [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
 
-		//MARK: Unless save is done for private context in background, you can skip merging"
-		if (self.shouldMergeForManagedContext) {
-			[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-			FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));
-		}
-		
-		self.shouldMergeForManagedContext = NO;
+	if (mainStoreUUID
+		&& notifyingStoreUUID
+		&& [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
+
+		[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+		FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));
 	}
-	
-	FXDLog(@"2.%@", _BOOL(self.shouldMergeForManagedContext));
 }
 
 #pragma mark -

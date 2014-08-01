@@ -16,8 +16,6 @@
 
 
 @interface FXDmoduleCoredata : FXDsuperModule {
-
-	BOOL _shouldMergeForManagedContext;
 	BOOL _didStartEnumerating;
 	
 	UIBackgroundTaskIdentifier _enumeratingTask;
@@ -31,7 +29,6 @@
 	NSArray *_mainSortDescriptors;
 }
 
-@property (nonatomic) BOOL shouldMergeForManagedContext;
 @property (nonatomic) BOOL didStartEnumerating;
 
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTask;
@@ -70,7 +67,7 @@
 
 
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)saveMainDocumentShouldSkipMerge:(BOOL)shouldSkipMerge withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)saveMainDocumentShouldMerge:(BOOL)shouldMerge withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 #pragma mark - Observer
