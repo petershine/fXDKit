@@ -6,10 +6,21 @@
 @implementation FXDmoduleCoredata
 
 #pragma mark - Memory management
+- (void)dealloc {
+	[_enumeratingOperationQueue cancelAllOperations];
+}
 
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
+- (NSOperationQueue*)enumeratingOperationQueue {
+	if (_enumeratingOperationQueue == nil) {
+		_enumeratingOperationQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
+	}
+	return _enumeratingOperationQueue;
+}
+
+#pragma mark -
 - (NSString*)coredataName {
 	if (_coredataName == nil) {
 		_coredataName = application_BundleIdentifier;
@@ -298,31 +309,6 @@
 }
 
 #pragma mark -
-- (NSManagedObject*)initializedMainEntityObj {
-	if (self.mainEntityName == nil) {	FXDLog_OVERRIDE;
-		return nil;
-	}
-	
-	
-	if ([NSThread isMainThread] == NO) {	FXDLog_OVERRIDE;
-		FXDLog_IsMainThread;
-		return nil;
-	}
-	
-	
-	NSEntityDescription *mainEntity = [NSEntityDescription entityForName:self.mainEntityName inManagedObjectContext:self.mainDocument.managedObjectContext];
-
-	if (mainEntity == nil) {
-		return nil;
-	}
-
-	
-	NSManagedObject *mainEntityObj = [(NSManagedObject*)[[NSClassFromString(self.mainEntityName) class] alloc] initWithEntity:mainEntity insertIntoManagedObjectContext:self.mainDocument.managedObjectContext];
-	
-	return mainEntityObj;
-}
-
-#pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	FXDAlertView *alertView =
 	[[FXDAlertView alloc]
@@ -339,9 +325,9 @@
 			 return;
 		 }
 
-
 		 [self
-		  enumerateAllMainEntityObjShouldShowProgressView:YES
+		  enumerateAllDataWithPrivateContext:NO
+		  shouldShowInformationView:YES
 		  withEnumerationBlock:^(NSManagedObjectContext *managedContext,
 								 NSManagedObject *mainEntityObj,
 								 BOOL *shouldBreak) {
@@ -351,8 +337,12 @@
 			  }
 
 			  [managedContext deleteObject:mainEntityObj];
+		  }
+		  withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+			  FXDLog_BLOCK(self, caller);
 
-		  } withFinishCallback:finishCallback];
+			  [self saveMainDocumentWithFinishCallback:finishCallback];
+		  }];
 	 }];
 
 	[alertView addButtonWithTitle:NSLocalizedString(@"Delete All", nil)];
@@ -361,31 +351,17 @@
 }
 
 #pragma mark -
-- (void)enumerateAllMainEntityObjShouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {
-	
-	[self
-	 enumerateAllMainEntityObjShouldUsePrivateContext:NO
-	 shouldSaveAtTheEnd:YES
-	 shouldShowProgressView:shouldShowProgressView
-	 withEnumerationBlock:enumerationBlock
-	 withFinishCallback:finishCallback];
-}
-
-- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd shouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	
 	FXDLogBOOL(shouldUsePrivateContext);
-	FXDLog(@"0.%@", _Variable(self.didStartEnumerating));
-	
-	//TODO: Decide if returning is not appropriate
-	if (self.didStartEnumerating) {
+	FXDLogVariable(self.enumeratingOperationQueue.operationCount);
+
+	if (self.enumeratingOperationQueue.operationCount > 0) {
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
-	
-	
-	self.didStartEnumerating = YES;
 
 
 	UIApplication *application = [UIApplication sharedApplication];
@@ -403,7 +379,7 @@
 		}
 	}];
 
-	FXDLogVariable(self.enumeratingTask);
+	FXDLogVariable(weakSelf.enumeratingTask);
 	
 	
 	FXDWindow *mainWindow = nil;
@@ -416,11 +392,9 @@
 	
 	__block BOOL shouldBreak = NO;
 	
-	NSManagedObjectContext *managedContext = (shouldUsePrivateContext) ? self.mainDocument.managedObjectContext.parentContext:self.mainDocument.managedObjectContext;
+	NSManagedObjectContext *managedContext = (shouldUsePrivateContext) ? weakSelf.mainDocument.managedObjectContext.parentContext:weakSelf.mainDocument.managedObjectContext;
 
-	NSOperationQueue *enumeratingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
-	
-	[enumeratingQueue
+	[weakSelf.enumeratingOperationQueue
 	 addOperationWithBlock:^{
 		 
 		 NSArray *fetchedObjArray = [managedContext
@@ -455,49 +429,25 @@
 		 
 		 [[NSOperationQueue currentQueue]
 		  addOperationWithBlock:^{
-			  FXDLog(@"1.%@", _Variable(self.didStartEnumerating));
-			  self.didStartEnumerating = NO;
-			  FXDLog(@"2.%@", _Variable(self.didStartEnumerating));
-			  
-			  
-			  void (^DidEnumerateBlock)(BOOL) = ^(BOOL didFinish) {	FXDLog_DEFAULT;
-				  FXDLog(@"1.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
-				  
-				  if (shouldShowProgressView) {
-					  [mainWindow hideInformationView];
-				  }
-				  
-				  if (shouldBreak) {
-					  didFinish = NO;
-				  }
-				  
-				  FXDLog(@"2.%@ %@", _BOOL(didFinish), _BOOL(shouldBreak));
-				  
-				  if (finishCallback) {
-					  finishCallback(_cmd, didFinish, nil);
-				  }
+			  FXDLog_BLOCK(weakSelf, _cmd);
 
-
-				  FXDLog_REMAINING;
-
-				  FXDLogVariable(self.enumeratingTask);
-				  
-				  [application endBackgroundTask:self.enumeratingTask];
-				  self.enumeratingTask = UIBackgroundTaskInvalid;
-			  };
-			  
-			  
-			  if (shouldSaveAtTheEnd == NO) {
-				  DidEnumerateBlock(YES);
-				  
-				  return;
+			  if (shouldShowProgressView) {
+				  [mainWindow hideInformationView];
 			  }
-			  
-			  
-			  [self
-			   saveMainDocumentWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-				   DidEnumerateBlock(didFinish);
-			   }];
+
+			  FXDLogBOOL(!shouldBreak);
+
+			  if (finishCallback) {
+				  finishCallback(_cmd, !shouldBreak, nil);
+			  }
+
+
+			  FXDLog_REMAINING;
+
+			  FXDLogVariable(weakSelf.enumeratingTask);
+
+			  [application endBackgroundTask:weakSelf.enumeratingTask];
+			  weakSelf.enumeratingTask = UIBackgroundTaskInvalid;
 		  }];
 	 }];
 }
@@ -667,11 +617,7 @@
 
 #pragma mark -
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogObject(notification.object);
-	
-	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
+	FXDLogObject(notification);
 }
 
 

@@ -16,10 +16,10 @@
 
 
 @interface FXDmoduleCoredata : FXDsuperModule {
-	BOOL _didStartEnumerating;
-	
 	UIBackgroundTaskIdentifier _enumeratingTask;
 	UIBackgroundTaskIdentifier _dataSavingTask;
+
+	NSOperationQueue *_enumeratingOperationQueue;
 
 	NSString *_coredataName;
 	NSString *_ubiquitousContentName;
@@ -29,10 +29,10 @@
 	NSArray *_mainSortDescriptors;
 }
 
-@property (nonatomic) BOOL didStartEnumerating;
-
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTask;
 @property (nonatomic) UIBackgroundTaskIdentifier dataSavingTask;
+
+@property (strong, nonatomic) NSOperationQueue *enumeratingOperationQueue;
 
 @property (strong, nonatomic) NSString *coredataName;
 @property (strong, nonatomic) NSString *ubiquitousContentName;
@@ -58,12 +58,9 @@
 - (void)startReactiveObserving;
 
 
-- (NSManagedObject*)initializedMainEntityObj;
-
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
-- (void)enumerateAllMainEntityObjShouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)enumerateAllMainEntityObjShouldUsePrivateContext:(BOOL)shouldUsePrivateContext shouldSaveAtTheEnd:(BOOL)shouldSaveAtTheEnd shouldShowProgressView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback;
