@@ -548,19 +548,19 @@
 		 }
 	 }];
 	
-	FXDLogVariable(self.dataSavingTask);
+	FXDLogVariable(weakSelf.dataSavingTask);
 
 
-	[self
+	[weakSelf
 	 saveMainDocumentWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-		 FXDLog_BLOCK(self, caller);
+		 FXDLog_BLOCK(weakSelf, caller);
 
 		 FXDLog_REMAINING;
 
-		 FXDLogVariable(self.dataSavingTask);
+		 FXDLogVariable(weakSelf.dataSavingTask);
 
-		 [application endBackgroundTask:self.dataSavingTask];
-		 self.dataSavingTask = UIBackgroundTaskInvalid;
+		 [application endBackgroundTask:weakSelf.dataSavingTask];
+		 weakSelf.dataSavingTask = UIBackgroundTaskInvalid;
 	 }];
 }
 
