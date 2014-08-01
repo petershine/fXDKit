@@ -93,15 +93,17 @@
 							} else {\
 								FXDLog(@"\n\n	%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
+	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
+							if ([NSThread isMainThread]) {\
+								FXDLog(@"OVERRIDE: %@", _ClassSelectorSelf);\
+							} else {\
+								FXDLog(@"OVERRIDE: %@ %@", _ClassSelectorSelf, _IsMainThread);}
+
 
 	#define FXDLog_FRAME	FXDLog_EMPTY;\
 							FXDLog(@"%@: %@", _ClassSelectorSelf, _Rect(self.view.frame))
 
 	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@", _ClassSelectorSelf, _Rect(self.view.frame))
-
-
-	#define FXDLog_OVERRIDE	FXDLog_EMPTY;\
-							FXDLog(@"OVERRIDE: %@", _ClassSelectorSelf)
 
 
 	#define FXDLog_ERROR	if (error) {\
@@ -180,12 +182,10 @@
 
 	#define FXDLog_DEFAULT
 	#define FXDLog_SEPARATE
+	#define FXDLog_OVERRIDE
 
 	#define FXDLog_FRAME
 	#define FXDLog_SEPARATE_FRAME
-
-	#define FXDLog_OVERRIDE
-
 
 	#define FXDLog_ERROR
 	#define FXDLog_ERROR_ALERT

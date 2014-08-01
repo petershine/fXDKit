@@ -495,8 +495,7 @@
 			  
 			  
 			  [self
-			   saveMainDocumentShouldMerge:YES
-			   withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+			   saveMainDocumentWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 				   DidEnumerateBlock(didFinish);
 			   }];
 		  }];
@@ -559,9 +558,7 @@
 	}
 }
 
-- (void)saveMainDocumentShouldMerge:(BOOL)shouldMerge withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
-	
-	FXDLogBOOL(shouldMerge);
+- (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
 	FXDLogVariable(self.mainDocument.documentState);
 	FXDLogBOOL([self.mainDocument hasUnsavedChanges]);
 	
@@ -605,8 +602,7 @@
 
 
 	[self
-	 saveMainDocumentShouldMerge:YES
-	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+	 saveMainDocumentWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 
 		 FXDLog_REMAINING;
@@ -620,8 +616,6 @@
 
 #pragma mark -
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
-	//notification: NSConcreteNotification 0x1a3746e0 {name = UIDocumentStateChangedNotification; object = <FXDManagedDocument: 0x16d94d10> fileURL: file:///var/mobile/Applications/A2651A45-6230-4225-A538-420889FD5693/Documents/managed.coredata.document documentState: [EditingDisabled | SavingError]}
-
 	FXDLogObject(notification);
 	FXDLogObject(self.mainDocument.fileModificationDate);
 	FXDLogVariable(self.mainDocument.documentState);
@@ -629,54 +623,42 @@
 
 #pragma mark -
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", _Object(notification.object), _Variable([(NSManagedObjectContext*)notification.object concurrencyType]));
+	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
 }
 
 - (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", _Object(notification.object), _Variable([(NSManagedObjectContext*)notification.object concurrencyType]));
+	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
 }
 
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", _Object(notification.object), _Variable([(NSManagedObjectContext*)notification.object concurrencyType]));
+	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
 
 	// Distinguish notification from main managedObjectContext and private managedObjectContext
 	FXDLogBOOL([notification.object isEqual:self.mainDocument.managedObjectContext]);
 	if ([notification.object isEqual:self.mainDocument.managedObjectContext]) {
 		return;
 	}
-	
-	
-	FXDLog_IsMainThread;
-	FXDLog(@"NOTIFIED: mergeChangesFromContextDidSaveNotification:");
-	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
-	
+
+
+	NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores].firstObject;
+	NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores].firstObject;
+
+	NSString *mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
+	NSString *notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
+
+
 	//MARK: Merge only if persistentStore is same
-	NSString *mainStoreUUID = nil;
-	NSInteger mainStoreIndex = 0;	//MARK: Assume first one is the mainStore
-	
-	if ([[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores].count > 0) {
-		NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores][mainStoreIndex];
-		mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
-		
-		FXDLogObject(mainStoreUUID);
-	}
-	
-	NSString *notifyingStoreUUID = nil;
-	
-	if ([[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores].count > 0) {
-		NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores][mainStoreIndex];
-		notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
-		
-		FXDLogObject(notifyingStoreUUID);
-	}
-	
+	FXDLogObject(mainStoreUUID);
+	FXDLogObject(notifyingStoreUUID);
 	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);
 
 	if (mainStoreUUID
 		&& notifyingStoreUUID
 		&& [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
+
+		FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
+		FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
+		FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
 
 		[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 		FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));

@@ -67,7 +67,7 @@
 
 
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)saveMainDocumentShouldMerge:(BOOL)shouldMerge withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
 #pragma mark - Observer
