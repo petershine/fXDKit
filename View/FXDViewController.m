@@ -51,6 +51,7 @@
 - (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
 	[super viewDidLoad];
 
+	self.initialBounds = self.view.bounds;
 }
 
 #pragma mark - StatusBar
