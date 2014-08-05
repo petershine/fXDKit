@@ -602,17 +602,24 @@
 	FXDLogObject(notifyingStoreUUID);
 	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);
 
-	if (mainStoreUUID
-		&& notifyingStoreUUID
-		&& [mainStoreUUID isEqualToString:notifyingStoreUUID]) {
-
-		FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
-		FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
-		FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
-
-		[self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-		FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));
+	if (mainStoreUUID.length == 0
+		|| notifyingStoreUUID.length == 0
+		|| [mainStoreUUID isEqualToString:notifyingStoreUUID] == NO) {
+		return;
 	}
+
+
+	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
+
+	[self.mainDocument.managedObjectContext
+	 performBlock:^{
+		 FXDLog_BLOCK(self.mainDocument.managedObjectContext, @selector(performBlock:));
+
+		 [self.mainDocument.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+		 FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));
+	 }];
 }
 
 #pragma mark -
