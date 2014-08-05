@@ -178,11 +178,9 @@
 
 
 	[_videoCamera removeTarget:_cameraFilter];
-
 	[_cameraFilter removeAllTargets];
+
 	_cameraFilter = nil;
-
-
 	_cameraFilter = [[NSClassFromString(filterName) alloc] init];
 	
 	[_videoCamera addTarget:_cameraFilter];
