@@ -250,6 +250,19 @@
 
 @implementation UIWindow (Essential)
 + (instancetype)newDefaultWindow {	FXDLog_SEPARATE;
+
+	NSString *filename = NSStringFromClass([self class]);
+	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
+
+	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
+	FXDLog(@"%@ %@", _BOOL(nibExists), _Object(resourcePath));
+
+	if (nibExists) {
+		UIWindow *newWindow = [[self class] viewFromNib:nil];
+		return newWindow;
+	}
+
+
 	CGRect screenBounds = [UIScreen mainScreen].bounds;
 	FXDLogRect(screenBounds);
 
