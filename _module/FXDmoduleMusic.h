@@ -17,7 +17,7 @@
 @interface FXDmoduleMusic : FXDsuperModule
 
 @property (nonatomic) MPMusicPlaybackState playbackState;
-@property (nonatomic) MPMediaItem *nowPlayingItem;
+@property (weak, nonatomic) MPMediaItem *nowPlayingItem;
 
 
 - (void)startObservingPlayerNotifications;
