@@ -146,7 +146,7 @@
 	for (MPMediaPlaylist *playlist in mediaQuery.collections) {
 
 		if ([MPMediaPlaylist canFilterByProperty:MPMediaPlaylistPropertyName]) {
-			FXDLog(@"%@\t%@", _Variable(playlist.items.count), [playlist valueForProperty:MPMediaPlaylistPropertyName]);
+			FXDLog(@"%@\t%@", _Variable(playlist.items.count), _Object(playlist.name));
 		}
 	}
 }
