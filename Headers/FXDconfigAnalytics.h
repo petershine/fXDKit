@@ -5,7 +5,6 @@
 
 
 #ifndef USE_Flurry
-	#warning //TODO: Decide if Flurry is used
 	#define USE_Flurry	FALSE
 #endif
 

@@ -68,7 +68,6 @@
 - (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
-#pragma mark - Observer
 - (void)observedUIDocumentStateChanged:(NSNotification*)notification;
 
 - (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
@@ -76,7 +75,5 @@
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
 
 - (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
-
-#pragma mark - Delegate
 
 @end
