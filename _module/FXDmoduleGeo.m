@@ -295,7 +295,7 @@
 	Float64 dividedBy = 1.0;
 
 	CGRect tileCGRect = [UIScreen mainScreen].bounds;
-	FXDLog(@"%u: %@", (NSUInteger)dividedBy, _Rect(tileCGRect));
+	FXDLog(@"%f: %@", dividedBy, _Rect(tileCGRect));
 
 	do {
 		dividedBy += 1.0;
@@ -309,7 +309,7 @@
 		tileCGRect.size.width /= dividedBy;
 		tileCGRect.size.height /= dividedBy;
 
-		FXDLog(@"%u: %@", (NSUInteger)dividedBy, _Rect(tileCGRect));
+		FXDLog(@"%lu: %@", (unsigned long)dividedBy, _Rect(tileCGRect));
 
 	} while (tileCGRect.size.width > minimumDimension && dividedBy < 100.0);
 
@@ -325,7 +325,7 @@
 																   MKMapPointMake(tileMapRect.size.width,
 																				  tileMapRect.size.height));
 
-	FXDLog(@"%ux%u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
+	FXDLog(@"%lux%lu: %@ %@", (unsigned long)dividedBy, (unsigned long)dividedBy, MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
 
 	do {
 		dividedBy += 1.0;
@@ -343,7 +343,7 @@
 													MKMapPointMake(tileMapRect.size.width,
 																   tileMapRect.size.height));
 
-		FXDLog(@"%ux%u = %u: %@ %@", (NSUInteger)dividedBy, (NSUInteger)dividedBy, (NSUInteger)(dividedBy*dividedBy), MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
+		FXDLog(@"%ux%lu = %lu: %@ %@", (NSUInteger)dividedBy, (unsigned long)dividedBy, (unsigned long)(dividedBy*dividedBy), MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
 
 	} while ((NSUInteger)diagonalDistance > minimumDiagonalDistance);
 

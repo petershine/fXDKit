@@ -4,6 +4,21 @@
 #import "FXDKit.h"
 
 
+#ifndef __IPHONE_8_0
+@interface MPMediaItem (ForOldSDK)
+- (int64_t)persistentID;
+- (int64_t)artistPersistentID;
+- (NSTimeInterval)playbackDuration;
+
+- (MPMediaItemArtwork*)artwork;
+- (NSString*)title;
+- (NSString*)artist;
+- (NSString*)albumTitle;
+- (NSString*)genre;
+@end
+#endif
+
+
 @interface MPMusicPlayerController (Added)
 + (instancetype)deviceMusicPlayer;
 @end
