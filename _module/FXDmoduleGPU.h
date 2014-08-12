@@ -5,6 +5,9 @@
 #import "FXDKit.h"
 
 
+#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720
+
+
 @class FXDmoduleCapture;
 
 

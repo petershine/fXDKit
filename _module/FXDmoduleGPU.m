@@ -6,6 +6,75 @@
 
 
 @implementation FXDcameraGPU
+- (void)rotateCamera {
+	if (GlobalModule.isDeviceOld == NO) {
+		[super rotateCamera];
+		return;
+	}
+
+
+	FXDLog_DEFAULT;
+
+	if (self.frontFacingCameraPresent == NO) {
+		FXDLogBOOL(self.frontFacingCameraPresent);
+		return;
+	}
+
+
+	NSError *error = nil;
+	AVCaptureDeviceInput *newVideoInput = nil;
+	AVCaptureDevicePosition newCameraPosition = [[videoInput device] position];
+
+	if (newCameraPosition == AVCaptureDevicePositionBack) {
+		newCameraPosition = AVCaptureDevicePositionFront;
+	}
+	else {
+		newCameraPosition = AVCaptureDevicePositionBack;
+	}
+
+	AVCaptureDevice *newVideCamera = nil;
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+	for (AVCaptureDevice *device in devices) {
+		if ([device position] == newCameraPosition) {
+			newVideCamera = device;
+		}
+	}
+
+	newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newVideCamera error:&error];
+	FXDLog_ERROR;
+
+	if (newVideoInput != nil) {
+		[_captureSession beginConfiguration];
+
+		[_captureSession removeInput:videoInput];
+
+
+		//MARK: In case of old device, preset has to be different
+		if (newCameraPosition == AVCaptureDevicePositionBack) {
+			_captureSession.sessionPreset = sessionPresetOptimalCapture;
+		}
+		else {
+			_captureSession.sessionPreset = AVCaptureSessionPresetHigh;
+		}
+		FXDLogObject(_captureSession.sessionPreset);
+
+
+		if ([_captureSession canAddInput:newVideoInput]) {
+			[_captureSession addInput:newVideoInput];
+			videoInput = newVideoInput;
+		}
+		else {
+			[_captureSession addInput:videoInput];
+		}
+
+		[_captureSession commitConfiguration];
+	}
+
+	_inputCamera = newVideCamera;
+	
+	[self setOutputImageOrientation:self.outputImageOrientation];
+}
 @end
 
 @implementation FXDfilterGPU
@@ -107,7 +176,7 @@
 
 	FXDLog_DEFAULT;
 
-	_videoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
+	_videoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:sessionPresetOptimalCapture
 												cameraPosition:AVCaptureDevicePositionBack];
 	[_videoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
