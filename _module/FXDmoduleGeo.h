@@ -5,7 +5,9 @@
 #import "FXDKit.h"
 
 
-@interface FXDmoduleGeo : FXDsuperModule <CLLocationManagerDelegate>
+@interface FXDmoduleGeo : FXDsuperModule <CLLocationManagerDelegate> {
+	CLLocationManager *_mainLocationManager;
+}
 
 @property (nonatomic) BOOL didStartSignificantMonitoring;
 

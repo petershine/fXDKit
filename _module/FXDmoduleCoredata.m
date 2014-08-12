@@ -149,7 +149,7 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withCompleteProtection:(BOOL)withCompleteProtection withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withProtectionOption:(NSString*)protectionOption withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	if (managedDocument == nil) {
 		FXDLog(@"CHECK if bundle has more than 1 momd");
@@ -162,7 +162,7 @@
 
 
 	FXDLogObject(ubiquityContainerURL);
-	FXDLogBOOL(withCompleteProtection);
+	FXDLogObject(protectionOption);
 	FXDLogObject(managedDocument);
 
 	self.mainDocument = managedDocument;
@@ -183,8 +183,8 @@
 	}
 
 	//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
-	if (withCompleteProtection) {
-		storeOptions[NSPersistentStoreFileProtectionKey] = NSFileProtectionComplete;
+	if (protectionOption.length > 0) {
+		storeOptions[NSPersistentStoreFileProtectionKey] = protectionOption;
 	}
 
 	FXDLogObject(storeOptions);
