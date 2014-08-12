@@ -343,7 +343,7 @@
 													MKMapPointMake(tileMapRect.size.width,
 																   tileMapRect.size.height));
 
-		FXDLog(@"%ux%lu = %lu: %@ %@", (NSUInteger)dividedBy, (unsigned long)dividedBy, (unsigned long)(dividedBy*dividedBy), MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
+		FXDLog(@"%lux%lu = %lu: %@ %@", (unsigned long)dividedBy, (unsigned long)dividedBy, (unsigned long)(dividedBy*dividedBy), MKStringFromMapSize(tileMapRect.size), _Variable(diagonalDistance));
 
 	} while ((NSUInteger)diagonalDistance > minimumDiagonalDistance);
 
