@@ -26,8 +26,8 @@
 #define intervalOneSecond	durationOneSecond
 
 
-#define radiusCorner	5.0
-#define radiusBigCorner	8.0
+#define radiusCorner	4.0
+#define radiusBigCorner	(radiusCorner*2.0)
 
 
 #define durationKeyboardAnimation	0.25
