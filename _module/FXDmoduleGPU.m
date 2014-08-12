@@ -15,54 +15,44 @@
 
 	FXDLog_DEFAULT;
 
+	FXDLogBOOL(self.frontFacingCameraPresent);
 	if (self.frontFacingCameraPresent == NO) {
-		FXDLogBOOL(self.frontFacingCameraPresent);
 		return;
 	}
 
 
 	NSError *error = nil;
-	AVCaptureDeviceInput *newVideoInput = nil;
-	AVCaptureDevicePosition newCameraPosition = [[videoInput device] position];
+	AVCaptureDeviceInput *captureInput = nil;
 
-	if (newCameraPosition == AVCaptureDevicePositionBack) {
-		newCameraPosition = AVCaptureDevicePositionFront;
-	}
-	else {
-		newCameraPosition = AVCaptureDevicePositionBack;
-	}
+	AVCaptureDevicePosition modifiedPosition = [[videoInput device] position];
+	modifiedPosition = (modifiedPosition == AVCaptureDevicePositionBack) ? AVCaptureDevicePositionFront:AVCaptureDevicePositionBack;
 
-	AVCaptureDevice *newVideCamera = nil;
+	AVCaptureDevice *captureDevice = nil;
 	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
 
 	for (AVCaptureDevice *device in devices) {
-		if ([device position] == newCameraPosition) {
-			newVideCamera = device;
+		if ([device position] == modifiedPosition) {
+			captureDevice = device;
 		}
 	}
 
-	newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newVideCamera error:&error];
+	captureInput = [[AVCaptureDeviceInput alloc] initWithDevice:captureDevice error:&error];
 	FXDLog_ERROR;
 
-	if (newVideoInput != nil) {
+	if (captureInput != nil) {
 		[_captureSession beginConfiguration];
 
 		[_captureSession removeInput:videoInput];
 
 
 		//MARK: In case of old device, preset has to be different
-		if (newCameraPosition == AVCaptureDevicePositionBack) {
-			_captureSession.sessionPreset = sessionPresetOptimalCapture;
-		}
-		else {
-			_captureSession.sessionPreset = AVCaptureSessionPresetHigh;
-		}
+		_captureSession.sessionPreset = (modifiedPosition == AVCaptureDevicePositionBack) ? sessionPresetOptimalCapture:AVCaptureSessionPresetHigh;
 		FXDLogObject(_captureSession.sessionPreset);
 
 
-		if ([_captureSession canAddInput:newVideoInput]) {
-			[_captureSession addInput:newVideoInput];
-			videoInput = newVideoInput;
+		if ([_captureSession canAddInput:captureInput]) {
+			[_captureSession addInput:captureInput];
+			videoInput = captureInput;
 		}
 		else {
 			[_captureSession addInput:videoInput];
@@ -71,8 +61,8 @@
 		[_captureSession commitConfiguration];
 	}
 
-	_inputCamera = newVideCamera;
-	
+	_inputCamera = captureDevice;
+
 	[self setOutputImageOrientation:self.outputImageOrientation];
 }
 @end
