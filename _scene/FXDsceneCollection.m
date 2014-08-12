@@ -92,7 +92,7 @@
 	[cellOperation
 	 addExecutionBlock:^{
 
-		 if (weakOperation && weakOperation.isCancelled == NO) {
+		 if (weakOperation.isCancelled == NO) {
 			 //TODO:
 		 }
 		 
