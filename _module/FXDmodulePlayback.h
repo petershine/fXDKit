@@ -13,7 +13,7 @@
 #endif
 
 
-@interface FXDsubviewAssetDisplay : UIView
+@interface FXDsubviewAssetDisplay : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 + (instancetype)assetDisplay;
 

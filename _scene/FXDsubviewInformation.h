@@ -2,7 +2,7 @@
 #import "FXDKit.h"
 
 
-@interface FXDsubviewInformation : UIView
+@interface FXDsubviewInformation : FXDView
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 

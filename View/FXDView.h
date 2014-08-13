@@ -9,6 +9,17 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 	boxCornerTopRight
 };
 
+typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *event);
+
+
+@interface FXDView : UIView {
+	FXDblockHitTest _hitTestBlock;
+}
+
+@property (copy, nonatomic) FXDblockHitTest hitTestBlock;
+
+@end
+
 
 @interface UIView (Essential)
 + (instancetype)viewFromNibName:(NSString*)nibName;
@@ -57,7 +68,7 @@ typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
 @end
 
 
-@interface FXDsubviewGlowing : UIView
+@interface FXDsubviewGlowing : FXDView
 @property (strong, nonatomic) UIColor *glowingColor;
 - (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
 @end
