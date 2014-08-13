@@ -86,6 +86,10 @@
 @end
 
 @implementation FXDwriterGPU
+- (void)dealloc {
+	FXDLog_DEFAULT;
+}
+
 + (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
 
 	FXDLog(@"%@ %f", _Size(videoSize), (MAX(videoSize.width, videoSize.height)/MIN(videoSize.width, videoSize.height)));
