@@ -2,13 +2,6 @@
 #import "FXDKit.h"
 
 
-typedef NS_ENUM(NSInteger, BOX_CORNER_TYPE) {
-	boxCornerTopLeft,
-	boxCornerBottomLeft,
-	boxCornerBottomRight,
-	boxCornerTopRight
-};
-
 typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *event);
 
 
@@ -48,8 +41,6 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 
 - (void)blinkShadowOpacity;
 
-- (void)updateFromPortraitCornerType:(BOX_CORNER_TYPE)boxCornerType forSize:(CGSize)size forDuration:(NSTimeInterval)duration;
-- (void)updateWithBoxCornerType:(BOX_CORNER_TYPE)boxCornerType forSize:(CGSize)size forDuration:(NSTimeInterval)duration;
 
 - (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
 
