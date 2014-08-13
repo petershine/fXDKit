@@ -15,6 +15,7 @@
 - (void)scrollToCenterToShowSubView:(UIView*)subView shouldAnimate:(BOOL)shouldAnimate;
 
 - (BOOL)isScrollingCurrently;
+- (BOOL)isScrolledByUser;
 
 - (CGFloat)horizontalProgress;
 

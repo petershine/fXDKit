@@ -124,6 +124,10 @@
 	return (self.isDragging && self.isDecelerating && !self.isTracking);
 }
 
+- (BOOL)isScrolledByUser {
+	return (self.isTracking || self.isDragging);
+}
+
 #pragma mark -
 - (CGFloat)horizontalProgress {
 	//MARK: Need to find the correct calculation, considering contentInset
