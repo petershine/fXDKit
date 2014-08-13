@@ -79,46 +79,7 @@
 	return view;
 }
 
-- (void)applyDefaultBorderLine {
-	[self applyDefaultBorderLineWithCornerRadius:radiusCorner];
-}
-
-- (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius {
-	self.layer.masksToBounds = YES;
-	self.layer.cornerRadius = radius;
-	
-	self.layer.borderWidth = 1.0;
-	self.layer.borderColor = [UIColor darkGrayColor].CGColor;
-}
-
-- (void)reframeToBeAtTheCenterOfSuperview {	FXDLog_DEFAULT;
-	
-	if (self.superview) {
-		[self updateWithXYratio:CGPointMake(0.5, 0.5)
-						forSize:self.superview.frame.size
-				   forTransform:self.transform
-					forDuration:0.0];
-	}
-}
-
-- (void)fadeIn {
-	self.alpha = 0.0;
-	
-	[UIView
-	 animateWithDuration:durationAnimation
-	 animations:^{
-		 self.alpha = 1.0;
-	 }];
-}
-
-- (void)fadeOut {
-	[UIView
-	 animateWithDuration:durationAnimation
-	 animations:^{
-		 self.alpha = 0.0;
-	 }];
-}
-
+#pragma mark -
 - (void)fadeInFromHidden {
 	if (self.hidden == NO && self.alpha == 1.0) {
 		return;
@@ -164,6 +125,7 @@
 	 }];
 }
 
+#pragma mark -
 - (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock {
 	subview.alpha = 0.0;
 
@@ -356,6 +318,56 @@
 	converted.size.height += marginDefault*2.0;
 
 	return [NSValue valueWithCGRect:converted];
+}
+
+#pragma mark -
+- (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay {
+
+	UILabel *alertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, heightNavigationBar)];
+	alertLabel.text = alertText;
+
+	alertLabel.font = [UIFont boldSystemFontOfSize:20.0];
+	alertLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue08];
+	alertLabel.textColor = [UIColor whiteColor];
+	alertLabel.textAlignment = NSTextAlignmentCenter;
+
+	alertLabel.autoresizingMask = UIViewAutoresizingNone;
+	alertLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin;
+
+	alertLabel.userInteractionEnabled = NO;
+
+	alertLabel.alpha = 0.0;
+
+
+	[self addSubview:alertLabel];
+
+	[alertLabel updateWithXYratio:CGPointMake(0.5, 0.5)
+						  forSize:alertLabel.superview.frame.size
+					 forTransform:alertLabel.transform
+					  forDuration:0.0];
+
+
+	[UIView
+	 animateWithDuration:durationSlowAnimation
+	 delay:0.0
+	 options:UIViewAnimationOptionCurveEaseInOut
+	 animations:^{
+		 alertLabel.alpha = 1.0;
+	 }
+	 completion:^(BOOL finished) {
+
+		 [UIView
+		  animateWithDuration:durationSlowAnimation
+		  delay:delay
+		  options:UIViewAnimationOptionCurveEaseInOut
+		  animations:^{
+			  alertLabel.alpha = 0.0;
+
+		  }
+		  completion:^(BOOL finished) {
+			  [alertLabel removeFromSuperview];
+		  }];
+	 }];
 }
 
 @end

@@ -21,8 +21,6 @@
 - (void)showInformationViewWithClassName:(NSString*)className;
 - (void)hideInformationView;
 
-- (void)temporaryAlertWithText:(NSString*)alertText;
-
 @end
 
 

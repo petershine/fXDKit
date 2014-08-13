@@ -8,9 +8,13 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 @interface FXDView : UIView {
 	FXDblockHitTest _hitTestBlock;
 }
-
 @property (copy, nonatomic) FXDblockHitTest hitTestBlock;
+@end
 
+
+@interface FXDsubviewGlowing : FXDView
+@property (strong, nonatomic) UIColor *glowingColor;
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
 @end
 
 
@@ -21,12 +25,6 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 + (instancetype)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil;
 + (instancetype)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil;
 
-- (void)applyDefaultBorderLine;
-- (void)applyDefaultBorderLineWithCornerRadius:(CGFloat)radius;
-- (void)reframeToBeAtTheCenterOfSuperview;
-
-- (void)fadeIn;
-- (void)fadeOut;
 
 - (void)fadeInFromHidden;
 - (void)fadeOutThenHidden;
@@ -51,6 +49,9 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 
 - (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view;
 
+
+- (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay;
+
 @end
 
 
@@ -58,11 +59,6 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 - (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
 @end
 
-
-@interface FXDsubviewGlowing : FXDView
-@property (strong, nonatomic) UIColor *glowingColor;
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
-@end
 
 @interface UIView (Glowing)
 - (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;

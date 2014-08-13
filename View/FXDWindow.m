@@ -199,52 +199,6 @@
 	 }];
 }
 
-#pragma mark -
-- (void)temporaryAlertWithText:(NSString*)alertText {
-
-	UILabel *temporaryAlertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, heightNavigationBar)];
-	temporaryAlertLabel.text = alertText;
-
-	temporaryAlertLabel.font = [UIFont boldSystemFontOfSize:20.0];
-	temporaryAlertLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue08];
-	temporaryAlertLabel.textColor = [UIColor whiteColor];
-	temporaryAlertLabel.textAlignment = NSTextAlignmentCenter;
-
-	temporaryAlertLabel.autoresizingMask = UIViewAutoresizingNone;
-	temporaryAlertLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin;
-
-	temporaryAlertLabel.userInteractionEnabled = NO;
-
-	temporaryAlertLabel.alpha = 0.0;
-
-
-	[self addSubview:temporaryAlertLabel];
-	[temporaryAlertLabel reframeToBeAtTheCenterOfSuperview];
-
-
-	[UIView
-	 animateWithDuration:durationSlowAnimation
-	 delay:0.0
-	 options:UIViewAnimationOptionCurveEaseInOut
-	 animations:^{
-		 temporaryAlertLabel.alpha = 1.0;
-	 }
-	 completion:^(BOOL finished) {
-
-		 [UIView
-		  animateWithDuration:durationSlowAnimation
-		  delay:0.0
-		  options:UIViewAnimationOptionCurveEaseInOut
-		  animations:^{
-			  temporaryAlertLabel.alpha = 0.0;
-
-		  }
-		  completion:^(BOOL finished) {
-			  [temporaryAlertLabel removeFromSuperview];
-		  }];
-	 }];
-}
-
 @end
 
 
