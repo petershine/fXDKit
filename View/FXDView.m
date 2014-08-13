@@ -174,16 +174,16 @@
 										   NO,	//MARK: to allow transparency
 										   scale);
 
-	if ([self.layer respondsToSelector:@selector(renderInContext:)]) {
-		[self.layer performSelector:@selector(renderInContext:) withObject:(__bridge id)UIGraphicsGetCurrentContext()];
-	}
-	else {
+	if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
 		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds
 								  afterScreenUpdates:afterScreenUpdates];
 
 		if (didDraw == NO) {	FXDLog_DEFAULT;
 			FXDLogBOOL(didDraw);
 		}
+	}
+	else if ([self.layer respondsToSelector:@selector(renderInContext:)]) {
+		[self.layer performSelector:@selector(renderInContext:) withObject:(__bridge id)UIGraphicsGetCurrentContext()];
 	}
 
 	renderedImage = UIGraphicsGetImageFromCurrentImageContext();
