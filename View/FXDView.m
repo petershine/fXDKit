@@ -290,25 +290,6 @@
 }
 
 #pragma mark -
-- (void)updateLayerWithAffineTransform:(CGAffineTransform)affineTransform forBounds:(CGRect)bounds {	FXDLog_DEFAULT;
-	FXDLog(@"1.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
-
-	self.layer.affineTransform = affineTransform;
-	self.layer.frame = bounds;
-
-	for (CALayer *sublayer in self.layer.sublayers) {
-		FXDLog(@"1.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
-		sublayer.frame = self.layer.bounds;
-
-		FXDLog(@"2.%@ %@", _Rect(sublayer.frame), _Rect(sublayer.bounds));
-	}
-
-	[self setNeedsLayout];
-
-	FXDLog(@"2.%@ %@ %@ %@", _Rect(self.frame), _Rect(self.bounds), _Rect(self.layer.frame), _Rect(self.layer.bounds));
-}
-
-#pragma mark -
 - (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view {
 	CGRect converted = [self convertRect:rect toView:view];
 

@@ -92,13 +92,10 @@
 	FXDLogObject(fileURL);
 	FXDLogObject(gpuimageFilter);
 
-	FXDwriterGPU *gpumovieWriter = [[FXDwriterGPU alloc]
-									initWithMovieURL:fileURL
-									size:videoSize
-									fileType:AVFileTypeQuickTimeMovie
-									outputSettings:nil];
-
-	gpumovieWriter.uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
+	FXDwriterGPU *gpumovieWriter = [[[self class] alloc] initWithMovieURL:fileURL
+																	 size:videoSize
+																 fileType:AVFileTypeQuickTimeMovie
+														   outputSettings:nil];
 
 	gpumovieWriter.encodingLiveVideo = YES;
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];

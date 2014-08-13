@@ -22,9 +22,6 @@
 @end
 
 @interface FXDwriterGPU : GPUImageMovieWriter
-@property (nonatomic) CMTime startTime;
-@property (strong, nonatomic) NSString *uniqueKey;
-
 + (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter;
 @end
 

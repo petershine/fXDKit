@@ -45,7 +45,6 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 - (void)updateForClippedDimension:(CGFloat)clippedDimension forSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 
-- (void)updateLayerWithAffineTransform:(CGAffineTransform)affineTransform forBounds:(CGRect)screenBounds;
 
 - (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view;
 
