@@ -4,13 +4,13 @@
 
 @interface FXDsubviewInformation : FXDView
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelTitle;
-@property (weak, nonatomic) IBOutlet UILabel *labelMessage_0;
-@property (weak, nonatomic) IBOutlet UILabel *labelMessage_1;
+@property (strong, nonatomic) IBOutlet UILabel *labelTitle;
+@property (strong, nonatomic) IBOutlet UILabel *labelMessage_0;
+@property (strong, nonatomic) IBOutlet UILabel *labelMessage_1;
 
-@property (weak, nonatomic) IBOutlet UISlider *sliderProgress;
-@property (weak, nonatomic) IBOutlet UIProgressView *indicatorProgress;
+@property (strong, nonatomic) IBOutlet UISlider *sliderProgress;
+@property (strong, nonatomic) IBOutlet UIProgressView *indicatorProgress;
 
 @end

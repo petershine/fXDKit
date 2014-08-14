@@ -27,8 +27,8 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 @property (nonatomic) BOOL isUncovering;
 
 
-@property (weak, nonatomic) IBOutlet UIView *mainNavigationbar;
-@property (weak, nonatomic) IBOutlet UIView *mainToolbar;
+@property (strong, nonatomic) IBOutlet UIView *mainNavigationbar;
+@property (strong, nonatomic) IBOutlet UIView *mainToolbar;
 
 
 - (void)coverWithSegue:(FXDsegueCover*)coveringSegue;

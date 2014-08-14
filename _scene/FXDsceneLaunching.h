@@ -4,7 +4,6 @@
 
 @interface FXDsceneLaunching : FXDViewController
 
-
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;
 
 
