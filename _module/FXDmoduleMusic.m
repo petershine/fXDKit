@@ -70,7 +70,6 @@
 	MPMediaQuery *mediaQuery = [[MPMediaQuery alloc]
 								initWithFilterPredicates:[NSSet setWithObject:predicate]];
 
-
 	if (mediaQuery.items.count > 1) {
 		MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 		FXDLogObject(mediaLibrary.lastModifiedDate);
@@ -80,6 +79,36 @@
 	}
 
 	return mediaQuery.items.firstObject;
+}
+
+- (MPMediaItem*)mediaItemForTitle:(NSString*)title forArtist:(NSString*)artist forAlbumTitle:(NSString*)albumTitle {
+	MPMediaQuery *songQuery = [[MPMediaQuery alloc] init];
+
+	if (title.length > 0) {
+		MPMediaPropertyPredicate *titlePredicate = [MPMediaPropertyPredicate
+													predicateWithValue:title
+													forProperty:MPMediaItemPropertyTitle];
+		[songQuery addFilterPredicate:titlePredicate];
+	}
+
+	if (artist.length > 0) {
+		MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate
+													 predicateWithValue:artist
+													 forProperty:MPMediaItemPropertyArtist];
+		[songQuery addFilterPredicate:artistPredicate];
+	}
+
+	if (albumTitle.length > 0) {
+		MPMediaPropertyPredicate *albumTitlePredicate = [MPMediaPropertyPredicate
+														 predicateWithValue:albumTitle
+														 forProperty:MPMediaItemPropertyAlbumTitle];
+		[songQuery addFilterPredicate:albumTitlePredicate];
+	}
+
+
+	MPMediaItem *mediaItem = songQuery.items.firstObject;
+
+	return mediaItem;
 }
 @end
 

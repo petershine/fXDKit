@@ -26,6 +26,7 @@
 
 @interface MPMediaLibrary (Added)
 - (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID;
+- (MPMediaItem*)mediaItemForTitle:(NSString*)title forArtist:(NSString*)artist forAlbumTitle:(NSString*)albumTitle;
 @end
 
 
