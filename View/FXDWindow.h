@@ -2,12 +2,19 @@
 #import "FXDKit.h"
 
 
+typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *event);
+
+
 @class FXDsubviewInformation;
 
 @class FXDsceneLaunching;
 
 
-@interface FXDWindow : UIWindow
+@interface FXDWindow : UIWindow {
+	FXDblockHitTest _hitTestBlock;
+}
+
+@property (copy, nonatomic) FXDblockHitTest hitTestBlock;
 
 @property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
 

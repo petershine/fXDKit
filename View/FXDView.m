@@ -4,25 +4,6 @@
 
 
 @implementation FXDView
-- (void)dealloc {
-	if (_hitTestBlock) {	FXDLog_DEFAULT;
-		FXDLogObject(_hitTestBlock);
-	}
-}
-
-#pragma mark - Method overriding
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-	UIView *testedView = [super hitTest:point withEvent:event];
-
-	if (_hitTestBlock) {	FXDLog_DEFAULT;
-		FXDLog(@"%@ %@ %@", _Point(point), _Object(event), _Object(testedView));
-		
-		testedView = _hitTestBlock(testedView, point, event);
-	}
-
-	return testedView;
-}
-
 @end
 
 

@@ -2,19 +2,7 @@
 #import "FXDKit.h"
 
 
-typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *event);
-
-
-@interface FXDView : UIView {
-	FXDblockHitTest _hitTestBlock;
-}
-@property (copy, nonatomic) FXDblockHitTest hitTestBlock;
-@end
-
-
-@interface FXDsubviewGlowing : FXDView
-@property (strong, nonatomic) UIColor *glowingColor;
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
+@interface FXDView : UIView
 @end
 
 
@@ -58,6 +46,11 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 - (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
 @end
 
+
+@interface FXDsubviewGlowing : FXDView
+@property (strong, nonatomic) UIColor *glowingColor;
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
+@end
 
 @interface UIView (Glowing)
 - (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;
