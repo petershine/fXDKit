@@ -3,4 +3,7 @@
 
 
 @interface FXDsuperModule : NSObject
+
+- (void)startReactiveObserving;
+
 @end

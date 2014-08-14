@@ -20,7 +20,7 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {	FXDLog_OVERRIDE;
+- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@", _Point(point), _Object(event));
 
 	UIView *testedView = [super hitTest:point withEvent:event];
@@ -29,14 +29,16 @@
 	return testedView;
 }
 
-- (void)layoutSubviews {	FXDLog_OVERRIDE;
+- (void)layoutSubviews {	FXDLog_DEFAULT;
 	[super layoutSubviews];
 
+	FXDLogVariable([UIDevice currentDevice].orientation);
+	FXDLogTransform(self.transform);
 	FXDLogObject(self);
 }
 
 #pragma mark -
-- (void)makeKeyAndVisible {	FXDLog_SEPARATE;
+- (void)makeKeyAndVisible {	FXDLog_DEFAULT;
 	[super makeKeyAndVisible];
 }
 
@@ -64,29 +66,29 @@
 	}
 
 
+	UIViewController *previousRootScene = self.rootViewController;
+
 	if (willBecomeBlock) {
 		willBecomeBlock();
 	}
 
-	UIViewController *launchScene = self.rootViewController;
-
 	[self setRootViewController:rootScene];
 
-	[self addSubview:launchScene.view];
+	[self addSubview:previousRootScene.view];
 
 
 	if (didBecomeBlock) {
 		didBecomeBlock();
 	}
 
-	if ([launchScene isKindOfClass:[FXDsceneLaunching class]]) {
+	if ([previousRootScene isKindOfClass:[FXDsceneLaunching class]]) {
 
-		[(FXDsceneLaunching*)launchScene
+		[(FXDsceneLaunching*)previousRootScene
 		 dismissLaunchSceneWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-			 FXDLog_BLOCK(launchScene, caller);
+			 FXDLog_BLOCK(previousRootScene, caller);
 			 FXDLogBOOL(didFinish);
 
-			 [launchScene.view removeFromSuperview];
+			 [previousRootScene.view removeFromSuperview];
 
 			 if (finishCallback) {
 				 finishCallback(_cmd, didFinish, responseObj);
@@ -102,11 +104,11 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
-		 launchScene.view.alpha = 0.0;
+		 previousRootScene.view.alpha = 0.0;
 	 }
 	 completion:^(BOOL didFinish) {
 
-		 [launchScene.view removeFromSuperview];
+		 [previousRootScene.view removeFromSuperview];
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, YES, nil);

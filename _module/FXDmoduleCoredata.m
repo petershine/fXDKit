@@ -304,10 +304,6 @@
 	 object:notifyingContext];
 }
 
-- (void)startReactiveObserving {	FXDLog_OVERRIDE;
-
-}
-
 #pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 	FXDAlertView *alertView =

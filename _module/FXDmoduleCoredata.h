@@ -55,7 +55,6 @@
 - (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)startObservingCoreDataNotifications;
-- (void)startReactiveObserving;
 
 
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback;

@@ -21,4 +21,7 @@
 	return self;
 }
 
+#pragma mark - Public
+- (void)startReactiveObserving {	FXDLog_DEFAULT;
+}
 @end
