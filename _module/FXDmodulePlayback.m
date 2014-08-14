@@ -10,7 +10,7 @@
 
 + (instancetype)assetDisplay {	FXDLog_DEFAULT;
 
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice currentDevice].orientation];
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice validDeviceOrientation]];
 
 	FXDsubviewAssetDisplay *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
 

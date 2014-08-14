@@ -227,34 +227,6 @@
 	return validOrientation;
 }
 
-+ (CGAffineTransform)forcedTransformForDeviceOrientation {
-
-	CGAffineTransform forcedTransform = CGAffineTransformIdentity;
-
-	UIDeviceOrientation deviceOrientation = [[self class] currentDevice].orientation;
-
-	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-		return forcedTransform;
-	}
-
-
-	switch (deviceOrientation) {
-		case UIDeviceOrientationLandscapeLeft:
-			forcedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(rotationAngleLandscapeLeft));
-			break;
-
-		case UIDeviceOrientationLandscapeRight:
-			forcedTransform = CGAffineTransformMakeRotation(radianAngleForDegree(rotationAngleLandscapeRight));
-			break;
-
-		default: {
-			break;
-		}
-	}
-
-	return forcedTransform;
-}
-
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation {
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;
 

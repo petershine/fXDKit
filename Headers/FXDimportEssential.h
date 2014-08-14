@@ -76,7 +76,6 @@
 
 @interface UIDevice (Essential)
 + (UIDeviceOrientation)validDeviceOrientation;
-+ (CGAffineTransform)forcedTransformForDeviceOrientation;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 
