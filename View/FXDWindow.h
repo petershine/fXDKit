@@ -19,7 +19,6 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 @property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
 
 
-- (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene;
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)showInformationViewAfterDelay:(NSTimeInterval)delay;

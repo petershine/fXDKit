@@ -21,11 +21,18 @@
 
 #pragma mark - Method overriding
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {	FXDLog_OVERRIDE;
+	FXDLog(@"%@ %@", _Point(point), _Object(event));
 
 	UIView *testedView = [super hitTest:point withEvent:event];
-	FXDLog(@"%@ %@ %@ %@", _Point(point), _Object(event), _Object(testedView), _Object(_hitTestBlock));
+	FXDLog(@"%@ %@", _Object(testedView), _Object(_hitTestBlock));
 
 	return testedView;
+}
+
+- (void)layoutSubviews {	FXDLog_OVERRIDE;
+	[super layoutSubviews];
+
+	FXDLogObject(self);
 }
 
 #pragma mark -
@@ -36,23 +43,6 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)prepareWindowWithLaunchScene:(FXDsceneLaunching*)launchScene {	FXDLog_DEFAULT;
-	if (launchScene == nil) {
-		launchScene = [[FXDsceneLaunching alloc] initWithNibName:nil bundle:nil];
-	}
-
-	CGRect modifiedFrame = launchScene.view.frame;
-	modifiedFrame.size.height = self.frame.size.height;
-	launchScene.view.frame = modifiedFrame;
-
-	modifiedFrame = launchScene.imageviewDefault.frame;
-	modifiedFrame.origin.y = 0.0;
-	modifiedFrame.size.height = self.frame.size.height;
-	launchScene.imageviewDefault.frame = modifiedFrame;
-
-	self.rootViewController = launchScene;
-}
-
 - (void)configureRootViewController:(UIViewController*)rootScene shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
