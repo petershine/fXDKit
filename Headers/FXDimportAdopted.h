@@ -23,9 +23,14 @@
 	@import CoreLocation;
 	@import MapKit;
 
+	@interface CLLocation (LocationFrameworks)
+	- (NSString*)formattedDistanceTextFromLocation:(CLLocation*)location;
+	@end
+
 	#import "FXDMapView.h"
 	#import "FXDAnnotationView.h"
 #endif
+
 
 #if USE_MultimediaFrameworks
 	@import CoreMedia;

@@ -3,8 +3,33 @@
 #import "FXDimportAdopted.h"
 
 
-#if USE_MultimediaFrameworks
+#if USE_LocationFrameworks
+@implementation CLLocation (LocationFrameworks)
+- (NSString*)formattedDistanceTextFromLocation:(CLLocation*)location {
 
+	NSString *distanceText = nil;
+
+	CLLocationDistance distance = [self distanceFromLocation:location];
+
+	//TODO: use miles for US users"
+
+	if (distance >= 1000.0) {
+		distance /= 1000.0;
+
+		distanceText = [NSString stringWithFormat:@"%.1f km", distance];
+	}
+	else {
+		distanceText = [NSString stringWithFormat:@"%.1f m", distance];
+
+	}
+
+	return distanceText;
+}
+@end
+#endif
+
+
+#if USE_MultimediaFrameworks
 @implementation CALayer (MultimediaFrameworks)
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
 	//MARK: Use removedOnCompletion & fillMode appropriately
@@ -64,5 +89,4 @@
 	return affineTransform;
 }
 @end
-
 #endif
