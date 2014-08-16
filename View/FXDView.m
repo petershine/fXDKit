@@ -74,7 +74,7 @@
 	}
 	
 	[UIView
-	 animateWithDuration:durationQuickAnimation
+	 animateWithDuration:durationAnimation
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
@@ -91,7 +91,7 @@
 	
 	
 	[UIView
-	 animateWithDuration:durationQuickAnimation
+	 animateWithDuration:durationAnimation
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
