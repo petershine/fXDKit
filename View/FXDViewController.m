@@ -160,7 +160,7 @@
 }
 
 #pragma mark -
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 }
 
@@ -172,7 +172,7 @@
 	[super viewDidLayoutSubviews];
 }
 
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 }
 

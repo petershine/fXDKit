@@ -140,18 +140,18 @@
 
 
 
-	#define FXDLog_REACT(keypath, value)	FXDLog_EMPTY;\
-											if ([NSThread isMainThread]) {\
-												FXDLog(@"REACT: [%@] %s: %@",\
-												NSStringFromClass([self class]),\
-												#keypath,\
-												value);\
-											} else {\
-												FXDLog(@"REACT: [%@] %@ %s: %@",\
-												NSStringFromClass([self class]),\
-												_IsMainThread,\
-												#keypath,\
-												value);}
+	#define FXDLog_REACT(value)	FXDLog_EMPTY;\
+								if ([NSThread isMainThread]) {\
+									FXDLog(@"REACT: %@ %s: %@",\
+									_ClassSelectorSelf,\
+									#value,\
+									value);\
+								} else {\
+									FXDLog(@"REACT: %@ %@ %s: %@",\
+									_ClassSelectorSelf,\
+									_IsMainThread,\
+									#value,\
+									value);}
 
 	#define FXDAssert_IsMainThread	NSAssert([NSThread isMainThread], nil)
 
@@ -194,7 +194,7 @@
 
 	#define FXDLog_BLOCK(instance, caller)
 
-	#define FXDLog_REACT(keypath, value)
+	#define FXDLog_REACT(value)
 
 	#define FXDAssert_IsMainThread
 
