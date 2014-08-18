@@ -20,7 +20,12 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {	FXDLog_DEFAULT;
+- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	if (_hitTestBlock == nil) {
+		return [super hitTest:point withEvent:event];
+	}
+
+	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@", _Point(point), _Object(event));
 
 	UIView *testedView = [super hitTest:point withEvent:event];
