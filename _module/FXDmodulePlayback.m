@@ -150,16 +150,12 @@
 			  }
 
 
-			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
-
-			  self.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
-
-			  [self.mainPlaybackDisplay setMainPlayer:self.moviePlayer];
-			  
-
 			  __weak FXDmodulePlayback *weakSelf = self;
 
-			  [weakSelf configurePlaybackObservers];
+			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+
+			  weakSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
+			  [weakSelf.mainPlaybackDisplay setMainPlayer:weakSelf.moviePlayer];
 
 			  [weakSelf startSeekingToTime:kCMTimeZero withFinishCallback:nil];
 
