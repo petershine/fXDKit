@@ -194,11 +194,7 @@
 	//MARK: Be careful about validity of time
 	if (CMTimeCompare(weakSelf.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
 		&& progressPercentage > 0.0) {
-		seekedTime = CMTimeMultiplyByFloat64(self.moviePlayer.currentItem.duration, progressPercentage);
-	}
-
-	if (progressPercentage == 0.0) {
-		FXDLog(@"%@ %@ %@", _Variable(progressPercentage), _Time(seekedTime), _Time(weakSelf.moviePlayer.currentItem.duration));
+		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressPercentage);
 	}
 
 	[weakSelf startSeekingToTime:seekedTime withFinishCallback:finishCallback];
@@ -208,8 +204,7 @@
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
-	if (CMTIME_IS_VALID(seekedTime) == NO) {
-		FXDLog_DEFAULT;
+	if (CMTIME_IS_VALID(seekedTime) == NO) {	FXDLog_DEFAULT;
 		FXDLogBOOL(CMTIME_IS_VALID(seekedTime));
 
 		if (finishCallback) {
@@ -256,6 +251,9 @@
 	[weakSelf.moviePlayer.currentItem
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL didFinish) {
+		 FXDLog_BLOCK(weakSelf.moviePlayer.currentItem, @selector(seekToTime:completionHandler:));
+		 FXDLogTime(seekedTime);
+
 		 if (didFinish) {
 			 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 }
