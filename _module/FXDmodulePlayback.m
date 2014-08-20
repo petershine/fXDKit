@@ -104,15 +104,9 @@
 
 #pragma mark - Property overriding
 - (FXDsubviewAssetDisplay*)mainPlaybackDisplay {
-	if (_mainPlaybackDisplay) {
-		return _mainPlaybackDisplay;
+	if (_mainPlaybackDisplay == nil) {	FXDLog_DEFAULT;
+		_mainPlaybackDisplay = [FXDsubviewAssetDisplay assetDisplay];
 	}
-
-
-	FXDLog_DEFAULT;
-
-	_mainPlaybackDisplay = [FXDsubviewAssetDisplay assetDisplay];
-
 	return _mainPlaybackDisplay;
 }
 

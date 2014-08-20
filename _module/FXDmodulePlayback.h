@@ -21,7 +21,10 @@
 @end
 
 
-@interface FXDmodulePlayback : FXDsuperModule
+@interface FXDmodulePlayback : FXDsuperModule {
+	FXDsubviewAssetDisplay *_mainPlaybackDisplay;
+}
+
 @property (nonatomic) CMTime playbackCurrentTime;
 @property (nonatomic) CMTime lastSeekedTime;
 
