@@ -252,7 +252,7 @@
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL didFinish) {
 		 FXDLog_BLOCK(weakSelf.moviePlayer.currentItem, @selector(seekToTime:completionHandler:));
-		 FXDLogTime(seekedTime);
+		 FXDLog(@"%@ %@", _Time(seekedTime), _Time([weakSelf.moviePlayer.currentItem currentTime]));
 
 		 if (didFinish) {
 			 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
