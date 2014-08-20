@@ -12,7 +12,6 @@
 @property (nonatomic) BOOL didStartSignificantMonitoring;
 
 @property (nonatomic) UIBackgroundTaskIdentifier monitoringTask;
-@property (nonatomic) UIBackgroundTaskIdentifier locationUpdatingTask;
 
 @property (strong, nonatomic) CLLocationManager *mainLocationManager;
 
