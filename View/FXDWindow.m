@@ -34,14 +34,6 @@
 	return testedView;
 }
 
-- (void)layoutSubviews {	FXDLog_DEFAULT;
-	[super layoutSubviews];
-
-	FXDLogVariable([UIDevice currentDevice].orientation);
-	FXDLogTransform(self.transform);
-	FXDLogObject(self);
-}
-
 #pragma mark -
 - (void)makeKeyAndVisible {	FXDLog_DEFAULT;
 	[super makeKeyAndVisible];
