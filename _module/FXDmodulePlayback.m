@@ -209,8 +209,7 @@
 
 
 	if (weakSelf.moviePlayer.status != AVPlayerStatusReadyToPlay
-		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {
-		FXDLog_DEFAULT;
+		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
 		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
 
 		if (finishCallback) {
@@ -245,12 +244,18 @@
 	[weakSelf.moviePlayer.currentItem
 	 seekToTime:seekedTime
 	 completionHandler:^(BOOL didFinish) {
-		 FXDLog_BLOCK(weakSelf.moviePlayer.currentItem, @selector(seekToTime:completionHandler:));
-		 FXDLog(@"%@ %@", _Time(seekedTime), _Time([weakSelf.moviePlayer.currentItem currentTime]));
 
+		 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
+
+		 //TEST:
+		 /*
 		 if (didFinish) {
-			 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 		 }
+		 else {
+			 FXDLog_BLOCK(weakSelf.moviePlayer.currentItem, @selector(seekToTime:completionHandler:));
+			 FXDLog(@"%@ %@", _Time(seekedTime), _Time([weakSelf.moviePlayer.currentItem currentTime]));
+		 }
+		  */
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, didFinish, nil);
