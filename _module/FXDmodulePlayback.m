@@ -95,6 +95,7 @@
 	[_mainPlaybackDisplay setMainPlayer:nil];
 	[_mainPlaybackDisplay removeFromSuperview];
 
+	[_moviePlayer cancelPendingPrerolls];
 	[_moviePlayer pause];
 	[_moviePlayer replaceCurrentItemWithPlayerItem:nil];
 
