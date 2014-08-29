@@ -96,6 +96,7 @@
 	[_mainPlaybackDisplay removeFromSuperview];
 
 	[_moviePlayer pause];
+	[_moviePlayer replaceCurrentItemWithPlayerItem:nil];
 
 	[_moviePlayer removeTimeObserver:_periodicObserver];
 }
@@ -114,6 +115,8 @@
 
 #pragma mark - Public
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	AVURLAsset *movieAsset = [AVURLAsset
 							  URLAssetWithURL:movieFileURL
@@ -144,14 +147,23 @@
 			  }
 
 
-			  __weak FXDmodulePlayback *weakSelf = self;
+			  __strong FXDmodulePlayback *strongSelf = weakSelf;
+
+			  if (strongSelf == nil) {
+				  if (callback) {
+					  callback(_cmd, NO, nil);
+				  }
+				  return;
+			  }
+
 
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 
-			  weakSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
-			  [weakSelf.mainPlaybackDisplay setMainPlayer:weakSelf.moviePlayer];
 
-			  [weakSelf startSeekingToTime:kCMTimeZero withFinishCallback:nil];
+			  strongSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
+			  [strongSelf.mainPlaybackDisplay setMainPlayer:strongSelf.moviePlayer];
+
+			  [strongSelf startSeekingToTime:kCMTimeZero withFinishCallback:nil];
 
 			  if (callback) {
 				  callback(_cmd, YES, nil);
