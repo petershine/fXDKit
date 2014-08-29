@@ -31,14 +31,11 @@
 @property (strong, nonatomic) AVPlayer *moviePlayer;
 @property (strong, nonatomic) id periodicObserver;
 
-@property (strong, nonatomic) id playerItemObserver;
-
 @property (strong, nonatomic) FXDsubviewAssetDisplay *mainPlaybackDisplay;
 
 
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;
 
-- (void)configurePlaybackObservers;
 
 - (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;

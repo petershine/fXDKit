@@ -87,11 +87,6 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:_playerItemObserver];
-	_playerItemObserver = nil;
-
-	_periodicObserver = nil;
-
 	[_mainPlaybackDisplay setMainPlayer:nil];
 	[_mainPlaybackDisplay removeFromSuperview];
 
@@ -100,6 +95,7 @@
 	[_moviePlayer replaceCurrentItemWithPlayerItem:nil];
 
 	[_moviePlayer removeTimeObserver:_periodicObserver];
+	_periodicObserver = nil;
 }
 
 #pragma mark - Initialization
@@ -170,24 +166,6 @@
 				  callback(_cmd, YES, nil);
 			  }
 		  }];
-	 }];
-}
-
-#pragma mark -
-- (void)configurePlaybackObservers {	FXDLog_DEFAULT;
-	
-	__weak FXDmodulePlayback *weakSelf = self;
-
-	weakSelf.playerItemObserver =
-	[[NSNotificationCenter defaultCenter]
-	 addObserverForName:AVPlayerItemDidPlayToEndTimeNotification
-	 object:nil
-	 queue:nil
-	 usingBlock:^(NSNotification *notification) {
-		 FXDLogObject(notification);
-		 FXDLogTime(weakSelf.moviePlayer.currentItem.duration);
-
-		 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	 }];
 }
 
