@@ -279,7 +279,8 @@
 }
 
 #pragma mark -
-- (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+
 	__weak FXDmodulePlayback *weakSelf = self;
 
 	FXDcallbackFinish ResumingMoviePlayer = ^(SEL caller, BOOL didFinish, id responseObj){
@@ -300,8 +301,8 @@
 
 		[weakSelf.moviePlayer play];
 
-		if (finishCallback) {
-			finishCallback(caller, didFinish, responseObj);
+		if (callback) {
+			callback(caller, didFinish, responseObj);
 		}
 	};
 
@@ -323,7 +324,7 @@
 	 }];
 }
 
-- (void)pauseRemovingPeriodicObserver {	//FXDLog_DEFAULT;
+- (void)pauseAndRemovePeriodicObserver {	//FXDLog_DEFAULT;
 	
 	__weak FXDmodulePlayback *weakSelf = self;
 

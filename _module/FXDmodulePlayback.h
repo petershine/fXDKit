@@ -44,6 +44,6 @@
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)pauseRemovingPeriodicObserver;
+- (void)pauseAndRemovePeriodicObserver;
 
 @end
