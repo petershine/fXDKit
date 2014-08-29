@@ -182,9 +182,7 @@
 		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressPercentage);
 	}
 
-	[weakSelf
-	 startSeekingToTime:seekedTime
-	 withFinishCallback:callback];
+	[weakSelf startSeekingToTime:seekedTime withFinishCallback:callback];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)callback {
@@ -251,7 +249,7 @@
 		  */
 
 		 if (callback) {
-			 callback(_cmd, didFinish, nil);
+			 callback(_cmd, didFinish, weakSelf.moviePlayer.currentItem);
 		 }
 	 }];
 }
