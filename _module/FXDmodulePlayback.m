@@ -191,7 +191,7 @@
 }
 
 #pragma mark -
-- (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)callback {
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
@@ -203,18 +203,20 @@
 		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressPercentage);
 	}
 
-	[weakSelf startSeekingToTime:seekedTime withFinishCallback:finishCallback];
+	[weakSelf
+	 startSeekingToTime:seekedTime
+	 withFinishCallback:callback];
 }
 
-- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)callback {
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
 	if (CMTIME_IS_VALID(seekedTime) == NO) {	FXDLog_DEFAULT;
 		FXDLogBOOL(CMTIME_IS_VALID(seekedTime));
 
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
+		if (callback) {
+			callback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -224,8 +226,8 @@
 		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
 		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
 
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
+		if (callback) {
+			callback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -235,15 +237,15 @@
 	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
 
 	if (CMTimeCompare(currentTime, seekedTime) == NSOrderedSame) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
+		if (callback) {
+			callback(_cmd, NO, nil);
 		}
 		return;
 	}
 
 	if (CMTimeCompare(weakSelf.lastSeekedTime, seekedTime) == NSOrderedSame) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
+		if (callback) {
+			callback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -269,8 +271,8 @@
 		 }
 		  */
 
-		 if (finishCallback) {
-			 finishCallback(_cmd, didFinish, nil);
+		 if (callback) {
+			 callback(_cmd, didFinish, nil);
 		 }
 	 }];
 }
