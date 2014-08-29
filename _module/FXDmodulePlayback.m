@@ -269,7 +269,7 @@
 			[weakSelf.moviePlayer
 			 addPeriodicTimeObserverForInterval:periodicintervalDefault
 			 queue:NULL
-			 usingBlock:^(CMTime currentTime) {
+			 usingBlock:^(CMTime time) {
 
 				 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
 			 }];
