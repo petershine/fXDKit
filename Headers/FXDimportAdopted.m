@@ -60,10 +60,10 @@
 
 
 @implementation NSURL (MultimediaFrameworks)
-+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix {
++ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix atDirectory:(NSString*)directory {
 	NSString *filename = [NSString uniqueFilenameWithWithPrefix:prefix forType:(__bridge CFStringRef)AVFileTypeQuickTimeMovie];
 
-	NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+	NSString *filePath = [directory stringByAppendingPathComponent:filename];
 
 	NSURL *movieFileURL = [NSURL fileURLWithPath:filePath];
 	FXDLogObject(movieFileURL);

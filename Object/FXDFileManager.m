@@ -5,16 +5,19 @@
 
 @implementation NSFileManager (Essential)
 - (void)clearTempDirectory {	FXDLog_DEFAULT;
+	[self clearDirectory:NSTemporaryDirectory()];
+}
 
+- (void)clearDirectory:(NSString*)directory {	FXDLog_DEFAULT;
 	NSError *error = nil;
-	NSArray *clearedFileArray = [self contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error];
+	NSArray *clearedFileArray = [self contentsOfDirectoryAtPath:directory error:&error];
 	FXDLog_ERROR;
 
 	FXDLogObject(clearedFileArray);
 
 	for (NSString *temporaryFile in clearedFileArray) {
 		NSError *error = nil;
-		[self removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), temporaryFile] error:&error];
+		[self removeItemAtPath:[directory stringByAppendingPathComponent:temporaryFile] error:&error];
 		FXDLog_ERROR;
 	}
 }

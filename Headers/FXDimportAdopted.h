@@ -49,7 +49,7 @@
 	@end
 
 	@interface NSURL (MultimediaFrameworks)
-	+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix;
+	+ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix atDirectory:(NSString*)directory;
 	@end
 
 	@interface UIDevice (MultimediaFrameworks)

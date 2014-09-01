@@ -4,6 +4,7 @@
 
 @interface NSFileManager (Essential)
 - (void)clearTempDirectory;
+- (void)clearDirectory:(NSString*)directory;
 
 - (NSDirectoryEnumerator*)fullEnumeratorForRootURL:(NSURL*)rootURL;
 - (NSDirectoryEnumerator*)limitedEnumeratorForRootURL:(NSURL*)rootURL;

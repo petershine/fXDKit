@@ -101,7 +101,7 @@
 	BOOL didCreate = [fileManager createFileAtPath:thumbItemPath contents:imageData attributes:nil];
 
 	if (didCreate) {
-		//TODO:
+		//EMPTY:
 	}
 	
 	NSURL *thumbItemURL = [NSURL fileURLWithPath:thumbItemPath];
