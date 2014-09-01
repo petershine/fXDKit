@@ -158,7 +158,11 @@
 										   NO,	//MARK: to allow transparency
 										   scale);
 
-	if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+	FXDLogObject(self.window);
+
+	if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]
+		&& self.window) {
+		
 		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds
 								  afterScreenUpdates:afterScreenUpdates];
 
