@@ -9,15 +9,17 @@
 }
 
 - (void)clearDirectory:(NSString*)directory {	FXDLog_DEFAULT;
+	FXDLogObject(directory);
+	
 	NSError *error = nil;
 	NSArray *clearedFileArray = [self contentsOfDirectoryAtPath:directory error:&error];
 	FXDLog_ERROR;
 
 	FXDLogObject(clearedFileArray);
 
-	for (NSString *temporaryFile in clearedFileArray) {
+	for (NSString *clearedFilePath in clearedFileArray) {
 		NSError *error = nil;
-		[self removeItemAtPath:[directory stringByAppendingPathComponent:temporaryFile] error:&error];
+		[self removeItemAtPath:[directory stringByAppendingPathComponent:clearedFilePath] error:&error];
 		FXDLog_ERROR;
 	}
 }
