@@ -156,7 +156,6 @@
 
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 
-
 			  strongSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 			  [strongSelf.mainPlaybackDisplay setMainPlayer:strongSelf.moviePlayer];
 
