@@ -148,8 +148,72 @@
 
 	   NSStringFromClass([GPUImageXYDerivativeFilter class]),
 
-#warning //TODO: Test with more filters.
-#warning //TODO: Find the way to apply filter AFTER recording
+	   NSStringFromClass([GPUImageiOSBlurFilter class]),
+
+	   NSStringFromClass([GPUImageAdaptiveThresholdFilter class]),
+	   NSStringFromClass([GPUImageAmatorkaFilter class]),
+	   NSStringFromClass([GPUImageAverageLuminanceThresholdFilter class]),
+
+	   NSStringFromClass([GPUImageCGAColorspaceFilter class]),
+	   NSStringFromClass([GPUImageCannyEdgeDetectionFilter class]),
+	   NSStringFromClass([GPUImageChromaKeyFilter class]),
+	   NSStringFromClass([GPUImageClosingFilter class]),
+	   NSStringFromClass([GPUImageCrosshatchFilter class]),
+
+	   NSStringFromClass([GPUImageDilationFilter class]),
+
+	   NSStringFromClass([GPUImageEmbossFilter class]),
+	   NSStringFromClass([GPUImageErosionFilter class]),
+
+	   NSStringFromClass([GPUImageFalseColorFilter class]),
+
+	   NSStringFromClass([GPUImageGaussianBlurFilter class]),
+	   NSStringFromClass([GPUImageGrayscaleFilter class]),
+	   NSStringFromClass([GPUImageHalftoneFilter class]),
+	   NSStringFromClass([GPUImageHazeFilter class]),
+	   NSStringFromClass([GPUImageHighPassFilter class]),
+
+	   NSStringFromClass([GPUImageKuwaharaRadius3Filter class]),
+
+	   NSStringFromClass([GPUImageLocalBinaryPatternFilter class]),
+	   NSStringFromClass([GPUImageLowPassFilter class]),
+	   NSStringFromClass([GPUImageLuminanceRangeFilter class]),
+	   NSStringFromClass([GPUImageLuminanceThresholdFilter class]),
+
+	   NSStringFromClass([GPUImageMissEtikateFilter class]),
+	   NSStringFromClass([GPUImageMonochromeFilter class]),
+	   NSStringFromClass([GPUImageMotionBlurFilter class]),
+
+	   NSStringFromClass([GPUImageNonMaximumSuppressionFilter class]),
+
+	   NSStringFromClass([GPUImageOpeningFilter class]),
+
+	   NSStringFromClass([GPUImagePinchDistortionFilter class]),
+	   NSStringFromClass([GPUImagePixellateFilter class]),
+	   NSStringFromClass([GPUImagePixellatePositionFilter class]),
+	   NSStringFromClass([GPUImagePolarPixellateFilter class]),
+	   NSStringFromClass([GPUImagePolkaDotFilter class]),
+	   NSStringFromClass([GPUImagePosterizeFilter class]),
+	   NSStringFromClass([GPUImagePrewittEdgeDetectionFilter class]),
+
+	   NSStringFromClass([GPUImageSepiaFilter class]),
+	   NSStringFromClass([GPUImageSharpenFilter class]),
+	   NSStringFromClass([GPUImageSketchFilter class]),
+	   NSStringFromClass([GPUImageSmoothToonFilter class]),
+	   NSStringFromClass([GPUImageSobelEdgeDetectionFilter class]),
+	   NSStringFromClass([GPUImageSoftEleganceFilter class]),
+	   NSStringFromClass([GPUImageStretchDistortionFilter class]),
+	   NSStringFromClass([GPUImageSwirlFilter class]),
+
+	   NSStringFromClass([GPUImageThresholdSketchFilter class]),
+	   NSStringFromClass([GPUImageTiltShiftFilter class]),
+	   NSStringFromClass([GPUImageToonFilter class]),
+
+
+	   NSStringFromClass([GPUImageVignetteFilter class]),
+
+	   NSStringFromClass([GPUImageXYDerivativeFilter class]),
+	   NSStringFromClass([GPUImageZoomBlurFilter class]),
 
 	   ] mutableCopy];
 
