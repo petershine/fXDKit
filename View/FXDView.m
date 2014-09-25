@@ -339,6 +339,11 @@
 	 }];
 }
 
+#pragma mark -
+- (void)modifyToCircular {
+	self.layer.masksToBounds = YES;
+	self.layer.cornerRadius = self.bounds.size.width/2.0;
+}
 @end
 
 

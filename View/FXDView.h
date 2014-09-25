@@ -39,6 +39,8 @@
 
 - (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay;
 
+- (void)modifyToCircular;
+
 @end
 
 
