@@ -13,7 +13,6 @@
 
 
 @interface FXDcameraGPU : GPUImageVideoCamera
-@property (nonatomic) BOOL isCapturing;
 @end
 
 @interface FXDfilterGPU : GPUImageFilter
