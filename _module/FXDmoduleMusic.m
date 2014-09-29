@@ -16,7 +16,6 @@
 	return [[self valueForProperty:MPMediaItemPropertyPlaybackDuration] doubleValue];
 }
 
-#pragma mark -
 - (MPMediaItemArtwork*)artwork {
 	return [self valueForProperty:MPMediaItemPropertyArtwork];
 }
