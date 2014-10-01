@@ -206,7 +206,7 @@
 	CGFloat screenWidth = screenBounds.size.width;
 	CGFloat screenHeight = screenBounds.size.height;
 
-	if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
+	if (UIDeviceOrientationIsPortrait(deviceOrientation) == NO) {
 		screenBounds.size.width = screenHeight;
 		screenBounds.size.height = screenWidth;
 	}
