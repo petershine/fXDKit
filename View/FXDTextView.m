@@ -52,4 +52,29 @@
 	return boundingRect;
 }
 
+#pragma mark -
+- (void)applyShadowColor:(UIColor*)shadowColor {	FXDLog_DEFAULT;
+	FXDLogObject(shadowColor);
+
+	if (shadowColor == nil) {
+		shadowColor = [UIColor clearColor];
+	}
+
+	NSShadow *textShadow = [[NSShadow alloc] init];
+	textShadow.shadowBlurRadius = (marginDefault/2.0);
+	textShadow.shadowColor = shadowColor;
+
+	NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+	paragraphStyle.alignment = self.textAlignment;
+
+	NSDictionary *textAttributes = @{	NSShadowAttributeName : textShadow,
+										NSParagraphStyleAttributeName : paragraphStyle,
+										NSForegroundColorAttributeName : self.textColor,
+										NSFontAttributeName : self.font	};
+
+	self.attributedText = [[NSAttributedString alloc]
+						   initWithString:self.text
+						   attributes:textAttributes];
+}
+
 @end
