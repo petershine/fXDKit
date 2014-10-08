@@ -23,23 +23,27 @@
 - (MPMediaItem*)mediaItemForPersistentID:(NSNumber*)persistentID {
 	//FXDLogObject(persistentID);
 
+	MPMediaQuery *mediaQuery  = [[MPMediaQuery alloc] init];
+
 	MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate
 										   predicateWithValue:persistentID
 										   forProperty:MPMediaEntityPropertyPersistentID];
 
-	MPMediaQuery *mediaQuery = [[MPMediaQuery alloc]
-								initWithFilterPredicates:[NSSet setWithObject:predicate]];
+	[mediaQuery addFilterPredicate:predicate];
 
-	if (mediaQuery.items.count != 1) {
+
+	MPMediaItem *mediaItem = mediaQuery.items.firstObject;
+
+	if (mediaItem == nil) {
 		/*
-		MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
-		FXDLogObject(mediaLibrary.lastModifiedDate);
-		FXDLogObject(predicate);
-		FXDLogObject(mediaQuery.items);
+		 MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
+		 FXDLogObject(mediaLibrary.lastModifiedDate);
+		 FXDLogObject(predicate);
+		 FXDLogObject(mediaQuery.items);
 		 */
 	}
 
-	return mediaQuery.items.firstObject;
+	return mediaItem;
 }
 
 - (MPMediaItem*)mediaItemForTitle:(NSString*)title forArtist:(NSString*)artist forAlbumTitle:(NSString*)albumTitle {
