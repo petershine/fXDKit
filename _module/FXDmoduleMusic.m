@@ -67,12 +67,13 @@
 	MPMediaQuery *mediaQuery = [[MPMediaQuery alloc]
 								initWithFilterPredicates:[NSSet setWithObject:predicate]];
 
-	if (mediaQuery.items.count > 1) {
+	if (mediaQuery.items.count != 1) {
+		/*
 		MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 		FXDLogObject(mediaLibrary.lastModifiedDate);
-
 		FXDLogObject(predicate);
 		FXDLogObject(mediaQuery.items);
+		 */
 	}
 
 	return mediaQuery.items.firstObject;
@@ -104,6 +105,10 @@
 
 
 	MPMediaItem *mediaItem = songQuery.items.firstObject;
+	
+	if (mediaItem == nil) {
+		//FXDLogObject(songQuery.filterPredicates);
+	}
 
 	return mediaItem;
 }
