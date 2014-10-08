@@ -35,7 +35,6 @@
 - (NSString*)genre {
 	return [self valueForProperty:MPMediaItemPropertyGenre];
 }
-
 @end
 #endif
 
