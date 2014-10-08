@@ -18,27 +18,6 @@
 	return _appLaunchCount;
 }
 
-- (BOOL)isDeviceOld {
-	//MARK: Test using oldDeviceArray
-	if (_oldDeviceArray == nil) {
-
-		//MARK: Update as new devices are introduced and it's harder to support old devices
-		_oldDeviceArray = @[@"iPhone 4",
-							@"iPhone 4S"];
-
-		_isDeviceOld = [_oldDeviceArray containsObject:self.deviceModelName];
-
-#if ForDEVELOPER
-		if (_isDeviceOld) {	FXDLog_DEFAULT;
-			FXDLogObject(_oldDeviceArray);
-			FXDLogBOOL(_isDeviceOld);
-		}
-#endif
-	}
-
-	return _isDeviceOld;
-}
-
 #pragma mark -
 - (UIStoryboard*)mainStoryboard {
 	if (_mainStoryboard == nil) {
@@ -59,7 +38,6 @@
 	if (_mainStoryboardName == nil) {
 		FXDLog_OVERRIDE;
 	}
-
 	return _mainStoryboardName;
 }
 
@@ -127,6 +105,7 @@
 		  @"iPhone3,2":    @"iPhone 4(Rev A)",
 		  @"iPhone3,3":    @"iPhone 4(CDMA)",
 		  @"iPhone4,1":    @"iPhone 4S",
+
 		  @"iPhone5,1":    @"iPhone 5(GSM)",
 		  @"iPhone5,2":    @"iPhone 5(GSM+CDMA)",
 		  @"iPhone5,3":    @"iPhone 5c(GSM)",
@@ -178,6 +157,35 @@
 	}
 
 	return _deviceModelName;
+}
+
+#pragma mark -
+- (NSNumber*)isDevice_iPhoneFour {
+	if (_isDevice_iPhoneFour == nil) {
+		struct utsname systemInfo;
+		uname(&systemInfo);
+
+		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+
+		_isDevice_iPhoneFour = @(([machineName isEqualToString:@"iPhone3,1"]
+								  || [machineName isEqualToString:@"iPhone3,2"]
+								  || [machineName isEqualToString:@"iPhone3,3"]
+								  || [machineName isEqualToString:@"iPhone4,1"]));
+	}
+	return _isDevice_iPhoneFour;
+}
+
+- (NSNumber*)isDevice_iPhoneSix {
+	if (_isDevice_iPhoneSix == nil) {
+		struct utsname systemInfo;
+		uname(&systemInfo);
+
+		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+
+		_isDevice_iPhoneSix = @(([machineName isEqualToString:@"iPhone7,1"]
+								 || [machineName isEqualToString:@"iPhone7,2"]));
+	}
+	return _isDevice_iPhoneSix;
 }
 
 #pragma mark -

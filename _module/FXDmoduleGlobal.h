@@ -13,25 +13,22 @@
 
 @interface FXDmoduleGlobal : FXDsuperModule {
 	NSInteger _appLaunchCount;
-	BOOL _isDeviceOld;
 
 	NSString *_mainStoryboardName;
 	UIStoryboard *_mainStoryboard;
-
-	NSArray *_oldDeviceArray;
 }
 
 @property (nonatomic, readonly) NSInteger appLaunchCount;
-@property (nonatomic) BOOL isDeviceOld;
 
 @property (strong, nonatomic) NSString *mainStoryboardName;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
-@property (strong, nonatomic, readonly) NSArray *oldDeviceArray;
-
 @property (strong, nonatomic) NSString *deviceLanguageCode;
 @property (strong, nonatomic) NSString *deviceCountryCode;
 @property (strong, nonatomic) NSString *deviceModelName;
+
+@property (strong, nonatomic) NSNumber *isDevice_iPhoneFour;
+@property (strong, nonatomic) NSNumber *isDevice_iPhoneSix;
 
 @property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
 @property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
