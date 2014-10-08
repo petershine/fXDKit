@@ -7,7 +7,7 @@
 
 @implementation FXDcameraGPU
 - (void)rotateCamera {
-	if (GlobalModule.isDeviceOld == NO) {
+	if (GlobalModule.isDevice_iPhoneFour.boolValue == NO) {
 		[super rotateCamera];
 		return;
 	}

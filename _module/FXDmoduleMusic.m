@@ -2,43 +2,6 @@
 
 #import "FXDmoduleMusic.h"
 
-#ifndef __IPHONE_8_0
-@implementation MPMediaItem (ForOldSDK)
-- (int64_t)persistentID {
-	return [[self valueForProperty:MPMediaItemPropertyPersistentID] longLongValue];
-}
-
-- (int64_t)artistPersistentID {
-	return [[self valueForProperty:MPMediaItemPropertyArtistPersistentID] longLongValue];
-}
-
-- (NSTimeInterval)playbackDuration {
-	return [[self valueForProperty:MPMediaItemPropertyPlaybackDuration] doubleValue];
-}
-
-- (MPMediaItemArtwork*)artwork {
-	return [self valueForProperty:MPMediaItemPropertyArtwork];
-}
-
-- (NSString*)title {
-	return [self valueForProperty:MPMediaItemPropertyTitle];
-}
-
-- (NSString*)artist {
-	return [self valueForProperty:MPMediaItemPropertyArtist];
-}
-
-- (NSString*)albumTitle {
-	return [self valueForProperty:MPMediaItemPropertyAlbumTitle];
-}
-
-- (NSString*)genre {
-	return [self valueForProperty:MPMediaItemPropertyGenre];
-}
-
-@end
-#endif
-
 
 @implementation MPMusicPlayerController (Added)
 + (instancetype)deviceMusicPlayer {
