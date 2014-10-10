@@ -15,8 +15,6 @@ typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 
 @property (strong, nonatomic) id addedObj;
 
-@property (strong, nonatomic) NSIndexPath *linkedIndexPath;
-
 
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageview;
 
