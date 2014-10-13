@@ -55,9 +55,6 @@
 	@interface UIDevice (MultimediaFrameworks)
 	- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
 	@end
-
-	#import "FXDMediaItem.h"
-
 #endif
 
 
