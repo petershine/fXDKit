@@ -125,7 +125,7 @@
 }
 
 #pragma mark -
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	FXDLog_DEFAULT;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	//FXDLog_DEFAULT;
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
 	NSAssert(coordinator, nil);
@@ -136,8 +136,10 @@
 						  forDuration:[coordinator transitionDuration]];
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+		 /*
 		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
 		 FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
+		  */
 	 }];
 }
 
