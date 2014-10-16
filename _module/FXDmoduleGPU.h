@@ -48,6 +48,6 @@
 - (void)resetGPUmodule;
 
 - (void)cycleGPUfiltersForward:(BOOL)isForward withCallback:(FXDcallbackFinish)finishCallback;
-- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex;
+- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex shouldShowLabel:(BOOL)shouldShowLabel;
 
 @end

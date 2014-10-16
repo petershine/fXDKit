@@ -250,7 +250,7 @@
 
 	FXDLog_DEFAULT;
 
-	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex];
+	[self applyGPUfilterAtFilterIndex:self.lastFilterIndex shouldShowLabel:NO];
 
 	return _cameraFilter;
 }
@@ -285,7 +285,7 @@
 	}
 
 
-	[self applyGPUfilterAtFilterIndex:filterIndex];
+	[self applyGPUfilterAtFilterIndex:filterIndex shouldShowLabel:YES];
 
 
 	if (callback) {
@@ -293,7 +293,7 @@
 	}
 }
 
-- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex {	FXDLog_DEFAULT;
+- (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex shouldShowLabel:(BOOL)shouldShowLabel {	FXDLog_DEFAULT;
 	FXDLogVariable(filterIndex);
 	self.lastFilterIndex = filterIndex;
 	
