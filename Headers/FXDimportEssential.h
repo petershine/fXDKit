@@ -80,4 +80,9 @@
 @end
 
 
+@interface UILabel (Essential)
+- (void)applyShadowColor:(UIColor*)shadowColor;
+@end
+
+
 #endif

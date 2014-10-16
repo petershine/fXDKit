@@ -296,7 +296,10 @@
 	alertLabel.text = alertText;
 
 	alertLabel.font = [UIFont boldSystemFontOfSize:20.0];
-	alertLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue08];
+
+	//alertLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue08];
+	[alertLabel applyShadowColor:[UIColor blackColor]];
+	
 	alertLabel.textColor = [UIColor whiteColor];
 	alertLabel.textAlignment = NSTextAlignmentCenter;
 
