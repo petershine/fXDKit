@@ -21,19 +21,27 @@
 }
 
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate {
+
+	NSString *localDateText = [self localDateTextForUTCdate:UTCdate withFormat:@"yyyy-MM-dd"];
+
+	return localDateText;
+}
+
++ (NSString*)localDateTextForUTCdate:(NSDate*)UTCdate withFormat:(NSString*)format {
+
 	if (UTCdate == nil) {
 		UTCdate = [self date];
 	}
 
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
-    NSTimeZone *UTCtimezone = [NSTimeZone defaultTimeZone];
-    [dateFormatter setTimeZone:UTCtimezone];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
+	NSTimeZone *UTCtimezone = [NSTimeZone defaultTimeZone];
+	[dateFormatter setTimeZone:UTCtimezone];
+	[dateFormatter setDateFormat:format];
 
-    NSString *shortLocalDateString = [dateFormatter stringFromDate:UTCdate];
+	NSString *localDateText = [dateFormatter stringFromDate:UTCdate];
 
-    return shortLocalDateString;
+	return localDateText;
 }
 
 #pragma mark -

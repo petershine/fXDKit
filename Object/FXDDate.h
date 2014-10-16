@@ -5,6 +5,7 @@
 @interface NSDate (Essential)
 + (NSString*)shortUTCdateStringForLocalDate:(NSDate*)localDate;
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;
++ (NSString*)localDateTextForUTCdate:(NSDate*)UTCdate withFormat:(NSString*)format;
 
 - (NSInteger)yearValue;
 - (NSInteger)monthValue;
