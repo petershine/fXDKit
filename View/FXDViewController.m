@@ -345,8 +345,7 @@
 #pragma mark -
 - (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)callback {
 
-	if ([scene isKindOfClass:[FXDViewController class]]
-		&& dismissedCallback) {
+	if ([scene isKindOfClass:[FXDViewController class]]) {
 		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
 	}
 
@@ -371,14 +370,7 @@
 	 }];
 }
 
-- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)callback {
-
-	if ([scene isKindOfClass:[FXDViewController class]]
-		&& [scene performSelector:@selector(dismissedCallback)] == nil
-		&& dismissedCallback) {
-		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
-	}
-
+- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)callback {
 
 	[scene willMoveToParentViewController:nil];
 
