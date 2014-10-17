@@ -22,6 +22,7 @@
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
+- (void)forceSceneUpdatingForScreenSize:(CGSize)screenSize forTransform:(CGAffineTransform)transform forOrientation:(UIDeviceOrientation)forcedOrientation forDuration:(NSTimeInterval)duration;
 
 - (CGRect)animatedFrameForTransform:(CGAffineTransform)transform forSize:(CGSize)size forDeviceOrientation:(UIDeviceOrientation)deviceOrientation forXYratio:(CGPoint)xyRatio;
 

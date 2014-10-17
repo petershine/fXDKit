@@ -335,6 +335,12 @@
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
 
+- (void)forceSceneUpdatingForScreenSize:(CGSize)screenSize forTransform:(CGAffineTransform)transform forOrientation:(UIDeviceOrientation)forcedOrientation forDuration:(NSTimeInterval)duration {
+	FXDLog_OVERRIDE;
+	FXDLog(@"%@ %@ %@ %@", _Size(screenSize), _Transform(transform), _Variable(forcedOrientation), _Variable(duration));
+}
+
+#pragma mark -
 - (CGRect)animatedFrameForTransform:(CGAffineTransform)transform forSize:(CGSize)size forDeviceOrientation:(UIDeviceOrientation)deviceOrientation forXYratio:(CGPoint)xyRatio {
 
 	CGRect animatedFrame = CGRectApplyAffineTransform(self.view.bounds, transform);
