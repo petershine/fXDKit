@@ -71,6 +71,11 @@
 
 @interface UIScreen (Essential)
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
++ (CGRect)screenBoundsForLandscape:(BOOL)isForLanscape;
+
++ (CGFloat)maximumScreenDimension;
++ (CGFloat)minimumScreenDimension;
+
 @end
 
 

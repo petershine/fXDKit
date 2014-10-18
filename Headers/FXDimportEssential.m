@@ -201,18 +201,45 @@
 @implementation UIScreen (Essential)
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
 
+	BOOL isForLandscape = (UIDeviceOrientationIsPortrait(deviceOrientation) == NO);
+
+	CGRect screenBounds = [self screenBoundsForLandscape:isForLandscape];
+
+	return screenBounds;
+}
+
++ (CGRect)screenBoundsForLandscape:(BOOL)isForLanscape {
 	CGRect screenBounds = [[self class] mainScreen].bounds;
 
 	CGFloat screenWidth = screenBounds.size.width;
 	CGFloat screenHeight = screenBounds.size.height;
 
-	if (UIDeviceOrientationIsPortrait(deviceOrientation) == NO) {
-		screenBounds.size.width = screenHeight;
-		screenBounds.size.height = screenWidth;
+	if (isForLanscape) {
+		screenBounds.size.width = MAX(screenWidth, screenHeight);
+		screenBounds.size.height = MIN(screenWidth, screenHeight);
 	}
 
 	return screenBounds;
 }
+
++ (CGFloat)maximumScreenDimension {
+	CGRect screenBounds = [[self class] mainScreen].bounds;
+
+	CGFloat screenWidth = screenBounds.size.width;
+	CGFloat screenHeight = screenBounds.size.height;
+
+	return MAX(screenWidth, screenHeight);
+}
+
++ (CGFloat)minimumScreenDimension {
+	CGRect screenBounds = [[self class] mainScreen].bounds;
+	
+	CGFloat screenWidth = screenBounds.size.width;
+	CGFloat screenHeight = screenBounds.size.height;
+
+	return MIN(screenWidth, screenHeight);
+}
+
 @end
 
 
