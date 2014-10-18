@@ -335,18 +335,18 @@
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
 
-- (void)forceSceneUpdatingForScreenSize:(CGSize)screenSize forTransform:(CGAffineTransform)transform forOrientation:(UIDeviceOrientation)forcedOrientation forDuration:(NSTimeInterval)duration {
+- (void)animateSceneUpdatingForForcedSize:(CGSize)forcedSize forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {
 	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@ %@ %@", _Size(screenSize), _Transform(transform), _Variable(forcedOrientation), _Variable(duration));
+	FXDLog(@"%@ %@ %@", _Size(forcedSize), _Transform(transform), _Variable(duration));
 }
 
 #pragma mark -
-- (CGRect)sceneFrameForTransform:(CGAffineTransform)transform forXYratio:(CGPoint)xyRatio insideScreenSize:(CGSize)screenSize {
+- (CGRect)sceneFrameForTransform:(CGAffineTransform)transform forXYratio:(CGPoint)xyRatio insideSize:(CGSize)size {
 
 	CGRect sceneFrame = CGRectApplyAffineTransform(self.view.bounds, transform);
 
-	sceneFrame.origin.x = (screenSize.width-sceneFrame.size.width)*xyRatio.x;
-	sceneFrame.origin.y = (screenSize.height-sceneFrame.size.height)*xyRatio.y;
+	sceneFrame.origin.x = (size.width-sceneFrame.size.width)*xyRatio.x;
+	sceneFrame.origin.y = (size.height-sceneFrame.size.height)*xyRatio.y;
 
 	return sceneFrame;
 }
