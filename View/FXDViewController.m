@@ -341,11 +341,14 @@
 }
 
 #pragma mark -
-- (CGRect)animatedFrameForTransform:(CGAffineTransform)transform forSize:(CGSize)size forDeviceOrientation:(UIDeviceOrientation)deviceOrientation forXYratio:(CGPoint)xyRatio {
+- (CGRect)sceneFrameForTransform:(CGAffineTransform)transform forXYratio:(CGPoint)xyRatio insideScreenSize:(CGSize)screenSize {
 
-	CGRect animatedFrame = CGRectApplyAffineTransform(self.view.bounds, transform);
+	CGRect sceneFrame = CGRectApplyAffineTransform(self.view.bounds, transform);
 
-	return animatedFrame;
+	sceneFrame.origin.x = (screenSize.width-sceneFrame.size.width)*xyRatio.x;
+	sceneFrame.origin.y = (screenSize.height-sceneFrame.size.height)*xyRatio.y;
+
+	return sceneFrame;
 }
 
 #pragma mark -
