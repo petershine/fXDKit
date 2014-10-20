@@ -358,8 +358,9 @@
 		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
 	}
 
-
-	scene.view.alpha = 0.0;
+	if (duration > 0.0) {
+		scene.view.alpha = 0.0;
+	}
 
 	__weak UIViewController *weakSelf = self;
 	
@@ -367,8 +368,16 @@
 	[weakSelf.view addSubview:scene.view];
 	[scene didMoveToParentViewController:weakSelf];
 
+	if (duration == 0.0) {
+		if (callback) {
+			callback(_cmd, YES, nil);
+		}
+		return;
+	}
+
+
 	[UIView
-	 animateWithDuration:durationAnimation
+	 animateWithDuration:duration
 	 animations:^{
 		 scene.view.alpha = 1.0;
 	 }
@@ -382,6 +391,17 @@
 - (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)callback {
 
 	[scene willMoveToParentViewController:nil];
+
+	if (duration == 0.0) {
+		[scene.view removeFromSuperview];
+		[scene removeFromParentViewController];
+
+		if (callback) {
+			callback(_cmd, YES, nil);
+		}
+		return;
+	}
+
 
 	[UIView
 	 animateWithDuration:duration
