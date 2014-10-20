@@ -4,6 +4,31 @@
 
 
 @implementation NSFileManager (Essential)
+- (NSString*)prepareDirectoryAtPath:(NSString *)directoryPath withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error {	FXDLog_DEFAULT;
+
+	FXDLogObject(directoryPath);
+
+	BOOL isDirectory = NO;
+	if ([self fileExistsAtPath:directoryPath isDirectory:&isDirectory]) {
+		FXDLogBOOL(isDirectory);
+
+		if (isDirectory) {
+			return directoryPath;
+		}
+	}
+
+
+	BOOL didCreate = [self
+					  createDirectoryAtPath:directoryPath
+					  withIntermediateDirectories:createIntermediates
+					  attributes:attributes
+					  error:error];
+	FXDLogBOOL(didCreate);
+
+	return (didCreate) ? directoryPath : nil;
+}
+
+#pragma mark -
 - (void)clearTempDirectory {	FXDLog_DEFAULT;
 	[self clearDirectory:NSTemporaryDirectory()];
 }

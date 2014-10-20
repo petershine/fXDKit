@@ -3,6 +3,8 @@
 
 
 @interface NSFileManager (Essential)
+- (NSString*)prepareDirectoryAtPath:(NSString *)path withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error;
+
 - (void)clearTempDirectory;
 - (void)clearDirectory:(NSString*)directory;
 
