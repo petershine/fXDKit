@@ -352,21 +352,20 @@
 }
 
 #pragma mark -
-- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)callback withDismissedCallback:(FXDcallbackFinish)dismissedCallback {
+- (void)addChildScene:(UIViewController*)childScene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)callback withDismissedBlock:(FXDcallbackFinish)dismissedBlock {
 
-	if ([scene isKindOfClass:[FXDViewController class]]) {
-		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
+	if ([childScene isKindOfClass:[FXDViewController class]]) {
+		[(FXDViewController*)childScene setDismissedCallback:dismissedBlock];
 	}
 
 	if (duration > 0.0) {
-		scene.view.alpha = 0.0;
+		childScene.view.alpha = 0.0;
 	}
-
-	__weak UIViewController *weakSelf = self;
 	
-	[weakSelf addChildViewController:scene];
-	[weakSelf.view addSubview:scene.view];
-	[scene didMoveToParentViewController:weakSelf];
+	
+	[self addChildViewController:childScene];
+	[self.view addSubview:childScene.view];
+	[childScene didMoveToParentViewController:self];
 
 	if (duration == 0.0) {
 		if (callback) {
@@ -379,7 +378,7 @@
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
-		 scene.view.alpha = 1.0;
+		 childScene.view.alpha = 1.0;
 	 }
 	 completion:^(BOOL finished) {
 		 if (callback) {
@@ -388,16 +387,16 @@
 	 }];
 }
 
-- (void)fadeOutAndRemoveScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)callback {
+- (void)removeChildScene:(UIViewController*)childScene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {
 
-	[scene willMoveToParentViewController:nil];
+	[childScene willMoveToParentViewController:nil];
 
 	if (duration == 0.0) {
-		[scene.view removeFromSuperview];
-		[scene removeFromParentViewController];
+		[childScene.view removeFromSuperview];
+		[childScene removeFromParentViewController];
 
-		if (callback) {
-			callback(_cmd, YES, nil);
+		if (finishCallback) {
+			finishCallback(_cmd, YES, nil);
 		}
 		return;
 	}
@@ -406,14 +405,14 @@
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
-		 scene.view.alpha = 0.0;
+		 childScene.view.alpha = 0.0;
 	 }
 	 completion:^(BOOL finished) {
-		 [scene.view removeFromSuperview];
-		 [scene removeFromParentViewController];
+		 [childScene.view removeFromSuperview];
+		 [childScene removeFromParentViewController];
 
-		 if (callback) {
-			 callback(_cmd, YES, nil);
+		 if (finishCallback) {
+			 finishCallback(_cmd, YES, nil);
 		 }
 	 }];
 }
