@@ -8,9 +8,6 @@
 #pragma mark - Memory management
 - (void)dealloc {	FXDLog_DEFAULT;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	FXDLogObject(_dismissedCallback);
-	_dismissedCallback = nil;
 }
 
 #pragma mark - Initialization
@@ -355,7 +352,7 @@
 - (void)addChildScene:(UIViewController*)childScene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)callback withDismissedBlock:(FXDcallbackFinish)dismissedBlock {
 
 	if ([childScene isKindOfClass:[FXDViewController class]]) {
-		[(FXDViewController*)childScene setDismissedCallback:dismissedBlock];
+		[(FXDViewController*)childScene setDismissedBlock:dismissedBlock];
 	}
 
 	if (duration > 0.0) {

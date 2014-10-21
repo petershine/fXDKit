@@ -4,12 +4,12 @@
 
 @interface FXDViewController : UIViewController {
 	CGRect _initialBounds;
-	FXDcallbackFinish _dismissedCallback;
+	FXDcallbackFinish _dismissedBlock;
 }
 
 @property (nonatomic) CGRect initialBounds;
 
-@property (copy) FXDcallbackFinish dismissedCallback;
+@property (copy) FXDcallbackFinish dismissedBlock;
 
 @end
 
