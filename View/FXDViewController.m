@@ -352,7 +352,7 @@
 }
 
 #pragma mark -
-- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withDismissedCallback:(FXDcallbackFinish)dismissedCallback withFinishCallback:(FXDcallbackFinish)callback {
+- (void)fadeInAndAddScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withFinishCallback:(FXDcallbackFinish)callback withDismissedCallback:(FXDcallbackFinish)dismissedCallback {
 
 	if ([scene isKindOfClass:[FXDViewController class]]) {
 		[(FXDViewController*)scene setDismissedCallback:dismissedCallback];
@@ -383,7 +383,7 @@
 	 }
 	 completion:^(BOOL finished) {
 		 if (callback) {
-			 callback(_cmd, finished, nil);
+			 callback(_cmd, YES, nil);
 		 }
 	 }];
 }
@@ -413,7 +413,7 @@
 		 [scene removeFromParentViewController];
 
 		 if (callback) {
-			 callback(_cmd, finished, nil);
+			 callback(_cmd, YES, nil);
 		 }
 	 }];
 }
