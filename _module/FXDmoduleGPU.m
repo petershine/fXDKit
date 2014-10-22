@@ -273,26 +273,6 @@
 }
 
 #pragma mark -
-- (void)cycleGPUfiltersForward:(BOOL)isForward withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
-
-	NSInteger filterIndex = self.lastFilterIndex +(isForward ? 1:(-1));
-
-	if (filterIndex < 0) {
-		filterIndex = self.filterNameArray.count-1;
-	}
-	else if (filterIndex == self.filterNameArray.count) {
-		filterIndex = 0;
-	}
-
-
-	[self applyGPUfilterAtFilterIndex:filterIndex shouldShowLabel:YES];
-
-
-	if (callback) {
-		callback(_cmd, YES, @(filterIndex));
-	}
-}
-
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex shouldShowLabel:(BOOL)shouldShowLabel {	FXDLog_DEFAULT;
 	FXDLogVariable(filterIndex);
 	self.lastFilterIndex = filterIndex;
