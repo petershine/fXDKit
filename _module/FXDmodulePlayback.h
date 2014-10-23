@@ -16,9 +16,10 @@
 @interface FXDdisplayPlayback : FXDView
 
 @property (strong, nonatomic) AVPlayer *mainPlayer;
-+ (instancetype)assetDisplay;
 
-- (void)centerAlignForPresentationSize:(CGSize)presentationSize forDisplaySize:(CGSize)displaySize forDuration:(NSTimeInterval)duration;
++ (instancetype)assetDisplay;
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize;
+
 @end
 
 

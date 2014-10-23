@@ -30,55 +30,54 @@
 }
 
 #pragma mark -
-- (void)centerAlignForPresentationSize:(CGSize)presentationSize  forDisplaySize:(CGSize)displaySize forDuration:(NSTimeInterval)duration {
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize {
+
+	CGRect displayFrame = CGRectMake(0, 0, forcedSize.width, forcedSize.height);
+
+	CGSize presentationSize = [self mainPlayer].currentItem.presentationSize;
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
-		presentationSize = [self mainPlayer].currentItem.presentationSize;
-	}
-
-	if (self.superview == nil
-		|| (CGSizeEqualToSize(presentationSize, CGSizeZero))) {
-		return;
+		return displayFrame;
 	}
 
 
 	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Object(self.superview), _Size(presentationSize));
+	FXDLog(@"%@ %@", _Size(presentationSize), _Size(forcedSize));
 
-	if (CGSizeEqualToSize(displaySize, CGSizeZero)) {
-		displaySize = self.superview.bounds.size;
-	}
+	CGFloat aspectRatio = MIN(presentationSize.width, presentationSize.height)/MAX(presentationSize.width, presentationSize.height);
+	FXDLogVariable(aspectRatio);
 
 
-	CGRect displayFrame = CGRectMake(0, 0, displaySize.width, displaySize.height);
-	CGFloat aspectRatio = MAX(displaySize.width, displaySize.height)/MIN(displaySize.width, displaySize.height);
+	if (forcedSize.width < forcedSize.height) {
+		displayFrame.size.width = forcedSize.width;
 
-	FXDLog(@"1.%@ %@", _Rect(displayFrame), _Variable(aspectRatio));
-
-	if (presentationSize.width < presentationSize.height) {
-		displayFrame.size.height = displaySize.height;
-
-		displayFrame.size.width = displayFrame.size.height/aspectRatio;
+		if (presentationSize.width < presentationSize.height) {
+			displayFrame.size.height = displayFrame.size.width/aspectRatio;
+		}
+		else {
+			displayFrame.size.height = displayFrame.size.width*aspectRatio;
+		}
 	}
 	else {
-		displayFrame.size.width = displaySize.width;
+		displayFrame.size.height = forcedSize.height;
 
-		displayFrame.size.height = displayFrame.size.width/aspectRatio;
+		if (presentationSize.width < presentationSize.height) {
+			displayFrame.size.width = displayFrame.size.height*aspectRatio;
+		}
+		else {
+			displayFrame.size.width = displayFrame.size.height/aspectRatio;
+		}
 	}
 
+	FXDLog(@"1.%@", _Rect(displayFrame));
+
+
+	displayFrame.origin.x = (forcedSize.width -displayFrame.size.width)/2.0;
+	displayFrame.origin.y = (forcedSize.height -displayFrame.size.height)/2.0;
 	FXDLog(@"2.%@", _Rect(displayFrame));
 
 
-	displayFrame.origin.x = (displaySize.width -displayFrame.size.width)/2.0;
-	displayFrame.origin.y = (displaySize.height -displayFrame.size.height)/2.0;
-	FXDLog(@"3.%@", _Rect(displayFrame));
-
-
-	[UIView
-	 animateWithDuration:duration
-	 animations:^{
-		 self.frame = displayFrame;
-	 }];
+	return displayFrame;
 }
 @end
 
