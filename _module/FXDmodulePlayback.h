@@ -13,7 +13,8 @@
 #endif
 
 
-@interface FXDsubviewAssetDisplay : FXDView
+@interface FXDdisplayPlayback : FXDView
+
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 + (instancetype)assetDisplay;
 
@@ -22,7 +23,7 @@
 
 
 @interface FXDmodulePlayback : FXDsuperModule {
-	FXDsubviewAssetDisplay *_mainPlaybackDisplay;
+	FXDdisplayPlayback *_mainPlaybackDisplay;
 }
 
 @property (nonatomic) CMTime playbackCurrentTime;
@@ -31,13 +32,13 @@
 @property (strong, nonatomic) AVPlayer *moviePlayer;
 @property (strong, nonatomic) id periodicObserver;
 
-@property (strong, nonatomic) FXDsubviewAssetDisplay *mainPlaybackDisplay;
+@property (strong, nonatomic) FXDdisplayPlayback *mainPlaybackDisplay;
 
 
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;
 
 
-- (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)startSeekingToTrackProgress:(Float64)trackProgress withCallback:(FXDcallbackFinish)finishCallback;
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)finishCallback;

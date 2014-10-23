@@ -3,7 +3,7 @@
 #import "FXDmodulePlayback.h"
 
 
-@implementation FXDsubviewAssetDisplay
+@implementation FXDdisplayPlayback
 + (Class)layerClass {
 	return [AVPlayerLayer class];
 }
@@ -12,10 +12,10 @@
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice validDeviceOrientation]];
 
-	FXDsubviewAssetDisplay *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
+	FXDdisplayPlayback *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
 
 	AVPlayerLayer *displayLayer = (AVPlayerLayer*)assetDisplay.layer;
-	displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+	displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 
 	return assetDisplay;
 }
@@ -101,9 +101,9 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (FXDsubviewAssetDisplay*)mainPlaybackDisplay {
+- (FXDdisplayPlayback*)mainPlaybackDisplay {
 	if (_mainPlaybackDisplay == nil) {	FXDLog_DEFAULT;
-		_mainPlaybackDisplay = [FXDsubviewAssetDisplay assetDisplay];
+		_mainPlaybackDisplay = [FXDdisplayPlayback assetDisplay];
 	}
 	return _mainPlaybackDisplay;
 }
@@ -169,7 +169,7 @@
 }
 
 #pragma mark -
-- (void)startSeekingToProgressPercentage:(Float64)progressPercentage withFinishCallback:(FXDcallbackFinish)callback {
+- (void)startSeekingToTrackProgress:(Float64)trackProgress withCallback:(FXDcallbackFinish)callback {
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
@@ -177,8 +177,8 @@
 
 	//MARK: Be careful about validity of time
 	if (CMTimeCompare(weakSelf.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
-		&& progressPercentage > 0.0) {
-		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, progressPercentage);
+		&& trackProgress > 0.0) {
+		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, trackProgress);
 	}
 
 	[weakSelf startSeekingToTime:seekedTime withFinishCallback:callback];
