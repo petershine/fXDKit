@@ -30,19 +30,21 @@
 }
 
 #pragma mark -
-- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize {
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+
+	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
+		presentationSize = [self mainPlayer].currentItem.presentationSize;
+	}
+
+	FXDLog(@"%@ %@", _Size(presentationSize), _Size(forcedSize));
+
 
 	CGRect displayFrame = CGRectMake(0, 0, forcedSize.width, forcedSize.height);
-
-	CGSize presentationSize = [self mainPlayer].currentItem.presentationSize;
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
 		return displayFrame;
 	}
 
-
-	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Size(presentationSize), _Size(forcedSize));
 
 	CGFloat aspectRatio = MIN(presentationSize.width, presentationSize.height)/MAX(presentationSize.width, presentationSize.height);
 	FXDLogVariable(aspectRatio);
@@ -70,7 +72,6 @@
 	}
 
 	FXDLog(@"1.%@", _Rect(displayFrame));
-
 
 	displayFrame.origin.x = (forcedSize.width -displayFrame.size.width)/2.0;
 	displayFrame.origin.y = (forcedSize.height -displayFrame.size.height)/2.0;

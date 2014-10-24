@@ -18,7 +18,7 @@
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
 + (instancetype)assetDisplay;
-- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize;
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize;
 
 @end
 
