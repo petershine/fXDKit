@@ -150,7 +150,7 @@
 	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
 }
 
-- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {
+- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	FXDLog_DEFAULT;
 
 	UIImage *renderedImage = nil;
 
@@ -160,8 +160,11 @@
 
 	FXDLogObject(self.window);
 
-	if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]
-		&& self.window) {
+	FXDLogBOOL([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]);
+	FXDLogBOOL([self.layer respondsToSelector:@selector(renderInContext:)]);
+
+	if (self.window
+		&& [self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
 		
 		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds
 								  afterScreenUpdates:afterScreenUpdates];
