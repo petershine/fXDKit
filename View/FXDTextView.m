@@ -53,8 +53,8 @@
 }
 
 #pragma mark -
-- (void)applyShadowColor:(UIColor*)shadowColor {	FXDLog_DEFAULT;
-	FXDLogObject(shadowColor);
+- (void)applyShadowColor:(UIColor*)shadowColor {	//FXDLog_DEFAULT;
+	//FXDLogObject(shadowColor);
 
 	if (shadowColor == nil) {
 		shadowColor = [UIColor clearColor];
