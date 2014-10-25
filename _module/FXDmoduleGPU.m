@@ -235,7 +235,9 @@
 												cameraPosition:AVCaptureDevicePositionBack];
 	[_videoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
-	[_videoCamera.inputCamera applyDefaultConfigurationWithFlashMode:AVCaptureFlashModeAuto];
+	[_videoCamera.inputCamera
+	 applyConfigurationWithFlashMode:AVCaptureFlashModeAuto
+	 withFocusMode:AVCaptureFocusModeContinuousAutoFocus];
 
 	[_videoCamera addAudioInputsAndOutputs];
 

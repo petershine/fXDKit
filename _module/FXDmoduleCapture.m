@@ -4,7 +4,7 @@
 
 
 @implementation AVCaptureDevice (MultimediaFrameworks)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode {
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
 
 	AVCaptureDevice *videoCaptureDevice = nil;
 
@@ -22,12 +22,15 @@
 	}
 
 	FXDLog_DEFAULT;
-	[videoCaptureDevice applyDefaultConfigurationWithFlashMode:flashMode];
+	[videoCaptureDevice
+	 applyConfigurationWithFlashMode:flashMode
+	 withFocusMode:focusMode];
 
 	return videoCaptureDevice;
 }
 
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode {
+- (void)applyConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
+
 	NSError *error = nil;
 
 	if ([self lockForConfiguration:&error]) {
@@ -36,8 +39,8 @@
 			self.flashMode = flashMode;
 		}
 
-		if ([self isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
-			self.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+		if ([self isFocusModeSupported:focusMode]) {
+			self.focusMode = focusMode;
 		}
 
 		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
@@ -54,6 +57,9 @@
 	}
 
 	FXDLog_DEFAULT;
+
+	FXDLogVariable(flashMode);
+	FXDLogVariable(focusMode);
 	FXDLog(@"%@ %@ %@ %@ %@", _Variable(self.flashMode), _Variable(self.focusMode), _Variable(self.exposureMode), _Variable(self.whiteBalanceMode), _BOOL(self.subjectAreaChangeMonitoringEnabled));
 	
 	FXDLog_ERROR;
@@ -169,7 +175,8 @@
 
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
 											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
-											 withFlashMode:self.flashMode];
+											 withFlashMode:self.flashMode
+											 withFocusMode:AVCaptureFocusModeContinuousAutoFocus];
 
 		NSError *error = nil;
 		_deviceInputBack = [[AVCaptureDeviceInput alloc] initWithDevice:backVideoCapture error:&error];
@@ -184,7 +191,8 @@
 
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
 											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
-											  withFlashMode:self.flashMode];
+											  withFlashMode:self.flashMode
+											  withFocusMode:AVCaptureFocusModeContinuousAutoFocus];
 
 		NSError *error = nil;
 		_deviceInputFront = [[AVCaptureDeviceInput alloc] initWithDevice:frontVideoCapture error:&error];

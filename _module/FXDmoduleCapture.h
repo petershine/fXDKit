@@ -9,8 +9,8 @@
 
 
 @interface AVCaptureDevice (MultimediaFrameworks)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode;
-- (void)applyDefaultConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode;
++ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode;
+- (void)applyConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode;
 @end
 
 
