@@ -414,4 +414,24 @@
 	 }];
 }
 
+#pragma mark -
+- (id)lastChildSceneOfClass:(Class)sceneClass {
+
+	__block UIViewController *lastChildScene = nil;
+
+	[self.childViewControllers
+	 enumerateObjectsWithOptions:NSEnumerationReverse
+	 usingBlock:^(UIViewController *childScene, NSUInteger idx, BOOL *stop) {
+		 if (lastChildScene) {
+			return;
+		 }
+
+		 if ([childScene isKindOfClass:sceneClass]) {
+			lastChildScene = childScene;
+		 }
+	 }];
+
+	return lastChildScene;
+}
+
 @end

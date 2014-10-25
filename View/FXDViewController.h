@@ -29,4 +29,6 @@
 - (void)addChildScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback withDismissedBlock:(FXDcallbackFinish)dismissedBlock;
 - (void)removeChildScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
 
+- (id)lastChildSceneOfClass:(Class)sceneClass;
+
 @end
