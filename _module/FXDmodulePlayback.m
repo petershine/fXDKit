@@ -254,7 +254,7 @@
 }
 
 #pragma mark -
-- (void)resumeMoviePlayerWithFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)resumeMoviePlayerWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	__weak FXDmodulePlayback *weakSelf = self;
 

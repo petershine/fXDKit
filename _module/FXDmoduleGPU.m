@@ -79,7 +79,7 @@
 	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
 
 	[gpuimageFilter addTarget:gpuviewCaptured];
-	FXDLogObject([gpuimageFilter targets]);
+	//FXDLogObject([gpuimageFilter targets]);
 
 	return gpuviewCaptured;
 }
@@ -105,7 +105,7 @@
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
 
 	[gpuimageFilter addTarget:gpumovieWriter];
-	FXDLogObject([gpuimageFilter targets]);
+	//FXDLogObject([gpuimageFilter targets]);
 
 	return gpumovieWriter;
 }
