@@ -28,6 +28,7 @@
 }
 
 @property (nonatomic) CMTime playbackCurrentTime;
+@property (nonatomic) Float64 playbackProgress;
 @property (nonatomic) CMTime lastSeekedTime;
 
 @property (strong, nonatomic) AVPlayer *moviePlayer;
@@ -39,7 +40,7 @@
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;
 
 
-- (void)startSeekingToTrackProgress:(Float64)trackProgress withCallback:(FXDcallbackFinish)finishCallback;
+- (void)startSeekingToPlaybackProgress:(Float64)playbackProgress withCallback:(FXDcallbackFinish)finishCallback;
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)resumeMoviePlayerWithCallback:(FXDcallbackFinish)finishCallback;

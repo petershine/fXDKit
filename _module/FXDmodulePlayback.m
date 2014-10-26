@@ -169,7 +169,7 @@
 }
 
 #pragma mark -
-- (void)startSeekingToTrackProgress:(Float64)trackProgress withCallback:(FXDcallbackFinish)callback {
+- (void)startSeekingToPlaybackProgress:(Float64)playbackProgress withCallback:(FXDcallbackFinish)finishCallback {
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
@@ -177,11 +177,20 @@
 
 	//MARK: Be careful about validity of time
 	if (CMTimeCompare(weakSelf.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
-		&& trackProgress > 0.0) {
-		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, trackProgress);
+		&& playbackProgress > 0.0) {
+		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, playbackProgress);
 	}
 
-	[weakSelf startSeekingToTime:seekedTime withFinishCallback:callback];
+	[weakSelf
+	 startSeekingToTime:seekedTime
+	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+
+		 weakSelf.playbackProgress = playbackProgress;
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, didFinish, responseObj);
+		 }
+	 }];
 }
 
 - (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)callback {
