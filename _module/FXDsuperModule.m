@@ -22,6 +22,6 @@
 }
 
 #pragma mark - Public
-- (void)startReactiveObserving {	FXDLog_DEFAULT;
+- (void)startReactiveObserving {	FXDLog_DEFAULT;;
 }
 @end

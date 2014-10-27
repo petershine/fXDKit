@@ -49,7 +49,8 @@
 		}
 
 
-		[self cancelOperationForKey:key withDictionary:operationDictionary];
+		BOOL isCancelled = [self cancelOperationForKey:key withDictionary:operationDictionary];
+		FXDLog(@"%@ %@", _Object(key), _BOOL(isCancelled));
 
 		[removedKeyArray addObject:key];
 	}

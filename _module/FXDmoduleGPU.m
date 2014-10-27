@@ -102,7 +102,7 @@
 														   outputSettings:nil];
 
 	gpumovieWriter.encodingLiveVideo = YES;
-	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];
+	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];	
 
 	[gpuimageFilter addTarget:gpumovieWriter];
 	//FXDLogObject([gpuimageFilter targets]);

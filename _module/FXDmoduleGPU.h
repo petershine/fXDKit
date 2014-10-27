@@ -40,6 +40,8 @@
 
 @property (strong, nonatomic) NSMutableArray *filterNameArray;
 
+@property (strong, nonatomic) NSString *originalAudioSesssionCategory;
+
 @property (strong, nonatomic) FXDcameraGPU *videoCamera;
 @property (strong, nonatomic) FXDfilterGPU *cameraFilter;
 

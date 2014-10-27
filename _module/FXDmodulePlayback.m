@@ -119,11 +119,8 @@
 							  URLAssetWithURL:movieFileURL
 							  options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
 
-	NSString *tracksKey = @"tracks";
-
-
 	[movieAsset
-	 loadValuesAsynchronouslyForKeys:@[tracksKey]
+	 loadValuesAsynchronouslyForKeys:@[@"tracks", @"duration", @"presentationSize"]
 	 completionHandler:^{
 		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
 		 FXDLogBOOL(movieAsset.isPlayable);
@@ -132,7 +129,7 @@
 		  addOperationWithBlock:^{
 
 			  NSError *error = nil;
-			  AVKeyValueStatus valueStatus = [movieAsset statusOfValueForKey:tracksKey error:&error];
+			  AVKeyValueStatus valueStatus = [movieAsset statusOfValueForKey:@"tracks" error:&error];
 			  FXDLog_ERROR;
 			  FXDLogVariable(valueStatus);
 
@@ -159,7 +156,7 @@
 			  strongSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
 			  [strongSelf.mainPlaybackDisplay setMainPlayer:strongSelf.moviePlayer];
 
-			  [strongSelf startSeekingToTime:kCMTimeZero withFinishCallback:nil];
+			  [strongSelf startSeekingToTime:kCMTimeZero withCallback:nil];
 
 			  if (callback) {
 				  callback(_cmd, YES, nil);
@@ -183,7 +180,7 @@
 
 	[weakSelf
 	 startSeekingToTime:seekedTime
-	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+	 withCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 
 		 weakSelf.playbackProgress = playbackProgress;
 
@@ -193,15 +190,15 @@
 	 }];
 }
 
-- (void)startSeekingToTime:(CMTime)seekedTime withFinishCallback:(FXDcallbackFinish)callback {
+- (void)startSeekingToTime:(CMTime)seekedTime withCallback:(FXDcallbackFinish)finishCallback {
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
 	if (CMTIME_IS_VALID(seekedTime) == NO) {	FXDLog_DEFAULT;
 		FXDLogBOOL(CMTIME_IS_VALID(seekedTime));
 
-		if (callback) {
-			callback(_cmd, NO, nil);
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -211,8 +208,8 @@
 		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
 		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
 
-		if (callback) {
-			callback(_cmd, NO, nil);
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -222,15 +219,15 @@
 	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
 
 	if (CMTimeCompare(currentTime, seekedTime) == NSOrderedSame) {
-		if (callback) {
-			callback(_cmd, NO, nil);
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
 
 	if (CMTimeCompare(weakSelf.lastSeekedTime, seekedTime) == NSOrderedSame) {
-		if (callback) {
-			callback(_cmd, NO, nil);
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
@@ -256,8 +253,8 @@
 		 }
 		  */
 
-		 if (callback) {
-			 callback(_cmd, didFinish, weakSelf.moviePlayer.currentItem);
+		 if (finishCallback) {
+			 finishCallback(_cmd, didFinish, weakSelf.moviePlayer.currentItem);
 		 }
 	 }];
 }
@@ -303,7 +300,7 @@
 
 	[weakSelf
 	 startSeekingToTime:kCMTimeZero
-	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
+	 withCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 ResumingMoviePlayer(_cmd, didFinish, responseObj);
 	 }];
 }
