@@ -50,6 +50,7 @@
 
 
 		BOOL isCancelled = [self cancelOperationForKey:key withDictionary:operationDictionary];
+		if (isCancelled) {}
 		FXDLog(@"%@ %@", _Object(key), _BOOL(isCancelled));
 
 		[removedKeyArray addObject:key];

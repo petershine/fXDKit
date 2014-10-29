@@ -215,6 +215,7 @@
 	}
 
 
+#warning //TODO: Make sure loading is completed for correct preview updating
 	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
 	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
 
