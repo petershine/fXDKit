@@ -29,7 +29,6 @@
 
 @property (nonatomic) CMTime playbackCurrentTime;
 @property (nonatomic) Float64 playbackProgress;
-@property (nonatomic) CMTime lastSeekedTime;
 
 @property (strong, nonatomic) AVPlayer *moviePlayer;
 @property (strong, nonatomic) id periodicObserver;

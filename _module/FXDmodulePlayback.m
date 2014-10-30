@@ -227,17 +227,8 @@
 		return;
 	}
 
-	if (CMTimeCompare(weakSelf.lastSeekedTime, seekedTime) == NSOrderedSame) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
 
-
-	weakSelf.lastSeekedTime = seekedTime;
-
-	//TEST: [weakSelf.moviePlayer.currentItem cancelPendingSeeks];
+	[weakSelf.moviePlayer.currentItem cancelPendingSeeks];
 
 	[weakSelf.moviePlayer.currentItem
 	 seekToTime:seekedTime
@@ -246,16 +237,6 @@
 	 completionHandler:^(BOOL didFinish) {
 
 		 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
-
-		 //TEST:
-		 /*
-		 if (didFinish) {
-		 }
-		 else {
-			 FXDLog_BLOCK(weakSelf.moviePlayer.currentItem, @selector(seekToTime:completionHandler:));
-			 FXDLog(@"%@ %@", _Time(seekedTime), _Time([weakSelf.moviePlayer.currentItem currentTime]));
-		 }
-		  */
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, didFinish, weakSelf.moviePlayer.currentItem);
