@@ -42,6 +42,7 @@
 	CGRect displayFrame = CGRectMake(0, 0, forcedSize.width, forcedSize.height);
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
+		//MARK: For the case with presentationSize not being present and the device is 4 or 4s, make sure gravity is AVLayerVideoGravityResizeAspectFill
 		return displayFrame;
 	}
 
@@ -236,10 +237,12 @@
 
 	weakSelf.lastSeekedTime = seekedTime;
 
-	[weakSelf.moviePlayer.currentItem cancelPendingSeeks];
+	//TEST: [weakSelf.moviePlayer.currentItem cancelPendingSeeks];
 
 	[weakSelf.moviePlayer.currentItem
 	 seekToTime:seekedTime
+	 toleranceBefore:kCMTimeZero
+	 toleranceAfter:kCMTimeZero
 	 completionHandler:^(BOOL didFinish) {
 
 		 weakSelf.playbackCurrentTime = [weakSelf.moviePlayer.currentItem currentTime];
