@@ -295,7 +295,9 @@
 #pragma mark -
 - (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay {
 
-	UILabel *alertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, heightNavigationBar)];
+	CGRect labelFrame = CGRectMake(0, 0, MIN(self.frame.size.width, self.frame.size.height), heightNavigationBar);
+
+	UILabel *alertLabel = [[UILabel alloc] initWithFrame:labelFrame];
 	alertLabel.text = alertText;
 
 	alertLabel.font = [UIFont boldSystemFontOfSize:20.0];
@@ -311,15 +313,20 @@
 
 	alertLabel.userInteractionEnabled = NO;
 
+
+	//MARK: Assume center of the screen is where label should be
+	UIDeviceOrientation deviceOrientation = [UIDevice validDeviceOrientation];
+
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:deviceOrientation];
+
+	labelFrame.origin.x = (screenBounds.size.width -labelFrame.size.width)/2.0;
+	labelFrame.origin.y = (screenBounds.size.height -labelFrame.size.height)/2.0;
+	alertLabel.frame = labelFrame;
+
+
 	alertLabel.alpha = 0.0;
 
-
 	[self addSubview:alertLabel];
-
-	[alertLabel updateWithXYratio:CGPointMake(0.5, 0.5)
-						  forSize:alertLabel.superview.frame.size
-					 forTransform:alertLabel.transform
-					  forDuration:0.0];
 
 
 	[UIView
