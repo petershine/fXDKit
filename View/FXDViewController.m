@@ -423,6 +423,7 @@
 	 enumerateObjectsWithOptions:NSEnumerationReverse
 	 usingBlock:^(UIViewController *childScene, NSUInteger idx, BOOL *stop) {
 		 if (lastChildScene) {
+			 *stop = YES;
 			return;
 		 }
 
