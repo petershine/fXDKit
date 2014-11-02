@@ -31,44 +31,57 @@
 
 #pragma mark -
 - (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@", _Size(forcedSize), _Size(presentationSize));
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
 		presentationSize = [self mainPlayer].currentItem.presentationSize;
+
+		if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
+			presentationSize = forcedSize;
+		}
 	}
 
-	FXDLog(@"%@ %@", _Size(presentationSize), _Size(forcedSize));
+
+	CGFloat forcedAspect = MAX(forcedSize.width, forcedSize.height)/MIN(forcedSize.width, forcedSize.height);
+	FXDLogVariable(forcedAspect);
+
+	CGFloat presentationAspect = MAX(presentationSize.width, presentationSize.height)/MIN(presentationSize.width, presentationSize.height);
+	FXDLogVariable(presentationAspect);
+
+	CGFloat displayAspect = MAX(forcedAspect, presentationAspect);
+	FXDLogVariable(displayAspect);
 
 
 	CGRect displayFrame = CGRectMake(0, 0, forcedSize.width, forcedSize.height);
 
-	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
-		//MARK: For the case with presentationSize not being present and the device is 4 or 4s, make sure gravity is AVLayerVideoGravityResizeAspectFill
-		return displayFrame;
-	}
-
-
-	CGFloat aspectRatio = MIN(presentationSize.width, presentationSize.height)/MAX(presentationSize.width, presentationSize.height);
-	FXDLogVariable(aspectRatio);
-
+	AVPlayerLayer *displayLayer = (AVPlayerLayer*)self.layer;
 
 	if (forcedSize.width < forcedSize.height) {
 		displayFrame.size.width = forcedSize.width;
 
 		if (presentationSize.width < presentationSize.height) {
-			displayFrame.size.height = displayFrame.size.width/aspectRatio;
+			displayFrame.size.height = displayFrame.size.width*displayAspect;
+
+			displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 		}
 		else {
-			displayFrame.size.height = displayFrame.size.width*aspectRatio;
+			displayFrame.size.height = displayFrame.size.width/displayAspect;
+
+			displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 		}
 	}
 	else {
 		displayFrame.size.height = forcedSize.height;
 
 		if (presentationSize.width < presentationSize.height) {
-			displayFrame.size.width = displayFrame.size.height*aspectRatio;
+			displayFrame.size.width = displayFrame.size.height/displayAspect;
+
+			displayLayer.videoGravity = AVLayerVideoGravityResizeAspect;
 		}
 		else {
-			displayFrame.size.width = displayFrame.size.height/aspectRatio;
+			displayFrame.size.width = displayFrame.size.height*displayAspect;
+
+			displayLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 		}
 	}
 
@@ -76,7 +89,12 @@
 
 	displayFrame.origin.x = (forcedSize.width -displayFrame.size.width)/2.0;
 	displayFrame.origin.y = (forcedSize.height -displayFrame.size.height)/2.0;
+
 	FXDLog(@"2.%@", _Rect(displayFrame));
+	FXDLogObject(displayLayer.videoGravity);
+
+	FXDLogBOOL(self.layer.needsDisplay);
+	[self.layer displayIfNeeded];
 
 
 	return displayFrame;

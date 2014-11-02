@@ -6,13 +6,16 @@
 #import "FXDKit.h"
 
 
-#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720
+#ifndef sessionPresetOptimalCapture
+	#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720
+#endif
 
 
 @class FXDmoduleCapture;
 
 
 @interface FXDcameraGPU : GPUImageVideoCamera
+- (void)rotateCameraWithOptimalPreset:(NSString*)optimalCaptureSessionPreset;
 @end
 
 @interface FXDfilterGPU : GPUImageFilter
@@ -32,6 +35,8 @@
 
 	NSMutableArray *_filterNameArray;
 
+	NSString *_optimalCaptureSessionPreset;
+
 	FXDcameraGPU *_videoCamera;
 	FXDfilterGPU *_cameraFilter;
 }
@@ -41,6 +46,7 @@
 @property (strong, nonatomic) NSMutableArray *filterNameArray;
 
 @property (strong, nonatomic) NSString *originalAudioSesssionCategory;
+@property (strong, nonatomic) NSString *optimalCaptureSessionPreset;
 
 @property (strong, nonatomic) FXDcameraGPU *videoCamera;
 @property (strong, nonatomic) FXDfilterGPU *cameraFilter;

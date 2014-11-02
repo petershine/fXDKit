@@ -6,7 +6,7 @@
 
 
 @implementation FXDcameraGPU
-- (void)rotateCamera {
+- (void)rotateCameraWithOptimalPreset:(NSString*)optimalCaptureSessionPreset {
 	if (GlobalModule.isDevice_iPhoneFour.boolValue == NO) {
 		[super rotateCamera];
 		return;
@@ -14,6 +14,7 @@
 
 
 	FXDLog_DEFAULT;
+	FXDLogObject(optimalCaptureSessionPreset);
 
 	FXDLogBOOL(self.frontFacingCameraPresent);
 	if (self.frontFacingCameraPresent == NO) {
@@ -46,7 +47,7 @@
 
 
 		//MARK: In case of old device, preset has to be different
-		_captureSession.sessionPreset = (modifiedPosition == AVCaptureDevicePositionBack) ? sessionPresetOptimalCapture:AVCaptureSessionPresetHigh;
+		_captureSession.sessionPreset = (modifiedPosition == AVCaptureDevicePositionBack) ? optimalCaptureSessionPreset:AVCaptureSessionPresetHigh;
 		FXDLogObject(_captureSession.sessionPreset);
 
 
@@ -223,6 +224,14 @@
 }
 
 #pragma mark -
+- (NSString*)optimalCaptureSessionPreset {
+	if (_optimalCaptureSessionPreset == nil) {
+		_optimalCaptureSessionPreset = sessionPresetOptimalCapture;
+	}
+	return _optimalCaptureSessionPreset;
+}
+
+#pragma mark -
 - (FXDcameraGPU*)videoCamera {
 	if (_videoCamera) {
 		return _videoCamera;
@@ -231,7 +240,7 @@
 
 	FXDLog_DEFAULT;
 
-	_videoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:sessionPresetOptimalCapture
+	_videoCamera = [[FXDcameraGPU alloc] initWithSessionPreset:self.optimalCaptureSessionPreset
 												cameraPosition:AVCaptureDevicePositionBack];
 	[_videoCamera setOutputImageOrientation:(UIInterfaceOrientation)AVCaptureVideoOrientationPortrait];
 
