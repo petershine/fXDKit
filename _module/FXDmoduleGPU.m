@@ -91,16 +91,17 @@
 	FXDLog_DEFAULT;
 }
 
-+ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter {	//FXDLog_DEFAULT;
 
 	FXDLog(@"%@ %f", _Size(videoSize), (MAX(videoSize.width, videoSize.height)/MIN(videoSize.width, videoSize.height)));
 	FXDLogObject(fileURL);
 	FXDLogObject(gpuimageFilter);
 
-	FXDwriterGPU *gpumovieWriter = [[[self class] alloc] initWithMovieURL:fileURL
-																	 size:videoSize
-																 fileType:AVFileTypeQuickTimeMovie
-														   outputSettings:nil];
+	FXDwriterGPU *gpumovieWriter = [[[self class] alloc]
+									initWithMovieURL:fileURL
+									size:videoSize
+									fileType:AVFileTypeQuickTimeMovie
+									outputSettings:nil];
 
 	gpumovieWriter.encodingLiveVideo = YES;
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];	
@@ -276,11 +277,14 @@
 }
 
 - (void)resetGPUmodule {	FXDLog_DEFAULT;
-	[_videoCamera removeAllTargets];
-	_videoCamera = nil;
-
 	[_cameraFilter removeAllTargets];
 	_cameraFilter = nil;
+
+	[_cropFilter removeAllTargets];
+	_cropFilter = nil;
+
+	[_videoCamera removeAllTargets];
+	_videoCamera = nil;
 }
 
 #pragma mark -
@@ -291,14 +295,24 @@
 	NSString *filterName = self.filterNameArray[filterIndex];
 	FXDLogObject(filterName);
 
+	FXDLogObject(_cropFilter);
+
+
+	[_cameraFilter removeAllTargets];
 
 	[_videoCamera removeTarget:_cameraFilter];
-	[_cameraFilter removeAllTargets];
+	[_cropFilter removeTarget:_cameraFilter];
+
 
 	_cameraFilter = nil;
 	_cameraFilter = [[NSClassFromString(filterName) alloc] init];
-	
-	[_videoCamera addTarget:_cameraFilter];
+
+	if (_cropFilter == nil) {
+		[_videoCamera addTarget:_cameraFilter];
+	}
+	else {
+		[_cropFilter addTarget:_cameraFilter];
+	}
 }
 
 @end

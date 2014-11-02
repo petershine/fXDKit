@@ -39,6 +39,8 @@
 
 	FXDcameraGPU *_videoCamera;
 	FXDfilterGPU *_cameraFilter;
+
+	GPUImageCropFilter *_cropFilter;
 }
 
 @property (nonatomic) NSInteger lastFilterIndex;
@@ -50,6 +52,8 @@
 
 @property (strong, nonatomic) FXDcameraGPU *videoCamera;
 @property (strong, nonatomic) FXDfilterGPU *cameraFilter;
+
+@property (strong, nonatomic) GPUImageCropFilter *cropFilter;
 
 
 - (void)prepareGPUmodule;
