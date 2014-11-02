@@ -121,7 +121,7 @@
 							  options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
 
 	[movieAsset
-	 loadValuesAsynchronouslyForKeys:@[@"tracks", @"duration", @"presentationSize"]
+	 loadValuesAsynchronouslyForKeys:@[@"duration"]
 	 completionHandler:^{
 		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
 		 FXDLogBOOL(movieAsset.isPlayable);
