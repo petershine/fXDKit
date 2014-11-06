@@ -114,7 +114,8 @@
 
 	[self sceneTransitionForSize:self.view.bounds.size
 					forTransform:CGAffineTransformIdentity
-					 forDuration:duration];
+					 forDuration:duration
+					withCallback:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -130,7 +131,8 @@
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 [self sceneTransitionForSize:size
 						 forTransform:[coordinator targetTransform]
-						  forDuration:[coordinator transitionDuration]];
+						  forDuration:[coordinator transitionDuration]
+						 withCallback:nil];
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 		 /*
@@ -328,7 +330,7 @@
 }
 
 #pragma mark -
-- (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
+- (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
 
