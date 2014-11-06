@@ -378,6 +378,10 @@
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
 		deviceOrientation = (UIDeviceOrientation)self.videoOrientation;
+
+		if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
+			deviceOrientation = (UIDeviceOrientation)[UIApplication sharedApplication].statusBarOrientation;
+		}
 	}
 
 

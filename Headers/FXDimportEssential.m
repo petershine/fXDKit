@@ -248,7 +248,7 @@
 	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(validOrientation) == NO) {
-		validOrientation = UIDeviceOrientationPortrait;
+		validOrientation = (UIDeviceOrientation)[UIApplication sharedApplication].statusBarOrientation;
 	}
 
 	return validOrientation;
