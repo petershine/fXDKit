@@ -33,7 +33,7 @@
 @interface FXDmoduleGPU : FXDsuperModule {
 	NSInteger _lastFilterIndex;
 
-	NSMutableArray *_filterNameArray;
+	NSArray *_filterNameArray;
 
 	NSString *_optimalCaptureSessionPreset;
 
@@ -45,7 +45,7 @@
 
 @property (nonatomic) NSInteger lastFilterIndex;
 
-@property (strong, nonatomic) NSMutableArray *filterNameArray;
+@property (strong, nonatomic) NSArray *filterNameArray;
 
 @property (strong, nonatomic) NSString *originalAudioSesssionCategory;
 @property (strong, nonatomic) NSString *optimalCaptureSessionPreset;

@@ -295,9 +295,10 @@
 #pragma mark -
 - (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay {
 
-	CGRect labelFrame = CGRectMake(0, 0, MIN(self.frame.size.width, self.frame.size.height), heightNavigationBar);
+	CGRect labelFrame = CGRectMake(0, 0, MIN(self.frame.size.width, self.frame.size.height), heightNavigationBar*2.0);
 
 	UILabel *alertLabel = [[UILabel alloc] initWithFrame:labelFrame];
+	alertLabel.numberOfLines = 0;
 	alertLabel.text = alertText;
 
 	alertLabel.font = [UIFont boldSystemFontOfSize:20.0];

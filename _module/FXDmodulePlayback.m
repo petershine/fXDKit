@@ -142,7 +142,18 @@
 	 loadValuesAsynchronouslyForKeys:@[@"duration"]
 	 completionHandler:^{
 		 FXDLog_BLOCK(movieAsset, @selector(loadValuesAsynchronouslyForKeys:completionHandler:));
-		 FXDLogBOOL(movieAsset.isPlayable);
+
+		 NSError *error = nil;
+		 AVKeyValueStatus valueStatus = [movieAsset
+										 statusOfValueForKey:@"duration"
+										 error:&error];FXDLog_ERROR;
+		 FXDLogVariable(valueStatus);
+		 if (valueStatus) {}
+		 
+		 FXDLogTime(movieAsset.duration);
+		 
+		 FXDLogBOOL(movieAsset.hasProtectedContent);
+		 FXDLog(@"%@ %@ %@ %@", _BOOL(movieAsset.isPlayable), _BOOL(movieAsset.isExportable), _BOOL(movieAsset.isReadable), _BOOL(movieAsset.isComposable));
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
@@ -186,6 +197,11 @@
 
 #pragma mark -
 - (void)startSeekingToPlaybackProgress:(Float64)playbackProgress withCallback:(FXDcallbackFinish)finishCallback {
+
+	if (playbackProgress < 0.0 || isnan(playbackProgress)) {
+		playbackProgress = 0.0;
+	}
+
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
@@ -309,10 +325,10 @@
 }
 
 - (void)pauseAndRemovePeriodicObserver {	//FXDLog_DEFAULT;
+	[self.moviePlayer pause];
+	self.moviePlayer.volume = 1.0;
 	
 	__weak FXDmodulePlayback *weakSelf = self;
-
-	[weakSelf.moviePlayer pause];
 
 	if (weakSelf.periodicObserver) {
 		[weakSelf.moviePlayer removeTimeObserver:weakSelf.periodicObserver];

@@ -30,6 +30,9 @@
 }
 
 #pragma mark -
+
+#warning //MARK: For the app with remote notification, ignore following implementation
+/*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 	FXDLogObject(deviceToken);
 }
@@ -54,6 +57,7 @@
 		completionHandler(UIBackgroundFetchResultNoData);
 	}
 }
+ */
 
 #pragma mark -
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {	FXDLog_SEPARATE;
