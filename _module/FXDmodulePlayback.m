@@ -227,8 +227,6 @@
 
 - (void)startSeekingToTime:(CMTime)seekedTime withCallback:(FXDcallbackFinish)finishCallback {
 
-	__weak FXDmodulePlayback *weakSelf = self;
-
 	if (CMTIME_IS_VALID(seekedTime) == NO) {	FXDLog_DEFAULT;
 		FXDLogBOOL(CMTIME_IS_VALID(seekedTime));
 
@@ -239,9 +237,10 @@
 	}
 
 
-	if (weakSelf.moviePlayer.status != AVPlayerStatusReadyToPlay
-		&& weakSelf.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
-		FXDLog(@"%@ %@", _Variable(weakSelf.moviePlayer.status), _Variable(weakSelf.moviePlayer.currentItem.status));
+	//NOTE: Make sure loading is completed for correct preview updating
+	if (self.moviePlayer.status != AVPlayerStatusReadyToPlay
+		&& self.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
+		FXDLog(@"%@ %@", _Variable(self.moviePlayer.status), _Variable(self.moviePlayer.currentItem.status));
 
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
@@ -250,19 +249,9 @@
 	}
 
 
-#warning //TODO: Make sure loading is completed for correct preview updating
-	CMTime currentTime = [weakSelf.moviePlayer.currentItem currentTime];
-	//FXDLog(@"%@ %@ %@", _Time(seekedTime), _Time(currentTime), _Variable(CMTimeCompare(currentTime, seekedTime)));
+	[self.moviePlayer.currentItem cancelPendingSeeks];
 
-	if (CMTimeCompare(currentTime, seekedTime) == NSOrderedSame) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
-
-
-	[weakSelf.moviePlayer.currentItem cancelPendingSeeks];
+	__weak FXDmodulePlayback *weakSelf = self;
 
 	[weakSelf.moviePlayer.currentItem
 	 seekToTime:seekedTime
