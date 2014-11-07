@@ -165,6 +165,8 @@
 - (void)observedMPMediaLibraryDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
 
+#if	ForDEVELOPER
+
 	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 	FXDLogObject(mediaLibrary.lastModifiedDate);
 
@@ -181,6 +183,7 @@
 			FXDLog(@"%@\t%@", _Variable(playlist.items.count), _Object([playlist valueForProperty:MPMediaPlaylistPropertyName]));
 		}
 	}
+#endif
 }
 
 #pragma mark - Delegate

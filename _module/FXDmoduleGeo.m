@@ -267,6 +267,7 @@
 																   MKMapPointMake(tileMapRect.size.width,
 																				  tileMapRect.size.height));
 	FXDLogVariable(diagonalDistance);
+	if (diagonalDistance) {}
 
 	self.tileMapRect = tileMapRect;
 
