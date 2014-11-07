@@ -437,4 +437,57 @@
 	return lastChildScene;
 }
 
+#pragma mark -
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+	FXDLog(@"%@ %@", _Size(forcedSize), _Size(presentationSize));
+
+	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
+		presentationSize = forcedSize;
+	}
+
+
+	CGFloat forcedAspect = MAX(forcedSize.width, forcedSize.height)/MIN(forcedSize.width, forcedSize.height);
+	FXDLogVariable(forcedAspect);
+
+	CGFloat presentationAspect = MAX(presentationSize.width, presentationSize.height)/MIN(presentationSize.width, presentationSize.height);
+	FXDLogVariable(presentationAspect);
+
+	CGFloat displayAspect = MAX(forcedAspect, presentationAspect);
+	FXDLogVariable(displayAspect);
+
+
+	CGRect displayFrame = CGRectMake(0, 0, forcedSize.width, forcedSize.height);
+
+	if (forcedSize.width < forcedSize.height) {
+		displayFrame.size.width = forcedSize.width;
+
+		if (presentationSize.width < presentationSize.height) {
+			displayFrame.size.height = displayFrame.size.width*displayAspect;
+		}
+		else {
+			displayFrame.size.height = displayFrame.size.width/displayAspect;
+		}
+	}
+	else {
+		displayFrame.size.height = forcedSize.height;
+
+		if (presentationSize.width < presentationSize.height) {
+			displayFrame.size.width = displayFrame.size.height/displayAspect;
+		}
+		else {
+			displayFrame.size.width = displayFrame.size.height*displayAspect;
+		}
+	}
+
+	FXDLog(@"1.%@", _Rect(displayFrame));
+
+	displayFrame.origin.x = (forcedSize.width -displayFrame.size.width)/2.0;
+	displayFrame.origin.y = (forcedSize.height -displayFrame.size.height)/2.0;
+
+	FXDLog(@"2.%@", _Rect(displayFrame));
+
+	
+	return displayFrame;
+}
+
 @end

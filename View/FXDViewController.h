@@ -31,4 +31,6 @@
 
 - (id)lastChildSceneOfClass:(Class)sceneClass;
 
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize;
+
 @end
