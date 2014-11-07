@@ -17,12 +17,18 @@
 
 	#import "Flurry.h"
 
-	#define LOGEVENT(__FORMAT__, ...)	[Flurry logEvent:[NSString stringWithFormat:__FORMAT__, ##__VA_ARGS__]]
+	#define LOGEVENT(__FORMAT__, ...)	[[NSOperationQueue mainQueue]\
+										addOperationWithBlock:^{\
+										[Flurry\
+										logEvent:[NSString stringWithFormat:__FORMAT__,\
+										##__VA_ARGS__]];}]
 
-	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[Flurry\
-																logEvent:identifier\
-																withParameters:parameters\
-																timed:shouldTime]
+#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[[NSOperationQueue mainQueue]\
+															addOperationWithBlock:^{\
+															[Flurry\
+															logEvent:identifier\
+															withParameters:parameters\
+															timed:shouldTime];}]
 
 	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
 

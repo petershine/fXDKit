@@ -332,8 +332,10 @@
 #pragma mark -
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
 	FXDLogBOOL([@(USE_Flurry) boolValue]);
+	FXDAssert_IsMainThread;
 	
 #if USE_Flurry
+
 	[Flurry setSecureTransportEnabled:YES];
 	[Flurry setCrashReportingEnabled:YES];
 
