@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,49 +11,82 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="whiteLarge" id="3">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="3">
                     <rect key="frame" x="141" y="266" width="37" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="37" id="NEz-k4-rtK"/>
+                        <constraint firstAttribute="height" constant="37" id="gab-JZ-igc"/>
+                    </constraints>
                 </activityIndicatorView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="12" id="9">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="9">
                     <rect key="frame" x="10" y="223" width="300" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="XYm-lk-OhF"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="12" id="5">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="5">
                     <rect key="frame" x="10" y="208" width="300" height="41"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="41" id="dwu-Rq-SDN"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="12" id="4">
-                    <rect key="frame" x="10" y="320" width="300" height="41"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="4">
+                    <rect key="frame" x="10" y="340" width="300" height="41"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="41" id="LPP-qg-oxB"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </label>
-                <slider hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" id="10">
-                    <rect key="frame" x="10" y="316" width="300" height="29"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <slider hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                    <rect key="frame" x="10" y="336" width="300" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="296" id="NVt-xL-nJw"/>
+                        <constraint firstAttribute="height" constant="28" id="gpR-zE-XEh"/>
+                    </constraints>
                 </slider>
-                <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" id="18">
-                    <rect key="frame" x="20" y="322" width="280" height="2"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="18">
+                    <rect key="frame" x="20" y="342" width="280" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="2" id="00n-cQ-fHY"/>
+                        <constraint firstAttribute="height" constant="2" id="0kf-tj-rUF"/>
+                        <constraint firstAttribute="width" constant="280" id="fY7-RA-Nmf"/>
+                    </constraints>
                     <color key="progressTintColor" red="0.0" green="0.66666666669999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="trackTintColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                 </progressView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="10" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="33" id="1BI-je-2S3"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="37" id="4dA-iY-yIO"/>
+                <constraint firstItem="3" firstAttribute="centerX" secondItem="18" secondAttribute="centerX" constant="-0.5" id="8cU-2m-2ZR"/>
+                <constraint firstItem="9" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="10" id="DEP-IS-jL7"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="10" id="DgC-TB-cBw"/>
+                <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="10" id="I0O-DK-n3d"/>
+                <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="10" id="Rc5-eY-9Fe"/>
+                <constraint firstItem="18" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="39" id="Xf4-za-XMo"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="17" id="ars-ni-Amh"/>
+                <constraint firstAttribute="centerX" secondItem="3" secondAttribute="centerX" id="e4g-it-dSN"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="10" id="hMf-kR-RW8"/>
+                <constraint firstAttribute="centerY" secondItem="3" secondAttribute="centerY" id="o4e-mv-vca"/>
+                <constraint firstItem="10" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" constant="0.5" id="p7v-4n-LPV"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="9" secondAttribute="bottom" constant="13" id="rpa-Qb-FUE"/>
+                <constraint firstItem="5" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="10" id="wb1-Bc-KAP"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
