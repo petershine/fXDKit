@@ -23,6 +23,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="XYm-lk-OhF"/>
+                        <constraint firstAttribute="width" constant="300" id="Yey-UT-rdL"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -33,6 +34,7 @@
                     <rect key="frame" x="10" y="208" width="300" height="41"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="300" id="cf5-SR-vsr"/>
                         <constraint firstAttribute="height" constant="41" id="dwu-Rq-SDN"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -45,6 +47,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="41" id="LPP-qg-oxB"/>
+                        <constraint firstAttribute="width" constant="300" id="kc9-dG-WSP"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -73,19 +76,16 @@
             <constraints>
                 <constraint firstItem="10" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="33" id="1BI-je-2S3"/>
                 <constraint firstItem="4" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="37" id="4dA-iY-yIO"/>
+                <constraint firstItem="3" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" constant="-0.5" id="833-8U-aSt"/>
                 <constraint firstItem="3" firstAttribute="centerX" secondItem="18" secondAttribute="centerX" constant="-0.5" id="8cU-2m-2ZR"/>
-                <constraint firstItem="9" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="10" id="DEP-IS-jL7"/>
-                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="10" id="DgC-TB-cBw"/>
-                <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="10" id="I0O-DK-n3d"/>
-                <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="10" id="Rc5-eY-9Fe"/>
+                <constraint firstItem="3" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" constant="-0.5" id="Rpw-rn-TQl"/>
                 <constraint firstItem="18" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="39" id="Xf4-za-XMo"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="17" id="ars-ni-Amh"/>
+                <constraint firstItem="3" firstAttribute="centerX" secondItem="9" secondAttribute="centerX" constant="-0.5" id="aub-Mg-2C5"/>
                 <constraint firstAttribute="centerX" secondItem="3" secondAttribute="centerX" id="e4g-it-dSN"/>
-                <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="10" id="hMf-kR-RW8"/>
                 <constraint firstAttribute="centerY" secondItem="3" secondAttribute="centerY" id="o4e-mv-vca"/>
                 <constraint firstItem="10" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" constant="0.5" id="p7v-4n-LPV"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="9" secondAttribute="bottom" constant="13" id="rpa-Qb-FUE"/>
-                <constraint firstItem="5" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="10" id="wb1-Bc-KAP"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
