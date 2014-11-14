@@ -101,3 +101,43 @@
 @interface FXDmoduleFacebook : FXDmoduleSocial
 - (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId;
 @end
+
+
+
+//MARK: Using Facebook SDK"
+#import <FacebookSDK/FacebookSDK.h>
+
+#define userdefaultObjKeyFacebookAuthenticationURL	@"FacebookAuthenticationURLObjKey"
+#define userdefaultObjKeyFacebookAccessToken		@"FacebookAccessTokenObjKey"
+
+
+@interface FXDmoduleFacebookSSO : FXDmoduleFacebook {
+	NSDictionary *_currentFacebookAccount;
+	NSString *_currentPageAccessToken;
+}
+
+@property (nonatomic) BOOL isAskingForMorePermissions;
+
+@property (strong, nonatomic) NSDictionary *currentFacebookAccount;
+@property (strong, nonatomic) NSString *currentPageAccessToken;
+
+
+- (void)startObservingFBSessionNotifications;
+
+- (BOOL)shouldContinueWithError:(NSError*)error;
+
+- (void)updateSessionPermissionWithFinishCallback:(FXDcallbackFinish)finishCallback;
+
+- (void)facebookRequestForMeWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)facebookRequestForAccountsWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)facebookRequestPageAccessTokenWithFinishCallback:(FXDcallbackFinish)finishCallback;
+
+- (void)facebookRequestToPostWithMessage:(NSString*)message withMediaLink:(NSString*)mediaLink atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude withFinishCallback:(FXDcallbackFinish)finishCallback;
+
+
+- (void)observedFBSessionDidSetActiveSession:(NSNotification*)notification;
+- (void)observedFBSessionDidUnsetActiveSession:(NSNotification*)notification;
+- (void)observedFBSessionDidBecomeOpenActiveSession:(NSNotification*)notification;
+- (void)observedFBSessionDidBecomeClosedActiveSession:(NSNotification*)notification;
+
+@end
