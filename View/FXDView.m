@@ -91,7 +91,9 @@
 	if (self.hidden) {
 		return;
 	}
-	
+
+
+	CGFloat previousAlpha = self.alpha;
 	
 	[UIView
 	 animateWithDuration:durationAnimation
@@ -101,11 +103,8 @@
 		 self.alpha = 0.0;
 	 }
 	 completion:^(BOOL didFinish) {
-		 if (self.hidden == NO) {
-			 self.hidden = YES;
-		 }
-		 
-		 self.alpha = 1.0;
+		 self.hidden = YES;
+		 self.alpha = previousAlpha ;
 	 }];
 }
 
