@@ -1033,11 +1033,7 @@
 	if ([actionSheet isKindOfClass:[UIActionSheet class]]
 		&& buttonIndex == [(FXDActionSheet*)actionSheet destructiveButtonIndex]) {
 
-		[userDefaults removeObjectForKey:accountObjKey];
-
-		[[FBSession activeSession] closeAndClearTokenInformation];
-
-		_currentFacebookAccount = nil;
+		[self resetCredential];
 	}
 	else {
 		NSDictionary *selectedAccount = (self.multiAccountArray)[buttonIndex-1];
@@ -1147,8 +1143,7 @@
 				 return;
 			 }
 
-
-			 [[FBSession activeSession] closeAndClearTokenInformation];
+			 [self resetCredential];
 			 
 			 if (requestingBlock) {
 				 requestingBlock(NO);
@@ -1159,6 +1154,17 @@
 
 
 #pragma mark - Public
+- (void)resetCredential {	FXDLog_DEFAULT;
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
+
+	[[FBSession activeSession] closeAndClearTokenInformation];
+
+	_currentFacebookAccount = nil;
+	_currentPageAccessToken = nil;
+}
+
+#pragma mark -
 - (void)startObservingFBSessionNotifications {	FXDLog_DEFAULT;
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -1198,6 +1204,7 @@
 	FXDLog_ERROR;
 
 	NSString *errorMessage = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"][@"message"];
+	FXDLogObject(errorMessage);
 
 	if (errorMessage.length > 0) {
 		[FXDAlertView
@@ -1393,6 +1400,9 @@
 
 				   if (shouldContinue) {
 					   self.currentPageAccessToken = [result[objkeyFacebookAccessToken] copy];
+				   }
+				   else {
+					   self.currentPageAccessToken = nil;
 				   }
 
 				   FXDLog(@"2.%@", _Object(self.currentPageAccessToken));
@@ -1592,7 +1602,7 @@
 	}
 
 
-	[[FBSession activeSession] closeAndClearTokenInformation];
+	[self resetCredential];
 }
 
 #pragma mark -

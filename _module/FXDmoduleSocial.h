@@ -72,6 +72,7 @@
 @end
 
 
+
 #ifndef apikeyFacebookAppId
 	#define apikeyFacebookAppId	@"000000000000000"
 #endif
@@ -128,6 +129,8 @@
 @property (strong, nonatomic) NSDictionary *currentFacebookAccount;
 @property (strong, nonatomic) NSString *currentPageAccessToken;
 
+
+- (void)resetCredential;
 
 - (void)startObservingFBSessionNotifications;
 
