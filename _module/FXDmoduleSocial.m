@@ -707,15 +707,17 @@
 #pragma mark - Property overriding
 - (NSDictionary*)additionalAccessOptions {
 	if (_additionalAccessOptions == nil) {	FXDLog_DEFAULT;
+		
 		_additionalAccessOptions =
 		@{ACFacebookAppIdKey:	apikeyFacebookAppId,
-		  ACFacebookPermissionsKey:	@[facebookPermissionBasicInfo,
+		  ACFacebookPermissionsKey:	@[facebookPermissionPublicProfile,
+									  facebookPermissionUserFriends,
 									  facebookPermissionPublishActions,
 									  facebookPermissionManagePages,
 									  facebookPermissionPublishStream],
 		  ACFacebookAudienceKey:	ACFacebookAudienceEveryone};
 
-		FXDLog(@"_additionalAccessOptions: %@", _additionalAccessOptions);
+		FXDLogObject(_additionalAccessOptions);
 	}
 
 	return _additionalAccessOptions;
