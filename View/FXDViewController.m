@@ -357,21 +357,23 @@
 		[(FXDViewController*)childScene setDismissedBlock:dismissedBlock];
 	}
 
-	if (duration > 0.0) {
-		childScene.view.alpha = 0.0;
-	}
-	
-	
-	[self addChildViewController:childScene];
-	[self.view addSubview:childScene.view];
-	[childScene didMoveToParentViewController:self];
-
 	if (duration == 0.0) {
+		[self addChildViewController:childScene];
+		[self.view addSubview:childScene.view];
+		[childScene didMoveToParentViewController:self];
+
 		if (callback) {
 			callback(_cmd, YES, nil);
 		}
 		return;
 	}
+
+
+	[self addChildViewController:childScene];
+	childScene.view.alpha = 0.0;
+
+	[self.view addSubview:childScene.view];
+	[childScene didMoveToParentViewController:self];
 
 
 	[UIView
