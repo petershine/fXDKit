@@ -248,6 +248,26 @@
 
 	[_videoCamera addAudioInputsAndOutputs];
 
+
+
+	AVCaptureConnection *captureConnection = _videoCamera.videoCaptureConnection;
+
+	FXDLogBOOL(captureConnection.isVideoStabilizationSupported);
+
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+
+		captureConnection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
+
+		FXDLogVariable(captureConnection.preferredVideoStabilizationMode);
+		FXDLogVariable(captureConnection.activeVideoStabilizationMode);
+	}
+	else {
+		captureConnection.enablesVideoStabilizationWhenAvailable = YES;
+		
+		FXDLogBOOL(captureConnection.isVideoStabilizationEnabled);
+	}
+
+
 	return _videoCamera;
 }
 
