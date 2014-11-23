@@ -4,7 +4,7 @@
 
 
 @implementation AVCaptureDevice (MultimediaFrameworks)
-+ (AVCaptureDevice*)videoCaptureDeviceFoPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
++ (AVCaptureDevice*)videoCaptureDeviceForPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
 
 	AVCaptureDevice *videoCaptureDevice = nil;
 
@@ -174,7 +174,7 @@
 	if (_deviceInputBack == nil) {
 
 		AVCaptureDevice *backVideoCapture = [AVCaptureDevice
-											 videoCaptureDeviceFoPosition:AVCaptureDevicePositionBack
+											 videoCaptureDeviceForPosition:AVCaptureDevicePositionBack
 											 withFlashMode:self.flashMode
 											 withFocusMode:AVCaptureFocusModeContinuousAutoFocus];
 
@@ -190,7 +190,7 @@
 	if (_deviceInputFront == nil) {
 
 		AVCaptureDevice *frontVideoCapture = [AVCaptureDevice
-											  videoCaptureDeviceFoPosition:AVCaptureDevicePositionFront
+											  videoCaptureDeviceForPosition:AVCaptureDevicePositionFront
 											  withFlashMode:self.flashMode
 											  withFocusMode:AVCaptureFocusModeContinuousAutoFocus];
 
