@@ -14,7 +14,7 @@ typedef UIView* (^FXDblockHitTest)(UIView *testedView, CGPoint point, UIEvent *e
 	FXDblockHitTest _hitTestBlock;
 }
 
-@property (copy, nonatomic) FXDblockHitTest hitTestBlock;
+@property (copy) FXDblockHitTest hitTestBlock;
 
 @property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
 

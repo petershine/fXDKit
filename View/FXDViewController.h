@@ -8,7 +8,6 @@
 }
 
 @property (nonatomic) CGRect initialBounds;
-
 @property (copy) FXDcallbackFinish dismissedBlock;
 
 @end
