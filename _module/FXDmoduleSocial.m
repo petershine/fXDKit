@@ -596,8 +596,7 @@
 
 		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
 
-		 NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText
-											  } mutableCopy];
+		 NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText} mutableCopy];
 
 		 if (latitude != 0.0 && longitude != 0.0) {
 			 parameters[objkeyTwitterLat] = @(latitude);
