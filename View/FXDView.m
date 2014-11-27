@@ -149,7 +149,7 @@
 	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
 }
 
-- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	FXDLog_DEFAULT;
+- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	//FXDLog_DEFAULT;
 
 	UIImage *renderedImage = nil;
 
@@ -157,10 +157,10 @@
 										   NO,	//MARK: to allow transparency
 										   scale);
 
-	FXDLogObject(self.window);
+	//FXDLogObject(self.window);
 
-	FXDLogBOOL([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]);
-	FXDLogBOOL([self.layer respondsToSelector:@selector(renderInContext:)]);
+	//FXDLogBOOL([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]);
+	//FXDLogBOOL([self.layer respondsToSelector:@selector(renderInContext:)]);
 
 	if (self.window
 		&& [self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {

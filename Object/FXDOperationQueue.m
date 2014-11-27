@@ -27,7 +27,7 @@
 }
 
 #pragma mark -
-- (BOOL)shouldEnqueOperationForKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers withDictionary:(NSMutableDictionary*)operationDictionary {
+- (BOOL)shouldEnqueOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers {
 
 	BOOL shouldEnque = YES;
 

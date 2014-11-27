@@ -8,7 +8,7 @@
 
 - (void)resetOperationQueueAndDictionary:(NSMutableDictionary*)operationDictionary;
 
-- (BOOL)shouldEnqueOperationForKey:(id)operationKey shouldCancelOthers:(BOOL)shouldCancelOthers withDictionary:(NSMutableDictionary*)operationDictionary;
+- (BOOL)shouldEnqueOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers;
 
 - (void)enqueOperation:(NSOperation*)operation forKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary;
 - (BOOL)removeOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary;
