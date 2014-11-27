@@ -31,11 +31,13 @@
 
 	BOOL shouldEnque = YES;
 
-	if ([operationDictionary objectForKey:operationKey]) {
+	NSBlockOperation *enqueuedOperation = operationDictionary[operationKey];
+
+	if (enqueuedOperation && enqueuedOperation.isCancelled == NO) {
 		shouldEnque = NO;
 	}
 
-	if (shouldCancelOthers == NO) {
+	if (shouldCancelOthers ==  NO) {
 		return shouldEnque;
 	}
 
@@ -44,7 +46,6 @@
 
 	for (NSString *key in [operationDictionary allKeys]) {
 		if ([operationKey isEqualToString:key]) {
-			shouldEnque = NO;
 			continue;
 		}
 
