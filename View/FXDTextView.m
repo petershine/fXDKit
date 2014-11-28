@@ -12,9 +12,9 @@
 
 
 	CGRect boundingRect = [self boundingRectForChangedText:changedText
-											forMaximumSize:self.bounds.size];
+											forMaximumSize:self.frame.size];
 
-	NSInteger verticalOffset = (NSInteger)((self.bounds.size.height -self.font.pointSize -boundingRect.size.height)/2.0);
+	NSInteger verticalOffset = (NSInteger)((self.frame.size.height -self.font.pointSize -boundingRect.size.height)/2.0);
 
 	if (verticalOffset < 0.0) {
 		//FXDLog(@"%@, %@ lines: %f %@", _Variable(verticalOffset), _Variable(self.font.pointSize), (boundingRect.size.height/self.font.pointSize), _Object(self.text));
@@ -34,7 +34,7 @@
 	}
 
 
-	//FXDLog(@"%@ %@ %@ %@", _Variable(verticalOffset), _Struct(modifiedInset), _Point(modifiedOffset), _Object(self.text));
+	FXDLog(@"%@ %@ %@ %@", _Variable(verticalOffset), _Struct(modifiedInset), _Point(modifiedOffset), _Object(self.text));
 
 	self.contentInset = modifiedInset;
 	[self setContentOffset:modifiedOffset animated:NO];
