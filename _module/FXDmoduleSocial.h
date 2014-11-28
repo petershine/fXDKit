@@ -120,11 +120,15 @@
 
 
 @interface FXDmoduleFacebookSSO : FXDmoduleFacebook {
+	FBSessionLoginBehavior _sessionLoginBehavior;
+
 	NSDictionary *_currentFacebookAccount;
 	NSString *_currentPageAccessToken;
 }
 
 @property (nonatomic) BOOL isAskingForMorePermissions;
+
+@property (nonatomic) FBSessionLoginBehavior sessionLoginBehavior;
 
 @property (strong, nonatomic) NSDictionary *currentFacebookAccount;
 @property (strong, nonatomic) NSString *currentPageAccessToken;

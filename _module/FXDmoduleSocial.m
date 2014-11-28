@@ -722,10 +722,16 @@
 	return _additionalAccessOptions;
 }
 
-- (NSArray*)multiAccountArray {	//MARK: Using facebookSDK;
+- (NSArray*)multiAccountArray {	//NOTE: Using facebookSDK;
 	return _multiAccountArray;
 }
 
+#pragma mark -
+- (FBSessionLoginBehavior)sessionLoginBehavior {
+	return FBSessionLoginBehaviorUseSystemAccountIfPresent;
+}
+
+#pragma mark -
 - (NSDictionary*)currentFacebookAccount {
 
 	if (_currentFacebookAccount == nil) {	FXDLog_DEFAULT;
@@ -1076,7 +1082,7 @@
 		FXDLog(@"SessionOpening: %@", finishCallback);
 
 		[[FBSession activeSession]
-		 openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+		 openWithBehavior:self.sessionLoginBehavior
 		 completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
 			 FXDLog_BLOCK([FBSession activeSession], @selector(openWithBehavior:completionHandler:));
 			 FXDLogVariable(status);
@@ -1224,13 +1230,13 @@
 	BOOL canReturnEarly = YES;
 
 	FBSession *activeSession = [FBSession activeSession];
-	FXDLog(@"activeSession.permissions: %@", activeSession.permissions);
+	FXDLogObject(activeSession.permissions);
 
 	if ([activeSession.permissions containsObject:facebookPermissionPublishActions] == NO) {
 		canReturnEarly = NO;
 	}
 
-	FXDLog(@"canReturnEarly: %d", canReturnEarly);
+	FXDLogBOOL(canReturnEarly);
 
 	if (canReturnEarly) {
 		if (finishCallback) {
@@ -1276,7 +1282,7 @@
 }
 
 
-#pragma mark - Public
+#pragma mark -
 - (void)facebookRequestForMeWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	[self
