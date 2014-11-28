@@ -221,7 +221,6 @@
 	FXDLogRect(screenBounds);
 
 	UIWindow *newWindow = [[[self class] alloc] initWithFrame:screenBounds];
-	newWindow.backgroundColor = [UIColor blackColor];
 
 	return newWindow;
 }
