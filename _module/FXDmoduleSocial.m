@@ -159,9 +159,10 @@
 	FXDLogVariable(self.mainAccountType.accessGranted);
 
 	void (^GrantedAccess)(void) = ^(void){
-		[self showActionSheetInPresentingView:presentingView
+		[self
+		 showActionSheetInPresentingView:presentingView
 		 forSelectingAccountForTypeIdentifier:typeIdentifier
-						   withFinishCallback:callback];
+		 withFinishCallback:callback];
 	};
 
 	void (^DeniedAccess)(void) = ^(void){
@@ -773,6 +774,7 @@
 	}
 
 
+	FXDLogObject([UIApplication mainWindow]);
 	[(FXDWindow*)[UIApplication mainWindow] showInformationViewAfterDelay:delayQuarterSecond];
 
 	// Initialize a session object
@@ -829,7 +831,7 @@
 		 }
 
 
-		 FXDLog(@"self.isAskingForMorePermissions: %d", self.isAskingForMorePermissions);
+		 FXDLogBOOL(self.isAskingForMorePermissions);
 		 if (self.isAskingForMorePermissions) {
 			 return;
 		 }
@@ -1249,6 +1251,7 @@
 	NSMutableArray *permissions = [self.additionalAccessOptions[ACFacebookPermissionsKey] mutableCopy];
 
 	[permissions removeObject:facebookPermissionBasicInfo];
+	FXDLogObject(permissions);
 
 
 	FBSessionDefaultAudience defaultAudience = FBSessionDefaultAudienceNone;

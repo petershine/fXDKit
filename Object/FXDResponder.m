@@ -62,6 +62,7 @@
 #pragma mark -
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {	FXDLog_SEPARATE;
 
+	/*
 #if	ForDEVELOPER
 	NSDictionary *parameters = @{@"sourceApplication":	(sourceApplication) ? sourceApplication:@"",
 								 @"annotation":	(annotation) ? annotation:@"",
@@ -76,6 +77,7 @@
 	 cancelButtonTitle:nil
 	 withAlertCallback:nil];
 #endif
+	 */
 
 	return YES;
 }
