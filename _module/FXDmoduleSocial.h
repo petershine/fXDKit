@@ -77,14 +77,15 @@
 	#define apikeyFacebookAppId	@"000000000000000"
 #endif
 
-#define	facebookPermissionEmail		@"email"
-#define facebookPermissionBasicInfo			@"basic_info"	//TODO: Obsolete. Update appropriately
-#define facebookPermissionPublicProfile		@"public_profile"
-#define facebookPermissionUserFriends		@"user_friends"
+#define facebookPermissionBasicInfo	@"basic_info"	//TODO: Obsolete. Update appropriately
+#define facebookPermissionPublishStream	@"publish_stream"
+
+#define	facebookPermissionEmail			@"email"
+#define facebookPermissionPublicProfile	@"public_profile"
+#define facebookPermissionUserFriends	@"user_friends"
 
 #define	facebookPermissionPublishActions	@"publish_actions"
 #define	facebookPermissionManagePages		@"manage_pages"
-#define facebookPermissionPublishStream		@"publish_stream"
 
 #define facebookGraphMe				@"me"
 #define facebookGraphMeAccounts		@"me/accounts"

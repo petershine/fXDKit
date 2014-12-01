@@ -1213,9 +1213,6 @@
 
 	FXDLog_ERROR;
 
-	NSDictionary *errorInformation = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"];
-	FXDLogObject(errorInformation);
-
 
 	BOOL shouldNotifyUser = [FBErrorUtility shouldNotifyUserForError:error];
 	FXDLogBOOL(shouldNotifyUser);
@@ -1245,6 +1242,13 @@
 							  (localizedDescription) ? localizedDescription:@"",
 							  (failureReason) ? failureReason:@"",
 							  (userMessage) ? userMessage:@""];
+
+	NSDictionary *errorInformation = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"];
+	NSString *errorMessage = errorInformation[@"message"];
+
+	if (errorMessage.length > 0) {
+		alertMessage = [alertMessage stringByAppendingFormat:@"\n%@", errorMessage];
+	}
 
 	FXDLogObject(alertMessage);
 
@@ -1304,9 +1308,8 @@
 	}
 
 
-	NSMutableArray *permissions = [self.additionalAccessOptions[ACFacebookPermissionsKey] mutableCopy];
-
-	[permissions removeObject:facebookPermissionBasicInfo];
+	NSArray *permissions = @[facebookPermissionPublishActions,
+							 facebookPermissionManagePages];
 	FXDLogObject(permissions);
 
 
@@ -1323,7 +1326,7 @@
 	}
 
 	[activeSession
-	 requestNewPublishPermissions:[permissions copy]
+	 requestNewPublishPermissions:permissions
 	 defaultAudience:defaultAudience
 	 completionHandler:^(FBSession *session, NSError *error) {
 		 FXDLog(@"3.%@", _Variable(session.state));
