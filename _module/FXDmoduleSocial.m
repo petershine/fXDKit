@@ -1210,15 +1210,49 @@
 	}
 
 
+	FXDLog_DEFAULT;
+
 	FXDLog_ERROR;
 
-	NSString *errorMessage = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"][@"message"];
-	FXDLogObject(errorMessage);
+	NSDictionary *errorInformation = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"];
+	FXDLogObject(errorInformation);
+	
 
-	if (errorMessage.length > 0) {
+	BOOL shouldNotifyUser = [FBErrorUtility shouldNotifyUserForError:error];
+	FXDLogBOOL(shouldNotifyUser);
+
+	BOOL isTransient = [FBErrorUtility isTransientError:error];
+	FXDLogBOOL(isTransient);
+
+	FBErrorCategory errorCategory = [FBErrorUtility errorCategoryForError:error];
+	FXDLogVariable(errorCategory);
+
+	
+
+	NSString *userTitle = [FBErrorUtility userTitleForError:error];
+	NSString *userMessage = [FBErrorUtility userMessageForError:error];
+	FXDLogObject(userTitle);
+	FXDLogObject(userMessage);
+
+
+	NSString *localizedDescription = error.userInfo[NSLocalizedDescriptionKey];
+	NSString *failureReason = error.userInfo[NSLocalizedFailureReasonErrorKey];
+	FXDLogObject(localizedDescription);
+	FXDLogObject(failureReason);
+
+	NSString *alertTitle = (userTitle.length > 0) ? userTitle:NSLocalizedString(@"Facebook", nil);
+
+	NSString *alertMessage = [NSString stringWithFormat:@"%@\n%@\n%@",
+							  (localizedDescription) ? localizedDescription:@"",
+							  (failureReason) ? failureReason:@"",
+							  (userMessage) ? userMessage:@""];
+
+	FXDLogObject(alertMessage);
+
+	if (alertMessage.length > 0) {
 		[FXDAlertView
-		 showAlertWithTitle:nil
-		 message:errorMessage
+		 showAlertWithTitle:alertTitle
+		 message:alertMessage
 		 cancelButtonTitle:nil
 		 withAlertCallback:nil];
 	}
