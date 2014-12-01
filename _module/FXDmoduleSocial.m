@@ -839,15 +839,15 @@
 
 		 self.isAskingForMorePermissions = YES;
 
-		 Float64 delayInSeconds = 2.0;
+		 Float64 delayedSeconds = 2.0;
 
 		 if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-			 delayInSeconds = 0.0;
+			 delayedSeconds = 0.0;
 		 }
 
-		 FXDLog(@"%@ %@", _BOOL([UIApplication sharedApplication].applicationState == UIApplicationStateActive), _Variable(delayInSeconds));
+		 FXDLog(@"%@ %@", _BOOL([UIApplication sharedApplication].applicationState == UIApplicationStateActive), _Variable(delayedSeconds));
 
-		 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+		 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayedSeconds * NSEC_PER_SEC));
 		 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 			 [self
 			  updateSessionPermissionWithFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
@@ -893,7 +893,7 @@
 
 
 	void (^ConfigureActionSheet)(void) = ^(void){
-		FXDLog(@"self.multiAccountArray:\n%@", self.multiAccountArray);
+		FXDLogObject(self.multiAccountArray);
 
 		NSString *actionsheetTitle = NSLocalizedString(@"Please select your Facebook Timeline or Page", nil);
 
@@ -959,42 +959,41 @@
 	}
 
 
-	NSMutableArray *collectedAccounts = [[NSMutableArray alloc] initWithCapacity:0];
+	__block NSMutableArray *collectedAccounts = [[NSMutableArray alloc] initWithCapacity:0];
+	FXDLogObject(collectedAccounts);
 
-	//TODO: Learn about batch requesting
 	[self
 	 facebookRequestForMeWithFinishCallback:^(SEL caller, BOOL finished, NSArray *accounts) {
 		 FXDLog_BLOCK(self, caller);
+		 FXDLogObject(accounts);
 
 		 if ([accounts count] > 0) {
 			 [collectedAccounts addObjectsFromArray:accounts];
 		 }
-		 else {
-			 RequestingFailed();
-			 return;
-		 }
 
+		 FXDLogObject(collectedAccounts);
 
 		 [self
 		  facebookRequestForAccountsWithFinishCallback:^(SEL caller, BOOL finished, NSArray *accounts) {
 			  FXDLog_BLOCK(self, caller);
+			  FXDLogObject(accounts);
 
 			  if ([accounts count] > 0) {
 				  [collectedAccounts addObjectsFromArray:accounts];
 			  }
-			  else {
-				  RequestingFailed();
-				  return;
-			  }
+
+			  FXDLogObject(collectedAccounts);
 
 
 			  _multiAccountArray = [collectedAccounts copy];
-			  FXDLog(@"_multiAccountArray count: %lu", (unsigned long)[_multiAccountArray count]);
+			  FXDLogVariable([_multiAccountArray count]);
 
 			  if ([self.multiAccountArray count] > 0) {
 				  ConfigureActionSheet();
 			  }
 			  else {
+				  _multiAccountArray = nil;
+				  
 				  RequestingFailed();
 			  }
 		  }];
@@ -1216,7 +1215,7 @@
 
 	NSDictionary *errorInformation = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"];
 	FXDLogObject(errorInformation);
-	
+
 
 	BOOL shouldNotifyUser = [FBErrorUtility shouldNotifyUserForError:error];
 	FXDLogBOOL(shouldNotifyUser);
@@ -1256,6 +1255,29 @@
 		 cancelButtonTitle:nil
 		 withAlertCallback:nil];
 	}
+
+
+	//ERROR:
+	/*
+	 ERROR: [FCMmoduleFacebook shouldContinueWithError:]
+	 FILE: /Users/thckbrws/Desktop/_WORK_fXceed/_PROJECT/__FXDKit/_module/FXDmoduleSocial.m
+	 LINE: 1213
+	 {
+	 Code = 2;
+	 Description = "\Uc8c4\Uc1a1\Ud569\Ub2c8\Ub2e4. \Uc774 \Uae30\Ub2a5\Uc740 \Ud604\Uc7ac \Uc774\Uc6a9\Ud560 \Uc218 \Uc5c6\Uc2b5\Ub2c8\Ub2e4.: \Uc774 \Uc694\Uccad\Uc744 \Ucc98\Ub9ac\Ud558\Ub294 \Ub3d9\Uc548 \Uc624\Ub958\Uac00 \Ubc1c\Uc0dd\Ud588\Uc2b5\Ub2c8\Ub2e4. \Ub098\Uc911\Uc5d0 \Ub2e4\Uc2dc \Uc2dc\Ub3c4\Ud574 \Uc8fc\Uc138\Uc694.";
+	 Domain = "com.facebook.sdk";
+	 FailureReason = "com.facebook.sdk:UserLoginOtherError";
+	 UserInfo =     {
+	 NSLocalizedDescription = "\Uc8c4\Uc1a1\Ud569\Ub2c8\Ub2e4. \Uc774 \Uae30\Ub2a5\Uc740 \Ud604\Uc7ac \Uc774\Uc6a9\Ud560 \Uc218 \Uc5c6\Uc2b5\Ub2c8\Ub2e4.: \Uc774 \Uc694\Uccad\Uc744 \Ucc98\Ub9ac\Ud558\Ub294 \Ub3d9\Uc548 \Uc624\Ub958\Uac00 \Ubc1c\Uc0dd\Ud588\Uc2b5\Ub2c8\Ub2e4. \Ub098\Uc911\Uc5d0 \Ub2e4\Uc2dc \Uc2dc\Ub3c4\Ud574 \Uc8fc\Uc138\Uc694.";
+	 NSLocalizedFailureReason = "com.facebook.sdk:UserLoginOtherError";
+	 "com.facebook.sdk:ErrorLoginFailedOriginalErrorCode" = 2;
+	 "com.facebook.sdk:ErrorLoginFailedReason" = "com.facebook.sdk:UserLoginOtherError";
+	 "com.facebook.sdk:ErrorSessionKey" = "<FBSession: 0x16e38ba0, state: FBSessionStateClosedLoginFailed, loginHandler: 0x0, appID: 734812369930783, urlSchemeSuffix: , tokenCachingStrategy:<FBSessionTokenCachingStrategy: 0x16d49570>, expirationDate: (null), refreshDate: (null), attemptedRefreshDate: 0001-12-30 00:00:00 +0000, permissions:(null)>";
+	 };
+	 }
+	 2014-12-01 11:25:36.329 GroveCam[1575:60b] errorMessage: (null)
+	 */
+
 
 	return NO;
 }
@@ -1386,6 +1408,7 @@
 		 [FBRequestConnection
 		  startWithGraphPath:facebookGraphMeAccounts
 		  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+			  FXDLogObject(result);
 
 			  BOOL shouldContinue = [self shouldContinueWithError:error];
 
