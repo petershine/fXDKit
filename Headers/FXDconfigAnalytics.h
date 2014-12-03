@@ -23,14 +23,18 @@
 										logEvent:[NSString stringWithFormat:__FORMAT__,\
 										##__VA_ARGS__]];}]
 
-#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[[NSOperationQueue mainQueue]\
-															addOperationWithBlock:^{\
-															[Flurry\
-															logEvent:identifier\
-															withParameters:parameters\
-															timed:shouldTime];}]
+	#define LOGEVENT_FULL(identifier, parameters, shouldTime)	[[NSOperationQueue mainQueue]\
+																addOperationWithBlock:^{\
+																[Flurry\
+																logEvent:identifier\
+																withParameters:parameters\
+																timed:shouldTime];}]
 
-	#define LOGEVENT_END(identifier, parameters)	[Flurry endTimedEvent:identifier withParameters:parameters];
+	#define LOGEVENT_END(identifier, parameters)	[[NSOperationQueue mainQueue]\
+													addOperationWithBlock:^{\
+													[Flurry\
+													endTimedEvent:identifier\
+													withParameters:parameters];}]
 
 	#define LOGEVENT_DEFAULT	LOGEVENT(@"%@", _ClassSelectorSelf)
 	#define LOGEVENT_ERROR	if(error){\
