@@ -41,6 +41,14 @@
 								NSString *logString = [NSString stringWithFormat:@"ERROR: %@", _ClassSelectorSelf];\
 								LOGEVENT_FULL(logString, [error essentialParameters], NO);}
 
+
+	#define LOGEVENT_ALERT(alertView, didCancel)	NSDictionary *parameters = @{\
+													@"title": (alertView.title.length > 0) ? alertView.title:@"",\
+													@"message": (alertView.message.length > 0) ? alertView.message:@"",\
+													@"didCancel": (didCancel) ? @"YES":@"NO"};\
+													LOGEVENT_FULL(_ClassSelectorSelf, parameters, NO);
+
+
 #else
 	#define LOGEVENT(__FORMAT__, ...)	{}
 
@@ -50,6 +58,9 @@
 
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_ERROR
+
+
+	#define LOGEVENT_ALERT(alertView, didCancel)
 
 #endif
 
