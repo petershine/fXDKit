@@ -76,15 +76,16 @@
 @end
 
 @implementation FXDimageviewGPU
-+ (instancetype)imageviewForBounds:(CGRect)bounds withImageFilter:(GPUImageFilter*)gpuimageFilter {	FXDLog_DEFAULT;
++ (instancetype)imageviewForBounds:(CGRect)bounds withImageOutput:(GPUImageOutput*)imageOutput {	FXDLog_DEFAULT;
 	FXDLogRect(bounds);
 
 	FXDimageviewGPU *gpuviewCaptured = [[[self class] alloc] initWithFrame:bounds];
 	gpuviewCaptured.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	gpuviewCaptured.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
 
-	[gpuimageFilter addTarget:gpuviewCaptured];
-	//FXDLogObject([gpuimageFilter targets]);
+	[imageOutput addTarget:gpuviewCaptured];
+
+	FXDLogObject([imageOutput targets]);
 
 	return gpuviewCaptured;
 }
