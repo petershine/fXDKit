@@ -30,7 +30,7 @@
 @end
 
 @interface FXDwriterGPU : GPUImageMovieWriter
-+ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageOuput:(GPUImageOutput*)imageOutput;
 @end
 
 

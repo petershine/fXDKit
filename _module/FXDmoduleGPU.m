@@ -95,11 +95,11 @@
 	FXDLog_DEFAULT;
 }
 
-+ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageFilter:(GPUImageFilter*)gpuimageFilter {	//FXDLog_DEFAULT;
++ (instancetype)movieWriterWithVideoSize:(CGSize)videoSize withFileURL:(NSURL*)fileURL withImageOuput:(GPUImageOutput*)imageOutput {	//FXDLog_DEFAULT;
 
 	FXDLog(@"%@ %f", _Size(videoSize), (MAX(videoSize.width, videoSize.height)/MIN(videoSize.width, videoSize.height)));
 	FXDLogObject(fileURL);
-	FXDLogObject(gpuimageFilter);
+	FXDLogObject(imageOutput);
 
 	FXDwriterGPU *gpumovieWriter = [[[self class] alloc]
 									initWithMovieURL:fileURL
@@ -110,8 +110,7 @@
 	gpumovieWriter.encodingLiveVideo = YES;
 	[gpumovieWriter setHasAudioTrack:YES audioSettings:nil];	
 
-	[gpuimageFilter addTarget:gpumovieWriter];
-	//FXDLogObject([gpuimageFilter targets]);
+	[imageOutput addTarget:gpumovieWriter];
 
 	return gpumovieWriter;
 }
