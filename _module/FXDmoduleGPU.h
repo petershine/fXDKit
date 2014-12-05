@@ -14,11 +14,15 @@
 @class FXDmoduleCapture;
 
 
-@interface FXDcameraGPU : GPUImageVideoCamera
-- (void)rotateCameraWithOptimalPreset:(NSString*)optimalCaptureSessionPreset;
+@interface FXDfilterGPU : GPUImageFilter
 @end
 
-@interface FXDfilterGPU : GPUImageFilter
+@interface FXDgroupfilterGPU : GPUImageFilterGroup
+@end
+
+
+@interface FXDcameraGPU : GPUImageVideoCamera
+- (void)rotateCameraWithOptimalPreset:(NSString*)optimalCaptureSessionPreset;
 @end
 
 @interface FXDimageviewGPU : GPUImageView

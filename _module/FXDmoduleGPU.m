@@ -5,6 +5,13 @@
 #import "FXDmoduleCapture.h"
 
 
+@implementation FXDfilterGPU
+@end
+
+@implementation FXDgroupfilterGPU
+@end
+
+
 @implementation FXDcameraGPU
 - (void)rotateCameraWithOptimalPreset:(NSString*)optimalCaptureSessionPreset {
 	if (GlobalModule.isDevice_iPhoneFour.boolValue == NO) {
@@ -66,9 +73,6 @@
 
 	[self setOutputImageOrientation:self.outputImageOrientation];
 }
-@end
-
-@implementation FXDfilterGPU
 @end
 
 @implementation FXDimageviewGPU
