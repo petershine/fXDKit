@@ -293,7 +293,12 @@
 #pragma mark - Public
 - (void)prepareGPUmodule {	FXDLog_DEFAULT;
 	//MARK: Make sure camera and filter are initialized here
-	[self.videoCamera addTarget:self.cameraFilter];
+	GPUImageOutput *camera = self.videoCamera;
+	id<GPUImageInput> filter = self.cameraFilter;
+
+	if (filter) {
+		[camera addTarget:filter];
+	}
 }
 
 - (void)resetGPUmodule {	FXDLog_DEFAULT;
@@ -318,13 +323,20 @@
 	FXDLogObject(_cropFilter);
 
 
-	[_cameraFilter removeAllTargets];
+	if (_cameraFilter) {
+		[_videoCamera removeTarget:_cameraFilter];
+		[_cropFilter removeTarget:_cameraFilter];
 
-	[_videoCamera removeTarget:_cameraFilter];
-	[_cropFilter removeTarget:_cameraFilter];
+		[_cameraFilter removeAllTargets];
+		_cameraFilter = nil;
+	}
+
+	if ([filterName isEqualToString:NSStringFromClass([GPUImageRGBFilter class])]) {
+		_cameraFilter = (FXDfilterGPU*)_cropFilter;
+		return;
+	}
 
 
-	_cameraFilter = nil;
 	_cameraFilter = [[NSClassFromString(filterName) alloc] init];
 
 	if (_cropFilter == nil) {
