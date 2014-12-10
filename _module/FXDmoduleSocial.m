@@ -1216,12 +1216,18 @@
 
 	BOOL shouldNotifyUser = [FBErrorUtility shouldNotifyUserForError:error];
 	FXDLogBOOL(shouldNotifyUser);
+	if (shouldNotifyUser) {
+	}
 
 	BOOL isTransient = [FBErrorUtility isTransientError:error];
 	FXDLogBOOL(isTransient);
+	if (isTransient) {
+	}
 
 	FBErrorCategory errorCategory = [FBErrorUtility errorCategoryForError:error];
 	FXDLogVariable(errorCategory);
+	if (errorCategory == FBErrorCategoryServer) {
+	}
 
 	
 
