@@ -832,7 +832,7 @@
 			 [(FXDWindow*)[UIApplication mainWindow] hideInformationViewAfterDelay:delayQuarterSecond];
 
 			 if (finishCallback) {
-				 finishCallback(_cmd, shouldContinue, nil);
+				 finishCallback(_cmd, NO, nil);
 			 }
 			 return;
 		 }
@@ -1184,6 +1184,10 @@
 	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
 	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
 
+	_currentFacebookAccount = nil;
+	_currentPageAccessToken = nil;
+
+
 	[[FBSession activeSession] closeAndClearTokenInformation];
 
 	FXDLogVariable([FBSession activeSession].state);
@@ -1192,9 +1196,6 @@
 	FXDLogVariable([FBSession activeSession].accessTokenData.loginType);
 
 	FXDLogBOOL(FB_ISSESSIONSTATETERMINAL([FBSession activeSession].state));
-
-	_currentFacebookAccount = nil;
-	_currentPageAccessToken = nil;
 }
 
 #pragma mark -
