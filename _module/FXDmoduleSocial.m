@@ -814,10 +814,17 @@
 	 openActiveSessionWithReadPermissions:nil
 	 allowLoginUI:YES
 	 completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-		 FXDLog(@"2.%@", _Variable(status));
+		 FXDLog_BLOCK(FBSession, @selector(openActiveSessionWithReadPermissions:allowLoginUI:completionHandler:));
+
+		 FXDLog_ERROR;
+
+		 FXDLog(@"2.%@", _Variable(session.state));
 		 FXDLog(@"2.%@", _BOOL(session.isOpen));
 
 		 FXDLog(@"2.%@", _Variable(session.accessTokenData.loginType));
+
+		 FXDLogBOOL(FB_ISSESSIONSTATETERMINAL(session.state));
+
 
 		 BOOL shouldContinue = [self shouldContinueWithError:error];
 
@@ -1000,13 +1007,13 @@
 	 }];
 }
 
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {
+- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
 	}
 
-	FXDLog(@"typeIdentifier: %@", typeIdentifier);
+	FXDLogObject(typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		if (finishCallback) {
@@ -1060,6 +1067,8 @@
 
 	_multiAccountArray = nil;
 
+	FXDLogBOOL(didAssignAccount);
+
 	if (finishCallback) {
 		finishCallback(_cmd, didAssignAccount, nil);
 	}
@@ -1086,8 +1095,15 @@
 		 openWithBehavior:self.sessionLoginBehavior
 		 completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
 			 FXDLog_BLOCK([FBSession activeSession], @selector(openWithBehavior:completionHandler:));
-			 FXDLogVariable(status);
+
 			 FXDLog_ERROR;
+
+			 FXDLog(@"2.%@", _Variable(session.state));
+			 FXDLog(@"2.%@", _BOOL(session.isOpen));
+
+			 FXDLog(@"2.%@", _Variable(session.accessTokenData.loginType));
+
+			 FXDLogBOOL(FB_ISSESSIONSTATETERMINAL(session.state));
 
 
 			 BOOL shouldRequest = (status == FBSessionStateCreatedOpening
@@ -1098,6 +1114,8 @@
 			 if (finishCallback) {
 				 finishCallback(_cmd, shouldRequest, nil);
 			 }
+
+#warning //TODO: Find how to remove this block to be called again
 		 }];
 	};
 
@@ -1167,6 +1185,13 @@
 	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
 
 	[[FBSession activeSession] closeAndClearTokenInformation];
+
+	FXDLogVariable([FBSession activeSession].state);
+	FXDLogBOOL([FBSession activeSession].isOpen);
+
+	FXDLogVariable([FBSession activeSession].accessTokenData.loginType);
+
+	FXDLogBOOL(FB_ISSESSIONSTATETERMINAL([FBSession activeSession].state));
 
 	_currentFacebookAccount = nil;
 	_currentPageAccessToken = nil;
