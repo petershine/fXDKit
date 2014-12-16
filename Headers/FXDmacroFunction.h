@@ -52,6 +52,10 @@
 #define appDirectory_Document	(NSURL*)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
 #define appDirectory_Caches		(NSURL*)[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]
 
+#define temporaryPathFor(folderName)	[NSTemporaryDirectory() stringByAppendingPathComponent:folderName]
+#define cachedPathFor(folderName)		[appSearhPath_Caches stringByAppendingPathComponent:folderName]
+#define documentPathFor(folderName)		[appSearhPath_Document stringByAppendingPathComponent:folderName]
+
 
 
 #define NSIndexPathMake(section, row)	[NSIndexPath indexPathForRow:row inSection:section]
