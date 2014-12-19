@@ -35,7 +35,7 @@
 
 
 @interface FXDmoduleGPU : FXDsuperModule {
-	NSInteger _lastFilterIndex;
+	NSInteger _currentFilterIndex;
 
 	NSArray *_filterNameArray;
 
@@ -47,7 +47,7 @@
 	GPUImageCropFilter *_cropFilter;
 }
 
-@property (nonatomic) NSInteger lastFilterIndex;
+@property (nonatomic) NSInteger currentFilterIndex;
 
 @property (strong, nonatomic) NSArray *filterNameArray;
 

@@ -134,8 +134,8 @@
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
-	AVURLAsset *movieAsset = [AVURLAsset URLAssetWithURL:movieFileURL
-												 options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
+	AVURLAsset *movieAsset = [[AVURLAsset alloc] initWithURL:movieFileURL
+													 options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @(YES)}];
 	FXDLogObject(movieAsset);
 
 	[movieAsset
