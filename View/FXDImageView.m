@@ -43,9 +43,9 @@
 	}
 
 
-	UIImage *resizeableImage = [weakSelf.image resizableImageWithCapInsets:capInsets];
+	UIImage *resizableImage = [weakSelf.image resizableImageWithCapInsets:capInsets];
 
-	if (resizeableImage == nil) {
+	if (resizableImage == nil) {
 		return;
 	}
 
@@ -54,7 +54,7 @@
 	 addOperationWithBlock:^{
 		 __strong UIImageView *strongSelf = weakSelf;
 
-		 strongSelf.image = resizeableImage;
+		 strongSelf.image = resizableImage;
 	 }];
 }
 
