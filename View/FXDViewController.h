@@ -28,6 +28,10 @@
 - (void)addChildScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback withDismissedBlock:(FXDcallbackFinish)dismissedBlock;
 - (void)removeChildScene:(UIViewController*)scene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
 
+- (void)presentBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
+- (void)dismissBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
+
+
 - (id)lastChildSceneOfClass:(Class)sceneClass;
 
 - (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize;

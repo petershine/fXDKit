@@ -419,6 +419,53 @@
 }
 
 #pragma mark -
+- (void)presentBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+	CGRect sceneFrame = self.view.frame;
+	FXDLogRect(sceneFrame);
+
+	CGRect modifiedFrame = sceneFrame;
+	modifiedFrame.origin.y = self.view.frame.size.height;
+	FXDLogRect(modifiedFrame);
+
+
+	self.view.frame = modifiedFrame;
+
+	self.view.hidden = NO;
+
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 self.view.frame = sceneFrame;
+
+	 } completion:^(BOOL finished) {
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, YES, nil);
+		 }
+	 }];
+}
+
+- (void)dismissBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+
+	CGRect sceneFrame = self.view.frame;
+	sceneFrame.origin.y = self.view.frame.size.height;
+	FXDLogRect(sceneFrame);
+
+
+	[UIView
+	 animateWithDuration:duration
+	 animations:^{
+		 self.view.frame = sceneFrame;
+
+	 } completion:^(BOOL finished) {
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, YES, nil);
+		 }
+	 }];
+}
+
+#pragma mark -
 - (id)lastChildSceneOfClass:(Class)sceneClass {
 
 	__block UIViewController *lastChildScene = nil;
