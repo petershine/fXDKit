@@ -1113,8 +1113,6 @@
 			 if (finishCallback) {
 				 finishCallback(_cmd, shouldRequest, nil);
 			 }
-
-#warning //TODO: Find how to remove this block to be called again
 		 }];
 	};
 

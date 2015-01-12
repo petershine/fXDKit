@@ -31,7 +31,7 @@
 
 #pragma mark -
 
-#warning //MARK: For the app with remote notification, ignore following implementation
+//NOTE: For the app with remote notification, ignore following implementation
 /*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 	FXDLogObject(deviceToken);

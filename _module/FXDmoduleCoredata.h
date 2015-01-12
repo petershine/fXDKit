@@ -62,7 +62,6 @@
 - (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
-#warning //TODO: Evaluate if this is necessary
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish)finishCallback;
 
