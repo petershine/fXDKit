@@ -34,6 +34,7 @@
 	}
 
 
+	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@ %@ %@", _Variable(verticalOffset), _Struct(modifiedInset), _Point(modifiedOffset), _Object(self.text));
 
 	self.contentInset = modifiedInset;
