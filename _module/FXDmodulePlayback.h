@@ -14,7 +14,6 @@
 
 
 @interface FXDdisplayPlayback : FXDView
-
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
 + (instancetype)assetDisplay;
@@ -24,7 +23,7 @@
 
 
 @interface FXDmodulePlayback : FXDsuperModule {
-	FXDdisplayPlayback *_mainPlaybackDisplay;
+	FXDdisplayPlayback *_mainDisplay;
 }
 
 @property (nonatomic) CMTime playbackCurrentTime;
@@ -33,7 +32,7 @@
 @property (strong, nonatomic) AVPlayer *moviePlayer;
 @property (strong, nonatomic) id periodicObserver;
 
-@property (strong, nonatomic) FXDdisplayPlayback *mainPlaybackDisplay;
+@property (strong, nonatomic) FXDdisplayPlayback *mainDisplay;
 
 
 - (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback;

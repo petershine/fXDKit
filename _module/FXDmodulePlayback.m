@@ -106,8 +106,8 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_mainPlaybackDisplay setMainPlayer:nil];
-	[_mainPlaybackDisplay removeFromSuperview];
+	[_mainDisplay setMainPlayer:nil];
+	[_mainDisplay removeFromSuperview];
 
 	[_moviePlayer.currentItem cancelPendingSeeks];
 	[_moviePlayer cancelPendingPrerolls];
@@ -120,11 +120,11 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (FXDdisplayPlayback*)mainPlaybackDisplay {
-	if (_mainPlaybackDisplay == nil) {	FXDLog_DEFAULT;
-		_mainPlaybackDisplay = [FXDdisplayPlayback assetDisplay];
+- (FXDdisplayPlayback*)mainDisplay {
+	if (_mainDisplay == nil) {	FXDLog_DEFAULT;
+		_mainDisplay = [FXDdisplayPlayback assetDisplay];
 	}
-	return _mainPlaybackDisplay;
+	return _mainDisplay;
 }
 
 #pragma mark - Method overriding
@@ -184,7 +184,7 @@
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 
 			  strongSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
-			  [strongSelf.mainPlaybackDisplay setMainPlayer:strongSelf.moviePlayer];
+			  [strongSelf.mainDisplay setMainPlayer:strongSelf.moviePlayer];
 
 			  [strongSelf startSeekingToTime:kCMTimeZero withCallback:nil];
 
