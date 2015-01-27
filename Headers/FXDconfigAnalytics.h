@@ -4,6 +4,25 @@
 #define FXDKit_FXDconfigAnalytics_h
 
 
+#ifndef USE_Crashlytics
+	#define USE_Crashlytics	TRUE
+#endif
+
+#if USE_Crashlytics
+	#import <Fabric/Fabric.h>
+	#import <Crashlytics/Crashlytics.h>
+
+	#define CLSEvent_DEFAULT	CLSLog(@"%@", _ClassSelectorSelf)
+	#define CLSEvent_CMD	CLSLog(@"%@", NSStringFromSelector(_cmd))
+	#define CLSEvent_ERROR	if(error){CLSLog(@"%@", [error essentialParameters]);}
+#else
+
+	#define CLSEvent_DEFAULT
+	#define CLSEvent_CMD
+	#define CLSEvent_ERROR
+#endif
+
+
 #ifndef USE_Flurry
 	#define USE_Flurry	FALSE
 #endif
