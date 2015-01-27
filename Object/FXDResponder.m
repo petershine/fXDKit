@@ -84,6 +84,9 @@
 
 #pragma mark -
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
+
+	[Fabric with:@[CrashlyticsKit]];
+	
 	return YES;
 }
 
