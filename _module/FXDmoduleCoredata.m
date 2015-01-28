@@ -580,9 +580,11 @@
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
 
-	// Distinguish notification from main managedObjectContext and private managedObjectContext
-	FXDLogBOOL([notification.object isEqual:self.mainDocument.managedObjectContext]);
-	if ([notification.object isEqual:self.mainDocument.managedObjectContext]) {
+	//NOTE: Distinguish notification from main managedObjectContext and private managedObjectContext
+	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
+	FXDLogBOOL([notification.object isEqual:notifyingContext]);
+
+	if ([notification.object isEqual:notifyingContext] == NO) {
 		return;
 	}
 
