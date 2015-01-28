@@ -5,8 +5,17 @@
 
 
 #ifndef USE_Crashlytics
-	#define USE_Crashlytics	TRUE
+	#define USE_Crashlytics	FALSE
 #endif
+
+#ifndef USE_GoogleAnalytics
+	#define USE_GoogleAnalytics	FALSE
+#endif
+
+#ifndef USE_Flurry
+	#define USE_Flurry	FALSE
+#endif
+
 
 #if USE_Crashlytics
 	#import <Fabric/Fabric.h>
@@ -23,8 +32,13 @@
 #endif
 
 
-#ifndef USE_Flurry
-	#define USE_Flurry	FALSE
+#if USE_GoogleAnalytics
+	#ifndef googleAnalyticsTrackingID
+		#warning //TODO: Define	googleAnalyticsTrackingID
+		#define googleAnalyticsTrackingID	@"UA-4053838-4"
+	#endif
+
+	#import "GAI.h"
 #endif
 
 
