@@ -11,7 +11,9 @@
 		musicPlayer = [MPMusicPlayerController systemMusicPlayer];
 	}
 	else {
+#ifndef __IPHONE_8_1
 		musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+#endif
 	}
 
 	return musicPlayer;

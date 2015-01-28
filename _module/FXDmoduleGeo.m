@@ -73,9 +73,11 @@
 		}
 	}
 	else {
+#ifndef __IPHONE_8_1
 		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
 			isAuthorized = NO;
 		}
+#endif
 	}
 
 
@@ -232,9 +234,11 @@
 		}
 	}
 	else {
+#ifndef __IPHONE_8_1
 		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
 			isAuthorized = NO;
 		}
+#endif
 	}
 
 
