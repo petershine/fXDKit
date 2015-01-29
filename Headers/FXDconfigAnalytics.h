@@ -35,7 +35,7 @@
 #if USE_GoogleAnalytics
 	#ifndef googleAnalyticsTrackingID
 		#warning //TODO: Define	googleAnalyticsTrackingID
-		#define googleAnalyticsTrackingID	@"UA-4053838-4"
+		#define googleAnalyticsTrackingID	@"**-*******-*"
 	#endif
 
 	#import "GAI.h"
