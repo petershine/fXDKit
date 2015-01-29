@@ -31,27 +31,47 @@
 
 - (void)applyConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
 
+	if (self.flashMode == flashMode
+		&& self.focusMode == focusMode
+		&& self.exposureMode == AVCaptureExposureModeContinuousAutoExposure
+		&& self.whiteBalanceMode == AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance
+		&& self.subjectAreaChangeMonitoringEnabled) {
+
+		return;
+	}
+
+
 	NSError *error = nil;
 
 	if ([self lockForConfiguration:&error]) {
 
-		if ([self isFlashModeSupported:flashMode]) {
+		if ([self isFlashModeSupported:flashMode]
+			&& self.flashMode != flashMode) {
+
 			self.flashMode = flashMode;
 		}
 
-		if ([self isFocusModeSupported:focusMode]) {
+		if ([self isFocusModeSupported:focusMode]
+			&& self.focusMode != focusMode) {
+
 			self.focusMode = focusMode;
 		}
 
-		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+		if ([self isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]
+			&& self.exposureMode != AVCaptureExposureModeContinuousAutoExposure) {
+
 			self.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
 		}
 
-		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+		if ([self isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]
+			&& self.whiteBalanceMode != AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance) {
+
 			self.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
 		}
 
-		self.subjectAreaChangeMonitoringEnabled = YES;
+		if (self.subjectAreaChangeMonitoringEnabled == NO) {
+			self.subjectAreaChangeMonitoringEnabled = YES;
+		}
 
 		[self unlockForConfiguration];
 	}
@@ -60,7 +80,12 @@
 
 	FXDLogVariable(flashMode);
 	FXDLogVariable(focusMode);
-	FXDLog(@"%@ %@ %@ %@ %@", _Variable(self.flashMode), _Variable(self.focusMode), _Variable(self.exposureMode), _Variable(self.whiteBalanceMode), _BOOL(self.subjectAreaChangeMonitoringEnabled));
+	FXDLog(@"%@ %@ %@ %@ %@",
+		   _Variable(self.flashMode),
+		   _Variable(self.focusMode),
+		   _Variable(self.exposureMode),
+		   _Variable(self.whiteBalanceMode),
+		   _BOOL(self.subjectAreaChangeMonitoringEnabled));
 	
 	FXDLog_ERROR;
 }
