@@ -331,14 +331,22 @@
 
 #pragma mark -
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+	FXDLogBOOL([@(USE_Crashlytics) boolValue]);
+	FXDLogBOOL([@(USE_GoogleAnalytics) boolValue]);
 	FXDLogBOOL([@(USE_Flurry) boolValue]);
 	FXDAssert_IsMainThread;
-	
+
+#if	USE_Crashlytics
+	[Fabric with:@[CrashlyticsKit]];
+#endif
+
+#if	USE_GoogleAnalytics
+	[[GAI sharedInstance] trackerWithTrackingId:googleAnalyticsTrackingID];
+#endif
+
 #if USE_Flurry
 	[Flurry setCrashReportingEnabled:YES];
-
 	[Flurry setBackgroundSessionEnabled:YES];
-
 	[Flurry startSession:flurryApplicationKey withOptions:launchOptions];
 #endif
 }

@@ -85,14 +85,6 @@
 #pragma mark -
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 
-#if USE_Crashlytics
-	[Fabric with:@[CrashlyticsKit]];
-#endif
-
-#if	USE_GoogleAnalytics
-	[[GAI sharedInstance] trackerWithTrackingId:googleAnalyticsTrackingID];
-#endif
-
 	return YES;
 }
 
