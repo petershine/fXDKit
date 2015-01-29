@@ -123,7 +123,7 @@
 		
 	if ([presentedScene shouldCoverAbove] == NO
 		&& self.childViewControllers.count > self.minimumChildCount) {
-		//MARK: Including newly added child, the count should be bigger than one
+		//NOTE: Including newly added child, the count should be bigger than one
 		
 		NSInteger destinationIndex = [self.childViewControllers indexOfObject:presentedScene];
 		
@@ -134,7 +134,7 @@
 			
 			if (childIndex < destinationIndex && [childScene shouldStayFixed] == NO) {
 				
-				//MARK: If the childScene is last slid one, which is in previous index
+				//NOTE: If the childScene is last slid one, which is in previous index
 				if (childIndex == destinationIndex-1) {
 					pushedScene = childScene;
 					animatedPushedFrame = pushedScene.view.frame;
@@ -222,7 +222,7 @@
 	
 	if ([dismissedScene shouldCoverAbove] == NO
 		&& self.childViewControllers.count > self.minimumChildCount) {
-		//MARK: Including newly added child, the count should be bigger than one
+		//NOTE: Including newly added child, the count should be bigger than one
 		
 		NSInteger sourceIndex = [self.childViewControllers indexOfObject:dismissedScene];
 		
@@ -233,7 +233,7 @@
 			
 			if (childIndex < sourceIndex && [childScene shouldStayFixed] == NO) {
 				
-				//MARK: If the childController is last slid one, which is in previous index
+				//NOTE: If the childController is last slid one, which is in previous index
 				if (childIndex == sourceIndex-1) {
 					pulledScene = childScene;
 					animatedPulledFrame = pulledScene.view.frame;
@@ -302,7 +302,7 @@
 }
 
 - (void)uncoverAllSceneWithFinishCallback:(FXDcallbackFinish)callback {
-	//MARK: Assume direction is only vertical
+	//NOTE: Assume direction is only vertical
 	if (self.childViewControllers.count == 0) {
 
 		if (callback) {

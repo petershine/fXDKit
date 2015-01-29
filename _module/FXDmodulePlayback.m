@@ -207,7 +207,7 @@
 
 	CMTime seekedTime = kCMTimeZero;
 
-	//MARK: Be careful about validity of time
+	//NOTE: Be careful about validity of time
 	if (CMTimeCompare(weakSelf.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
 		&& playbackProgress > 0.0) {
 		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, playbackProgress);

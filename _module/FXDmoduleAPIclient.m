@@ -100,7 +100,7 @@
 		}
 	}
 
-	//MARK: Never be nil
+	//NOTE: Never be nil
 	FXDLogObject(collectedItemArray);
 
 	return collectedItemArray;

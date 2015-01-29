@@ -18,7 +18,7 @@
 
     UAConfig *config = [UAConfig defaultConfig];
 
-	//MARK: Automatic detection is not working correctly
+	//NOTE: Automatic detection is not working correctly
 #if DEBUG
 	config.inProduction = NO;
 #else

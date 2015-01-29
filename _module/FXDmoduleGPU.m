@@ -53,7 +53,7 @@
 		[_captureSession removeInput:videoInput];
 
 
-		//MARK: In case of old device, preset has to be different
+		//NOTE: In case of old device, preset has to be different
 		_captureSession.sessionPreset = (modifiedPosition == AVCaptureDevicePositionBack) ? optimalCaptureSessionPreset:AVCaptureSessionPresetHigh;
 		FXDLogObject(_captureSession.sessionPreset);
 
@@ -266,9 +266,10 @@
 		FXDLogVariable(captureConnection.activeVideoStabilizationMode);
 	}
 	else {
+#ifndef __IPHONE_8_0
 		captureConnection.enablesVideoStabilizationWhenAvailable = YES;
-		
 		FXDLogBOOL(captureConnection.isVideoStabilizationEnabled);
+#endif
 	}
 
 
@@ -293,7 +294,7 @@
 
 #pragma mark - Public
 - (void)prepareGPUmodule {	FXDLog_DEFAULT;
-	//MARK: Make sure camera and filter are initialized here
+	//NOTE: Make sure camera and filter are initialized here
 	GPUImageOutput *camera = self.videoCamera;
 	id<GPUImageInput> filter = self.cameraFilter;
 

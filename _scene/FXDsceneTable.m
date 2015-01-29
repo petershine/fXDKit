@@ -62,7 +62,7 @@
 
 #pragma mark - Public
 - (void)initializeTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
-	//MARK: for newly initialized cell.
+	//NOTE: for newly initialized cell.
 }
 
 - (void)configureTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
@@ -157,7 +157,7 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//MARK: UITableViewDataSource
+//NOTE: UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	NSInteger numberOfSections = [self numberOfSectionsForScrollView:tableView];
 	
@@ -188,7 +188,7 @@
 }
 
 
-//MARK: UITableViewDelegate
+//NOTE: UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
 	
 	BOOL didCancel = [self.cellOperationQueue

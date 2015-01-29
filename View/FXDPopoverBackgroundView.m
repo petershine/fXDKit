@@ -24,7 +24,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
     self = [super initWithFrame:frame];
 
-	//MARK: Cannot use awakeFromNib
+	//NOTE: Cannot use awakeFromNib
     if (self) {
 #if ForDEVELOPER
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValue05];

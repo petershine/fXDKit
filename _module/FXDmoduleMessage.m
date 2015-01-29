@@ -118,7 +118,7 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//MARK: MFMailComposeViewControllerDelegate
+//NOTE: MFMailComposeViewControllerDelegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {	FXDLog_DEFAULT;
 
 	FXDLogVariable(result);

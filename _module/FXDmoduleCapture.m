@@ -333,7 +333,7 @@
 #pragma mark -
 - (CIImage*)coreImageForCVImageBuffer:(CVImageBufferRef)imageBuffer withScale:(NSNumber*)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoOrientation:(AVCaptureVideoOrientation)videoOrientation shouldUseMirroring:(BOOL)shouldUseMirroring {
 
-	//MARK: Other method	http://www.fantageek.com/598/convert-cmsamplebufferref-to-uiimage/
+	//NOTE: Other method	http://www.fantageek.com/598/convert-cmsamplebufferref-to-uiimage/
 
 	CIImage *originalImage = [CIImage imageWithCVPixelBuffer:imageBuffer];
 
