@@ -15,7 +15,7 @@
 
 	if (nibNameOrNil == nil) {
 		NSString *filename = NSStringFromClass([self class]);
-		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
+		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//NOTE: Should use nib instead of xib for file type
 
 		BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 
@@ -194,7 +194,7 @@
 
 #pragma mark - Segues
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
-	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
+	//NOTE: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
 	FXDLogObject(sender);
 	FXDLogObject(identifier);
@@ -247,7 +247,7 @@
 
 	__block UIViewController *viewController = nil;
 
-	//MARK: Iterate backward
+	//NOTE: Iterate backward
 	for (NSInteger index = self.childViewControllers.count-1; index >= 0; index--) {
 		UIViewController *childScene = self.childViewControllers[index];
 
@@ -315,7 +315,7 @@
 	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:nil];
 	
 	
-	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
+	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//NOTE: self must be the owner
 
 	UIView *sceneView = [viewArray firstObject];	
 	FXDLogObject(sceneView);

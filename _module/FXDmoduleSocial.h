@@ -113,7 +113,7 @@
 
 
 
-//MARK: Using Facebook SDK"
+//NOTE: Using Facebook SDK"
 #import <FacebookSDK/FacebookSDK.h>
 
 #define userdefaultObjKeyFacebookAuthenticationURL	@"FacebookAuthenticationURLObjKey"

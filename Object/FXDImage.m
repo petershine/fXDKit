@@ -12,7 +12,7 @@
 	}
 
 	
-	//MARK: To load from .jpg, use specific scale value for retina
+	//NOTE: To load from .jpg, use specific scale value for retina
 	NSString *scaledImageName = nil;
 
 	if ([UIScreen mainScreen].scale >= 3.0) {
@@ -34,7 +34,7 @@
 	}
 
 
-	//MARK: If scale value added name is not working try normal name
+	//NOTE: If scale value added name is not working try normal name
 	imageName = [imageName stringByAppendingString:@".jpg"];
 
 	bundledImage = [UIImage imageNamed:imageName];
@@ -171,7 +171,7 @@
 	UIImage *resizedImage = nil;
 
 	UIGraphicsBeginImageContextWithOptions(size,
-										   NO,	//MARK: to allow transparency
+										   NO,	//NOTE: to allow transparency
 										   scale);
 	{
 		[self drawInRect:CGRectMake(0, 0, size.width, size.height)];
@@ -195,7 +195,7 @@
 	CGRect clippedRect = CGRectMake(0, 0, sideFull, sideFull);	
 
 	UIGraphicsBeginImageContextWithOptions(CGSizeMake(thumbDimension, thumbDimension),
-										   NO,	//MARK: to allow transparency
+										   NO,	//NOTE: to allow transparency
 										   0.0);
 
 	CGContextRef currentContext = UIGraphicsGetCurrentContext();

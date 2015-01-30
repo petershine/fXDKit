@@ -10,7 +10,7 @@
     for (NSString *attribute in attributes) {
 		id value = keyedValues[attribute];
 		
-		//MARK: Check cases
+		//NOTE: Check cases
 		if (value == nil) {
 			value = keyedValues[[attribute uppercaseString]];
 		}

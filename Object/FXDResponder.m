@@ -20,7 +20,7 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//MARK: UIApplicationDelegate
+//NOTE: UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 	FXDLogObject(launchOptions);
 
@@ -42,7 +42,7 @@
 	FXDLog_ERROR_ALERT;
 }
 
-//MARK: Be careful with the case for older version, which cannot fetch.
+//NOTE: Be careful with the case for older version, which cannot fetch.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
 	FXDLogObject(userInfo);
 	FXDLogObject(completionHandler);

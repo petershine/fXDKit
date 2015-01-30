@@ -109,7 +109,7 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//MARK: UIWebViewDelegate
+//NOTE: UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 
 	FXDLogVariable(navigationType);

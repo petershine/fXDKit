@@ -27,13 +27,13 @@
 
 - (BOOL)isDistantEnoughFromLastLocation;
 
-//MARK: For testing significantMonitoring
+//NOTE: For testing significantMonitoring
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 
 @end
 
 
-//MARK: distance value is x10 of real meters
+//NOTE: distance value is x10 of real meters
 #define distanceDiagonalTenthKilo	1190.0
 #define distanceDiagonalFirstKilo	148.0
 

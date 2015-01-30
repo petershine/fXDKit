@@ -110,7 +110,7 @@
 
 #pragma mark -
 - (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
-	//MARK: Optionally called by subclass
+	//NOTE: Optionally called by subclass
 	FXDLogVariable([UIApplication sharedApplication].applicationState);
 	
 	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
@@ -221,7 +221,7 @@
 }
 
 #pragma mark - Delegate
-//MARK: CLLocationManagerDelegate
+//NOTE: CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
 	FXDLogVariable(authorizationStatus);
 

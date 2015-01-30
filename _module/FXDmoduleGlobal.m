@@ -57,7 +57,7 @@
 		
 		FXDLog(@"1.%@ %@", _Object(_deviceLanguageCode), _Object(languages));
 		
-		//MARK: limit supported languages
+		//NOTE: limit supported languages
 		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
 			&& [_deviceLanguageCode isEqualToString:@"ko"] == NO
 			&& [_deviceLanguageCode isEqualToString:@"ja"] == NO
@@ -314,7 +314,7 @@
 
 #pragma mark -
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
-	//MARK: Make sure value is retrieved from userDefaults first
+	//NOTE: Make sure value is retrieved from userDefaults first
 	_appLaunchCount = (self.appLaunchCount)+1;
 	FXDLogVariable(_appLaunchCount);
 	
