@@ -56,5 +56,9 @@
 - (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
 
+
+- (void)enableAudioPlaybackCategory;
+- (void)disableAudioPlaybackCategory;
+
 @end
 
