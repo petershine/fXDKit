@@ -24,19 +24,16 @@
 		if (self.mainStoryboardName) {
 			_mainStoryboard = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
 		}
-#if ForDEVELOPER
-		else {
-			FXDLog_OVERRIDE;
-		}
-#endif
 	}
-	
+
+
+	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
+	}
 	return _mainStoryboard;
 }
 
 - (NSString*)mainStoryboardName {
-	if (_mainStoryboardName == nil) {
-		FXDLog_OVERRIDE;
+	if (_mainStoryboardName == nil) {	FXDLog_OVERRIDE;
 	}
 	return _mainStoryboardName;
 }
@@ -221,14 +218,17 @@
 
 #pragma mark -
 - (id)initialScene {
-	if (_initialScene == nil) {
-		if (self.mainStoryboard) {
-			_initialScene = [self.mainStoryboard instantiateInitialViewController];
-		}
-
-		FXDLog_DEFAULT;
-		FXDLogObject(_initialScene);
+	if (_initialScene) {
+		return _initialScene;
 	}
+
+
+	if (self.mainStoryboard) {
+		_initialScene = [self.mainStoryboard instantiateInitialViewController];
+	}
+
+	FXDLog_DEFAULT;
+	FXDLogObject(_initialScene);
 
 	return _initialScene;
 }
