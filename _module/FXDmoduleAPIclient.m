@@ -41,7 +41,6 @@
 
 
 	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:searchRequest];
-	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 
 	[operation
 	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -52,14 +51,7 @@
 		 }
 	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		 FXDLog_ERROR;
-
-		 if (error && [error localizedDescription]) {
-			 [FXDAlertView
-			  showAlertWithTitle:[error localizedDescription]
-			  message:nil
-			  cancelButtonTitle:nil
-			  withAlertCallback:nil];
-		 }
+		 FXDLog_ERROR_ALERT;
 
 		 if (didCollectBlock) {
 			 didCollectBlock(nil);

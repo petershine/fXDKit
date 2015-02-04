@@ -420,6 +420,7 @@
 }
 
 #pragma mark -
+#if USE_MultimediaFrameworks
 - (void)enableAudioPlaybackCategory {	FXDLog_DEFAULT;
 	FXDAssert_IsMainThread;
 
@@ -452,5 +453,6 @@
 
 	FXDLog(@"2.%@ %@", _Object(audioSession.category), _BOOL([category isEqualToString:audioSession.category]));
 }
+#endif
 
 @end

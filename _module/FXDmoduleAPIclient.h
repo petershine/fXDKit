@@ -3,7 +3,7 @@
 
 
 #import <AFNetworking.h>
-#import <UIKit+AFNetworking.h>
+#import <UIImageView+AFNetworking.h>
 
 
 @interface FXDmoduleAPIclient : FXDsuperModule {
