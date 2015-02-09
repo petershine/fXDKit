@@ -11,7 +11,7 @@
 
 #if USE_AFNetworking	//https://github.com/AFNetworking/AFNetworking
 	#import <AFNetworking.h>
-	#import <UIImageView+AFNetworking.h>
+	#import <UIKit+AFNetworking.h>
 #endif
 
 #if USE_GPUImage	//https://github.com/BradLarson/GPUImage

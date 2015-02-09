@@ -98,7 +98,7 @@
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_DEFAULT;
-	BOOL preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
+	UIInterfaceOrientation preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
 	//FXDLogVariable(preferredInterfaceOrientation);
 
 	return preferredInterfaceOrientation;
