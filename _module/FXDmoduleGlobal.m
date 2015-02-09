@@ -346,7 +346,7 @@
 #endif
 
 #if USE_Flurry
-	[Flurry setCrashReportingEnabled:YES];
+	[Flurry setCrashReportingEnabled:![@(USE_Crashlytics) boolValue]];
 	[Flurry setBackgroundSessionEnabled:YES];
 	[Flurry startSession:flurryApplicationKey withOptions:launchOptions];
 #endif
