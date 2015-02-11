@@ -55,4 +55,8 @@
 #define rotationAngleLandscapeLeft	90.0
 #define rotationAngleLandscapeRight	270.0
 
+
+#define keychainAccountAccessToken	@"AccessTokenAccount"
+#define keychainAccountAccessSecret	@"AccessSecretAccount"
+
 #endif
