@@ -105,4 +105,56 @@
 	return item;
 }
 
+#pragma mark -
+- (void)generalRequestWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {	FXDLog_DEFAULT;
+
+	FXDLogObject(method);
+	FXDLogObject(urlString);
+	FXDLogObject(parameters);
+	FXDLogObject(contentTypes);
+
+	NSError *error = nil;
+	NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]
+									requestWithMethod:method
+									URLString:urlString
+									parameters:parameters
+									error:&error];FXDLog_ERROR;
+
+	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
+										 initWithRequest:request];
+
+	operation.responseSerializer = [AFCompoundResponseSerializer
+									compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer]]];
+
+	NSMutableSet *modifiedSet = [operation.responseSerializer.acceptableContentTypes mutableCopy];
+	[modifiedSet addObjectsFromArray:contentTypes];
+	operation.responseSerializer.acceptableContentTypes = modifiedSet;
+
+	[operation
+	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
+
+		 FXDLogVariable(operation.response.statusCode);
+		 FXDLogObject(operation.response.allHeaderFields);
+		 FXDLogObject(responseObject);
+
+		 if (successBlock) {
+			 successBlock(operation, responseObject);
+		 }
+
+	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
+
+		 FXDLogVariable(operation.response.statusCode);
+		 FXDLogObject(operation.response.allHeaderFields);
+		 FXDLog_ERROR;
+
+		 if (failureBlock) {
+			 failureBlock(operation, error);
+		 }
+	 }];
+
+	[[AFHTTPRequestOperationManager manager].operationQueue
+	 addOperation:operation];
+}
 @end
