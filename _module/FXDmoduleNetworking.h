@@ -6,7 +6,7 @@
 #import <UIKit+AFNetworking.h>
 
 
-@interface FXDmoduleAPIclient : FXDsuperModule {
+@interface FXDmoduleNetworking : FXDsuperModule {
 	NSString *_mainRootURLformat;
 	NSString *_mainAPIkey;
 	NSString *_mainJSONrootKey;
@@ -22,6 +22,6 @@
 - (NSMutableArray*)collectedItemArrayFromJSONobj:(id)jsonObj;
 - (id)simplerItemFromItem:(id)item;
 
-- (void)generalRequestWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
+- (void)startRequestOperationWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 @end

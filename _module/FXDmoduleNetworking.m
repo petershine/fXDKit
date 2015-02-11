@@ -1,8 +1,8 @@
 
 
-#import "FXDmoduleAPIclient.h"
+#import "FXDmoduleNetworking.h"
 
-@implementation FXDmoduleAPIclient
+@implementation FXDmoduleNetworking
 
 #pragma mark - Memory management
 
@@ -106,7 +106,7 @@
 }
 
 #pragma mark -
-- (void)generalRequestWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {	FXDLog_DEFAULT;
+- (void)startRequestOperationWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {	FXDLog_DEFAULT;
 
 	FXDLogObject(method);
 	FXDLogObject(urlString);
@@ -120,17 +120,17 @@
 									parameters:parameters
 									error:&error];FXDLog_ERROR;
 
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
-										 initWithRequest:request];
+	AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc]
+												initWithRequest:request];
 
-	operation.responseSerializer = [AFCompoundResponseSerializer
-									compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer]]];
+	requestOperation.responseSerializer = [AFCompoundResponseSerializer
+										   compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer]]];
 
-	NSMutableSet *modifiedSet = [operation.responseSerializer.acceptableContentTypes mutableCopy];
+	NSMutableSet *modifiedSet = [requestOperation.responseSerializer.acceptableContentTypes mutableCopy];
 	[modifiedSet addObjectsFromArray:contentTypes];
-	operation.responseSerializer.acceptableContentTypes = modifiedSet;
+	requestOperation.responseSerializer.acceptableContentTypes = modifiedSet;
 
-	[operation
+	[requestOperation
 	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
 
@@ -155,6 +155,6 @@
 	 }];
 
 	[[AFHTTPRequestOperationManager manager].operationQueue
-	 addOperation:operation];
+	 addOperation:requestOperation];
 }
 @end
