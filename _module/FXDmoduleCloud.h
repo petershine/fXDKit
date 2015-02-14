@@ -1,11 +1,10 @@
 
-#import "FXDimportCore.h"
-
 
 #define userdefaultObjSavedUbiquityIdentityToken	@"SavedUbiquityIdentityTokenObjKey"
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleCloud : FXDsuperModule {
 	FXDcallbackFinish _statusCallback;
 

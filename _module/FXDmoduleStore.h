@@ -1,14 +1,14 @@
 
 
-#import "FXDimportCore.h"
-#import "FXDimportAdopted.h"
-
+@import StoreKit;
 
 #define userdefaultObjVerifiedReceipt	@"VerifiedReceiptObjKey"
 
 
-@import StoreKit;
+#import "FXDimportAdopted.h"
 
+
+#import "FXDsuperModule.h"
 @interface FXDmoduleStore : FXDsuperModule <SKProductsRequestDelegate> {
 	BOOL _didPurchasePremiumUpgrade;
 	NSArray *_productIdentifiers;

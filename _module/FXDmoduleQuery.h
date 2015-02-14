@@ -1,5 +1,6 @@
 
-#import "FXDimportCore.h"
+@import UIKit;
+@import Foundation;
 
 
 @protocol FXDMetadataQueryDelegate <NSMetadataQueryDelegate>
@@ -11,6 +12,7 @@
 @end
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleQuery : FXDsuperModule <FXDMetadataQueryDelegate> {
 	FXDcallbackFinish _metadataQueryCallback;
 

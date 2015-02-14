@@ -1,7 +1,5 @@
 
 
-#import "FXDimportCore.h"
-
 #define userdefaultObjMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
 #define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
 
@@ -11,6 +9,7 @@
 @import CoreLocation;
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleSocial : FXDsuperModule {
 	NSString *_typeIdentifier;
 	NSString *_reasonForConnecting;

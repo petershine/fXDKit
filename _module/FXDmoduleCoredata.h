@@ -1,5 +1,4 @@
 
-#import "FXDimportCore.h"
 
 //NOTE: For subclass to define names or keys
 /* SAMPLE:
@@ -15,6 +14,7 @@
 @import CoreData;
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleCoredata : FXDsuperModule {
 	UIBackgroundTaskIdentifier _enumeratingTask;
 	UIBackgroundTaskIdentifier _dataSavingTask;

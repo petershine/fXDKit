@@ -1,4 +1,7 @@
 
+@import UIKit;
+@import Foundation;
+
 #import "FXDimportCore.h"
 
 

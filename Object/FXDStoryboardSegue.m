@@ -2,6 +2,8 @@
 
 #import "FXDStoryboardSegue.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation FXDStoryboardSegue
 

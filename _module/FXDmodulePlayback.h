@@ -1,8 +1,5 @@
 
 
-#import "FXDimportCore.h"
-
-
 #ifndef periodicintervalDivisor
 	#define periodicintervalDivisor	3
 #endif
@@ -14,6 +11,8 @@
 
 @import AVFoundation;
 
+
+#import "FXDView.h"
 @interface FXDdisplayPlayback : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
@@ -23,6 +22,7 @@
 @end
 
 
+#import "FXDsuperModule.h"
 @interface FXDmodulePlayback : FXDsuperModule {
 	FXDdisplayPlayback *_mainDisplay;
 }

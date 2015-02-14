@@ -2,6 +2,8 @@
 
 #import "FXDImageView.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation UIImageView (Essential)
 - (void)modifyHeightForContainedImage {	FXDLog_DEFAULT;

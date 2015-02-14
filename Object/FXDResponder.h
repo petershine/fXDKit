@@ -1,8 +1,7 @@
 
-#import "FXDimportCore.h"
 
-
-@class FXDAlertView;
+@import UIKit;
+@import Foundation;
 
 
 @interface FXDResponder : UIResponder <UIApplicationDelegate>

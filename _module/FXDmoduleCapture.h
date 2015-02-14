@@ -1,5 +1,4 @@
 
-#import "FXDimportCore.h"
 
 #define filternameScale		@"CILanczosScaleTransform"
 #define filternameTransform		@"CIAffineTransform"
@@ -13,6 +12,7 @@
 @end
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleCapture : FXDsuperModule <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;

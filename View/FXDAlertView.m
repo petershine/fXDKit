@@ -47,11 +47,12 @@
 		cancelButtonTitle = NSLocalizedString(@"OK", nil);
 	}
 
-	self = [super initWithTitle:title
-						message:message
-					   delegate:nil
-			  cancelButtonTitle:cancelButtonTitle
-			  otherButtonTitles:nil];
+	self = [super
+			initWithTitle:title
+			message:message
+			delegate:nil
+			cancelButtonTitle:cancelButtonTitle
+			otherButtonTitles:nil];
 
 	if (self) {
 		self.delegate = self;

@@ -1,7 +1,6 @@
 
-#import "FXDimportCore.h"
 
-
+#import "FXDViewController.h"
 @interface FXDsceneLaunching : FXDViewController
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;

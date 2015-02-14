@@ -2,6 +2,8 @@
 
 #import "FXDAnnotationView.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation MKAnnotationView (Essential)
 - (instancetype)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage shouldChangeOffset:(BOOL)shouldChangeOffset {

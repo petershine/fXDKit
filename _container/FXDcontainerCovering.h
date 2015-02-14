@@ -1,4 +1,7 @@
 
+@import UIKit;
+@import Foundation;
+
 #import "FXDimportCore.h"
 
 
@@ -10,6 +13,8 @@ typedef NS_ENUM(NSInteger, COVER_DIRECTION_TYPE) {
 	coverDirectionBottom
 };
 
+
+#import "FXDStoryboardSegue.h"
 
 @interface FXDsegueCover : FXDStoryboardSegue
 @end

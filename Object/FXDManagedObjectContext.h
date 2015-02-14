@@ -1,5 +1,4 @@
 
-#import "FXDimportCore.h"
 
 #ifndef limitInfiniteFetch
 	#define limitInfiniteFetch	0

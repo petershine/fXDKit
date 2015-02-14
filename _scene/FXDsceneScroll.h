@@ -1,12 +1,11 @@
 
-#import "FXDimportCore.h"
-
 
 #ifndef scaleSceneDismissingOffset
 	#define scaleSceneDismissingOffset	0.275
 #endif
 
 
+#import "FXDViewController.h"
 @interface FXDsceneScroll : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
 	NSString *_mainCellIdentifier;

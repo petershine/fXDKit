@@ -2,6 +2,8 @@
 
 #import "FXDImage.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation UIImage (Essential)
 + (UIImage*)bundledImageForName:(NSString*)imageName {

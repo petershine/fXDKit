@@ -3,7 +3,6 @@
 #import "FXDWindow.h"
 
 #import "FXDsubviewInformation.h"
-
 #import "FXDsceneLaunching.h"
 
 

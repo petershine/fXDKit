@@ -2,7 +2,7 @@
 
 #import "FXDResponder.h"
 
-#import "FXDAlertView.h"
+#import "FXDimportCore.h"
 
 
 @implementation FXDResponder

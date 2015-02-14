@@ -1,14 +1,13 @@
 
-#import "FXDimportCore.h"
 
 @import AssetsLibrary;
-
 
 @interface ALAsset (MultimediaFrameworks)
 - (id)valueForKey:(NSString *)key;
 @end
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleAssets : FXDsuperModule
 
 @property (strong, nonatomic) ALAssetsLibrary *mainAssetsLibrary;

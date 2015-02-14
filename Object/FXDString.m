@@ -2,6 +2,8 @@
 
 #import "FXDString.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation NSString (Essential)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue {

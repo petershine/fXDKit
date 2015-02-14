@@ -1,6 +1,4 @@
 
-#import "FXDimportCore.h"
-
 
 #define userdefaultIntegerAppLaunchCount			@"AppLaunchCountIntegerKey"
 #define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
@@ -11,6 +9,7 @@
 @class FXDmoduleCoredata;
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleGlobal : FXDsuperModule {
 	NSInteger _appLaunchCount;
 

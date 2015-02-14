@@ -2,6 +2,8 @@
 
 #import "FXDTextView.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation UITextView (Essential)
 - (BOOL)verticalAlignWithChangedText:(NSString*)changedText {

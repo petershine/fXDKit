@@ -1,6 +1,7 @@
 
-#import "FXDimportCore.h"
 
+@import UIKit;
+@import Foundation;
 
 @interface FXDinfoEnumerated : NSObject
 @property (strong, nonatomic) NSArray *folderURLarray;

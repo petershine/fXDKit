@@ -2,6 +2,8 @@
 
 #import "FXDView.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation FXDView
 @end

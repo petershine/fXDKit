@@ -1,7 +1,6 @@
 #if USE_AFNetworking
 
 
-#import "FXDimportCore.h"
 
 
 @interface FXDmoduleNetworking : FXDsuperModule {

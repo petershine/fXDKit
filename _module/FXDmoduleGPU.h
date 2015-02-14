@@ -1,7 +1,6 @@
 #if USE_GPUImage
 
 
-#import "FXDimportCore.h"
 
 #ifndef sessionPresetOptimalCapture
 	#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720

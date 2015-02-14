@@ -1,5 +1,4 @@
 
-#import "FXDimportCore.h"
 
 @import CoreData;
 

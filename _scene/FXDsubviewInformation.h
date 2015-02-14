@@ -1,7 +1,6 @@
 
-#import "FXDimportCore.h"
 
-
+#import "FXDView.h"
 @interface FXDsubviewInformation : FXDView
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;

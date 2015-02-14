@@ -2,6 +2,8 @@
 
 #import "FXDURL.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error {

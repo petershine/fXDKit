@@ -2,6 +2,8 @@
 
 #import "FXDCollectionViewLayout.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation FXDCollectionViewLayoutAttributes
 + (instancetype)layoutAttributesForCellWithIndexPath:(NSIndexPath *)indexPath {	FXDLog_DEFAULT;

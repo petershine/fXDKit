@@ -1,5 +1,4 @@
 
-#import "FXDimportCore.h"
 
 
 @import MediaPlayer;
@@ -16,6 +15,7 @@
 @end
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleMusic : FXDsuperModule
 
 @property (nonatomic) MPMusicPlaybackState playbackState;
