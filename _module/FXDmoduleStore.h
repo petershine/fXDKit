@@ -1,7 +1,10 @@
 
-#define userdefaultObjVerifiedReceipt	@"VerifiedReceiptObjKey"
 
-#import "FXDKit.h"
+#import "FXDimportCore.h"
+#import "FXDimportAdopted.h"
+
+
+#define userdefaultObjVerifiedReceipt	@"VerifiedReceiptObjKey"
 
 
 @import StoreKit;

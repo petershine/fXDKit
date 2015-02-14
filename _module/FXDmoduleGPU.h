@@ -1,14 +1,14 @@
 #if USE_GPUImage
 
 
-@import AVFoundation;
-
-#import "FXDKit.h"
-
+#import "FXDimportCore.h"
 
 #ifndef sessionPresetOptimalCapture
 	#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720
 #endif
+
+
+@import AVFoundation;
 
 
 @class FXDmoduleCapture;

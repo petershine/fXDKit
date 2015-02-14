@@ -1,8 +1,6 @@
 
-@import AVFoundation;
 
-
-#import "FXDKit.h"
+#import "FXDimportCore.h"
 
 
 #ifndef periodicintervalDivisor
@@ -13,6 +11,8 @@
 	#define periodicintervalDefault	CMTimeMultiplyByRatio(CMTimeMake(1, 3), 1, periodicintervalDivisor)
 #endif
 
+
+@import AVFoundation;
 
 @interface FXDdisplayPlayback : FXDView
 @property (strong, nonatomic) AVPlayer *mainPlayer;

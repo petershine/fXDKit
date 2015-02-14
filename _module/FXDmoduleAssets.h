@@ -1,7 +1,7 @@
 
-@import AssetsLibrary;
+#import "FXDimportCore.h"
 
-#import "FXDKit.h"
+@import AssetsLibrary;
 
 
 @interface ALAsset (MultimediaFrameworks)

@@ -1,5 +1,5 @@
 
-#import "FXDKit.h"
+#import "FXDimportCore.h"
 
 
 #define userdefaultObjSavedUbiquityIdentityToken	@"SavedUbiquityIdentityTokenObjKey"

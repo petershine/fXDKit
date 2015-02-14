@@ -1,8 +1,8 @@
 
+#import "FXDimportCore.h"
+
 @import CoreLocation;
 @import MapKit;
-
-#import "FXDKit.h"
 
 
 @interface FXDmoduleGeo : FXDsuperModule <CLLocationManagerDelegate> {
