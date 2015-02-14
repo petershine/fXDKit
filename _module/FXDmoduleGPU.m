@@ -1,3 +1,4 @@
+#if USE_GPUImage
 
 
 #import "FXDmoduleGPU.h"
@@ -356,3 +357,6 @@
 }
 
 @end
+
+
+#endif

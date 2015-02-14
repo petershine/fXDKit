@@ -1,3 +1,4 @@
+#if USE_SocialFrameworks
 
 
 #import "FXDmoduleSocial.h"
@@ -1721,3 +1722,6 @@
 #pragma mark - Delegate
 
 @end
+
+
+#endif

@@ -1,7 +1,6 @@
+#if USE_GPUImage
 
 @import AVFoundation;
-
-#import <GPUImage.h>
 
 #import "FXDKit.h"
 
@@ -66,3 +65,6 @@
 - (void)applyGPUfilterAtFilterIndex:(NSInteger)filterIndex shouldShowLabel:(BOOL)shouldShowLabel;
 
 @end
+
+
+#endif

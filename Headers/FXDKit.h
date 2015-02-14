@@ -3,9 +3,6 @@
 #ifndef FXDKit_FXDKit_h
 #define FXDKit_FXDKit_h
 
-@import UIKit;
-@import Foundation;
-
 
 #ifndef USE_ReactiveCocoa
 	#define	USE_ReactiveCocoa	FALSE
@@ -27,8 +24,15 @@
 	#define USE_MultimediaFrameworks	FALSE
 #endif
 
+#ifndef USE_SocialFrameworks
+	#define USE_SocialFrameworks	FALSE
+#endif
 
-#pragma mark - Callbacks
+
+@import UIKit;
+@import Foundation;
+
+
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 

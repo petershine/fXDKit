@@ -1,3 +1,5 @@
+#if USE_SocialFrameworks
+
 
 @import Social;
 @import Accounts;
@@ -156,3 +158,6 @@
 - (void)observedFBSessionDidBecomeClosedActiveSession:(NSNotification*)notification;
 
 @end
+
+
+#endif

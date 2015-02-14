@@ -29,6 +29,7 @@
 #import "FXDKit.h"
 
 
+#pragma mark - Categories
 @interface NSError (Essential)
 - (NSDictionary*)essentialParameters;
 @end

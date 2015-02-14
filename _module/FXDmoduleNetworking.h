@@ -1,9 +1,7 @@
+#if USE_AFNetworking
+
 
 #import "FXDKit.h"
-
-
-#import <AFNetworking.h>
-#import <UIKit+AFNetworking.h>
 
 
 @interface FXDmoduleNetworking : FXDsuperModule {
@@ -25,3 +23,6 @@
 - (void)startRequestOperationWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 @end
+
+
+#endif

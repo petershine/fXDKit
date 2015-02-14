@@ -1,3 +1,4 @@
+#if USE_AFNetworking
 
 
 #import "FXDmoduleNetworking.h"
@@ -158,3 +159,6 @@
 	 addOperation:requestOperation];
 }
 @end
+
+
+#endif

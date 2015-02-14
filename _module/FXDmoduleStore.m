@@ -105,8 +105,8 @@
 	[validationRequest setHTTPMethod:@"POST"];
 	[validationRequest setHTTPBody:jsonData];
 
-
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
+#if	USE_AFNetworking
+	AFHTTPRequestOperation *NSOperation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation.responseSerializer setAcceptableContentTypes:[NSSet setWithArray:@[@"text/plain"]]];
 
@@ -143,6 +143,14 @@
 	 }];
 	
 	[operation start];
+	
+#else
+	NSAssert1([@(USE_AFNetworking) boolValue], @"%@", _BOOL([@(USE_AFNetworking) boolValue]));
+
+	if (finishCallback) {
+		finishCallback(_cmd, NO, nil);
+	}
+#endif
 }
 
 #pragma mark -
