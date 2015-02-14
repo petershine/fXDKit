@@ -1,7 +1,7 @@
 
-@import MapKit;
+#import "FXDimportCore.h"
 
-#import "FXDKit.h"
+@import MapKit;
 
 
 @interface FXDMapView : MKMapView

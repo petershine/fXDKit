@@ -1,5 +1,5 @@
 
-#import "FXDKit.h"
+#import "FXDimportCore.h"
 
 
 typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {

@@ -1,8 +1,5 @@
 
-@import CoreData;
-
-#import "FXDKit.h"
-
+#import "FXDimportCore.h"
 
 #ifndef limitInfiniteFetch
 	#define limitInfiniteFetch	0
@@ -16,6 +13,8 @@
 	#define sizeDefaultBatch	20
 #endif
 
+
+@import CoreData;
 
 @interface NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit;

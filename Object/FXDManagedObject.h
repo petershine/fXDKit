@@ -1,7 +1,7 @@
 
-@import CoreData;
+#import "FXDimportCore.h"
 
-#import "FXDKit.h"
+@import CoreData;
 
 
 @interface NSManagedObject (Essential)
