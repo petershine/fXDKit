@@ -106,7 +106,7 @@
 	[validationRequest setHTTPBody:jsonData];
 
 #if	USE_AFNetworking
-	AFHTTPRequestOperation *NSOperation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
+	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
 	operation.responseSerializer = [AFJSONResponseSerializer serializer];
 	[operation.responseSerializer setAcceptableContentTypes:[NSSet setWithArray:@[@"text/plain"]]];
 
