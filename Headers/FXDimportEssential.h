@@ -3,13 +3,9 @@
 #ifndef FXDKit_FXDimportEssential_h
 #define FXDKit_FXDimportEssential_h
 
-#import <objc/runtime.h>
-#import <stdarg.h>
-#import <sys/utsname.h>
 
-#import <Availability.h>
-#import <TargetConditionals.h>
-
+@import UIKit;
+@import Foundation;
 
 @import SystemConfiguration;
 @import MobileCoreServices;
@@ -25,6 +21,34 @@
 @import MessageUI;
 @import Accounts;
 @import Social;
+
+#import <objc/runtime.h>
+#import <stdarg.h>
+#import <sys/utsname.h>
+
+#import <Availability.h>
+#import <TargetConditionals.h>
+
+
+typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
+typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
+
+
+@protocol FXDprotocolShared <NSObject>
+@required
++ (instancetype)sharedInstance;
+
+@optional
+- (void)observedUIApplicationDidEnterBackground:(NSNotification*)notification;
+- (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification;
+
+- (void)observedUIApplicationDidReceiveMemoryWarning:(NSNotification*)notification;
+- (void)observedUIDeviceBatteryLevelDidChange:(NSNotification*)notification;
+
+- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification;
+@end
+
 
 #import "FXDKit.h"
 

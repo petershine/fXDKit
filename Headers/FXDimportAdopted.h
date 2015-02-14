@@ -4,6 +4,31 @@
 #define FXDKit_FXDimportAdopted_h
 
 
+#ifndef USE_ReactiveCocoa
+	#define	USE_ReactiveCocoa	FALSE
+#endif
+
+#ifndef USE_AFNetworking
+	#define USE_AFNetworking	FALSE
+#endif
+
+#ifndef USE_GPUImage
+	#define USE_GPUImage	FALSE
+#endif
+
+#ifndef USE_LocationFrameworks
+	#define USE_LocationFrameworks	FALSE
+#endif
+
+#ifndef USE_MultimediaFrameworks
+	#define USE_MultimediaFrameworks	FALSE
+#endif
+
+#ifndef USE_SocialFrameworks
+	#define USE_SocialFrameworks	FALSE
+#endif
+
+
 #if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
 	#import <ReactiveCocoa.h>
 	#import <RACEXTScope.h>
@@ -55,6 +80,16 @@
 	@interface UIDevice (MultimediaFrameworks)
 	- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
 	@end
+
+	@interface AVAudioSession (MultimediaFrameworks)
+	- (void)enableAudioPlaybackCategory;
+	- (void)disableAudioPlaybackCategory;
+	@end
+
+#endif
+
+#if USE_SocialFrameworks
+	#import <FacebookSDK/FacebookSDK.h>
 #endif
 
 

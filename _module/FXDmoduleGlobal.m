@@ -420,40 +420,5 @@
 	return localDate;
 }
 
-#pragma mark -
-#if USE_MultimediaFrameworks
-- (void)enableAudioPlaybackCategory {	FXDLog_DEFAULT;
-	FXDAssert_IsMainThread;
-
-	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-	FXDLog(@"1.%@", _Object(audioSession.category));
-
-	//NOTE: Necessary for playback to be audible if silence is switched on
-	//same as disabled condition. Evalute if this method is needed
-	NSString *category = AVAudioSessionCategoryPlayAndRecord;
-
-	NSError *error = nil;
-	[audioSession
-	 setCategory:category
-	 error:&error];FXDLog_ERROR;LOGEVENT_ERROR;CLSEvent_ERROR;
-
-	FXDLog(@"2.%@", _Object(audioSession.category));
-}
-
-- (void)disableAudioPlaybackCategory {	FXDLog_DEFAULT;
-	//FXDAssert_IsMainThread;
-
-	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-
-	NSString *category = AVAudioSessionCategoryPlayAndRecord;
-
-	NSError *error = nil;
-	[audioSession
-	 setCategory:category
-	 error:&error];FXDLog_ERROR;LOGEVENT_ERROR;CLSEvent_ERROR;
-
-	FXDLog(@"2.%@ %@", _Object(audioSession.category), _BOOL([category isEqualToString:audioSession.category]));
-}
-#endif
 
 @end
