@@ -3,6 +3,12 @@
 #import "FXDimportEssential.h"
 
 
+#import "FXDconfigDeveloper.h"
+
+#import "FXDmacroValue.h"
+#import "FXDmacroFunction.h"
+
+
 @implementation NSError (Essential)
 - (NSDictionary*)essentialParameters {
 	NSDictionary *parameters =

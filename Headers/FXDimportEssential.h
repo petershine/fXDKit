@@ -50,8 +50,6 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @end
 
 
-#import "FXDKit.h"
-
 
 #pragma mark - Categories
 @interface NSError (Essential)
