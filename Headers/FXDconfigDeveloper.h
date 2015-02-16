@@ -155,7 +155,6 @@
 
 	#define FXDAssert_IsMainThread	NSAssert([NSThread isMainThread], nil)
 
-	#define FXDLog_EARLY	FXDLog(@"EARLY RETURN: %@", _ClassSelectorSelf)
 
 #else
 	#define FXDLog(__FORMAT__, ...)	{}
@@ -200,7 +199,6 @@
 
 	#define FXDAssert_IsMainThread
 
-	#define FXDLog_EARLY
 
 #endif
 
