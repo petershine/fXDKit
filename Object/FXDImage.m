@@ -172,15 +172,50 @@
 - (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale {
 	UIImage *resizedImage = nil;
 
-	UIGraphicsBeginImageContextWithOptions(size,
-										   NO,	//NOTE: to allow transparency
-										   scale);
+	UIGraphicsBeginImageContextWithOptions(size, NO, scale);
 	{
 		[self drawInRect:CGRectMake(0, 0, size.width, size.height)];
 
 		resizedImage = UIGraphicsGetImageFromCurrentImageContext();
 	}
 	UIGraphicsEndImageContext();
+
+#warning //NOTE: May have the problem with memory management with used in massive scale
+
+	return resizedImage;
+}
+
+- (UIImage*)resizedImageFromContextForSize:(CGSize)size {
+
+	size_t width = size.width;
+	size_t height = size.height;
+
+	size_t bitsPerComponent = CGImageGetBitsPerComponent(self.CGImage);
+	size_t bytesPerRow = CGImageGetBytesPerRow(self.CGImage);
+	CGColorSpaceRef colorSpace = CGImageGetColorSpace(self.CGImage);
+	CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(self.CGImage);
+
+	CGContextRef context = CGBitmapContextCreate(nil,
+												 width,
+												 height,
+												 bitsPerComponent,
+												 bytesPerRow,
+												 colorSpace,
+												 bitmapInfo);
+
+	CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+
+	CGContextDrawImage(context,
+					   CGRectMake(0.0, 0.0, width, height),
+					   self.CGImage);
+
+	CGImageRef contextImage = CGBitmapContextCreateImage(context);
+
+
+	UIImage *resizedImage = [[UIImage alloc] initWithCGImage:contextImage];
+
+	CGImageRelease(contextImage);
+	CGContextRelease(context);
 
 	return resizedImage;
 }

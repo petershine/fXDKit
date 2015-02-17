@@ -18,6 +18,7 @@
 
 - (UIImage*)resizedImageUsingSize:(CGSize)size;
 - (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale;
+- (UIImage*)resizedImageFromContextForSize:(CGSize)size;
 
 - (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension;
 
