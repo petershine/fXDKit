@@ -86,7 +86,10 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 @interface UIApplication (Essential)
+#if TARGET_APP_EXTENSION
+#else
 + (UIWindow*)mainWindow;
+#endif
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
 @end
@@ -103,7 +106,10 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 @interface UIDevice (Essential)
+#if TARGET_APP_EXTENSION
+#else
 + (UIDeviceOrientation)validDeviceOrientation;
+#endif
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 

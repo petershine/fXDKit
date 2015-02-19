@@ -55,9 +55,12 @@
 - (void)setNeedsStatusBarAppearanceUpdate {
 	[super setNeedsStatusBarAppearanceUpdate];
 
+#if TARGET_APP_EXTENSION
+#else
 	if ([UIApplication sharedApplication].statusBarHidden == NO) {	FXDLog_DEFAULT;
 		FXDLogVariable([UIApplication sharedApplication].statusBarStyle);
 	}
+#endif
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {

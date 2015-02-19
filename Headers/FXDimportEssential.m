@@ -169,6 +169,8 @@
 
 
 @implementation UIApplication (Essential)
+#if TARGET_APP_EXTENSION
+#else
 + (UIWindow*)mainWindow {
 	UIWindow *mainWindow = nil;
 
@@ -178,6 +180,7 @@
 
 	return mainWindow;
 }
+#endif
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 	if (alertBody == nil) {
@@ -250,6 +253,8 @@
 
 
 @implementation UIDevice (Essential)
+#if TARGET_APP_EXTENSION
+#else
 + (UIDeviceOrientation)validDeviceOrientation {
 	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
 
@@ -259,6 +264,7 @@
 
 	return validOrientation;
 }
+#endif
 
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation {
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;
