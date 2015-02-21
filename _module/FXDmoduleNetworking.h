@@ -1,8 +1,6 @@
 #if USE_AFNetworking
 
 
-
-
 @interface FXDmoduleNetworking : FXDsuperModule {
 	NSString *_mainRootURLformat;
 	NSString *_mainAPIkey;
