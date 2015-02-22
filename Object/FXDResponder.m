@@ -21,15 +21,6 @@
 
 #pragma mark - Delegate
 //NOTE: UIApplicationDelegate
-- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
-	FXDLogObject(launchOptions);
-
-	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
-
-	return YES;
-}
-
-#pragma mark -
 
 //NOTE: For the app with remote notification, ignore following implementation
 /*
@@ -79,10 +70,22 @@
 #endif
 	 */
 
+	FXDLogObject(url);
+	FXDLogObject(sourceApplication);
+	FXDLogObject(annotation);
+
 	return YES;
 }
 
 #pragma mark -
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
+	FXDLogObject(launchOptions);
+
+	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
+
+	return YES;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 
 	return YES;
