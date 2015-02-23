@@ -21,14 +21,8 @@
 	#import <Fabric/Fabric.h>
 	#import <Crashlytics/Crashlytics.h>
 
-	#define CLSEvent_DEFAULT	CLSLog(@"%@", _ClassSelectorSelf)
-	#define CLSEvent_CMD	CLSLog(@"%@", NSStringFromSelector(_cmd))
-	#define CLSEvent_ERROR	if(error){CLSLog(@"%@", [error essentialParameters]);}
 #else
 
-	#define CLSEvent_DEFAULT
-	#define CLSEvent_CMD
-	#define CLSEvent_ERROR
 #endif
 
 

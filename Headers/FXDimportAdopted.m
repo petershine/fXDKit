@@ -104,7 +104,7 @@
 	NSError *error = nil;
 	[self
 	 setCategory:category
-	 error:&error];FXDLog_ERROR;LOGEVENT_ERROR;CLSEvent_ERROR;
+	 error:&error];FXDLog_ERROR;LOGEVENT_ERROR;
 
 	FXDLog(@"2.%@", _Object(self.category));
 }
@@ -117,7 +117,7 @@
 	NSError *error = nil;
 	[self
 	 setCategory:category
-	 error:&error];FXDLog_ERROR;LOGEVENT_ERROR;CLSEvent_ERROR;
+	 error:&error];FXDLog_ERROR;LOGEVENT_ERROR;
 
 	FXDLog(@"2.%@ %@", _Object(self.category), _BOOL([category isEqualToString:self.category]));
 }
