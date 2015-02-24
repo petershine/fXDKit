@@ -218,16 +218,18 @@
 	}
 
 
-	CGRect animatedFrame = self.bounds;
-	animatedFrame.origin.x = (size.width-self.bounds.size.width)*xyRatio.x;
-	animatedFrame.origin.y = (size.height-self.bounds.size.height)*xyRatio.y;
+	CGRect animatedFrame = CGRectApplyAffineTransform(self.bounds, transform);
+	animatedFrame.origin.x = (size.width-animatedFrame.size.width)*xyRatio.x;
+	animatedFrame.origin.y = (size.height-animatedFrame.size.height)*xyRatio.y;
+
 
 	[UIView
 	 animateWithDuration:duration
 	 animations:^{
 		 self.transform = transform;
 		 self.frame = animatedFrame;
-	 }];
+
+	 } completion:nil];
 }
 
 #pragma mark -
