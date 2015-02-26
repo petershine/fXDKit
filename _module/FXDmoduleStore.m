@@ -12,9 +12,6 @@
 
 #pragma mark -
 - (void)prepareStoreManager {	FXDLog_DEFAULT;
-	NSDictionary *receiptDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultObjVerifiedReceipt];
-	FXDLogObject(receiptDictionary);
-
 	//TODO: For listing In-App Purchasable items Combine with BundleIdentifier
 	NSSet *identifierSet = [NSSet setWithArray:self.productIdentifiers];
 
@@ -22,6 +19,9 @@
 	[request setDelegate:self];
 	[request start];
 
+
+	NSDictionary *receiptDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:userdefaultObjVerifiedReceipt];
+	FXDLogObject(receiptDictionary);
 
 #if	ForDEVELOPER
 	if (receiptDictionary
@@ -71,23 +71,25 @@
 	FXDLogObject(validationURL);
 
 	NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-	FXDLogObject([[NSBundle mainBundle] appStoreReceiptURL]);
+	FXDLogObject(receiptURL);
+
+	NSError *error = nil;
+	NSData *receiptData = [[NSData alloc] initWithContentsOfURL:receiptURL options:NSDataReadingUncached error:&error];FXDLog_ERROR;
+	FXDLog(@"1.%@ %@", _BOOL(receiptData != nil), _Variable(receiptData.length));
+
+	error = nil;
+	BOOL isReachable = [receiptURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERROR;
+	FXDLogBOOL(isReachable);
 
 	BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[receiptURL path]];
 	FXDLogBOOL(fileExists);
 
-	if (fileExists == NO) {
+	if (receiptData.length == 0 && fileExists == NO && isReachable == NO) {
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
 		}
 		return;
 	}
-
-
-	NSError *error = nil;
-	NSData *receiptData = [[NSData alloc] initWithContentsOfURL:receiptURL options:NSDataReadingUncached error:&error];
-	FXDLog_ERROR;
-	FXDLog(@"1.%@", _Variable(receiptData.length));
 
 
 	NSString *base64String = [receiptData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithCarriageReturn];
@@ -105,34 +107,51 @@
 	[validationRequest setHTTPMethod:@"POST"];
 	[validationRequest setHTTPBody:jsonData];
 
-#if	USE_AFNetworking
-	AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
 
-	requestOperation.responseSerializer = [AFCompoundResponseSerializer
-										   compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer]]];
+	NSOperationQueue *validationQueue = [NSOperationQueue newSerialQueue];
 
-	NSMutableSet *modifiedSet = [requestOperation.responseSerializer.acceptableContentTypes mutableCopy];
-	[modifiedSet addObjectsFromArray:@[@"text/plain"]];
-	requestOperation.responseSerializer.acceptableContentTypes = modifiedSet;
+	[NSURLConnection
+	 sendAsynchronousRequest:validationRequest
+	 queue:validationQueue
+	 completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+		 FXDLog_BLOCK(self, @selector(sendAsynchronousRequest:queue:completionHandler:));
+
+		 NSError *error = connectionError;
+		 FXDLog_ERROR;
+
+		 if (connectionError) {
+			 if (finishCallback) {
+				 finishCallback(_cmd, NO, nil);
+			 }
+			 return;
+		 }
 
 
-	[requestOperation
-	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
-		 FXDLogObject(responseObject);
+		 error = nil;
+		 NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+		 FXDLog_ERROR;
+
+		 FXDLogObject(jsonResponse);
+
+		 if (jsonResponse == nil) {
+			 if (finishCallback) {
+				 finishCallback(_cmd, NO, nil);
+			 }
+			 return;
+		 }
+
 
 		 BOOL finished = NO;
 
-		 if ([responseObject[@"status"] integerValue] == 0) {
+		 if ([jsonResponse[@"status"] integerValue] == 0) {
 			 finished = YES;
 
-			 NSDictionary *receiptDictionary = responseObject[@"receipt"];
+			 NSDictionary *receiptDictionary = jsonResponse[@"receipt"];
 
 
 #warning //TODO: Find the secure way to save the receipt
 			 [[NSUserDefaults standardUserDefaults] setObject:receiptDictionary forKey:userdefaultObjVerifiedReceipt];
 			 [[NSUserDefaults standardUserDefaults] synchronize];
-
 
 			 [self logAboutReceiptDictionary:receiptDictionary];
 		 }
@@ -140,26 +159,7 @@
 		 if (finishCallback) {
 			 finishCallback(_cmd, finished, nil);
 		 }
-
-	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
-		 FXDLog_ERROR;
-
-		 if (finishCallback) {
-			 finishCallback(_cmd, NO, nil);
-		 }
 	 }];
-	
-	[[AFHTTPRequestOperationManager manager].operationQueue
-	 addOperation:requestOperation];
-	
-#else
-	NSAssert1([@(USE_AFNetworking) boolValue], @"%@", _BOOL([@(USE_AFNetworking) boolValue]));
-
-	if (finishCallback) {
-		finishCallback(_cmd, NO, nil);
-	}
-#endif
 }
 
 #pragma mark -
