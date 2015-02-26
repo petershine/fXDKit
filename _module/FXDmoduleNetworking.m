@@ -131,6 +131,7 @@
 	[modifiedSet addObjectsFromArray:contentTypes];
 	requestOperation.responseSerializer.acceptableContentTypes = modifiedSet;
 
+
 	[requestOperation
 	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));

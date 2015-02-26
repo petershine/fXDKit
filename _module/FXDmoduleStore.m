@@ -106,11 +106,17 @@
 	[validationRequest setHTTPBody:jsonData];
 
 #if	USE_AFNetworking
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
-	operation.responseSerializer = [AFJSONResponseSerializer serializer];
-	[operation.responseSerializer setAcceptableContentTypes:[NSSet setWithArray:@[@"text/plain"]]];
+	AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:validationRequest];
 
-	[operation
+	requestOperation.responseSerializer = [AFCompoundResponseSerializer
+										   compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer]]];
+
+	NSMutableSet *modifiedSet = [requestOperation.responseSerializer.acceptableContentTypes mutableCopy];
+	[modifiedSet addObjectsFromArray:@[@"text/plain"]];
+	requestOperation.responseSerializer.acceptableContentTypes = modifiedSet;
+
+
+	[requestOperation
 	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
 		 FXDLogObject(responseObject);
@@ -122,6 +128,8 @@
 
 			 NSDictionary *receiptDictionary = responseObject[@"receipt"];
 
+
+#warning //TODO: Find the secure way to save the receipt
 			 [[NSUserDefaults standardUserDefaults] setObject:receiptDictionary forKey:userdefaultObjVerifiedReceipt];
 			 [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -142,7 +150,8 @@
 		 }
 	 }];
 	
-	[operation start];
+	[[AFHTTPRequestOperationManager manager].operationQueue
+	 addOperation:requestOperation];
 	
 #else
 	NSAssert1([@(USE_AFNetworking) boolValue], @"%@", _BOOL([@(USE_AFNetworking) boolValue]));
