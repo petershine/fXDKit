@@ -37,7 +37,7 @@
 @property (strong, nonatomic) id homeScene;
 
 
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)callback;
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)incrementAppLaunchCount;
 
