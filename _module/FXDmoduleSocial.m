@@ -181,7 +181,7 @@
 		 cancelButtonTitle:nil
 		 withAlertCallback:nil];
 
-		_mainAccountType = nil;
+		self->_mainAccountType = nil;
 
 		if (callback) {
 			callback(_cmd, NO, nil);
