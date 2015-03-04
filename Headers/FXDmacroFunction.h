@@ -10,7 +10,7 @@
 #endif
 
 #ifndef application_AppStoreID
-	#define application_AppStoreID	@"000000000"
+	#define application_AppStoreID	@""
 #endif
 
 #ifndef application_ContactEmail

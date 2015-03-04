@@ -381,29 +381,121 @@
 }
 
 #pragma mark -
+- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*)appStoreID withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+	FXDLogObject(appStoreID);
+
+#ifdef application_AppStoreID
+	if (appStoreID.length == 0) {
+		appStoreID = application_AppStoreID;
+	}
+#endif
+
+	if (appStoreID.length == 0) {
+		if (finishCallback) {
+			finishCallback(_cmd, NO, nil);
+		}
+		return;
+	}
+
+
+	// ->byNED
+	NSString *storeString = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
+	FXDLogObject(storeString);
+
+	NSURL *storeURL = [NSURL URLWithString:storeString];
+
+	NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:storeURL];
+	[req setHTTPMethod:@"GET"];
+
+	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+
+	[NSURLConnection
+	 sendAsynchronousRequest:req
+	 queue:queue
+	 completionHandler:^(NSURLResponse *reponse, NSData *data, NSError *error){
+		 FXDLog_BLOCK(self, @selector(sendAsynchronousRequest:queue:completionHandler:));
+		 FXDLogVariable(data.length);
+		 FXDLog_ERROR;
+
+		 if (error || data.length == 0) {
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  if (finishCallback) {
+					  finishCallback(_cmd, NO, nil);
+				  }
+			  }];
+			 return;
+		 }
+
+
+		 NSError *parseError = nil;
+		 NSDictionary *appData = [NSJSONSerialization
+								  JSONObjectWithData:data
+								  options:NSJSONReadingAllowFragments
+								  error:&parseError];
+		 FXDLogObject(parseError);
+
+		 NSArray *versionAppStore = [[appData valueForKey:@"results"] valueForKey:@"version"];
+
+		 if(versionAppStore.count == 0){
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  if (finishCallback) {
+					  finishCallback(_cmd, NO, nil);
+				  }
+			  }];
+			 return;
+		 }
+
+
+		 NSString *currentAppStoreVersion = versionAppStore[0];
+		 FXDLogObject(currentAppStoreVersion);
+		 FXDLogObject(application_BundleVersion);
+
+		 if([currentAppStoreVersion isEqualToString:application_BundleVersion]){
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  if (finishCallback) {
+					  finishCallback(_cmd, NO, nil);
+				  }
+			  }];
+			 return;
+		 }
+
+
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  if (finishCallback) {
+				  finishCallback(_cmd, YES, nil);
+			  }
+		  }];
+	 }];
+}
+
+#pragma mark -
 - (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate {
 	if (localDate == nil) {
 		localDate = [NSDate date];
 	}
-	
+
     NSString *UTCdateString = [self.dateformatterUTC stringFromDate:localDate];
-	
+
     return UTCdateString;
 }
 
 - (NSDate*)UTCdateForLocalDate:(NSDate*)localDate {
-	
+
 	NSString *UTCdateString = [self UTCdateStringForLocalDate:localDate];
-	
+
 	NSDate *UTCdate = [self.dateformatterUTC dateFromString:UTCdateString];
-	
+
 	return UTCdate;
 }
 
 - (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate {
-	
+
 	NSString *localDateString = [self.dateformatterLocal stringFromDate:UTCdate];
-	
+
 	return localDateString;
 }
 

@@ -50,6 +50,7 @@
 - (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger;
 - (void)updateLastUpgradedAppVersionAfterLaunch;
 
+- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*)appStoreID withCallback:(FXDcallbackFinish)finishCallback;
 
 - (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
 - (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;

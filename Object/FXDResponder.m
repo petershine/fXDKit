@@ -88,6 +88,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 
+	FXDLog_OVERRIDE;
+	
 	return YES;
 }
 
