@@ -32,9 +32,7 @@
 @property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
 @property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
 
-#warning //TODO: Evaluate necessity of properties
 @property (strong, nonatomic) id initialScene;
-@property (strong, nonatomic) id homeScene;
 
 
 - (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)finishCallback;

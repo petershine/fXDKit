@@ -233,58 +233,6 @@
 	return _initialScene;
 }
 
-- (id)homeScene {
-	if (_homeScene) {
-		return _homeScene;
-	}
-	
-	
-	FXDLog_DEFAULT;
-	
-	NSArray *addedSceneArray = nil;
-	
-	if ([self.initialScene respondsToSelector:@selector(viewControllers)]) {
-		addedSceneArray = [self.initialScene performSelector:@selector(viewControllers)];
-	}
-	else if ([self.initialScene respondsToSelector:@selector(childViewControllers)]) {
-		addedSceneArray = [self.initialScene performSelector:@selector(childViewControllers)];
-	}
-	
-	FXDLogVariable(addedSceneArray.count);
-	
-	if (addedSceneArray.count == 0) {
-		_homeScene = self.initialScene;
-		FXDLogObject(self.initialScene);
-		
-		return _homeScene;
-	}
-	
-	
-	if ([self.initialScene isKindOfClass:[UITabBarController class]] == NO) {
-		_homeScene = [addedSceneArray firstObject];
-		FXDLogObject([addedSceneArray firstObject]);
-		
-		return _homeScene;
-	}
-	
-	
-	id subContainer = [addedSceneArray firstObject];
-	
-	if ([subContainer isKindOfClass:[UINavigationController class]]) {
-		UINavigationController *navigationContainer = (UINavigationController*)subContainer;
-		
-		if (navigationContainer.viewControllers.count > 0) {
-			_homeScene = [(navigationContainer.viewControllers) firstObject];
-			FXDLogObject([(navigationContainer.viewControllers) firstObject]);
-		}
-	}
-	else {
-		_homeScene = subContainer;
-		FXDLogObject(subContainer);
-	}
-	
-	return _homeScene;
-}
 
 #pragma mark - Method overriding
 
