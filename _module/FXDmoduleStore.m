@@ -84,11 +84,18 @@
 	NSData *receiptData = [[NSData alloc] initWithContentsOfURL:receiptURL options:NSDataReadingUncached error:&error];FXDLog_ERROR;
 	FXDLog(@"1.%@ %@", _BOOL(receiptData != nil), _Variable(receiptData.length));
 
+	if (receiptData == nil) {
+		error = nil;
+		receiptData = [[NSData alloc] initWithContentsOfFile:receiptURL.path options:NSDataReadingUncached error:&error];FXDLog_ERROR;
+		FXDLog(@"2.%@ %@", _BOOL(receiptData != nil), _Variable(receiptData.length));
+	}
+
+
 	error = nil;
 	BOOL isReachable = [receiptURL checkResourceIsReachableAndReturnError:&error];FXDLog_ERROR;
 	FXDLogBOOL(isReachable);
 
-	BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[receiptURL path]];
+	BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:receiptURL.path];
 	FXDLogBOOL(fileExists);
 
 	if (receiptData.length == 0 && fileExists == NO && isReachable == NO) {
@@ -127,9 +134,12 @@
 		 FXDLog_ERROR;
 
 		 if (connectionError) {
-			 if (finishCallback) {
-				 finishCallback(_cmd, NO, nil);
-			 }
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  if (finishCallback) {
+					  finishCallback(_cmd, NO, nil);
+				  }
+			  }];
 			 return;
 		 }
 
@@ -141,9 +151,12 @@
 		 FXDLogObject(jsonResponse);
 
 		 if (jsonResponse == nil) {
-			 if (finishCallback) {
-				 finishCallback(_cmd, NO, nil);
-			 }
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  if (finishCallback) {
+					  finishCallback(_cmd, NO, nil);
+				  }
+			  }];
 			 return;
 		 }
 
@@ -163,9 +176,12 @@
 			 [self logAboutReceiptDictionary:receiptDictionary];
 		 }
 
-		 if (finishCallback) {
-			 finishCallback(_cmd, finished, nil);
-		 }
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  if (finishCallback) {
+				  finishCallback(_cmd, finished, nil);
+			  }
+		  }];
 	 }];
 }
 
