@@ -44,11 +44,8 @@
 	}
 
 
-	NSURL *sandboxVerificationURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
-	NSURL *productionVerificationURL = [NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"];
-
 	[self
-	 verifyAppStoreReceiptWithValidationURL:sandboxVerificationURL
+	 verifyAppStoreReceiptWithValidationURL:validationURLSandbox
 	 withFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 		 FXDLog(@"1. SANDBOX %@", _BOOL(didFinish));
@@ -59,7 +56,7 @@
 
 
 		 [self
-		  verifyAppStoreReceiptWithValidationURL:productionVerificationURL
+		  verifyAppStoreReceiptWithValidationURL:validationURLProduction
 		  withFinishCallback:^(SEL caller, BOOL finished, id responseObj) {
 			  FXDLog_BLOCK(self, caller);
 			  FXDLog(@"2. PRODUCTION %@", _BOOL(finished));
@@ -67,12 +64,22 @@
 	 }];
 }
 
+#pragma mark -
 - (void)verifyAppStoreReceiptWithValidationURL:(NSURL*)validationURL withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
-	FXDLogObject(validationURL);
 
 	NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-	FXDLogObject(receiptURL);
 
+	[self verifyReceiptURL:receiptURL
+		 withValidationURL:validationURL
+			  withCallback:finishCallback];
+}
+
+- (void)verifyReceiptURL:(NSURL*)receiptURL withValidationURL:(NSURL*)validationURL withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+
+	FXDLogObject(receiptURL);
+	FXDLogObject(validationURL);
+
+	
 	NSError *error = nil;
 	NSData *receiptData = [[NSData alloc] initWithContentsOfURL:receiptURL options:NSDataReadingUncached error:&error];FXDLog_ERROR;
 	FXDLog(@"1.%@ %@", _BOOL(receiptData != nil), _Variable(receiptData.length));
@@ -161,6 +168,7 @@
 		 }
 	 }];
 }
+
 
 #pragma mark -
 - (void)logAboutReceiptDictionary:(NSDictionary*)receiptDictionary {	FXDLog_DEFAULT;

@@ -4,6 +4,9 @@
 
 #define userdefaultObjVerifiedReceipt	@"VerifiedReceiptObjKey"
 
+#define validationURLSandbox	[NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"]
+#define validationURLProduction	[NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"]
+
 
 #import "FXDimportAdopted.h"
 
@@ -21,6 +24,7 @@
 - (void)prepareStoreManager;
 
 - (void)verifyAppStoreReceiptWithValidationURL:(NSURL*)validationURL withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)verifyReceiptURL:(NSURL*)receiptURL withValidationURL:(NSURL*)validationURL withCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)logAboutReceiptDictionary:(NSDictionary*)receiptDictionary;
 
