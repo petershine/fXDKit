@@ -86,7 +86,8 @@
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
 	
 #if	ForDEVELOPER
-	NSAssert([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, nil);
+#warning //TODO: Manually add info with undocumented key "NSLocationAlwaysUsageDescription"
+	NSAssert1([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, @"%@", @"");
 #endif
 
 	if (isAuthorized == NO) {
@@ -99,7 +100,6 @@
 
 
 	[self.mainLocationManager startUpdatingLocation];
-
 	[self configureUpdatingForApplicationState];
 }
 

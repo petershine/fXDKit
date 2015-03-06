@@ -26,7 +26,6 @@
 
 - (BOOL)isDistantEnoughFromLastLocation;
 
-//NOTE: For testing significantMonitoring
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 
 @end
