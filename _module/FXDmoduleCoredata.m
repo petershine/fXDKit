@@ -607,9 +607,9 @@
 	}
 
 
-	FXDLog(@"inserted: %lu", (unsigned long)[(notification.userInfo)[@"inserted"] count]);
-	FXDLog(@"deleted: %lu", (unsigned long)[(notification.userInfo)[@"deleted"] count]);
-	FXDLog(@"updated: %lu", (unsigned long)[(notification.userInfo)[@"updated"] count]);
+	FXDLog(@"inserted: %lu", (unsigned long)[(NSArray*)(notification.userInfo)[@"inserted"] count]);
+	FXDLog(@"deleted: %lu", (unsigned long)[(NSArray*)(notification.userInfo)[@"deleted"] count]);
+	FXDLog(@"updated: %lu", (unsigned long)[(NSArray*)(notification.userInfo)[@"updated"] count]);
 
 	[self.mainDocument.managedObjectContext
 	 performBlock:^{
