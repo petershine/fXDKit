@@ -1,11 +1,9 @@
 
 
-
-#define	userdefaultStringInitialWebURL	@"InitialWebURLstringKey"
-
-#ifndef initialWebURLstring
-	#define initialWebURLstring	@"http://www.google.com"
+#ifndef	TEST_shouldEvaluateSource
+	#define	TEST_shouldEvaluateSource	FALSE
 #endif
+
 
 
 #import "FXDsceneScroll.h"

@@ -78,9 +78,6 @@
 	}
 
 
-	[[NSUserDefaults standardUserDefaults] setObject:webURLstring forKey:userdefaultStringInitialWebURL];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-
 	self.initialWebRequest = [[NSURLRequest alloc]
 							  initWithURL:[NSURL URLWithString:webURLstring]
 							  cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -108,13 +105,16 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
 #if ForDEVELOPER
+	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
+	FXDLogObject([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
+
+
+#if TEST_shouldEvaluateSource
 	NSString *source = [webView stringByEvaluatingJavaScriptFromString:
 						@"document.getElementsByTagName('html')[0].outerHTML"];
 
 	FXDLogObject(source);
-
-	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
-	FXDLogObject([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
+#endif
 #endif
 }
 
