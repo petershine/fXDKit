@@ -21,6 +21,7 @@
 #define application_BundleIdentifier	[NSBundle mainBundle].bundleIdentifier
 #define application_BundleName			[NSBundle mainBundle].infoDictionary[@"CFBundleName"]
 #define application_BundleVersion		[NSBundle mainBundle].infoDictionary[@"CFBundleVersion"]
+#define application_ShortVersion		[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]
 #define application_DisplayName			[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
 
 

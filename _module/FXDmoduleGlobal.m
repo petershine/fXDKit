@@ -398,9 +398,9 @@
 
 		 NSString *currentAppStoreVersion = versionAppStore[0];
 		 FXDLogObject(currentAppStoreVersion);
-		 FXDLogObject(application_BundleVersion);
+		 FXDLogObject(application_ShortVersion);
 
-		 if([currentAppStoreVersion isEqualToString:application_BundleVersion]){
+		 if([currentAppStoreVersion isEqualToString:application_ShortVersion]){
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
 				  if (finishCallback) {

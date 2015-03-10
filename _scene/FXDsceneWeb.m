@@ -70,7 +70,7 @@
 
 #pragma mark - Public
 - (void)loadWebURLstring:(NSString*)webURLstring {	FXDLog_DEFAULT;
-
+	FXDLogObject(webURLstring);
 	FXDLogBOOL(self.mainWebview.isLoading);
 
 	if (self.mainWebview.isLoading) {
