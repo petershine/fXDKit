@@ -23,6 +23,7 @@
 
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
+#warning //TODO: Evalute if callback is necessary
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
 - (void)animateSceneUpdatingForForcedSize:(CGSize)forcedSize forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
 

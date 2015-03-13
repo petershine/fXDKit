@@ -73,9 +73,12 @@
 	FXDLogObject(webURLstring);
 	FXDLogBOOL(self.mainWebview.isLoading);
 
+	//TEST: Skip
+	/*
 	if (self.mainWebview.isLoading) {
 		return;
 	}
+	 */
 
 
 	self.initialWebRequest = [[NSURLRequest alloc]
