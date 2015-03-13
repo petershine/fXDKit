@@ -98,7 +98,8 @@
 
 	FXDLogVariable(navigationType);
 	FXDLogObject(request);
-	FXDLogObject([request allHTTPHeaderFields]);
+	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.baseURL));
+	//FXDLogObject([request allHTTPHeaderFields]);
 
 	return YES;
 }
