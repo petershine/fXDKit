@@ -352,14 +352,14 @@
 
 	NSURL *storeURL = [NSURL URLWithString:storeString];
 
-	NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:storeURL];
-	[req setHTTPMethod:@"GET"];
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:storeURL];
+	[request setHTTPMethod:@"GET"];
 
-	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+	NSOperationQueue *networkingQueue = [[NSOperationQueue alloc] init];
 
 	[NSURLConnection
-	 sendAsynchronousRequest:req
-	 queue:queue
+	 sendAsynchronousRequest:request
+	 queue:networkingQueue
 	 completionHandler:^(NSURLResponse *reponse, NSData *data, NSError *error){
 		 FXDLog_BLOCK(self, @selector(sendAsynchronousRequest:queue:completionHandler:));
 		 FXDLogVariable(data.length);
