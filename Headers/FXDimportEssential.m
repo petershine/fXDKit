@@ -38,7 +38,7 @@
 	CATextLayer *textLayer = [[CATextLayer alloc] init];
 	textLayer.string = [textControl text];
 
-	CGRect scaledBounds = [textControl bounds];
+	CGRect scaledBounds = [(UIView*)textControl bounds];
 	scaledBounds.size.width *= renderingScale;
 	scaledBounds.size.height *= renderingScale;
 	textLayer.frame = scaledBounds;
