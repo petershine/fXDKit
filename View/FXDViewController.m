@@ -162,6 +162,7 @@
 }
 
 #pragma mark -
+//NOTE: Acquainted with UIViewController appearing order
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 }
