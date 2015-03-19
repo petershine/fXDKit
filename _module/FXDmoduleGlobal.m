@@ -346,25 +346,24 @@
 	}
 
 
-	NSString *storeString = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
-	FXDLogObject(storeString);
+	NSString *requestURL = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 
-	NSURL *storeURL = [NSURL URLWithString:storeString];
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURL]];
+	FXDLogObject(request);
 
-	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:storeURL];
-	[request setHTTPMethod:@"GET"];
-
-	NSOperationQueue *networkingQueue = [[NSOperationQueue alloc] init];
+	NSOperationQueue *networkingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 
 	[NSURLConnection
 	 sendAsynchronousRequest:request
 	 queue:networkingQueue
-	 completionHandler:^(NSURLResponse *reponse, NSData *data, NSError *error){
+	 completionHandler:^(NSURLResponse *reponse, NSData *data, NSError *connectionError){
 		 FXDLog_BLOCK(self, _cmd);
 		 FXDLogVariable(data.length);
+
+		 NSError *error = connectionError;
 		 FXDLog_ERROR;
 
-		 if (error || data.length == 0) {
+		 if (connectionError || data.length == 0) {
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
 				  if (finishCallback) {
@@ -375,16 +374,15 @@
 		 }
 
 
-		 NSError *parseError = nil;
-		 NSDictionary *appData = [NSJSONSerialization
+		 error = nil;
+		 NSDictionary *jsonObject = [NSJSONSerialization
 								  JSONObjectWithData:data
 								  options:NSJSONReadingAllowFragments
-								  error:&parseError];
-		 FXDLogObject(parseError);
+								  error:&error];FXDLog_ERROR;
 
-		 NSArray *versionAppStore = [[appData valueForKey:@"results"] valueForKey:@"version"];
+		 NSArray *versionArray = jsonObject[@"results"][@"version"];
 
-		 if(versionAppStore.count == 0){
+		 if(versionArray.count == 0){
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
 				  if (finishCallback) {
@@ -395,11 +393,11 @@
 		 }
 
 
-		 NSString *currentAppStoreVersion = versionAppStore.firstObject;
-		 FXDLogObject(currentAppStoreVersion);
+		 NSString *appStoreVersion = versionArray.firstObject;
+		 FXDLogObject(appStoreVersion);
 		 FXDLogObject(application_ShortVersion);
 
-		 if([currentAppStoreVersion isEqualToString:application_ShortVersion]){
+		 if([appStoreVersion isEqualToString:application_ShortVersion]){
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
 				  if (finishCallback) {
