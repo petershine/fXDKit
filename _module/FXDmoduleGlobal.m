@@ -346,7 +346,6 @@
 	}
 
 
-	// ->byNED
 	NSString *storeString = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 	FXDLogObject(storeString);
 
@@ -396,7 +395,7 @@
 		 }
 
 
-		 NSString *currentAppStoreVersion = versionAppStore[0];
+		 NSString *currentAppStoreVersion = versionAppStore.firstObject;
 		 FXDLogObject(currentAppStoreVersion);
 		 FXDLogObject(application_ShortVersion);
 
