@@ -5,12 +5,13 @@
 #endif
 
 
+#import "FXDWebView.h"
 
 #import "FXDsceneScroll.h"
 @interface FXDsceneWeb : FXDsceneScroll <UIWebViewDelegate>
 @property (strong, nonatomic) NSURLRequest *initialWebRequest;
 
-@property (strong, nonatomic) IBOutlet UIWebView *mainWebview;
+@property (strong, nonatomic) IBOutlet FXDWebView *mainWebview;
 
 
 - (IBAction)pressedNavigateBackButton:(id)sender;

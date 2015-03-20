@@ -104,6 +104,15 @@
 	return YES;
 }
 
+#pragma mark -
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {	FXDLog_DEFAULT;
+	FXDLog_ERROR;
+
+	if (error && [error code] != -999) {
+		//TODO:
+	}
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
 }
 
@@ -120,14 +129,6 @@
 	FXDLogObject(source);
 #endif
 #endif
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {	FXDLog_DEFAULT;
-	FXDLog_ERROR;
-
-	if (error && [error code] != -999) {
-		//TODO:
-	}
 }
 
 @end
