@@ -219,8 +219,10 @@
 	CGRect screenBounds = [UIScreen mainScreen].bounds;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+#ifdef	__IPHONE_8_0
 		FXDLogRect([UIScreen mainScreen].nativeBounds);
 		FXDLogVariable([UIScreen mainScreen].nativeScale);
+#endif
 	}
 
 	FXDLogRect(screenBounds);
