@@ -53,7 +53,6 @@
 		 }
 	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		 FXDLog_ERROR;
-		 FXDLog_ERROR_ALERT;
 
 		 if (didCollectBlock) {
 			 didCollectBlock(nil);

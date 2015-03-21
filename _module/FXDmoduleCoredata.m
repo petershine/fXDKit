@@ -141,9 +141,8 @@
 
 	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedPath error:&error];
 	FXDLogBOOL(didCopy);
-
 	FXDLog_ERROR;
-	FXDLog_ERROR_ALERT;
+
 
 	return didCopy;
 }
@@ -215,7 +214,6 @@
 
 	//NOTE: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 	FXDLog_ERROR;
-	FXDLog_ERROR_ALERT;
 
 
 	FXDLogObject([UIManagedDocument persistentStoreName]);

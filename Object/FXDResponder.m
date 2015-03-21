@@ -22,7 +22,7 @@
 #pragma mark - Delegate
 //NOTE: UIApplicationDelegate
 
-//NOTE: For the app with remote notification, ignore following implementation
+//NOTE: For the app with remote notification, override following implementation
 /*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 	FXDLogObject(deviceToken);
@@ -30,7 +30,6 @@
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {	FXDLog_SEPARATE;
 	FXDLog_ERROR;
-	FXDLog_ERROR_ALERT;
 }
 
 //NOTE: Be careful with the case for older version, which cannot fetch.

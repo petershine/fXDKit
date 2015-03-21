@@ -480,7 +480,6 @@
 
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {	FXDLog_DEFAULT;
 	FXDLog_ERROR;
-	FXDLog_ERROR_ALERT;
 
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
@@ -491,7 +490,7 @@
 		FXDLog(@"%@ : %@", _Variable(statusCode), _Object(statusCodeDescription));
 	}
 
-	FXDLog(@"responseData %@ bytes", _Variable([responseData length]));
+	FXDLogVariable([responseData length]);
 
 	if ([responseData length] > 0) {
 		id jsonObj = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];

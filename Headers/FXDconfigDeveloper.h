@@ -110,15 +110,6 @@
 								FXDLog_EMPTY;\
 								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, _Error(error));}\
 
-	#define FXDLog_ERROR_ALERT if (error) {\
-									[FXDAlertView\
-									showAlertWithTitle:_ClassSelectorSelf\
-									message:_Error(error)\
-									cancelButtonTitle:nil\
-									withAlertCallback:nil];\
-									[[UIApplication sharedApplication]\
-									 localNotificationWithAlertBody:_Error(error)\
-									 afterDelay:0.0];}
 
 	#define FXDLog_ERROR_ignored(ignoredCode)	if (error\
 												&& [error code] != ignoredCode){\
@@ -188,9 +179,8 @@
 	#define FXDLog_FRAME
 	#define FXDLog_SEPARATE_FRAME
 
-	#define FXDLog_ERROR
-	#define FXDLog_ERROR_ALERT
-	#define FXDLog_ERROR_ignored(ignoredCode)
+	#define FXDLog_ERROR	if (error) {}
+	#define FXDLog_ERROR_ignored(ignoredCode)	if (error) {}
 
 
 	#define FXDLog_BLOCK(instance, caller)
