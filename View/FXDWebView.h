@@ -1,4 +1,7 @@
 
+@import UIKit;
+@import Foundation;
+
 
 @interface FXDWebView : UIWebView
 @property (nonatomic) BOOL didStartLoading;

@@ -2,6 +2,8 @@
 
 #import "FXDWebView.h"
 
+#import "FXDimportCore.h"
+
 
 @implementation FXDWebView
 @end
