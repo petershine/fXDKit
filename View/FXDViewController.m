@@ -42,11 +42,13 @@
 - (void)awakeFromNib {	FXDLog_SEPARATE;
 	[super awakeFromNib];
 	
-	FXDLog(@"%@, %@", _Object(self.storyboard), _Object(self.nibName));
+	FXDLog(@"%@ %@", _Object(self.storyboard), _Object(self.nibName));
 }
 
-- (void)viewDidLoad {	FXDLog_SEPARATE_FRAME;
+- (void)viewDidLoad {	FXDLog_SEPARATE;
 	[super viewDidLoad];
+
+	FXDLog(@"%@ %@", _Rect(self.view.frame), _Rect(self.view.bounds));
 
 	self.initialBounds = self.view.bounds;
 }

@@ -100,12 +100,6 @@
 								FXDLog(@"OVERRIDE: %@ %@", _ClassSelectorSelf, _IsMainThread);}
 
 
-	#define FXDLog_FRAME	FXDLog_EMPTY;\
-							FXDLog(@"%@: %@", _ClassSelectorSelf, _Rect(self.view.frame))
-
-	#define FXDLog_SEPARATE_FRAME	FXDLog(@"\n\n	%@: %@", _ClassSelectorSelf, _Rect(self.view.frame))
-
-
 	#define FXDLog_ERROR	if (error) {\
 								FXDLog_EMPTY;\
 								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, _Error(error));}\
@@ -176,8 +170,6 @@
 	#define FXDLog_SEPARATE
 	#define FXDLog_OVERRIDE
 
-	#define FXDLog_FRAME
-	#define FXDLog_SEPARATE_FRAME
 
 	#define FXDLog_ERROR	if (error) {}
 	#define FXDLog_ERROR_ignored(ignoredCode)	if (error) {}
