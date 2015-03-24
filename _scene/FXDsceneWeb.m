@@ -114,6 +114,8 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
+
+	FXDLogObject(webView.request.URL);
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
@@ -129,6 +131,8 @@
 	FXDLogObject(source);
 #endif
 #endif
+	
+	FXDLogObject(webView.request.URL);
 }
 
 @end
