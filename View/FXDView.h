@@ -3,6 +3,9 @@
 @import Foundation;
 
 
+#define UIViewAutoresizingKeepCenter	(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin)
+
+
 @interface FXDView : UIView
 @end
 

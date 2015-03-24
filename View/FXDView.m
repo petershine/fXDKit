@@ -309,8 +309,7 @@
 	alertLabel.textColor = [UIColor whiteColor];
 	alertLabel.textAlignment = NSTextAlignmentCenter;
 
-	alertLabel.autoresizingMask = UIViewAutoresizingNone;
-	alertLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin;
+	alertLabel.autoresizingMask = UIViewAutoresizingKeepCenter;
 
 	alertLabel.userInteractionEnabled = NO;
 

@@ -154,7 +154,6 @@
 	
 	FXDLog(@"%@ %@", _Object(pushedScene), _Rect(animatedPushedFrame));
 
-	presentedScene.view.autoresizingMask = UIViewAutoresizingNone;
 	presentedScene.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	
 	
