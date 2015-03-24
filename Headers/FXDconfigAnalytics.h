@@ -71,7 +71,7 @@
 
 	#define LOGEVENT_DEFAULT
 	#define LOGEVENT_CMD
-	#define LOGEVENT_ERROR
+	#define LOGEVENT_ERROR	if(error){}
 
 
 	#define LOGEVENT_ALERT(alertView, didCancel)
