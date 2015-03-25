@@ -13,11 +13,13 @@
 - (NSDictionary*)essentialParameters {
 	NSDictionary *parameters =
 	@{
-	  @"Description":	(([self localizedDescription]) ? [self localizedDescription]:@""),
-	  @"FailureReason":	(([self localizedFailureReason]) ? [self localizedFailureReason]:@""),
-	  @"Domain":		(([self domain]) ? [self domain]:@""),
-	  @"Code":			@([self code]),
-	  @"UserInfo":		(([self userInfo]) ? [self userInfo]:@"")
+	  @"Description"	:		((self.localizedDescription) ? self. localizedDescription:@""),
+	  @"FailureReason"	:		((self.localizedFailureReason) ? self. localizedFailureReason:@""),
+	  @"RecoverySuggestion"	:	((self.localizedRecoverySuggestion) ? self.localizedRecoverySuggestion:@""),
+	  @"Domain"	:				((self.domain) ? self.domain:@""),
+	  @"Code"	:				@(self.code),
+	  @"UserInfo"	:			((self.userInfo) ? self.userInfo:@""),
+	  @"HelpAnchor"	:			((self.helpAnchor) ? self.helpAnchor:@""),
 	  };
 
 	return parameters;
