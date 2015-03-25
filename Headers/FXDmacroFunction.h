@@ -26,6 +26,8 @@
 
 
 #define iosVersion8	8.0
+#define iosVersion7	7.0
+
 
 #define SYSTEM_VERSION_sameOrHigher(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue >= versionNumber)
 
