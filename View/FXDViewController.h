@@ -35,6 +35,9 @@
 - (void)presentBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
 - (void)dismissBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;
 
+- (void)presentScene:(UIViewController*)presentedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback;
+- (void)dismissScene:(UIViewController*)dismissedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback;
+
 
 - (id)lastChildSceneOfClass:(Class)sceneClass;
 

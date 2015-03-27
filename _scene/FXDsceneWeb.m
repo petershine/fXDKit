@@ -99,7 +99,12 @@
 	FXDLogVariable(navigationType);
 	FXDLogObject(request);
 	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.baseURL));
-	//FXDLogObject([request allHTTPHeaderFields]);
+
+	FXDLogVariable(request.cachePolicy);
+	FXDLogVariable(request.timeoutInterval);
+	FXDLogBOOL(request.HTTPShouldHandleCookies);
+	FXDLogBOOL(request.HTTPShouldUsePipelining);
+	FXDLogObject(request.allHTTPHeaderFields);
 
 	return YES;
 }

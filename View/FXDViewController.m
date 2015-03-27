@@ -476,6 +476,100 @@
 }
 
 #pragma mark -
+- (void)presentScene:(UIViewController*)presentedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+	FXDLogObject(self.view);
+	FXDLogObject(presentedScene.view);
+	FXDLogBOOL(shouldSlide);
+
+	if (shouldSlide == NO) {
+		[self
+		 presentViewController:presentedScene
+		 animated:YES
+		 completion:^{
+			 if (finishCallback) {
+				 finishCallback(_cmd, YES, nil);
+			 }
+		 }];
+		return;
+	}
+
+
+	UIView *snapshot = [presentedScene.view snapshotViewAfterScreenUpdates:YES];
+
+	CGRect modifiedFrame = presentedScene.view.frame;
+	modifiedFrame.origin.x = self.view.frame.size.width;
+	snapshot.frame = modifiedFrame;
+
+	[self.view addSubview:snapshot];
+
+
+	CGRect animatedFrame = modifiedFrame;
+	animatedFrame.origin.x = 0.0;
+
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 snapshot.frame = animatedFrame;
+
+	 } completion:^(BOOL finished) {
+
+		 [self
+		  presentViewController:presentedScene
+		  animated:NO
+		  completion:^{
+			  [snapshot removeFromSuperview];
+
+			  if (finishCallback) {
+				  finishCallback(_cmd, YES, nil);
+			  }
+		  }];
+	 }];
+}
+
+- (void)dismissScene:(UIViewController*)dismissedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+	FXDLogObject(self.view);
+	FXDLogObject(dismissedScene.view);
+	FXDLogBOOL(shouldSlide);
+
+	if (shouldSlide == NO) {
+		[dismissedScene
+		 dismissViewControllerAnimated:YES
+		 completion:^{
+			 if (finishCallback) {
+				 finishCallback(_cmd, YES, nil);
+			 }
+		 }];
+		return;
+	}
+
+
+	UIView *snapshot = [dismissedScene.view snapshotViewAfterScreenUpdates:YES];
+	[self.view insertSubview:snapshot aboveSubview:dismissedScene.view];
+
+
+	[dismissedScene
+	 dismissViewControllerAnimated:NO
+	 completion:^{
+
+		 CGRect animatedFrame = snapshot.frame;
+		 animatedFrame.origin.x = self.view.frame.size.width;
+
+		 [UIView
+		  animateWithDuration:durationAnimation
+		  animations:^{
+			  snapshot.frame = animatedFrame;
+
+		  } completion:^(BOOL finished) {
+			  [snapshot removeFromSuperview];
+
+			  if (finishCallback) {
+				  finishCallback(_cmd, YES, nil);
+			  }
+		  }];
+	 }];
+}
+
+#pragma mark -
 - (id)lastChildSceneOfClass:(Class)sceneClass {
 
 	__block UIViewController *lastChildScene = nil;
