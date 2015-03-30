@@ -8,7 +8,7 @@
 @end
 
 
-//NOTE:javascript alert,confirm 커스터마이징
+//NOTE: For javascript alert,confirm
 @class WebFrame;
 @class WebView;
 

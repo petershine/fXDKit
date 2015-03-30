@@ -9,7 +9,7 @@
 @end
 
 
-//javascript alert,confirm 커스터마이징
+//NOTE: For javascript alert,confirm
 @implementation UIWebView (JavaScriptResponding)
 
 NSInteger diagStat = 3;
