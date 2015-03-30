@@ -494,11 +494,31 @@
 	}
 
 
+	CGRect modifiedFrame = presentedScene.view.frame;
+	modifiedFrame.size = self.view.frame.size;
+
+	if (CGAffineTransformIsIdentity(self.view.transform) == NO) {
+		modifiedFrame.size = CGSizeMake(MAX(self.view.frame.size.width, self.view.frame.size.height),
+										MIN(self.view.frame.size.width, self.view.frame.size.height));
+	}
+
+	presentedScene.view.frame = modifiedFrame;
+
+	FXDLogRect(self.view.frame);
+	FXDLogRect(presentedScene.view.frame);
+
+
 	UIView *snapshot = [presentedScene.view snapshotViewAfterScreenUpdates:YES];
 
-	CGRect modifiedFrame = presentedScene.view.frame;
-	modifiedFrame.origin.x = self.view.frame.size.width;
+	modifiedFrame = presentedScene.view.frame;
+	modifiedFrame.origin.x = presentedScene.view.frame.size.width;
+
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion8) == NO) {
+		modifiedFrame.origin.y = MIN([UIApplication sharedApplication].statusBarFrame.size.width, [UIApplication sharedApplication].statusBarFrame.size.height);
+	}
+
 	snapshot.frame = modifiedFrame;
+	FXDLogObject(snapshot);
 
 	[self.view addSubview:snapshot];
 
@@ -552,7 +572,7 @@
 	 completion:^{
 
 		 CGRect animatedFrame = snapshot.frame;
-		 animatedFrame.origin.x = self.view.frame.size.width;
+		 animatedFrame.origin.x = snapshot.frame.size.width;
 
 		 [UIView
 		  animateWithDuration:durationAnimation
