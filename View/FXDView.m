@@ -357,6 +357,14 @@
 	self.layer.masksToBounds = YES;
 	self.layer.cornerRadius = self.bounds.size.width/2.0;
 }
+
+#pragma mark -
+- (void)removeAllSubviews {
+	for (UIView *subview in self.subviews) {
+		[subview removeFromSuperview];
+	}
+}
+
 @end
 
 

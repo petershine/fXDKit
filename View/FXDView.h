@@ -45,6 +45,8 @@
 
 - (void)modifyToCircular;
 
+- (void)removeAllSubviews;
+
 @end
 
 
