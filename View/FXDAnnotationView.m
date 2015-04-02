@@ -31,7 +31,7 @@
 	CGRect modifiedFrame = self.frame;
 	modifiedFrame.origin.x += offset.x;
 	modifiedFrame.origin.y += offset.y;
-	[self setFrame:modifiedFrame];
+	self.frame = modifiedFrame;
 	
 	// Animate drop
 	[UIView
@@ -39,7 +39,7 @@
 	 delay:delay
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 [self setFrame:animatedFrame];
+		 self.frame = animatedFrame;
 	 }
 	 completion:^(BOOL finished){
 		 

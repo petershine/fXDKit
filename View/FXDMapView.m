@@ -34,7 +34,7 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
-	id disclaimerView = [self disclaimerView];
+	UIView *disclaimerView = [self disclaimerView];
 	
 	if (disclaimerView) {
 		FXDLogObject(disclaimerView);
@@ -48,7 +48,7 @@
 
 		FXDLog(@"2.%@", _Rect(modifiedFrame));
 		
-		[disclaimerView setFrame:modifiedFrame];
+		disclaimerView.frame = modifiedFrame;
 	}
 }
 
