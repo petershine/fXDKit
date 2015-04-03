@@ -1,7 +1,5 @@
 
 
-
-
 @import MapKit;
 
 @class FXDMapView;

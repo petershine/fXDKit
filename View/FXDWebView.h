@@ -3,10 +3,6 @@
 @import Foundation;
 
 
-@interface FXDWebView : UIWebView
-@end
-
-
 //NOTE: For javascript alert,confirm
 @class WebFrame;
 @class WebView;

@@ -9,7 +9,7 @@
 
 #import "FXDsceneScroll.h"
 @interface FXDsceneWeb : FXDsceneScroll <UIWebViewDelegate> {
-	FXDWebView *_mainWebview;
+	UIWebView *_mainWebview;
 }
 
 @property (strong, nonatomic) NSURLRequest *initialWebRequest;
@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSURLRequest *startedWebRequest;
 @property (strong, nonatomic) NSURLRequest *finishedWebRequest;
 
-@property (strong, nonatomic) IBOutlet FXDWebView *mainWebview;
+@property (strong, nonatomic) IBOutlet UIWebView *mainWebview;
 
 
 - (IBAction)pressedNavigateBackButton:(id)sender;

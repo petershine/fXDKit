@@ -5,10 +5,6 @@
 #import "FXDimportCore.h"
 
 
-@implementation FXDWebView
-@end
-
-
 //NOTE: For javascript alert,confirm
 @implementation UIWebView (JavaScriptResponding)
 
