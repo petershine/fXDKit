@@ -4,7 +4,6 @@
 
 
 @interface FXDWebView : UIWebView
-@property (nonatomic) BOOL didStartLoading;
 @end
 
 

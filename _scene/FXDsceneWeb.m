@@ -38,6 +38,10 @@
 - (UIScrollView*)mainScrollview {
 	if (_mainScrollview == nil) {
 		_mainScrollview = self.mainWebview.scrollView;
+
+		if (_mainScrollview == nil) {
+			_mainScrollview = [super mainScrollview];
+		}
 	}
 
 	return _mainScrollview;
@@ -69,24 +73,17 @@
 }
 
 #pragma mark - Public
-- (void)loadWebURLstring:(NSString*)webRequestURL {	FXDLog_DEFAULT;
-	FXDLogObject(webRequestURL);
+- (void)loadWebRequestURL:(NSString*)requestURL {	FXDLog_DEFAULT;
+	FXDLogObject(requestURL);
 	FXDLogBOOL(self.mainWebview.isLoading);
 
-	//TEST: Skip
-	/*
-	if (self.mainWebview.isLoading) {
-		return;
-	}
-	 */
 
+	NSURLRequest *webRequest = [[NSURLRequest alloc]
+								initWithURL:[NSURL URLWithString:requestURL]
+								cachePolicy:NSURLRequestUseProtocolCachePolicy
+								timeoutInterval:(intervalOneSecond*60.0)];
 
-	self.initialWebRequest = [[NSURLRequest alloc]
-							  initWithURL:[NSURL URLWithString:webRequestURL]
-							  cachePolicy:NSURLRequestUseProtocolCachePolicy
-							  timeoutInterval:(intervalOneSecond*60.0)];
-
-	[self.mainWebview loadRequest:self.initialWebRequest];
+	[self.mainWebview loadRequest:webRequest];
 }
 
 

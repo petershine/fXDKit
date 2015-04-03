@@ -346,9 +346,9 @@
 	}
 
 
-	NSString *requestURL = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
+	NSString *requestPath = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 
-	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURL]];
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestPath]];
 	FXDLogObject(request);
 
 	NSOperationQueue *networkingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
