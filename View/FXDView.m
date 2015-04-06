@@ -212,16 +212,22 @@
 #pragma mark -
 - (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {
 
+	CGRect animatedFrame = CGRectApplyAffineTransform(self.bounds, transform);
+
 	if ([self constraints].count > 0) {	FXDLog_DEFAULT;
 		FXDLogObject([self constraints]);
-		return;
+
+		//TEST: Make sure this works OK with other apps
+		//return;
+		NSAssert1(CGAffineTransformIsIdentity(transform), @"%@", _Transform(transform));
+
+		transform = CGAffineTransformIdentity;
+		animatedFrame = self.frame;
 	}
 
 
-	CGRect animatedFrame = CGRectApplyAffineTransform(self.bounds, transform);
 	animatedFrame.origin.x = (size.width-animatedFrame.size.width)*xyRatio.x;
 	animatedFrame.origin.y = (size.height-animatedFrame.size.height)*xyRatio.y;
-
 
 	[UIView
 	 animateWithDuration:duration
