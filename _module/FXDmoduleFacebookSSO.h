@@ -1,10 +1,4 @@
-//
-//  FXDmoduleFacebookSSO.h
-//  FXDFramework
-//
-//  Created by petershine on 2/14/15.
-//  Copyright (c) 2015 fXceed. All rights reserved.
-//
+
 
 #if USE_SocialFrameworks
 

@@ -152,7 +152,8 @@
 #pragma mark - View Appearing
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 
-	if (parent == nil) {	FXDLog_DEFAULT;
+	if (parent == nil) {
+		//FXDLog_DEFAULT;
 	}
 
 	[super willMoveToParentViewController:parent];
@@ -161,7 +162,8 @@
 - (void)didMoveToParentViewController:(UIViewController *)parent {
 	[super didMoveToParentViewController:parent];
 
-	if (parent) {	FXDLog_DEFAULT;
+	if (parent) {
+		FXDLog_DEFAULT;
 	}
 }
 
