@@ -136,6 +136,7 @@
 	 }
 	 completion:^(BOOL didFinish) {
 		 [subview removeFromSuperview];
+		 subview.alpha = 1.0;
 		 
 		 if (afterRemovedBlock) {
 			 afterRemovedBlock();
