@@ -37,9 +37,11 @@
 #pragma mark - Property overriding
 - (UIScrollView*)mainScrollview {
 	if (_mainScrollview == nil) {
-		_mainScrollview = self.mainWebview.scrollView;
 
-		if (_mainScrollview == nil) {
+		if (self.mainWebview) {
+			_mainScrollview = self.mainWebview.scrollView;
+		}
+		else {
 			_mainScrollview = [super mainScrollview];
 		}
 	}

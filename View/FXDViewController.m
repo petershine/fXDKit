@@ -128,7 +128,6 @@
 }
 
 #pragma mark -
-#ifdef __IPHONE_8_0
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	//FXDLog_DEFAULT;
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
@@ -147,7 +146,6 @@
 		  */
 	 }];
 }
-#endif
 
 #pragma mark - View Appearing
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -197,12 +195,6 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-#ifdef __IPHONE_8_0
-- (void)prepareForInterfaceBuilder {	FXDLog_DEFAULT;
-	[super prepareForInterfaceBuilder];
-	
-}
-#endif
 
 #pragma mark - Segues
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
