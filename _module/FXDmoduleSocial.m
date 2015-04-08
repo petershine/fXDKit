@@ -12,6 +12,7 @@
 	self = [super init];
 
 	if (self) {
+#warning //TODO: Make sure observing of only started if the modula began running
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
 		[notificationCenter
