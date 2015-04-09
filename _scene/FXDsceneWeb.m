@@ -75,13 +75,13 @@
 }
 
 #pragma mark - Public
-- (void)loadWebRequestURL:(NSString*)requestURL {	FXDLog_DEFAULT;
-	FXDLogObject(requestURL);
+- (void)loadWebRequestPath:(NSString*)requestPath {	FXDLog_DEFAULT;
+	FXDLogObject(requestPath);
 	FXDLogBOOL(self.mainWebview.isLoading);
 
 
 	NSURLRequest *webRequest = [[NSURLRequest alloc]
-								initWithURL:[NSURL URLWithString:requestURL]
+								initWithURL:[NSURL URLWithString:requestPath]
 								cachePolicy:NSURLRequestUseProtocolCachePolicy
 								timeoutInterval:(intervalOneSecond*60.0)];
 

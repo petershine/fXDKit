@@ -26,6 +26,6 @@
 - (IBAction)pressedStopLoadingButton:(id)sender;
 
 
-- (void)loadWebRequestURL:(NSString*)requestURL;
+- (void)loadWebRequestPath:(NSString*)requestPath;
 
 @end
