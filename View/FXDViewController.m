@@ -140,10 +140,8 @@
 						 withCallback:nil];
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		 /*
-		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
+		 FXDLog_BLOCK(self, _cmd);
 		 FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
-		  */
 	 }];
 }
 
@@ -338,8 +336,7 @@
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
 
-- (void)animateSceneUpdatingForForcedSize:(CGSize)forcedSize forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {
-	FXDLog_OVERRIDE;
+- (void)animateSceneUpdatingForForcedSize:(CGSize)forcedSize forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@ %@", _Size(forcedSize), _Transform(transform), _Variable(duration));
 }
 
