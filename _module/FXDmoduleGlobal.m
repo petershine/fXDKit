@@ -254,7 +254,6 @@
 	[self configureUserDefaultsInfo];
 	[self configureGlobalAppearance];
 
-#warning //TODO: Add receipt checking
 
 	if (finishCallback) {
 		finishCallback(_cmd, YES, nil);

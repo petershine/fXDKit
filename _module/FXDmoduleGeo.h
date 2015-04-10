@@ -18,6 +18,7 @@
 
 
 - (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions;
+- (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus;
 - (void)pauseMainLocationManager;
 
 - (void)configureUpdatingForApplicationState;

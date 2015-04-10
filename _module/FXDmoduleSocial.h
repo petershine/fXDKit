@@ -42,10 +42,7 @@
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error;
 
 
-#pragma mark - Observer
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification;
-
-#pragma mark - Delegate
 
 @end
 

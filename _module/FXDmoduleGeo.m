@@ -8,28 +8,6 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)init {
-	self = [super init];
-
-	if (self) {
-#warning //TODO: Make sure observing of only started if the modula began running
-		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-
-		[notificationCenter
-		 addObserver:self
-		 selector:@selector(observedUIApplicationDidEnterBackground:)
-		 name:UIApplicationDidEnterBackgroundNotification
-		 object:nil];
-
-		[notificationCenter
-		 addObserver:self
-		 selector:@selector(observedUIApplicationDidBecomeActive:)
-		 name:UIApplicationDidBecomeActiveNotification
-		 object:nil];
-	}
-
-	return self;
-}
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
@@ -60,11 +38,53 @@
 - (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
 	FXDLogObject(launchOptions[UIApplicationLaunchOptionsLocationKey]);
 
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidEnterBackground:)
+	 name:UIApplicationDidEnterBackgroundNotification
+	 object:nil];
+
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationDidBecomeActive:)
+	 name:UIApplicationDidBecomeActiveNotification
+	 object:nil];
+
+	[self startMainLocationManagerForAuthorizationStatus:[CLLocationManager authorizationStatus]];
+
+
+	if (launchOptions[UIApplicationLaunchOptionsLocationKey] == nil
+		&& launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey] == nil
+		&& launchOptions[UIApplicationLaunchOptionsBluetoothPeripheralsKey] == nil) {
+		return;
+	}
+
+
+	LOGEVENT_DEFAULT;
+
+	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+		[self observedUIApplicationDidEnterBackground:nil];
+	}
+}
+
+- (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
 	FXDLogVariable([CLLocationManager authorizationStatus]);
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
 
-	CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
+	FXDLogVariable(authorizationStatus);
+	FXDLogBOOL(authorizationStatus == [CLLocationManager authorizationStatus]);
+
+	FXDLogObject([UIDevice currentDevice].systemVersion);
+	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
+
+#if	ForDEVELOPER
+	//NOTE: Manually add info with undocumented key "NSLocationAlwaysUsageDescription"
+	NSAssert1([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, @"%@", @"");
+#endif
+
 	BOOL isAuthorized = YES;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
@@ -79,22 +99,13 @@
 		}
 	}
 
-
 	FXDLogBOOL(isAuthorized);
-	FXDLogObject([UIDevice currentDevice].systemVersion);
-	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
-	
-#if	ForDEVELOPER
-#warning //TODO: Manually add info with undocumented key "NSLocationAlwaysUsageDescription"
-	NSAssert1([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, @"%@", @"");
-#endif
 
-	if (isAuthorized == NO) {
-		if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-			[self.mainLocationManager requestAlwaysAuthorization];
+	if (isAuthorized == NO
+		&& SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 
-			return;
-		}
+		[self.mainLocationManager requestAlwaysAuthorization];
+		return;
 	}
 
 
@@ -245,7 +256,7 @@
 	}
 
 
-	[self startMainLocationManagerWithLaunchOptions:nil];
+	[self startMainLocationManagerForAuthorizationStatus:authorizationStatus];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {	FXDLog_OVERRIDE;

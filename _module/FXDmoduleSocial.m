@@ -56,7 +56,6 @@
 	if (_mainAccountStore == nil) {
 		_mainAccountStore = [[ACAccountStore alloc] init];
 	}
-
 	return _mainAccountStore;
 }
 
@@ -92,46 +91,49 @@
 }
 
 - (ACAccount*)currentMainAccount {
+	if (_currentMainAccount) {
+		return _currentMainAccount;
+	}
 
-	if (_currentMainAccount == nil) {	FXDLog_DEFAULT;
+	
+	FXDLog_DEFAULT;
 
-		NSString *accountObjKey = @"";
+	NSString *accountObjKey = @"";
 
-		if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			accountObjKey = userdefaultObjMainTwitterAccountIdentifier;
-		}
-		else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
-		}
-
-
-		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-		NSString *identifier = [userDefaults stringForKey:accountObjKey];
-
-		FXDLog(@"%@ %@", _Object(accountObjKey), _Object(identifier));
-
-		if (identifier) {
-
-			if (self.mainAccountType.accessGranted) {
-				_currentMainAccount = [self.mainAccountStore accountWithIdentifier:identifier];
-			}
-			else {
-				identifier = nil;
-			}
-		}
+	if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+		accountObjKey = userdefaultObjMainTwitterAccountIdentifier;
+	}
+	else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+		accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
+	}
 
 
-		if (identifier) {
-			[userDefaults setObject:identifier forKey:accountObjKey];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+	NSString *identifier = [userDefaults stringForKey:accountObjKey];
+
+	FXDLog(@"%@ %@", _Object(accountObjKey), _Object(identifier));
+
+	if (identifier) {
+
+		if (self.mainAccountType.accessGranted) {
+			_currentMainAccount = [self.mainAccountStore accountWithIdentifier:identifier];
 		}
 		else {
-			[userDefaults removeObjectForKey:accountObjKey];
+			identifier = nil;
 		}
-
-		[userDefaults synchronize];
-		FXDLogObject(_currentMainAccount);
 	}
+
+
+	if (identifier) {
+		[userDefaults setObject:identifier forKey:accountObjKey];
+	}
+	else {
+		[userDefaults removeObjectForKey:accountObjKey];
+	}
+
+	[userDefaults synchronize];
+	FXDLogObject(_currentMainAccount);
 
 	return _currentMainAccount;
 }

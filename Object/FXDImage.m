@@ -170,6 +170,8 @@
 }
 
 - (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale {
+	//NOTE: May have the problem with memory management with used in massive scale
+	
 	UIImage *resizedImage = nil;
 
 	UIGraphicsBeginImageContextWithOptions(size, NO, scale);
@@ -179,8 +181,6 @@
 		resizedImage = UIGraphicsGetImageFromCurrentImageContext();
 	}
 	UIGraphicsEndImageContext();
-
-#warning //NOTE: May have the problem with memory management with used in massive scale
 
 	return resizedImage;
 }
