@@ -19,11 +19,11 @@
 
 - (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions;
 - (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus;
-- (void)pauseMainLocationManager;
 
 - (void)configureUpdatingForApplicationState;
 - (void)maximizeUpdatingForActiveState;
 - (void)minimizeUpdatingForBackgroundState;
+- (void)pauseMainLocationManager;
 
 - (BOOL)isDistantEnoughFromLastLocation;
 

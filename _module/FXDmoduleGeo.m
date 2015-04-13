@@ -113,11 +113,6 @@
 	[self configureUpdatingForApplicationState];
 }
 
-- (void)pauseMainLocationManager {	FXDLog_DEFAULT;
-	[_mainLocationManager stopUpdatingLocation];
-	[_mainLocationManager stopMonitoringSignificantLocationChanges];
-}
-
 #pragma mark -
 - (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
 	//NOTE: Optionally called by subclass
@@ -140,6 +135,12 @@
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
 	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(_mainLocationManager.desiredAccuracy));
 }
+
+- (void)pauseMainLocationManager {	FXDLog_DEFAULT;
+	[_mainLocationManager stopUpdatingLocation];
+	[_mainLocationManager stopMonitoringSignificantLocationChanges];
+}
+
 
 #pragma mark -
 - (BOOL)isDistantEnoughFromLastLocation {
