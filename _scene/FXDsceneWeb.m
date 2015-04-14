@@ -94,9 +94,9 @@
 #pragma mark - Delegate
 //NOTE: UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
+	FXDLogObject(webView.request.URL);
 
 	FXDLogVariable(navigationType);
-	FXDLogObject(request);
 	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.baseURL));
 
 	FXDLogVariable(request.cachePolicy);
@@ -110,6 +110,7 @@
 
 #pragma mark -
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {	FXDLog_DEFAULT;
+	FXDLogObject(webView.request.URL);
 	FXDLog_ERROR;
 
 	if (error && [error code] != -999) {
@@ -118,11 +119,12 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
-
 	FXDLogObject(webView.request.URL);
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
+	FXDLogObject(webView.request.URL);
+
 #if ForDEVELOPER
 	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
 	FXDLogObject([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
@@ -135,8 +137,6 @@
 	FXDLogObject(source);
 #endif
 #endif
-	
-	FXDLogObject(webView.request.URL);
 }
 
 @end
