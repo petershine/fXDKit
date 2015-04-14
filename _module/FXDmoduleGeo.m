@@ -79,11 +79,8 @@
 
 	FXDLogObject([UIDevice currentDevice].systemVersion);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
+	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationWhenInUseUsageDescription"]);
 
-#if	ForDEVELOPER
-	//NOTE: Manually add info with undocumented key "NSLocationAlwaysUsageDescription"
-	NSAssert1([[NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"] length] > 0, @"%@", @"");
-#endif
 
 	BOOL isAuthorized = YES;
 
@@ -104,7 +101,13 @@
 	if (isAuthorized == NO
 		&& SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
 
-		[self.mainLocationManager requestAlwaysAuthorization];
+		if ([NSBundle mainBundle].infoDictionary[@"NSLocationWhenInUseUsageDescription"]) {
+			[self.mainLocationManager requestWhenInUseAuthorization];
+		}
+		else {
+			[self.mainLocationManager requestAlwaysAuthorization];
+		}
+
 		return;
 	}
 
