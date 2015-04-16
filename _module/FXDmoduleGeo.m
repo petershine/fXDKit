@@ -52,6 +52,12 @@
 	 name:UIApplicationDidBecomeActiveNotification
 	 object:nil];
 
+	[notificationCenter
+	 addObserver:self
+	 selector:@selector(observedUIApplicationWillTerminate:)
+	 name:UIApplicationWillTerminateNotification
+	 object:nil];
+
 	[self startMainLocationManagerForAuthorizationStatus:[CLLocationManager authorizationStatus]];
 
 
@@ -63,10 +69,6 @@
 
 
 	LOGEVENT_DEFAULT;
-
-	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
-		[self observedUIApplicationDidEnterBackground:nil];
-	}
 }
 
 - (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
@@ -118,7 +120,6 @@
 
 #pragma mark -
 - (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
-	//NOTE: Optionally called by subclass
 	FXDLogVariable([UIApplication sharedApplication].applicationState);
 	
 	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
@@ -131,12 +132,12 @@
 
 - (void)maximizeUpdatingForActiveState {	FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(_mainLocationManager.desiredAccuracy));
+	FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
 - (void)minimizeUpdatingForBackgroundState {	FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-	FXDLog(@"%@ %@", _Object(NSStringFromSelector(_cmd)), _Variable(_mainLocationManager.desiredAccuracy));
+	FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
 - (void)pauseMainLocationManager {	FXDLog_DEFAULT;
@@ -233,6 +234,9 @@
 }
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {
+	FXDLog_OVERRIDE;
+}
 
 #pragma mark - Delegate
 //NOTE: CLLocationManagerDelegate
@@ -252,7 +256,6 @@
 			isAuthorized = NO;
 		}
 	}
-
 
 	if (isAuthorized == NO) {
 		[self pauseMainLocationManager];
