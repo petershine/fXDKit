@@ -109,7 +109,7 @@
 	return preferredInterfaceOrientation;
 }
 
-#pragma mark -
+#pragma mark - For <= iOS 7
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -140,16 +140,21 @@
 						 withCallback:nil];
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		 FXDLog_BLOCK(self, _cmd);
+		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
 		 FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
 	 }];
+}
+
+#pragma mark -
+- (void)updateViewConstraints {	FXDLog_DEFAULT;
+	[super updateViewConstraints];
 }
 
 #pragma mark - View Appearing
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 
 	if (parent == nil) {
-		//FXDLog_DEFAULT;
+		FXDLog_DEFAULT;
 	}
 
 	[super willMoveToParentViewController:parent];
@@ -164,20 +169,20 @@
 }
 
 #pragma mark -
-//NOTE: Acquainted with UIViewController appearing order
-- (void)viewWillAppear:(BOOL)animated {
+//TODO: Acquainted with UIViewController appearing order
+- (void)viewWillAppear:(BOOL)animated {	FXDLog_DEFAULT;
 	[super viewWillAppear:animated];
 }
 
-- (void)viewWillLayoutSubviews {
+- (void)viewWillLayoutSubviews {	FXDLog_DEFAULT;
 	[super viewWillLayoutSubviews];
 }
 
-- (void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {	FXDLog_DEFAULT;
 	[super viewDidLayoutSubviews];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {	FXDLog_DEFAULT;
 	[super viewDidAppear:animated];
 }
 

@@ -112,13 +112,15 @@
 
 	#define FXDLog_BLOCK(instance, caller)	FXDLog_EMPTY;\
 											if ([NSThread isMainThread]) {\
-												FXDLog(@"%@: ^[%@ %@]",\
+												FXDLog(@"%@ %@: ^[%@ %@]",\
 												[self class],\
+												_SelectorShort(_cmd),\
 												[instance class],\
 												_SelectorShort(caller));\
 											} else {\
-												FXDLog(@"%@: ^[%@ %@] %@",\
+												FXDLog(@"%@ %@: ^[%@ %@] %@",\
 												[self class],\
+												_SelectorShort(_cmd),\
 												[instance class],\
 												_SelectorShort(caller),\
 												_IsMainThread);}

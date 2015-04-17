@@ -173,7 +173,7 @@
 		 }
 	 }
 	 completion:^(BOOL didFinish) {	FXDLog_DEFAULT;
-		 FXDLog_BLOCK(self, @selector(coverWithSegue:));
+		 FXDLog_BLOCK(UIView, @selector(animateWithDuration:delay:options:animations:completion:));
 		 FXDLogObject(self.childViewControllers);
 		 
 		 self.isCovering = NO;

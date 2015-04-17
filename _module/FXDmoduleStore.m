@@ -128,7 +128,7 @@
 	 sendAsynchronousRequest:validationRequest
 	 queue:validationQueue
 	 completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-		 FXDLog_BLOCK(self, _cmd);
+		 FXDLog_BLOCK(NSURLConnection, @selector(sendAsynchronousRequest:queue:completionHandler:));
 
 		 NSError *error = connectionError;
 		 FXDLog_ERROR;
