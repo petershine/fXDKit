@@ -34,8 +34,9 @@
 }
 
 #pragma mark -
-- (void)makeKeyAndVisible {	FXDLog_DEFAULT;
+- (void)makeKeyAndVisible {	FXDLog_SEPARATE;
 	[super makeKeyAndVisible];
+	
 }
 
 #pragma mark - IBActions

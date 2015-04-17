@@ -145,10 +145,6 @@
 	 }];
 }
 
-#pragma mark -
-- (void)updateViewConstraints {	FXDLog_DEFAULT;
-	[super updateViewConstraints];
-}
 
 #pragma mark - View Appearing
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -176,6 +172,10 @@
 
 - (void)viewWillLayoutSubviews {	FXDLog_DEFAULT;
 	[super viewWillLayoutSubviews];
+}
+
+- (void)updateViewConstraints {	FXDLog_DEFAULT;
+	[super updateViewConstraints];
 }
 
 - (void)viewDidLayoutSubviews {	FXDLog_DEFAULT;

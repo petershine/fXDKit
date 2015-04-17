@@ -279,8 +279,8 @@
 
 #pragma mark -
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
-	FXDLogBOOL([@(USE_Crashlytics) boolValue]);
-	FXDLogBOOL([@(USE_Flurry) boolValue]);
+	FXDLog(@"USE_Crashlytics: %@", _BOOL([@(USE_Crashlytics) boolValue]));
+	FXDLog(@"USE_Flurry: %@", _BOOL([@(USE_Flurry) boolValue]));
 	FXDAssert_IsMainThread;
 
 #if	USE_Crashlytics
