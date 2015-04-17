@@ -166,24 +166,29 @@
 
 #pragma mark -
 //TODO: Acquainted with UIViewController appearing order
-- (void)viewWillAppear:(BOOL)animated {	FXDLog_DEFAULT;
+- (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	FXDLog_VIEW;
 }
 
-- (void)viewWillLayoutSubviews {	FXDLog_DEFAULT;
+- (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
+	FXDLog_VIEW;
 }
 
-- (void)updateViewConstraints {	FXDLog_DEFAULT;
+- (void)updateViewConstraints {
 	[super updateViewConstraints];
+	FXDLog_VIEW;
 }
 
-- (void)viewDidLayoutSubviews {	FXDLog_DEFAULT;
+- (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
+	FXDLog_VIEW;
 }
 
-- (void)viewDidAppear:(BOOL)animated {	FXDLog_DEFAULT;
+- (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
+	FXDLog_VIEW;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

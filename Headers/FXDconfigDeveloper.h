@@ -88,6 +88,12 @@
 							} else {\
 								FXDLog(@"%@ %@", _ClassSelectorSelf, _IsMainThread);}
 
+	#define FXDLog_VIEW		FXDLog_EMPTY;\
+							if ([NSThread isMainThread]) {\
+								FXDLog(@"%@ %@ %@", _ClassSelectorSelf, _Rect(self.view.frame), _Rect(self.view.bounds));\
+							} else {\
+								FXDLog(@"%@ %@ %@ %@", _ClassSelectorSelf, _Rect(self.view.frame), _Rect(self.view.bounds), _IsMainThread);}
+
 	#define FXDLog_SEPARATE	if ([NSThread isMainThread]) {\
 								FXDLog(@"\n\n	%@", _ClassSelectorSelf);\
 							} else {\
@@ -169,6 +175,7 @@
 	#define FXDLog_REMAINING
 
 	#define FXDLog_DEFAULT
+	#define FXDLog_VIEW
 	#define FXDLog_SEPARATE
 	#define FXDLog_OVERRIDE
 

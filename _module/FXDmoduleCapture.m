@@ -347,7 +347,7 @@
 	}
 
 
-	if (UIDeviceOrientationIsPortrait(videoOrientation) == NO
+	if (UIDeviceOrientationIsPortrait((UIDeviceOrientation)videoOrientation) == NO
 		&& cameraPosition == AVCaptureDevicePositionBack) {
 		return originalImage;
 	}
@@ -366,7 +366,7 @@
 	}
 
 
-	if (UIDeviceOrientationIsPortrait(videoOrientation) == NO) {
+	if (UIDeviceOrientationIsPortrait((UIDeviceOrientation)videoOrientation) == NO) {
 		if (cameraPosition != AVCaptureDevicePositionBack
 			&& shouldUseMirroring == NO) {
 
