@@ -52,6 +52,13 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Categories
+//http://stackoverflow.com/a/23925044/259765
+@interface NSDictionary (NullCleaning)
++ (NSDictionary *)cleanNullInJsonDic:(NSDictionary *)dic;
++ (NSArray *)cleanNullInJsonArray:(NSArray *)array;
+@end
+
+
 @interface NSError (Essential)
 - (NSDictionary*)essentialParameters;
 @end
