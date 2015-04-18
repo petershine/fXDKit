@@ -78,6 +78,7 @@
 - (void)loadWebRequestPath:(NSString*)requestPath {	FXDLog_DEFAULT;
 	FXDLogObject(requestPath);
 	FXDLogBOOL(self.mainWebview.isLoading);
+	FXDLogBOOL(self.mainWebview.loading);
 
 
 	NSURLRequest *webRequest = [[NSURLRequest alloc]
