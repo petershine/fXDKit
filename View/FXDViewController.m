@@ -176,11 +176,6 @@
 	FXDLog_VIEW;
 }
 
-- (void)updateViewConstraints {
-	[super updateViewConstraints];
-	FXDLog_VIEW;
-}
-
 - (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
 	FXDLog_VIEW;
