@@ -8,18 +8,14 @@
 typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *event);
 
 
-@interface FXDView : UIView
-@end
-
-
-@interface FXDpassthroughView : FXDView {
-	FXDcallbackHitTest _hitTestBlock;
+@interface FXDpassthroughView : UIView {
+	FXDcallbackHitTest _hitTestCallback;
 }
-@property (copy, nonatomic) FXDcallbackHitTest hitTestBlock;
+@property (copy, nonatomic) FXDcallbackHitTest hitTestCallback;
 @end
 
 
-@interface FXDsubviewGlowing : FXDView
+@interface FXDsubviewGlowing : UIView
 @property (strong, nonatomic) UIColor *glowingColor;
 - (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
 @end

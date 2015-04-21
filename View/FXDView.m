@@ -5,20 +5,14 @@
 #import "FXDimportCore.h"
 
 
-@implementation FXDView
-@end
-
-
 @implementation FXDpassthroughView
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	UIView *hitView = [super hitTest:point withEvent:event];
 
-	if (_hitTestBlock == nil) {
-		return hitView;
+	if (_hitTestCallback) {
+		hitView = _hitTestCallback(hitView, point, event);
 	}
 
-
-	hitView = _hitTestBlock(hitView, point, event);
 	return hitView;
 }
 @end

@@ -13,7 +13,7 @@
 
 
 #import "FXDView.h"
-@interface FXDdisplayPlayback : FXDView
+@interface FXDdisplayPlayback : UIView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
 + (instancetype)assetDisplay;
