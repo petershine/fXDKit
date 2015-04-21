@@ -9,6 +9,110 @@
 @end
 
 
+@implementation FXDpassthroughView
+- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	UIView *hitView = [super hitTest:point withEvent:event];
+
+	if (_hitTestBlock == nil) {
+		return hitView;
+	}
+
+
+	hitView = _hitTestBlock(hitView, point, event);
+	return hitView;
+}
+@end
+
+
+@implementation FXDsubviewGlowing
+- (instancetype)initWithFrame:(CGRect)frame {
+	self = [super initWithFrame:frame];
+
+	if (self) {
+		self.backgroundColor = [UIColor clearColor];
+	}
+
+	return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor {
+	self = [self initWithFrame:frame];
+
+	if (self) {
+		self.glowingColor = glowingColor;
+	}
+
+	return self;
+}
+
+#pragma mark -
+- (void)drawRect:(CGRect)rect {
+	//[super drawRect:rect];
+
+	//// General Declarations
+	CGContextRef context = UIGraphicsGetCurrentContext();
+
+	//// Color Declarations
+	//UIColor* fillColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+	UIColor* fillColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+	UIColor* strokeColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+
+	if (self.glowingColor) {
+		fillColor = self.glowingColor;
+		strokeColor = self.glowingColor;
+	}
+
+
+	//// Shadow Declarations
+	UIColor* shadow = fillColor;
+	CGSize shadowOffset = CGSizeMake(0.1, -0.1);
+	CGFloat shadowBlurRadius = 10;
+
+	//// Rectangle Drawing
+	UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rect];
+	CGContextSaveGState(context);
+	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, [shadow CGColor]);
+	[[UIColor clearColor] setFill];
+	[rectanglePath fill];
+
+	////// Rectangle Inner Shadow
+	CGRect rectangleBorderRect = CGRectInset([rectanglePath bounds], -shadowBlurRadius, -shadowBlurRadius);
+	rectangleBorderRect = CGRectOffset(rectangleBorderRect, -shadowOffset.width, -shadowOffset.height);
+	rectangleBorderRect = CGRectInset(CGRectUnion(rectangleBorderRect, [rectanglePath bounds]), -1, -1);
+
+	UIBezierPath* rectangleNegativePath = [UIBezierPath bezierPathWithRect: rectangleBorderRect];
+	[rectangleNegativePath appendPath: rectanglePath];
+	rectangleNegativePath.usesEvenOddFillRule = YES;
+
+	CGContextSaveGState(context);
+	{
+		CGFloat xOffset = shadowOffset.width + round(rectangleBorderRect.size.width);
+		CGFloat yOffset = shadowOffset.height;
+		CGContextSetShadowWithColor(context,
+									CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
+									shadowBlurRadius,
+									[shadow CGColor]);
+
+		[rectanglePath addClip];
+		CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(rectangleBorderRect.size.width), 0);
+		[rectangleNegativePath applyTransform: transform];
+		[[UIColor grayColor] setFill];
+		[rectangleNegativePath fill];
+	}
+	CGContextRestoreGState(context);
+
+	CGContextRestoreGState(context);
+
+	CGContextSaveGState(context);
+	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, [shadow CGColor]);
+	[strokeColor setStroke];
+	rectanglePath.lineWidth = 1;
+	[rectanglePath stroke];
+	CGContextRestoreGState(context);
+}
+@end
+
+
 @implementation UIView (Essential)
 + (instancetype)viewFromNibName:(NSString*)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];
@@ -397,95 +501,6 @@
 
 	// Add both effects to your view
 	[self addMotionEffect:group];
-}
-@end
-
-
-@implementation FXDsubviewGlowing
-- (instancetype)initWithFrame:(CGRect)frame {
-	self = [super initWithFrame:frame];
-
-	if (self) {
-		self.backgroundColor = [UIColor clearColor];
-	}
-
-	return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor {
-	self = [self initWithFrame:frame];
-
-	if (self) {
-		self.glowingColor = glowingColor;
-	}
-
-	return self;
-}
-
-#pragma mark -
-- (void)drawRect:(CGRect)rect {
-	//[super drawRect:rect];
-
-	//// General Declarations
-	CGContextRef context = UIGraphicsGetCurrentContext();
-
-	//// Color Declarations
-	//UIColor* fillColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
-	UIColor* fillColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
-	UIColor* strokeColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
-
-	if (self.glowingColor) {
-		fillColor = self.glowingColor;
-		strokeColor = self.glowingColor;
-	}
-
-
-	//// Shadow Declarations
-	UIColor* shadow = fillColor;
-	CGSize shadowOffset = CGSizeMake(0.1, -0.1);
-	CGFloat shadowBlurRadius = 10;
-
-	//// Rectangle Drawing
-	UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rect];
-	CGContextSaveGState(context);
-	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, [shadow CGColor]);
-	[[UIColor clearColor] setFill];
-	[rectanglePath fill];
-
-	////// Rectangle Inner Shadow
-	CGRect rectangleBorderRect = CGRectInset([rectanglePath bounds], -shadowBlurRadius, -shadowBlurRadius);
-	rectangleBorderRect = CGRectOffset(rectangleBorderRect, -shadowOffset.width, -shadowOffset.height);
-	rectangleBorderRect = CGRectInset(CGRectUnion(rectangleBorderRect, [rectanglePath bounds]), -1, -1);
-
-	UIBezierPath* rectangleNegativePath = [UIBezierPath bezierPathWithRect: rectangleBorderRect];
-	[rectangleNegativePath appendPath: rectanglePath];
-	rectangleNegativePath.usesEvenOddFillRule = YES;
-
-	CGContextSaveGState(context);
-	{
-		CGFloat xOffset = shadowOffset.width + round(rectangleBorderRect.size.width);
-		CGFloat yOffset = shadowOffset.height;
-		CGContextSetShadowWithColor(context,
-									CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
-									shadowBlurRadius,
-									[shadow CGColor]);
-
-		[rectanglePath addClip];
-		CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(rectangleBorderRect.size.width), 0);
-		[rectangleNegativePath applyTransform: transform];
-		[[UIColor grayColor] setFill];
-		[rectangleNegativePath fill];
-	}
-	CGContextRestoreGState(context);
-
-	CGContextRestoreGState(context);
-
-	CGContextSaveGState(context);
-	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, [shadow CGColor]);
-	[strokeColor setStroke];
-	rectanglePath.lineWidth = 1;
-	[rectanglePath stroke];
-	CGContextRestoreGState(context);
 }
 @end
 

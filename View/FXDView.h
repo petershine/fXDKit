@@ -5,8 +5,23 @@
 
 #define UIViewAutoresizingKeepCenter	(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin)
 
+typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *event);
+
 
 @interface FXDView : UIView
+@end
+
+
+@interface FXDpassthroughView : FXDView {
+	FXDcallbackHitTest _hitTestBlock;
+}
+@property (copy, nonatomic) FXDcallbackHitTest hitTestBlock;
+@end
+
+
+@interface FXDsubviewGlowing : FXDView
+@property (strong, nonatomic) UIColor *glowingColor;
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
 @end
 
 
@@ -54,11 +69,6 @@
 - (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
 @end
 
-
-@interface FXDsubviewGlowing : FXDView
-@property (strong, nonatomic) UIColor *glowingColor;
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
-@end
 
 @interface UIView (Glowing)
 - (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;

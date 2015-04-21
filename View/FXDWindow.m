@@ -9,31 +9,12 @@
 @implementation FXDWindow
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
-	FXDLogObject(_hitTestBlock);
-}
-
 
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-	if (_hitTestBlock == nil) {
-		return [super hitTest:point withEvent:event];
-	}
-
-	FXDLog_DEFAULT;
-	FXDLog(@"%@ %@", _Point(point), _Object(event));
-
-	UIView *testedView = [super hitTest:point withEvent:event];
-	FXDLog(@"%@ %@", _Object(testedView), _Object(_hitTestBlock));
-
-	return testedView;
-}
-
-#pragma mark -
 - (void)makeKeyAndVisible {	FXDLog_SEPARATE;
 	[super makeKeyAndVisible];
 	
