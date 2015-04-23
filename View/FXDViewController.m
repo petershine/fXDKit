@@ -21,18 +21,14 @@
 	//NOTE: Should use nib instead of xib for file type
 	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
 	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
+	FXDLog(@"SELF: %@ %@", _BOOL(nibExists), _Object(resourcePath));
 
 	if (nibExists == NO) {
-		FXDLog(@"SELF: %@ %@", _BOOL(nibExists), _Object(resourcePath));
-
 		nibNameOrNil = NSStringFromClass([self superclass]);
 
 		resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
 		nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
-
-		if (nibExists == NO) {
-			FXDLog(@"SUPER: %@ %@", _BOOL(nibExists), _Object(resourcePath));
-		}
+		FXDLog(@"SUPER: %@ %@", _BOOL(nibExists), _Object(resourcePath));
 	}
 
 	
