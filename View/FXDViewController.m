@@ -14,21 +14,30 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
 
 	if (nibNameOrNil == nil) {
-		NSString *filename = NSStringFromClass([self class]);
-		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//NOTE: Should use nib instead of xib for file type
+		nibNameOrNil = NSStringFromClass([self class]);
+	}
 
-		BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 
-		FXDLog(@"%@ %@", _BOOL(nibExists), _Object(resourcePath));
-		
-		if (nibExists) {
-			nibNameOrNil = filename;
+	//NOTE: Should use nib instead of xib for file type
+	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
+	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
+
+	if (nibExists == NO) {
+		FXDLog(@"SELF: %@ %@", _BOOL(nibExists), _Object(resourcePath));
+
+		nibNameOrNil = NSStringFromClass([self superclass]);
+
+		resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
+		nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
+
+		if (nibExists == NO) {
+			FXDLog(@"SUPER: %@ %@", _BOOL(nibExists), _Object(resourcePath));
 		}
 	}
 
+	
 	FXDLog(@"%@ %@", _Object(nibNameOrNil), _Object(nibBundleOrNil));
 
-	
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
@@ -52,6 +61,10 @@
 
 	self.initialBounds = self.view.bounds;
 }
+
+
+#pragma mark - Property overriding
+
 
 #pragma mark - StatusBar
 - (void)setNeedsStatusBarAppearanceUpdate {
@@ -165,7 +178,6 @@
 }
 
 #pragma mark -
-//TODO: Acquainted with UIViewController appearing order
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	FXDLog_VIEW;
@@ -194,8 +206,6 @@
 	[super viewDidDisappear:animated];
 }
 
-
-#pragma mark - Property overriding
 
 #pragma mark - Method overriding
 
@@ -300,6 +310,7 @@
 
 
 @implementation UIViewController (Essential)
+
 #pragma mark - IBActions
 - (IBAction)dismissSceneForEventSender:(id)sender {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@", _Object(self.parentViewController), _Object(self.presentingViewController));

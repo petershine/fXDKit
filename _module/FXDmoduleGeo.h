@@ -23,7 +23,7 @@
 - (void)configureUpdatingForApplicationState;
 - (void)maximizeUpdatingForActiveState;
 - (void)minimizeUpdatingForBackgroundState;
-- (void)pauseMainLocationManager;
+- (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus;
 
 - (BOOL)isDistantEnoughFromLastLocation;
 

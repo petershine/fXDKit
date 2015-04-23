@@ -140,7 +140,9 @@
 	FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
-- (void)pauseMainLocationManager {	FXDLog_DEFAULT;
+- (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
+	FXDLogVariable(authorizationStatus);
+
 	[_mainLocationManager stopUpdatingLocation];
 	[_mainLocationManager stopMonitoringSignificantLocationChanges];
 }
@@ -258,7 +260,7 @@
 	}
 
 	if (isAuthorized == NO) {
-		[self pauseMainLocationManager];
+		[self pauseMainLocationManagerForAuthorizationStatus:authorizationStatus];
 		return;
 	}
 
