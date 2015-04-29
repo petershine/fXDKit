@@ -161,3 +161,36 @@
 }
 
 @end
+
+
+#if USE_AFNetworking
+@implementation UIImageView (Asynchronous)
+- (void)asynchronousUpdateWithImageURL:(NSURL*)imageURL placeholderImage:(UIImage*)placeholderImage withCallback:(FXDcallbackFinish)finishCallback {
+
+	NSMutableURLRequest *imageRequest = [[NSMutableURLRequest alloc] initWithURL:imageURL];
+
+
+	__weak UIImageView *weakSelf = self;
+
+	[self
+	 setImageWithURLRequest:imageRequest
+	 placeholderImage:placeholderImage
+	 success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+
+		 __strong UIImageView *strongSelf = weakSelf;
+
+		 strongSelf.image = image;
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, YES, image);
+		 }
+
+	 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, NO, nil);
+		 }
+	 }];
+}
+@end
+#endif

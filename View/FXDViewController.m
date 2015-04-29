@@ -174,24 +174,20 @@
 }
 
 #pragma mark -
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {	FXDLog_VIEW;
 	[super viewWillAppear:animated];
-	FXDLog_VIEW;
 }
 
-- (void)viewWillLayoutSubviews {
+- (void)viewWillLayoutSubviews {	//FXDLog_VIEW;
 	[super viewWillLayoutSubviews];
-	FXDLog_VIEW;
 }
 
-- (void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {	//FXDLog_VIEW;
 	[super viewDidLayoutSubviews];
-	FXDLog_VIEW;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {	FXDLog_VIEW;
 	[super viewDidAppear:animated];
-	FXDLog_VIEW;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
