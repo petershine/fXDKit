@@ -313,8 +313,8 @@
 
 	CGRect animatedFrame = CGRectApplyAffineTransform(self.bounds, transform);
 
-	if ([self constraints].count > 0) {	FXDLog_DEFAULT;
-		FXDLogObject([self constraints]);
+	if ([self constraints].count > 0) {	//FXDLog_DEFAULT;
+		//FXDLogObject([self constraints]);
 
 		//TEST: Make sure this works OK with other apps
 		//return;
