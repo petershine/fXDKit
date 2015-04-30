@@ -132,5 +132,48 @@
 	return formattedString;
 }
 
+#pragma mark -
++ (BOOL)validateURL:(NSString*)candidate {
 
+	// Empty strings should return NO
+	if (candidate.length == 0) {
+		return NO;
+	}
+
+
+	NSError *error = nil;
+	NSDataDetector *dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+	FXDLogObject(dataDetector);
+	FXDLog_ERROR;
+
+	if (dataDetector == nil || error) {
+		return NO;
+	}
+
+
+	NSRange range = NSMakeRange(0, candidate.length);
+	NSRange notFoundRange = (NSRange){NSNotFound, 0};
+	NSRange linkRange = [dataDetector rangeOfFirstMatchInString:candidate options:0 range:range];
+	FXDLogBOOL(NSEqualRanges(notFoundRange, linkRange));
+	FXDLogBOOL(NSEqualRanges(range, linkRange));
+
+	if (NSEqualRanges(notFoundRange, linkRange) || NSEqualRanges(range, linkRange) == NO) {
+		return NO;
+	}
+
+
+	return YES;
+}
+
++ (BOOL)isHTTPcompatible:(NSString*)candidate {
+	NSRange rangeForHTTP = [candidate rangeOfString:@"http:" options:NSCaseInsensitiveSearch];
+	NSRange rangeForHTTPS = [candidate rangeOfString:@"https:" options:NSCaseInsensitiveSearch];
+	FXDLog(@"%@ %@", _Object(NSStringFromRange(rangeForHTTP)), _Object(NSStringFromRange(rangeForHTTPS)));
+
+	//NOTE: Make sure string starts with http | https
+	BOOL isHTTPcompatible = ((rangeForHTTP.location == 0 && rangeForHTTP.length > 0)
+							 || (rangeForHTTPS.location == 0 && rangeForHTTPS.length > 0));
+
+	return isHTTPcompatible;
+}
 @end

@@ -26,4 +26,7 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 
 - (NSString*)fileSizeString;
 
++ (BOOL)validateURL:(NSString*)candidate;
++ (BOOL)isHTTPcompatible:(NSString*)candidate;
+
 @end

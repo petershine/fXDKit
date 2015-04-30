@@ -56,8 +56,8 @@
 #if	ForDEVELOPER
 	NSDictionary *parameters = @{@"sourceApplication":	(sourceApplication) ? sourceApplication:@"",
 								 @"annotation":	(annotation) ? annotation:@"",
-								 @"url":	([url absoluteString]) ? [[url absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]:@"",
-								 @"url scheme":	([url scheme]) ? [url scheme]:@"",};
+								 @"url":	(url.absoluteString) ? [url.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]:@"",
+								 @"url scheme":	(url.scheme) ? url.scheme:@"",};
 
 	FXDLogObject(parameters);
 
