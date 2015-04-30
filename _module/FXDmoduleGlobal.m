@@ -356,7 +356,7 @@
 	[NSURLConnection
 	 sendAsynchronousRequest:request
 	 queue:networkingQueue
-	 completionHandler:^(NSURLResponse *reponse, NSData *data, NSError *connectionError){
+	 completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
 		 FXDLog_BLOCK(NSURLConnection, @selector(sendAsynchronousRequest:queue:completionHandler:));
 		 FXDLogVariable(data.length);
 
