@@ -345,9 +345,10 @@
 	}
 
 
+	//NOTE: Use different locale for future reuse
 	NSString *requestPath = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 
-	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestPath]];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestPath]];
 	FXDLogObject(request);
 
 	NSOperationQueue *networkingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
@@ -375,42 +376,29 @@
 
 		 error = nil;
 		 NSDictionary *jsonObject = [NSJSONSerialization
-								  JSONObjectWithData:data
-								  options:NSJSONReadingAllowFragments
-								  error:&error];FXDLog_ERROR;
-
-		 NSArray *versionArray = jsonObject[@"results"][@"version"];
-
-		 if(versionArray.count == 0){
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  if (finishCallback) {
-					  finishCallback(_cmd, NO, nil);
-				  }
-			  }];
-			 return;
-		 }
+									 JSONObjectWithData:data
+									 options:NSJSONReadingAllowFragments
+									 error:&error];FXDLog_ERROR;
+		 FXDLogObject(jsonObject);
 
 
-		 NSString *appStoreVersion = versionArray.firstObject;
+		 NSArray *resultArray = jsonObject[@"results"];
+		 FXDLogVariable(resultArray.count);
+
+		 NSDictionary *firstResult = resultArray.firstObject;
+
+		 NSString *appStoreVersion = firstResult[@"version"];
 		 FXDLogObject(appStoreVersion);
 		 FXDLogObject(application_ShortVersion);
 
-		 if([appStoreVersion isEqualToString:application_ShortVersion]){
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  if (finishCallback) {
-					  finishCallback(_cmd, NO, nil);
-				  }
-			  }];
-			 return;
-		 }
-
+		 BOOL shouldAlert = (appStoreVersion
+							 && ([appStoreVersion isEqualToString:application_ShortVersion] == NO));
+		 FXDLogBOOL(shouldAlert);
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 			  if (finishCallback) {
-				  finishCallback(_cmd, YES, nil);
+				  finishCallback(_cmd, shouldAlert, nil);
 			  }
 		  }];
 	 }];
