@@ -140,17 +140,17 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	//FXDLog_DEFAULT;
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-	NSAssert(coordinator, nil);
 	[coordinator
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+
 		 [self sceneTransitionForSize:size
 						 forTransform:[coordinator targetTransform]
 						  forDuration:[coordinator transitionDuration]
 						 withCallback:nil];
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		 FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
-		 FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
+		 //FXDLog_BLOCK(coordinator, @selector(animateAlongsideTransition:completion:));
+		 //FXDLog(@"%@ %@ %@ %@", _Size(size), _Object([context containerView]), _Variable([context percentComplete]), _Variable([context completionVelocity]));
 	 }];
 }
 
