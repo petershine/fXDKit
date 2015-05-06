@@ -108,6 +108,7 @@
 //NOTE: UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 	FXDLogObject(webView.request.URL);
+	FXDLogObject(webView.request.URL.absoluteString);
 
 	FXDLogVariable(navigationType);
 	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.baseURL));

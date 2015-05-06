@@ -384,4 +384,10 @@
 						   attributes:textAttributes];
 }
 
+- (void)attributeColor:(UIColor*)attributedColor forSubstring:(NSString*)substring {
+
+	NSMutableAttributedString *colorAttributed = [[NSMutableAttributedString alloc] initWithString:self.text];
+	[colorAttributed addAttribute:NSForegroundColorAttributeName value:attributedColor range:[self.text rangeOfString:substring]];
+	self.attributedText = colorAttributed;
+}
 @end
