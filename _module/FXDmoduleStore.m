@@ -169,7 +169,7 @@
 			 NSDictionary *receiptDictionary = jsonResponse[@"receipt"];
 
 
-#warning //TODO: Find the secure way to save the receipt
+			 //TODO: Find the secure way to save the receipt
 			 [[NSUserDefaults standardUserDefaults] setObject:receiptDictionary forKey:userdefaultObjVerifiedReceipt];
 			 [[NSUserDefaults standardUserDefaults] synchronize];
 
