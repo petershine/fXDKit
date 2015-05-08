@@ -386,8 +386,15 @@
 
 - (void)attributeColor:(UIColor*)attributedColor forSubstring:(NSString*)substring {
 
+	NSRange substringRange = [self.text rangeOfString:substring];
+
+	if (substringRange.location == NSNotFound) {
+		return;
+	}
+
+
 	NSMutableAttributedString *colorAttributed = [[NSMutableAttributedString alloc] initWithString:self.text];
-	[colorAttributed addAttribute:NSForegroundColorAttributeName value:attributedColor range:[self.text rangeOfString:substring]];
+	[colorAttributed addAttribute:NSForegroundColorAttributeName value:attributedColor range:substringRange];
 	self.attributedText = colorAttributed;
 }
 @end

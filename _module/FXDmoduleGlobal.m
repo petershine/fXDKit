@@ -26,7 +26,6 @@
 		}
 	}
 
-
 	if (_mainStoryboard == nil) {	FXDLog_OVERRIDE;
 	}
 	return _mainStoryboard;
