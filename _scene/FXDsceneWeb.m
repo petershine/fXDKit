@@ -139,17 +139,8 @@
 	FXDLogObject(webView.request.URL);
 
 #if ForDEVELOPER
-	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
-	FXDLogObject([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
-	FXDLogObject([NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields forURL:nil]);
-
-
-#if TEST_shouldEvaluateSource
-	NSString *source = [webView stringByEvaluatingJavaScriptFromString:
-						@"document.getElementsByTagName('html')[0].outerHTML"];
-
-	FXDLogObject(source);
-#endif
+	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)[[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request].response;
+	FXDLogObject(httpResponse.allHeaderFields);
 #endif
 }
 

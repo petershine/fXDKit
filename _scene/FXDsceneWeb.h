@@ -1,10 +1,5 @@
 
 
-#ifndef	TEST_shouldEvaluateSource
-	#define	TEST_shouldEvaluateSource	FALSE
-#endif
-
-
 #import "FXDWebView.h"
 
 #import "FXDsceneScroll.h"
