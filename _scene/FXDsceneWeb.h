@@ -9,6 +9,7 @@
 
 #import "FXDsceneScroll.h"
 @interface FXDsceneWeb : FXDsceneScroll <UIWebViewDelegate> {
+	NSURLRequest *_initialWebRequest;
 	UIWebView *_mainWebview;
 }
 

@@ -108,7 +108,6 @@
 //NOTE: UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {	FXDLog_DEFAULT;
 	FXDLogObject(webView.request.URL);
-	FXDLogObject(webView.request.URL.absoluteString);
 
 	FXDLogVariable(navigationType);
 	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.baseURL));
@@ -142,6 +141,7 @@
 #if ForDEVELOPER
 	NSCachedURLResponse *webviewResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
 	FXDLogObject([(NSHTTPURLResponse*)webviewResponse.response allHeaderFields]);
+	FXDLogObject([NSHTTPCookie cookiesWithResponseHeaderFields:httpResponse.allHeaderFields forURL:nil]);
 
 
 #if TEST_shouldEvaluateSource
