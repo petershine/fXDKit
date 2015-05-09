@@ -77,18 +77,7 @@
 #pragma mark - Public
 - (void)loadWebRequestPath:(NSString*)requestPath {	FXDLog_DEFAULT;
 
-	NSURL *requestURL = [NSURL URLWithString:requestPath];
-
-	if (requestURL == nil) {
-		FXDLog(@"NOT Escaped:    %@", requestPath);
-
-		requestPath = [requestPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		FXDLog(@"PercentEscaped: %@", requestPath);
-
-		requestURL = [NSURL URLWithString:requestPath];
-	}
-
-	FXDLogObject(requestURL);
+	NSURL *requestURL = [NSURL evaluatedURLforPath:requestPath];
 
 	FXDLogBOOL(self.mainWebview.isLoading);
 	FXDLogBOOL(self.mainWebview.loading);

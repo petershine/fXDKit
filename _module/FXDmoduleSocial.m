@@ -562,7 +562,7 @@
 		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
 		 FXDLogBOOL(shouldRequest);
 
-		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterUserShow];
+		 NSURL *requestURL = [NSURL evaluatedURLforPath:urlstringTwitterUserShow];
 
 		 NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
 
@@ -597,7 +597,7 @@
 		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
 		 FXDLogBOOL(shouldRequest);
 
-		 NSURL *requestURL = [NSURL URLWithString:urlstringTwitterStatusUpdate];
+		 NSURL *requestURL = [NSURL evaluatedURLforPath:urlstringTwitterStatusUpdate];
 
 		 NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText} mutableCopy];
 
@@ -672,10 +672,10 @@
 		 NSURL *requestURL = nil;
 
 		 if ([facebookUserId length] > 0) {
-			 requestURL = [NSURL URLWithString:urlstringFacebook(facebookUserId)];
+			 requestURL = [NSURL evaluatedURLforPath:urlstringFacebook(facebookUserId)];
 		 }
 		 else {
-			 requestURL = [NSURL URLWithString:urlstringFacebook(facebookGraphMe)];
+			 requestURL = [NSURL evaluatedURLforPath:urlstringFacebook(facebookGraphMe)];
 		 }
 
 

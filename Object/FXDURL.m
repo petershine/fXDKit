@@ -143,10 +143,10 @@
 
 	NSError *error = nil;
 	NSDataDetector *dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
-	FXDLogObject(dataDetector);
-	FXDLog_ERROR;
 
 	if (dataDetector == nil || error) {
+		FXDLogObject(dataDetector);
+		FXDLog_ERROR;
 		return NO;
 	}
 
@@ -154,10 +154,10 @@
 	NSRange range = NSMakeRange(0, candidate.length);
 	NSRange notFoundRange = (NSRange){NSNotFound, 0};
 	NSRange linkRange = [dataDetector rangeOfFirstMatchInString:candidate options:0 range:range];
-	FXDLogBOOL(NSEqualRanges(notFoundRange, linkRange));
-	FXDLogBOOL(NSEqualRanges(range, linkRange));
 
 	if (NSEqualRanges(notFoundRange, linkRange) || NSEqualRanges(range, linkRange) == NO) {
+		FXDLogBOOL(NSEqualRanges(notFoundRange, linkRange));
+		FXDLogBOOL(NSEqualRanges(range, linkRange));
 		return NO;
 	}
 
@@ -168,7 +168,7 @@
 + (BOOL)isHTTPcompatible:(NSString*)candidate {
 	NSRange rangeForHTTP = [candidate rangeOfString:@"http:" options:NSCaseInsensitiveSearch];
 	NSRange rangeForHTTPS = [candidate rangeOfString:@"https:" options:NSCaseInsensitiveSearch];
-	FXDLog(@"%@ %@", _Object(NSStringFromRange(rangeForHTTP)), _Object(NSStringFromRange(rangeForHTTPS)));
+	//FXDLog(@"%@ %@", _Object(NSStringFromRange(rangeForHTTP)), _Object(NSStringFromRange(rangeForHTTPS)));
 
 	//NOTE: Make sure string starts with http | https
 	BOOL isHTTPcompatible = ((rangeForHTTP.location == 0 && rangeForHTTP.length > 0)
@@ -176,4 +176,59 @@
 
 	return isHTTPcompatible;
 }
+
+#pragma mark -
++ (NSURL*)evaluatedURLforPath:(NSString*)requestPath {
+
+	requestPath = [requestPath stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+	NSURL *evaluatedURL = [self URLWithString:requestPath];
+
+	if (evaluatedURL) {
+		FXDLogObject(evaluatedURL);
+		return evaluatedURL;
+	}
+
+
+	NSArray *componentArray = [requestPath componentsSeparatedByString:@"%"];
+
+	if (componentArray.count < 2) {
+		requestPath = [requestPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+		evaluatedURL = [self URLWithString:requestPath];
+
+		FXDLogObject(evaluatedURL);
+		return evaluatedURL;
+	}
+
+
+	FXDLog_DEFAULT;
+	FXDLog(@"%@", @"NOTE: Because the percent (\"%\") character serves as the indicator for percent-encoded octets, it must be percent-encoded as \"%25\" for that octet to be used as data within a URI.");
+
+	FXDLogObject(requestPath);
+	FXDLogVariable(componentArray.count);
+
+	NSString *wholeEscaped = @"";
+
+	for (NSString *component in componentArray) {
+
+		if (component != componentArray.firstObject) {
+			wholeEscaped = [wholeEscaped stringByAppendingString:@"%25"];
+		}
+
+
+		NSString *escaped = [component stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		FXDLog(@"%ld:\n%@\n%@", (unsigned long)[componentArray indexOfObject:component], component, escaped);
+
+		wholeEscaped = [wholeEscaped stringByAppendingString:escaped];
+	}
+
+	requestPath = [wholeEscaped copy];
+
+	evaluatedURL = [self URLWithString:requestPath];
+
+	FXDLogObject(evaluatedURL);
+	return evaluatedURL;
+}
+
 @end

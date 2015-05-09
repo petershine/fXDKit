@@ -29,4 +29,5 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 + (BOOL)validateURL:(NSString*)candidate;
 + (BOOL)isHTTPcompatible:(NSString*)candidate;
 
++ (NSURL*)evaluatedURLforPath:(NSString*)requestPath;
 @end

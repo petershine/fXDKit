@@ -91,7 +91,7 @@
 	}
 
 
-	self.containerURL = [NSURL URLWithString:[userDefaults objectForKey:userdefaultStringSavedUbiquityContainerURL]];
+	self.containerURL = [NSURL evaluatedURLforPath:[userDefaults objectForKey:userdefaultStringSavedUbiquityContainerURL]];
 	FXDLogObject(self.containerURL);
 
 

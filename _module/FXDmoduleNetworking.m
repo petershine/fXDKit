@@ -70,7 +70,7 @@
 
 	NSString *percentEscaped = [queryText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-	NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:self.mainRootURLformat, percentEscaped, self.mainAPIkey]];
+	NSURL *requestURL = [NSURL evaluatedURLforPath:[NSString stringWithFormat:self.mainRootURLformat, percentEscaped, self.mainAPIkey]];
 
 	NSURLRequest *request = [NSURLRequest requestWithURL:requestURL];
 

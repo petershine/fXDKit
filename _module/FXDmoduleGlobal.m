@@ -347,7 +347,7 @@
 	//NOTE: Use different locale for future reuse
 	NSString *requestPath = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestPath]];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL evaluatedURLforPath:requestPath]];
 	FXDLogObject(request);
 
 	NSOperationQueue *networkingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
