@@ -190,6 +190,7 @@
 	}
 
 
+	FXDLog(@"1.%@", _Object(requestPath));
 	NSArray *componentArray = [requestPath componentsSeparatedByString:@"%"];
 
 	if (componentArray.count < 2) {
@@ -202,10 +203,8 @@
 	}
 
 
-	FXDLog_DEFAULT;
 	FXDLog(@"%@", @"NOTE: Because the percent (\"%\") character serves as the indicator for percent-encoded octets, it must be percent-encoded as \"%25\" for that octet to be used as data within a URI.");
 
-	FXDLogObject(requestPath);
 	FXDLogVariable(componentArray.count);
 
 	NSString *wholeEscaped = @"";
