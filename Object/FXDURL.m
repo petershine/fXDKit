@@ -185,12 +185,12 @@
 	NSURL *evaluatedURL = [self URLWithString:requestPath];
 
 	if (evaluatedURL) {
-		FXDLogObject(evaluatedURL);
+		//FXDLogObject(evaluatedURL);
 		return evaluatedURL;
 	}
 
 
-	FXDLog(@"1.%@", _Object(requestPath));
+	FXDLog(@"INCORRECT %@", _Object(requestPath));
 	NSArray *componentArray = [requestPath componentsSeparatedByString:@"%"];
 
 	if (componentArray.count < 2) {
