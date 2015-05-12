@@ -378,7 +378,7 @@
 									 JSONObjectWithData:data
 									 options:NSJSONReadingAllowFragments
 									 error:&error];FXDLog_ERROR;
-		 FXDLogObject(jsonObject);
+		 //FXDLogObject(jsonObject);
 
 
 		 NSArray *resultArray = jsonObject[@"results"];
@@ -389,15 +389,22 @@
 		 NSString *appStoreVersion = firstResult[@"version"];
 		 FXDLogObject(appStoreVersion);
 		 FXDLogObject(application_ShortVersion);
+		 FXDLogBOOL(([appStoreVersion isEqualToString:application_ShortVersion] == NO));
 
-		 BOOL shouldAlert = (appStoreVersion
-							 && ([appStoreVersion isEqualToString:application_ShortVersion] == NO));
+		 NSInteger currentVersionInteger = [[application_ShortVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+		 NSInteger appStoreVersionInteger = [[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+		 FXDLogVariable(currentVersionInteger);
+		 FXDLogVariable(appStoreVersionInteger);
+		 FXDLogBOOL((currentVersionInteger < appStoreVersionInteger));
+
+
+		 BOOL shouldAlert = (appStoreVersion && (currentVersionInteger < appStoreVersionInteger));
 		 FXDLogBOOL(shouldAlert);
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 			  if (finishCallback) {
-				  finishCallback(_cmd, shouldAlert, nil);
+				  finishCallback(_cmd, shouldAlert, appStoreVersion);
 			  }
 		  }];
 	 }];

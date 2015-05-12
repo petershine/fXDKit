@@ -12,4 +12,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+
+- (void)executeOperationsForApplication:(UIApplication*)application withLaunchOption:(NSDictionary*)launchOptions;
+- (BOOL)isUsableLaunchOption:(NSDictionary*)launchOptions;
+
 @end
