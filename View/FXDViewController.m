@@ -29,6 +29,10 @@
 		resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
 		nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 		FXDLog(@"SUPER: %@ %@", _BOOL(nibExists), _Object(resourcePath));
+
+		if (nibExists == NO) {
+			nibNameOrNil = nil;
+		}
 	}
 
 	
