@@ -237,7 +237,8 @@
 
 #pragma mark - Public
 - (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
-	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
+	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
+	//FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
 	FXDLogObject(NSUserName());
 	FXDLogObject(NSFullUserName());

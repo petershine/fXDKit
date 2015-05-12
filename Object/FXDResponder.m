@@ -16,51 +16,6 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)executeOperationsForApplication:(UIApplication*)application withLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
-	if (launchOptions[UIApplicationLaunchOptionsURLKey]
-		|| launchOptions[UIApplicationLaunchOptionsSourceApplicationKey]
-		|| launchOptions[UIApplicationLaunchOptionsAnnotationKey]) {
-
-		NSURL *url = launchOptions[UIApplicationLaunchOptionsURLKey];
-		NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
-		id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
-
-		[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
-	}
-
-	UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
-	[self application:application didReceiveLocalNotification:localNotification];
-
-	NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-	[self application:application didReceiveRemoteNotification:remoteNotificationUserInfo];
-}
-
-- (BOOL)isUsableLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
-
-	if (launchOptions[UIApplicationLaunchOptionsURLKey]
-		|| launchOptions[UIApplicationLaunchOptionsSourceApplicationKey]
-		|| launchOptions[UIApplicationLaunchOptionsAnnotationKey]) {
-
-		return YES;
-	}
-
-	if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
-		return YES;
-	}
-
-	if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-		return YES;
-	}
-
-	if (launchOptions) {
-		FXDLogObject(launchOptions);
-		return YES;
-	}
-
-
-	return NO;
-}
-
 
 #pragma mark - Observer
 
@@ -125,8 +80,6 @@
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
 	FXDLogObject(launchOptions);
 
-	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
-
 	return YES;
 }
 
@@ -167,6 +120,55 @@
 		FXDLogBOOL(self.isAppLaunching);
 		return;
 	}
+}
+
+@end
+
+
+@implementation UIResponder (Added)
+- (void)executeOperationsForApplication:(UIApplication*)application withLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+	if (launchOptions[UIApplicationLaunchOptionsURLKey]
+		|| launchOptions[UIApplicationLaunchOptionsSourceApplicationKey]
+		|| launchOptions[UIApplicationLaunchOptionsAnnotationKey]) {
+
+		NSURL *url = launchOptions[UIApplicationLaunchOptionsURLKey];
+		NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
+		id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
+
+		[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+	}
+
+	UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
+	[self application:application didReceiveLocalNotification:localNotification];
+
+	NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+	[self application:application didReceiveRemoteNotification:remoteNotificationUserInfo];
+}
+
+- (BOOL)isUsableLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+
+	if (launchOptions[UIApplicationLaunchOptionsURLKey]
+		|| launchOptions[UIApplicationLaunchOptionsSourceApplicationKey]
+		|| launchOptions[UIApplicationLaunchOptionsAnnotationKey]) {
+
+		return YES;
+	}
+
+	if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
+		return YES;
+	}
+
+	if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+		return YES;
+	}
+
+	if (launchOptions) {
+		FXDLogObject(launchOptions);
+		return YES;
+	}
+
+
+	return NO;
 }
 
 @end

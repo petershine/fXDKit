@@ -42,10 +42,10 @@
 
 		if (self.offsetYdismissingController == 0.0) {
 			CGRect screenBounds = [[UIScreen mainScreen] bounds];
-			FXDLogRect(screenBounds);
+			//FXDLogRect(screenBounds);
 
 			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleSceneDismissingOffset);
-			FXDLogVariable(self.offsetYdismissingController);
+			//FXDLogVariable(self.offsetYdismissingController);
 		}
 	}
 }
@@ -296,7 +296,7 @@
 	
 	if (scrollView.contentOffset.y < (self.offsetYdismissingController-scrollView.contentInset.top)
 		&& self.didStartDismissingByPullingDown == NO) {
-		FXDLogVariable(self.offsetYdismissingController);
+		//FXDLogVariable(self.offsetYdismissingController);
 		
 		[self dismissByPullingDownScrollView:scrollView];
 	}
