@@ -11,23 +11,15 @@
 
 #pragma mark - Property overriding
 - (CLLocationManager*)mainLocationManager {
-	if (_mainLocationManager) {
-		return _mainLocationManager;
+	if (_mainLocationManager == nil) {
+		_mainLocationManager = [[CLLocationManager alloc] init];
+		_mainLocationManager.activityType = CLActivityTypeOther;
+		_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
+
+		_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
+
+		_mainLocationManager.delegate = self;
 	}
-
-
-	FXDLog_DEFAULT;
-
-	_mainLocationManager = [[CLLocationManager alloc] init];
-	_mainLocationManager.activityType = CLActivityTypeOther;
-	_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
-
-	_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
-
-	_mainLocationManager.delegate = self;
-
-	FXDLogObject(_mainLocationManager);
-
 	return _mainLocationManager;
 }
 
@@ -59,16 +51,6 @@
 	 object:nil];
 
 	[self startMainLocationManagerForAuthorizationStatus:[CLLocationManager authorizationStatus]];
-
-
-	if (launchOptions[UIApplicationLaunchOptionsLocationKey] == nil
-		&& launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey] == nil
-		&& launchOptions[UIApplicationLaunchOptionsBluetoothPeripheralsKey] == nil) {
-		return;
-	}
-
-
-	LOGEVENT_DEFAULT;
 }
 
 - (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
@@ -119,8 +101,8 @@
 }
 
 #pragma mark -
-- (void)configureUpdatingForApplicationState {	FXDLog_DEFAULT;
-	FXDLogVariable([UIApplication sharedApplication].applicationState);
+- (void)configureUpdatingForApplicationState {	//FXDLog_DEFAULT;
+	//FXDLogVariable([UIApplication sharedApplication].applicationState);
 	
 	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
 		[self minimizeUpdatingForBackgroundState];
@@ -130,18 +112,18 @@
 	[self maximizeUpdatingForActiveState];
 }
 
-- (void)maximizeUpdatingForActiveState {	FXDLog_DEFAULT;
+- (void)maximizeUpdatingForActiveState {	//FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	FXDLogVariable(_mainLocationManager.desiredAccuracy);
+	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
-- (void)minimizeUpdatingForBackgroundState {	FXDLog_DEFAULT;
+- (void)minimizeUpdatingForBackgroundState {	//FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-	FXDLogVariable(_mainLocationManager.desiredAccuracy);
+	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
-- (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
-	FXDLogVariable(authorizationStatus);
+- (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	//FXDLog_DEFAULT;
+	//FXDLogVariable(authorizationStatus);
 
 	[_mainLocationManager stopUpdatingLocation];
 	[_mainLocationManager stopMonitoringSignificantLocationChanges];
@@ -236,8 +218,7 @@
 }
 - (void)observedUIApplicationDidBecomeActive:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {
-	FXDLog_OVERRIDE;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_OVERRIDE;
 }
 
 #pragma mark - Delegate
