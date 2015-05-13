@@ -9,6 +9,18 @@
 #import "FXDmacroFunction.h"
 
 
+#pragma mark - Categories
+@implementation NSNumberFormatter (Grouping)
++ (NSNumberFormatter*)formatterGroupingSize:(NSInteger)groupingSize separator:(NSString*)separator {
+	NSNumberFormatter *grouping = [[NSNumberFormatter alloc] init];
+	grouping.groupingSize = groupingSize;
+	grouping.groupingSeparator = separator;
+	grouping.usesGroupingSeparator = YES;
+	return grouping;
+}
+@end
+
+
 @implementation NSDictionary (NullCleaning)
 + (NSDictionary *)cleanNullInJsonDic:(NSDictionary *)dic {
 	if (!dic || (id)dic == [NSNull null]) {

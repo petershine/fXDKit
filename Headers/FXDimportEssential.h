@@ -52,6 +52,11 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 #pragma mark - Categories
+@interface NSNumberFormatter (Grouping)
++ (NSNumberFormatter*)formatterGroupingSize:(NSInteger)groupingSize separator:(NSString*)separator;
+@end
+
+
 //http://stackoverflow.com/a/23925044/259765
 @interface NSDictionary (NullCleaning)
 + (NSDictionary *)cleanNullInJsonDic:(NSDictionary *)dic;
