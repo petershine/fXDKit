@@ -122,13 +122,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
 	FXDLogObject(webView.request.URL);
-
-	FXDLogObject(webView.request.allHTTPHeaderFields);
-
-#if ForDEVELOPER
-	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)[[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request].response;
-	FXDLogObject(httpResponse.allHeaderFields);
-#endif
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
