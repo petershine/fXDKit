@@ -99,7 +99,7 @@
 	FXDLogObject(webView.request.URL);
 
 	FXDLogVariable(navigationType);
-	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.baseURL));
+	FXDLog(@"%@ %@", _Object(request.URL.scheme), _Object(request.URL.resourceSpecifier));
 
 	FXDLogVariable(request.cachePolicy);
 	FXDLogVariable(request.timeoutInterval);
@@ -122,6 +122,13 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {	FXDLog_DEFAULT;
 	FXDLogObject(webView.request.URL);
+
+	FXDLogObject(webView.request.allHTTPHeaderFields);
+
+#if ForDEVELOPER
+	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)[[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request].response;
+	FXDLogObject(httpResponse.allHeaderFields);
+#endif
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {	FXDLog_DEFAULT;

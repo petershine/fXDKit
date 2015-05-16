@@ -398,6 +398,11 @@
 
 - (void)attributeColor:(UIColor*)attributedColor forSubstring:(NSString*)substring {
 
+	if (substring.length == 0) {
+		return;
+	}
+
+
 	NSRange substringRange = [self.text rangeOfString:substring];
 
 	if (substringRange.location == NSNotFound) {

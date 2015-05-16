@@ -22,6 +22,8 @@
 
 @property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
 
++ (void)showWaiting;
++ (void)hideWaiting;
 
 - (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 

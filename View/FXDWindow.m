@@ -26,6 +26,23 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
++ (void)showWaiting {
+	UIWindow *window = [[UIApplication sharedApplication].delegate window];
+
+	if ([window isKindOfClass:[self class]]) {
+		[(FXDWindow*)window showInformationViewAfterDelay:0.0];
+	}
+}
+
++ (void)hideWaiting {
+	UIWindow *window = [[UIApplication sharedApplication].delegate window];
+
+	if ([window isKindOfClass:[self class]]) {
+		[(FXDWindow*)window	hideInformationViewAfterDelay:0.0];
+	}
+}
+
+#pragma mark -
 - (void)configureRootViewController:(UIViewController*)rootScene shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	//NOTE: fade in and replace rootViewController. DO NOT USE addChildViewController
