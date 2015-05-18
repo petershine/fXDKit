@@ -108,12 +108,14 @@
 
 	#define FXDLog_ERROR	if (error) {\
 								FXDLog_EMPTY;\
-								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, _Error(error));}\
+								FXDLog(@"ERROR: %@\n%@", _ClassSelectorSelf, _Error(error));}
 
 
 	#define FXDLog_ERROR_ignored(ignoredCode)	if (error\
 												&& [error code] != ignoredCode){\
-													FXDLog_ERROR;}
+													FXDLog_ERROR;\
+												} else {\
+													FXDLogVariable(ignoredCode);}
 
 
 	#define FXDLog_BLOCK(instance, caller)	FXDLog_EMPTY;\

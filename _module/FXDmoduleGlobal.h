@@ -32,6 +32,9 @@
 @property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
 @property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
 
+@property (strong, nonatomic) NSString *lastAlertTitle;
+@property (strong, nonatomic) NSString *lastAlertMessage;
+
 @property (strong, nonatomic) id initialScene;
 
 

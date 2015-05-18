@@ -22,6 +22,20 @@
 #pragma mark - Public
 + (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
+	if ((GlobalModule.lastAlertTitle && [GlobalModule.lastAlertTitle isEqualToString:title])
+		&& (GlobalModule.lastAlertMessage && [GlobalModule.lastAlertMessage isEqualToString:message])) {
+
+		FXDLogObject(title);
+		FXDLogObject(message);
+
+		return nil;
+	}
+
+
+	GlobalModule.lastAlertTitle = title;
+	GlobalModule.lastAlertMessage = message;
+
+
 	__block FXDAlertView *alertView = nil;
 
 	[[NSOperationQueue mainQueue]
@@ -42,7 +56,7 @@
 #pragma mark -
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
-	//NOTE: Assume this is the condition for simple alerting withour choice
+	//NOTE: Assume this is the condition for simple alerting without choice
 	if (cancelButtonTitle == nil) {
 		cancelButtonTitle = NSLocalizedString(@"OK", nil);
 	}
@@ -70,6 +84,9 @@
 	if (alertView.alertCallback) {
 		alertView.alertCallback(alertView, buttonIndex);
 	}
+
+	GlobalModule.lastAlertTitle = nil;
+	GlobalModule.lastAlertMessage = nil;
 }
 
 @end
