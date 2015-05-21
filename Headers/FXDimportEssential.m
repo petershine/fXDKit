@@ -414,4 +414,25 @@
 	[colorAttributed addAttribute:NSForegroundColorAttributeName value:attributedColor range:substringRange];
 	self.attributedText = colorAttributed;
 }
+
+- (void)attributeUnderlineAndColor:(UIColor*)attributedColor forSubstring:(NSString*)substring {
+
+	if (substring.length == 0) {
+		return;
+	}
+
+
+	NSRange substringRange = [self.text rangeOfString:substring];
+
+	if (substringRange.location == NSNotFound) {
+		return;
+	}
+
+
+	NSMutableAttributedString *colorAttributed = [[NSMutableAttributedString alloc] initWithString:self.text];
+	[colorAttributed addAttribute:NSForegroundColorAttributeName value:attributedColor range:substringRange];
+	[colorAttributed addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:substringRange];
+	self.attributedText = colorAttributed;
+}
+
 @end

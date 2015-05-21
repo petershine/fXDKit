@@ -129,6 +129,7 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @interface UILabel (Essential)
 - (void)applyShadowColor:(UIColor*)shadowColor;
 - (void)attributeColor:(UIColor*)attributedColor forSubstring:(NSString*)substring;
+- (void)attributeUnderlineAndColor:(UIColor*)attributedColor forSubstring:(NSString*)substring;
 @end
 
 
