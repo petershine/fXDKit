@@ -398,6 +398,11 @@
 
 - (void)attributeColor:(UIColor*)attributedColor forSubstring:(NSString*)substring {
 
+	if (self.text == nil) {
+		return;
+	}
+	
+
 	if (substring.length == 0) {
 		return;
 	}
@@ -416,6 +421,11 @@
 }
 
 - (void)attributeUnderlineAndColor:(UIColor*)attributedColor forSubstring:(NSString*)substring {
+
+	if (self.text == nil) {
+		return;
+	}
+
 
 	if (substring.length == 0) {
 		return;
