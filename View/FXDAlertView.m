@@ -22,20 +22,6 @@
 #pragma mark - Public
 + (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
-	if ((GlobalModule.lastAlertTitle && [GlobalModule.lastAlertTitle isEqualToString:title])
-		&& (GlobalModule.lastAlertMessage && [GlobalModule.lastAlertMessage isEqualToString:message])) {
-
-		FXDLogObject(title);
-		FXDLogObject(message);
-
-		return nil;
-	}
-
-
-	GlobalModule.lastAlertTitle = title;
-	GlobalModule.lastAlertMessage = message;
-
-
 	__block FXDAlertView *alertView = nil;
 
 	[[NSOperationQueue mainQueue]
@@ -84,9 +70,6 @@
 	if (alertView.alertCallback) {
 		alertView.alertCallback(alertView, buttonIndex);
 	}
-
-	GlobalModule.lastAlertTitle = nil;
-	GlobalModule.lastAlertMessage = nil;
 }
 
 @end

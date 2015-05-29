@@ -188,28 +188,7 @@
 
 #pragma mark -
 - (void)logAboutReceiptDictionary:(NSDictionary*)receiptDictionary {	FXDLog_DEFAULT;
-	/*
-	 2013-12-05 21:05:46.917 PopToo[20934:60b] responseObject: {
-	 environment = Production;
-	 receipt =     {
-***REMOVED***
-	 "application_version" = "1.0.5";
-***REMOVED***
-	 "download_id" = 81004424696190;
-	 "in_app" =         (
-	 );
-	 "original_application_version" = "1.0.3";
-	 "original_purchase_date" = "2013-11-18 13:17:02 Etc/GMT";
-	 "original_purchase_date_ms" = 1384780622000;
-	 "original_purchase_date_pst" = "2013-11-18 05:17:02 America/Los_Angeles";
-	 "receipt_type" = Production;
-	 "request_date" = "2013-12-05 12:05:46 Etc/GMT";
-	 "request_date_ms" = 1386245146102;
-	 "request_date_pst" = "2013-12-05 04:05:46 America/Los_Angeles";
-	 };
-	 status = 0;
-	 }
-	 */
+
 #if USE_Flurry
 	NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:0];
 

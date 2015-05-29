@@ -5,54 +5,81 @@
 #import "FXDimportCore.h"
 
 
-//NOTE: For javascript alert,confirm
 @implementation UIWebView (JavaScriptResponding)
 
-NSInteger diagStat = 3;
+
+static BOOL _userConfirmedResponse = NO;
+static BOOL _shouldWaitForAlert = NO;
+
 
 - (void)webView:(UIWebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)webFrame {	FXDLog_DEFAULT;
 	FXDLogObject(message);
 	FXDLogObject(webFrame);
 
-	UIAlertView* customAlert = [[UIAlertView alloc]
-								initWithTitle:nil
-								message:message
-								delegate:nil
-								cancelButtonTitle:@"확인"
-								otherButtonTitles:nil];
-	[customAlert show];
+	_userConfirmedResponse = NO;
+	_shouldWaitForAlert = YES;
+
+
+	UIAlertView* webAlert = [[UIAlertView alloc] initWithTitle:nil
+													   message:message
+													  delegate:self
+											 cancelButtonTitle:nil
+											 otherButtonTitles:NSLocalizedString(@"확인", nil), nil];
+	[webAlert show];
+
+
+	while (_shouldWaitForAlert) {
+		[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:durationDefaultResponseWaiting]];
+	}
+
+	FXDLogBOOL(_shouldWaitForAlert);
+	FXDLogObject(@"ALERT CLOSED");
+
 }
 
 - (BOOL)webView:(UIWebView *)sender runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)webFrame {	FXDLog_DEFAULT;
 	FXDLogObject(message);
 	FXDLogObject(webFrame);
 
-	UIAlertView *confirmDiag = [[UIAlertView alloc]
-								initWithTitle:nil
-								message:message
-								delegate:self
-								cancelButtonTitle:@"예"
-								otherButtonTitles:@"아니오", nil];
-	[confirmDiag show];
+	_userConfirmedResponse = NO;
+	_shouldWaitForAlert = YES;
 
-	while (diagStat == 3) {
-		[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01f]];
+
+	UIAlertView *webConfirm = [[UIAlertView alloc] initWithTitle:nil
+														 message:message
+														delegate:self
+											   cancelButtonTitle:NSLocalizedString(@"아니오", nil)
+											   otherButtonTitles:NSLocalizedString(@"예", nil), nil];
+	[webConfirm show];
+
+
+	while (_shouldWaitForAlert) {
+		[[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:durationDefaultResponseWaiting]];
 	}
 
 
-	FXDLogVariable(diagStat);
+	FXDLogBOOL(_userConfirmedResponse);
+	FXDLogBOOL(_shouldWaitForAlert);
+	FXDLogObject(@"ALERT CLOSED");
 
-	if (diagStat == 0){
-		return YES;
-	}
-	else{
-		return NO;
-	}
+
+	return _userConfirmedResponse;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{	FXDLog_DEFAULT;
-	diagStat = buttonIndex;
-	FXDLogVariable(diagStat);
+//MARK: UIAlertViewDelegate
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+	FXDLogVariable(buttonIndex);
+	FXDLogBOOL(buttonIndex == alertView.cancelButtonIndex);
+
+	if (buttonIndex == alertView.cancelButtonIndex){
+		_userConfirmedResponse = NO;
+	}
+	else {
+		_userConfirmedResponse = YES;
+	}
+
+	_shouldWaitForAlert = NO;
 }
 
 @end

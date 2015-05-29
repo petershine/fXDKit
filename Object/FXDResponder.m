@@ -53,6 +53,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {	FXDLog_SEPARATE;
 
 #if DEBUG | ForDEVELOPER
+	/*
 	NSDictionary *parameters = @{@"sourceApplication":	(sourceApplication) ? sourceApplication:@"",
 								 @"annotation":	(annotation) ? annotation:@"",
 								 @"url":	(url.absoluteString) ? [url.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]:@"",
@@ -65,6 +66,7 @@
 	 message:[parameters description]
 	 cancelButtonTitle:nil
 	 withAlertCallback:nil];
+	 */
 #endif
 
 	FXDLogObject(url);
