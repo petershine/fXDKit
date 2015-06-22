@@ -54,7 +54,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+#endif
 	}
 
 	return [dateComponents year];
@@ -67,7 +69,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+#endif
 	}
 
 	return [dateComponents month];
@@ -80,7 +84,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit fromDate:self];
+#endif
 	}
 
 	return [dateComponents day];
@@ -126,7 +132,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
+#endif
 	}
 
 
@@ -143,7 +151,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:self];
+#endif
 	}
 
 	return [dateComponents hour];
@@ -156,7 +166,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMinute fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:self];
+#endif
 	}
 
 	return [dateComponents minute];
@@ -169,7 +181,9 @@
 		dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitSecond fromDate:self];
 	}
 	else {
+#ifndef __IPHONE_8_0
 		dateComponents = [[NSCalendar currentCalendar] components:NSSecondCalendarUnit fromDate:self];
+#endif
 	}
 
 	return [dateComponents second];

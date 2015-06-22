@@ -5,7 +5,7 @@
 
 
 #ifndef GlobalModule
-	#warning //TODO: Must define app's own GlobalModule
+//TODO: Must define app's own GlobalModule
 	#define GlobalModule	((<#FXDmoduleGlobal#>*)[<#FXDmoduleGlobal#> sharedInstance])
 #endif
 

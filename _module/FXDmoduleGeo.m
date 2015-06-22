@@ -75,9 +75,11 @@
 		}
 	}
 	else {
+#ifndef __IPHONE_8_0
 		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
 			isAuthorized = NO;
 		}
+#endif
 	}
 
 	FXDLogBOOL(isAuthorized);
@@ -235,9 +237,11 @@
 		}
 	}
 	else {
+#ifndef __IPHONE_8_0
 		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
 			isAuthorized = NO;
 		}
+#endif
 	}
 
 	if (isAuthorized == NO) {
