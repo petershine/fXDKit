@@ -162,22 +162,23 @@
 
 
 		 BOOL finished = NO;
+		 NSDictionary *receiptDictionary = nil;
 
 		 if ([jsonResponse[@"status"] integerValue] == 0) {
 			 finished = YES;
-
-			 NSDictionary *receiptDictionary = jsonResponse[@"receipt"];
-
-
-			 //TODO: Find the secure way to save the receipt
-			 [[NSUserDefaults standardUserDefaults] setObject:receiptDictionary forKey:userdefaultObjVerifiedReceipt];
-			 [[NSUserDefaults standardUserDefaults] synchronize];
-
-			 [self logAboutReceiptDictionary:receiptDictionary];
+			 receiptDictionary = jsonResponse[@"receipt"];
 		 }
 
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
+
+			  if (receiptDictionary) {
+				  [[NSUserDefaults standardUserDefaults] setObject:receiptDictionary forKey:userdefaultObjVerifiedReceipt];
+				  [[NSUserDefaults standardUserDefaults] synchronize];
+
+				  [self logAboutReceiptDictionary:receiptDictionary];
+			  }
+
 			  if (finishCallback) {
 				  finishCallback(_cmd, finished, nil);
 			  }
