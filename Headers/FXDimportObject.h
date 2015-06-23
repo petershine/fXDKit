@@ -4,7 +4,6 @@
 #define FXDKit_FXDimportObject_h
 
 
-#import "FXDsuperModule.h"
 #import "FXDResponder.h"
 
 #import "FXDString.h"

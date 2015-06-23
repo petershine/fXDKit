@@ -43,6 +43,10 @@
 	#import <GPUImage.h>
 #endif
 
+#if USE_SocialFrameworks
+	#import <FacebookSDK/FacebookSDK.h>
+#endif
+
 
 #if USE_LocationFrameworks
 	@import CoreLocation;
@@ -86,10 +90,6 @@
 	- (void)disableAudioPlaybackCategory;
 	@end
 
-#endif
-
-#if USE_SocialFrameworks
-	#import <FacebookSDK/FacebookSDK.h>
 #endif
 
 

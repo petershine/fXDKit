@@ -33,6 +33,7 @@
 @end
 
 
+#import "FXDsuperModule.h"
 @interface FXDmoduleGPU : FXDsuperModule {
 	NSInteger _currentFilterIndex;
 
