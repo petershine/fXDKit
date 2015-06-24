@@ -7,6 +7,14 @@
 @import UIKit;
 @import Foundation;
 
+#import <objc/runtime.h>
+#import <stdarg.h>
+#import <sys/utsname.h>
+
+#import <Availability.h>
+#import <TargetConditionals.h>
+
+
 #import "FXDconfigDeveloper.h"
 
 #import "FXDmacroValue.h"

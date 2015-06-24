@@ -4,14 +4,6 @@
 #define FXDKit_FXDimportEssential_h
 
 
-#import <objc/runtime.h>
-#import <stdarg.h>
-#import <sys/utsname.h>
-
-#import <Availability.h>
-#import <TargetConditionals.h>
-
-
 @import UIKit;
 @import Foundation;
 
