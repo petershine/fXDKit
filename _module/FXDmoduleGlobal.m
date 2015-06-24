@@ -348,22 +348,20 @@
 	//NOTE: Use different locale for future reuse
 	NSString *requestPath = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL evaluatedURLforPath:requestPath]];
-	FXDLogObject(request);
+	NSURLRequest *evaluationRequest = [NSURLRequest requestWithURL:[NSURL evaluatedURLforPath:requestPath]];
+	FXDLogObject(evaluationRequest);
 
-	NSOperationQueue *networkingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 
-	[NSURLConnection
-	 sendAsynchronousRequest:request
-	 queue:networkingQueue
-	 completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
-		 FXDLog_BLOCK(NSURLConnection, @selector(sendAsynchronousRequest:queue:completionHandler:));
-		 FXDLogVariable(data.length);
+	[[NSURLSession sharedSession]
+	 dataTaskWithRequest:evaluationRequest
+	 completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
+		 FXDLog_BLOCK(NSURLSession, @selector(dataTaskWithRequest:completionHandler:));
 
-		 NSError *error = connectionError;
 		 FXDLog_ERROR;
 
-		 if (connectionError || data.length == 0) {
+		 FXDLogVariable(data.length);
+
+		 if (error || data.length == 0) {
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
 				  if (finishCallback) {

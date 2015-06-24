@@ -3,6 +3,8 @@
 @import UIKit;
 @import Foundation;
 
+#import "FXDmacroFunction.h"
+
 
 @interface NSMetadataQuery (Essential)
 - (BOOL)isQueryResultsTransferring;

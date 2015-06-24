@@ -122,18 +122,13 @@
 	[validationRequest setHTTPBody:jsonData];
 
 
-	NSOperationQueue *validationQueue = [NSOperationQueue newSerialQueue];
-
-	[NSURLConnection
-	 sendAsynchronousRequest:validationRequest
-	 queue:validationQueue
-	 completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-		 FXDLog_BLOCK(NSURLConnection, @selector(sendAsynchronousRequest:queue:completionHandler:));
-
-		 NSError *error = connectionError;
+	[[NSURLSession sharedSession]
+	 dataTaskWithRequest:validationRequest
+	 completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
+		 FXDLog_BLOCK(NSURLSession, @selector(dataTaskWithRequest:completionHandler:));
 		 FXDLog_ERROR;
 
-		 if (connectionError) {
+		 if (error) {
 			 [[NSOperationQueue mainQueue]
 			  addOperationWithBlock:^{
 				  if (finishCallback) {
@@ -183,6 +178,7 @@
 				  finishCallback(_cmd, finished, nil);
 			  }
 		  }];
+
 	 }];
 }
 

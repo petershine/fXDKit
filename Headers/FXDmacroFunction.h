@@ -25,6 +25,7 @@
 #define application_DisplayName			[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
 
 
+#define iosVersion9	9.0
 #define iosVersion8	8.0
 #define iosVersion7	7.0
 

@@ -45,7 +45,23 @@
 }
 
 - (NSString*)unicodeAbsoluteString {
-	return [[self absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+	NSString *unicodeString = nil;
+
+#ifdef __IPHONE_9_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+		unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
+	}
+	else {
+#endif
+
+		unicodeString = [self.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+#ifdef __IPHONE_9_0
+	}
+#endif
+
+	return unicodeString;
 }
 
 - (NSDate*)attributeModificationDate {
@@ -194,7 +210,7 @@
 	NSArray *componentArray = [requestPath componentsSeparatedByString:@"%"];
 
 	if (componentArray.count < 2) {
-		requestPath = [requestPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		requestPath = [requestPath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 
 		evaluatedURL = [self URLWithString:requestPath];
 
@@ -216,7 +232,7 @@
 		}
 
 
-		NSString *escaped = [component stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString *escaped = [component stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 		FXDLog(@"%ld:\n%@\n%@", (unsigned long)[componentArray indexOfObject:component], component, escaped);
 
 		wholeEscaped = [wholeEscaped stringByAppendingString:escaped];

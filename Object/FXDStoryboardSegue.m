@@ -82,8 +82,7 @@
 
 		if ([self.destinationViewController isKindOfClass:[UINavigationController class]] == NO
 			&& [self.destinationViewController isKindOfClass:[UITabBarController class]] == NO
-			&& [self.destinationViewController isKindOfClass:[UISplitViewController class]] == NO
-			&& [self.destinationViewController isKindOfClass:[UIPopoverController class]] == NO) {
+			&& [self.destinationViewController isKindOfClass:[UISplitViewController class]] == NO) {
 
 			shouldUseNavigationPush = YES;
 		}

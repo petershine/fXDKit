@@ -63,7 +63,24 @@
 }
 
 - (NSString*)unicodeAbsoluteString {
-	return [[[self valueForAttribute:NSMetadataItemURLKey] absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	NSURL *metadataItemURL = [self valueForAttribute:NSMetadataItemURLKey];
+
+	NSString *unicodeString = nil;
+
+#ifdef __IPHONE_9_0
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+		unicodeString = [metadataItemURL.absoluteString stringByRemovingPercentEncoding];
+	}
+	else {
+#endif
+
+		unicodeString = [metadataItemURL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+#ifdef __IPHONE_9_0
+	}
+#endif
+
+	return unicodeString;
 }
 
 - (NSDate*)attributeModificationDate {

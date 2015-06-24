@@ -91,7 +91,7 @@
 
 	FXDLogObject(mailBody);
 
-	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
+	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithNavigationBarClass:nil toolbarClass:nil];
 	[emailScene setSubject:subjectLine];
 	[emailScene setToRecipients:toRecipients];
 	[emailScene setMessageBody:mailBody isHTML:NO];
@@ -101,7 +101,7 @@
 
 - (MFMailComposeViewController*)emailSceneForSharingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
 
-	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithRootViewController:nil];
+	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithNavigationBarClass:nil toolbarClass:nil];
 	[emailScene setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayName]];
 
 	if (image) {

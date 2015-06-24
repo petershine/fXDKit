@@ -52,23 +52,6 @@
 #pragma mark -
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {	FXDLog_SEPARATE;
 
-#if DEBUG | ForDEVELOPER
-	/*
-	NSDictionary *parameters = @{@"sourceApplication":	(sourceApplication) ? sourceApplication:@"",
-								 @"annotation":	(annotation) ? annotation:@"",
-								 @"url":	(url.absoluteString) ? [url.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]:@"",
-								 @"url.scheme":	(url.scheme) ? url.scheme:@"",};
-
-	FXDLogObject(parameters);
-
-	[FXDAlertView
-	 showAlertWithTitle:nil
-	 message:[parameters description]
-	 cancelButtonTitle:nil
-	 withAlertCallback:nil];
-	 */
-#endif
-
 	FXDLogObject(url);
 	FXDLogObject(sourceApplication);
 	FXDLogObject(annotation);
@@ -127,15 +110,27 @@
 
 @implementation UIResponder (Added)
 - (void)executeOperationsForApplication:(UIApplication*)application withLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+
 	if (launchOptions[UIApplicationLaunchOptionsURLKey]
 		|| launchOptions[UIApplicationLaunchOptionsSourceApplicationKey]
 		|| launchOptions[UIApplicationLaunchOptionsAnnotationKey]) {
 
 		NSURL *url = launchOptions[UIApplicationLaunchOptionsURLKey];
-		NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
-		id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
 
-		[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+#ifdef __IPHONE_9_0
+		if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+			[self application:application openURL:url options:nil];
+		}
+		else {
+#endif
+			NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
+			id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
+
+			[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+
+#ifdef __IPHONE_9_0
+		}
+#endif
 	}
 
 	UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];

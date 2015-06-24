@@ -108,9 +108,12 @@
 	return shouldAutorotate;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {	//FXDLog_DEFAULT;
-	NSUInteger supportedInterface = [super supportedInterfaceOrientations];
-	//FXDLogVariable(supportedInterface);
+#ifdef __IPHONE_9_0
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+#else
+- (NSUInteger)supportedInterfaceOrientations {
+#endif
+	UIInterfaceOrientationMask supportedInterface = [super supportedInterfaceOrientations];
 
 	return supportedInterface;
 }
