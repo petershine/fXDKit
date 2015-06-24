@@ -1,4 +1,4 @@
-
+#ifndef __IPHONE_9_0
 
 @import AssetsLibrary;
 
@@ -17,3 +17,5 @@
 - (void)assetsArrayFromGroup:(ALAssetsGroup*)group withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 @end
+
+#endif
