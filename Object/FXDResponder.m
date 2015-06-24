@@ -120,20 +120,19 @@
 		NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
 		id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
 		
-#ifdef __IPHONE_9_0
 		if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+			#ifdef __IPHONE_9_0
 			NSDictionary *openOptions = @{UIApplicationOpenURLOptionsSourceApplicationKey:sourceApplication,
 										  UIApplicationOpenURLOptionsAnnotationKey:annotation};
 
 			[self application:application openURL:url options:openOptions];
+			#endif
 		}
 		else {
-#endif
+			#ifndef __IPHONE_9_0
 			[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
-
-#ifdef __IPHONE_9_0
+			#endif
 		}
-#endif
 	}
 
 	UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];

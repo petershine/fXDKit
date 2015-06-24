@@ -105,18 +105,16 @@
 
 	NSString *unicodeString = nil;
 
-#ifdef __IPHONE_9_0
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+		#ifdef __IPHONE_9_0
 		unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
+		#endif
 	}
 	else {
-#endif
-
+		#ifndef __IPHONE_9_0
 		unicodeString = [self.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-#ifdef __IPHONE_9_0
+		#endif
 	}
-#endif
 
 	return unicodeString;
 }
