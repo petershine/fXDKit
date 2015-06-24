@@ -13,9 +13,6 @@
 #import "FXDImageView.h"
 #import "FXDTableViewCell.h"
 
-#import "FXDAlertView.h"
-#import "FXDActionSheet.h"
-
 #import "FXDScrollView.h"
 #import "FXDWebView.h"
 
@@ -24,6 +21,7 @@
 
 #pragma mark - ViewController
 #import "FXDViewController.h"
+#import "FXDAlertController.h"
 
 
 #endif
