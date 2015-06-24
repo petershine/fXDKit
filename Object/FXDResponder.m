@@ -110,22 +110,25 @@
 
 @implementation UIResponder (Added)
 - (void)executeOperationsForApplication:(UIApplication*)application withLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+	FXDLogObject(launchOptions);
 
 	if (launchOptions[UIApplicationLaunchOptionsURLKey]
 		|| launchOptions[UIApplicationLaunchOptionsSourceApplicationKey]
 		|| launchOptions[UIApplicationLaunchOptionsAnnotationKey]) {
 
 		NSURL *url = launchOptions[UIApplicationLaunchOptionsURLKey];
-
+		NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
+		id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
+		
 #ifdef __IPHONE_9_0
 		if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-			[self application:application openURL:url options:nil];
+			NSDictionary *openOptions = @{UIApplicationOpenURLOptionsSourceApplicationKey:sourceApplication,
+										  UIApplicationOpenURLOptionsAnnotationKey:annotation};
+
+			[self application:application openURL:url options:openOptions];
 		}
 		else {
 #endif
-			NSString *sourceApplication = launchOptions[UIApplicationLaunchOptionsSourceApplicationKey];
-			id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
-
 			[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 
 #ifdef __IPHONE_9_0

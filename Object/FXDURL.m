@@ -37,11 +37,68 @@
 	NSMutableDictionary *resourceValues = [[NSMutableDictionary alloc] initWithDictionary:[self resourceValuesForUbiquitousItemKeysWithError:&error]];
 	FXDLog_ERROR;
 
+
+	NSArray *resourceKeys =
+	@[NSURLNameKey,
+	  NSURLLocalizedNameKey,
+
+	  NSURLIsRegularFileKey,
+	  NSURLIsDirectoryKey,
+	  NSURLIsSymbolicLinkKey,
+	  NSURLIsVolumeKey,
+	  NSURLIsPackageKey,
+
+	  NSURLIsSystemImmutableKey,
+	  NSURLIsUserImmutableKey,
+	  NSURLIsHiddenKey,
+
+	  NSURLHasHiddenExtensionKey,
+
+	  NSURLCreationDateKey,
+	  NSURLContentAccessDateKey,
+	  NSURLContentModificationDateKey,
+	  NSURLAttributeModificationDateKey,
+
+	  NSURLLinkCountKey,
+	  NSURLParentDirectoryURLKey,
+	  NSURLVolumeURLKey,
+
+	  NSURLTypeIdentifierKey,
+	  NSURLLocalizedTypeDescriptionKey,
+
+	  NSURLFileResourceIdentifierKey,
+	  NSURLVolumeIdentifierKey,
+	  NSURLPreferredIOBlockSizeKey,
+
+	  NSURLIsReadableKey,
+	  NSURLIsWritableKey,
+	  NSURLIsExecutableKey,
+	  NSURLFileSecurityKey,
+	  NSURLIsExcludedFromBackupKey,
+
+	  NSURLPathKey,
+
+	  NSURLFileResourceTypeKey,
+
+	  NSURLFileSizeKey,
+	  NSURLFileAllocatedSizeKey,
+	  NSURLTotalFileSizeKey,
+	  NSURLTotalFileAllocatedSizeKey,
+
+	  NSURLIsAliasFileKey,
+
+	  NSURLFileProtectionKey,
+	  NSURLFileProtectionNone,
+	  NSURLFileProtectionComplete,
+	  NSURLFileProtectionCompleteUnlessOpen,
+	  NSURLFileProtectionCompleteUntilFirstUserAuthentication,
+	  ];
+
 	error = nil;
-	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:nil error:&error]];
+	[resourceValues setValuesForKeysWithDictionary:[self resourceValuesForKeys:resourceKeys error:&error]];
 	FXDLog_ERROR;
 	
-	return resourceValues;	
+	return [resourceValues copy];
 }
 
 - (NSString*)unicodeAbsoluteString {
