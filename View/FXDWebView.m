@@ -20,11 +20,12 @@ static BOOL _shouldWaitForAlert = NO;
 	_shouldWaitForAlert = YES;
 
 
-	UIAlertView* webAlert = [[UIAlertView alloc] initWithTitle:nil
-													   message:message
-													  delegate:self
-											 cancelButtonTitle:nil
-											 otherButtonTitles:NSLocalizedString(@"확인", nil), nil];
+	UIAlertView *webAlert = [[UIAlertView alloc]
+							 initWithTitle:nil
+							 message:message
+							 delegate:self
+							 cancelButtonTitle:nil
+							 otherButtonTitles:NSLocalizedString(@"확인", nil), nil];
 	[webAlert show];
 
 
@@ -45,11 +46,12 @@ static BOOL _shouldWaitForAlert = NO;
 	_shouldWaitForAlert = YES;
 
 
-	UIAlertView *webConfirm = [[UIAlertView alloc] initWithTitle:nil
-														 message:message
-														delegate:self
-											   cancelButtonTitle:NSLocalizedString(@"아니오", nil)
-											   otherButtonTitles:NSLocalizedString(@"예", nil), nil];
+	UIAlertView *webConfirm = [[UIAlertView alloc]
+							   initWithTitle:nil
+							   message:message
+							   delegate:self
+							   cancelButtonTitle:NSLocalizedString(@"아니오", nil)
+							   otherButtonTitles:NSLocalizedString(@"예", nil), nil];
 	[webConfirm show];
 
 

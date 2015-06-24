@@ -4,6 +4,14 @@
 #define FXDKit_FXDimportEssential_h
 
 
+#import <objc/runtime.h>
+#import <stdarg.h>
+#import <sys/utsname.h>
+
+#import <Availability.h>
+#import <TargetConditionals.h>
+
+
 @import UIKit;
 @import Foundation;
 
@@ -21,13 +29,6 @@
 @import MessageUI;
 @import Accounts;
 @import Social;
-
-#import <objc/runtime.h>
-#import <stdarg.h>
-#import <sys/utsname.h>
-
-#import <Availability.h>
-#import <TargetConditionals.h>
 
 
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
