@@ -86,12 +86,6 @@
 	  NSURLTotalFileAllocatedSizeKey,
 
 	  NSURLIsAliasFileKey,
-
-	  NSURLFileProtectionKey,
-	  NSURLFileProtectionNone,
-	  NSURLFileProtectionComplete,
-	  NSURLFileProtectionCompleteUnlessOpen,
-	  NSURLFileProtectionCompleteUntilFirstUserAuthentication,
 	  ];
 
 	error = nil;
