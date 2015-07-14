@@ -122,6 +122,7 @@
 	[validationRequest setHTTPBody:jsonData];
 
 
+	NSURLSessionDataTask *validationTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:validationRequest
 	 completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
@@ -178,8 +179,9 @@
 				  finishCallback(_cmd, finished, nil);
 			  }
 		  }];
-
 	 }];
+
+	[validationTask resume];
 }
 
 

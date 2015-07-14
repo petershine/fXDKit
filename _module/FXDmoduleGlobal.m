@@ -352,6 +352,7 @@
 	FXDLogObject(evaluationRequest);
 
 
+	NSURLSessionDataTask *evaluationSessionTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:evaluationRequest
 	 completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
@@ -407,6 +408,8 @@
 			  }
 		  }];
 	 }];
+
+	[evaluationSessionTask resume];
 }
 
 #pragma mark -
