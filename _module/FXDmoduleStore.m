@@ -125,17 +125,19 @@
 	NSURLSessionDataTask *validationTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:validationRequest
-	 completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
-		 FXDLog_BLOCK(NSURLSession, @selector(dataTaskWithRequest:completionHandler:));
+	 completionHandler:^(NSData * __nullable data,
+						 NSURLResponse * __nullable response,
+						 NSError * __nullable error) {	FXDLog_BLOCK(self, _cmd);
+		 FXDLogObject(response);
 		 FXDLog_ERROR;
 
 		 if (error) {
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  if (finishCallback) {
+			 if (finishCallback) {
+				 [[NSOperationQueue mainQueue]
+				  addOperationWithBlock:^{
 					  finishCallback(_cmd, NO, nil);
-				  }
-			  }];
+				  }];
+			 }
 			 return;
 		 }
 
@@ -147,12 +149,12 @@
 		 FXDLogObject(jsonResponse);
 
 		 if (jsonResponse == nil) {
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  if (finishCallback) {
+			 if (finishCallback) {
+				 [[NSOperationQueue mainQueue]
+				  addOperationWithBlock:^{
 					  finishCallback(_cmd, NO, nil);
-				  }
-			  }];
+				  }];
+			 }
 			 return;
 		 }
 

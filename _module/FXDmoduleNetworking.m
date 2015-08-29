@@ -1,4 +1,3 @@
-#if USE_AFNetworking
 
 
 #import "FXDmoduleNetworking.h"
@@ -41,25 +40,45 @@
 	}
 
 
-	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:searchRequest];
-	operation.responseSerializer = [AFJSONResponseSerializer serializer];
-
-	[operation
-	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		 NSMutableArray *collectedItemArray = [self collectedItemArrayFromJSONobj:responseObject];
-
-		 if (didCollectBlock) {
-			 didCollectBlock(collectedItemArray);
-		 }
-	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+	NSURLSessionTask *searchTask =
+	[[NSURLSession sharedSession]
+	 dataTaskWithRequest:searchRequest
+	 completionHandler:^(NSData * _Nullable data,
+						 NSURLResponse * _Nullable response,
+						 NSError * _Nullable error) {	FXDLog_BLOCK(self, _cmd);
+		 FXDLogObject(response);
 		 FXDLog_ERROR;
 
+		 if (error != nil) {
+			 if (didCollectBlock) {
+				 [[NSOperationQueue mainQueue]
+				  addOperationWithBlock:^{
+					  didCollectBlock(nil);
+				  }];
+			 }
+			 return;
+		 }
+
+
+		 NSError *serializationError = nil;
+
+		 id responseJSON = [NSJSONSerialization
+							JSONObjectWithData:data
+							options:NSJSONReadingMutableContainers
+							error:&serializationError];
+		 FXDLogObject(serializationError);
+
+		 NSMutableArray *collectedItemArray = [self collectedItemArrayFromJSONobj:responseJSON];
+
 		 if (didCollectBlock) {
-			 didCollectBlock(nil);
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
+				  didCollectBlock(collectedItemArray);
+			  }];
 		 }
 	 }];
 
-	[operation start];
+	[searchTask resume];
 }
 
 - (NSURLRequest*)requestWithQueryText:(NSString*)queryText {
@@ -105,60 +124,4 @@
 	return item;
 }
 
-#pragma mark -
-- (void)startRequestOperationWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock {	FXDLog_DEFAULT;
-
-	FXDLogObject(method);
-	FXDLogObject(urlString);
-	FXDLogObject(parameters);
-	FXDLogObject(contentTypes);
-
-	NSError *error = nil;
-	NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]
-									requestWithMethod:method
-									URLString:urlString
-									parameters:parameters
-									error:&error];FXDLog_ERROR;
-
-	AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc]
-												initWithRequest:request];
-
-	requestOperation.responseSerializer = [AFCompoundResponseSerializer
-										   compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer]]];
-
-	NSMutableSet *modifiedSet = [requestOperation.responseSerializer.acceptableContentTypes mutableCopy];
-	[modifiedSet addObjectsFromArray:contentTypes];
-	requestOperation.responseSerializer.acceptableContentTypes = modifiedSet;
-
-
-	[requestOperation
-	 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
-
-		 FXDLogVariable(operation.response.statusCode);
-		 FXDLogObject(operation.response.allHeaderFields);
-		 FXDLogObject(responseObject);
-
-		 if (successBlock) {
-			 successBlock(operation, responseObject);
-		 }
-
-	 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		 FXDLog_BLOCK(operation, @selector(setCompletionBlockWithSuccess:failure:));
-
-		 FXDLogVariable(operation.response.statusCode);
-		 FXDLogObject(operation.response.allHeaderFields);
-		 FXDLog_ERROR;
-
-		 if (failureBlock) {
-			 failureBlock(operation, error);
-		 }
-	 }];
-
-	[[AFHTTPRequestOperationManager manager].operationQueue
-	 addOperation:requestOperation];
-}
 @end
-
-
-#endif

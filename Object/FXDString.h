@@ -12,4 +12,6 @@
 
 - (NSString*)stringByCompressingWhitespaceTo:(NSString*)seperator;
 
+- (NSString*)stringByAppendURLparameters:(NSDictionary*)parameters;
+
 @end

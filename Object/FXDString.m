@@ -70,7 +70,7 @@
 	return alignedParagraph;
 }
 
-- (NSString*)stringByCompressingWhitespaceTo:(NSString*)seperator; {
+- (NSString*)stringByCompressingWhitespaceTo:(NSString*)seperator {
 
 	NSArray *separated = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
@@ -83,6 +83,37 @@
 	}
 
 	return [combined componentsJoinedByString:seperator];
+}
+
+- (NSString*)stringByAppendURLparameters:(NSDictionary*)parameters {
+	if (parameters.count == 0) {
+		return self;
+	}
+
+
+	NSMutableArray *parameterComponents = [[NSMutableArray alloc] initWithCapacity:0];
+
+	for (NSString *key in parameters.allKeys) {
+		id value = parameters[key];
+
+		if ([value isKindOfClass:[NSString class]]) {
+			NSString *component = [NSString stringWithFormat:@"%@=%@",
+								   [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+								   [(NSString*)value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+			[parameterComponents addObject:component];
+		}
+	}
+
+	if (parameterComponents.count == 0) {
+		return self;
+	}
+
+
+	NSString *queryString = [self stringByAppendingString:@"?"];
+	queryString = [self stringByAppendingString:[parameterComponents componentsJoinedByString:@"&"]];
+
+	return queryString;
 }
 
 @end

@@ -163,34 +163,48 @@
 @end
 
 
-#if USE_AFNetworking
 @implementation UIImageView (Asynchronous)
 - (void)asynchronousUpdateWithImageURL:(NSURL*)imageURL placeholderImage:(UIImage*)placeholderImage withCallback:(FXDcallbackFinish)finishCallback {
 
-	NSMutableURLRequest *imageRequest = [[NSMutableURLRequest alloc] initWithURL:imageURL];
-
-
 	__weak UIImageView *weakSelf = self;
 
-	[self
-	 setImageWithURLRequest:imageRequest
-	 placeholderImage:placeholderImage
-	 success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+	NSMutableURLRequest *imageRequest = [[NSMutableURLRequest alloc] initWithURL:imageURL];
 
-		 __strong UIImageView *strongSelf = weakSelf;
+	NSURLSessionTask *imageRequestTask =
+	[[NSURLSession sharedSession]
+	 dataTaskWithRequest:imageRequest
+	 completionHandler:^(NSData * _Nullable data,
+						 NSURLResponse * _Nullable response,
+						 NSError * _Nullable error) {
 
-		 strongSelf.image = image;
+		 if (error != nil) {	FXDLog_BLOCK(self, _cmd);
+			 FXDLogObject(response);
+			 FXDLog_ERROR;
+
+			 if (finishCallback) {
+				 finishCallback(_cmd, NO, nil);
+			 }
+			 return;
+		 }
+
+
+		 UIImage *image = [[UIImage alloc]
+						   initWithData:data
+						   scale:[UIScreen mainScreen].scale];
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, YES, image);
 		 }
 
-	 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 
-		 if (finishCallback) {
-			 finishCallback(_cmd, NO, nil);
-		 }
+		 [[NSOperationQueue mainQueue]
+		  addOperationWithBlock:^{
+			  __strong UIImageView *strongSelf = weakSelf;
+
+			  strongSelf.image = image;
+		  }];
 	 }];
+
+	[imageRequestTask resume];
 }
 @end
-#endif

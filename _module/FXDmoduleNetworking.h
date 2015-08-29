@@ -1,4 +1,3 @@
-#if USE_AFNetworking
 
 
 #import "FXDsuperModule.h"
@@ -18,9 +17,4 @@
 - (NSMutableArray*)collectedItemArrayFromJSONobj:(id)jsonObj;
 - (id)simplerItemFromItem:(id)item;
 
-- (void)startRequestOperationWithMethod:(NSString*)method withURLString:(NSString*)urlString withParameters:(NSDictionary*)parameters forContentTypes:(NSArray*)contentTypes withSuccessBlock:(void (^)(AFHTTPRequestOperation *operation, id responseObject))successBlock withFailureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
-
 @end
-
-
-#endif

@@ -904,34 +904,36 @@
 				  parameters[objkeyFacebookAccessToken] = self.currentPageAccessToken;
 				  FXDLog(@"2.PostWithLink parameters: %@", parameters);
 
-				  NSError *error = nil;
-				  NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]
-												  requestWithMethod:@"POST"
-												  URLString:urlstringFacebook(graphPath)
-												  parameters:parameters
-												  error:&error];FXDLog_ERROR;
-				  FXDLogObject(request);
+				  NSString *requestQuery = [urlstringFacebook(graphPath) stringByAppendURLparameters:parameters];
+				  NSURL *requestURL = [NSURL URLWithString:requestQuery];
 
-				  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-				  operation.responseSerializer = [AFJSONResponseSerializer serializer];
+				  NSMutableURLRequest *facebookRequest = [[NSMutableURLRequest alloc] initWithURL:requestURL];
+				  facebookRequest.HTTPMethod = @"POST";
 
-				  [operation
-				   setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-					   FXDLogObject(responseObject);
+				  FXDLogObject(facebookRequest);
 
-					   if (finishCallback) {
-						   finishCallback(_cmd, YES, nil);
-					   }
-				   }
-				   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+				  NSURLSessionTask *facebookTask =
+				  [[NSURLSession sharedSession]
+				   dataTaskWithRequest:facebookRequest
+				   completionHandler:^(NSData * _Nullable data,
+									   NSURLResponse * _Nullable response,
+									   NSError * _Nullable error) {	FXDLog_BLOCK(self, _cmd);
+					   FXDLogObject(response);
 					   FXDLog_ERROR;
 
+#if	ForDEVELOPER
+					   if (data.length > 0) {
+						   NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+						   FXDLogObject(responseString);
+					   }
+#endif
+
 					   if (finishCallback) {
-						   finishCallback(_cmd, NO, nil);
+						   finishCallback(_cmd, (error == nil), nil);
 					   }
 				   }];
 
-				  [operation start];
+				  [facebookTask resume];
 			  }];
 		 };
 

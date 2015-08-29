@@ -355,20 +355,21 @@
 	NSURLSessionDataTask *evaluationSessionTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:evaluationRequest
-	 completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
-		 FXDLog_BLOCK(NSURLSession, @selector(dataTaskWithRequest:completionHandler:));
-
+	 completionHandler:^(NSData * __nullable data,
+						 NSURLResponse * __nullable response,
+						 NSError * __nullable error) {	FXDLog_BLOCK(self, _cmd);
+		 FXDLogObject(response);
 		 FXDLog_ERROR;
 
 		 FXDLogVariable(data.length);
 
 		 if (error || data.length == 0) {
-			 [[NSOperationQueue mainQueue]
-			  addOperationWithBlock:^{
-				  if (finishCallback) {
+			 if (finishCallback) {
+				 [[NSOperationQueue mainQueue]
+				  addOperationWithBlock:^{
 					  finishCallback(_cmd, NO, nil);
-				  }
-			  }];
+				  }];
+			 }
 			 return;
 		 }
 
@@ -401,12 +402,12 @@
 		 BOOL shouldAlert = (appStoreVersion && (currentVersionInteger < appStoreVersionInteger));
 		 FXDLogBOOL(shouldAlert);
 
-		 [[NSOperationQueue mainQueue]
-		  addOperationWithBlock:^{
-			  if (finishCallback) {
+		 if (finishCallback) {
+			 [[NSOperationQueue mainQueue]
+			  addOperationWithBlock:^{
 				  finishCallback(_cmd, shouldAlert, appStoreVersion);
-			  }
-		  }];
+			  }];
+		 }
 	 }];
 
 	[evaluationSessionTask resume];

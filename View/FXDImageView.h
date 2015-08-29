@@ -14,8 +14,6 @@
 @end
 
 
-#if USE_AFNetworking
 @interface UIImageView (Asynchronous)
 - (void)asynchronousUpdateWithImageURL:(NSURL*)imageURL placeholderImage:(UIImage*)placeholderImage withCallback:(FXDcallbackFinish)finishCallback;
 @end
-#endif
