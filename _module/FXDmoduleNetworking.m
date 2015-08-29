@@ -43,9 +43,9 @@
 	NSURLSessionTask *searchTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:searchRequest
-	 completionHandler:^(NSData * _Nullable data,
-						 NSURLResponse * _Nullable response,
-						 NSError * _Nullable error) {	FXDLog_BLOCK(self, _cmd);
+	 completionHandler:^(NSData *data,
+						 NSURLResponse *response,
+						 NSError *error) {	FXDLog_BLOCK(self, _cmd);
 		 FXDLogObject(response);
 		 FXDLog_ERROR;
 

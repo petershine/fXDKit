@@ -125,9 +125,9 @@
 	NSURLSessionDataTask *validationTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:validationRequest
-	 completionHandler:^(NSData * __nullable data,
-						 NSURLResponse * __nullable response,
-						 NSError * __nullable error) {	FXDLog_BLOCK(self, _cmd);
+	 completionHandler:^(NSData *data,
+						 NSURLResponse *response,
+						 NSError *error) {	FXDLog_BLOCK(self, _cmd);
 		 FXDLogObject(response);
 		 FXDLog_ERROR;
 

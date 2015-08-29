@@ -173,9 +173,9 @@
 	NSURLSessionTask *imageRequestTask =
 	[[NSURLSession sharedSession]
 	 dataTaskWithRequest:imageRequest
-	 completionHandler:^(NSData * _Nullable data,
-						 NSURLResponse * _Nullable response,
-						 NSError * _Nullable error) {
+	 completionHandler:^(NSData *data,
+						 NSURLResponse *response,
+						 NSError *error) {
 
 		 if (error != nil) {	FXDLog_BLOCK(self, _cmd);
 			 FXDLogObject(response);
