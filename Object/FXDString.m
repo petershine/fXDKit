@@ -111,6 +111,8 @@
 
 
 	NSString *queryString = [self stringByAppendingString:@"?"];
+	if (queryString) {	}
+	
 	queryString = [self stringByAppendingString:[parameterComponents componentsJoinedByString:@"&"]];
 
 	return queryString;
