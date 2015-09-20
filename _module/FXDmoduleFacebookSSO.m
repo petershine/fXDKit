@@ -120,6 +120,7 @@
 	[FBSession
 	 openActiveSessionWithReadPermissions:nil
 	 allowLoginUI:YES
+	 fromViewController:nil
 	 completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
 		 FXDLog_BLOCK(FBSession, @selector(openActiveSessionWithReadPermissions:allowLoginUI:completionHandler:));
 
@@ -400,6 +401,7 @@
 
 		[[FBSession activeSession]
 		 openWithBehavior:self.sessionLoginBehavior
+		 fromViewController:nil
 		 completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
 			 FXDLog_BLOCK([FBSession activeSession], @selector(openWithBehavior:completionHandler:));
 
