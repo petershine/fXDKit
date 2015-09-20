@@ -110,10 +110,9 @@
 	}
 
 
-	NSString *queryString = [self stringByAppendingString:@"?"];
-	if (queryString) {	}
-	
-	queryString = [self stringByAppendingString:[parameterComponents componentsJoinedByString:@"&"]];
+	NSString *joinedParameters = [parameterComponents componentsJoinedByString:@"&"];
+
+	NSString *queryString = [NSString stringWithFormat:@"%@?%@", self, joinedParameters];
 
 	return queryString;
 }
