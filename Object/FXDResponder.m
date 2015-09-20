@@ -2,8 +2,6 @@
 
 #import "FXDResponder.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation FXDResponder
 

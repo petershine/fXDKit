@@ -2,8 +2,6 @@
 
 #import "FXDScrollView.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation UIScrollView (Essential)
 - (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;

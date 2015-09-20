@@ -2,8 +2,6 @@
 
 #import "FXDTableViewCell.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation FXDTableViewCell
 

@@ -13,7 +13,10 @@
 #endif
 
 
+#import "FXDimportCore.h"
+
 @import CoreData;
+
 
 @interface NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit;

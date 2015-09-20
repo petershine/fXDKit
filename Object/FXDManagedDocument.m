@@ -2,8 +2,6 @@
 
 #import "FXDManagedDocument.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation FXDManagedDocument
 

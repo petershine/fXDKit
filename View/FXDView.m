@@ -2,8 +2,6 @@
 
 #import "FXDView.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation FXDpassthroughView
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {

@@ -1,8 +1,9 @@
 
-@import UIKit;
-@import Foundation;
 
 #import "FXDimportCore.h"
+
+@import UIKit;
+@import Foundation;
 
 
 @class FXDsceneLaunching;

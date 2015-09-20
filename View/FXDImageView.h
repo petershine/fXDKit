@@ -2,6 +2,8 @@
 @import UIKit;
 @import Foundation;
 
+#import "FXDimportCore.h"
+
 
 @interface UIImageView (Essential)
 - (void)modifyHeightForContainedImage;

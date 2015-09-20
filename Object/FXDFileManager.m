@@ -2,8 +2,6 @@
 
 #import "FXDFileManager.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation NSFileManager (Essential)
 - (NSString*)prepareDirectoryAtPath:(NSString *)directoryPath withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error {	FXDLog_DEFAULT;

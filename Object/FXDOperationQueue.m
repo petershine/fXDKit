@@ -2,8 +2,6 @@
 
 #import "FXDOperationQueue.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation NSOperationQueue (Essential)
 + (instancetype)newSerialQueue {

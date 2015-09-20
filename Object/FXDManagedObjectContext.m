@@ -2,8 +2,6 @@
 
 #import "FXDManagedObjectContext.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation NSManagedObjectContext (Essential)
 - (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {

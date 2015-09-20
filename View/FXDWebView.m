@@ -2,8 +2,6 @@
 
 #import "FXDWebView.h"
 
-#import "FXDimportCore.h"
-
 
 @implementation UIWebView (JavaScriptResponding)
 
