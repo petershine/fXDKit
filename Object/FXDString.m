@@ -97,10 +97,7 @@
 		id value = parameters[key];
 
 		if ([value isKindOfClass:[NSString class]]) {
-			NSString *component = [NSString stringWithFormat:@"%@=%@",
-								   [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-								   [(NSString*)value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
+			NSString *component = [NSString stringWithFormat:@"%@=%@", key, value];
 			[parameterComponents addObject:component];
 		}
 	}
@@ -111,8 +108,14 @@
 
 
 	NSString *joinedParameters = [parameterComponents componentsJoinedByString:@"&"];
-
 	NSString *queryString = [NSString stringWithFormat:@"%@?%@", self, joinedParameters];
+
+	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+		queryString = [queryString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+	}
+	else {
+		queryString = [queryString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	}
 
 	return queryString;
 }

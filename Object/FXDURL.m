@@ -103,9 +103,7 @@
 		unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
 	}
 	else {
-		#ifndef __IPHONE_9_0
 		unicodeString = [self.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		#endif
 	}
 
 	return unicodeString;

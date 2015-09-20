@@ -127,9 +127,7 @@
 			[self application:application openURL:url options:openOptions];
 		}
 		else {
-			#ifndef __IPHONE_9_0
 			[self application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
-			#endif
 		}
 	}
 

@@ -71,9 +71,7 @@
 		unicodeString = [metadataItemURL.absoluteString stringByRemovingPercentEncoding];
 	}
 	else {
-		#ifndef __IPHONE_9_0
 		unicodeString = [metadataItemURL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		#endif
 	}
 
 	return unicodeString;
