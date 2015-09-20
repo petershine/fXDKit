@@ -18,6 +18,18 @@
 
 		_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
 
+		/*
+		 *      With UIBackgroundModes set to include "location" in Info.plist, you must
+		 *      also set this property to YES at runtime whenever calling
+		 *      -startUpdatingLocation with the intent to continue in the background.
+		 *
+		 *      Setting this property to YES when UIBackgroundModes does not include
+		 *      "location" is a fatal error.
+		 */
+		if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
+			_mainLocationManager.allowsBackgroundLocationUpdates = YES;
+		}
+
 		_mainLocationManager.delegate = self;
 	}
 	return _mainLocationManager;
