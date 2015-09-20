@@ -68,24 +68,14 @@
 
 	BOOL isAuthorized = YES;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
-			&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
-			isAuthorized = NO;
-		}
-	}
-	else {
-#ifndef __IPHONE_8_0
-		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
-			isAuthorized = NO;
-		}
-#endif
+	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+		isAuthorized = NO;
 	}
 
 	FXDLogBOOL(isAuthorized);
 
-	if (isAuthorized == NO
-		&& SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+	if (isAuthorized == NO) {
 
 		if ([NSBundle mainBundle].infoDictionary[@"NSLocationWhenInUseUsageDescription"]) {
 			[self.mainLocationManager requestWhenInUseAuthorization];
@@ -230,18 +220,9 @@
 
 	BOOL isAuthorized = YES;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
-			&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
-			isAuthorized = NO;
-		}
-	}
-	else {
-#ifndef __IPHONE_8_0
-		if (authorizationStatus != kCLAuthorizationStatusAuthorized) {
-			isAuthorized = NO;
-		}
-#endif
+	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+		isAuthorized = NO;
 	}
 
 	if (isAuthorized == NO) {

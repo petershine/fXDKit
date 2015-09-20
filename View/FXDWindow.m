@@ -219,12 +219,8 @@
 
 
 	CGRect screenBounds = [UIScreen mainScreen].bounds;
-
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
-		FXDLogRect([UIScreen mainScreen].nativeBounds);
-		FXDLogVariable([UIScreen mainScreen].nativeScale);
-	}
-
+	FXDLogRect([UIScreen mainScreen].nativeBounds);
+	FXDLogVariable([UIScreen mainScreen].nativeScale);
 	FXDLogRect(screenBounds);
 
 	UIWindow *newWindow = [[[self class] alloc] initWithFrame:screenBounds];

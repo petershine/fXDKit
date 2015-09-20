@@ -259,20 +259,10 @@
 
 	FXDLogBOOL(captureConnection.isVideoStabilizationSupported);
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion8)) {
+	captureConnection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
 
-		captureConnection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
-
-		FXDLogVariable(captureConnection.preferredVideoStabilizationMode);
-		FXDLogVariable(captureConnection.activeVideoStabilizationMode);
-	}
-	else {
-#ifndef __IPHONE_8_0
-		captureConnection.enablesVideoStabilizationWhenAvailable = YES;
-		FXDLogBOOL(captureConnection.isVideoStabilizationEnabled);
-#endif
-	}
-
+	FXDLogVariable(captureConnection.preferredVideoStabilizationMode);
+	FXDLogVariable(captureConnection.activeVideoStabilizationMode);
 
 	return _videoCamera;
 }

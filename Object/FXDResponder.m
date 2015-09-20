@@ -121,12 +121,10 @@
 		id annotation = launchOptions[UIApplicationLaunchOptionsAnnotationKey];
 		
 		if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-			#ifdef __IPHONE_9_0
 			NSDictionary *openOptions = @{UIApplicationOpenURLOptionsSourceApplicationKey:sourceApplication,
 										  UIApplicationOpenURLOptionsAnnotationKey:annotation};
 
 			[self application:application openURL:url options:openOptions];
-			#endif
 		}
 		else {
 			#ifndef __IPHONE_9_0

@@ -100,9 +100,7 @@
 	NSString *unicodeString = nil;
 
 	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-		#ifdef __IPHONE_9_0
 		unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
-		#endif
 	}
 	else {
 		#ifndef __IPHONE_9_0
