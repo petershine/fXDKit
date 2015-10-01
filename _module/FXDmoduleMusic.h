@@ -5,7 +5,6 @@
 
 
 @interface MPMusicPlayerController (Added)
-+ (instancetype)deviceMusicPlayer;
 @end
 
 
@@ -16,7 +15,11 @@
 
 
 #import "FXDsuperModule.h"
-@interface FXDmoduleMusic : FXDsuperModule
+@interface FXDmoduleMusic : FXDsuperModule {
+	MPMusicPlayerController *_musicPlayer;
+}
+
+@property (weak, nonatomic, readonly) MPMusicPlayerController *musicPlayer;
 
 @property (nonatomic) MPMusicPlaybackState playbackState;
 @property (weak, nonatomic) MPMediaItem *nowPlayingItem;

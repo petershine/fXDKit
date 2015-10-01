@@ -4,13 +4,6 @@
 
 
 @implementation MPMusicPlayerController (Added)
-+ (instancetype)deviceMusicPlayer {
-	MPMusicPlayerController *musicPlayer = nil;
-
-	musicPlayer = [MPMusicPlayerController systemMusicPlayer];
-
-	return musicPlayer;
-}
 @end
 
 
@@ -81,8 +74,7 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
-	[musicPlayer endGeneratingPlaybackNotifications];
+	[self.musicPlayer endGeneratingPlaybackNotifications];
 
 	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 	[mediaLibrary endGeneratingLibraryChangeNotifications];
@@ -94,10 +86,8 @@
 	self = [super init];
 
 	if (self) {
-		MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
-
-		self.playbackState = musicPlayer.playbackState;
-		self.nowPlayingItem = musicPlayer.nowPlayingItem;
+		self.playbackState = self.musicPlayer.playbackState;
+		self.nowPlayingItem = self.musicPlayer.nowPlayingItem;
 	}
 
 	return self;
@@ -105,28 +95,36 @@
 
 
 #pragma mark - Property overriding
+- (MPMusicPlayerController*)musicPlayer {
+	__strong MPMusicPlayerController *strongMusicPlayer = _musicPlayer;
+
+	if (strongMusicPlayer == nil) {
+		_musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+	}
+
+	return _musicPlayer;
+}
+
 
 #pragma mark - Method overriding
 
 #pragma mark - Public
 - (void)startObservingPlayerNotifications {	FXDLog_DEFAULT;
-	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
-
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedMPMusicPlayerControllerPlaybackStateDidChange:)
 	 name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
-	 object:musicPlayer];
+	 object:self.musicPlayer];
 
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedMPMusicPlayerControllerNowPlayingItemDidChange:)
 	 name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-	 object:musicPlayer];
+	 object:self.musicPlayer];
 
-	[musicPlayer beginGeneratingPlaybackNotifications];
+	[self.musicPlayer beginGeneratingPlaybackNotifications];
 }
 
 - (void)startObservingLibraryNotifications {	FXDLog_DEFAULT;
@@ -145,15 +143,11 @@
 
 #pragma mark - Observer
 - (void)observedMPMusicPlayerControllerPlaybackStateDidChange:(NSNotification*)notification {
-
-	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
-	self.playbackState = musicPlayer.playbackState;
+	self.playbackState = self.musicPlayer.playbackState;
 }
 
 - (void)observedMPMusicPlayerControllerNowPlayingItemDidChange:(NSNotification*)notification {
-
-	MPMusicPlayerController *musicPlayer = [MPMusicPlayerController deviceMusicPlayer];
-	self.nowPlayingItem = musicPlayer.nowPlayingItem;
+	self.nowPlayingItem = self.musicPlayer.nowPlayingItem;
 }
 
 #pragma mark -
