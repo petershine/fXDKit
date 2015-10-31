@@ -374,4 +374,12 @@
 	return scaledSize;
 }
 
+
+#pragma mark -
++ (UIImage*)randomImageForScreenShot {
+	UIImage *randomImage = nil;
+
+	return randomImage;
+}
+
 @end
