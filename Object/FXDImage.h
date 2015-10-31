@@ -31,8 +31,4 @@
 
 - (CGSize)deviceScaledSize;
 
-
-+ (UIImage*)randomImageForScreenShot;
-
 @end
-
