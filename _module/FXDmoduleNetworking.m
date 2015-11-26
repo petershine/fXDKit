@@ -89,12 +89,8 @@
 
 	NSString *percentEscaped = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-		percentEscaped = [queryText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-	}
-	else {
-		percentEscaped = [queryText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	}
+	percentEscaped = [queryText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+
 
 	NSURL *requestURL = [NSURL evaluatedURLforPath:[NSString stringWithFormat:self.mainRootURLformat, percentEscaped, self.mainAPIkey]];
 

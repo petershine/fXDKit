@@ -97,12 +97,7 @@
 
 	NSString *unicodeString = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-		unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
-	}
-	else {
-		unicodeString = [self.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	}
+	unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
 
 	return unicodeString;
 }

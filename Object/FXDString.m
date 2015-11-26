@@ -108,12 +108,7 @@
 	NSString *joinedParameters = [parameterComponents componentsJoinedByString:@"&"];
 	NSString *queryString = [NSString stringWithFormat:@"%@?%@", self, joinedParameters];
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-		queryString = [queryString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-	}
-	else {
-		queryString = [queryString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	}
+	queryString = [queryString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 
 	return queryString;
 }

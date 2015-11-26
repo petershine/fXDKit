@@ -17,7 +17,6 @@
 		_mainLocationManager.distanceFilter = kCLDistanceFilterNone;
 
 		_mainLocationManager.pausesLocationUpdatesAutomatically = NO;
-
 		/*
 		 *      With UIBackgroundModes set to include "location" in Info.plist, you must
 		 *      also set this property to YES at runtime whenever calling
@@ -26,9 +25,7 @@
 		 *      Setting this property to YES when UIBackgroundModes does not include
 		 *      "location" is a fatal error.
 		 */
-		if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-			_mainLocationManager.allowsBackgroundLocationUpdates = YES;
-		}
+		_mainLocationManager.allowsBackgroundLocationUpdates = YES;
 
 		_mainLocationManager.delegate = self;
 	}

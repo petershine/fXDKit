@@ -67,12 +67,7 @@
 
 	NSString *unicodeString = nil;
 
-	if (SYSTEM_VERSION_sameOrHigher(iosVersion9)) {
-		unicodeString = [metadataItemURL.absoluteString stringByRemovingPercentEncoding];
-	}
-	else {
-		unicodeString = [metadataItemURL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	}
+	unicodeString = [metadataItemURL.absoluteString stringByRemovingPercentEncoding];
 
 	return unicodeString;
 }
