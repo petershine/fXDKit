@@ -455,7 +455,7 @@
 				 }
 				 FXDLogObject(alertMessage);
 
-				 [FXDAlertView
+				 [FXDAlertController
 				  showAlertWithTitle:nil
 				  message:alertMessage
 				  cancelButtonTitle:nil
@@ -592,7 +592,7 @@
 	FXDLogObject(alertMessage);
 
 	if (alertMessage.length > 0) {
-		[FXDAlertView
+		[FXDAlertController
 		 showAlertWithTitle:alertTitle
 		 message:alertMessage
 		 cancelButtonTitle:nil

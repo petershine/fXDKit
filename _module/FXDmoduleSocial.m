@@ -178,7 +178,7 @@
 			alertTitle = NSLocalizedString(@"Please grant Facebook access in Settings", nil);
 		}
 
-		[FXDAlertView
+		[FXDAlertController
 		 showAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
 		 cancelButtonTitle:nil
@@ -271,7 +271,7 @@
 			alertTitle = NSLocalizedString(@"Please sign up for a Facebook account", nil);
 		}
 
-		[FXDAlertView
+		[FXDAlertController
 		 showAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
 		 cancelButtonTitle:nil
@@ -443,7 +443,7 @@
 		}
 
 		
-		[FXDAlertView
+		[FXDAlertController
 		 showAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
 		 cancelButtonTitle:nil

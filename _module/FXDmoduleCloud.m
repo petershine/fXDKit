@@ -44,7 +44,7 @@
 	}
 
 	if (alertBody.length > 0) {
-		[FXDAlertView
+		[FXDAlertController
 		 showAlertWithTitle:alertBody
 		 message:nil
 		 cancelButtonTitle:nil

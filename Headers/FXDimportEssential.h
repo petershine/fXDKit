@@ -24,7 +24,6 @@
 
 
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
-typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 
 
 @protocol FXDprotocolShared <NSObject>

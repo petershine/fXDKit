@@ -35,12 +35,6 @@
 	FXDLogObject(userInfo);
 	FXDLogObject(completionHandler);
 
-	[FXDAlertView
-	 showAlertWithTitle:nil
-	 message:userInfo[@"aps"][@"alert"]
-	 cancelButtonTitle:nil
-	 withAlertCallback:nil];
-
 	if (completionHandler) {
 		completionHandler(UIBackgroundFetchResultNoData);
 	}

@@ -52,26 +52,6 @@
 }
 
 #pragma mark - Initialization
-+ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
-
-	__block FXDAlertView *alertView = nil;
-
-	[[NSOperationQueue mainQueue]
-	 addOperationWithBlock:^{
-
-		 alertView = [[[self class] alloc]
-					  initWithTitle:title
-					  message:message
-					  cancelButtonTitle:cancelButtonTitle
-					  withAlertCallback:alertCallback];
-
-		 [alertView show];
-	 }];
-
-	return alertView;
-}
-
-#pragma mark -
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
 	//NOTE: Assume this is the condition for simple alerting without choice
@@ -117,14 +97,47 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark -
++ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback {
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+	//NOTE: Assume this is the condition for simple alerting without choice
+	if (cancelButtonTitle == nil) {
+		cancelButtonTitle = NSLocalizedString(@"OK", nil);
+	}
+
+
+	FXDAlertController *alertController =
+	[[self class]
+	 alertControllerWithTitle:title
+	 message:message
+	 preferredStyle:UIAlertControllerStyleAlert];
+
+
+	UIAlertAction *cancelAction =
+	[UIAlertAction
+	 actionWithTitle:cancelButtonTitle
+	 style:UIAlertActionStyleCancel
+	 handler:^(UIAlertAction * _Nonnull action) {
+		 if (alertCallback) {
+			 alertCallback(alertController, 0);
+		 }
+	 }];
+
+	[alertController addAction:cancelAction];
+
+
+	UIWindow *currentWindow = (UIWindow*)[UIApplication sharedApplication].windows.lastObject;
+	FXDLogObject(currentWindow);
+
+	UIViewController *rootScene = currentWindow.rootViewController;
+	FXDLogObject(rootScene);
+
+	[rootScene
+	 presentViewController:alertController
+	 animated:YES
+	 completion:nil];
+
+	return alertController;
 }
-*/
 
 @end
