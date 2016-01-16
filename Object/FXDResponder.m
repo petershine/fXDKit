@@ -42,11 +42,10 @@
  */
 
 #pragma mark -
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {	FXDLog_SEPARATE;
-
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options {	FXDLog_SEPARATE;
 	FXDLogObject(url);
-	FXDLogObject(sourceApplication);
-	FXDLogObject(annotation);
+	FXDLogObject(app);
+	FXDLogObject(options);
 
 	return YES;
 }
