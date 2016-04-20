@@ -142,7 +142,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier fromPresentingScene:(UIViewController*)presentingScene withFinishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -163,7 +163,7 @@
 
 	void (^GrantedAccess)(void) = ^(void){
 		[self
-		 showActionSheetInPresentingView:presentingView
+		 showActionSheetFromPresentingScene:presentingScene
 		 forSelectingAccountForTypeIdentifier:typeIdentifier
 		 withFinishCallback:callback];
 	};
@@ -241,7 +241,7 @@
 	 }];
 }
 
-- (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)showActionSheetFromPresentingScene:(UIViewController*)presentingScene forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -328,7 +328,7 @@
 	actionSheet.destructiveButtonIndex = self.multiAccountArray.count+1;
 	
 	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-	[actionSheet showInView:presentingView];
+	[actionSheet showInView:presentingScene.view];
 }
 
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {

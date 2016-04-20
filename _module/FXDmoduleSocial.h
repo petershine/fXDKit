@@ -31,8 +31,8 @@
 @property (strong, nonatomic) ACAccount *currentMainAccount;
 
 
-- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withPresentingView:(UIView*)presentingView withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)signInBySelectingAccountForTypeIdentifier:(NSString*)typeIdentifier fromPresentingScene:(UIViewController*)presentingScene withFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)showActionSheetFromPresentingScene:(UIViewController*)presentingScene forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback;
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock;

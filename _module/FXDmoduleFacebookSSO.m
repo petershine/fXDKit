@@ -66,7 +66,7 @@
 
 
 #pragma mark - Method overriding
-- (void)signInBySelectingAccountForTypeIdentifier:(NSString *)typeIdentifier withPresentingView:(UIView *)presentingView withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)signInBySelectingAccountForTypeIdentifier:(NSString *)typeIdentifier fromPresentingScene:(UIViewController*)presentingScene withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -83,7 +83,9 @@
 
 
 	FXDLogObject([UIApplication mainWindow]);
-	[(FXDWindow*)[UIApplication mainWindow] showInformationViewAfterDelay:delayQuarterSecond];
+
+	//#warning //MARK: Due to not being able to get notification from web browser
+	//[(FXDWindow*)[UIApplication mainWindow] showInformationViewAfterDelay:delayQuarterSecond];
 
 	// Initialize a session object
 	FBSession *activeSession = [FBSession activeSession];
@@ -101,7 +103,7 @@
 
 			 if (finished) {
 				 [self
-				  showActionSheetInPresentingView:presentingView
+				  showActionSheetFromPresentingScene:presentingScene
 				  forSelectingAccountForTypeIdentifier:typeIdentifier
 				  withFinishCallback:finishCallback];
 			 }
@@ -171,7 +173,7 @@
 
 				  if (finished) {
 					  [self
-					   showActionSheetInPresentingView:presentingView
+					   showActionSheetFromPresentingScene:presentingScene
 					   forSelectingAccountForTypeIdentifier:typeIdentifier
 					   withFinishCallback:finishCallback];
 				  }
@@ -189,7 +191,7 @@
 	 }];
 }
 
-- (void)showActionSheetInPresentingView:(UIView*)presentingView forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)showActionSheetFromPresentingScene:(UIViewController*)presentingScene forSelectingAccountForTypeIdentifier:(NSString*)typeIdentifier withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
 		typeIdentifier = self.typeIdentifier;
@@ -253,7 +255,7 @@
 		actionSheet.destructiveButtonIndex = [self.multiAccountArray count]+1;
 
 		actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-		[actionSheet showInView:presentingView];
+		[actionSheet showInView:presentingScene.view];
 
 		[(FXDWindow*)[UIApplication mainWindow] hideInformationViewAfterDelay:delayQuarterSecond];
 	};
