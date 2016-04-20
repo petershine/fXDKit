@@ -303,20 +303,28 @@
 
 #pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
-	FXDAlertView *alertView =
-	[[FXDAlertView alloc]
-	 initWithTitle:nil
-	 message:nil
-	 cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-	 withAlertCallback:^(FXDAlertView *alertObj, NSInteger buttonIndex) {
-		 FXDLog(@"%@, %@", _Object(alertObj), _Variable(buttonIndex));
 
-		 if (buttonIndex == alertObj.cancelButtonIndex) {
-			 if (finishCallback) {
-				 finishCallback(_cmd, NO, nil);
-			 }
-			 return;
+	FXDAlertController *alertController =
+	[[self class]
+	 alertControllerWithTitle:nil
+	 message:nil
+	 preferredStyle:UIAlertControllerStyleAlert];
+
+	UIAlertAction *cancelAction =
+	[UIAlertAction
+	 actionWithTitle:NSLocalizedString(@"Cancel", nil)
+	 style:UIAlertActionStyleCancel
+	 handler:^(UIAlertAction * _Nonnull action) {
+		 if (finishCallback) {
+			 finishCallback(_cmd, NO, nil);
 		 }
+	 }];
+
+	UIAlertAction *deleteAllAction =
+	[UIAlertAction
+	 actionWithTitle:NSLocalizedString(@"Delete All", nil)
+	 style:UIAlertActionStyleDestructive
+	 handler:^(UIAlertAction * _Nonnull action) {
 
 		 [self
 		  enumerateAllDataWithPrivateContext:NO
@@ -338,9 +346,19 @@
 		  }];
 	 }];
 
-	[alertView addButtonWithTitle:NSLocalizedString(@"Delete All", nil)];
+	[alertController addAction:deleteAllAction];
+	[alertController addAction:cancelAction];
 
-	[alertView show];
+	UIWindow *currentWindow = (UIWindow*)[UIApplication sharedApplication].windows.lastObject;
+	FXDLogObject(currentWindow);
+
+	UIViewController *rootScene = currentWindow.rootViewController;
+	FXDLogObject(rootScene);
+
+	[rootScene
+	 presentViewController:alertController
+	 animated:YES
+	 completion:nil];
 }
 
 #pragma mark -
