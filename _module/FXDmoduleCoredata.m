@@ -304,14 +304,13 @@
 #pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	FXDAlertController *alertController =
-	[[self class]
-	 alertControllerWithTitle:nil
-	 message:nil
-	 preferredStyle:UIAlertControllerStyleAlert];
+	FXDAlertController *alertController = [FXDAlertController
+										   alertControllerWithTitle:nil
+										   message:nil
+										   preferredStyle:UIAlertControllerStyleAlert];
 
-	UIAlertAction *cancelAction =
-	[UIAlertAction
+	FXDAlertAction *cancelAction =
+	[FXDAlertAction
 	 actionWithTitle:NSLocalizedString(@"Cancel", nil)
 	 style:UIAlertActionStyleCancel
 	 handler:^(UIAlertAction * _Nonnull action) {
@@ -320,8 +319,8 @@
 		 }
 	 }];
 
-	UIAlertAction *deleteAllAction =
-	[UIAlertAction
+	FXDAlertAction *deleteAllAction =
+	[FXDAlertAction
 	 actionWithTitle:NSLocalizedString(@"Delete All", nil)
 	 style:UIAlertActionStyleDestructive
 	 handler:^(UIAlertAction * _Nonnull action) {
@@ -352,10 +351,10 @@
 	UIWindow *currentWindow = (UIWindow*)[UIApplication sharedApplication].windows.lastObject;
 	FXDLogObject(currentWindow);
 
-	UIViewController *rootScene = currentWindow.rootViewController;
-	FXDLogObject(rootScene);
+	UIViewController *presentingScene = currentWindow.rootViewController;
+	FXDLogObject(presentingScene);
 
-	[rootScene
+	[presentingScene
 	 presentViewController:alertController
 	 animated:YES
 	 completion:nil];

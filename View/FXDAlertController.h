@@ -24,6 +24,11 @@ typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
 @end
 
 
+@interface FXDAlertAction : UIAlertAction
+@property (strong, nonatomic) id attachedObj;
+@end
+
+
 @interface FXDAlertController : UIAlertController
 
 + (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;

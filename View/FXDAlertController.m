@@ -85,6 +85,10 @@
 @end
 
 
+@implementation FXDAlertAction : UIAlertAction
+@end
+
+
 @implementation FXDAlertController
 
 - (void)viewDidLoad {
@@ -113,8 +117,8 @@
 	 preferredStyle:UIAlertControllerStyleAlert];
 
 
-	UIAlertAction *cancelAction =
-	[UIAlertAction
+	FXDAlertAction *cancelAction =
+	[FXDAlertAction
 	 actionWithTitle:cancelButtonTitle
 	 style:UIAlertActionStyleCancel
 	 handler:^(UIAlertAction * _Nonnull action) {

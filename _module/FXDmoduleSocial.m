@@ -285,120 +285,106 @@
 
 
 	NSString *actionsheetTitle = nil;
-
-	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-		actionsheetTitle = NSLocalizedString(@"Please select your Twitter Account", nil);
-	}
-	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-		actionsheetTitle = NSLocalizedString(@"Please select your Facebook Timeline or Page", nil);
-	}
-
-	FXDActionSheet *actionSheet =
-	[[FXDActionSheet alloc]
-	 initWithTitle:actionsheetTitle
-	 withButtonTitleArray:nil
-	 cancelButtonTitle:nil
-	 destructiveButtonTitle:nil
-	 withAlertCallback:^(id alertObj, NSInteger buttonIndex) {
-		 [self
-		  selectAccountForTypeIdentifier:typeIdentifier
-		  fromActionSheet:alertObj
-		  forButtonIndex:buttonIndex
-		  withFinishCallback:finishCallback];
-	 }];
-	
-	[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
-	actionSheet.cancelButtonIndex = 0;
-	
-	for (ACAccount *account in self.multiAccountArray) {
-		if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-			[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"@%@", account.username]];
-		}
-		else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-			if (account.userFullName) {
-				[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", account.userFullName]];
-			}
-			else {
-				[actionSheet addButtonWithTitle:[NSString stringWithFormat:@"%@", account.username]];
-			}
-		}
-	}
-	
-	[actionSheet addButtonWithTitle:NSLocalizedString(@"Sign Out", nil)];
-	actionSheet.destructiveButtonIndex = self.multiAccountArray.count+1;
-	
-	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-	[actionSheet showInView:presentingScene.view];
-}
-
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {
-
-	if (typeIdentifier == nil) {
-		typeIdentifier = self.typeIdentifier;
-	}
-
-	FXDLogObject(typeIdentifier);
-
-	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
-
-
-	FXDLogVariable(buttonIndex);
-	FXDLogVariable(actionSheet.cancelButtonIndex);
-	FXDLogVariable(actionSheet.destructiveButtonIndex);
-
-	if (buttonIndex == (NSInteger)[actionSheet performSelector:@selector(cancelButtonIndex)]) {
-		_multiAccountArray = nil;
-
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
-
-
 	NSString *accountObjKey = @"";
 
 	if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+		actionsheetTitle = NSLocalizedString(@"Please select your Twitter Account", nil);
 		accountObjKey = userdefaultObjMainTwitterAccountIdentifier;
 	}
 	else if ([typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+		actionsheetTitle = NSLocalizedString(@"Please select your Facebook Timeline or Page", nil);
 		accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
 	}
+
+	FXDAlertController *alertController = [FXDAlertController
+										   alertControllerWithTitle:actionsheetTitle
+										   message:nil
+										   preferredStyle:UIAlertControllerStyleActionSheet];
+
+	FXDAlertAction *cancelAction =
+	[FXDAlertAction
+	 actionWithTitle:NSLocalizedString(@"Cancel", nil)
+	 style:UIAlertActionStyleCancel
+	 handler:^(UIAlertAction * _Nonnull action) {
+		 _multiAccountArray = nil;
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, NO, nil);
+		 }
+	 }];
+
+	[alertController addAction:cancelAction];
 
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	if ([actionSheet isKindOfClass:[UIActionSheet class]]
-		&& buttonIndex == [(FXDActionSheet*)actionSheet destructiveButtonIndex]) {
-		
-		[userDefaults removeObjectForKey:accountObjKey];
+	for (ACAccount *account in self.multiAccountArray) {
 
-		_currentMainAccount = nil;
-	}
-	else {
-		ACAccount *selectedAccount = (self.multiAccountArray)[buttonIndex-1];
-		FXDLogObject(selectedAccount);
-		
-		if (selectedAccount) {
-			[userDefaults setObject:selectedAccount.identifier forKey:accountObjKey];
+		NSString *actionTitle = nil;
 
-			_currentMainAccount = selectedAccount;
+		if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+			actionTitle = [NSString stringWithFormat:@"@%@", account.username];
 		}
-		
-		[userDefaults synchronize];
+		else if ([self.typeIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+			if (account.userFullName) {
+				actionTitle = [NSString stringWithFormat:@"%@", account.userFullName];
+			}
+			else {
+				actionTitle = [NSString stringWithFormat:@"%@", account.username];
+			}
+		}
+
+
+		FXDAlertAction *selectAction =
+		[FXDAlertAction
+		 actionWithTitle:actionTitle
+		 style:UIAlertActionStyleDefault
+		 handler:^(UIAlertAction * _Nonnull action) {
+			 FXDLogObject(account);
+
+			 if (account) {
+				 [userDefaults setObject:account.identifier forKey:accountObjKey];
+
+				 _currentMainAccount = account;
+			 }
+
+			 [userDefaults synchronize];
+
+			 _multiAccountArray = nil;
+
+			 if (finishCallback) {
+				 finishCallback(_cmd, YES, nil);
+			 }
+		 }];
+
+		[alertController addAction:selectAction];
 	}
 
-	_multiAccountArray = nil;
 
-	if (finishCallback) {
-		finishCallback(_cmd, YES, nil);
-	}
+	FXDAlertAction *signOutAction =
+	[FXDAlertAction
+	 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
+	 style:UIAlertActionStyleDestructive
+	 handler:^(UIAlertAction * _Nonnull action) {
+		 [userDefaults removeObjectForKey:accountObjKey];
+
+		 _currentMainAccount = nil;
+
+		 _multiAccountArray = nil;
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, YES, nil);
+		 }
+	 }];
+
+	[alertController addAction:signOutAction];
+
+	[presentingScene
+	 presentViewController:alertController
+	 animated:YES
+	 completion:nil];
 }
+
 
 #pragma mark -
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {	FXDLog_DEFAULT;
