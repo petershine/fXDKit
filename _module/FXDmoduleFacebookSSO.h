@@ -25,8 +25,6 @@
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 
-- (void)resetCredential;
-
 - (void)startObservingFBSessionNotifications;
 
 - (BOOL)shouldContinueWithError:(NSError*)error;

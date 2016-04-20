@@ -387,6 +387,10 @@
 
 
 #pragma mark -
+- (void)resetCredential {
+	FXDLog_OVERRIDE;
+}
+
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {	FXDLog_DEFAULT;
 	FXDLogObject(typeIdentifier);
 

@@ -317,6 +317,7 @@
 	 }];
 }
 
+#pragma mark -
 - (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
 	if (typeIdentifier == nil) {
@@ -355,9 +356,7 @@
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-	if ([actionSheet isKindOfClass:[UIActionSheet class]]
-		&& buttonIndex == [(FXDActionSheet*)actionSheet destructiveButtonIndex]) {
-
+	if (buttonIndex == actionSheet.destructiveButtonIndex) {
 		[self resetCredential];
 	}
 	else {
@@ -385,6 +384,24 @@
 }
 
 #pragma mark -
+- (void)resetCredential {	FXDLog_DEFAULT;
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
+
+	_currentFacebookAccount = nil;
+	_currentPageAccessToken = nil;
+
+
+	[[FBSession activeSession] closeAndClearTokenInformation];
+
+	FXDLogVariable([FBSession activeSession].state);
+	FXDLogBOOL([FBSession activeSession].isOpen);
+
+	FXDLogVariable([FBSession activeSession].accessTokenData.loginType);
+
+	FXDLogBOOL(FB_ISSESSIONSTATETERMINAL([FBSession activeSession].state));
+}
+
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {	FXDLog_DEFAULT;
 
 	FBSession *activeSession = [FBSession activeSession];
@@ -489,25 +506,6 @@
 
 
 #pragma mark - Public
-- (void)resetCredential {	FXDLog_DEFAULT;
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
-
-	_currentFacebookAccount = nil;
-	_currentPageAccessToken = nil;
-
-
-	[[FBSession activeSession] closeAndClearTokenInformation];
-
-	FXDLogVariable([FBSession activeSession].state);
-	FXDLogBOOL([FBSession activeSession].isOpen);
-
-	FXDLogVariable([FBSession activeSession].accessTokenData.loginType);
-
-	FXDLogBOOL(FB_ISSESSIONSTATETERMINAL([FBSession activeSession].state));
-}
-
-#pragma mark -
 - (void)startObservingFBSessionNotifications {	FXDLog_DEFAULT;
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
