@@ -22,8 +22,8 @@
 @property (strong, nonatomic) NSDictionary *currentFacebookAccount;
 @property (strong, nonatomic) NSString *currentPageAccessToken;
 
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback;
 
+- (void)resetCredential;
 
 - (void)startObservingFBSessionNotifications;
 

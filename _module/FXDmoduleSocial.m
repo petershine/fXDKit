@@ -313,7 +313,24 @@
 		 }
 	 }];
 
+	FXDAlertAction *signOutAction =
+	[FXDAlertAction
+	 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
+	 style:UIAlertActionStyleDestructive
+	 handler:^(UIAlertAction * _Nonnull action) {
+		 [[NSUserDefaults standardUserDefaults] removeObjectForKey:accountObjKey];
+
+		 _currentMainAccount = nil;
+
+		 _multiAccountArray = nil;
+
+		 if (finishCallback) {
+			 finishCallback(_cmd, YES, nil);
+		 }
+	 }];
+
 	[alertController addAction:cancelAction];
+	[alertController addAction:signOutAction];
 
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -361,24 +378,6 @@
 	}
 
 
-	FXDAlertAction *signOutAction =
-	[FXDAlertAction
-	 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
-	 style:UIAlertActionStyleDestructive
-	 handler:^(UIAlertAction * _Nonnull action) {
-		 [userDefaults removeObjectForKey:accountObjKey];
-
-		 _currentMainAccount = nil;
-
-		 _multiAccountArray = nil;
-
-		 if (finishCallback) {
-			 finishCallback(_cmd, YES, nil);
-		 }
-	 }];
-
-	[alertController addAction:signOutAction];
-
 	[presentingScene
 	 presentViewController:alertController
 	 animated:YES
@@ -387,10 +386,6 @@
 
 
 #pragma mark -
-- (void)resetCredential {
-	FXDLog_OVERRIDE;
-}
-
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {	FXDLog_DEFAULT;
 	FXDLogObject(typeIdentifier);
 

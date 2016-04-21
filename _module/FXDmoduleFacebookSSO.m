@@ -197,7 +197,7 @@
 		typeIdentifier = self.typeIdentifier;
 	}
 
-	FXDLog(@"typeIdentifier: %@", typeIdentifier);
+	FXDLogObject(typeIdentifier);
 
 	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
 		[(FXDWindow*)[UIApplication mainWindow] hideInformationViewAfterDelay:delayQuarterSecond];
@@ -213,23 +213,44 @@
 		FXDLogObject(self.multiAccountArray);
 
 		NSString *actionsheetTitle = NSLocalizedString(@"Please select your Facebook Timeline or Page", nil);
+		NSString *accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
 
-		FXDActionSheet *actionSheet =
-		[[FXDActionSheet alloc]
-		 initWithTitle:actionsheetTitle
-		 withButtonTitleArray:nil
-		 cancelButtonTitle:nil
-		 destructiveButtonTitle:nil
-		 withAlertCallback:^(id alertObj, NSInteger buttonIndex) {
-			 [self
-			  selectAccountForTypeIdentifier:typeIdentifier
-			  fromActionSheet:alertObj
-			  forButtonIndex:buttonIndex
-			  withFinishCallback:finishCallback];
+		FXDAlertController *alertController = [FXDAlertController
+											   alertControllerWithTitle:actionsheetTitle
+											   message:nil
+											   preferredStyle:UIAlertControllerStyleActionSheet];
+
+		FXDAlertAction *cancelAction =
+		[FXDAlertAction
+		 actionWithTitle:NSLocalizedString(@"Cancel", nil)
+		 style:UIAlertActionStyleCancel
+		 handler:^(UIAlertAction * _Nonnull action) {
+			 _multiAccountArray = nil;
+
+			 if (finishCallback) {
+				 finishCallback(_cmd, NO, nil);
+			 }
 		 }];
 
-		[actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
-		actionSheet.cancelButtonIndex = 0;
+		FXDAlertAction *signOutAction =
+		[FXDAlertAction
+		 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
+		 style:UIAlertActionStyleDestructive
+		 handler:^(UIAlertAction * _Nonnull action) {
+			 [self resetCredential];
+
+			 _multiAccountArray = nil;
+
+			 if (finishCallback) {
+				 finishCallback(_cmd, NO, nil);
+			 }
+		 }];
+
+		[alertController addAction:cancelAction];
+		[alertController addAction:signOutAction];
+
+
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
 		for (NSDictionary *account in self.multiAccountArray) {
 			NSString *buttonTitle = nil;
@@ -246,16 +267,37 @@
 				buttonTitle = [NSString stringWithFormat:@"PAGE: %@", account[objkeyFacebookName]];
 			}
 
-			if (buttonTitle) {
-				[actionSheet addButtonWithTitle:buttonTitle];
-			}
+
+			FXDAlertAction *selectAction =
+			[FXDAlertAction
+			 actionWithTitle:buttonTitle
+			 style:UIAlertActionStyleDefault
+			 handler:^(UIAlertAction * _Nonnull action) {
+				 FXDLogObject(account);
+
+				 if (account) {
+					 [userDefaults setObject:account forKey:accountObjKey];
+
+					 _currentFacebookAccount = account;
+				 }
+
+				 [userDefaults synchronize];
+
+				 _multiAccountArray = nil;
+
+				 if (finishCallback) {
+					 finishCallback(_cmd, YES, nil);
+				 }
+			 }];
+
+			[alertController addAction:selectAction];
 		}
 
-		[actionSheet addButtonWithTitle:NSLocalizedString(@"Sign Out", nil)];
-		actionSheet.destructiveButtonIndex = [self.multiAccountArray count]+1;
 
-		actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-		[actionSheet showInView:presentingScene.view];
+		[presentingScene
+		 presentViewController:alertController
+		 animated:YES
+		 completion:nil];
 
 		[(FXDWindow*)[UIApplication mainWindow] hideInformationViewAfterDelay:delayQuarterSecond];
 	};
@@ -318,90 +360,6 @@
 }
 
 #pragma mark -
-- (void)selectAccountForTypeIdentifier:(NSString*)typeIdentifier fromActionSheet:(FXDActionSheet*)actionSheet forButtonIndex:(NSInteger)buttonIndex withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
-
-	if (typeIdentifier == nil) {
-		typeIdentifier = self.typeIdentifier;
-	}
-
-	FXDLogObject(typeIdentifier);
-
-	if (typeIdentifier == nil || [typeIdentifier isEqualToString:self.typeIdentifier] == NO) {
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
-
-
-	FXDLogVariable(buttonIndex);
-	FXDLogVariable(actionSheet.cancelButtonIndex);
-	FXDLogVariable(actionSheet.destructiveButtonIndex);
-
-
-	if (buttonIndex == (NSInteger)[actionSheet performSelector:@selector(cancelButtonIndex)]) {
-		_multiAccountArray = nil;
-
-		if (finishCallback) {
-			finishCallback(_cmd, NO, nil);
-		}
-		return;
-	}
-
-
-	NSString *accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
-
-
-	BOOL didAssignAccount = NO;
-
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-	if (buttonIndex == actionSheet.destructiveButtonIndex) {
-		[self resetCredential];
-	}
-	else {
-		NSDictionary *selectedAccount = (self.multiAccountArray)[buttonIndex-1];
-		FXDLog(@"selectedAccount: %@", selectedAccount);
-
-		if (selectedAccount) {
-			[userDefaults setObject:selectedAccount forKey:accountObjKey];
-
-			_currentFacebookAccount = selectedAccount;
-		}
-
-		[userDefaults synchronize];
-
-		didAssignAccount = YES;
-	}
-
-	_multiAccountArray = nil;
-
-	FXDLogBOOL(didAssignAccount);
-
-	if (finishCallback) {
-		finishCallback(_cmd, didAssignAccount, nil);
-	}
-}
-
-#pragma mark -
-- (void)resetCredential {	FXDLog_DEFAULT;
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
-
-	_currentFacebookAccount = nil;
-	_currentPageAccessToken = nil;
-
-
-	[[FBSession activeSession] closeAndClearTokenInformation];
-
-	FXDLogVariable([FBSession activeSession].state);
-	FXDLogBOOL([FBSession activeSession].isOpen);
-
-	FXDLogVariable([FBSession activeSession].accessTokenData.loginType);
-
-	FXDLogBOOL(FB_ISSESSIONSTATETERMINAL([FBSession activeSession].state));
-}
-
 - (void)renewAccountCredentialForTypeIdentifier:(NSString*)typeIdentifier withRequestingBlock:(void(^)(BOOL shouldRequest))requestingBlock {	FXDLog_DEFAULT;
 
 	FBSession *activeSession = [FBSession activeSession];
@@ -506,6 +464,25 @@
 
 
 #pragma mark - Public
+- (void)resetCredential {	FXDLog_DEFAULT;
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
+
+	_currentFacebookAccount = nil;
+	_currentPageAccessToken = nil;
+
+
+	[[FBSession activeSession] closeAndClearTokenInformation];
+
+	FXDLogVariable([FBSession activeSession].state);
+	FXDLogBOOL([FBSession activeSession].isOpen);
+
+	FXDLogVariable([FBSession activeSession].accessTokenData.loginType);
+
+	FXDLogBOOL(FB_ISSESSIONSTATETERMINAL([FBSession activeSession].state));
+}
+
+#pragma mark -
 - (void)startObservingFBSessionNotifications {	FXDLog_DEFAULT;
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
