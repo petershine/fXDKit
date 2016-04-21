@@ -242,7 +242,7 @@
 			 _multiAccountArray = nil;
 
 			 if (finishCallback) {
-				 finishCallback(_cmd, NO, nil);
+				 finishCallback(_cmd, YES, nil);
 			 }
 		 }];
 
