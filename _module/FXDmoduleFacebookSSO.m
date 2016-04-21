@@ -154,9 +154,12 @@
 		 }
 
 
+		 //MARK: Right after being signed in, show delay for collecting time.
+		 [(FXDWindow*)[UIApplication mainWindow] showInformationViewAfterDelay:delayQuarterSecond];
+
 		 self.isAskingForMorePermissions = YES;
 
-		 Float64 delayedSeconds = 2.0;
+		 Float64 delayedSeconds = 1.0;
 
 		 if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
 			 delayedSeconds = 0.0;
@@ -209,7 +212,7 @@
 	}
 
 
-	void (^ConfigureActionSheet)(void) = ^(void){
+	void (^PresentActionSheet)(void) = ^(void){
 		FXDLogObject(self.multiAccountArray);
 
 		NSString *actionsheetTitle = NSLocalizedString(@"Please select your Facebook Timeline or Page", nil);
@@ -313,7 +316,7 @@
 
 
 	if ([self.multiAccountArray count] > 0) {
-		ConfigureActionSheet();
+		PresentActionSheet();
 		return;
 	}
 
@@ -348,7 +351,7 @@
 			  FXDLogVariable([_multiAccountArray count]);
 
 			  if ([self.multiAccountArray count] > 0) {
-				  ConfigureActionSheet();
+				  PresentActionSheet();
 			  }
 			  else {
 				  _multiAccountArray = nil;
