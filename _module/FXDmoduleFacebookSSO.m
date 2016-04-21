@@ -465,8 +465,10 @@
 
 #pragma mark - Public
 - (void)resetCredential {	FXDLog_DEFAULT;
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
-	[[NSUserDefaults standardUserDefaults] removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults removeObjectForKey:userdefaultObjMainFacebookAccountIdentifier];
+	[userDefaults removeObjectForKey:userdefaultObjKeyFacebookAccessToken];
+	[userDefaults synchronize];
 
 	_currentFacebookAccount = nil;
 	_currentPageAccessToken = nil;

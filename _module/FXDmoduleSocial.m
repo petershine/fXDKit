@@ -313,12 +313,16 @@
 		 }
 	 }];
 
+
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
 	FXDAlertAction *signOutAction =
 	[FXDAlertAction
 	 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
 	 style:UIAlertActionStyleDestructive
 	 handler:^(UIAlertAction * _Nonnull action) {
-		 [[NSUserDefaults standardUserDefaults] removeObjectForKey:accountObjKey];
+		 [userDefaults removeObjectForKey:accountObjKey];
+		 [userDefaults synchronize];
 
 		 _currentMainAccount = nil;
 
@@ -332,8 +336,6 @@
 	[alertController addAction:cancelAction];
 	[alertController addAction:signOutAction];
 
-
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
 	for (ACAccount *account in self.multiAccountArray) {
 
