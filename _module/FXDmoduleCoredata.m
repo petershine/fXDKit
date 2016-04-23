@@ -309,8 +309,8 @@
 										   message:nil
 										   preferredStyle:UIAlertControllerStyleAlert];
 
-	FXDAlertAction *cancelAction =
-	[FXDAlertAction
+	UIAlertAction *cancelAction =
+	[UIAlertAction
 	 actionWithTitle:NSLocalizedString(@"Cancel", nil)
 	 style:UIAlertActionStyleCancel
 	 handler:^(UIAlertAction * _Nonnull action) {
@@ -319,8 +319,8 @@
 		 }
 	 }];
 
-	FXDAlertAction *deleteAllAction =
-	[FXDAlertAction
+	UIAlertAction *deleteAllAction =
+	[UIAlertAction
 	 actionWithTitle:NSLocalizedString(@"Delete All", nil)
 	 style:UIAlertActionStyleDestructive
 	 handler:^(UIAlertAction * _Nonnull action) {

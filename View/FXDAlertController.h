@@ -3,34 +3,8 @@
 #import "FXDimportCore.h"
 
 
-typedef void (^FXDcallbackAlert)(id alertObj, NSInteger buttonIndex);
-
-
-@interface FXDAlertView : UIAlertView <UIAlertViewDelegate>
-
-@property (copy) FXDcallbackAlert alertCallback;
-
-- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
-
-@end
-
-
-@interface FXDActionSheet : UIActionSheet <UIActionSheetDelegate>
-
-@property (copy) FXDcallbackAlert alertCallback;
-
-- (instancetype)initWithTitle:(NSString *)title withButtonTitleArray:(NSArray*)buttonTitleArray cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
-
-@end
-
-
-@interface FXDAlertAction : UIAlertAction
-@property (strong, nonatomic) id attachedObj;
-@end
-
-
 @interface FXDAlertController : UIAlertController
 
-+ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)message cancelButtonTitle:(NSString*)cancelButtonTitle withAlertCallback:(FXDcallbackAlert)alertCallback;
++ (_Nonnull instancetype)simpleAlertWithTitle:(nullable NSString*)title message:(nullable NSString*)message cancelButtonTitle:(nullable NSString*)cancelButtonTitle withAlertHandler:(void (^ __nullable)(UIAlertAction *_Nonnull action))alertHandler;
 
 @end

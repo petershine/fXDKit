@@ -45,10 +45,10 @@
 
 	if (alertBody.length > 0) {
 		[FXDAlertController
-		 showAlertWithTitle:alertBody
+		 simpleAlertWithTitle:alertBody
 		 message:nil
 		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
+		 withAlertHandler:nil];
 	}
 
 	if (_statusCallback) {

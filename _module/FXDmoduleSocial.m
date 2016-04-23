@@ -179,10 +179,10 @@
 		}
 
 		[FXDAlertController
-		 showAlertWithTitle:alertTitle
+		 simpleAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
 		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
+		 withAlertHandler:nil];
 
 		self->_mainAccountType = nil;
 
@@ -272,10 +272,10 @@
 		}
 
 		[FXDAlertController
-		 showAlertWithTitle:alertTitle
+		 simpleAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
 		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
+		 withAlertHandler:nil];
 
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
@@ -301,8 +301,8 @@
 										   message:nil
 										   preferredStyle:UIAlertControllerStyleActionSheet];
 
-	FXDAlertAction *cancelAction =
-	[FXDAlertAction
+	UIAlertAction *cancelAction =
+	[UIAlertAction
 	 actionWithTitle:NSLocalizedString(@"Cancel", nil)
 	 style:UIAlertActionStyleCancel
 	 handler:^(UIAlertAction * _Nonnull action) {
@@ -316,8 +316,8 @@
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-	FXDAlertAction *signOutAction =
-	[FXDAlertAction
+	UIAlertAction *signOutAction =
+	[UIAlertAction
 	 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
 	 style:UIAlertActionStyleDestructive
 	 handler:^(UIAlertAction * _Nonnull action) {
@@ -354,8 +354,8 @@
 		}
 
 
-		FXDAlertAction *selectAction =
-		[FXDAlertAction
+		UIAlertAction *selectAction =
+		[UIAlertAction
 		 actionWithTitle:actionTitle
 		 style:UIAlertActionStyleDefault
 		 handler:^(UIAlertAction * _Nonnull action) {
@@ -431,10 +431,10 @@
 
 		
 		[FXDAlertController
-		 showAlertWithTitle:alertTitle
+		 simpleAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
 		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
+		 withAlertHandler:nil];
 		
 		return nil;
 	}

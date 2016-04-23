@@ -223,8 +223,8 @@
 											   message:nil
 											   preferredStyle:UIAlertControllerStyleActionSheet];
 
-		FXDAlertAction *cancelAction =
-		[FXDAlertAction
+		UIAlertAction*cancelAction =
+		[UIAlertAction
 		 actionWithTitle:NSLocalizedString(@"Cancel", nil)
 		 style:UIAlertActionStyleCancel
 		 handler:^(UIAlertAction * _Nonnull action) {
@@ -235,8 +235,8 @@
 			 }
 		 }];
 
-		FXDAlertAction *signOutAction =
-		[FXDAlertAction
+		UIAlertAction *signOutAction =
+		[UIAlertAction
 		 actionWithTitle:NSLocalizedString(@"Sign Out", nil)
 		 style:UIAlertActionStyleDestructive
 		 handler:^(UIAlertAction * _Nonnull action) {
@@ -271,8 +271,8 @@
 			}
 
 
-			FXDAlertAction *selectAction =
-			[FXDAlertAction
+			UIAlertAction *selectAction =
+			[UIAlertAction
 			 actionWithTitle:buttonTitle
 			 style:UIAlertActionStyleDefault
 			 handler:^(UIAlertAction * _Nonnull action) {
@@ -436,10 +436,10 @@
 				 FXDLogObject(alertMessage);
 
 				 [FXDAlertController
-				  showAlertWithTitle:nil
+				  simpleAlertWithTitle:nil
 				  message:alertMessage
 				  cancelButtonTitle:nil
-				  withAlertCallback:nil];
+				  withAlertHandler:nil];
 			 }
 
 			 BOOL didRenew = (result == ACAccountCredentialRenewResultRenewed);
@@ -575,10 +575,10 @@
 
 	if (alertMessage.length > 0) {
 		[FXDAlertController
-		 showAlertWithTitle:alertTitle
+		 simpleAlertWithTitle:alertTitle
 		 message:alertMessage
 		 cancelButtonTitle:nil
-		 withAlertCallback:nil];
+		 withAlertHandler:nil];
 	}
 
 
