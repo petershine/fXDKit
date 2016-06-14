@@ -25,9 +25,10 @@
 #define application_DisplayName			[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
 
 
-#define iosVersion9	9.0
-#define iosVersion8	8.0
-#define iosVersion7	7.0
+#define iosVersion10	10.0
+#define iosVersion9		9.0
+#define iosVersion8		8.0
+#define iosVersion7		7.0
 
 
 #define SYSTEM_VERSION_sameOrHigher(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue >= versionNumber)

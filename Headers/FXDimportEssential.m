@@ -119,8 +119,8 @@
 	textLayer.frame = scaledBounds;
 
 
-	textLayer.font = (__bridge CFTypeRef)([textControl font]);
-	textLayer.fontSize = [textControl font].pointSize*renderingScale;
+	textLayer.font = (CFTypeRef)([textControl font]);
+	textLayer.fontSize = [(UIFont*)[textControl font] pointSize]*renderingScale;
 
 	textLayer.foregroundColor = [[textControl textColor] CGColor];
 
