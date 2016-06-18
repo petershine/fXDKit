@@ -145,12 +145,12 @@
 
 		self.viewTitle.backgroundColor = [UIColor clearColor];
 
-		[(UILabel*)self.viewTitle setTextAlignment:NSTextAlignmentCenter];
-		[(UILabel*)self.viewTitle setFont:[UIFont boldSystemFontOfSize:20]];
-		[(UILabel*)self.viewTitle setTextColor:[UIColor whiteColor]];
-		[(UILabel*)self.viewTitle setShadowColor:[UIColor darkGrayColor]];
+		((UILabel*)self.viewTitle).textAlignment = NSTextAlignmentCenter;
+		((UILabel*)self.viewTitle).font = [UIFont boldSystemFontOfSize:20];
+		((UILabel*)self.viewTitle).textColor = [UIColor whiteColor];
+		((UILabel*)self.viewTitle).shadowColor = [UIColor darkGrayColor];
 
-		[(UILabel*)self.viewTitle setText:self.titleText];
+		((UILabel*)self.viewTitle).text = self.titleText;
 	}
 
 	if (self.viewTitle) {

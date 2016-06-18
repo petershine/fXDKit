@@ -44,7 +44,7 @@
 
 	NSMutableArray *removedKeyArray = [[NSMutableArray alloc] initWithCapacity:0];
 
-	for (NSString *key in [operationDictionary allKeys]) {
+	for (NSString *key in operationDictionary.allKeys) {
 		if ([operationKey isEqualToString:key]) {
 			continue;
 		}
@@ -64,7 +64,7 @@
 
 #pragma mark -
 - (void)enqueOperation:(NSOperation*)operation forKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
-	[operationDictionary setObject:operation forKey:operationKey];
+	operationDictionary[operationKey] = operation;
 	[self addOperation:operation];
 }
 

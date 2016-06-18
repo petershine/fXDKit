@@ -58,7 +58,7 @@
 	
 	UIEdgeInsets modifiedInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 	
-	[self setContentInset:modifiedInset];
+	self.contentInset = modifiedInset;
 }
 
 - (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;
@@ -75,7 +75,7 @@
 	
 	FXDLog(@"2.%@", _Struct(modifiedInset));
 	
-	[self setContentInset:modifiedInset];
+	self.contentInset = modifiedInset;
 }
 
 #pragma mark -
@@ -83,7 +83,7 @@
 	CGSize modifiedSize = subView.frame.size;
 	modifiedSize.width += (self.frame.size.width);
 	modifiedSize.height += (self.frame.size.height);
-	[self setContentSize:modifiedSize];
+	self.contentSize = modifiedSize;
 }
 
 #pragma mark -

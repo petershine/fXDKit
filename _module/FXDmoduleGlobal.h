@@ -45,7 +45,7 @@
 
 - (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions;
 
-- (BOOL)shouldUpgradeForNewAppVersion;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldUpgradeForNewAppVersion;
 - (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger;
 - (void)updateLastUpgradedAppVersionAfterLaunch;
 

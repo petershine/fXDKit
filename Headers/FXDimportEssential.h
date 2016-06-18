@@ -57,7 +57,7 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 
 @interface NSError (Essential)
-- (NSDictionary*)essentialParameters;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *essentialParameters;
 @end
 
 

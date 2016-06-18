@@ -11,16 +11,16 @@
 + (NSString*)shortLocalDateStringForUTCdate:(NSDate*)UTCdate;
 + (NSString*)localDateTextForUTCdate:(NSDate*)UTCdate withFormat:(NSString*)format;
 
-- (NSInteger)yearValue;
-- (NSInteger)monthValue;
-- (NSInteger)dayValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger yearValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger monthValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger dayValue;
 
-- (NSString*)shortMonthString;
-- (NSString*)weekdayString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *shortMonthString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *weekdayString;
 
-- (NSInteger)hourValue;
-- (NSInteger)minuteValue;
-- (NSInteger)secondValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger hourValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger minuteValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger secondValue;
 
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
 

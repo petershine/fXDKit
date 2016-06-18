@@ -11,7 +11,7 @@
 + (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(CFStringRef)type;
 + (NSString*)filenameWithWithPrefix:(NSString*)prefix withUniqueKey:(NSString*)uniqueKey forType:(CFStringRef)type;
 
-- (NSString*)leftAlignedParagraph;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *leftAlignedParagraph;
 
 - (NSString*)stringByCompressingWhitespaceTo:(NSString*)seperator;
 

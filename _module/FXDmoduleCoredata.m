@@ -82,7 +82,7 @@
 #pragma mark - Public
 - (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {
 
-	if ([self doesStoredSqliteExist]) {
+	if (self.doesStoredSqliteExist) {
 		return;
 	}
 
@@ -97,7 +97,7 @@
 
 - (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {
 
-	if ([self doesStoredSqliteExist]) {
+	if (self.doesStoredSqliteExist) {
 		return;
 	}
 
@@ -167,7 +167,7 @@
 	self.mainDocument = managedDocument;
 
 
-	NSURL *rootURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	NSURL *rootURL = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
 	NSURL *storeURL = [rootURL URLByAppendingPathComponent:self.sqlitePathComponent];
 	FXDLogObject(storeURL);
 
@@ -420,7 +420,7 @@
 			 
 			 
 			 if (enumerationBlock) {
-				 NSManagedObject *mainEntityObj = [managedContext objectWithID:[fetchedObj objectID]];
+				 NSManagedObject *mainEntityObj = [managedContext objectWithID:fetchedObj.objectID];
 				 
 				 if (shouldUsePrivateContext) {
 					 enumerationBlock(managedContext, mainEntityObj, &shouldBreak);
@@ -603,11 +603,11 @@
 	}
 
 
-	NSPersistentStore *mainPersistentStore = [[self.mainDocument.managedObjectContext persistentStoreCoordinator] persistentStores].firstObject;
-	NSPersistentStore *notifyingPersistentStore = [[(NSManagedObjectContext*)notification.object persistentStoreCoordinator] persistentStores].firstObject;
+	NSPersistentStore *mainPersistentStore = (self.mainDocument.managedObjectContext).persistentStoreCoordinator.persistentStores.firstObject;
+	NSPersistentStore *notifyingPersistentStore = ((NSManagedObjectContext*)notification.object).persistentStoreCoordinator.persistentStores.firstObject;
 
-	NSString *mainStoreUUID = [mainPersistentStore metadata][@"NSStoreUUID"];
-	NSString *notifyingStoreUUID = [notifyingPersistentStore metadata][@"NSStoreUUID"];
+	NSString *mainStoreUUID = mainPersistentStore.metadata[@"NSStoreUUID"];
+	NSString *notifyingStoreUUID = notifyingPersistentStore.metadata[@"NSStoreUUID"];
 
 
 	//NOTE: Merge only if persistentStore is same

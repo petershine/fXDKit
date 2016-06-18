@@ -17,7 +17,7 @@
 		return self.manuallyInitializedModel;
 	}
 
-	return [super managedObjectModel];
+	return super.managedObjectModel;
 }
 
 #pragma mark -

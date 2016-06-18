@@ -54,19 +54,19 @@
 	[super setHighlighted:highlighted animated:animated];
 	
 	if (self.imageView) {
-		[self.imageView setHighlighted:highlighted];
+		(self.imageView).highlighted = highlighted;
 	}
 	
 	if (self.textLabel) {
-		[self.textLabel setHighlighted:highlighted];
+		(self.textLabel).highlighted = highlighted;
 	}
 	
 	if ([self.accessoryView isKindOfClass:[UIImageView class]]) {
-		[(UIImageView*)self.accessoryView setHighlighted:highlighted];
+		((UIImageView*)self.accessoryView).highlighted = highlighted;
 	}
 	
 	if (self.backgroundImageview) {
-		[self.backgroundImageview setHighlighted:highlighted];
+		(self.backgroundImageview).highlighted = highlighted;
 	}
 }
 

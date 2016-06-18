@@ -31,7 +31,7 @@
 			_mainScrollview = self.mainTableview;
 		}
 		else {
-			_mainScrollview = [super mainScrollview];
+			_mainScrollview = super.mainScrollview;
 		}
 	}
 	
@@ -137,7 +137,7 @@
 	id accessoryView = nil;
 
 	if (accessoryView) {
-		if ([(UIImageView*)accessoryView image] == nil) {
+		if (((UIImageView*)accessoryView).image == nil) {
 			accessoryView = nil;
 		}
 	}

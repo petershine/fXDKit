@@ -97,7 +97,7 @@
 
 	NSString *unicodeString = nil;
 
-	unicodeString = [self.absoluteString stringByRemovingPercentEncoding];
+	unicodeString = (self.absoluteString).stringByRemovingPercentEncoding;
 
 	return unicodeString;
 }
@@ -167,7 +167,7 @@
 }
 
 - (NSString*)followingPathAfterPathComponent:(NSString *)pathComponent {
-	return [[[self unicodeAbsoluteString] componentsSeparatedByString:pathComponent] lastObject];
+	return [self.unicodeAbsoluteString componentsSeparatedByString:pathComponent].lastObject;
 }
 
 - (NSString*)followingPathInDocuments {
@@ -181,7 +181,7 @@
 	[self getResourceValue:&fileSize forKey:NSURLFileSizeKey error:&error];
 	FXDLog_ERROR;
 
-	NSString *formattedString = [fileSize byteUnitFormatted];
+	NSString *formattedString = fileSize.byteUnitFormatted;
 	
 	return formattedString;
 }

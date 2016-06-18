@@ -120,7 +120,7 @@
 			  }
 
 
-			  [userDefaults setObject:[ubiquityContainerURL absoluteString] forKey:userdefaultStringSavedUbiquityContainerURL];
+			  [userDefaults setObject:ubiquityContainerURL.absoluteString forKey:userdefaultStringSavedUbiquityContainerURL];
 			  [userDefaults synchronize];
 
 

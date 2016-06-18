@@ -315,7 +315,7 @@
 	};
 
 
-	if ([self.multiAccountArray count] > 0) {
+	if ((self.multiAccountArray).count > 0) {
 		PresentActionSheet();
 		return;
 	}
@@ -329,7 +329,7 @@
 		 FXDLog_BLOCK(self, caller);
 		 FXDLogObject(accounts);
 
-		 if ([accounts count] > 0) {
+		 if (accounts.count > 0) {
 			 [collectedAccounts addObjectsFromArray:accounts];
 		 }
 
@@ -340,7 +340,7 @@
 			  FXDLog_BLOCK(self, caller);
 			  FXDLogObject(accounts);
 
-			  if ([accounts count] > 0) {
+			  if (accounts.count > 0) {
 				  [collectedAccounts addObjectsFromArray:accounts];
 			  }
 
@@ -350,7 +350,7 @@
 			  _multiAccountArray = [collectedAccounts copy];
 			  FXDLogVariable([_multiAccountArray count]);
 
-			  if ([self.multiAccountArray count] > 0) {
+			  if ((self.multiAccountArray).count > 0) {
 				  PresentActionSheet();
 			  }
 			  else {
@@ -428,9 +428,9 @@
 			 FXDLog_ERROR;
 
 			 if (error) {
-				 NSString *alertMessage = [error localizedDescription];
+				 NSString *alertMessage = error.localizedDescription;
 
-				 if ([error code] == 9) {
+				 if (error.code == 9) {
 					 alertMessage = [alertMessage stringByAppendingString:NSLocalizedString(@"\nPlease try again", nil)];
 				 }
 				 FXDLogObject(alertMessage);
@@ -564,7 +564,7 @@
 							  (failureReason) ? failureReason:@"",
 							  (userMessage) ? userMessage:@""];
 
-	NSDictionary *errorInformation = [error userInfo][@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"];
+	NSDictionary *errorInformation = error.userInfo[@"com.facebook.sdk:ParsedJSONResponseKey"][@"body"][@"error"];
 	NSString *errorMessage = errorInformation[@"message"];
 
 	if (errorMessage.length > 0) {
@@ -980,7 +980,7 @@
 - (void)observedACAccountStoreDidChange:(NSNotification*)notification {
 	[super observedACAccountStoreDidChange:notification];
 
-	ACAccountStore *accountStore = [notification object];
+	ACAccountStore *accountStore = notification.object;
 
 	for (ACAccount *account in accountStore.accounts) {
 		ACAccountType *accountType = account.accountType;

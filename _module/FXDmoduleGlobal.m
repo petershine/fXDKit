@@ -42,7 +42,7 @@
 	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
-		_deviceLanguageCode = [languages firstObject];
+		_deviceLanguageCode = languages.firstObject;
 		
 		if ([_deviceLanguageCode isEqualToString:@"zh-Hans"]) {
 			_deviceLanguageCode = @"ch";
@@ -69,7 +69,7 @@
 
 - (NSString*)deviceCountryCode {
 	if (_deviceCountryCode == nil) {	FXDLog_DEFAULT;
-		NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+		NSString *localeIdentifier = [NSLocale currentLocale].localeIdentifier;
 		
 		NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
 		
@@ -87,7 +87,7 @@
 		struct utsname systemInfo;
 		uname(&systemInfo);
 		
-		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+		NSString *machineName = @(systemInfo.machine);
 		
 		NSDictionary *commonNamesDictionary =
 		@{
@@ -161,7 +161,7 @@
 		struct utsname systemInfo;
 		uname(&systemInfo);
 
-		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+		NSString *machineName = @(systemInfo.machine);
 
 		_isDevice_iPhoneFour = @(([machineName isEqualToString:@"iPhone3,1"]
 								  || [machineName isEqualToString:@"iPhone3,2"]
@@ -176,7 +176,7 @@
 		struct utsname systemInfo;
 		uname(&systemInfo);
 
-		NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+		NSString *machineName = @(systemInfo.machine);
 
 		_isDevice_iPhoneSix = @(([machineName isEqualToString:@"iPhone7,1"]
 								 || [machineName isEqualToString:@"iPhone7,2"]));
@@ -191,7 +191,7 @@
 		_dateformatterUTC = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
-		[_dateformatterUTC setTimeZone:UTCtimezone];
+		_dateformatterUTC.timeZone = UTCtimezone;
 		[_dateformatterUTC setDateFormat:dateformatDefault];
 		
 		FXDLogObject(_dateformatterUTC);
@@ -206,7 +206,7 @@
 		_dateformatterLocal = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
-		[_dateformatterLocal setTimeZone:localTimeZone];
+		_dateformatterLocal.timeZone = localTimeZone;
 		[_dateformatterLocal setDateFormat:dateformatDefault];
 				
 		FXDLogObject(_dateformatterLocal);
@@ -288,7 +288,7 @@
 
 #if USE_Flurry
 	FXDLog(@"USE_Flurry: %@", _BOOL([@(USE_Flurry) boolValue]));
-	[Flurry setCrashReportingEnabled:![@(USE_Crashlytics) boolValue]];
+	[Flurry setCrashReportingEnabled:!(@(USE_Crashlytics)).boolValue];
 	[Flurry setBackgroundSessionEnabled:YES];
 	[Flurry startSession:flurryApplicationKey withOptions:launchOptions];
 #endif
@@ -296,7 +296,7 @@
 
 #pragma mark -
 - (BOOL)shouldUpgradeForNewAppVersion {
-	NSInteger versionInteger = [[application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+	NSInteger versionInteger = [application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""].integerValue;
 	FXDLogVariable(versionInteger);
 
 	BOOL shouldUpgrade = [self isLastVersionOlderThanVersionInteger:versionInteger];
@@ -320,7 +320,7 @@
 }
 
 - (void)updateLastUpgradedAppVersionAfterLaunch {	FXDLog_DEFAULT;
-	NSInteger versionInteger = [[application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+	NSInteger versionInteger = [application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""].integerValue;
 
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
 	[[NSUserDefaults standardUserDefaults] synchronize];
@@ -392,8 +392,8 @@
 		 FXDLogObject(application_ShortVersion);
 		 FXDLogBOOL(([appStoreVersion isEqualToString:application_ShortVersion] == NO));
 
-		 NSInteger currentVersionInteger = [[application_ShortVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
-		 NSInteger appStoreVersionInteger = [[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
+		 NSInteger currentVersionInteger = [application_ShortVersion stringByReplacingOccurrencesOfString:@"." withString:@""].integerValue;
+		 NSInteger appStoreVersionInteger = [appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""].integerValue;
 		 FXDLogVariable(currentVersionInteger);
 		 FXDLogVariable(appStoreVersionInteger);
 		 FXDLogBOOL((currentVersionInteger < appStoreVersionInteger));

@@ -12,7 +12,7 @@
 
 	for (AVCaptureDevice *device in devices) {
 
-		if ([device position] != cameraPosition) {
+		if (device.position != cameraPosition) {
 			continue;
 		}
 
@@ -134,7 +134,7 @@
 	[_mainCaptureSession beginConfiguration];
 
 	if ([_mainCaptureSession canSetSessionPreset:captureSessionPreset]) {
-		[_mainCaptureSession setSessionPreset:captureSessionPreset];
+		_mainCaptureSession.sessionPreset = captureSessionPreset;
 	}
 
 
@@ -148,7 +148,7 @@
 	if ([_mainCaptureSession canAddOutput:self.dataOutputVideo]) {
 
 		NSDictionary *outputSettings = @{(NSString*)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
-		[self.dataOutputVideo setVideoSettings:outputSettings];
+		(self.dataOutputVideo).videoSettings = outputSettings;
 
 		self.dataOutputVideo.alwaysDiscardsLateVideoFrames = NO;
 
@@ -232,7 +232,7 @@
 
 		NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
 
-		AVCaptureDevice *audioCapture = [devices firstObject];
+		AVCaptureDevice *audioCapture = devices.firstObject;
 
 		NSError *error = nil;
 		_deviceInputAudio = [[AVCaptureDeviceInput alloc] initWithDevice:audioCapture error:&error];
@@ -362,7 +362,7 @@
 	if (cameraPosition != AVCaptureDevicePositionBack
 		&& shouldUseMirroring) {
 		affineTransform = CGAffineTransformScale(affineTransform, 1.0, -1.0);
-		affineTransform = CGAffineTransformTranslate(affineTransform, 0.0, [originalImage extent].size.height);
+		affineTransform = CGAffineTransformTranslate(affineTransform, 0.0, originalImage.extent.size.height);
 	}
 
 
@@ -412,7 +412,7 @@
 
 	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 
-	[self.mainPreviewLayer.connection setVideoOrientation:self.videoOrientation];
+	(self.mainPreviewLayer.connection).videoOrientation = self.videoOrientation;
 }
 
 #pragma mark - Delegate

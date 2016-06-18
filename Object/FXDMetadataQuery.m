@@ -8,7 +8,7 @@
 	
 	BOOL isTransferring = NO;
 
-	for (NSMetadataItem *metadataItem in [self results]) {
+	for (NSMetadataItem *metadataItem in self.results) {
 
 		BOOL isDownloaded = NO;
 		BOOL isUploaded = NO;
@@ -67,7 +67,7 @@
 
 	NSString *unicodeString = nil;
 
-	unicodeString = [metadataItemURL.absoluteString stringByRemovingPercentEncoding];
+	unicodeString = (metadataItemURL.absoluteString).stringByRemovingPercentEncoding;
 
 	return unicodeString;
 }

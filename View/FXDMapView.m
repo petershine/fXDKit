@@ -21,7 +21,7 @@
 - (void)awakeFromNib {	FXDLog_DEFAULT;
 	[super awakeFromNib];
 
-	self.initialDisclaimerFrame = [[self disclaimerView] frame];
+	self.initialDisclaimerFrame = [self.disclaimerView frame];
 	self.disclaimerOffset = CGPointZero;
 }
 
@@ -32,13 +32,13 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
-	UIView *disclaimerView = [self disclaimerView];
+	UIView *disclaimerView = self.disclaimerView;
 	
 	if (disclaimerView) {
 		FXDLogObject(disclaimerView);
 		FXDLogObject([(UILabel*)disclaimerView font]);
 
-		CGRect modifiedFrame = [disclaimerView frame];
+		CGRect modifiedFrame = disclaimerView.frame;
 		FXDLog(@"1.%@", _Rect(modifiedFrame));
 
 		modifiedFrame.origin.x = self.initialDisclaimerFrame.origin.x +self.disclaimerOffset.x;

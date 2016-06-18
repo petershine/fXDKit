@@ -7,13 +7,13 @@
 
 
 @interface NSMetadataQuery (Essential)
-- (BOOL)isQueryResultsTransferring;
+@property (NS_NONATOMIC_IOSONLY, getter=isQueryResultsTransferring, readonly) BOOL queryResultsTransferring;
 @end
 
 
 @interface NSMetadataItem (Essential)
-- (Float64)transferPercentage;
+@property (NS_NONATOMIC_IOSONLY, readonly) Float64 transferPercentage;
 
-- (NSString*)unicodeAbsoluteString;
-- (NSDate*)attributeModificationDate;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *unicodeAbsoluteString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDate *attributeModificationDate;
 @end

@@ -17,17 +17,17 @@ typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 
 @interface NSURL (Essential)
 - (NSDictionary*)resourceValuesForUbiquitousItemKeysWithError:(NSError**)error;
-- (NSDictionary*)fullResourceValues;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *fullResourceValues;
 
-- (NSString*)unicodeAbsoluteString;
-- (NSDate*)attributeModificationDate;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *unicodeAbsoluteString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDate *attributeModificationDate;
 
-- (FILE_KIND_TYPE)fileKindType;
+@property (NS_NONATOMIC_IOSONLY, readonly) FILE_KIND_TYPE fileKindType;
 
 - (NSString*)followingPathAfterPathComponent:(NSString*)pathComponent;
-- (NSString*)followingPathInDocuments;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *followingPathInDocuments;
 
-- (NSString*)fileSizeString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *fileSizeString;
 
 + (BOOL)validateURL:(NSString*)candidate;
 + (BOOL)isHTTPcompatible:(NSString*)candidate;

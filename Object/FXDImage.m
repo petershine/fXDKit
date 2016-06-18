@@ -351,7 +351,7 @@
 											CGImageGetDataProvider(maskRef), NULL, false);
 		FXDLogObject(mask);
 
-		CGImageRef masked = CGImageCreateWithMask([maskedImage CGImage], mask);
+		CGImageRef masked = CGImageCreateWithMask(maskedImage.CGImage, mask);
 		CFRelease(mask);
 		
 		FXDLogObject(masked);

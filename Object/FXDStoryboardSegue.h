@@ -11,9 +11,9 @@
 
 
 @interface UIStoryboardSegue (Essential)
-- (NSDictionary*)fullDescription;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *fullDescription;
 
-- (BOOL)shouldUseNavigationPush;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldUseNavigationPush;
 
 - (id)mainContainerOfClass:(Class)class;
 

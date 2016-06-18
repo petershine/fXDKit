@@ -41,7 +41,7 @@
 
 
 		if (self.offsetYdismissingController == 0.0) {
-			CGRect screenBounds = [[UIScreen mainScreen] bounds];
+			CGRect screenBounds = [UIScreen mainScreen].bounds;
 			//FXDLogRect(screenBounds);
 
 			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleSceneDismissingOffset);
@@ -189,7 +189,7 @@
 		if (section < sections.count) {
 			id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
 			
-			numberOfItems = [sectionInfo numberOfObjects];
+			numberOfItems = sectionInfo.numberOfObjects;
 		}
 		
 		if (numberOfItems != fetchedCount) {	FXDLog_DEFAULT;

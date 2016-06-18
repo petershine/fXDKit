@@ -15,7 +15,7 @@
 		if (defaultImage && shouldChangeOffset) {
 			CGPoint modifiedOffset = self.centerOffset;
 			modifiedOffset.y -= (defaultImage.size.height/2.0);
-			[self setCenterOffset:modifiedOffset];
+			self.centerOffset = modifiedOffset;
 		}
 	}
 	

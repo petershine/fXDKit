@@ -19,9 +19,9 @@
 		_mainMetadataQuery = [[NSMetadataQuery alloc] init];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];
-		[_mainMetadataQuery setPredicate:predicate];
+		_mainMetadataQuery.predicate = predicate;
 
-		[_mainMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
+		_mainMetadataQuery.searchScopes = @[NSMetadataQueryUbiquitousDocumentsScope];
 	}
 
 	return _mainMetadataQuery;

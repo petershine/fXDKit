@@ -14,11 +14,11 @@
 
 
 @interface MKMapView (Essential)
-- (id)disclaimerView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id disclaimerView;
 
-- (BOOL)isHorizontal;
+@property (NS_NONATOMIC_IOSONLY, getter=isHorizontal, readonly) BOOL horizontal;
 
-- (MKZoomScale)mapZoomScale;
+@property (NS_NONATOMIC_IOSONLY, readonly) MKZoomScale mapZoomScale;
 
 - (CGPoint)offsetFromLastRegion:(MKCoordinateRegion)lastRegion toCurrentRegion:(MKCoordinateRegion)currentRegion;
 

@@ -7,14 +7,14 @@
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue {
 	//NOTE: Use 32 as the string length
 	NSString *digits = [[NSString stringWithFormat:@"%12ld", (long)doubleValue] stringByReplacingOccurrencesOfString:@" " withString:@"0"];
-	NSString *decimals = [[[NSString stringWithFormat:@"%.20f", (doubleValue -((NSInteger)doubleValue))] componentsSeparatedByString:@"."] lastObject];
+	NSString *decimals = [[NSString stringWithFormat:@"%.20f", (doubleValue -((NSInteger)doubleValue))] componentsSeparatedByString:@"."].lastObject;
 
 	return [NSString stringWithFormat:@"%@%@", digits, decimals];
 }
 
 + (NSString*)uniqueFilenameWithWithPrefix:(NSString*)prefix forType:(CFStringRef)type {
 
-	NSString *uniqueKey = [NSString uniqueKeyFrom:[[NSDate date] timeIntervalSince1970]];
+	NSString *uniqueKey = [NSString uniqueKeyFrom:[NSDate date].timeIntervalSince1970];
 
 	NSString *filename = [self filenameWithWithPrefix:prefix withUniqueKey:uniqueKey forType:type];
 

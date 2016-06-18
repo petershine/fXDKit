@@ -42,7 +42,7 @@
 			_mainScrollview = self.mainWebview.scrollView;
 		}
 		else {
-			_mainScrollview = [super mainScrollview];
+			_mainScrollview = super.mainScrollview;
 		}
 	}
 
@@ -115,7 +115,7 @@
 	FXDLogObject(webView.request.URL);
 	FXDLog_ERROR;
 
-	if (error && [error code] != -999) {
+	if (error && error.code != -999) {
 		//TODO:
 	}
 }

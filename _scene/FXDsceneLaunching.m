@@ -44,7 +44,7 @@
 	 delay:0.0
 	 options:UIViewAnimationOptionCurveEaseIn
 	 animations:^{
-		 [weakSelf.view setAlpha:0.0];
+		 (weakSelf.view).alpha = 0.0;
 
 	 } completion:^(BOOL didFinish) {
 		 

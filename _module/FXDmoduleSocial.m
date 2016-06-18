@@ -472,7 +472,7 @@
 	FXDLog_ERROR;
 
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
-		NSInteger statusCode = [(NSHTTPURLResponse*)urlResponse statusCode];
+		NSInteger statusCode = ((NSHTTPURLResponse*)urlResponse).statusCode;
 		NSString *statusCodeDescription = [NSHTTPURLResponse localizedStringForStatusCode:statusCode];
 
 		if (statusCodeDescription) {}
@@ -482,7 +482,7 @@
 
 	FXDLogVariable([responseData length]);
 
-	if ([responseData length] > 0) {
+	if (responseData.length > 0) {
 		id jsonObj = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
 		if (jsonObj) {}
 		FXDLog(@"%@\n %@", _Object([jsonObj class]), jsonObj);
@@ -497,7 +497,7 @@
 #if	ForDEVELOPER
 	FXDLogObject(self.typeIdentifier);
 
-	ACAccountStore *accountStore = [notification object];
+	ACAccountStore *accountStore = notification.object;
 
 	for (ACAccount *account in accountStore.accounts) {
 		ACAccountType *accountType = account.accountType;
@@ -658,7 +658,7 @@
 		 
 		 NSURL *requestURL = nil;
 
-		 if ([facebookUserId length] > 0) {
+		 if (facebookUserId.length > 0) {
 			 requestURL = [NSURL evaluatedURLforPath:urlstringFacebook(facebookUserId)];
 		 }
 		 else {

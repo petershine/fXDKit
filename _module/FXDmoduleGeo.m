@@ -167,7 +167,7 @@
 	NSNumber *lastLongitude = [userDefaults objectForKey:@"LastLongitudeObjKey"];
 
 	if (lastTimestamp && lastLatitude && lastLongitude) {
-		CLLocationCoordinate2D monitoredCoordinate = CLLocationCoordinate2DMake([lastLatitude doubleValue], [lastLongitude doubleValue]);
+		CLLocationCoordinate2D monitoredCoordinate = CLLocationCoordinate2DMake(lastLatitude.doubleValue, lastLongitude.doubleValue);
 
 		CLLocation *monitoredLocation = [[CLLocation alloc]
 										 initWithCoordinate:monitoredCoordinate
@@ -193,11 +193,11 @@
 	FXDLogObject(alertBody);
 
 
-	if ([alertBody length] > 0) {
+	if (alertBody.length > 0) {
 		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 		localNotifcation.repeatInterval = 0;
 		localNotifcation.hasAction = YES;
-		localNotifcation.alertBody = (alertBody) ? alertBody:[newLocation description];
+		localNotifcation.alertBody = (alertBody) ? alertBody:newLocation.description;
 		localNotifcation.soundName = UILocalNotificationDefaultSoundName;
 		localNotifcation.applicationIconBadgeNumber = ([UIApplication sharedApplication].applicationIconBadgeNumber+1);
 

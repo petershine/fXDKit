@@ -4,7 +4,7 @@
 
 
 @interface NSNumber (Essential)
-- (NSString*)byteUnitFormatted;
-- (NSString*)timerUnitFormatted;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *byteUnitFormatted;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *timerUnitFormatted;
 
 @end

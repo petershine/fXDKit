@@ -30,21 +30,21 @@
 
 	NSMutableDictionary *mulDic = [[NSMutableDictionary alloc] init];
 
-	for (NSString *key in [dic allKeys]) {
+	for (NSString *key in dic.allKeys) {
 		NSObject *obj = dic[key];
 		if (!obj || obj == [NSNull null])
 		{
 			//            [mulDic setObject:[@"" JSONValue] forKey:key];
 		}else if ([obj isKindOfClass:[NSDictionary class]])
 		{
-			[mulDic setObject:[self cleanNullInJsonDic:(NSDictionary *)obj] forKey:key];
+			mulDic[key] = [self cleanNullInJsonDic:(NSDictionary *)obj];
 		}else if ([obj isKindOfClass:[NSArray class]])
 		{
 			NSArray *array = [self cleanNullInJsonArray:(NSArray *)obj];
-			[mulDic setObject:array forKey:key];
+			mulDic[key] = array;
 		}else
 		{
-			[mulDic setObject:obj forKey:key];
+			mulDic[key] = obj;
 		}
 	}
 
@@ -113,16 +113,16 @@
 	CATextLayer *textLayer = [[CATextLayer alloc] init];
 	textLayer.string = [textControl text];
 
-	CGRect scaledBounds = [(UIView*)textControl bounds];
+	CGRect scaledBounds = ((UIView*)textControl).bounds;
 	scaledBounds.size.width *= renderingScale;
 	scaledBounds.size.height *= renderingScale;
 	textLayer.frame = scaledBounds;
 
 
-	textLayer.font = (CFTypeRef)([textControl font]);
-	textLayer.fontSize = [(UIFont*)[textControl font] pointSize]*renderingScale;
+	textLayer.font = (__bridge CFTypeRef)([textControl font]);
+	textLayer.fontSize = ((UIFont*)[textControl font]).pointSize*renderingScale;
 
-	textLayer.foregroundColor = [[textControl textColor] CGColor];
+	textLayer.foregroundColor = [textControl textColor].CGColor;
 
 
 	NSString *alignmentMode = kCAAlignmentNatural;
@@ -152,7 +152,7 @@
 			break;
 	}
 
-	[textLayer setAlignmentMode:alignmentMode];
+	textLayer.alignmentMode = alignmentMode;
 
 	if ([textControl isKindOfClass:[UITextView class]]) {
 		textLayer.wrapped = YES;
@@ -181,7 +181,7 @@
 	if (self.fetchedObjects.count > 0) {
 		NSArray *filteredArray = [self.fetchedObjects filteredArrayUsingPredicate:predicate];
 
-		resultObj = [filteredArray firstObject];
+		resultObj = filteredArray.firstObject;
 	}
 
 	return resultObj;
@@ -441,7 +441,7 @@
 
 	NSMutableAttributedString *colorAttributed = [[NSMutableAttributedString alloc] initWithString:self.text];
 	[colorAttributed addAttribute:NSForegroundColorAttributeName value:attributedColor range:substringRange];
-	[colorAttributed addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:substringRange];
+	[colorAttributed addAttribute:NSUnderlineStyleAttributeName value:@1 range:substringRange];
 	self.attributedText = colorAttributed;
 }
 

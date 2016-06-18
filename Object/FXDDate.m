@@ -12,8 +12,8 @@
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
     NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
-    [dateFormatter setTimeZone:UTCtimezone];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    dateFormatter.timeZone = UTCtimezone;
+	dateFormatter.dateFormat = @"yyyy-MM-dd";
 
     NSString *shortUTCdateString = [dateFormatter stringFromDate:localDate];
 
@@ -36,8 +36,8 @@
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
 	NSTimeZone *UTCtimezone = [NSTimeZone defaultTimeZone];
-	[dateFormatter setTimeZone:UTCtimezone];
-	[dateFormatter setDateFormat:format];
+	dateFormatter.timeZone = UTCtimezone;
+	dateFormatter.dateFormat = format;
 
 	NSString *localDateText = [dateFormatter stringFromDate:UTCdate];
 
@@ -50,7 +50,7 @@
 
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:self];
 
-	return [dateComponents year];
+	return dateComponents.year;
 }
 
 - (NSInteger)monthValue {
@@ -58,7 +58,7 @@
 
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth fromDate:self];
 
-	return [dateComponents month];
+	return dateComponents.month;
 }
 
 - (NSInteger)dayValue {
@@ -66,7 +66,7 @@
 
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:self];
 
-	return [dateComponents day];
+	return dateComponents.day;
 }
 
 #pragma mark -
@@ -86,7 +86,7 @@
 								  @"Nov",
 								  @"Dec"];
 
-	NSString *monthString = monthStringArray[[self monthValue]];
+	NSString *monthString = monthStringArray[self.monthValue];
 
 	return monthString;
 }
@@ -108,7 +108,7 @@
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:self];
 
 
-	NSString *weekdayString = weekdayStringArray[[dateComponents weekday]];
+	NSString *weekdayString = weekdayStringArray[dateComponents.weekday];
 
 	return weekdayString;
 }
@@ -119,7 +119,7 @@
 
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:self];
 
-	return [dateComponents hour];
+	return dateComponents.hour;
 }
 
 - (NSInteger)minuteValue {
@@ -127,7 +127,7 @@
 
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMinute fromDate:self];
 
-	return [dateComponents minute];
+	return dateComponents.minute;
 }
 
 - (NSInteger)secondValue {
@@ -135,16 +135,16 @@
 
 	dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitSecond fromDate:self];
 
-	return [dateComponents second];
+	return dateComponents.second;
 }
 
 #pragma mark -
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate {
 	BOOL isSame = NO;
 
-	if ([self yearValue] == [anotherDate yearValue]
-		&& [self monthValue] == [anotherDate monthValue]
-		&& [self dayValue] == [anotherDate dayValue]) {
+	if (self.yearValue == anotherDate.yearValue
+		&& self.monthValue == anotherDate.monthValue
+		&& self.dayValue == anotherDate.dayValue) {
 		isSame = YES;
 	}
 
@@ -166,7 +166,7 @@
 	NSInteger days = (NSInteger)(age/60/60/24);
 
 	if (days > 7) {
-		ageText = [NSString stringWithFormat:@"%@", [[[self description] componentsSeparatedByString:@" "] firstObject]];
+		ageText = [NSString stringWithFormat:@"%@", [self.description componentsSeparatedByString:@" "].firstObject];
 	}
 	else if (days > 0 && days <= 7) {
 		ageText = [NSString stringWithFormat:@"%ld day", (long)days];

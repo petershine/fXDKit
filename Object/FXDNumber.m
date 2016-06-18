@@ -10,7 +10,7 @@
 
 	NSInteger kiloUnit = 1024;
 
-	NSInteger fileSize = [self integerValue];
+	NSInteger fileSize = self.integerValue;
 
 	if (fileSize < kiloUnit) {
 		formattedString = [NSString stringWithFormat:@"%ld B", (long)fileSize];
@@ -31,7 +31,7 @@
 - (NSString*)timerUnitFormatted {
 	NSString *formattedString = nil;
 
-	Float64 timerInterval = [self doubleValue];
+	Float64 timerInterval = self.doubleValue;
 
 	NSInteger seconds = (NSInteger)timerInterval % 60;
 

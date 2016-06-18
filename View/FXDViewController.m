@@ -24,7 +24,7 @@
 	FXDLog(@"SELF: %@ %@", _BOOL(nibExists), _Object(resourcePath));
 
 	if (nibExists == NO) {
-		nibNameOrNil = NSStringFromClass([self superclass]);
+		nibNameOrNil = NSStringFromClass(self.superclass);
 
 		resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
 		nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
@@ -330,7 +330,7 @@
 	
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//NOTE: self must be the owner
 
-	UIView *sceneView = [viewArray firstObject];	
+	UIView *sceneView = viewArray.firstObject;	
 	FXDLogObject(sceneView);
 	
 #if ForDEVELOPER
@@ -366,7 +366,7 @@
 - (void)addChildScene:(UIViewController*)childScene forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)callback withDismissedBlock:(FXDcallbackFinish)dismissedBlock {
 
 	if ([childScene isKindOfClass:[FXDViewController class]]) {
-		[(FXDViewController*)childScene setDismissedBlock:dismissedBlock];
+		((FXDViewController*)childScene).dismissedBlock = dismissedBlock;
 	}
 
 	if (duration == 0.0) {

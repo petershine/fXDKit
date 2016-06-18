@@ -38,7 +38,7 @@ typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *e
 - (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock;
 - (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock;
 
-- (UIImage*)renderedImageForScreenScale;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage *renderedImageForScreenScale;
 - (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates;
 
 - (id)superViewOfClassName:(NSString*)className;

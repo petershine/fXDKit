@@ -21,9 +21,9 @@
 #pragma mark - Property overriding
 - (NSMetadataQuery*)mainMetadataQuery {
 	if (_mainMetadataQuery == nil) {
-		_mainMetadataQuery = [super mainMetadataQuery];
+		_mainMetadataQuery = super.mainMetadataQuery;
 
-		[_mainMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
+		_mainMetadataQuery.searchScopes = @[NSMetadataQueryUbiquitousDocumentsScope];
 	}
 
 	return _mainMetadataQuery;
@@ -61,7 +61,7 @@
 	[enumeratingQueue
 	 addOperationWithBlock:^{
 
-		 for (NSUInteger idx = 0; idx < [self.mainMetadataQuery resultCount]; idx++) {
+		 for (NSUInteger idx = 0; idx < (self.mainMetadataQuery).resultCount; idx++) {
 			 NSMetadataItem *metadataItem = [self.mainMetadataQuery resultAtIndex:idx];
 
 			 NSURL *itemURL = [metadataItem valueForAttribute:NSMetadataItemURLKey];
@@ -73,7 +73,7 @@
 			 FXDLog_ERROR_ignored(260);
 
 			 if (parentDirectoryURL == nil
-				 || [[parentDirectoryURL absoluteString] isEqualToString:[folderURL absoluteString]] == NO) {
+				 || [[parentDirectoryURL absoluteString] isEqualToString:folderURL.absoluteString] == NO) {
 				 continue;
 			 }
 

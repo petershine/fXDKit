@@ -22,11 +22,11 @@
 
 #pragma mark -
 - (AVPlayer*)mainPlayer {
-	return [(AVPlayerLayer*)[self layer] player];
+	return ((AVPlayerLayer*)self.layer).player;
 }
 
 - (void)setMainPlayer:(AVPlayer*)mainMoviePlayer {
-	[(AVPlayerLayer*)[self layer] setPlayer:mainMoviePlayer];
+	((AVPlayerLayer*)self.layer).player = mainMoviePlayer;
 }
 
 #pragma mark -
@@ -34,7 +34,7 @@
 	FXDLog(@"%@ %@", _Size(forcedSize), _Size(presentationSize));
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
-		presentationSize = [self mainPlayer].currentItem.presentationSize;
+		presentationSize = self.mainPlayer.currentItem.presentationSize;
 
 		if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
 			presentationSize = forcedSize;
@@ -184,7 +184,7 @@
 			  AVPlayerItem *movieItem = [AVPlayerItem playerItemWithAsset:movieAsset];
 
 			  strongSelf.moviePlayer = [AVPlayer playerWithPlayerItem:movieItem];
-			  [strongSelf.mainDisplay setMainPlayer:strongSelf.moviePlayer];
+			  (strongSelf.mainDisplay).mainPlayer = strongSelf.moviePlayer;
 
 			  [strongSelf startSeekingToTime:kCMTimeZero withCallback:nil];
 

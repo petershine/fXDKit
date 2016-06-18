@@ -25,7 +25,7 @@
 - (void)minimizeUpdatingForBackgroundState;
 - (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus;
 
-- (BOOL)isDistantEnoughFromLastLocation;
+@property (NS_NONATOMIC_IOSONLY, getter=isDistantEnoughFromLastLocation, readonly) BOOL distantEnoughFromLastLocation;
 
 - (void)notifySignificantChangeWithNewLocation:(CLLocation*)newLocation;
 

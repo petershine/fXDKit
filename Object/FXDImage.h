@@ -25,10 +25,10 @@
 
 - (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension;
 
-- (UIImage*)fixOrientation;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage *fixOrientation;
 
 - (UIImage*)maskedImageWithMaskImageName:(NSString*)maskImageName;
 
-- (CGSize)deviceScaledSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) CGSize deviceScaledSize;
 
 @end

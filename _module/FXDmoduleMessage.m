@@ -28,7 +28,7 @@
 			emailScene = [self emailSceneForSharingImage:image usingMessage:message];
 		}
 		else {
-			emailScene = [self emailSceneWithMailBody];
+			emailScene = self.emailSceneWithMailBody;
 		}
 	}
 
@@ -43,7 +43,7 @@
 	}
 
 
-	[emailScene setMailComposeDelegate:self];
+	emailScene.mailComposeDelegate = self;
 
 	[presentingController
 	 presentViewController:emailScene
@@ -60,7 +60,7 @@
 #if ForDEVELOPER
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [userDefaults objectForKey:@"AppleLanguages"];
-	NSString *currentLanguage = [languages firstObject];
+	NSString *currentLanguage = languages.firstObject;
 	FXDLogObject(currentLanguage);
 #endif
 
@@ -84,7 +84,7 @@
 	struct utsname systemInfo;
 	uname(&systemInfo);
 
-	NSString *machineName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+	NSString *machineName = @(systemInfo.machine);
 	NSString *machineNameLine = [NSString stringWithFormat:@"%@ %@", machineName, [UIDevice currentDevice].systemVersion];
 
 	NSString *mailBody = [NSString stringWithFormat:@"\n\n\n\n\n%@\n%@\n%@\n", lineSeparator, appVersionLine, machineNameLine];

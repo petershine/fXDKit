@@ -16,7 +16,7 @@
 	NSSet *identifierSet = [NSSet setWithArray:self.productIdentifiers];
 
 	SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:identifierSet];
-	[request setDelegate:self];
+	request.delegate = self;
 	[request start];
 
 
@@ -28,7 +28,7 @@
 		&& receiptDictionary[@"original_purchase_date_ms"]) {
 
 		NSTimeInterval originalPurchaseAbsoluteSeconds = [receiptDictionary[@"original_purchase_date_ms"] doubleValue]/doubleOneThousand;
-		NSTimeInterval currentAbsoluteSeconds = [[NSDate date] timeIntervalSince1970];
+		NSTimeInterval currentAbsoluteSeconds = [NSDate date].timeIntervalSince1970;
 
 		NSTimeInterval secondsPassedSinceLastPurchase = currentAbsoluteSeconds -originalPurchaseAbsoluteSeconds;
 		FXDLog(@"%@ = %f - %f", _Variable(secondsPassedSinceLastPurchase), currentAbsoluteSeconds, originalPurchaseAbsoluteSeconds);
@@ -67,7 +67,7 @@
 #pragma mark -
 - (void)verifyAppStoreReceiptWithValidationURL:(NSURL*)validationURL withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+	NSURL *receiptURL = [NSBundle mainBundle].appStoreReceiptURL;
 
 	[self verifyReceiptURL:receiptURL
 		 withValidationURL:validationURL
@@ -118,8 +118,8 @@
 
 
 	NSMutableURLRequest *validationRequest = [[NSMutableURLRequest alloc] initWithURL:validationURL];
-	[validationRequest setHTTPMethod:@"POST"];
-	[validationRequest setHTTPBody:jsonData];
+	validationRequest.HTTPMethod = @"POST";
+	validationRequest.HTTPBody = jsonData;
 
 
 	NSURLSessionDataTask *validationTask =
@@ -203,7 +203,7 @@
 		}
 	}
 
-	if ([parameters count] > 0) {
+	if (parameters.count > 0) {
 		FXDLogObject(parameters);
 		LOGEVENT_FULL(@"Receipt", parameters, NO);
 	}

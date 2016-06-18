@@ -12,12 +12,12 @@
 #pragma mark - Property overriding
 - (NSMetadataQuery*)mainMetadataQuery {
 	if (_mainMetadataQuery == nil) {
-		_mainMetadataQuery = [super mainMetadataQuery];
+		_mainMetadataQuery = super.mainMetadataQuery;
 
 		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSMetadataItemFSContentChangeDateKey ascending:NO];
-		[_mainMetadataQuery setSortDescriptors:@[sortDescriptor]];
+		_mainMetadataQuery.sortDescriptors = @[sortDescriptor];
 
-		[_mainMetadataQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
+		_mainMetadataQuery.searchScopes = @[NSMetadataQueryUbiquitousDataScope];
 	}
 
 	return _mainMetadataQuery;
@@ -39,7 +39,7 @@
 	}
 
 
-	NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:[itemURL URLByDeletingLastPathComponent]];
+	NSURL *cachedFolderURL = [self cachedFolderURLforFolderURL:itemURL.URLByDeletingLastPathComponent];
 
 	if (cachedFolderURL == nil) {
 		return nil;
@@ -67,7 +67,7 @@
 	}
 
 
-	NSURL *folderURL = [self folderURLforCachedFolderURL:[cachedURL URLByDeletingLastPathComponent]];
+	NSURL *folderURL = [self folderURLforCachedFolderURL:cachedURL.URLByDeletingLastPathComponent];
 
 	if (folderURL == nil) {
 		return nil;
@@ -109,7 +109,7 @@
 
 
 	NSError *error = nil;
-	[fileManager createDirectoryAtURL:[cachedURL URLByDeletingLastPathComponent]
+	[fileManager createDirectoryAtURL:cachedURL.URLByDeletingLastPathComponent
 		  withIntermediateDirectories:YES
 						   attributes:nil
 								error:&error];
@@ -122,7 +122,7 @@
 		FXDLogBOOL(didSetUbiquitous);
 	}
 
-	if ([error code] != 2 && [error code] != 516) {
+	if (error.code != 2 && error.code != 516) {
 		FXDLog_ERROR;
 	}
 }
@@ -157,7 +157,7 @@
 					 FXDLogBOOL(didRemove);
 				 }
 
-				 if (error && [error code] != 4 && [error code] != 260) {
+				 if (error && error.code != 4 && error.code != 260) {
 					 FXDLog_ERROR;
 				 }
 

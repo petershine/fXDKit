@@ -25,7 +25,7 @@
 
 #pragma mark - Method overriding
 - (NSString*)description {
-	NSString *description = [super description];
+	NSString *description = super.description;
 
 	description = [description stringByAppendingFormat:@" %@ %@",
 				   _Object(self.sourceViewController),
@@ -104,7 +104,7 @@
 	}
 	
 	
-	mainContainer = [(UIViewController*)mainContainer parentViewController];
+	mainContainer = ((UIViewController*)mainContainer).parentViewController;
 	
 	if ([mainContainer isKindOfClass:class]) {
 		return mainContainer;

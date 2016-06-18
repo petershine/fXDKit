@@ -5,18 +5,18 @@
 
 @implementation NSManagedObject (Essential)
 - (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter {
-    NSDictionary *attributes = [[self entity] attributesByName];
+    NSDictionary *attributes = self.entity.attributesByName;
 	
     for (NSString *attribute in attributes) {
 		id value = keyedValues[attribute];
 		
 		//NOTE: Check cases
 		if (value == nil) {
-			value = keyedValues[[attribute uppercaseString]];
+			value = keyedValues[attribute.uppercaseString];
 		}
 		
 		if (value == nil) {
-			value = keyedValues[[attribute lowercaseString]];
+			value = keyedValues[attribute.lowercaseString];
 		}
 		
         if (value == nil || [value isKindOfClass:[NSNull class]]) {

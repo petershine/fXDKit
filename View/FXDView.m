@@ -63,14 +63,14 @@
 	//// Rectangle Drawing
 	UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:rect];
 	CGContextSaveGState(context);
-	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, [shadow CGColor]);
+	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor);
 	[[UIColor clearColor] setFill];
 	[rectanglePath fill];
 
 	////// Rectangle Inner Shadow
-	CGRect rectangleBorderRect = CGRectInset([rectanglePath bounds], -shadowBlurRadius, -shadowBlurRadius);
+	CGRect rectangleBorderRect = CGRectInset(rectanglePath.bounds, -shadowBlurRadius, -shadowBlurRadius);
 	rectangleBorderRect = CGRectOffset(rectangleBorderRect, -shadowOffset.width, -shadowOffset.height);
-	rectangleBorderRect = CGRectInset(CGRectUnion(rectangleBorderRect, [rectanglePath bounds]), -1, -1);
+	rectangleBorderRect = CGRectInset(CGRectUnion(rectangleBorderRect, rectanglePath.bounds), -1, -1);
 
 	UIBezierPath* rectangleNegativePath = [UIBezierPath bezierPathWithRect: rectangleBorderRect];
 	[rectangleNegativePath appendPath: rectanglePath];
@@ -83,7 +83,7 @@
 		CGContextSetShadowWithColor(context,
 									CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
 									shadowBlurRadius,
-									[shadow CGColor]);
+									shadow.CGColor);
 
 		[rectanglePath addClip];
 		CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(rectangleBorderRect.size.width), 0);
@@ -96,7 +96,7 @@
 	CGContextRestoreGState(context);
 
 	CGContextSaveGState(context);
-	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, [shadow CGColor]);
+	CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor);
 	[strokeColor setStroke];
 	rectanglePath.lineWidth = 1;
 	[rectanglePath stroke];
@@ -299,8 +299,8 @@
 #pragma mark -
 - (void)blinkShadowOpacity {
 	CABasicAnimation *blinkShadow = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-	blinkShadow.fromValue = [NSNumber numberWithFloat:self.layer.shadowOpacity];
-	blinkShadow.toValue = [NSNumber numberWithFloat:0.0];
+	blinkShadow.fromValue = @(self.layer.shadowOpacity);
+	blinkShadow.toValue = @0.0f;
 	blinkShadow.duration = durationAnimation;
 	blinkShadow.autoreverses = YES;
 	[self.layer addAnimation:blinkShadow forKey:@"shadowOpacity"];
@@ -311,7 +311,7 @@
 
 	CGRect animatedFrame = CGRectApplyAffineTransform(self.bounds, transform);
 
-	if ([self constraints].count > 0) {	//FXDLog_DEFAULT;
+	if (self.constraints.count > 0) {	//FXDLog_DEFAULT;
 		//FXDLogObject([self constraints]);
 
 		//TEST: Make sure this works OK with other apps
@@ -348,7 +348,7 @@
 
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
 
-	if ([self constraints].count > 0) {	FXDLog_DEFAULT;
+	if (self.constraints.count > 0) {	FXDLog_DEFAULT;
 		FXDLogObject([self constraints]);
 		return;
 	}

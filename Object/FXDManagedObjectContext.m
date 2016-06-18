@@ -84,14 +84,14 @@
 
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity:entity];
-	[fetchRequest setSortDescriptors:sortDescriptors];
+	fetchRequest.entity = entity;
+	fetchRequest.sortDescriptors = sortDescriptors;
 	
 	if (predicate) {
-		[fetchRequest setPredicate:predicate];
+		fetchRequest.predicate = predicate;
 	}
 	
-	[fetchRequest setFetchLimit:limit];
+	fetchRequest.fetchLimit = limit;
 	[fetchRequest setFetchBatchSize:sizeDefaultBatch];
 
 	return fetchRequest;

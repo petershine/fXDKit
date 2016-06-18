@@ -34,7 +34,7 @@
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
 	//NOTE: Use removedOnCompletion & fillMode appropriately
 	//http://stackoverflow.com/a/14598962/259765
-	[self setOpacity:0.0];
+	self.opacity = 0.0;
 
 	CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
 	fadeIn.fromValue = @(0.0);

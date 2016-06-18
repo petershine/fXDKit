@@ -18,10 +18,10 @@
 
 - (void)scrollToCenterToShowSubView:(UIView*)subView shouldAnimate:(BOOL)shouldAnimate;
 
-- (BOOL)isScrollingCurrently;
-- (BOOL)isScrolledByUser;
+@property (NS_NONATOMIC_IOSONLY, getter=isScrollingCurrently, readonly) BOOL scrollingCurrently;
+@property (NS_NONATOMIC_IOSONLY, getter=isScrolledByUser, readonly) BOOL scrolledByUser;
 
-- (CGFloat)horizontalProgress;
+@property (NS_NONATOMIC_IOSONLY, readonly) CGFloat horizontalProgress;
 
 - (CGPoint)snappedOffsetFromContentOffset:(CGPoint)contentOffset withMinimumOffset:(CGPoint)minimumOffset shouldUpdate:(BOOL)shouldUpdate;
 

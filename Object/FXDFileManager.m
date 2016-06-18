@@ -149,11 +149,11 @@
 
 
 	for (NSURL *itemURL in localItemURLarray) {
-		NSString *localItemPath = [itemURL lastPathComponent];
+		NSString *localItemPath = itemURL.lastPathComponent;
 
 		NSURL *destinationURL = folderURL;
 
-		if ([localItemPath length] > 0) {
+		if (localItemPath.length > 0) {
 			destinationURL = [destinationURL URLByAppendingPathComponent:localItemPath];
 		}
 
@@ -208,8 +208,8 @@
 
 	NSString *alertTitle = nil;
 
-	if ([[resultError domain] isEqualToString:NSPOSIXErrorDomain]) {
-		switch ([resultError code]) {
+	if ([resultError.domain isEqualToString:NSPOSIXErrorDomain]) {
+		switch (resultError.code) {
 			case 63:	//The operation couldn’t be completed. File name too long
 				break;
 
@@ -217,8 +217,8 @@
 				break;
 		}
 	}
-	else if ([[resultError domain] isEqualToString:NSCocoaErrorDomain]) {
-		switch ([resultError code]) {
+	else if ([resultError.domain isEqualToString:NSCocoaErrorDomain]) {
+		switch (resultError.code) {
 			case 516:	{
 				//"Error Domain=NSPOSIXErrorDomain Code=17 \"The operation couldn\U2019t be completed. File exists\"";
 				NSError *error = nil;
@@ -226,7 +226,7 @@
 			}	break;
 
 			default:
-				alertTitle = [NSString stringWithFormat:@"%@\n%@", [resultError localizedDescription], localItemURL];
+				alertTitle = [NSString stringWithFormat:@"%@\n%@", resultError.localizedDescription, localItemURL];
 				break;
 		}
 	}

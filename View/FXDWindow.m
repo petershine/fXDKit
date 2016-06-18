@@ -27,7 +27,7 @@
 
 #pragma mark - Public
 + (void)showWaiting {
-	UIWindow *window = [[UIApplication sharedApplication].delegate window];
+	UIWindow *window = ([UIApplication sharedApplication].delegate).window;
 
 	if ([window isKindOfClass:[self class]]) {
 		[(FXDWindow*)window showInformationViewAfterDelay:0.0];
@@ -35,7 +35,7 @@
 }
 
 + (void)hideWaiting {
-	UIWindow *window = [[UIApplication sharedApplication].delegate window];
+	UIWindow *window = ([UIApplication sharedApplication].delegate).window;
 
 	if ([window isKindOfClass:[self class]]) {
 		[(FXDWindow*)window	hideInformationViewAfterDelay:0.0];
@@ -51,7 +51,7 @@
 			willBecomeBlock();
 		}
 
-		[self setRootViewController:rootScene];
+		self.rootViewController = rootScene;
 
 		if (didBecomeBlock) {
 			didBecomeBlock();
@@ -70,7 +70,7 @@
 		willBecomeBlock();
 	}
 
-	[self setRootViewController:rootScene];
+	self.rootViewController = rootScene;
 
 	[self addSubview:previousRootScene.view];
 

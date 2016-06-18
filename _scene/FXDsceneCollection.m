@@ -31,7 +31,7 @@
 			_mainScrollview = self.mainCollectionview;
 		}
 		else {
-			_mainScrollview = [super mainScrollview];
+			_mainScrollview = super.mainScrollview;
 		}
 	}
 	
