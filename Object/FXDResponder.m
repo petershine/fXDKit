@@ -20,7 +20,7 @@
 #pragma mark - Delegate
 //NOTE: UIApplicationDelegate
 
-//NOTE: For the app with remote notification, override following implementation
+//NOTE: For the app with any remote (even including local) notification, override following implementation
 /*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 	FXDLogObject(deviceToken);
