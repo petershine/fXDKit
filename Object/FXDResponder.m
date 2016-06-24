@@ -22,6 +22,11 @@
 
 //NOTE: For the app with any remote (even including local) notification, override following implementation
 /*
+ e.g. Request snippet
+	UIUserNotificationType notificationTypes = (UIUserNotificationTypeNone|UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert);
+	UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+	[[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
 	FXDLogObject(deviceToken);
 }
