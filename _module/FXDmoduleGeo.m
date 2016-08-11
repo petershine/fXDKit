@@ -116,11 +116,21 @@
 - (void)maximizeUpdatingForActiveState {	//FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
+
+	[_mainLocationManager disallowDeferredLocationUpdates];
 }
 
 - (void)minimizeUpdatingForBackgroundState {	//FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
 	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
+
+	//MARK: Learn how to use deferred location updates
+	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
+	if ([CLLocationManager deferredLocationUpdatesAvailable]) {
+		[_mainLocationManager
+		 allowDeferredLocationUpdatesUntilTraveled:CLLocationDistanceMax
+		 timeout:CLTimeIntervalMax];
+	}
 }
 
 - (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	//FXDLog_DEFAULT;
@@ -244,6 +254,11 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {	FXDLog_OVERRIDE;
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+didFinishDeferredUpdatesWithError:(nullable NSError *)error {	FXDLog_DEFAULT;
+	FXDLog_ERROR;
 }
 
 @end

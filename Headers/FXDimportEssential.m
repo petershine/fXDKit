@@ -119,8 +119,11 @@
 	textLayer.frame = scaledBounds;
 
 
+	#warning //MARK: Until iOS 10 can be used for building
+	//textLayer.font = (CFTypeRef)([textControl font]);
+	//textLayer.fontSize = [(UIFont*)[textControl font] pointSize]*renderingScale;
 	textLayer.font = (__bridge CFTypeRef)([textControl font]);
-	textLayer.fontSize = ((UIFont*)[textControl font]).pointSize*renderingScale;
+	textLayer.fontSize = [(UIFont*)[textControl font] pointSize]*renderingScale;
 
 	textLayer.foregroundColor = [textControl textColor].CGColor;
 
@@ -262,6 +265,7 @@
 		return;
 	}
 
+	
 
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
