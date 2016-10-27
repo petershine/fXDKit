@@ -288,9 +288,15 @@
 
 #if USE_Flurry
 	FXDLog(@"USE_Flurry: %@", _BOOL([@(USE_Flurry) boolValue]));
-	[Flurry setCrashReportingEnabled:!(@(USE_Crashlytics)).boolValue];
+
+	FlurrySessionBuilder* sessionBuilder = [[FlurrySessionBuilder alloc] init];
+	[sessionBuilder withLogLevel:((@(ForDEVELOPER)).boolValue) ? FlurryLogLevelDebug:FlurryLogLevelNone];
+	[sessionBuilder withCrashReporting:!(@(USE_Crashlytics)).boolValue];
+
 	[Flurry setBackgroundSessionEnabled:YES];
-	[Flurry startSession:flurryApplicationKey withOptions:launchOptions];
+	[Flurry startSession:flurryApplicationKey
+			 withOptions:launchOptions
+	  withSessionBuilder:sessionBuilder];
 #endif
 }
 
