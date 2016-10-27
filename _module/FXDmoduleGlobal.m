@@ -290,7 +290,12 @@
 	FXDLog(@"USE_Flurry: %@", _BOOL([@(USE_Flurry) boolValue]));
 
 	FlurrySessionBuilder* sessionBuilder = [[FlurrySessionBuilder alloc] init];
-	[sessionBuilder withLogLevel:((@(ForDEVELOPER)).boolValue) ? FlurryLogLevelDebug:FlurryLogLevelNone];
+#if ForDEVELOPER
+	[sessionBuilder withLogLevel:FlurryLogLevelDebug];
+#else
+	[sessionBuilder withLogLevel:FlurryLogLevelNone];
+#endif
+	
 	[sessionBuilder withCrashReporting:!(@(USE_Crashlytics)).boolValue];
 
 	[Flurry setBackgroundSessionEnabled:YES];
