@@ -79,21 +79,21 @@
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
-	UIStatusBarAnimation updateAnimation = [super preferredStatusBarUpdateAnimation];
+	UIStatusBarAnimation updateAnimation = super.preferredStatusBarUpdateAnimation;
 	//FXDLogVariable(updateAnimation);
 
 	return updateAnimation;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-	UIStatusBarStyle statusBarStyle = [super preferredStatusBarStyle];
+	UIStatusBarStyle statusBarStyle = super.preferredStatusBarStyle;
 	//FXDLogVariable(statusBarStyle);
 
 	return statusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
-	BOOL prefers = [super prefersStatusBarHidden];
+	BOOL prefers = super.prefersStatusBarHidden;
 	//FXDLogBOOL(prefers);
 
 	return prefers;
@@ -102,20 +102,20 @@
 
 #pragma mark - Autorotating
 - (BOOL)shouldAutorotate {	//FXDLog_DEFAULT;
-	BOOL shouldAutorotate = [super shouldAutorotate];
+	BOOL shouldAutorotate = super.shouldAutorotate;
 	//FXDLogBOOL(shouldAutorotate);
 
 	return shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-	UIInterfaceOrientationMask supportedInterface = [super supportedInterfaceOrientations];
+	UIInterfaceOrientationMask supportedInterface = super.supportedInterfaceOrientations;
 
 	return supportedInterface;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_DEFAULT;
-	UIInterfaceOrientation preferredInterfaceOrientation = [super preferredInterfaceOrientationForPresentation];
+	UIInterfaceOrientation preferredInterfaceOrientation = super.preferredInterfaceOrientationForPresentation;
 	//FXDLogVariable(preferredInterfaceOrientation);
 
 	return preferredInterfaceOrientation;
@@ -147,8 +147,8 @@
 	 animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
 		 [self sceneTransitionForSize:size
-						 forTransform:[coordinator targetTransform]
-						  forDuration:[coordinator transitionDuration]
+						 forTransform:coordinator.targetTransform
+						  forDuration:coordinator.transitionDuration
 						 withCallback:nil];
 
 	 } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
