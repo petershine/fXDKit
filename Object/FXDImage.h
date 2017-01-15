@@ -23,6 +23,7 @@
 - (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale;
 - (UIImage*)resizedImageFromContextForSize:(CGSize)size;
 
+- (UIImage*)thumbnailForSize:(CGSize)size;
 - (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension;
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage *fixOrientation;

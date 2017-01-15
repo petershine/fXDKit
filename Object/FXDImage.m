@@ -218,6 +218,19 @@
 	return resizedImage;
 }
 
+- (UIImage*)thumbnailForSize:(CGSize)size {
+	CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)UIImagePNGRepresentation(self), nil);
+
+	NSDictionary *options = @{(NSString*)kCGImageSourceThumbnailMaxPixelSize:@(MAX(size.width, size.height)),
+							  (NSString*)kCGImageSourceCreateThumbnailFromImageAlways:@(YES)};
+
+	CGImageRef thumbnailRef = CGImageSourceCreateThumbnailAtIndex(source, 0, (CFDictionaryRef)options);
+
+	UIImage *thumbnail = [[UIImage alloc] initWithCGImage:thumbnailRef];
+
+	return thumbnail;
+}
+
 - (UIImage*)thumbImageUsingThumbDimension:(CGFloat)thumbDimension {
 	UIImage *thumbImage = nil;
 	
