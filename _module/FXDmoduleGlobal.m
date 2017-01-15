@@ -291,7 +291,8 @@
 
 	FlurrySessionBuilder* sessionBuilder = [[FlurrySessionBuilder alloc] init];
 #if ForDEVELOPER
-	[sessionBuilder withLogLevel:FlurryLogLevelDebug];
+	//[sessionBuilder withLogLevel:FlurryLogLevelDebug];
+	[sessionBuilder withLogLevel:FlurryLogLevelCriticalOnly];
 #else
 	[sessionBuilder withLogLevel:FlurryLogLevelNone];
 #endif
