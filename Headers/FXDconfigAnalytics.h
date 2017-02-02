@@ -27,7 +27,7 @@
 		#define	flurryApplicationKey	@"flurryApplicationKey"
 	#endif
 
-	#import "Flurry.h"
+	#import <Flurry_iOS_SDK/Flurry.h>
 
 	#define LOGEVENT(__FORMAT__, ...)	[[NSOperationQueue mainQueue]\
 										addOperationWithBlock:^{\
