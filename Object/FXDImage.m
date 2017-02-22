@@ -228,6 +228,9 @@
 
 	UIImage *thumbnail = [[UIImage alloc] initWithCGImage:thumbnailRef];
 
+	CFRelease(source);
+	CFRelease(thumbnailRef);
+
 	return thumbnail;
 }
 

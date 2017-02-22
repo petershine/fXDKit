@@ -155,6 +155,8 @@
 	// Make sure and release colorspace before returning
 	CGColorSpaceRelease( colorSpace );
 
+	CFAutorelease(context);
+
 	return context;
 }
 
