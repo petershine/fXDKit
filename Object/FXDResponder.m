@@ -122,11 +122,9 @@
 		[self application:application openURL:url options:openOptions];
 	}
 
-	UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
-	[self application:application didReceiveLocalNotification:localNotification];
+	//MARK: UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsLocalNotificationKey     NS_DEPRECATED_IOS(4_0, 10_0, "Use UserNotifications Framework's -[UNUserNotificationCenterDelegate didReceiveNotificationResponse:withCompletionHandler:]") __TVOS_PROHIBITED; // userInfo contains a UILocalNotification
 
-	NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-	[self application:application didReceiveRemoteNotification:remoteNotificationUserInfo];
+	//MARK: - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo NS_DEPRECATED_IOS(3_0, 10_0, "Use UserNotifications Framework's -[UNUserNotificationCenterDelegate willPresentNotification:withCompletionHandler:] or -[UNUserNotificationCenterDelegate didReceiveNotificationResponse:withCompletionHandler:] for user visible notifications and -[UIApplicationDelegate application:didReceiveRemoteNotification:fetchCompletionHandler:] for silent remote notifications");
 }
 
 - (BOOL)isUsableLaunchOption:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
@@ -138,9 +136,7 @@
 		return YES;
 	}
 
-	if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
-		return YES;
-	}
+	//MARK: UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsLocalNotificationKey     NS_DEPRECATED_IOS(4_0, 10_0, "Use UserNotifications Framework's -[UNUserNotificationCenterDelegate didReceiveNotificationResponse:withCompletionHandler:]") __TVOS_PROHIBITED; // userInfo contains a UILocalNotification
 
 	if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
 		return YES;
