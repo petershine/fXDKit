@@ -203,6 +203,8 @@
 	FXDLogObject(alertBody);
 
 
+	//MARK: For future need to debug geomodule usage
+	/*
 	if (alertBody.length > 0) {
 		UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 		localNotifcation.repeatInterval = 0;
@@ -213,6 +215,7 @@
 
 		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
 	}
+	 */
 
 
 	FXDLog_REMAINING;

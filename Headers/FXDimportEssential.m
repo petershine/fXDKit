@@ -263,6 +263,8 @@
 
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
+		 //MARK: Old implementation
+		 /*
 		 UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
 		 localNotifcation.repeatInterval = 0;
 		 localNotifcation.alertBody = alertBody;
@@ -275,6 +277,25 @@
 		 else {
 			 [self presentLocalNotificationNow:localNotifcation];
 		 }
+		  */
+
+		 
+		 //MARK: 'UILocalNotification' is deprecated: first deprecated in iOS 10.0 - Use UserNotifications Framework's UNNotificationRequest
+
+		 UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+		 content.body = alertBody;
+		 content.sound = [UNNotificationSound defaultSound];
+
+		 UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:delay repeats:NO];
+
+		 UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"fXDLocalNotification" content:content trigger:trigger];
+
+		 [[UNUserNotificationCenter currentNotificationCenter]
+		  addNotificationRequest:request
+		  withCompletionHandler:^(NSError * _Nullable error) {	FXDLog_BLOCK(self, @selector(addNotificationRequest:withCompletionHandler:));
+
+			  FXDLog_ERROR;
+		  }];
 	 }];
 }
 @end

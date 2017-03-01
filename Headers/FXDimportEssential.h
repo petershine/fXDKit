@@ -22,6 +22,9 @@
 @import Accounts;
 @import Social;
 
+@import UserNotifications;
+@import UserNotificationsUI;
+
 
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
