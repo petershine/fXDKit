@@ -6,20 +6,10 @@
 @implementation AVCaptureDevice (MultimediaFrameworks)
 + (AVCaptureDevice*)videoCaptureDeviceForPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
 
-	AVCaptureDevice *videoCaptureDevice = nil;
-
-	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-
-	for (AVCaptureDevice *device in devices) {
-
-		if (device.position != cameraPosition) {
-			continue;
-		}
-
-
-		videoCaptureDevice = device;
-		break;
-	}
+	AVCaptureDevice *videoCaptureDevice = [AVCaptureDevice
+										   defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera
+										   mediaType:AVMediaTypeVideo
+										   position:cameraPosition];
 
 	FXDLog_DEFAULT;
 	[videoCaptureDevice
@@ -31,8 +21,7 @@
 
 - (void)applyConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode {
 
-	if (self.flashMode == flashMode
-		&& self.focusMode == focusMode
+	if (self.focusMode == focusMode
 		&& self.exposureMode == AVCaptureExposureModeContinuousAutoExposure
 		&& self.whiteBalanceMode == AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance
 		&& self.subjectAreaChangeMonitoringEnabled) {
@@ -44,12 +33,6 @@
 	NSError *error = nil;
 
 	if ([self lockForConfiguration:&error]) {
-
-		if ([self isFlashModeSupported:flashMode]
-			&& self.flashMode != flashMode) {
-
-			self.flashMode = flashMode;
-		}
 
 		if ([self isFocusModeSupported:focusMode]
 			&& self.focusMode != focusMode) {
@@ -80,8 +63,7 @@
 
 	FXDLogVariable(flashMode);
 	FXDLogVariable(focusMode);
-	FXDLog(@"%@ %@ %@ %@ %@",
-		   _Variable(self.flashMode),
+	FXDLog(@"%@ %@ %@ %@",
 		   _Variable(self.focusMode),
 		   _Variable(self.exposureMode),
 		   _Variable(self.whiteBalanceMode),
@@ -230,9 +212,10 @@
 - (AVCaptureDeviceInput*)deviceInputAudio {
 	if (_deviceInputAudio == nil) {
 
-		NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
-
-		AVCaptureDevice *audioCapture = devices.firstObject;
+		AVCaptureDevice *audioCapture = [AVCaptureDevice
+										 defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInMicrophone
+										 mediaType:AVMediaTypeAudio
+										 position:AVCaptureDevicePositionUnspecified];
 
 		NSError *error = nil;
 		_deviceInputAudio = [[AVCaptureDeviceInput alloc] initWithDevice:audioCapture error:&error];
