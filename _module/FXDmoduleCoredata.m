@@ -177,8 +177,11 @@
 	storeOptions[NSInferMappingModelAutomaticallyOption] = @(YES);
 
 	if (ubiquityContainerURL) {
+		//DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
+		/*
 		storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.ubiquitousContentName;
 		storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquityContainerURL;
+		 */
 	}
 
 	//NOTE: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
@@ -271,12 +274,15 @@
 	 name:UIDocumentStateChangedNotification
 	 object:nil];
 	
-	
+
+	//DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
+	/*
 	[notificationCenter
 	 addObserver:self
 	 selector:@selector(observedNSPersistentStoreDidImportUbiquitousContentChanges:)
 	 name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
 	 object:nil];
+	 */
 	
 	
 	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
