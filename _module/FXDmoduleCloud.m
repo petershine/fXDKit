@@ -44,11 +44,32 @@
 	}
 
 	if (alertBody.length > 0) {
-		[FXDAlertController
-		 simpleAlertWithTitle:alertBody
-		 message:nil
-		 cancelButtonTitle:nil
-		 withAlertHandler:nil];
+
+		//TODO: To be used with Swift version of simpleAlert
+		UIAlertController *alertController = [UIAlertController
+											  alertControllerWithTitle:alertBody
+											  message:nil
+											  preferredStyle:UIAlertControllerStyleAlert];
+
+		UIAlertAction *cancelAction =
+		[UIAlertAction
+		 actionWithTitle:NSLocalizedString(@"OK", nil)
+		 style:UIAlertActionStyleCancel
+		 handler:nil];
+
+		[alertController addAction:cancelAction];
+
+
+		UIWindow *currentWindow = (UIWindow*)[UIApplication sharedApplication].windows.lastObject;
+		FXDLogObject(currentWindow);
+
+		UIViewController *presentingScene = currentWindow.rootViewController;
+		FXDLogObject(presentingScene);
+
+		[presentingScene
+		 presentViewController:alertController
+		 animated:YES
+		 completion:nil];
 	}
 
 	if (_statusCallback) {

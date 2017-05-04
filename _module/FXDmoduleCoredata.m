@@ -310,10 +310,10 @@
 #pragma mark -
 - (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	FXDAlertController *alertController = [FXDAlertController
-										   alertControllerWithTitle:nil
-										   message:nil
-										   preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertController *alertController = [UIAlertController
+										  alertControllerWithTitle:nil
+										  message:nil
+										  preferredStyle:UIAlertControllerStyleAlert];
 
 	UIAlertAction *cancelAction =
 	[UIAlertAction

@@ -20,7 +20,7 @@
 
 #pragma mark - ViewController
 #import "FXDViewController.h"
-#import "FXDAlertController.h"
+//#import "FXDAlertController.h"
 
 
 #endif
