@@ -468,6 +468,7 @@
 }
 
 
+//TODO: Reconsider bring evaluation to be more generic function
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {	FXDLog_DEFAULT;
 	FXDLog_ERROR;
 

@@ -59,4 +59,61 @@
 #define keychainAccountAccessToken	@"AccessTokenAccount"
 #define keychainAccountAccessSecret	@"AccessSecretAccount"
 
+
+//Twitter
+#define userdefaultObjMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
+
+#define maximumTweetLength	140
+
+#define urlrootTwitterAPI			@"https://api.twitter.com/1.1/"
+#define urlstringTwitter(method)	[NSString stringWithFormat:@"%@%@", urlrootTwitterAPI, method]
+
+#define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
+#define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
+
+#define objkeyTwitterScreenName			@"screen_name"
+#define objkeyTwitterStatus				@"status"
+#define objkeyTwitterLat				@"lat"
+#define objkeyTwitterLong				@"long"
+#define objkeyTwitterPlaceId			@"place_id"
+#define objkeyTwitterDisplayCoordinates	@"display_coordinates"
+
+
+//Facebook
+#define userdefaultObjMainFacebookAccountIdentifier	@"MainFacebookAccountIdentifierObjKey"
+
+#ifndef apikeyFacebookAppId
+#define apikeyFacebookAppId	@"000000000000000"
+#endif
+
+#define facebookPermissionBasicInfo	@"basic_info"	//TODO: Obsolete. Update appropriately
+#define facebookPermissionPublishStream	@"publish_stream"
+
+#define	facebookPermissionEmail			@"email"
+#define facebookPermissionPublicProfile	@"public_profile"
+#define facebookPermissionUserFriends	@"user_friends"
+
+#define	facebookPermissionPublishActions	@"publish_actions"
+#define	facebookPermissionManagePages		@"manage_pages"
+
+#define facebookGraphMe				@"me"
+#define facebookGraphMeAccounts		@"me/accounts"
+#define facebookGraphProfileFeed	@"%@/feed"
+#define facebookGraphProfileVideos	@"%@/videos"
+#define facebookGraphAccessToken	@"%@?fields=access_token"
+
+#define urlrootFacebookAPI	@"https://graph.facebook.com/"
+#define urlhostFacebookVideoGraph	@"https://graph-video.facebook.com/"
+
+#define urlstringFacebook(method)	[NSString stringWithFormat:@"%@%@", urlrootFacebookAPI, method]
+#define urlstringFacebookVideoGraph(method)	[NSString stringWithFormat:@"%@%@", urlhostFacebookVideoGraph, method]
+
+#define objkeyFacebookAccessToken	@"access_token"
+#define objkeyFacebookID	@"id"
+#define objkeyFacebookName	@"name"
+#define objkeyFacebookLocale	@"locale"
+#define objkeyFacebookUsername	@"username"
+#define objkeyFacebookCategory	@"category"
+
+
 #endif
