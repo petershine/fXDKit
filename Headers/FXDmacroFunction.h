@@ -6,6 +6,7 @@
 
 #ifndef GlobalModule
 //TODO: Must define app's own GlobalModule
+//FXDmacroFunction.h:9:47: Editor placeholder in source file
 	#define GlobalModule	((<#FXDmoduleGlobal#>*)[<#FXDmoduleGlobal#> sharedInstance])
 #endif
 

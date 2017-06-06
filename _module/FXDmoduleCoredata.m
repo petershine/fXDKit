@@ -35,7 +35,7 @@
 - (NSString*)ubiquitousContentName {
 	if (_ubiquitousContentName == nil) {
 		_ubiquitousContentName = [self.coredataName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-		***REMOVED***
+		//-***REMOVED***
 
 		FXDLog_OVERRIDE;
 		FXDLogObject(_ubiquitousContentName);
