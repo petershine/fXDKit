@@ -554,7 +554,10 @@
 
 		 NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
 
-		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
+		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter
+														requestMethod:SLRequestMethodGET
+																  URL:requestURL
+														   parameters:parameters];
 
 		 defaultRequest.account = self.currentMainAccount;
 
@@ -595,7 +598,10 @@
 		 }
 
 
-		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:requestURL parameters:parameters];
+		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter
+														requestMethod:SLRequestMethodPOST
+																  URL:requestURL
+														   parameters:parameters];
 
 		 defaultRequest.account = self.currentMainAccount;
 
@@ -669,7 +675,10 @@
 
 		 NSDictionary *parameters = nil;
 
-		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodGET URL:requestURL parameters:parameters];
+		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook
+														requestMethod:SLRequestMethodGET
+																  URL:requestURL
+														   parameters:parameters];
 
 		 defaultRequest.account = self.currentMainAccount;
 
