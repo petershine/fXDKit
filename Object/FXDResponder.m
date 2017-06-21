@@ -18,9 +18,9 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//NOTE: UIApplicationDelegate
+//MARK: UIApplicationDelegate
 
-//NOTE: For the app with any remote (even including local) notification, override following implementation
+//MARK: For the app with any remote (even including local) notification, override following implementation
 /*
  e.g. Request snippet
 	UIUserNotificationType notificationTypes = (UIUserNotificationTypeNone|UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert);
@@ -35,7 +35,7 @@
 	FXDLog_ERROR;
 }
 
-//NOTE: Be careful with the case for older version, which cannot fetch.
+//MARK: Be careful with the case for older version, which cannot fetch.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
 	FXDLogObject(userInfo);
 	FXDLogObject(completionHandler);

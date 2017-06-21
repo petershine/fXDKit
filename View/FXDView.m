@@ -250,7 +250,7 @@
 	UIImage *renderedImage = nil;
 
 	UIGraphicsBeginImageContextWithOptions(self.bounds.size,
-										   NO,	//NOTE: to allow transparency
+										   NO,	//MARK: to allow transparency
 										   scale);
 
 	//FXDLogObject(self.window);
@@ -417,7 +417,7 @@
 	alertLabel.userInteractionEnabled = NO;
 
 
-	//NOTE: Assume center of the screen is where label should be
+	//MARK: Assume center of the screen is where label should be
 	UIDeviceOrientation deviceOrientation = [UIDevice validDeviceOrientation];
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:deviceOrientation];

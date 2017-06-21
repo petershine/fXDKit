@@ -53,7 +53,7 @@
 		
 		FXDLog(@"1.%@ %@", _Object(_deviceLanguageCode), _Object(languages));
 		
-		//NOTE: limit supported languages
+		//MARK: limit supported languages
 		if ([_deviceLanguageCode isEqualToString:@"en"] == NO
 			&& [_deviceLanguageCode isEqualToString:@"ko"] == NO
 			&& [_deviceLanguageCode isEqualToString:@"ja"] == NO
@@ -262,7 +262,7 @@
 
 #pragma mark -
 - (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
-	//NOTE: Make sure value is retrieved from userDefaults first
+	//MARK: Make sure value is retrieved from userDefaults first
 	_appLaunchCount = (self.appLaunchCount)+1;
 	FXDLogVariable(_appLaunchCount);
 	
@@ -357,7 +357,7 @@
 	}
 
 
-	//NOTE: Use different locale for future reuse
+	//MARK: Use different locale for future reuse
 	NSString *requestPath = [NSString stringWithFormat:@"http://itunes.apple.com/kr/lookup?id=%@", appStoreID];
 
 	NSURLRequest *evaluationRequest = [NSURLRequest requestWithURL:[NSURL evaluatedURLforPath:requestPath]];

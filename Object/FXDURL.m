@@ -224,7 +224,7 @@
 	NSRange rangeForHTTPS = [candidate rangeOfString:@"https:" options:NSCaseInsensitiveSearch];
 	//FXDLog(@"%@ %@", _Object(NSStringFromRange(rangeForHTTP)), _Object(NSStringFromRange(rangeForHTTPS)));
 
-	//NOTE: Make sure string starts with http | https
+	//MARK: Make sure string starts with http | https
 	BOOL isHTTPcompatible = ((rangeForHTTP.location == 0 && rangeForHTTP.length > 0)
 							 || (rangeForHTTPS.location == 0 && rangeForHTTPS.length > 0));
 

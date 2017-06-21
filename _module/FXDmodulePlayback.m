@@ -207,7 +207,7 @@
 
 	CMTime seekedTime = kCMTimeZero;
 
-	//NOTE: Be careful about validity of time
+	//MARK: Be careful about validity of time
 	if (CMTimeCompare(weakSelf.moviePlayer.currentItem.duration, kCMTimeIndefinite) != NSOrderedSame
 		&& playbackProgress > 0.0) {
 		seekedTime = CMTimeMultiplyByFloat64(weakSelf.moviePlayer.currentItem.duration, playbackProgress);
@@ -237,7 +237,7 @@
 	}
 
 
-	//NOTE: Make sure loading is completed for correct preview updating
+	//MARK: Make sure loading is completed for correct preview updating
 	if (self.moviePlayer.status != AVPlayerStatusReadyToPlay
 		&& self.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
 		FXDLog(@"%@ %@", _Variable(self.moviePlayer.status), _Variable(self.moviePlayer.currentItem.status));

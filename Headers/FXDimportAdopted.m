@@ -32,7 +32,7 @@
 #if USE_MultimediaFrameworks
 @implementation CALayer (MultimediaFrameworks)
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
-	//NOTE: Use removedOnCompletion & fillMode appropriately
+	//MARK: Use removedOnCompletion & fillMode appropriately
 	//http://stackoverflow.com/a/14598962/259765
 	self.opacity = 0.0;
 
@@ -97,7 +97,7 @@
 
 	FXDLog(@"1.%@", _Object(self.category));
 
-	//NOTE: Necessary for playback to be audible if silence is switched on
+	//MARK: Necessary for playback to be audible if silence is switched on
 	//same as disabled condition. Evalute if this method is needed
 	NSString *category = AVAudioSessionCategoryPlayAndRecord;
 

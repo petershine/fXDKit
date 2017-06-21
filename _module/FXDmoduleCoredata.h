@@ -1,12 +1,12 @@
 
 
-//NOTE: For subclass to define names or keys
+//MARK: For subclass to define names or keys
 /* SAMPLE:
  #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
  #define attribkey<#AttributeName#> @"<#AttributeName#>"
  */
 
-//NOTE: Logging options
+//MARK: Logging options
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 

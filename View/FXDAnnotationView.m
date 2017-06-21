@@ -6,7 +6,7 @@
 @implementation MKAnnotationView (Essential)
 - (instancetype)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier withDefaultImage:(UIImage*)defaultImage shouldChangeOffset:(BOOL)shouldChangeOffset {
 	
-	//NOTE: Need to use self, since this is an added category
+	//MARK: Need to use self, since this is an added category
 	self = [self initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	
 	if (self) {

@@ -12,7 +12,7 @@
 	}
 
 	
-	//NOTE: To load from .jpg, use specific scale value for retina
+	//MARK: To load from .jpg, use specific scale value for retina
 	NSString *scaledImageName = nil;
 
 	if ([UIScreen mainScreen].scale >= 3.0) {
@@ -34,7 +34,7 @@
 	}
 
 
-	//NOTE: If scale value added name is not working try normal name
+	//MARK: If scale value added name is not working try normal name
 	imageName = [imageName stringByAppendingString:@".jpg"];
 
 	bundledImage = [UIImage imageNamed:imageName];
@@ -168,7 +168,7 @@
 }
 
 - (UIImage*)resizedImageUsingSize:(CGSize)size forScale:(CGFloat)scale {
-	//NOTE: May have the problem with memory management with used in massive scale
+	//MARK: May have the problem with memory management with used in massive scale
 	
 	UIImage *resizedImage = nil;
 
@@ -246,7 +246,7 @@
 	CGRect clippedRect = CGRectMake(0, 0, sideFull, sideFull);	
 
 	UIGraphicsBeginImageContextWithOptions(CGSizeMake(thumbDimension, thumbDimension),
-										   NO,	//NOTE: to allow transparency
+										   NO,	//MARK: to allow transparency
 										   0.0);
 
 	CGContextRef currentContext = UIGraphicsGetCurrentContext();

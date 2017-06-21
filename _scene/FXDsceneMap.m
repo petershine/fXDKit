@@ -38,10 +38,10 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//NOTE: MKMapViewDelegate
+//MARK: MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
 	
-	if (self.shouldResumeTracking) {	//NOTE: Keep canceling until scrolling is stopped
+	if (self.shouldResumeTracking) {	//MARK: Keep canceling until scrolling is stopped
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resumeTrackingUser) object:nil];
 	}
 }

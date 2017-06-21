@@ -84,7 +84,7 @@
 			 [itemURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:&error];
 			 FXDLog_ERROR_ignored(260);
 
-			 //NOTE: Why hidden is evaluated? Possible to exclude system files like .DS~
+			 //MARK: Why hidden is evaluated? Possible to exclude system files like .DS~
 			 if ([isHidden boolValue] == NO) {
 				 if (itemURL) {
 					 [itemURLarray addObject:itemURL];

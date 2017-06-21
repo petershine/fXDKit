@@ -18,7 +18,7 @@
 #pragma mark -
 + (_Nonnull instancetype)simpleAlertWithTitle:(nullable NSString*)title message:(nullable NSString*)message cancelButtonTitle:(nullable NSString*)cancelButtonTitle withAlertHandler:(void (^ __nullable)(UIAlertAction *_Nonnull action))alertHandler {
 
-	//NOTE: Assume this is the condition for simple alerting without choice
+	//MARK: Assume this is the condition for simple alerting without choice
 	if (cancelButtonTitle == nil) {
 		cancelButtonTitle = NSLocalizedString(@"OK", nil);
 	}

@@ -236,7 +236,7 @@
 }
 
 #pragma mark - Delegate
-//NOTE: CLLocationManagerDelegate
+//MARK: CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
 	FXDLogVariable(authorizationStatus);
 

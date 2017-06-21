@@ -54,7 +54,7 @@
 		[_captureSession removeInput:videoInput];
 
 
-		//NOTE: In case of old device, preset has to be different
+		//MARK: In case of old device, preset has to be different
 		_captureSession.sessionPreset = (modifiedPosition == AVCaptureDevicePositionBack) ? optimalCaptureSessionPreset:AVCaptureSessionPresetHigh;
 		FXDLogObject(_captureSession.sessionPreset);
 
@@ -285,7 +285,7 @@
 
 #pragma mark - Public
 - (void)prepareGPUmodule {	FXDLog_DEFAULT;
-	//NOTE: Make sure camera and filter are initialized here
+	//MARK: Make sure camera and filter are initialized here
 	GPUImageOutput *camera = self.videoCamera;
 	id<GPUImageInput> filter = self.cameraFilter;
 

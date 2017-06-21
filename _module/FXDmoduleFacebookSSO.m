@@ -31,7 +31,7 @@
 	return _additionalAccessOptions;
 }
 
-- (NSArray*)multiAccountArray {	//NOTE: Using facebookSDK;
+- (NSArray*)multiAccountArray {	//MARK: Using facebookSDK;
 	return _multiAccountArray;
 }
 
@@ -775,7 +775,7 @@
 		 FXDLogObject(graphPath);
 
 
-		 //NOTE: MainQueue is necessaryfor safe requesting
+		 //MARK: MainQueue is necessaryfor safe requesting
 		 [[NSOperationQueue mainQueue]
 		  addOperationWithBlock:^{
 

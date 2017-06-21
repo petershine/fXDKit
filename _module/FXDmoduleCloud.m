@@ -32,7 +32,7 @@
 #pragma mark -
 - (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver withAlertBody:(NSString*)alertBody {	FXDLog_DEFAULT;
 
-	//NOTE: Assume if notification is nil, observer should be added
+	//MARK: Assume if notification is nil, observer should be added
 	if (shouldAddObserver) {
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 

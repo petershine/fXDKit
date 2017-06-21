@@ -66,7 +66,7 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//NOTE: UICollectionViewDataSource
+//MARK: UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 	
 	NSInteger numberOfSections = [self numberOfSectionsForScrollView:collectionView];
@@ -114,7 +114,7 @@
 	return cell;
 }
 
-//NOTE: UICollectionViewDelegate
+//MARK: UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
 
 	BOOL didCancel = [self.cellOperationQueue
@@ -126,6 +126,6 @@
 	}
 }
 
-//NOTE: UICollectionViewDelegateFlowLayout
+//MARK: UICollectionViewDelegateFlowLayout
 
 @end

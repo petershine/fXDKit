@@ -21,7 +21,7 @@
 	
 	
 	CGFloat minScale = MIN(xScale, yScale);
-	CGFloat maxScale = 2.0;	//NOTE: if you want to limit to screen size: MAX(xScale, yScale);
+	CGFloat maxScale = 2.0;	//MARK: if you want to limit to screen size: MAX(xScale, yScale);
 	
 	if (minScale > 1.0) {
 		minScale = 1.0;
@@ -130,7 +130,7 @@
 
 #pragma mark -
 - (CGFloat)horizontalProgress {
-	//NOTE: Need to find the correct calculation, considering contentInset
+	//MARK: Need to find the correct calculation, considering contentInset
 	CGFloat totalWidth = self.contentSize.width +self.contentInset.left +self.contentInset.right;
 
 	if (totalWidth > self.bounds.size.width) {
@@ -146,7 +146,7 @@
 #pragma mark -
 - (CGPoint)snappedOffsetFromContentOffset:(CGPoint)contentOffset withMinimumOffset:(CGPoint)minimumOffset shouldUpdate:(BOOL)shouldUpdate {
 
-	//NOTE: Be careful with left inset adding and subtracting
+	//MARK: Be careful with left inset adding and subtracting
 
 	CGPoint snappedOffset = contentOffset;
 	snappedOffset.x += self.contentInset.left;

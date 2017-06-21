@@ -45,7 +45,7 @@
 
 - (NSString*)sqlitePathComponent {
 	
-	//NOTE: Use different name for better controlling between developer build and release build
+	//MARK: Use different name for better controlling between developer build and release build
 	if (_sqlitePathComponent == nil) {
 		_sqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.coredataName];
 
@@ -154,7 +154,7 @@
 
 		NSURL *documentURL = [appDirectory_Document URLByAppendingPathComponent:[NSString stringWithFormat:@"managedDocument.%@", self.coredataName]];
 
-		//NOTE: Models may merge manually
+		//MARK: Models may merge manually
 		managedDocument = [[FXDManagedDocument alloc] initWithFileURL:documentURL];
 	}
 
@@ -183,7 +183,7 @@
 		 */
 	}
 
-	//NOTE: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
+	//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
 	if (protectionOption.length > 0) {
 		storeOptions[NSPersistentStoreFileProtectionKey] = protectionOption;
 	}
@@ -214,7 +214,7 @@
 	FXDAssert_IsMainThread;
 	FXDLog(@"2.%@", _BOOL(didConfigure));
 
-	//NOTE: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+	//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 	FXDLog_ERROR;
 
 
@@ -242,7 +242,7 @@
 			 callback(_cmd, didConfigure, nil);
 		 }
 
-		 //NOTE: Careful with order of operations
+		 //MARK: Careful with order of operations
 		 [self startObservingCoreDataNotifications];
 	 }];
 }
@@ -419,7 +419,7 @@
 									 withLimit:limitInfiniteFetch];
 		 
 		 for (NSManagedObject *fetchedObj in fetchedObjArray) {
-			 if (shouldBreak) {	//NOTE: Evaluate case for an item breaking the enumeration itself
+			 if (shouldBreak) {	//MARK: Evaluate case for an item breaking the enumeration itself
 				 break;
 			 }
 			 
@@ -599,7 +599,7 @@
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
 
-	//NOTE: Distinguish notification from main managedObjectContext and private managedObjectContext
+	//MARK: Distinguish notification from main managedObjectContext and private managedObjectContext
 	NSManagedObjectContext *notifyingContext = self.mainDocument.managedObjectContext.parentContext;
 	FXDLogBOOL([notification.object isEqual:notifyingContext]);
 
@@ -615,7 +615,7 @@
 	NSString *notifyingStoreUUID = notifyingPersistentStore.metadata[@"NSStoreUUID"];
 
 
-	//NOTE: Merge only if persistentStore is same
+	//MARK: Merge only if persistentStore is same
 	FXDLogObject(mainStoreUUID);
 	FXDLogObject(notifyingStoreUUID);
 	FXDLogBOOL([mainStoreUUID isEqualToString:notifyingStoreUUID]);

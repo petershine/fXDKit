@@ -20,7 +20,7 @@
 	}
 	
 	if (self.mainScrollview) {
-		//NOTE: Following should be closely related to scroll view configuration
+		//MARK: Following should be closely related to scroll view configuration
 		FXDLogObject(self.mainScrollview);
 
 		if (self.mainScrollview.delegate == nil) {
@@ -167,7 +167,7 @@
 		numberOfSections = self.mainResultsController.sections.count;
 	}
 	else if (self.mainDataSource) {
-		//NOTE: Assume it's just one array
+		//MARK: Assume it's just one array
 	}
 	else if (self.itemCounts) {
 		numberOfSections = self.itemCounts.count;
@@ -237,7 +237,7 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//NOTE: NSFetchedResultsControllerDelegate
+//MARK: NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController*)controller {
 	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
 		[self.mainScrollview performSelector:@selector(beginUpdates)];
@@ -286,7 +286,7 @@
 	}
 }
 
-//NOTE: UIScrollViewDelegate
+//MARK: UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
 	
 	if (self.shouldDismissingByPullingDown == NO) {

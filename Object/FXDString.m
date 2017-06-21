@@ -5,7 +5,7 @@
 
 @implementation NSString (Essential)
 + (NSString*)uniqueKeyFrom:(Float64)doubleValue {
-	//NOTE: Use 32 as the string length
+	//MARK: Use 32 as the string length
 	NSString *digits = [[NSString stringWithFormat:@"%12ld", (long)doubleValue] stringByReplacingOccurrencesOfString:@" " withString:@"0"];
 	NSString *decimals = [[NSString stringWithFormat:@"%.20f", (doubleValue -((NSInteger)doubleValue))] componentsSeparatedByString:@"."].lastObject;
 

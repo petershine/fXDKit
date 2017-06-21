@@ -45,7 +45,7 @@
 #pragma mark -
 - (void)configureRootViewController:(UIViewController*)rootScene shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
 
-	//NOTE: fade in and replace rootViewController. DO NOT USE addChildViewController
+	//MARK: fade in and replace rootViewController. DO NOT USE addChildViewController
 	if (shouldAnimate == NO) {
 		if (willBecomeBlock) {
 			willBecomeBlock();
@@ -207,7 +207,7 @@
 + (instancetype)newDefaultWindow {	FXDLog_SEPARATE;
 
 	NSString *filename = NSStringFromClass([self class]);
-	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//NOTE: Should use nib instead of xib for file type
+	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
 
 	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 	FXDLog(@"%@ %@", _BOOL(nibExists), _Object(resourcePath));
