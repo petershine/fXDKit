@@ -1,10 +1,4 @@
-//
-//  FXDAlertController.m
-//  PopToo2016
-//
-//  Created by petershine on 6/24/15.
-//  Copyright © 2015 fXceed. All rights reserved.
-//
+
 
 #import "FXDAlertController.h"
 
