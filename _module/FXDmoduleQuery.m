@@ -64,7 +64,7 @@
 	if (didStart) {}
 
 	if (self.mainMetadataQuery.isStarted) {
-		//TODO:
+		//FIXME:
 	}
 }
 

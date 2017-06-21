@@ -123,7 +123,7 @@
 		self.imageviewArrow.backgroundColor = [UIColor clearColor];
 #endif
 
-		//TODO: Modify based on arrowDirection
+		//FIXME: Modify based on arrowDirection
 		CGFloat modifiedCenterX = (self.frame.size.width/2.0) +self.arrowOffset;
 		self.imageviewArrow.center = CGPointMake(modifiedCenterX, self.imageviewArrow.center.y);
 

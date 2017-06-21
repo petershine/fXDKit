@@ -45,7 +45,7 @@
 
 	if (alertBody.length > 0) {
 
-		//TODO: To be used with Swift version of simpleAlert
+		//FIXME: To be used with Swift version of simpleAlert
 		UIAlertController *alertController = [UIAlertController
 											  alertControllerWithTitle:alertBody
 											  message:nil

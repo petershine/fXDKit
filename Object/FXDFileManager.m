@@ -233,7 +233,7 @@
 
 	if (alertTitle) {	FXDLog_DEFAULT;
 		FXDLogObject(alertTitle);
-		//TODO: Handle error with alert of notification
+		//FIXME: Handle error with alert of notification
 	}
 }
 

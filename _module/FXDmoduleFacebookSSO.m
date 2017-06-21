@@ -959,7 +959,7 @@
 
 			  NSString *placeId = nil;
 
-			  //TODO: Check if distance sorting is necessary
+			  //FIXME: Check if distance sorting is necessary
 
 			  for (NSDictionary *place in result[@"data"]) {
 

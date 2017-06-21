@@ -12,7 +12,7 @@
 	self = [super init];
 
 	if (self) {
-		//TODO: Make sure observing of only started if the modula began running
+		//FIXME: Make sure observing of only started if the modula began running
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
 		[notificationCenter
@@ -399,7 +399,7 @@
 			 
 			 FXDLogVariable(renewResult);
 			 
-			 //TODO: alert user about needing to have accessibility
+			 //FIXME: alert user about needing to have accessibility
 
 			 if (requestingBlock) {
 				 requestingBlock((renewResult == ACAccountCredentialRenewResultRenewed));
@@ -468,7 +468,7 @@
 }
 
 
-//TODO: Reconsider bring evaluation to be more generic function
+//FIXME: Reconsider bring evaluation to be more generic function
 - (void)evaluateResponseWithResponseData:(NSData*)responseData withURLresponse:(NSURLResponse*)urlResponse withError:(NSError*)error {	FXDLog_DEFAULT;
 	FXDLog_ERROR;
 

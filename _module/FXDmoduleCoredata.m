@@ -249,7 +249,7 @@
 
 #pragma mark -
 - (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_OVERRIDE;
-	//TODO: Learn about NSMigrationPolicy implementation
+	//FIXME: Learn about NSMigrationPolicy implementation
 
 	if (finishCallback) {
 		finishCallback(_cmd, YES, nil);
@@ -469,7 +469,7 @@
 
 #pragma mark -
 - (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
-	//TODO: Evaluate if this method is necessary
+	//FIXME: Evaluate if this method is necessary
 	
 	FXDLog(@"1.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 

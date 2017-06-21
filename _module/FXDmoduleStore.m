@@ -12,7 +12,7 @@
 
 #pragma mark -
 - (void)prepareStoreManager {	FXDLog_DEFAULT;
-	//TODO: For listing In-App Purchasable items Combine with BundleIdentifier
+	//FIXME: For listing In-App Purchasable items Combine with BundleIdentifier
 	NSSet *identifierSet = [NSSet setWithArray:self.productIdentifiers];
 
 	SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:identifierSet];
@@ -35,7 +35,7 @@
 		Float64 daysPassed = secondsPassedSinceLastPurchase/doubleSecondsInDay;
 		FXDLog(@"%@, %@", _Variable(daysPassed), _Variable((NSInteger)daysPassed));
 
-		//TODO: Use this passed seconds to decide advertising or other feature activity
+		//FIXME: Use this passed seconds to decide advertising or other feature activity
 	}
 #endif
 

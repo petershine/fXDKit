@@ -73,7 +73,7 @@
 	#define apikeyFacebookAppId	@"000000000000000"
 #endif
 
-#define facebookPermissionBasicInfo	@"basic_info"	//TODO: Obsolete. Update appropriately
+#define facebookPermissionBasicInfo	@"basic_info"	//FIXME: Obsolete. Update appropriately
 #define facebookPermissionPublishStream	@"publish_stream"
 
 #define	facebookPermissionEmail			@"email"

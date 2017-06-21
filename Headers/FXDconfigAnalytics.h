@@ -23,7 +23,7 @@
 
 #if USE_Flurry
 	#ifndef flurryApplicationKey
-		#warning //TODO: Define flurryApplicationKey
+		#warning //FIXME: Define flurryApplicationKey
 		#define	flurryApplicationKey	@"flurryApplicationKey"
 	#endif
 
