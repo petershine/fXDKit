@@ -168,6 +168,7 @@
 	 }];
 
 
+#if ForDEVELOPER
 	NSString *alertBody = nil;
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -201,6 +202,7 @@
 	[userDefaults synchronize];
 
 	FXDLogObject(alertBody);
+#endif
 
 
 	//MARK: For future need to debug geomodule usage
