@@ -5,9 +5,9 @@
 
 
 #ifndef GlobalModule
-//FIXME: Must define app's own GlobalModule
-//FXDmacroFunction.h:9:47: Editor placeholder in source file
-	#define GlobalModule	((<#FXDmoduleGlobal#>*)[<#FXDmoduleGlobal#> sharedInstance])
+//MARK: Must define app's own GlobalModule
+//FXDmacroFunction.h:10:25: Editor placeholder in source file
+	//#define GlobalModule	((FXDmoduleGlobal*)[FXDmoduleGlobal sharedInstance])
 #endif
 
 #ifndef application_AppStoreID
