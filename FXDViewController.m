@@ -250,6 +250,7 @@
 	return canPerform;
 }
 
+//FIXME: Deprecated. Override the allowedChildViewControllersForUnwindingFromSource: method instead.
 - (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
 	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
 
@@ -284,6 +285,7 @@
 	return viewController;
 }
 
+//FIXME: Deprecated. Use unwindForSegue:towardsViewController: instead.
 - (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
 	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
 
