@@ -5,8 +5,10 @@
 #endif
 
 
-#import "FXDViewController.h"
-@interface FXDsceneScroll : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
+#import "FXDimportCore.h"
+//#import "FXDViewController.h"
+//@interface FXDsceneScroll : FXDViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
+@interface FXDsceneScroll : UIViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;

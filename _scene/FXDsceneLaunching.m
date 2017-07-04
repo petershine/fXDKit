@@ -6,6 +6,10 @@
 @implementation FXDsceneLaunching
 
 #pragma mark - Memory management
+- (void)dealloc {    FXDLog_DEFAULT;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 #pragma mark - Initialization
 

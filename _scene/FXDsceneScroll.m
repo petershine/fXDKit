@@ -7,7 +7,9 @@
 
 #pragma mark - Memory management
 - (void)dealloc {
-	[_cellOperationQueue resetOperationQueueAndDictionary:_cellOperationDictionary];
+    [_cellOperationQueue resetOperationQueueAndDictionary:_cellOperationDictionary];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

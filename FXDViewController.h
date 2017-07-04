@@ -2,10 +2,6 @@
 
 #import "FXDimportCore.h"
 
-@import UIKit;
-@import Foundation;
-
-
 @interface FXDViewController : UIViewController {
 	CGRect _initialBounds;
 	FXDcallbackFinish _dismissedBlock;
