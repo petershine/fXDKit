@@ -19,8 +19,8 @@ typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *e
 
 
 @interface FXDsubviewGlowing : UIView
-@property (strong, nonatomic) UIColor *glowingColor;
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor;
+@property (strong, nonatomic, nullable) UIColor *glowingColor;
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor;
 @end
 
 
@@ -68,7 +68,3 @@ typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *e
 - (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
 @end
 
-
-@interface UIView (Glowing)
-- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;
-@end

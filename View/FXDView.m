@@ -27,7 +27,7 @@
 	return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(UIColor*)glowingColor {
+- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor {
 	self = [self initWithFrame:frame];
 
 	if (self) {
@@ -496,19 +496,3 @@
 }
 @end
 
-
-@implementation UIView (Glowing)
-- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview {
-
-	if (glowingSubview == nil) {
-		glowingSubview = [[FXDsubviewGlowing alloc]
-						  initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)
-						  withGlowingColor:nil];
-	}
-
-	glowingSubview.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	glowingSubview.userInteractionEnabled = NO;
-
-	[self addSubview:glowingSubview];
-}
-@end
