@@ -8,40 +8,40 @@
 
 #define UIViewAutoresizingKeepCenter	(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin)
 
-typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *event);
+typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPoint point, UIEvent * _Nullable event);
 
 
 @interface FXDpassthroughView : UIView {
 	FXDcallbackHitTest _hitTestCallback;
 }
-@property (copy, nonatomic) FXDcallbackHitTest hitTestCallback;
+@property (copy, nonatomic) FXDcallbackHitTest _Nullable hitTestCallback;
 @end
 
 
 @interface FXDsubviewGlowing : UIView
 @property (strong, nonatomic, nullable) UIColor *glowingColor;
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor;
+- (instancetype _Nullable )initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor;
 @end
 
 
 @interface UIView (Essential)
-+ (instancetype)viewFromNibName:(NSString*)nibName;
-+ (instancetype)viewFromNib:(UINib*)nib;
++ (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName;
++ (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib;
 
-+ (instancetype)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil;
-+ (instancetype)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil;
++ (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName withOwner:(id _Nullable )ownerOrNil;
++ (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib withOwner:(id _Nullable )ownerOrNil;
 
 
 - (void)fadeInFromHidden;
 - (void)fadeOutThenHidden;
 
-- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock;
-- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock;
+- (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock;
+- (void)removeAsFadeOutSubview:(UIView*_Nullable)subview afterRemovedBlock:(void(^_Nullable)(void))afterRemovedBlock;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage *renderedImageForScreenScale;
-- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage * _Nullable renderedImageForScreenScale;
+- (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates;
 
-- (id)superViewOfClassName:(NSString*)className;
+- (id _Nullable )superViewOfClassName:(NSString*_Nullable)className;
 
 - (void)blinkShadowOpacity;
 
@@ -52,10 +52,10 @@ typedef UIView* (^FXDcallbackHitTest)(UIView *hitView, CGPoint point, UIEvent *e
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation;
 
 
-- (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view;
+- (NSValue*_Nullable)biggerRectValueUsing:(CGRect)rect toView:(UIView *_Nullable)view;
 
 
-- (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay;
+- (void)fadeInAlertLabelWithText:(NSString*_Nullable)alertText fadeOutAfterDelay:(NSTimeInterval)delay;
 
 - (void)modifyToCircular;
 

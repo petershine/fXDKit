@@ -27,7 +27,7 @@
 	return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor {
+- (instancetype _Nullable )initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor {
 	self = [self initWithFrame:frame];
 
 	if (self) {
@@ -106,19 +106,19 @@
 
 
 @implementation UIView (Essential)
-+ (instancetype)viewFromNibName:(NSString*)nibName {
++ (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];
 	
 	return view;
 }
 
-+ (instancetype)viewFromNib:(UINib*)nib {
++ (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib {
 	UIView *view = [self viewFromNib:nib withOwner:nil];
 	
 	return view;
 }
 
-+ (instancetype)viewFromNibName:(NSString*)nibName withOwner:(id)ownerOrNil {
++ (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName withOwner:(id _Nullable )ownerOrNil {
 	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
 	}
@@ -130,7 +130,7 @@
 	return view;
 }
 
-+ (instancetype)viewFromNib:(UINib*)nib withOwner:(id)ownerOrNil {
++ (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib withOwner:(id _Nullable )ownerOrNil {
 	if (nib == nil) {
 		NSString *nibName = NSStringFromClass([self class]);
 
@@ -204,7 +204,7 @@
 }
 
 #pragma mark -
-- (void)addAsFadeInSubview:(UIView*)subview afterAddedBlock:(void(^)(void))afterAddedBlock {
+- (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock {
 	subview.alpha = 0.0;
 
 	[self addSubview:subview];
@@ -223,7 +223,7 @@
 	 }];
 }
 
-- (void)removeAsFadeOutSubview:(UIView*)subview afterRemovedBlock:(void(^)(void))afterRemovedBlock {
+- (void)removeAsFadeOutSubview:(UIView*_Nullable)subview afterRemovedBlock:(void(^_Nullable)(void))afterRemovedBlock {
 
 	[UIView
 	 animateWithDuration:durationAnimation
@@ -245,7 +245,7 @@
 	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
 }
 
-- (UIImage*)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	//FXDLog_DEFAULT;
+- (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	//FXDLog_DEFAULT;
 
 	UIImage *renderedImage = nil;
 
@@ -280,7 +280,7 @@
 }
 
 #pragma mark -
-- (id)superViewOfClassName:(NSString*)className {
+- (id _Nullable )superViewOfClassName:(NSString*_Nullable)className {
 	id superView = nil;
 
 	if (self.superview) {
@@ -384,7 +384,7 @@
 }
 
 #pragma mark -
-- (NSValue*)biggerRectValueUsing:(CGRect)rect toView:(UIView *)view {
+- (NSValue*_Nullable)biggerRectValueUsing:(CGRect)rect toView:(UIView *_Nullable)view {
 	CGRect converted = [self convertRect:rect toView:view];
 
 	converted.origin.x -= marginDefault;
@@ -396,7 +396,7 @@
 }
 
 #pragma mark -
-- (void)fadeInAlertLabelWithText:(NSString*)alertText fadeOutAfterDelay:(NSTimeInterval)delay {
+- (void)fadeInAlertLabelWithText:(NSString*_Nullable)alertText fadeOutAfterDelay:(NSTimeInterval)delay {
 
 	CGRect labelFrame = CGRectMake(0, 0, MIN(self.frame.size.width, self.frame.size.height), heightNavigationBar*2.0);
 
