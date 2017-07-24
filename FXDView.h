@@ -8,6 +8,7 @@
 
 #define UIViewAutoresizingKeepCenter	(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin)
 
+/*REPLACED by fXDSwift
 typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPoint point, UIEvent * _Nullable event);
 
 
@@ -16,6 +17,7 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 }
 @property (copy, nonatomic) FXDcallbackHitTest _Nullable hitTestCallback;
 @end
+ */
 
 
 @interface FXDsubviewGlowing : UIView

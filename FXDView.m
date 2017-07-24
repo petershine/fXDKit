@@ -3,6 +3,7 @@
 #import "FXDView.h"
 
 
+/*REPLACED by fXDSwift
 @implementation FXDpassthroughView
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	UIView *hitView = [super hitTest:point withEvent:event];
@@ -14,6 +15,7 @@
 	return hitView;
 }
 @end
+ */
 
 
 @implementation FXDsubviewGlowing
