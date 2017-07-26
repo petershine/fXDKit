@@ -108,6 +108,7 @@
 
 
 @implementation UIView (Essential)
+/*
 + (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];
 	
@@ -159,6 +160,7 @@
 
 	return view;
 }
+ */
 
 #pragma mark -
 - (void)fadeInFromHidden {

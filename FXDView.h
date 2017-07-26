@@ -27,11 +27,13 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 
 
 @interface UIView (Essential)
+/*
 + (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName;
 + (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib;
-
 + (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName withOwner:(id _Nullable )ownerOrNil;
 + (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib withOwner:(id _Nullable )ownerOrNil;
+ */
+
 
 
 - (void)fadeInFromHidden;
