@@ -206,14 +206,17 @@
 @implementation UIWindow (Essential)
 + (instancetype)newDefaultWindow {	FXDLog_SEPARATE;
 
-	NSString *filename = NSStringFromClass([self class]);
-	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
+	NSString *nibName = NSStringFromClass([self class]);
+	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:nibName ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
 
 	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 	FXDLog(@"%@ %@", _BOOL(nibExists), _Object(resourcePath));
 
 	if (nibExists) {
-		UIWindow *newWindow = [[self class] viewFromNib:nil];
+		UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
+		NSArray *viewArray = [nib instantiateWithOwner:nil options:nil];
+		UIWindow *newWindow = viewArray.firstObject;
+		
 		return newWindow;
 	}
 
