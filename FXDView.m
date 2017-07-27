@@ -160,21 +160,20 @@
 
 	return view;
 }
- */
 
 #pragma mark -
 - (void)fadeInFromHidden {
 	if (self.hidden == NO && self.alpha == 1.0) {
 		return;
 	}
-	
-	
+
+
 	self.alpha = 0.0;
-	
+
 	if (self.hidden) {
 		self.hidden = NO;
 	}
-	
+
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0
@@ -193,7 +192,7 @@
 
 
 	CGFloat previousAlpha = self.alpha;
-	
+
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0
@@ -206,6 +205,7 @@
 		 self.alpha = previousAlpha ;
 	 }];
 }
+ */
 
 #pragma mark -
 - (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock {
