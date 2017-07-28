@@ -205,9 +205,7 @@
 		 self.alpha = previousAlpha ;
 	 }];
 }
- */
 
-#pragma mark -
 - (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock {
 	subview.alpha = 0.0;
 
@@ -220,7 +218,7 @@
 		 subview.alpha = 1.0;
 	 }
 	 completion:^(BOOL didFinish) {
-		 
+
 		 if (afterAddedBlock) {
 			 afterAddedBlock();
 		 }
@@ -237,12 +235,13 @@
 	 completion:^(BOOL didFinish) {
 		 [subview removeFromSuperview];
 		 subview.alpha = 1.0;
-		 
+
 		 if (afterRemovedBlock) {
 			 afterRemovedBlock();
 		 }
 	 }];
 }
+ */
 
 #pragma mark -
 - (UIImage*)renderedImageForScreenScale {
@@ -459,18 +458,18 @@
 	 }];
 }
 
-#pragma mark -
+/*
 - (void)modifyToCircular {
 	self.layer.masksToBounds = YES;
 	self.layer.cornerRadius = self.bounds.size.width/2.0;
 }
 
-#pragma mark -
 - (void)removeAllSubviews {
 	for (UIView *subview in self.subviews) {
 		[subview removeFromSuperview];
 	}
 }
+ */
 
 @end
 
