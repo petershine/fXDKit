@@ -42,9 +42,9 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage * _Nullable renderedImageForScreenScale;
 - (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates;
 
-- (id _Nullable )superViewOfClassName:(NSString*_Nullable)className;
+- (id _Nullable )superViewOfClassName:(NSString*_Nullable)className;	//FIXME: To be replaced
 
-- (void)blinkShadowOpacity;
+- (void)blinkShadowOpacity;	//FIXME: To be replaced
 
 
 - (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
