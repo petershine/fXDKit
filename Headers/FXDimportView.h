@@ -5,7 +5,7 @@
 
 
 #pragma mark - View
-#import "FXDView.h"
+//#import "FXDView.h"
 #import "FXDWindow.h"
 
 #import "FXDButton.h"

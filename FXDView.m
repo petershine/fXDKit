@@ -3,7 +3,6 @@
 #import "FXDView.h"
 
 
-/*REPLACED by fXDSwift
 @implementation FXDpassthroughView
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	UIView *hitView = [super hitTest:point withEvent:event];
@@ -15,7 +14,6 @@
 	return hitView;
 }
 @end
- */
 
 
 @implementation FXDsubviewGlowing
@@ -108,7 +106,6 @@
 
 
 @implementation UIView (Essential)
-/*
 + (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName {
 	UIView *view = [self viewFromNibName:nibName withOwner:nil];
 	
@@ -166,14 +163,14 @@
 	if (self.hidden == NO && self.alpha == 1.0) {
 		return;
 	}
-
-
+	
+	
 	self.alpha = 0.0;
-
+	
 	if (self.hidden) {
 		self.hidden = NO;
 	}
-
+	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0
@@ -192,7 +189,7 @@
 
 
 	CGFloat previousAlpha = self.alpha;
-
+	
 	[UIView
 	 animateWithDuration:durationAnimation
 	 delay:0
@@ -206,6 +203,7 @@
 	 }];
 }
 
+#pragma mark -
 - (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock {
 	subview.alpha = 0.0;
 
@@ -218,7 +216,7 @@
 		 subview.alpha = 1.0;
 	 }
 	 completion:^(BOOL didFinish) {
-
+		 
 		 if (afterAddedBlock) {
 			 afterAddedBlock();
 		 }
@@ -235,13 +233,12 @@
 	 completion:^(BOOL didFinish) {
 		 [subview removeFromSuperview];
 		 subview.alpha = 1.0;
-
+		 
 		 if (afterRemovedBlock) {
 			 afterRemovedBlock();
 		 }
 	 }];
 }
- */
 
 #pragma mark -
 - (UIImage*)renderedImageForScreenScale {
@@ -458,18 +455,18 @@
 	 }];
 }
 
-/*
+#pragma mark -
 - (void)modifyToCircular {
 	self.layer.masksToBounds = YES;
 	self.layer.cornerRadius = self.bounds.size.width/2.0;
 }
 
+#pragma mark -
 - (void)removeAllSubviews {
 	for (UIView *subview in self.subviews) {
 		[subview removeFromSuperview];
 	}
 }
- */
 
 @end
 
@@ -496,6 +493,23 @@
 
 	// Add both effects to your view
 	[self addMotionEffect:group];
+}
+@end
+
+
+@implementation UIView (Glowing)
+- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview {
+
+	if (glowingSubview == nil) {
+		glowingSubview = [[FXDsubviewGlowing alloc]
+						  initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)
+						  withGlowingColor:nil];
+	}
+
+	glowingSubview.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	glowingSubview.userInteractionEnabled = NO;
+
+	[self addSubview:glowingSubview];
 }
 @end
 

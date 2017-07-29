@@ -8,7 +8,6 @@
 
 #define UIViewAutoresizingKeepCenter	(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin)
 
-/*REPLACED by fXDSwift
 typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPoint point, UIEvent * _Nullable event);
 
 
@@ -17,7 +16,6 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 }
 @property (copy, nonatomic) FXDcallbackHitTest _Nullable hitTestCallback;
 @end
- */
 
 
 @interface FXDsubviewGlowing : UIView
@@ -27,24 +25,25 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 
 
 @interface UIView (Essential)
-/*
 + (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName;
 + (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib;
+
 + (instancetype _Nullable )viewFromNibName:(NSString*_Nullable)nibName withOwner:(id _Nullable )ownerOrNil;
 + (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib withOwner:(id _Nullable )ownerOrNil;
 
+
 - (void)fadeInFromHidden;
 - (void)fadeOutThenHidden;
+
 - (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock;
 - (void)removeAsFadeOutSubview:(UIView*_Nullable)subview afterRemovedBlock:(void(^_Nullable)(void))afterRemovedBlock;
- */
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) UIImage * _Nullable renderedImageForScreenScale;
 - (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates;
 
-- (id _Nullable )superViewOfClassName:(NSString*_Nullable)className;	//FIXME: To be replaced
+- (id _Nullable )superViewOfClassName:(NSString*_Nullable)className;
 
-- (void)blinkShadowOpacity;	//FIXME: To be replaced
+- (void)blinkShadowOpacity;
 
 
 - (void)updateWithXYratio:(CGPoint)xyRatio forSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration;
@@ -58,15 +57,19 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 
 - (void)fadeInAlertLabelWithText:(NSString*_Nullable)alertText fadeOutAfterDelay:(NSTimeInterval)delay;
 
-/*
 - (void)modifyToCircular;
+
 - (void)removeAllSubviews;
- */
 
 @end
 
 
 @interface UIView (MotionEffect)
 - (void)enableParallaxEffectWithRelativeValue:(CGFloat)relativeValue;
+@end
+
+
+@interface UIView (Glowing)
+- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;
 @end
 

@@ -12,7 +12,7 @@
 @import AVFoundation;
 
 
-#import "FXDView.h"
+//#import "FXDView.h"
 @interface FXDdisplayPlayback : UIView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
