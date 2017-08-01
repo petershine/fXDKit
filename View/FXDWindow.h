@@ -37,7 +37,9 @@
 @end
 
 
+/*
 @interface UIWindow (Essential)
 + (instancetype)newDefaultWindow;
-
 @end
+ */
+

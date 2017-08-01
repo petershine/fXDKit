@@ -4,6 +4,8 @@
 
 #import "FXDsceneLaunching.h"
 
+#import "PopToo-Swift.h"	//FIXME: Separate fXDSwift at the end of evolution
+
 
 @implementation FXDsubviewInformation
 @end
@@ -203,6 +205,7 @@
 @end
 
 
+/*
 @implementation UIWindow (Essential)
 + (instancetype)newDefaultWindow {	FXDLog_SEPARATE;
 
@@ -231,5 +234,5 @@
 	
 	return newWindow;
 }
-
 @end
+ */
