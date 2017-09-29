@@ -255,32 +255,17 @@
 #endif
 
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
+
 	if (alertBody == nil) {
 		return;
 	}
 
-	
+	if (delay <= 0.0) {
+		delay = 0.25;	//MARK: timeInterval must be greater than 0.0
+	}
 
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
-		 //MARK: Old implementation
-		 /*
-		 UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
-		 localNotifcation.repeatInterval = 0;
-		 localNotifcation.alertBody = alertBody;
-
-		 if (delay > 0.0) {
-			 localNotifcation.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
-
-			 [self scheduleLocalNotification:localNotifcation];
-		 }
-		 else {
-			 [self presentLocalNotificationNow:localNotifcation];
-		 }
-		  */
-
-		 
-		 //MARK: 'UILocalNotification' is deprecated: first deprecated in iOS 10.0 - Use UserNotifications Framework's UNNotificationRequest
 
 		 UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
 		 content.body = alertBody;
