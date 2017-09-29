@@ -71,6 +71,7 @@
 	FXDLogBOOL(authorizationStatus == [CLLocationManager authorizationStatus]);
 
 	FXDLogObject([UIDevice currentDevice].systemVersion);
+	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysAndWhenInUseUsageDescription"]);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysUsageDescription"]);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationWhenInUseUsageDescription"]);
 
@@ -85,13 +86,8 @@
 	FXDLogBOOL(isAuthorized);
 
 	if (isAuthorized == NO) {
-
-		if ([NSBundle mainBundle].infoDictionary[@"NSLocationWhenInUseUsageDescription"]) {
-			[self.mainLocationManager requestWhenInUseAuthorization];
-		}
-		else {
-			[self.mainLocationManager requestAlwaysAuthorization];
-		}
+		//MARK: iOS 11 allows user to choose with UIAlertController
+		[self.mainLocationManager requestAlwaysAuthorization];
 
 		return;
 	}

@@ -527,7 +527,14 @@
 - (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_SEPARATE;
 	FXDLogVariable(self.mainDocument.documentState);
 	FXDLogBOOL([self.mainDocument hasUnsavedChanges]);
-	
+
+	//MAR: Following error may happen for iOS 11
+	/*
+	 2017-09-28 22:39:05.884304-0400 PopToo[5616:173973] [default] [ERROR] Could not get attribute values for item file:///
+	 Error: Error Domain=NSFileProviderInternalErrorDomain Code=1 "The reader is not permitted to access the URL." UserInfo={NSLocalizedDescription=The reader is not permitted to access the URL.}
+	 */
+
+
 	[self.mainDocument
 	 saveToURL:self.mainDocument.fileURL
 	 forSaveOperation:UIDocumentSaveForOverwriting
