@@ -4,8 +4,6 @@
 
 #import "FXDsceneLaunching.h"
 
-#import "PopToo-Swift.h"	//FIXME: Separate fXDSwift at the end of evolution
-
 
 @implementation FXDsubviewInformation
 @end
@@ -185,7 +183,15 @@
 	[self addSubview:self.informationSubview];
 	[self bringSubviewToFront:self.informationSubview];
 
-	[self.informationSubview fadeInFromHidden];
+
+	self.informationSubview.alpha = 0.0;
+	self.informationSubview.hidden = NO;
+
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 self.informationSubview.alpha = 1.0;
+	 }];
 }
 
 - (void)hideInformationView {
@@ -195,9 +201,12 @@
 	}
 
 
-	[self
-	 removeAsFadeOutSubview:self.informationSubview
-	 afterRemovedBlock:^{
+	[UIView
+	 animateWithDuration:durationAnimation
+	 animations:^{
+		 self.informationSubview.alpha = 0.0;
+	 } completion:^(BOOL finished) {
+		 [self.informationSubview removeFromSuperview];
 		 self.informationSubview = nil;
 	 }];
 }
