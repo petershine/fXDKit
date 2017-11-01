@@ -61,8 +61,6 @@
 
 
 //Twitter
-#define userdefaultObjMainTwitterAccountIdentifier	@"MainTwitterAccountIdentifierObjKey"
-
 #define maximumTweetLength	140
 
 #define urlrootTwitterAPI			@"https://api.twitter.com/1.1/"

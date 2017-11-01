@@ -44,7 +44,10 @@
 #endif
 
 #if USE_SocialFrameworks
-	#import <FacebookSDK/FacebookSDK.h>
+	#import <FBSDKCoreKit/FBSDKCoreKit.h>
+	#import <FBSDKLoginKit/FBSDKLoginKit.h>
+	#import <FBSDKShareKit/FBSDKShareKit.h>
+	#import <TwitterKit/TwitterKit.h>
 #endif
 
 
