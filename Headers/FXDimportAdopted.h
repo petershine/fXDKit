@@ -47,11 +47,7 @@
 	#import <FBSDKCoreKit/FBSDKCoreKit.h>
 	#import <FBSDKLoginKit/FBSDKLoginKit.h>
 	#import <FBSDKShareKit/FBSDKShareKit.h>
-<<<<<<< HEAD
-	#import <TwitterKit/TWTRTwitter.h>
-=======
 	#import <TwitterKit/TWTRKit.h>
->>>>>>> a21c2b88ed98d0feab9a708094f67f863d478e68
 #endif
 
 
