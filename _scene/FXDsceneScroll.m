@@ -91,40 +91,39 @@
 }
 
 - (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {	//FXDLog_OVERRIDE;
+	if (_mainCellIdentifier == nil) {
 	}
-	
 	return _mainCellIdentifier;
 }
 
 #pragma mark -
 - (NSArray*)itemCounts {
-	if (_itemCounts == nil) {	//FXDLog_OVERRIDE;
+	if (_itemCounts == nil) {
 	}
 	return _itemCounts;
 }
 
 - (NSDictionary*)cellTitleDictionary {
-	if (_cellTitleDictionary == nil) {	//FXDLog_OVERRIDE;
+	if (_cellTitleDictionary == nil) {
 	}
 	return _cellTitleDictionary;
 }
 
 - (NSDictionary*)cellSubTitleDictionary {
-	if (_cellSubTitleDictionary == nil) {	//FXDLog_OVERRIDE;
+	if (_cellSubTitleDictionary == nil) {
 	}
 	return _cellSubTitleDictionary;
 }
 
 #pragma mark -
 - (NSMutableArray*)mainDataSource {
-	if (_mainDataSource == nil) {	//FXDLog_OVERRIDE;
+	if (_mainDataSource == nil) {
 	}
 	return _mainDataSource;
 }
 
 - (NSFetchedResultsController*)mainResultsController {
-	if (_mainResultsController == nil) {	//FXDLog_OVERRIDE;
+	if (_mainResultsController == nil) {
 	}
 	return _mainResultsController;
 }
