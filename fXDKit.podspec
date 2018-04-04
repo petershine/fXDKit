@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'fXDKit'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of fXDKit.'
+  s.summary          = 'Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -28,7 +28,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/petershine/fXDKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'fXDKit/Classes/**/*'
   
@@ -38,5 +38,12 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+
+  s.dependency 'ReactiveSwift'
+
+  s.dependency 'FBSDKCoreKit'
+  s.dependency 'FBSDKLoginKit'
+  s.dependency 'FBSDKShareKit'
+
+  s.dependency 'TwitterKit'
 end
