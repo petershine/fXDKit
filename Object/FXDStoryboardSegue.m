@@ -42,34 +42,6 @@
 
 
 @implementation UIStoryboardSegue (Essential)
-- (NSDictionary*)fullDescription {
-	NSMutableDictionary *fullDescription = [[NSMutableDictionary alloc] initWithCapacity:0];
-
-	if (self.identifier) {
-		fullDescription[@"identifier"] = self.identifier;
-	}
-
-	if (self.sourceViewController) {
-		fullDescription[@"source"] = self.sourceViewController;
-	}
-
-	if (self.destinationViewController) {
-		fullDescription[@"destination"] = self.destinationViewController;
-	}
-
-	if ([self respondsToSelector:@selector(popoverController)]) {
-		fullDescription[@"popoverController"] = [self performSelector:@selector(popoverController)];
-	}
-
-	if (fullDescription.count == 0) {
-		fullDescription = nil;
-	}
-	else {
-		fullDescription[@"class"] = NSStringFromClass([self class]);
-	}
-
-	return fullDescription;
-}
 
 - (BOOL)shouldUseNavigationPush {
 	BOOL shouldUseNavigationPush = NO;

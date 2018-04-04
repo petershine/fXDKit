@@ -78,8 +78,6 @@
 
 
 //Facebook
-#define facebookGraphMe				@"me"
-#define facebookGraphMeAccounts		@"me/accounts"
 #define facebookGraphProfileFeed	@"%@/feed"
 #define facebookGraphProfileVideos	@"%@/videos"
 #define facebookGraphAccessToken	@"%@?fields=access_token"

@@ -54,13 +54,6 @@
 #define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
 #define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
 
-#define objkeyTwitterScreenName			@"screen_name"
-#define objkeyTwitterStatus				@"status"
-#define objkeyTwitterLat				@"lat"
-#define objkeyTwitterLong				@"long"
-#define objkeyTwitterPlaceId			@"place_id"
-#define objkeyTwitterDisplayCoordinates	@"display_coordinates"
-
 
 @interface FXDmoduleTwitter : FXDmoduleSocial
 - (void)twitterUserShowWithScreenName:(NSString*)screenName;

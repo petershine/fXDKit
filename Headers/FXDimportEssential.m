@@ -241,19 +241,6 @@
 
 
 @implementation UIApplication (Essential)
-#if TARGET_APP_EXTENSION
-#else
-+ (UIWindow*)mainWindow {
-	UIWindow *mainWindow = nil;
-
-	if ([[[self class] sharedApplication].delegate respondsToSelector:@selector(window)]) {
-		mainWindow = [[[self class] sharedApplication].delegate performSelector:@selector(window)];
-	}
-
-	return mainWindow;
-}
-#endif
-
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay {
 
 	if (alertBody == nil) {
