@@ -3,16 +3,6 @@
 import UIKit
 import Foundation
 
-/*
-class FXDWindow: UIWindow {
-
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-}
-*/
 
 extension UIWindow {
 	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {
