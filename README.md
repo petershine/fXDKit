@@ -19,12 +19,20 @@ fXDKit is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'fXDKit'
+pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
+```
+
+And import as:
+```swift
+import fXDKit
+```
+```objective-c
+#import <fXDKit/fXDKit-Swift.h>
 ```
 
 ## Author
 
-petershine, petershine@fxceed.com
+Peter SHIN, petershine@fxceed.com
 
 ## License
 
