@@ -32,7 +32,7 @@ import fXDKit	// for Swift
 
 ## Author
 
-Peter SHIN, petershine@fxceed.com
+Peter SHIN, petershine@fxceed.com, https://www.linkedin.com/in/petershine/
 
 ## License
 
