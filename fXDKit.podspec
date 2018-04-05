@@ -24,9 +24,9 @@ TODO: Add long description of the pod here.
   s.homepage         = 'https://github.com/petershine/fXDKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'petershine' => 'petershine@fxceed.com' }
+  s.author           = { 'Peter SHIN' => 'petershine@fxceed.com' }
   s.source           = { :git => 'https://github.com/petershine/fXDKit.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://www.linkedin.com/in/petershine/'
 
   s.ios.deployment_target = '10.0'
 
