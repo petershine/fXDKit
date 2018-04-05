@@ -21,11 +21,11 @@ let facebookGraphMeAccounts = "me/accounts"
 let userdefaultObjMainFacebookAccountIdentifier: String = "MainFacebookAccountIdentifierObjKey"
 
 
-class FXDmoduleFacebook: NSObject {
+open class FXDmoduleFacebook: NSObject {
 
 	let reasonForConnecting = NSLocalizedString("Please go to device's Settings and add your Facebook account", comment: "")
 
-	@objc lazy var currentFacebookAccount: Dictionary<String, Any>? =  {
+	@objc public lazy var currentFacebookAccount: Dictionary<String, Any>? =  {
 		return UserDefaults.standard.dictionary(forKey: userdefaultObjMainFacebookAccountIdentifier)
 	}()
 
@@ -33,7 +33,7 @@ class FXDmoduleFacebook: NSObject {
 	var batchFinishedClosure:((Bool) -> Void)?
 
 
-	@objc func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
 
 		FXDLog(presentingScene)
 		FXDLog(FBSDKAccessToken.current())
@@ -325,7 +325,7 @@ class FXDmoduleFacebook: NSObject {
 		})
 	}
 
-	@objc func requestToPost(message: String, mediaLink: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func requestToPost(message: String, mediaLink: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, callback: @escaping FXDcallback) {	FXDLog_Func()
 
 		self.requestSearch(latitude: latitude, longitude: longitude) {
 			[weak self] (shouldContinue: Bool?, placeId: Any?) in
@@ -423,7 +423,7 @@ class FXDmoduleFacebook: NSObject {
 
 extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 
-	func requestConnectionDidFinishLoading(_ connection: FBSDKGraphRequestConnection!) {	FXDLog_Func()
+	public func requestConnectionDidFinishLoading(_ connection: FBSDKGraphRequestConnection!) {	FXDLog_Func()
 
 		assert(self.batchFinishedClosure != nil)
 		self.batchFinishedClosure?(true)
@@ -431,7 +431,7 @@ extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 		assert(self.batchFinishedClosure == nil)
 	}
 
-	func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	FXDLog_Func()
+	public func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	FXDLog_Func()
 		FXDLog(error)
 
 		assert(self.batchFinishedClosure != nil)

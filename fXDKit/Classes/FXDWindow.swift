@@ -14,8 +14,8 @@ class FXDWindow: UIWindow {
 }
 */
 
-@objc extension UIWindow {
-	class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {
+extension UIWindow {
+	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {
 		FXDLog_Func()
 
 		//MARK: Customized initialization

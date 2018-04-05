@@ -22,25 +22,25 @@ let objkeyTwitterPlaceId = "place_id"
 let objkeyTwitterDisplayCoordinates = "display_coordinates"
 
 
-class FXDmoduleTwitter: NSObject {
+open class FXDmoduleTwitter: NSObject {
 	
 	let reasonForConnecting = NSLocalizedString("Please go to device's Settings and add your Twitter account", comment: "")
 
-	@objc var authenticatedSession: TWTRAuthSession? {
+	@objc public var authenticatedSession: TWTRAuthSession? {
 		get {
 			return TWTRTwitter.sharedInstance().sessionStore.session()
 		}
 	}
 
 
-	@objc required init(withTwitterKey twitterKey: String!, twitterSecret: String!) {
+	@objc required public init(withTwitterKey twitterKey: String!, twitterSecret: String!) {
 		FXDLog_Func()
 		super.init()
 
 		TWTRTwitter.sharedInstance().start(withConsumerKey: twitterKey!, consumerSecret: twitterSecret!)
 	}
 
-	@objc func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
 
 		FXDLog(self.authenticatedSession?.authToken as Any)
 		FXDLog(self.authenticatedSession?.authTokenSecret as Any)
@@ -194,7 +194,7 @@ class FXDmoduleTwitter: NSObject {
 		}
 	}
 
-	@objc func twitterStatusUpdate(withTweetText tweetText: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, placeId: String?, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func twitterStatusUpdate(withTweetText tweetText: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, placeId: String?, callback: @escaping FXDcallback) {	FXDLog_Func()
 
 		FXDLog(self.authenticatedSession as Any)
 

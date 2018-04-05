@@ -92,9 +92,9 @@ extension UIView {
 	}
 }
 
-@objc extension UIView {
+extension UIView {
 
-	class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {
+	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {
 		FXDLog_Func()
 
 		//MARK: Customized initialization
@@ -123,8 +123,8 @@ extension UIView {
 //FIXME: declare this as global variable
 let durationAnimation = 0.3
 
-@objc extension UIView {
-	func fadeInFromHidden() {
+extension UIView {
+	@objc public func fadeInFromHidden() {
 		guard (self.isHidden || self.alpha != 1.0) else {
 			return
 		}
@@ -137,7 +137,7 @@ let durationAnimation = 0.3
 		}
 	}
 
-	func fadeOutThenHidden() {
+	@objc public func fadeOutThenHidden() {
 		guard (self.isHidden == false) else {
 			return
 		}
@@ -153,7 +153,7 @@ let durationAnimation = 0.3
 		}
 	}
 
-	func addAsFadeInSubview(_ subview: UIView?, afterAddedBlock: (() -> Swift.Void)? = nil) {
+	@objc public func addAsFadeInSubview(_ subview: UIView?, afterAddedBlock: (() -> Swift.Void)? = nil) {
 
 		guard subview != nil else {
 			afterAddedBlock?()
@@ -175,7 +175,7 @@ let durationAnimation = 0.3
 		}
 	}
 
-	func removeAsFadeOutSubview(_ subview: UIView?, afterRemovedBlock: (() -> Swift.Void)? = nil) {
+	@objc public func removeAsFadeOutSubview(_ subview: UIView?, afterRemovedBlock: (() -> Swift.Void)? = nil) {
 
 		guard subview != nil else {
 			afterRemovedBlock?()
@@ -195,20 +195,20 @@ let durationAnimation = 0.3
 		}
 	}
 
-	func modifyToCircular() {
+	@objc public func modifyToCircular() {
 		self.layer.masksToBounds = true
 		self.layer.cornerRadius = self.bounds.size.width/2.0
 	}
 
-	func removeAllSubviews() {
+	@objc public func removeAllSubviews() {
 		for subview in self.subviews {
 			subview.removeFromSuperview()
 		}
 	}
 }
 
-@objc extension UIView {
-	func superView(forClassName className: String?) -> Any? {
+extension UIView {
+	@objc public func superView(forClassName className: String?) -> Any? {
 		var superView: Any? = nil
 
 		if self.superview != nil {
@@ -225,8 +225,8 @@ let durationAnimation = 0.3
 	}
 }
 
-@objc extension UIView {
-	func blinkShadowOpacity() {
+extension UIView {
+	@objc public func blinkShadowOpacity() {
 		let blinkShadow: CABasicAnimation = CABasicAnimation.init(keyPath: "shadowOpacity")
 		blinkShadow.fromValue = self.layer.shadowOpacity
 		blinkShadow.toValue = 0.0
@@ -238,12 +238,12 @@ let durationAnimation = 0.3
 
 
 //MARK: Sub-classes
-typealias FXDcallbackHitIntercept = (_ hitView: UIView?, _ point: CGPoint?, _ event: UIEvent?) -> UIView?
+public typealias FXDcallbackHitIntercept = (_ hitView: UIView?, _ point: CGPoint?, _ event: UIEvent?) -> UIView?
 
-class FXDpassthroughView: UIView {
+open class FXDpassthroughView: UIView {
 	var hitIntercept: FXDcallbackHitIntercept?
 
-	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+	override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
 		var hitView: UIView = super.hitTest(point, with: event)!
 

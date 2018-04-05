@@ -4,7 +4,7 @@ import UIKit
 import Foundation
 
 extension UIApplication {
-	@objc class func mainWindow() -> UIWindow? {
+	@objc public class func mainWindow() -> UIWindow? {
 		var mainWindow: UIWindow? = nil
 
 		let appDelegate = self.shared.delegate
@@ -18,7 +18,7 @@ extension UIApplication {
 }
 
 extension UIStoryboardSegue {
-	@objc func fullDescription() -> Dictionary<String, Any>? {
+	@objc public func fullDescription() -> Dictionary<String, Any>? {
 		var fullDescription: Dictionary<String, Any>? = [:]
 
 		if (self.identifier?.count)! > 0 {
@@ -35,7 +35,7 @@ extension UIStoryboardSegue {
 
 extension UIAlertController {
 
-	@objc class func simpleAlert(withTitle title: String?, message: String?) {
+	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
 		self.simpleAlert(withTitle: title,
 		                 message: message,
 		                 cancelText: nil,
@@ -43,7 +43,7 @@ extension UIAlertController {
 		                 handler: nil)
 	}
 
-	@objc class func simpleAlert(withTitle title: String?, message: String?,
+	@objc public class func simpleAlert(withTitle title: String?, message: String?,
 	                             cancelText: String?,
 	                             fromScene: UIViewController?,
 	                             handler: ((UIAlertAction) -> Swift.Void)?) {
