@@ -24,10 +24,10 @@ pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
 
 And import as:
 ```swift
-import fXDKit
+import fXDKit	// for Swift
 ```
-```objective-c
-#import <fXDKit/fXDKit-Swift.h>
+```objectivec
+#import <fXDKit/fXDKit-Swift.h>	// for Objective-C
 ```
 
 ## Author
