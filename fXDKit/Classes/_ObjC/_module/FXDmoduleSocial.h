@@ -54,11 +54,6 @@
 #define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
 #define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
 
-
-#ifndef apikeyFacebookAppId
-	#define apikeyFacebookAppId	@"000000000000000"
-#endif
-
 #define facebookPermissionBasicInfo	@"basic_info"	//FIXME: Obsolete. Update appropriately
 #define facebookPermissionPublishStream	@"publish_stream"
 
