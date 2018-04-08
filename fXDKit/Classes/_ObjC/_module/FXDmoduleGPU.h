@@ -1,10 +1,7 @@
 #if USE_GPUImage
 
 
-
-#ifndef sessionPresetOptimalCapture
-	#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720
-#endif
+#define sessionPresetOptimalCapture	AVCaptureSessionPreset1280x720
 
 
 @import AVFoundation;

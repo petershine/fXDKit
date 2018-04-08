@@ -1,19 +1,9 @@
 
 
-#ifndef limitInfiniteFetch
-	#define limitInfiniteFetch	0
-#endif
+#define limitInfiniteFetch	0
+#define limitDefaultFetch	1000
+#define sizeDefaultBatch	20
 
-#ifndef limitDefaultFetch
-	#define limitDefaultFetch	1000
-#endif
-
-#ifndef sizeDefaultBatch
-	#define sizeDefaultBatch	20
-#endif
-
-
-#import "FXDimportCore.h"
 
 @import CoreData;
 

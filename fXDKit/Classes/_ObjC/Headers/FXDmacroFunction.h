@@ -4,33 +4,11 @@
 #define FXDKit_FXDmacroFunction_h
 
 
-#ifndef GlobalModule
-//MARK: Must define app's own GlobalModule
-//FXDmacroFunction.h:10:25: Editor placeholder in source file
-	//#define GlobalModule	((FXDmoduleGlobal*)[FXDmoduleGlobal sharedInstance])
-#endif
-
-#ifndef application_AppStoreID
-	#define application_AppStoreID	@""
-#endif
-
-#ifndef application_ContactEmail
-	#define application_ContactEmail	@"app@company.com"
-#endif
-
-
 #define application_BundleIdentifier	[NSBundle mainBundle].bundleIdentifier
 #define application_BundleName			[NSBundle mainBundle].infoDictionary[@"CFBundleName"]
 #define application_BundleVersion		[NSBundle mainBundle].infoDictionary[@"CFBundleVersion"]
 #define application_ShortVersion		[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]
 #define application_DisplayName			[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
-
-
-#define iosVersion11	11.0
-#define iosVersion10	10.0
-#define iosVersion9		9.0
-#define iosVersion8		8.0
-#define iosVersion7		7.0
 
 
 #define SYSTEM_VERSION_sameOrHigher(versionNumber)	([UIDevice currentDevice].systemVersion.floatValue >= versionNumber)
@@ -45,13 +23,8 @@
 										return _sharedInstance
 
 
-#ifndef pathcomponentDocuments
-	#define pathcomponentDocuments @"Documents/"
-#endif
-
-#ifndef pathcomponentCaches
-	#define pathcomponentCaches	@"Caches/"
-#endif
+#define pathcomponentDocuments @"Documents/"
+#define pathcomponentCaches	@"Caches/"
 
 #define appSearhPath_Document	(NSString*)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 #define appSearhPath_Caches		(NSString*)[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]

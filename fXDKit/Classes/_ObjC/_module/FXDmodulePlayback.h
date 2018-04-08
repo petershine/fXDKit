@@ -1,18 +1,12 @@
 
 
-#ifndef periodicintervalDivisor
-	#define periodicintervalDivisor	3
-#endif
-
-#ifndef periodicintervalDefault
-	#define periodicintervalDefault	CMTimeMultiplyByRatio(CMTimeMake(1, 3), 1, periodicintervalDivisor)
-#endif
+#define periodicintervalDivisor	3
+#define periodicintervalDefault	CMTimeMultiplyByRatio(CMTimeMake(1, 3), 1, periodicintervalDivisor)
 
 
 @import AVFoundation;
 
 
-//#import "FXDView.h"
 @interface FXDdisplayPlayback : UIView
 @property (strong, nonatomic) AVPlayer *mainPlayer;
 
