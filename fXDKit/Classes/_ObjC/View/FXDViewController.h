@@ -16,9 +16,6 @@
 
 @interface UIViewController (Essential)
 
-- (IBAction)dismissSceneForEventSender:(id)sender;
-
-
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil;
 
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback;

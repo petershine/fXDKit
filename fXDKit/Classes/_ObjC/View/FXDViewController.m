@@ -303,16 +303,6 @@
 @implementation UIViewController (Essential)
 
 #pragma mark - IBActions
-- (IBAction)dismissSceneForEventSender:(id)sender {	FXDLog_OVERRIDE;
-	FXDLog(@"%@ %@", _Object(self.parentViewController), _Object(self.presentingViewController));
-
-	if (self.parentViewController) {
-		[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-	}
-	else {
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}
-}
 
 #pragma mark - Public
 - (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
