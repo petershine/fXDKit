@@ -3,19 +3,6 @@
 #import "FXDView.h"
 
 
-@implementation FXDpassthroughView
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-	UIView *hitView = [super hitTest:point withEvent:event];
-
-	if (_hitTestCallback) {
-		hitView = _hitTestCallback(hitView, point, event);
-	}
-
-	return hitView;
-}
-@end
-
-
 @implementation FXDsubviewGlowing
 - (instancetype)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];

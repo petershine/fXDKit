@@ -11,13 +11,6 @@
 typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPoint point, UIEvent * _Nullable event);
 
 
-@interface FXDpassthroughView : UIView {
-	FXDcallbackHitTest _hitTestCallback;
-}
-@property (copy, nonatomic) FXDcallbackHitTest _Nullable hitTestCallback;
-@end
-
-
 @interface FXDsubviewGlowing : UIView
 @property (strong, nonatomic, nullable) UIColor *glowingColor;
 - (instancetype _Nullable )initWithFrame:(CGRect)frame withGlowingColor:(nullable UIColor*)glowingColor;
