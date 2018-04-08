@@ -2,6 +2,8 @@
 
 #import "FXDmoduleMessage.h"
 
+#import "FXDmacroFunction.h"
+
 
 @implementation FXDmoduleMessage
 
@@ -14,7 +16,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
+- (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message withRecipients:(NSArray*)recipients {	FXDLog_DEFAULT;
 
 
 	if ([MFMailComposeViewController canSendMail] == NO) {
@@ -28,7 +30,7 @@
 			emailScene = [self emailSceneForSharingImage:image usingMessage:message];
 		}
 		else {
-			emailScene = self.emailSceneWithMailBody;
+			emailScene = [self emailSceneWithMailBodyWithRecipients:recipients];
 		}
 	}
 
@@ -51,8 +53,9 @@
 	 completion:nil];
 }
 
-- (MFMailComposeViewController*)emailSceneWithMailBody {	FXDLog_DEFAULT;
+- (MFMailComposeViewController*)emailSceneWithMailBodyWithRecipients:(NSArray*)recipients {	FXDLog_DEFAULT;
 	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
+	FXDLogObject(recipients);
 
 	NSString *version = application_BundleVersion;
 	FXDLogObject(version);
@@ -63,14 +66,6 @@
 	NSString *currentLanguage = languages.firstObject;
 	FXDLogObject(currentLanguage);
 #endif
-
-	NSString *contactEmail = NSLocalizedString(application_ContactEmail, nil);
-
-	NSArray *toRecipients = nil;
-
-	if (contactEmail) {
-		toRecipients = @[contactEmail];
-	}
 
 
 	NSString *displayName = application_DisplayName;
@@ -93,7 +88,7 @@
 
 	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithNavigationBarClass:nil toolbarClass:nil];
 	[emailScene setSubject:subjectLine];
-	[emailScene setToRecipients:toRecipients];
+	[emailScene setToRecipients:recipients];
 	[emailScene setMessageBody:mailBody isHTML:NO];
 
 	return emailScene;
