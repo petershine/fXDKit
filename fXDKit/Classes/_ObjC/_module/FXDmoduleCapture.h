@@ -11,8 +11,7 @@
 @end
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleCapture : FXDsuperModule <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
+@interface FXDmoduleCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;
 }

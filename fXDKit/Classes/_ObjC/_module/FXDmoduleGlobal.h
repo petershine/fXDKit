@@ -7,8 +7,7 @@
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleGlobal : FXDsuperModule {
+@interface FXDmoduleGlobal : NSObject {
 	NSInteger _appLaunchCount;
 
 	NSString *_mainStoryboardName;

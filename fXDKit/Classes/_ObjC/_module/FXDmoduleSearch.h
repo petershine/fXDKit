@@ -6,8 +6,7 @@
 #define HANGUL_END_CODE     0xD79F
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleSearch : FXDsuperModule
+@interface FXDmoduleSearch : NSObject
 
 @property (strong, nonatomic) NSArray *chosung;
 @property (strong, nonatomic) NSArray *jungsung;

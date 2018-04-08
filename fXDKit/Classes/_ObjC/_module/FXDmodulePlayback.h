@@ -14,8 +14,7 @@
 @end
 
 
-#import "FXDsuperModule.h"
-@interface FXDmodulePlayback : FXDsuperModule {
+@interface FXDmodulePlayback : NSObject {
 	FXDdisplayPlayback *_mainDisplay;
 }
 

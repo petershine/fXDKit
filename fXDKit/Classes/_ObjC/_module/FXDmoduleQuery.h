@@ -11,8 +11,7 @@
 @end
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleQuery : FXDsuperModule <FXDMetadataQueryDelegate> {
+@interface FXDmoduleQuery : NSObject <FXDMetadataQueryDelegate> {
 	FXDcallbackFinish _metadataQueryCallback;
 
 	NSMetadataQuery *_mainMetadataQuery;

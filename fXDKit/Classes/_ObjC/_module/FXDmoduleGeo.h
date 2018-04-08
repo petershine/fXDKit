@@ -2,8 +2,7 @@
 #import "FXDimportEssential.h"
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleGeo : FXDsuperModule <CLLocationManagerDelegate> {
+@interface FXDmoduleGeo : NSObject <CLLocationManagerDelegate> {
 	CLLocationManager *_mainLocationManager;
 }
 
@@ -39,7 +38,7 @@
 #define distanceDiagonalSatelliteMinimum	37.0
 
 
-@interface FXDmoduleTile : FXDsuperModule
+@interface FXDmoduleTile : NSObject
 
 @property (nonatomic) MKMapRect tileMapRect;
 @property (nonatomic) MKMapRect screenMapRect;

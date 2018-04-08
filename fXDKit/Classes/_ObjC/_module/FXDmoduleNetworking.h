@@ -2,8 +2,7 @@
 #import "FXDimportEssential.h"
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleNetworking : FXDsuperModule {
+@interface FXDmoduleNetworking : NSObject {
 	NSString *_mainRootURLformat;
 	NSString *_mainAPIkey;
 	NSString *_mainJSONrootKey;

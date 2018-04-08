@@ -12,8 +12,7 @@
 @end
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleMusic : FXDsuperModule {
+@interface FXDmoduleMusic : NSObject {
 	MPMusicPlayerController *_musicPlayer;
 }
 

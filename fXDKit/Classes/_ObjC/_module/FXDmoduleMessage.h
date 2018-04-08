@@ -3,8 +3,7 @@
 #import "FXDWindow.h"
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleMessage : FXDsuperModule <MFMailComposeViewControllerDelegate>
+@interface FXDmoduleMessage : NSObject <MFMailComposeViewControllerDelegate>
 
 - (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingScene usingImage:(UIImage*)image usingMessage:(NSString*)message withRecipients:(NSArray*)recipients;
 

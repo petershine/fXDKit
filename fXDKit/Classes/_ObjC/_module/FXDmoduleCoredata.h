@@ -18,8 +18,7 @@
 #import "FXDWindow.h"
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleCoredata : FXDsuperModule {
+@interface FXDmoduleCoredata : NSObject {
 	UIBackgroundTaskIdentifier _enumeratingTask;
 	UIBackgroundTaskIdentifier _dataSavingTask;
 

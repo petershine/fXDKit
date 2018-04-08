@@ -6,8 +6,7 @@
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"
 
 
-#import "FXDsuperModule.h"
-@interface FXDmoduleCloud : FXDsuperModule {
+@interface FXDmoduleCloud : NSObject {
 	FXDcallbackFinish _statusCallback;
 
 	NSString *_containerIdentifier;
