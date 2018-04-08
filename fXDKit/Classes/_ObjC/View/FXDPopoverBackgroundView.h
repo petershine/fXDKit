@@ -2,10 +2,8 @@
 @import UIKit;
 @import Foundation;
 
-#import "FXDimportCore.h"
 
-
-@interface FXDPopoverBackgroundView : UIPopoverBackgroundView <FXDprotocolShared> {
+@interface FXDPopoverBackgroundView : UIPopoverBackgroundView {
 	CGFloat _arrowOffset;
 	UIPopoverArrowDirection _arrowDirection;
 }
@@ -20,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewArrow;
 
 
++ (instancetype)sharedInstance;
 + (CGFloat)minimumInset;
 
 @end

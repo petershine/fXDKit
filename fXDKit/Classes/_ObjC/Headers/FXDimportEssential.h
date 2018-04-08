@@ -29,13 +29,6 @@
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 
-@protocol FXDprotocolShared <NSObject>
-@required
-+ (instancetype)sharedInstance;
-@end
-
-
-
 #pragma mark - Categories
 @interface NSNumberFormatter (Grouping)
 + (NSNumberFormatter*)formatterGroupingSize:(NSInteger)groupingSize separator:(NSString*)separator;
