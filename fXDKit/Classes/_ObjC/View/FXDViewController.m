@@ -6,9 +6,6 @@
 @implementation FXDViewController
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 #pragma mark - Initialization
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {	FXDLog_SEPARATE;
