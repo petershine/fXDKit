@@ -55,13 +55,6 @@
 #define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
 
 
-@interface FXDmoduleTwitter : FXDmoduleSocial
-- (void)twitterUserShowWithScreenName:(NSString*)screenName;
-- (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude;
-@end
-
-
-
 #ifndef apikeyFacebookAppId
 	#define apikeyFacebookAppId	@"000000000000000"
 #endif
@@ -95,7 +88,3 @@
 #define objkeyFacebookUsername	@"username"
 #define objkeyFacebookCategory	@"category"
 
-
-@interface FXDmoduleFacebook : FXDmoduleSocial
-- (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId;
-@end

@@ -5,7 +5,6 @@
 
 
 #pragma mark - View
-//#import "FXDView.h"
 #import "FXDWindow.h"
 
 #import "FXDButton.h"
@@ -16,11 +15,5 @@
 #import "FXDScrollView.h"
 
 #import "FXDPopoverBackgroundView.h"
-
-
-#pragma mark - ViewController
-//#import "FXDViewController.h"
-//#import "FXDAlertController.h"
-
 
 #endif

@@ -180,11 +180,12 @@
 			alertTitle = NSLocalizedString(@"Please grant Facebook access in Settings", nil);
 		}
 
-		[FXDAlertController
+		[UIAlertController
 		 simpleAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
-		 cancelButtonTitle:nil
-		 withAlertHandler:nil];
+		 cancelText:nil
+		 fromScene:nil
+		 handler:nil];
 
 		self.mainAccountType = nil;
 
@@ -273,11 +274,12 @@
 			alertTitle = NSLocalizedString(@"Please sign up for a Facebook account", nil);
 		}
 
-		[FXDAlertController
+		[UIAlertController
 		 simpleAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
-		 cancelButtonTitle:nil
-		 withAlertHandler:nil];
+		 cancelText:nil
+		 fromScene:nil
+		 handler:nil];
 
 		if (finishCallback) {
 			finishCallback(_cmd, NO, nil);
@@ -298,10 +300,10 @@
 		accountObjKey = userdefaultObjMainFacebookAccountIdentifier;
 	}
 
-	FXDAlertController *alertController = [FXDAlertController
-										   alertControllerWithTitle:actionsheetTitle
-										   message:nil
-										   preferredStyle:UIAlertControllerStyleActionSheet];
+	UIAlertController *alertController = [UIAlertController
+										  alertControllerWithTitle:actionsheetTitle
+										  message:nil
+										  preferredStyle:UIAlertControllerStyleActionSheet];
 
 	UIAlertAction *cancelAction =
 	[UIAlertAction
@@ -432,11 +434,12 @@
 		}
 
 		
-		[FXDAlertController
+		[UIAlertController
 		 simpleAlertWithTitle:alertTitle
 		 message:self.reasonForConnecting
-		 cancelButtonTitle:nil
-		 withAlertHandler:nil];
+		 cancelText:nil
+		 fromScene:nil
+		 handler:nil];
 		
 		return nil;
 	}
@@ -519,181 +522,3 @@
 	
 @end
 
-
-@implementation FXDmoduleTwitter : FXDmoduleSocial
-- (NSString*)typeIdentifier {
-	if (_typeIdentifier == nil) {
-		_typeIdentifier = ACAccountTypeIdentifierTwitter;
-	}
-
-	return _typeIdentifier;
-}
-
-- (NSString*)reasonForConnecting {
-	if (_reasonForConnecting == nil) {	FXDLog_OVERRIDE;
-		_reasonForConnecting = NSLocalizedString(@"Please go to device's Settings and add your Twitter account", nil);
-	}
-
-	return _reasonForConnecting;
-}
-
-#pragma mark -
-- (void)twitterUserShowWithScreenName:(NSString*)screenName {
-
-	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
-		FXDLogObject(self.currentMainAccount);
-		return;
-	}
-
-
-	[self
-	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierTwitter
-	 withRequestingBlock:^(BOOL shouldRequest){
-		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
-		 FXDLogBOOL(shouldRequest);
-
-		 NSURL *requestURL = [NSURL evaluatedURLforPath:urlstringTwitterUserShow];
-
-		 NSDictionary *parameters = @{objkeyTwitterScreenName: screenName};
-
-		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter
-														requestMethod:SLRequestMethodGET
-																  URL:requestURL
-														   parameters:parameters];
-
-		 defaultRequest.account = self.currentMainAccount;
-
-		 [defaultRequest
-		  performRequestWithHandler:^(NSData *responseData,
-									  NSHTTPURLResponse *urlResponse,
-									  NSError *error) {
-			  FXDLog_BLOCK(defaultRequest, @selector(performRequestWithHandler:));
-
-#if ForDEVELOPER
-			  [self evaluateResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
-#endif
-		  }];
-	 }];
-}
-
-- (void)twitterStatusUpdateWithTweetText:(NSString*)tweetText atLatitude:(CLLocationDegrees)latitude atLongitude:(CLLocationDegrees)longitude {
-
-	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
-		FXDLogObject(self.currentMainAccount);
-		return;
-	}
-
-
-	[self
-	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierTwitter
-	 withRequestingBlock:^(BOOL shouldRequest){
-		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
-		 FXDLogBOOL(shouldRequest);
-
-		 NSURL *requestURL = [NSURL evaluatedURLforPath:urlstringTwitterStatusUpdate];
-
-		 NSMutableDictionary *parameters = [@{objkeyTwitterStatus: tweetText} mutableCopy];
-
-		 if (latitude != 0.0 && longitude != 0.0) {
-			 parameters[objkeyTwitterLat] = @(latitude);
-			 parameters[objkeyTwitterLong] = @(longitude);
-		 }
-
-
-		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter
-														requestMethod:SLRequestMethodPOST
-																  URL:requestURL
-														   parameters:parameters];
-
-		 defaultRequest.account = self.currentMainAccount;
-
-		 [defaultRequest
-		  performRequestWithHandler:^(NSData *responseData,
-									  NSHTTPURLResponse *urlResponse,
-									  NSError *error) {
-			  FXDLog_BLOCK(defaultRequest, @selector(performRequestWithHandler:));
-
-#if ForDEVELOPER
-			  [self evaluateResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
-#endif
-		  }];
-	 }];
-}
-
-@end
-
-
-@implementation FXDmoduleFacebook : FXDmoduleSocial
-- (NSString*)typeIdentifier {
-	if (_typeIdentifier == nil) {
-		_typeIdentifier = ACAccountTypeIdentifierFacebook;
-	}
-
-	return _typeIdentifier;
-}
-
-- (NSString*)reasonForConnecting {
-	if (_reasonForConnecting == nil) {	FXDLog_OVERRIDE;
-		_reasonForConnecting = NSLocalizedString(@"Please go to device's Settings and add your Facebook account", nil);
-	}
-
-	return _reasonForConnecting;
-}
-
-- (NSDictionary*)initialAccessOptions {
-	if (_initialAccessOptions == nil) {	FXDLog_DEFAULT;
-		_initialAccessOptions = @{ACFacebookAppIdKey:	apikeyFacebookAppId,
-						   ACFacebookPermissionsKey:	@[facebookPermissionEmail]};
-
-		FXDLogObject(_initialAccessOptions);
-	}
-
-	return _initialAccessOptions;
-}
-
-#pragma mark -
-- (void)facebookRequestForFacebookUserId:(NSString*)facebookUserId {
-	if (self.currentMainAccount == nil) {	FXDLog_DEFAULT;
-		FXDLogObject(self.currentMainAccount);
-		return;
-	}
-
-
-	[self
-	 renewAccountCredentialForTypeIdentifier:ACAccountTypeIdentifierFacebook
-	 withRequestingBlock:^(BOOL shouldRequest){
-		 FXDLog_BLOCK(self, @selector(renewAccountCredentialForTypeIdentifier:withRequestingBlock:));
-		 FXDLogBOOL(shouldRequest);
-		 
-		 NSURL *requestURL = nil;
-
-		 if (facebookUserId.length > 0) {
-			 requestURL = [NSURL evaluatedURLforPath:urlstringFacebook(facebookUserId)];
-		 }
-		 else {
-			 requestURL = [NSURL evaluatedURLforPath:urlstringFacebook(facebookGraphMe)];
-		 }
-
-
-		 NSDictionary *parameters = nil;
-
-		 SLRequest *defaultRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook
-														requestMethod:SLRequestMethodGET
-																  URL:requestURL
-														   parameters:parameters];
-
-		 defaultRequest.account = self.currentMainAccount;
-
-		 [defaultRequest
-		  performRequestWithHandler:^(NSData *responseData,
-									  NSHTTPURLResponse *urlResponse,
-									  NSError *error) {
-			  FXDLog_BLOCK(defaultRequest, @selector(performRequestWithHandler:));
-
-#if ForDEVELOPER
-			  [self evaluateResponseWithResponseData:responseData withURLresponse:urlResponse withError:error];
-#endif
-		  }];
-	 }];
-}
-@end

@@ -159,88 +159,6 @@
 }
 
 #pragma mark -
-- (void)fadeInFromHidden {
-	if (self.hidden == NO && self.alpha == 1.0) {
-		return;
-	}
-	
-	
-	self.alpha = 0.0;
-	
-	if (self.hidden) {
-		self.hidden = NO;
-	}
-	
-	[UIView
-	 animateWithDuration:durationAnimation
-	 delay:0
-	 options:UIViewAnimationOptionCurveEaseOut
-	 animations:^{
-		 self.alpha = 1.0;
-	 }
-	 completion:nil];
-}
-
-- (void)fadeOutThenHidden {
-
-	if (self.hidden) {
-		return;
-	}
-
-
-	CGFloat previousAlpha = self.alpha;
-	
-	[UIView
-	 animateWithDuration:durationAnimation
-	 delay:0
-	 options:UIViewAnimationOptionCurveEaseOut
-	 animations:^{
-		 self.alpha = 0.0;
-	 }
-	 completion:^(BOOL didFinish) {
-		 self.hidden = YES;
-		 self.alpha = previousAlpha ;
-	 }];
-}
-
-#pragma mark -
-- (void)addAsFadeInSubview:(UIView*_Nullable)subview afterAddedBlock:(void(^_Nullable)(void))afterAddedBlock {
-	subview.alpha = 0.0;
-
-	[self addSubview:subview];
-	[self bringSubviewToFront:subview];
-
-	[UIView
-	 animateWithDuration:durationAnimation
-	 animations:^{
-		 subview.alpha = 1.0;
-	 }
-	 completion:^(BOOL didFinish) {
-		 
-		 if (afterAddedBlock) {
-			 afterAddedBlock();
-		 }
-	 }];
-}
-
-- (void)removeAsFadeOutSubview:(UIView*_Nullable)subview afterRemovedBlock:(void(^_Nullable)(void))afterRemovedBlock {
-
-	[UIView
-	 animateWithDuration:durationAnimation
-	 animations:^{
-		 subview.alpha = 0.0;
-	 }
-	 completion:^(BOOL didFinish) {
-		 [subview removeFromSuperview];
-		 subview.alpha = 1.0;
-		 
-		 if (afterRemovedBlock) {
-			 afterRemovedBlock();
-		 }
-	 }];
-}
-
-#pragma mark -
 - (UIImage*)renderedImageForScreenScale {
 	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
 }
@@ -443,12 +361,6 @@
 			  [alertLabel removeFromSuperview];
 		  }];
 	 }];
-}
-
-#pragma mark -
-- (void)modifyToCircular {
-	self.layer.masksToBounds = YES;
-	self.layer.cornerRadius = self.bounds.size.width/2.0;
 }
 
 @end
