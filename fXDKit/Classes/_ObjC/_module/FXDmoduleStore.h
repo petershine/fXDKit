@@ -8,9 +8,6 @@
 #define validationURLProduction	[NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"]
 
 
-#import "FXDimportAdopted.h"
-
-
 #import "FXDsuperModule.h"
 @interface FXDmoduleStore : FXDsuperModule <SKProductsRequestDelegate> {
 	BOOL _didPurchasePremiumUpgrade;
