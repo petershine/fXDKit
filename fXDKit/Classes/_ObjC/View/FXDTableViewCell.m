@@ -21,7 +21,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	self.sectionPositionType = integerNotDefined;
+	self.sectionPositionCase = integerNotDefined;
 
 	if (self.imageView) {
 		[self modifySizeOfCellSubview:self.imageView];

@@ -93,17 +93,17 @@
 	NSInteger rowCount = [(self.itemCounts)[indexPath.section] integerValue];
 
 	if (rowCount == 1) {
-		cell.sectionPositionType = sectionPositionOne;
+		cell.sectionPositionCase = SectionPlacementOne;
 	}
 	else if (rowCount > 1) {
 		if (indexPath.row == 0) {
-			cell.sectionPositionType = sectionPositionTop;
+			cell.sectionPositionCase = SectionPlacementTop;
 		}
 		else if (indexPath.row == rowCount-1) {
-			cell.sectionPositionType = sectionPositionBottom;
+			cell.sectionPositionCase = SectionPlacementBottom;
 		}
 		else {
-			cell.sectionPositionType = sectionPositionMiddle;
+			cell.sectionPositionCase = SectionPlacementMiddle;
 		}
 	}
 }
