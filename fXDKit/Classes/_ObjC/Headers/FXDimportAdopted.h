@@ -12,10 +12,6 @@
 	#define USE_AFNetworking	FALSE
 #endif
 
-#ifndef USE_GPUImage
-	#define USE_GPUImage	FALSE
-#endif
-
 
 #if USE_ReactiveCocoa	//https://github.com/ReactiveCocoa/ReactiveCocoa
 	#import <ReactiveCocoa.h>
@@ -26,11 +22,6 @@
 	#import <AFNetworking.h>
 	#import <UIKit+AFNetworking.h>
 #endif
-
-#if USE_GPUImage	//https://github.com/BradLarson/GPUImage
-	#import <GPUImage.h>
-#endif
-
 
 
 #endif
