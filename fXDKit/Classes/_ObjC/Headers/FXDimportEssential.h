@@ -29,7 +29,6 @@
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 
-#pragma mark - Categories
 @interface NSNumberFormatter (Grouping)
 + (NSNumberFormatter*)formatterGroupingSize:(NSInteger)groupingSize separator:(NSString*)separator;
 @end

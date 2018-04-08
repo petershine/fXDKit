@@ -278,13 +278,7 @@
 }
 
 #pragma mark -
-- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
-	FXDAssert_IsMainThread;
-
-#if	USE_Crashlytics
-	FXDLog(@"USE_Crashlytics: %@", _BOOL([@(USE_Crashlytics) boolValue]));
-	[Fabric with:@[CrashlyticsKit]];
-#endif
+- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_OVERRIDE;
 }
 
 #pragma mark -

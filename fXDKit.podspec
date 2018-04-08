@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'fXDKit'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012'
 
 # This description is used to generate tags and improve search results.
@@ -40,11 +40,11 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
 
-  s.dependency 'ReactiveSwift'
+	s.dependency 'ReactiveSwift'
 
-  s.dependency 'FBSDKCoreKit'
-  s.dependency 'FBSDKLoginKit'
-  s.dependency 'FBSDKShareKit'
+	s.dependency 'FBSDKCoreKit'
+	s.dependency 'FBSDKLoginKit'
+	s.dependency 'FBSDKShareKit'
 
-  s.dependency 'TwitterKit'
+	s.dependency 'TwitterKit'
 end
