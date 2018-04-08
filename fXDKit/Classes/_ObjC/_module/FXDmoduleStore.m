@@ -189,25 +189,6 @@
 
 #pragma mark -
 - (void)logAboutReceiptDictionary:(NSDictionary*)receiptDictionary {	FXDLog_DEFAULT;
-
-#if USE_Flurry
-	NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:0];
-
-	NSArray *receiptKeyArray = @[@"original_application_version",
-								 @"original_purchase_date"];
-
-	for (NSString *receiptKey in receiptKeyArray) {
-
-		if (receiptDictionary[receiptKey]) {
-			parameters[receiptKey] = receiptDictionary[receiptKey];
-		}
-	}
-
-	if (parameters.count > 0) {
-		FXDLogObject(parameters);
-		LOGEVENT_FULL(@"Receipt", parameters, NO);
-	}
-#endif
 }
 
 

@@ -285,25 +285,6 @@
 	FXDLog(@"USE_Crashlytics: %@", _BOOL([@(USE_Crashlytics) boolValue]));
 	[Fabric with:@[CrashlyticsKit]];
 #endif
-
-#if USE_Flurry
-	FXDLog(@"USE_Flurry: %@", _BOOL([@(USE_Flurry) boolValue]));
-
-	FlurrySessionBuilder* sessionBuilder = [[FlurrySessionBuilder alloc] init];
-#if ForDEVELOPER
-	//[sessionBuilder withLogLevel:FlurryLogLevelDebug];
-	[sessionBuilder withLogLevel:FlurryLogLevelCriticalOnly];
-#else
-	[sessionBuilder withLogLevel:FlurryLogLevelNone];
-#endif
-	
-	[sessionBuilder withCrashReporting:!(@(USE_Crashlytics)).boolValue];
-
-	[Flurry setBackgroundSessionEnabled:YES];
-	[Flurry startSession:flurryApplicationKey
-			 withOptions:launchOptions
-	  withSessionBuilder:sessionBuilder];
-#endif
 }
 
 #pragma mark -
