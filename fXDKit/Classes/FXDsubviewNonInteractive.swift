@@ -1,9 +1,8 @@
 
-import UIKit
 
 public typealias FXDcallbackHitIntercept = (_ hitView: UIView?, _ point: CGPoint?, _ event: UIEvent?) -> UIView?
 
-open class FXDviewNonInteractive: UIView {
+open class FXDsubviewNonInteractive: UIView {
 	var hitIntercept: FXDcallbackHitIntercept?
 
 	override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
