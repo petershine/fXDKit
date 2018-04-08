@@ -120,7 +120,6 @@ extension UIView {
 }
 
 
-//FIXME: declare this as global variable
 let durationAnimation = 0.3
 
 extension UIView {
@@ -236,21 +235,3 @@ extension UIView {
 	}
 }
 
-
-//MARK: Sub-classes
-public typealias FXDcallbackHitIntercept = (_ hitView: UIView?, _ point: CGPoint?, _ event: UIEvent?) -> UIView?
-
-open class FXDpassthroughView: UIView {
-	var hitIntercept: FXDcallbackHitIntercept?
-
-	override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-
-		var hitView: UIView = super.hitTest(point, with: event)!
-
-		if self.hitIntercept != nil {
-			hitView = self.hitIntercept!(hitView, point, event)!
-		}
-
-		return hitView
-	}
-}

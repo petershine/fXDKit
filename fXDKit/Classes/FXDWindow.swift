@@ -13,12 +13,12 @@ extension UIWindow {
 		//https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md
 
 		// Exploit that UIWindow is UIView
-		guard nibName == nil
-			else {
-				let newWindow: UIWindow? = self.view(fromNibName: nibName!, owner: owner) as! UIWindow?
-				return newWindow
+		guard nibName == nil else {
+			let newWindow: UIWindow? = self.view(fromNibName: nibName!, owner: owner) as! UIWindow?
+			return newWindow
 		}
 
+		
 		let screenBounds = UIScreen.main.bounds
 		FXDLog("screenBounds: \(screenBounds)")
 		FXDLog("UIScreen.main.nativeBounds: \(UIScreen.main.nativeBounds)")
