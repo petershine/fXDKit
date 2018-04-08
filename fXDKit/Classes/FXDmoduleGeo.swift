@@ -123,30 +123,44 @@ class FXDmoduleGeo: NSObject {
 		let geocoder: CLGeocoder = CLGeocoder()
 
 		geocoder.reverseGeocodeLocation((self.mainLocationManager?.location)!) {
-			[weak self] (placemarks, error) in
+			(placemarks, error) in
 
 			FXDLog(error as Any)
-
 			FXDLog(placemarks as Any)
-			
 		}
 	}
 }
 
 extension FXDmoduleGeo: FXDprotocolObserver {
-	@objc func observedUIApplicationDidBecomeActive(_ notification: Notification) {	FXDLog_Func()
-		FXDLog(notification)
 
-		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
-		FXDLog(self.mainLocationManager?.desiredAccuracy as Any)
-	}
-
-	@objc func observedUIApplicationDidEnterBackground(_ notification: Notification) {
-		FXDLog_Func()
+	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	FXDLog_Func()
 		FXDLog(notification)
 
 		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers*2.0
 		FXDLog(self.mainLocationManager?.desiredAccuracy as Any)
+	}
+
+	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	FXDLog_Func()
+		FXDLog(notification)
+		
+		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
+		FXDLog(self.mainLocationManager?.desiredAccuracy as Any)
+	}
+
+	func observedUIApplicationWillTerminate(_ notification: NSNotification) {
+
+	}
+
+	func observedUIApplicationDidReceiveMemoryWarning(_ notification: NSNotification) {
+
+	}
+
+	func observedUIDeviceBatteryLevelDidChange(_ notification: NSNotification) {
+
+	}
+
+	func observedUIDeviceOrientationDidChange(_ notification: NSNotification) {
+
 	}
 }
 
