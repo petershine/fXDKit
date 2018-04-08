@@ -103,4 +103,40 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 @end
 
 
+@import CoreLocation;
+@import MapKit;
+
+@interface CLLocation (LocationFrameworks)
+- (NSString*)formattedDistanceTextFromLocation:(CLLocation*)location;
+@end
+
+
+@import CoreMedia;
+@import CoreVideo;
+@import OpenGLES;
+
+@import AVFoundation;
+@import AssetsLibrary;
+
+@import MediaPlayer;
+@import MediaToolbox;
+
+@interface CALayer (MultimediaFrameworks)
+- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;
+@end
+
+@interface NSURL (MultimediaFrameworks)
++ (NSURL*)uniqueMovieFileURLwithPrefix:(NSString*)prefix atDirectory:(NSString*)directory;
+@end
+
+@interface UIDevice (MultimediaFrameworks)
+- (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation forPosition:(AVCaptureDevicePosition)cameraPosition;
+@end
+
+@interface AVAudioSession (MultimediaFrameworks)
+- (void)enableAudioPlaybackCategory;
+- (void)disableAudioPlaybackCategory;
+@end
+
+
 #endif
