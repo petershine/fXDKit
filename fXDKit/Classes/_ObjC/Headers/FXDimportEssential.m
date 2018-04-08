@@ -319,8 +319,6 @@
 
 
 @implementation UIDevice (Essential)
-#if TARGET_APP_EXTENSION
-#else
 + (UIDeviceOrientation)validDeviceOrientation {
 	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
 
@@ -330,7 +328,6 @@
 
 	return validOrientation;
 }
-#endif
 
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation {
 	CGAffineTransform affineTransform = CGAffineTransformIdentity;

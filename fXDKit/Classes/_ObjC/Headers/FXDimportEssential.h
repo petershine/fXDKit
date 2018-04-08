@@ -91,10 +91,7 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 
 @interface UIDevice (Essential)
-#if TARGET_APP_EXTENSION
-#else
 + (UIDeviceOrientation)validDeviceOrientation;
-#endif
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 
