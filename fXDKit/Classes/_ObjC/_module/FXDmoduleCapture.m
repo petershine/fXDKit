@@ -320,7 +320,7 @@
 
 	CIImage *originalImage = [CIImage imageWithCVPixelBuffer:imageBuffer];
 
-	if (scale) {
+	if (scale != nil) {
 		CIFilter *scaleFilter = [CIFilter filterWithName:filternameScale];
 		[scaleFilter setValue:originalImage forKey:kCIInputImageKey];
 
