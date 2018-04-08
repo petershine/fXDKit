@@ -1,9 +1,5 @@
 
-
-#import "FXDimportCore.h"
-
-@import UIKit;
-@import Foundation;
+#import "FXDimportEssential.h"
 
 
 @interface FXDsuperModule : NSObject

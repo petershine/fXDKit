@@ -1,12 +1,10 @@
 
+#import "FXDimportEssential.h"
 
 #define userdefaultIntegerAppLaunchCount			@"AppLaunchCountIntegerKey"
 #define userdefaultIntegerLastUpgradedAppVersion	@"LastUpgradedAppVersionIntegerKey"
 
 #define dateformatDefault	@"yyyy-MM-dd HH:mm:ss:SSS"
-
-
-@class FXDmoduleCoredata;
 
 
 #import "FXDsuperModule.h"

@@ -1,8 +1,5 @@
 
-
-#import "FXDimportCore.h"
-
-@import MapKit;
+#import "FXDimportEssential.h"
 
 
 @interface MKAnnotationView (Essential)

@@ -1,12 +1,7 @@
 
+#import "FXDimportEssential.h"
 
-#import "FXDimportCore.h"
-
-@import UIKit;
-@import Foundation;
-
-
-@class FXDsceneLaunching;
+#import "FXDsceneLaunching.h"
 
 
 @interface FXDsubviewInformation : UIView
@@ -35,11 +30,3 @@
 - (void)hideInformationView;
 
 @end
-
-
-/*
-@interface UIWindow (Essential)
-+ (instancetype)newDefaultWindow;
-@end
- */
-

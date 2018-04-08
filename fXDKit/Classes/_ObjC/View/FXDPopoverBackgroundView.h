@@ -1,6 +1,5 @@
 
-@import UIKit;
-@import Foundation;
+#import "FXDimportEssential.h"
 
 
 @interface FXDPopoverBackgroundView : UIPopoverBackgroundView {

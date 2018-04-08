@@ -2,8 +2,6 @@
 
 #import "FXDmoduleMessage.h"
 
-#import "FXDmacroFunction.h"
-
 
 @implementation FXDmoduleMessage
 

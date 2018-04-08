@@ -1,11 +1,5 @@
 
-
-#import "FXDimportCore.h"
-
-@import UIKit;
-@import Foundation;
-
-@import CoreData;
+#import "FXDimportEssential.h"
 
 
 @interface FXDManagedDocument : UIManagedDocument {

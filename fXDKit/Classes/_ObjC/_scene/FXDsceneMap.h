@@ -1,8 +1,6 @@
 
-
-@import MapKit;
-
-@class FXDMapView;
+#import "FXDimportEssential.h"
+#import "FXDMapView.h"
 
 
 #import "FXDsceneTable.h"

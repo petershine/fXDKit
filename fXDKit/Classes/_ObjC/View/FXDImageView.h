@@ -1,8 +1,5 @@
 
-@import UIKit;
-@import Foundation;
-
-#import "FXDimportCore.h"
+#import "FXDimportEssential.h"
 
 
 @interface UIImageView (Essential)

@@ -2,8 +2,6 @@
 
 #import "FXDWindow.h"
 
-#import "FXDsceneLaunching.h"
-
 
 @implementation FXDsubviewInformation
 @end

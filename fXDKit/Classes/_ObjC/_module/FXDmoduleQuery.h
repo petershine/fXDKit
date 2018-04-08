@@ -1,6 +1,5 @@
 
-@import UIKit;
-@import Foundation;
+#import "FXDimportEssential.h"
 
 
 @protocol FXDMetadataQueryDelegate <NSMetadataQueryDelegate>

@@ -1,7 +1,5 @@
 
-
-
-@import MediaPlayer;
+#import "FXDimportEssential.h"
 
 
 @interface MPMusicPlayerController (Added)

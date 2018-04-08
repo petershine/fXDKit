@@ -107,7 +107,6 @@
 	NSURL *thumbItemURL = [NSURL fileURLWithPath:thumbItemPath];
 	
 
-
 	NSError *error = nil;
 	[fileManager createDirectoryAtURL:cachedURL.URLByDeletingLastPathComponent
 		  withIntermediateDirectories:YES

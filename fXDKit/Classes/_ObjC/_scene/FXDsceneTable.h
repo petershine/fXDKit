@@ -1,4 +1,6 @@
 
+#import "FXDimportEssential.h"
+#import "FXDTableViewCell.h"
 
 
 #import "FXDsceneScroll.h"

@@ -1,5 +1,6 @@
 
-
+#import "FXDimportEssential.h"
+#import "FXDOperationQueue.h"
 
 #define prefixCached	@"_cached_"
 

@@ -2,8 +2,6 @@
 
 #import "FXDsceneMap.h"
 
-#import "FXDMapView.h"
-
 
 @implementation FXDsceneMap
 

@@ -1,10 +1,9 @@
 
+#import "FXDimportEssential.h"
 
 #define filternameScale		@"CILanczosScaleTransform"
 #define filternameTransform		@"CIAffineTransform"
 
-
-@import AVFoundation;
 
 @interface AVCaptureDevice (MultimediaFrameworks)
 + (AVCaptureDevice*)videoCaptureDeviceForPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode;

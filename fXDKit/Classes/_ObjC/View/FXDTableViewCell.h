@@ -1,10 +1,5 @@
 
-
-#import "FXDimportCore.h"
-
-@import UIKit;
-@import Foundation;
-
+#import "FXDimportEssential.h"
 
 typedef NS_ENUM(NSInteger, SECTION_POSITION_TYPE) {
 	sectionPositionOne,

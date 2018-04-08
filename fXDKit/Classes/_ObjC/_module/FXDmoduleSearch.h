@@ -1,4 +1,6 @@
 
+#import "FXDimportEssential.h"
+#import "FXDOperationQueue.h"
 
 #define HANGUL_START_CODE   0xAC00
 #define HANGUL_END_CODE     0xD79F

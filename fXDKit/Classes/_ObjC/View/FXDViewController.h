@@ -1,6 +1,7 @@
 
+#import "FXDimportEssential.h"
+#import "FXDStoryboardSegue.h"
 
-#import "FXDimportCore.h"
 
 @interface FXDViewController : UIViewController {
 	CGRect _initialBounds;

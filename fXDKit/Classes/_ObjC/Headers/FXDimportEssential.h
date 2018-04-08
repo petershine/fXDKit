@@ -4,6 +4,13 @@
 #define FXDKit_FXDimportEssential_h
 
 
+#import <objc/runtime.h>
+#import <stdarg.h>
+#import <sys/utsname.h>
+
+#import <Availability.h>
+#import <TargetConditionals.h>
+
 @import UIKit;
 @import Foundation;
 
@@ -24,6 +31,16 @@
 
 @import UserNotifications;
 @import UserNotificationsUI;
+
+
+#import "FXDconfigDeveloper.h"
+
+#import "FXDmacroValue.h"
+#import "FXDmacroFunction.h"
+
+#import "FXDNumber.h"
+#import "FXDString.h"
+#import "FXDURL.h"
 
 
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);

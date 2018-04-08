@@ -1,9 +1,5 @@
 
-
-@import UIKit;
-@import Foundation;
-
-#import "FXDmacroFunction.h"
+#import "FXDimportEssential.h"
 
 
 @interface NSMetadataQuery (Essential)

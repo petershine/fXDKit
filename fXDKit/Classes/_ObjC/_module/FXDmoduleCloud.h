@@ -1,4 +1,6 @@
 
+#import "FXDimportEssential.h"
+#import "FXDOperationQueue.h"
 
 #define userdefaultObjSavedUbiquityIdentityToken	@"SavedUbiquityIdentityTokenObjKey"
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"

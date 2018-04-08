@@ -1,7 +1,8 @@
 
+#import "FXDimportEssential.h"
+#import "FXDOperationQueue.h"
+#import "FXDFileManager.h"
 
-@import UIKit;
-@import Foundation;
 
 @interface FXDinfoEnumerated : NSObject
 @property (strong, nonatomic) NSArray *folderURLarray;

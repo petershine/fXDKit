@@ -1,6 +1,5 @@
 
-@import CoreLocation;
-@import MapKit;
+#import "FXDimportEssential.h"
 
 
 #import "FXDsuperModule.h"
