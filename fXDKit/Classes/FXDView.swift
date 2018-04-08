@@ -1,9 +1,5 @@
 
 
-import UIKit
-import Foundation
-
-
 extension UIView {
 	//REFERENCE: https://spin.atomicobject.com/2017/07/18/swift-interface-builder/
 

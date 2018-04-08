@@ -1,9 +1,5 @@
 
 
-import UIKit
-import Foundation
-
-
 extension UIWindow {
 	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {
 		FXDLog_Func()

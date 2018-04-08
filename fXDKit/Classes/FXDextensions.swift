@@ -1,8 +1,5 @@
 
 
-import UIKit
-import Foundation
-
 extension UIApplication {
 	@objc public class func mainWindow() -> UIWindow? {
 		var mainWindow: UIWindow? = nil

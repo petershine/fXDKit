@@ -1,8 +1,5 @@
 
 
-import UIKit
-import Foundation
-
 import CoreLocation
 
 import FBSDKCoreKit

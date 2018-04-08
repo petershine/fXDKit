@@ -1,9 +1,5 @@
 
 
-import UIKit
-import Foundation
-
-
 let urlformatYoutubeSearch = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
 let urlformatYoutubeShortLink = "youtu.be/%@"	//MARK: No http:// for Twitter length
 
