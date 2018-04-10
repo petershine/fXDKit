@@ -8,9 +8,9 @@ extension UIResponder {
 		}
 
 
-		let url: URL? = launchOptions![UIApplicationLaunchOptionsKey("url")] as? URL
-		let sourceApplication = launchOptions![UIApplicationLaunchOptionsKey("sourceApplication")]
-		let annotation = launchOptions![UIApplicationLaunchOptionsKey("annotation")]
+		let url: URL? = launchOptions![.url] as? URL
+		let sourceApplication = launchOptions![.sourceApplication]
+		let annotation = launchOptions![.annotation]
 
 		guard (url != nil
 			|| sourceApplication != nil
@@ -19,8 +19,8 @@ extension UIResponder {
 		}
 
 
-		let openOptions = [UIApplicationOpenURLOptionsKey("sourceApplication") : sourceApplication!,
-						   UIApplicationOpenURLOptionsKey("annotation"):annotation!]
+		let openOptions = [.sourceApplication : sourceApplication!,
+						   .annotation : annotation!]
 
 		if let appDelegate = self as? UIApplicationDelegate {
 			_ = appDelegate.application!(application, open: url!, options: openOptions)
@@ -35,10 +35,10 @@ extension UIResponder {
 		}
 
 
-		let url = launchOptions![UIApplicationLaunchOptionsKey("url")]
-		let sourceApplication = launchOptions![UIApplicationLaunchOptionsKey("sourceApplication")]
-		let annotation = launchOptions![UIApplicationLaunchOptionsKey("annotation")]
-		let remoteNotification = launchOptions![UIApplicationLaunchOptionsKey("remoteNotification")]
+		let url = launchOptions![.url]
+		let sourceApplication = launchOptions![.sourceApplication]
+		let annotation = launchOptions![.annotation]
+		let remoteNotification = launchOptions![.remoteNotification]
 
 		guard (url != nil
 			|| sourceApplication != nil
