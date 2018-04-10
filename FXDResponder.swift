@@ -1,6 +1,6 @@
 
 
-extension UIResponder: UIApplicationDelegate {
+extension UIResponder {
 	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) {	FXDLog_Func()
 
 		guard launchOptions != nil else {
@@ -22,8 +22,9 @@ extension UIResponder: UIApplicationDelegate {
 		let openOptions = [UIApplicationOpenURLOptionsKey("sourceApplication") : sourceApplication!,
 						   UIApplicationOpenURLOptionsKey("annotation"):annotation!]
 
-		let appDelegate = self as UIApplicationDelegate
-		_ = appDelegate.application!(application, open: url!, options: openOptions)
+		if let appDelegate = self as? UIApplicationDelegate {
+			_ = appDelegate.application!(application, open: url!, options: openOptions)
+		}
 	}
 
 
