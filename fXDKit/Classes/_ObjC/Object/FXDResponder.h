@@ -12,9 +12,3 @@
 
 @end
 
-
-@interface UIResponder (Added) <UIApplicationDelegate>
-- (void)executeOperationsForApplication:(UIApplication*)application withLaunchOption:(NSDictionary*)launchOptions;
-- (BOOL)isUsableLaunchOption:(NSDictionary*)launchOptions;
-
-@end
