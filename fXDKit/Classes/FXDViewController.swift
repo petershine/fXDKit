@@ -13,8 +13,7 @@ extension UIViewController {
 		}
 	}
 
-	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {
-		FXDLog_Func()
+	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	FXDLog_Func()
 
 		var fromNibName = nibName
 

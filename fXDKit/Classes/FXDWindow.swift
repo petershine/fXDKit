@@ -1,12 +1,7 @@
 
 
 extension UIWindow {
-	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {
-		FXDLog_Func()
-
-		//MARK: Customized initialization
-		//FIXME: Should update this method to use Self class, for subclasses.
-		//https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md
+	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	FXDLog_Func()
 
 		// Exploit that UIWindow is UIView
 		guard nibName == nil else {

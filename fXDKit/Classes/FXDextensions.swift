@@ -31,7 +31,6 @@ extension UIStoryboardSegue {
 }
 
 extension UIAlertController {
-
 	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
 		self.simpleAlert(withTitle: title,
 		                 message: message,
@@ -59,8 +58,8 @@ extension UIAlertController {
 		var presentingScene: UIViewController? = fromScene
 
 		if presentingScene == nil {
-			// Traverse to find the right presentingScene (live rootViewController in the most front window)
 
+			// Traverse to find the right presentingScene (live rootViewController in the most front window)
 			for window in UIApplication.shared.windows.reversed() {
 				if window != UIApplication.shared.keyWindow {
 					continue
@@ -75,7 +74,6 @@ extension UIAlertController {
 		}
 
 		DispatchQueue.main.async {
-			//Forced dispatch main
 			presentingScene?.present(alert,
 			                         animated: true,
 			                         completion: nil)

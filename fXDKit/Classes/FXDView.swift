@@ -90,10 +90,8 @@ extension UIView {
 
 extension UIView {
 
-	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {
-		FXDLog_Func()
+	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	FXDLog_Func()
 
-		//MARK: Customized initialization
 		//FIXME: Should update this method to use Self class, for subclasses.
 		//https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md
 
@@ -109,7 +107,6 @@ extension UIView {
 
 		let viewArray: [UIView]? = fromNib?.instantiate(withOwner: owner, options: nil) as? [UIView]
 		FXDLog("viewArray: \(String(describing: viewArray))")
-		//FIXME: Enumerate
 
 		return viewArray?.first
 	}
