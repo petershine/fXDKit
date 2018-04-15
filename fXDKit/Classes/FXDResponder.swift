@@ -19,9 +19,10 @@ extension UIResponder {
 		}
 
 
-		let openOptions = [.sourceApplication : sourceApplication!,
-						   .annotation : annotation!]
-
+		let openOptions: [UIApplicationOpenURLOptionsKey : Any]
+			= [.sourceApplication : sourceApplication!,
+			   .annotation : annotation!]
+		
 		if let appDelegate = self as? UIApplicationDelegate {
 			_ = appDelegate.application!(application, open: url!, options: openOptions)
 		}
