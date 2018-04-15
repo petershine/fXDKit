@@ -25,13 +25,13 @@ class FXDmoduleYoutube {
 		FXDLog(query)
 
 		guard  query.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else {
-			callback(false, NSNull())
+			callback(false, nil)
 			return
 		}
 
 
 		guard self.apikeyGoogleForBrowser != nil else {
-			callback(false, NSNull())
+			callback(false, nil)
 			return
 		}
 

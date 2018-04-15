@@ -4,9 +4,7 @@ import os.log
 
 
 //MARK: Closures
-//Use it until interoperability allows this closure with optionals.
-//e.g. typealias FXDcallback = (Bool?, Any?) -> Void
-public typealias FXDcallback = (_ result: Bool, _ object: Any) -> Void
+public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
 
 
 //MARK: Logging

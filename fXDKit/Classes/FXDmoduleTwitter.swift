@@ -58,7 +58,7 @@ open class FXDmoduleTwitter: NSObject {
 				UIAlertController.simpleAlert(withTitle: "Signed in as\n \"\(session!.userName)\"",
 											  message: nil)
 
-				callback(true, NSNull())
+				callback(true, nil)
 				return
 			}
 
@@ -66,7 +66,7 @@ open class FXDmoduleTwitter: NSObject {
 			FXDLog("error: \(String(describing: error?.localizedDescription))")
 			UIAlertController.simpleAlert(withTitle: NSLocalizedString("Please grant Twitter access in Settings", comment: ""),
 										  message: self?.reasonForConnecting)
-			callback(false, NSNull())
+			callback(false, nil)
 		})
 	}
 
@@ -80,7 +80,7 @@ open class FXDmoduleTwitter: NSObject {
 			UIAlertController.simpleAlert(withTitle: NSLocalizedString("Please sign up for a Twitter account", comment: ""),
 			                              message: self.reasonForConnecting)
 
-			callback(false, NSNull())
+			callback(false, nil)
 			return
 		}
 
@@ -108,7 +108,7 @@ open class FXDmoduleTwitter: NSObject {
 			style: .cancel) {
 				(action: UIAlertAction) in
 
-				callback(false, NSNull())
+				callback(false, nil)
 		}
 		
 		
@@ -120,7 +120,7 @@ open class FXDmoduleTwitter: NSObject {
 				let userID = self?.authenticatedSession?.userID
 				sessionStore.logOutUserID(userID!)
 
-				callback(true, NSNull())
+				callback(true, nil)
 		}
 
 		alertController?.addAction(cancelAction)
@@ -136,7 +136,7 @@ open class FXDmoduleTwitter: NSObject {
 					handler: {
 						(action: UIAlertAction) in
 
-						callback(true, NSNull())
+						callback(true, nil)
 				})
 
 				alertController?.addAction(selectAction)
@@ -196,7 +196,7 @@ open class FXDmoduleTwitter: NSObject {
 		FXDLog(self.authenticatedSession as Any)
 
 		guard TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() == true else {
-			callback(false, NSNull())
+			callback(false, nil)
 			return
 		}
 
@@ -245,7 +245,7 @@ open class FXDmoduleTwitter: NSObject {
 
 			//FIXME: Reconsider bringing evaluation to be more generic function
 
-			callback(connectionError == nil, NSNull())
+			callback(connectionError == nil, nil)
 		}
 	}
 }

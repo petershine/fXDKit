@@ -78,7 +78,7 @@ open class FXDmoduleFacebook: NSObject {
 				FXDLog(error as Any)
 
 				guard result != nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
@@ -96,7 +96,7 @@ open class FXDmoduleFacebook: NSObject {
 				FXDLog(result?.isCancelled as Any)
 
 				guard result?.isCancelled == false else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
@@ -129,12 +129,12 @@ open class FXDmoduleFacebook: NSObject {
 				FXDLog(error as Any)
 
 				guard result != nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
 				guard error == nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
@@ -164,7 +164,7 @@ open class FXDmoduleFacebook: NSObject {
 			UIAlertController.simpleAlert(withTitle: NSLocalizedString("Please sign up for a Facebook account", comment: ""),
 			                              message: self.reasonForConnecting)
 
-			callback(false, NSNull())
+			callback(false, nil)
 			return
 		}
 
@@ -181,7 +181,7 @@ open class FXDmoduleFacebook: NSObject {
 			style: .cancel) {
 				(action: UIAlertAction) in
 
-				callback(false, NSNull())
+				callback(false, nil)
 		}
 
 		let signOutAction = UIAlertAction(
@@ -191,7 +191,7 @@ open class FXDmoduleFacebook: NSObject {
 
 				//FIXME: resetCredential: Sign Out
 
-				callback(true, NSNull())
+				callback(true, nil)
 		}
 
 		alertController.addAction(cancelAction)
@@ -244,12 +244,12 @@ open class FXDmoduleFacebook: NSObject {
 				FXDLog(error as Any)
 
 				guard result != nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
 				guard error == nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
@@ -258,7 +258,7 @@ open class FXDmoduleFacebook: NSObject {
 				FXDLog(multiAccount)
 
 				guard multiAccount.count > 0 else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
@@ -294,7 +294,7 @@ open class FXDmoduleFacebook: NSObject {
 
 
 				guard self != nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
@@ -306,7 +306,7 @@ open class FXDmoduleFacebook: NSObject {
 					FXDLog(collectedPages)
 
 					guard shouldContinue else {
-						callback(false, NSNull())
+						callback(false, nil)
 						return
 					}
 
@@ -374,7 +374,7 @@ open class FXDmoduleFacebook: NSObject {
 		FXDLog(latitude)
 
 		guard (latitude != 0.0 && longitude != 0.0) else {
-			callback(false, NSNull())
+			callback(false, nil)
 			return
 		}
 
@@ -394,7 +394,7 @@ open class FXDmoduleFacebook: NSObject {
 				FXDLog(error as Any)
 
 				guard result != nil else {
-					callback(false, NSNull())
+					callback(false, nil)
 					return
 				}
 
