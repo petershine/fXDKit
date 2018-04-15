@@ -3,10 +3,6 @@
 #import "FXDimportEssential.h"
 
 
-
-
-
-
 @implementation NSNumberFormatter (Grouping)
 + (NSNumberFormatter*)formatterGroupingSize:(NSInteger)groupingSize separator:(NSString*)separator {
 	NSNumberFormatter *grouping = [[NSNumberFormatter alloc] init];

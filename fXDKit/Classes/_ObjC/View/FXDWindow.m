@@ -210,36 +210,3 @@
 }
 
 @end
-
-
-/*
-@implementation UIWindow (Essential)
-+ (instancetype)newDefaultWindow {	FXDLog_SEPARATE;
-
-	NSString *nibName = NSStringFromClass([self class]);
-	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:nibName ofType:@"nib"];	//MARK: Should use nib instead of xib for file type
-
-	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
-	FXDLog(@"%@ %@", _BOOL(nibExists), _Object(resourcePath));
-
-	if (nibExists) {
-		UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
-		NSArray *viewArray = [nib instantiateWithOwner:nil options:nil];
-		UIWindow *newWindow = viewArray.firstObject;
-		
-		return newWindow;
-	}
-
-
-	CGRect screenBounds = [UIScreen mainScreen].bounds;
-	FXDLogRect([UIScreen mainScreen].nativeBounds);
-	FXDLogVariable([UIScreen mainScreen].nativeScale);
-	FXDLogRect(screenBounds);
-
-	UIWindow *newWindow = [[[self class] alloc] initWithFrame:screenBounds];
-	newWindow.autoresizesSubviews = YES;
-	
-	return newWindow;
-}
-@end
- */
