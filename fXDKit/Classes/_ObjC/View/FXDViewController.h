@@ -33,8 +33,6 @@
 - (void)dismissScene:(UIViewController*)dismissedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback;
 
 
-- (id)lastChildSceneOfClass:(Class)sceneClass;
-
 - (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize;
 
 @end

@@ -574,27 +574,6 @@
 }
 
 #pragma mark -
-- (id)lastChildSceneOfClass:(Class)sceneClass {
-
-	__block UIViewController *lastChildScene = nil;
-
-	[self.childViewControllers
-	 enumerateObjectsWithOptions:NSEnumerationReverse
-	 usingBlock:^(UIViewController *childScene, NSUInteger idx, BOOL *stop) {
-		 if (lastChildScene) {
-			 *stop = YES;
-			return;
-		 }
-
-		 if ([childScene isKindOfClass:sceneClass]) {
-			lastChildScene = childScene;
-		 }
-	 }];
-
-	return lastChildScene;
-}
-
-#pragma mark -
 - (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
 	FXDLog(@"%@ %@", _Size(forcedSize), _Size(presentationSize));
 

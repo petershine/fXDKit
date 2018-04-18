@@ -30,6 +30,25 @@ extension UIViewController {
 
 		return viewArray?.first
 	}
+}
 
+extension UIViewController {
+	func lastChildScene(ofClass sceneClass: AnyClass?) -> UIViewController? {
+		guard sceneClass != nil else {
+			return nil
+		}
+
+
+		var lastChildScene: UIViewController? = nil
+
+		for childScene in self.childViewControllers.reversed() {
+			if childScene.isKind(of: sceneClass!) {
+				lastChildScene = childScene
+				break
+			}
+		}
+
+		return lastChildScene
+	}
 }
 
