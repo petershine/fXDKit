@@ -2,9 +2,13 @@
 #import "FXDimportEssential.h"
 #import "FXDTableViewCell.h"
 
-
 #import "FXDsceneScroll.h"
-@interface FXDsceneTable : FXDsceneScroll <UITableViewDataSource, UITableViewDelegate>
+
+
+@protocol FXDprotocolTableScene <FXDprotocolScrollScene>
+@end
+
+@interface FXDsceneTable : FXDsceneScroll <FXDprotocolScrollScene, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *mainTableview;
 

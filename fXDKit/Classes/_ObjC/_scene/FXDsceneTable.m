@@ -23,19 +23,8 @@
 }
 
 
-#pragma mark - Property overriding
-- (UIScrollView*)mainScrollview {
-	if (_mainScrollview == nil) {
-		
-		if (self.mainTableview) {
-			_mainScrollview = self.mainTableview;
-		}
-		else {
-			_mainScrollview = super.mainScrollview;
-		}
-	}
-	
-	return _mainScrollview;
+- (UIScrollView*)subclassScrollview {
+	return self.mainTableview;
 }
 
 

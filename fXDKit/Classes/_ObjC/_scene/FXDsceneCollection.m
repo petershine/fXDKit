@@ -23,19 +23,8 @@
 }
 
 
-#pragma mark - Property overriding
-- (UIScrollView*)mainScrollview {
-	if (_mainScrollview == nil) {
-		
-		if (self.mainCollectionview) {
-			_mainScrollview = self.mainCollectionview;
-		}
-		else {
-			_mainScrollview = super.mainScrollview;
-		}
-	}
-	
-	return _mainScrollview;
+- (UIScrollView*)subclassScrollview {
+	return self.mainCollectionview;
 }
 
 #pragma mark - Method overriding
