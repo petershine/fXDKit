@@ -18,40 +18,35 @@
 	if (self.mainResultsController && self.mainResultsController.delegate == nil) {
 		self.mainResultsController.delegate = self;
 	}
+	
+	if (self.mainScrollview) {
+		//MARK: Following should be closely related to scroll view configuration
+		FXDLogObject(self.mainScrollview);
 
-	if (self.mainScrollview == nil && [self subclassScrollview] == nil) {
-		return;
-	}
+		if (self.mainScrollview.delegate == nil) {
+			self.mainScrollview.delegate = self;
+		}
 
-
-	UIScrollView *scrollview = self.mainScrollview;
-
-	if (scrollview == nil) {
-		scrollview = [self subclassScrollview];
-	}
-
-	if (scrollview.delegate == nil) {
-		scrollview.delegate = self;
-	}
-
-	FXDLogObject(scrollview.delegate);
+		FXDLogObject(self.mainScrollview.delegate);
 
 
-	if ([scrollview respondsToSelector:@selector(dataSource)]
-		&& [scrollview performSelector:@selector(dataSource)] == nil) {
+		if ([self.mainScrollview respondsToSelector:@selector(dataSource)]
+			&& [self.mainScrollview performSelector:@selector(dataSource)] == nil) {
 
-		[scrollview performSelector:@selector(setDataSource:) withObject:self];
-	}
-
-	[self registerMainCellNib];
+			[self.mainScrollview performSelector:@selector(setDataSource:) withObject:self];
+		}
 
 
-	if (self.offsetYdismissingController == 0.0) {
-		CGRect screenBounds = [UIScreen mainScreen].bounds;
-		//FXDLogRect(screenBounds);
+		[self registerMainCellNib];
 
-		self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleSceneDismissingOffset);
-		//FXDLogVariable(self.offsetYdismissingController);
+
+		if (self.offsetYdismissingController == 0.0) {
+			CGRect screenBounds = [UIScreen mainScreen].bounds;
+			//FXDLogRect(screenBounds);
+
+			self.offsetYdismissingController = 0.0 -(screenBounds.size.height *scaleSceneDismissingOffset);
+			//FXDLogVariable(self.offsetYdismissingController);
+		}
 	}
 }
 
@@ -146,12 +141,6 @@
 
 	return _cellOperationDictionary;
 }
-
-#pragma mark -
-- (UIScrollView*)subclassScrollview {
-   return self.mainScrollview;
-}
-
 
 #pragma mark - Method overriding
 

@@ -7,7 +7,6 @@
 
 @protocol FXDprotocolScrollScene
 @required
-- (UIScrollView*)subclassScrollview;
 - (void)registerMainCellNib;
 @end
 
@@ -25,6 +24,8 @@
 	
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_cellOperationDictionary;
+	
+	UIScrollView *_mainScrollview;
 }
 
 @property (nonatomic) BOOL didStartAutoScrollingToTop;
