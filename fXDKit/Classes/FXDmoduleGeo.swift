@@ -3,18 +3,15 @@
 import CoreLocation
 import MapKit
 
-import ReactiveSwift
-import Result
+import RxSwift
 
 
 class FXDmoduleGeo: NSObject {
 
-	let (lastLocationSignal, lastLocationObserver) = Signal<CLLocation?, NoError>.pipe()
-
 	var didStartLocationManager: Bool? = false
 	
 	var mainLocationManager: CLLocationManager?
-	var lastLocation: CLLocation?
+    var lastLocation: CLLocation?
 
 
 	deinit {	FXDLog_Func()
@@ -184,8 +181,5 @@ extension FXDmoduleGeo: CLLocationManagerDelegate {
 
 		self.lastLocation = locations.last
 		FXDLog(self.lastLocation as Any)
-
-		self.lastLocationObserver.send(value: self.lastLocation!)
-		//		}
 	}
 }

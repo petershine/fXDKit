@@ -2,13 +2,10 @@
 
 import MediaPlayer
 
-import ReactiveSwift
-import Result
+import RxSwift
 
 
 class FXDmoduleMedia: NSObject {
-
-    let (nowplayingSignal, nowplayingObserver) = Signal<MPMediaItem?, NoError>.pipe()
 
     lazy var musicPlayer: MPMusicPlayerController? = {
         return MPMusicPlayerController.systemMusicPlayer
@@ -59,9 +56,6 @@ extension FXDmoduleMedia {
 	@objc func observedMPMusicPlayerControllerNowPlayingItemDidChange(_ notification: Notification) {
 		FXDLog(self.musicPlayer?.nowPlayingItem?.title as Any)
 		FXDLog(self.lastMediaItem?.title as Any)
-
-		//MARK: It's responsibility of the developer to control repeated item
-		self.nowplayingObserver.send(value: self.musicPlayer?.nowPlayingItem)
 	}
 
 	@objc func observedMPMediaLibraryDidChange(_ notification: Notification) {
