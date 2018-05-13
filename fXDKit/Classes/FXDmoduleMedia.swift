@@ -2,8 +2,6 @@
 
 import MediaPlayer
 
-import RxSwift
-
 
 class FXDmoduleMedia: NSObject {
 

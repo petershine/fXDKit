@@ -3,8 +3,6 @@
 import CoreLocation
 import MapKit
 
-import RxSwift
-
 
 class FXDmoduleGeo: NSObject {
 
