@@ -1,6 +1,9 @@
 # fXDKit
-Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012
-Currently working evolution, by translating source from Objective-C to Swift
+Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012.
+
+
+Currently, this kit is undergoing evolution, by translating source from Objective-C to Swift
+
 
 [![CI Status](http://img.shields.io/travis/petershine/fXDKit.svg?style=flat)](https://travis-ci.org/petershine/fXDKit)
 [![Version](https://img.shields.io/cocoapods/v/fXDKit.svg?style=flat)](http://cocoapods.org/pods/fXDKit)
