@@ -10,7 +10,7 @@
 
 @interface FXDsceneTable : FXDsceneScroll <FXDprotocolScrollScene, UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *mainTableview;
+@property (strong, nullable, nonatomic) IBOutlet UITableView *mainTableview;
 
 
 - (void)initializeTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath;

@@ -49,7 +49,7 @@
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
 
-@property (strong, nonatomic) IBOutlet UIScrollView *mainScrollview;
+@property (strong, nullable, nonatomic) IBOutlet UIScrollView *mainScrollview;
 
 
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
