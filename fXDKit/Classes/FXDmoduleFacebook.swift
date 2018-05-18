@@ -30,10 +30,10 @@ open class FXDmoduleFacebook: NSObject {
 	var batchFinishedClosure:((Bool) -> Void)?
 
 
-	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
 
-		FXDLog(presentingScene)
-		FXDLog(FBSDKAccessToken.current())
+		fxdPrint(presentingScene)
+		fxdPrint(FBSDKAccessToken.current())
 
 
 		guard FBSDKAccessToken.current() == nil else {
@@ -74,8 +74,8 @@ open class FXDmoduleFacebook: NSObject {
 			from: presentingScene) {
 				[weak self] (result:FBSDKLoginManagerLoginResult?, error:Error?) in
 
-				FXDLog(result as Any)
-				FXDLog(error as Any)
+				fxdPrint(result as Any)
+				fxdPrint(error as Any)
 
 				guard result != nil else {
 					callback(false, nil)
@@ -83,17 +83,17 @@ open class FXDmoduleFacebook: NSObject {
 				}
 
 
-				FXDLog(result?.token.appID as Any)
-				FXDLog(result?.token.expirationDate as Any)
-				FXDLog(result?.token.refreshDate as Any)
-				FXDLog(result?.token.tokenString as Any)
-				FXDLog(result?.token.userID as Any)
+				fxdPrint(result?.token.appID as Any)
+				fxdPrint(result?.token.expirationDate as Any)
+				fxdPrint(result?.token.refreshDate as Any)
+				fxdPrint(result?.token.tokenString as Any)
+				fxdPrint(result?.token.userID as Any)
 
 
-				FXDLog(result?.grantedPermissions.description as Any)
-				FXDLog(result?.declinedPermissions.description as Any)
+				fxdPrint(result?.grantedPermissions.description as Any)
+				fxdPrint(result?.declinedPermissions.description as Any)
 
-				FXDLog(result?.isCancelled as Any)
+				fxdPrint(result?.isCancelled as Any)
 
 				guard result?.isCancelled == false else {
 					callback(false, nil)
@@ -106,10 +106,10 @@ open class FXDmoduleFacebook: NSObject {
 	}
 
 
-	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
+	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
 
-		FXDLog(presentingScene)
-		FXDLog(FBSDKAccessToken.current())
+		fxdPrint(presentingScene)
+		fxdPrint(FBSDKAccessToken.current())
 
 		//FBSDKLog: starting with Graph API v2.4, GET requests for /me/accounts should contain an explicit "fields" parameter
 		//https://developers.facebook.com/docs/graph-api/reference/user/
@@ -125,8 +125,8 @@ open class FXDmoduleFacebook: NSObject {
 			completionHandler: {
 				[weak self] (requested:FBSDKGraphRequestConnection?, result:Any?, error:Error?) in
 
-				FXDLog(result as Any)
-				FXDLog(error as Any)
+				fxdPrint(result as Any)
+				fxdPrint(error as Any)
 
 				guard result != nil else {
 					callback(false, nil)
@@ -143,7 +143,7 @@ open class FXDmoduleFacebook: NSObject {
 				modified["category"] = "TIMELINE"
 
 				multiAccount.append(modified)
-				FXDLog(multiAccount)
+				fxdPrint(multiAccount)
 
 
 				//FIXME: Until page updating is approved, just provide Timeline update only
@@ -155,10 +155,10 @@ open class FXDmoduleFacebook: NSObject {
 		})
 	}
 
-	func presentActionSheet(multiAccount:Array<Dictionary<String, Any>>?, presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
+	func presentActionSheet(multiAccount:Array<Dictionary<String, Any>>?, presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
 
-		FXDLog(multiAccount as Any)
-		FXDLog(presentingScene)
+		fxdPrint(multiAccount as Any)
+		fxdPrint(presentingScene)
 
 		guard multiAccount != nil && multiAccount!.count > 0 else {
 			UIAlertController.simpleAlert(withTitle: NSLocalizedString("Please sign up for a Facebook account", comment: ""),
@@ -230,7 +230,7 @@ open class FXDmoduleFacebook: NSObject {
 
 
 
-	func requestAccounts(presentingScene: UIViewController, callback:@escaping FXDcallback) {	FXDLog_Func()
+	func requestAccounts(presentingScene: UIViewController, callback:@escaping FXDcallback) {	fxdFuncPrint()
 
 		let graphRequestAccounts = FBSDKGraphRequest(
 			graphPath: facebookGraphMeAccounts,
@@ -240,8 +240,8 @@ open class FXDmoduleFacebook: NSObject {
 			completionHandler: {
 				[weak self] (requested:FBSDKGraphRequestConnection?, result:Any?, error:Error?) in
 
-				FXDLog(result as Any)
-				FXDLog(error as Any)
+				fxdPrint(result as Any)
+				fxdPrint(error as Any)
 
 				guard result != nil else {
 					callback(false, nil)
@@ -255,7 +255,7 @@ open class FXDmoduleFacebook: NSObject {
 
 
 				let multiAccount: Array<Any> = (result as! Dictionary<String, Any>)["data"] as! Array
-				FXDLog(multiAccount)
+				fxdPrint(multiAccount)
 
 				guard multiAccount.count > 0 else {
 					callback(false, nil)
@@ -280,8 +280,8 @@ open class FXDmoduleFacebook: NSObject {
 						completionHandler: {
 							(requested:FBSDKGraphRequestConnection?, result:Any?, error:Error?) in
 
-							FXDLog(result as Any)
-							FXDLog(error as Any)
+							fxdPrint(result as Any)
+							fxdPrint(error as Any)
 
 							if error == nil {
 								var modified = result as! Dictionary<String, Any>
@@ -302,8 +302,8 @@ open class FXDmoduleFacebook: NSObject {
 				self!.batchFinishedClosure = {
 					[weak self] (shouldContinue: Bool) in
 
-					FXDLog(shouldContinue)
-					FXDLog(collectedPages)
+					fxdPrint(shouldContinue)
+					fxdPrint(collectedPages)
 
 					guard shouldContinue else {
 						callback(false, nil)
@@ -322,19 +322,19 @@ open class FXDmoduleFacebook: NSObject {
 		})
 	}
 
-	@objc public func requestToPost(message: String, mediaLink: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func requestToPost(message: String, mediaLink: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, callback: @escaping FXDcallback) {	fxdFuncPrint()
 
 		self.requestSearch(latitude: latitude, longitude: longitude) {
 			[weak self] (shouldContinue: Bool?, placeId: Any?) in
 
-			FXDLog(shouldContinue as Any)
+			fxdPrint(shouldContinue as Any)
 
-			FXDLog(message)
+			fxdPrint(message)
 
 
 			let facebookId:String = self?.currentFacebookAccount?["id"] as! String
 			let graphPath = "\(facebookId)/feed"
-			FXDLog(graphPath)
+			fxdPrint(graphPath)
 
 			var parameters = ["message":message]
 
@@ -344,7 +344,7 @@ open class FXDmoduleFacebook: NSObject {
 			if placeId != nil {
 				parameters["place"] = placeId as? String
 			}
-			FXDLog(parameters)
+			fxdPrint(parameters)
 
 
 			let graphRequestPost = FBSDKGraphRequest(
@@ -352,15 +352,15 @@ open class FXDmoduleFacebook: NSObject {
 				parameters: parameters,
 				httpMethod: "POST")
 
-			FXDLog(graphRequestPost as Any)
+			fxdPrint(graphRequestPost as Any)
 
 			//message = "(#200) Insufficient permission to post to target on behalf of the viewer";
 			_ = graphRequestPost?.start(
 				completionHandler: {
 					(requested:FBSDKGraphRequestConnection?, result:Any?, error:Error?) in
 
-					FXDLog(result as Any)
-					FXDLog(error as Any)
+					fxdPrint(result as Any)
+					fxdPrint(error as Any)
 
 					callback(error == nil, result as Any)
 			})
@@ -368,10 +368,10 @@ open class FXDmoduleFacebook: NSObject {
 		}
 	}
 
-	func requestSearch(latitude:CLLocationDegrees, longitude:CLLocationDegrees, callback:@escaping FXDcallback) {	FXDLog_Func()
+	func requestSearch(latitude:CLLocationDegrees, longitude:CLLocationDegrees, callback:@escaping FXDcallback) {	fxdFuncPrint()
 
-		FXDLog(longitude)
-		FXDLog(latitude)
+		fxdPrint(longitude)
+		fxdPrint(latitude)
 
 		guard (latitude != 0.0 && longitude != 0.0) else {
 			callback(false, nil)
@@ -384,14 +384,14 @@ open class FXDmoduleFacebook: NSObject {
 			parameters: ["type": "place",
 			             "center":String("\(latitude),\(longitude)"),
 			             "distance":String("\(kCLLocationAccuracyKilometer)")])
-		FXDLog(graphRequestSearch as Any)
+		fxdPrint(graphRequestSearch as Any)
 
 		_ = graphRequestSearch?.start(
 			completionHandler:{
 				(requested:FBSDKGraphRequestConnection?, result:Any?, error:Error?) in
 
-				FXDLog(result as Any)
-				FXDLog(error as Any)
+				fxdPrint(result as Any)
+				fxdPrint(error as Any)
 
 				guard result != nil else {
 					callback(false, nil)
@@ -400,7 +400,7 @@ open class FXDmoduleFacebook: NSObject {
 
 
 				let places: Array<Any> = (result as! Dictionary<String, Any>)["data"] as! Array
-				FXDLog(places)
+				fxdPrint(places)
 
 				var placeId:String? = nil
 
@@ -420,7 +420,7 @@ open class FXDmoduleFacebook: NSObject {
 
 extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 
-	public func requestConnectionDidFinishLoading(_ connection: FBSDKGraphRequestConnection!) {	FXDLog_Func()
+	public func requestConnectionDidFinishLoading(_ connection: FBSDKGraphRequestConnection!) {	fxdFuncPrint()
 
 		assert(self.batchFinishedClosure != nil)
 		self.batchFinishedClosure?(true)
@@ -428,8 +428,8 @@ extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 		assert(self.batchFinishedClosure == nil)
 	}
 
-	public func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	FXDLog_Func()
-		FXDLog(error)
+	public func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	fxdFuncPrint()
+		fxdPrint(error)
 
 		assert(self.batchFinishedClosure != nil)
 		self.batchFinishedClosure?(false)

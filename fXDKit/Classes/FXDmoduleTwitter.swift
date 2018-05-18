@@ -31,17 +31,17 @@ open class FXDmoduleTwitter: NSObject {
 
 
 	@objc required public init(withTwitterKey twitterKey: String!, twitterSecret: String!) {
-		FXDLog_Func()
+		fxdFuncPrint()
 		super.init()
 
 		TWTRTwitter.sharedInstance().start(withConsumerKey: twitterKey!, consumerSecret: twitterSecret!)
 	}
 
-	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
 
-		FXDLog(self.authenticatedSession?.authToken as Any)
-		FXDLog(self.authenticatedSession?.authTokenSecret as Any)
-		FXDLog(self.authenticatedSession?.userID as Any)
+		fxdPrint(self.authenticatedSession?.authToken as Any)
+		fxdPrint(self.authenticatedSession?.authTokenSecret as Any)
+		fxdPrint(self.authenticatedSession?.userID as Any)
 
 		guard TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() == false else {
 			self.showActionSheet(presentingScene: presentingScene, callback: callback)
@@ -53,7 +53,7 @@ open class FXDmoduleTwitter: NSObject {
 			[weak self] (session, error) in
 
 			guard session == nil else {
-				FXDLog("signed in as \(String(describing: session?.userName))")
+				fxdPrint("signed in as \(String(describing: session?.userName))")
 
 				UIAlertController.simpleAlert(withTitle: "Signed in as\n \"\(session!.userName)\"",
 											  message: nil)
@@ -63,7 +63,7 @@ open class FXDmoduleTwitter: NSObject {
 			}
 
 
-			FXDLog("error: \(String(describing: error?.localizedDescription))")
+			fxdPrint("error: \(String(describing: error?.localizedDescription))")
 			UIAlertController.simpleAlert(withTitle: NSLocalizedString("Please grant Twitter access in Settings", comment: ""),
 										  message: self?.reasonForConnecting)
 			callback(false, nil)
@@ -71,8 +71,8 @@ open class FXDmoduleTwitter: NSObject {
 	}
 
 
-	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	FXDLog_Func()
-		FXDLog(self.authenticatedSession as Any)
+	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
+		fxdPrint(self.authenticatedSession as Any)
 
 		let sessionStore: TWTRSessionStore = TWTRTwitter.sharedInstance().sessionStore
 
@@ -85,8 +85,8 @@ open class FXDmoduleTwitter: NSObject {
 		}
 
 
-		FXDLog("sessionStore.existingUserSessions: \(sessionStore.existingUserSessions())")
-		FXDLog("sessionStore.existingUserSessions().count: \(sessionStore.existingUserSessions().count)")
+		fxdPrint("sessionStore.existingUserSessions: \(sessionStore.existingUserSessions())")
+		fxdPrint("sessionStore.existingUserSessions().count: \(sessionStore.existingUserSessions().count)")
 
 		var alertController: UIAlertController? = nil
 
@@ -148,9 +148,9 @@ open class FXDmoduleTwitter: NSObject {
 
 
 	//MARK: Twitter specific
-	func twitterUserShow(withScreenName screenName: String) {	FXDLog_Func()
+	func twitterUserShow(withScreenName screenName: String) {	fxdFuncPrint()
 
-		FXDLog(self.authenticatedSession as Any)
+		fxdPrint(self.authenticatedSession as Any)
 
 		guard TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() == true else {
 			return
@@ -173,27 +173,27 @@ open class FXDmoduleTwitter: NSObject {
 			(response, data, connectionError) in
 			
 			if connectionError != nil {
-				FXDLog("Error: \(String(describing: connectionError))")
+				fxdPrint("Error: \(String(describing: connectionError))")
 			}
 
 			do {
 				let json = try JSONSerialization.jsonObject(with: data!, options: [])
-				FXDLog("json: \(json)")
+				fxdPrint("json: \(json)")
 			} catch let jsonError as NSError {
-				FXDLog("json error: \(jsonError.localizedDescription)")
+				fxdPrint("json error: \(jsonError.localizedDescription)")
 			}
 
-			FXDLog(data as Any)
-			FXDLog(response as Any)
-			FXDLog(connectionError as Any)
+			fxdPrint(data as Any)
+			fxdPrint(response as Any)
+			fxdPrint(connectionError as Any)
 
 			//FIXME: Reconsider bringing evaluation to be more generic function
 		}
 	}
 
-	@objc public func twitterStatusUpdate(withTweetText tweetText: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, placeId: String?, callback: @escaping FXDcallback) {	FXDLog_Func()
+	@objc public func twitterStatusUpdate(withTweetText tweetText: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, placeId: String?, callback: @escaping FXDcallback) {	fxdFuncPrint()
 
-		FXDLog(self.authenticatedSession as Any)
+		fxdPrint(self.authenticatedSession as Any)
 
 		guard TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() == true else {
 			callback(false, nil)
@@ -229,19 +229,19 @@ open class FXDmoduleTwitter: NSObject {
 			(response, data, connectionError) in
 
 			if connectionError != nil {
-				FXDLog("Error: \(String(describing: connectionError))")
+				fxdPrint("Error: \(String(describing: connectionError))")
 			}
 
 			do {
 				let json = try JSONSerialization.jsonObject(with: data!, options: [])
-				FXDLog("json: \(json)")
+				fxdPrint("json: \(json)")
 			} catch let jsonError as NSError {
-				FXDLog("json error: \(jsonError.localizedDescription)")
+				fxdPrint("json error: \(jsonError.localizedDescription)")
 			}
 
-			FXDLog(data as Any)
-			FXDLog(response as Any)
-			FXDLog(connectionError as Any)
+			fxdPrint(data as Any)
+			fxdPrint(response as Any)
+			fxdPrint(connectionError as Any)
 
 			//FIXME: Reconsider bringing evaluation to be more generic function
 

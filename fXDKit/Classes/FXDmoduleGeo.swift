@@ -12,16 +12,16 @@ class FXDmoduleGeo: NSObject {
     var lastLocation: CLLocation?
 
 
-	deinit {	FXDLog_Func()
+	deinit {	fxdFuncPrint()
 		stopLocationManager(mainLocationManager)
 	}
 
 
-	func startGeoModule() {	FXDLog_Func()
-		FXDLog(CLLocationManager.locationServicesEnabled().description)
-		FXDLog(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
-		FXDLog(CLLocationManager.isRangingAvailable().description)
-		FXDLog(CLLocationManager.deferredLocationUpdatesAvailable().description)
+	func startGeoModule() {	fxdFuncPrint()
+		fxdPrint(CLLocationManager.locationServicesEnabled().description)
+		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
+		fxdPrint(CLLocationManager.isRangingAvailable().description)
+		fxdPrint(CLLocationManager.deferredLocationUpdatesAvailable().description)
 
 		guard CLLocationManager.locationServicesEnabled() != false else {
 			return
@@ -45,7 +45,7 @@ class FXDmoduleGeo: NSObject {
 
 
 		let status = CLLocationManager.authorizationStatus()
-		FXDLog(String(status.rawValue))
+		fxdPrint(String(status.rawValue))
 
 		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
 			self.startLocationManager(self.mainLocationManager)
@@ -58,14 +58,14 @@ class FXDmoduleGeo: NSObject {
 	}
 
 
-	func startLocationManager(_ manager: CLLocationManager?) {	FXDLog_Func()
+	func startLocationManager(_ manager: CLLocationManager?) {	fxdFuncPrint()
 
 		guard manager != nil else {
 			return
 		}
 		
 
-		FXDLog(self.didStartLocationManager as Any)
+		fxdPrint(self.didStartLocationManager as Any)
 
 		guard self.didStartLocationManager != true else {
 			return
@@ -95,7 +95,7 @@ class FXDmoduleGeo: NSObject {
 		                                       object: nil)
 	}
 
-	func stopLocationManager(_ manager: CLLocationManager?) {	FXDLog_Func()
+	func stopLocationManager(_ manager: CLLocationManager?) {	fxdFuncPrint()
 
 		NotificationCenter.default.removeObserver(self)
 
@@ -105,7 +105,7 @@ class FXDmoduleGeo: NSObject {
 		didStartLocationManager = false
 	}
 
-	func updatePlacemarks() {	FXDLog_Func()
+	func updatePlacemarks() {	fxdFuncPrint()
 
 		guard self.mainLocationManager?.location != nil else {
 			return
@@ -117,26 +117,26 @@ class FXDmoduleGeo: NSObject {
 		geocoder.reverseGeocodeLocation((self.mainLocationManager?.location)!) {
 			(placemarks, error) in
 
-			FXDLog(error as Any)
-			FXDLog(placemarks as Any)
+			fxdPrint(error as Any)
+			fxdPrint(placemarks as Any)
 		}
 	}
 }
 
 extension FXDmoduleGeo: FXDprotocolObserver {
 
-	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	FXDLog_Func()
-		FXDLog(notification)
+	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxdFuncPrint()
+		fxdPrint(notification)
 
 		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers*2.0
-		FXDLog(self.mainLocationManager?.desiredAccuracy as Any)
+		fxdPrint(self.mainLocationManager?.desiredAccuracy as Any)
 	}
 
-	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	FXDLog_Func()
-		FXDLog(notification)
+	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	fxdFuncPrint()
+		fxdPrint(notification)
 		
 		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
-		FXDLog(self.mainLocationManager?.desiredAccuracy as Any)
+		fxdPrint(self.mainLocationManager?.desiredAccuracy as Any)
 	}
 
 	func observedUIApplicationWillTerminate(_ notification: NSNotification) {
@@ -158,9 +158,9 @@ extension FXDmoduleGeo: FXDprotocolObserver {
 
 extension FXDmoduleGeo: CLLocationManagerDelegate {
 	
-	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	FXDLog_Func()
+	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxdFuncPrint()
 
-		FXDLog(String(status.rawValue))
+		fxdPrint(String(status.rawValue))
 
 
 		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
@@ -178,6 +178,6 @@ extension FXDmoduleGeo: CLLocationManagerDelegate {
 		*/
 
 		self.lastLocation = locations.last
-		FXDLog(self.lastLocation as Any)
+		fxdPrint(self.lastLocation as Any)
 	}
 }

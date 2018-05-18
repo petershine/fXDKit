@@ -1,7 +1,7 @@
 
 
 extension UIWindow {
-	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	FXDLog_Func()
+	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxdFuncPrint()
 
 		// Exploit that UIWindow is UIView
 		guard nibName == nil else {
@@ -11,9 +11,9 @@ extension UIWindow {
 
 		
 		let screenBounds = UIScreen.main.bounds
-		FXDLog("screenBounds: \(screenBounds)")
-		FXDLog("UIScreen.main.nativeBounds: \(UIScreen.main.nativeBounds)")
-		FXDLog("UIScreen.main.nativeScale: \(UIScreen.main.nativeScale)")
+		fxdPrint("screenBounds: \(screenBounds)")
+		fxdPrint("UIScreen.main.nativeBounds: \(UIScreen.main.nativeBounds)")
+		fxdPrint("UIScreen.main.nativeScale: \(UIScreen.main.nativeScale)")
 
 		let newWindow: UIWindow? = self.init(frame: screenBounds)
 		newWindow?.autoresizesSubviews = true

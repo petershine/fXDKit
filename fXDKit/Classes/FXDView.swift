@@ -90,7 +90,7 @@ extension UIView {
 
 extension UIView {
 
-	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	FXDLog_Func()
+	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxdFuncPrint()
 
 		//FIXME: Should update this method to use Self class, for subclasses.
 		//https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md
@@ -100,13 +100,13 @@ extension UIView {
 		if fromNibName == nil {
 			fromNibName = String(describing: self)
 		}
-		FXDLog("fromNibName: \(String(describing: fromNibName))")
+		fxdPrint("fromNibName: \(String(describing: fromNibName))")
 
 		let fromNib: UINib? = UINib.init(nibName:fromNibName!, bundle: nil)
-		FXDLog("fromNib: \(String(describing: fromNib))")
+		fxdPrint("fromNib: \(String(describing: fromNib))")
 
 		let viewArray: [UIView]? = fromNib?.instantiate(withOwner: owner, options: nil) as? [UIView]
-		FXDLog("viewArray: \(String(describing: viewArray))")
+		fxdPrint("viewArray: \(String(describing: viewArray))")
 
 		return viewArray?.first
 	}

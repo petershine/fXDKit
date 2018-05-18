@@ -2,9 +2,9 @@
 
 extension UIViewController {
 
-	@IBAction func dismissSceneForEventSender(sender: Any) {  FXDLog_Func()
+	@IBAction func dismissSceneForEventSender(sender: Any) {  fxdFuncPrint()
 
-		FXDLog("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
+		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
 
 		if (self.parent != nil) {
 			self.parent?.dismiss(animated: true, completion: nil)
@@ -13,7 +13,7 @@ extension UIViewController {
 		}
 	}
 
-	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	FXDLog_Func()
+	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxdFuncPrint()
 
 		var fromNibName = nibName
 
@@ -26,7 +26,7 @@ extension UIViewController {
 		//MARK: self must be the owner
 		let viewArray: [UIView]? = fromNib?.instantiate(withOwner: self, options: nil) as? [UIView]
 
-		FXDLog("\(String(describing: viewArray?.first))")
+		fxdPrint("\(String(describing: viewArray?.first))")
 
 		return viewArray?.first
 	}

@@ -12,13 +12,13 @@ class FXDmoduleMedia: NSObject {
     var lastMediaItem: MPMediaItem?
 
 
-    deinit {    FXDLog_Func()
+    deinit {    fxdFuncPrint()
         musicPlayer?.endGeneratingPlaybackNotifications()
         MPMediaLibrary.default().endGeneratingLibraryChangeNotifications()
     }
 
 
-    func startObservingMediaNotifications() {    FXDLog_Func()
+    func startObservingMediaNotifications() {    fxdFuncPrint()
 		//MARK: The app's Info.plist must contain an NSAppleMusicUsageDescription key with a string value explaining to the user how the app uses this data.
 
         NotificationCenter.default.addObserver(self,
@@ -48,16 +48,16 @@ class FXDmoduleMedia: NSObject {
 extension FXDmoduleMedia {
 
 	@objc func observedMPMusicPlayerControllerPlaybackStateDidChange(_ notification: Notification) {
-		FXDLog(self.musicPlayer?.playbackState.rawValue as Any)
+		fxdPrint(self.musicPlayer?.playbackState.rawValue as Any)
 	}
 
 	@objc func observedMPMusicPlayerControllerNowPlayingItemDidChange(_ notification: Notification) {
-		FXDLog(self.musicPlayer?.nowPlayingItem?.title as Any)
-		FXDLog(self.lastMediaItem?.title as Any)
+		fxdPrint(self.musicPlayer?.nowPlayingItem?.title as Any)
+		fxdPrint(self.lastMediaItem?.title as Any)
 	}
 
 	@objc func observedMPMediaLibraryDidChange(_ notification: Notification) {
-		FXDLog(MPMediaLibrary.default().lastModifiedDate)
+		fxdPrint(MPMediaLibrary.default().lastModifiedDate)
 	}
 }
 
