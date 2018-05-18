@@ -1,5 +1,7 @@
 
 
+//MARK: Static constants
+public let MARGIN_DEFAULT: CGFloat = 8.0
 
 
 //MARK: Closures
