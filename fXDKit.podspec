@@ -37,9 +37,6 @@ TODO: Add long description of the pod here.
   #   'fXDKit' => ['fXDKit/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-
 	s.dependency 'FBSDKCoreKit'
 	s.dependency 'FBSDKLoginKit'
 	s.dependency 'FBSDKShareKit'
