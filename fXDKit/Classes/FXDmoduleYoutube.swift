@@ -15,7 +15,7 @@ class FXDmoduleYoutube {
 	var apikeyGoogleForBrowser: String?
 
 
-	func searchYouTubeUsing(artist: String?, song: String?, album: String?, callback:@escaping FXDcallback) {	fxdFuncPrint()
+	func searchYouTubeUsing(artist: String?, song: String?, album: String?, callback:@escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(artist as Any)
 		fxdPrint(song as Any)

@@ -31,13 +31,13 @@ open class FXDmoduleTwitter: NSObject {
 
 
 	@objc required public init(withTwitterKey twitterKey: String!, twitterSecret: String!) {
-		fxdFuncPrint()
+		fxd_log_func()
 		super.init()
 
 		TWTRTwitter.sharedInstance().start(withConsumerKey: twitterKey!, consumerSecret: twitterSecret!)
 	}
 
-	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(self.authenticatedSession?.authToken as Any)
 		fxdPrint(self.authenticatedSession?.authTokenSecret as Any)
@@ -71,7 +71,7 @@ open class FXDmoduleTwitter: NSObject {
 	}
 
 
-	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log_func()
 		fxdPrint(self.authenticatedSession as Any)
 
 		let sessionStore: TWTRSessionStore = TWTRTwitter.sharedInstance().sessionStore
@@ -148,7 +148,7 @@ open class FXDmoduleTwitter: NSObject {
 
 
 	//MARK: Twitter specific
-	func twitterUserShow(withScreenName screenName: String) {	fxdFuncPrint()
+	func twitterUserShow(withScreenName screenName: String) {	fxd_log_func()
 
 		fxdPrint(self.authenticatedSession as Any)
 
@@ -191,7 +191,7 @@ open class FXDmoduleTwitter: NSObject {
 		}
 	}
 
-	@objc public func twitterStatusUpdate(withTweetText tweetText: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, placeId: String?, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	@objc public func twitterStatusUpdate(withTweetText tweetText: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, placeId: String?, callback: @escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(self.authenticatedSession as Any)
 

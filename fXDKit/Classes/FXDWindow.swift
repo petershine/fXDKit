@@ -1,7 +1,7 @@
 
 
 extension UIWindow {
-	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxdFuncPrint()
+	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log_func()
 
 		// Exploit that UIWindow is UIView
 		guard nibName == nil else {

@@ -90,7 +90,7 @@ extension UIView {
 
 extension UIView {
 
-	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxdFuncPrint()
+	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log_func()
 
 		//FIXME: Should update this method to use Self class, for subclasses.
 		//https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md

@@ -12,12 +12,12 @@ class FXDmoduleGeo: NSObject {
     var lastLocation: CLLocation?
 
 
-	deinit {	fxdFuncPrint()
+	deinit {	fxd_log_func()
 		stopLocationManager(mainLocationManager)
 	}
 
 
-	func startGeoModule() {	fxdFuncPrint()
+	func startGeoModule() {	fxd_log_func()
 		fxdPrint(CLLocationManager.locationServicesEnabled().description)
 		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
 		fxdPrint(CLLocationManager.isRangingAvailable().description)
@@ -58,7 +58,7 @@ class FXDmoduleGeo: NSObject {
 	}
 
 
-	func startLocationManager(_ manager: CLLocationManager?) {	fxdFuncPrint()
+	func startLocationManager(_ manager: CLLocationManager?) {	fxd_log_func()
 
 		guard manager != nil else {
 			return
@@ -95,7 +95,7 @@ class FXDmoduleGeo: NSObject {
 		                                       object: nil)
 	}
 
-	func stopLocationManager(_ manager: CLLocationManager?) {	fxdFuncPrint()
+	func stopLocationManager(_ manager: CLLocationManager?) {	fxd_log_func()
 
 		NotificationCenter.default.removeObserver(self)
 
@@ -105,7 +105,7 @@ class FXDmoduleGeo: NSObject {
 		didStartLocationManager = false
 	}
 
-	func updatePlacemarks() {	fxdFuncPrint()
+	func updatePlacemarks() {	fxd_log_func()
 
 		guard self.mainLocationManager?.location != nil else {
 			return
@@ -125,14 +125,14 @@ class FXDmoduleGeo: NSObject {
 
 extension FXDmoduleGeo: FXDprotocolObserver {
 
-	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxdFuncPrint()
+	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxd_log_func()
 		fxdPrint(notification)
 
 		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers*2.0
 		fxdPrint(self.mainLocationManager?.desiredAccuracy as Any)
 	}
 
-	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	fxdFuncPrint()
+	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	fxd_log_func()
 		fxdPrint(notification)
 		
 		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -158,7 +158,7 @@ extension FXDmoduleGeo: FXDprotocolObserver {
 
 extension FXDmoduleGeo: CLLocationManagerDelegate {
 	
-	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxdFuncPrint()
+	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log_func()
 
 		fxdPrint(String(status.rawValue))
 

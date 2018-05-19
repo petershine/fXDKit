@@ -30,7 +30,7 @@ open class FXDmoduleFacebook: NSObject {
 	var batchFinishedClosure:((Bool) -> Void)?
 
 
-	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(presentingScene)
 		fxdPrint(FBSDKAccessToken.current())
@@ -106,7 +106,7 @@ open class FXDmoduleFacebook: NSObject {
 	}
 
 
-	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(presentingScene)
 		fxdPrint(FBSDKAccessToken.current())
@@ -155,7 +155,7 @@ open class FXDmoduleFacebook: NSObject {
 		})
 	}
 
-	func presentActionSheet(multiAccount:Array<Dictionary<String, Any>>?, presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	func presentActionSheet(multiAccount:Array<Dictionary<String, Any>>?, presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(multiAccount as Any)
 		fxdPrint(presentingScene)
@@ -230,7 +230,7 @@ open class FXDmoduleFacebook: NSObject {
 
 
 
-	func requestAccounts(presentingScene: UIViewController, callback:@escaping FXDcallback) {	fxdFuncPrint()
+	func requestAccounts(presentingScene: UIViewController, callback:@escaping FXDcallback) {	fxd_log_func()
 
 		let graphRequestAccounts = FBSDKGraphRequest(
 			graphPath: facebookGraphMeAccounts,
@@ -322,7 +322,7 @@ open class FXDmoduleFacebook: NSObject {
 		})
 	}
 
-	@objc public func requestToPost(message: String, mediaLink: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, callback: @escaping FXDcallback) {	fxdFuncPrint()
+	@objc public func requestToPost(message: String, mediaLink: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees, callback: @escaping FXDcallback) {	fxd_log_func()
 
 		self.requestSearch(latitude: latitude, longitude: longitude) {
 			[weak self] (shouldContinue: Bool?, placeId: Any?) in
@@ -368,7 +368,7 @@ open class FXDmoduleFacebook: NSObject {
 		}
 	}
 
-	func requestSearch(latitude:CLLocationDegrees, longitude:CLLocationDegrees, callback:@escaping FXDcallback) {	fxdFuncPrint()
+	func requestSearch(latitude:CLLocationDegrees, longitude:CLLocationDegrees, callback:@escaping FXDcallback) {	fxd_log_func()
 
 		fxdPrint(longitude)
 		fxdPrint(latitude)
@@ -420,7 +420,7 @@ open class FXDmoduleFacebook: NSObject {
 
 extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 
-	public func requestConnectionDidFinishLoading(_ connection: FBSDKGraphRequestConnection!) {	fxdFuncPrint()
+	public func requestConnectionDidFinishLoading(_ connection: FBSDKGraphRequestConnection!) {	fxd_log_func()
 
 		assert(self.batchFinishedClosure != nil)
 		self.batchFinishedClosure?(true)
@@ -428,7 +428,7 @@ extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 		assert(self.batchFinishedClosure == nil)
 	}
 
-	public func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	fxdFuncPrint()
+	public func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	fxd_log_func()
 		fxdPrint(error)
 
 		assert(self.batchFinishedClosure != nil)

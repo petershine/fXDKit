@@ -2,7 +2,7 @@
 
 extension UIViewController {
 
-	@IBAction func dismissSceneForEventSender(sender: Any) {  fxdFuncPrint()
+	@IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log_func()
 
 		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
 
@@ -13,7 +13,7 @@ extension UIViewController {
 		}
 	}
 
-	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxdFuncPrint()
+	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log_func()
 
 		var fromNibName = nibName
 

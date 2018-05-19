@@ -29,7 +29,7 @@ func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n
     #endif
 }
 
-func fxdFuncPrint(_ filename: String = #file, function: String = #function) {
+func fxd_log_func(_ filename: String = #file, function: String = #function) {
     #if DEBUG
     os_log(" ")
     os_log("\n\n[%@ %@]", (filename as NSString).lastPathComponent, function)
