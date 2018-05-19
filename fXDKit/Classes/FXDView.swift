@@ -113,8 +113,6 @@ extension UIView {
 }
 
 
-let durationAnimation = 0.3
-
 extension UIView {
 	@objc public func fadeInFromHidden() {
 		guard (self.isHidden || self.alpha != 1.0) else {
@@ -124,7 +122,7 @@ extension UIView {
 		self.alpha = 0.0;
 		self.isHidden = false;
 
-		UIView.animate(withDuration: durationAnimation) {
+		UIView.animate(withDuration: DURATION_ANIMATION) {
 			self.alpha = 1.0
 		}
 	}
@@ -136,7 +134,7 @@ extension UIView {
 
 		let previousAlpha = self.alpha
 
-		UIView.animate(withDuration: durationAnimation,
+		UIView.animate(withDuration: DURATION_ANIMATION,
 		               animations: {
 						self.alpha = 0.0
 		}) { (didFinish: Bool) in
@@ -158,7 +156,7 @@ extension UIView {
 		self.bringSubview(toFront: subview!)
 
 		UIView.animate(
-			withDuration: durationAnimation,
+			withDuration: DURATION_ANIMATION,
 			animations: {
 				subview?.alpha = 0.0
 
@@ -175,7 +173,7 @@ extension UIView {
 		}
 
 		UIView.animate(
-			withDuration: durationAnimation,
+			withDuration: DURATION_ANIMATION,
 			animations: {
 			subview?.alpha = 0.0
 
@@ -222,7 +220,7 @@ extension UIView {
 		let blinkShadow: CABasicAnimation = CABasicAnimation.init(keyPath: "shadowOpacity")
 		blinkShadow.fromValue = self.layer.shadowOpacity
 		blinkShadow.toValue = 0.0
-		blinkShadow.duration = durationAnimation
+		blinkShadow.duration = DURATION_ANIMATION
 		blinkShadow.autoreverses = true
 		self.layer.add(blinkShadow, forKey: "shadowOpacity")
 	}

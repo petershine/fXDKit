@@ -2,6 +2,8 @@
 
 //MARK: Static constants
 public let MARGIN_DEFAULT: CGFloat = 8.0
+public let DIMENSION_TOUCHABLE: CGFloat = 44.0
+public let DURATION_ANIMATION: TimeInterval = 0.3
 
 
 //MARK: Closures
