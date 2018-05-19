@@ -25,13 +25,13 @@ public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
 //MARK: Logging
 import os.log
 
-func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     #if DEBUG
     debugPrint(items, separator: separator, terminator: terminator)
     #endif
 }
 
-func fxd_log_func(_ filename: String = #file, function: String = #function) {
+public func fxd_log_func(_ filename: String = #file, function: String = #function) {
     #if DEBUG
     os_log(" ")
     os_log("\n\n[%@ %@]", (filename as NSString).lastPathComponent, function)
