@@ -5,12 +5,12 @@
 #define scaleSceneDismissingOffset	0.275
 
 
-@protocol FXDprotocolScrollScene
+@protocol FXDsceneWithCells
 @required
 - (void)registerMainCellNib;
 @end
 
-@interface FXDsceneScroll : UIViewController <FXDprotocolScrollScene, UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
+@interface FXDsceneScroll : UIViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;

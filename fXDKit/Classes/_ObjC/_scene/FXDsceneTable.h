@@ -5,10 +5,10 @@
 #import "FXDsceneScroll.h"
 
 
-@protocol FXDprotocolTableScene <FXDprotocolScrollScene>
+@protocol FXDprotocolTableScene <FXDsceneWithCells>
 @end
 
-@interface FXDsceneTable : FXDsceneScroll <FXDprotocolScrollScene, UITableViewDataSource, UITableViewDelegate>
+@interface FXDsceneTable : FXDsceneScroll <FXDsceneWithCells, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nullable, nonatomic) IBOutlet UITableView *mainTableview;
 

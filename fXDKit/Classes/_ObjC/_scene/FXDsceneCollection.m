@@ -39,21 +39,22 @@
 }
 
 #pragma mark - Method overriding
+
+#pragma mark - Required
 - (void)registerMainCellNib {
 
-	if ((self.mainCellNib == nil && self.mainCellIdentifier == nil)
-		|| self.mainCollectionview == nil) {
+    if (self.mainCollectionview == nil  || self.mainCellIdentifier == nil) {
 		[super registerMainCellNib];
 		return;
 	}
 
+    FXDLog_DEFAULT;
+    FXDLogObject(self.mainCollectionview);
+    FXDLogObject(self.mainCellIdentifier);
 
-	FXDLog_DEFAULT;
-	FXDLogObject(self.mainCellNib);
-	FXDLogObject(self.mainCellIdentifier);
-
-	FXDLogObject(self.mainCollectionview);
-	[self.mainCollectionview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
+    if (self.mainCellNib) {
+        [self.mainCollectionview registerNib:self.mainCellNib forCellWithReuseIdentifier:self.mainCellIdentifier];
+    }
 }
 
 

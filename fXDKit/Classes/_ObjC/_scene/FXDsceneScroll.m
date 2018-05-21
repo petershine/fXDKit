@@ -35,9 +35,8 @@
 
 			[self.mainScrollview performSelector:@selector(setDataSource:) withObject:self];
 		}
-
-
-		[self registerMainCellNib];
+        
+        [(id<FXDsceneWithCells>)self registerMainCellNib];
 
 
 		if (self.offsetYdismissingController == 0.0) {
@@ -149,14 +148,6 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (void)registerMainCellNib {	FXDLog_OVERRIDE;
-	FXDLogObject(self.mainCellIdentifier);
-	FXDLogObject(self.mainCellNib);
-	
-	FXDLogObject(self.mainScrollview);
-}
-
-#pragma mark -
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView {
 	
 	NSInteger numberOfSections = 1;
