@@ -82,18 +82,25 @@ open class FXDmoduleFacebook: NSObject {
 					return
 				}
 
+                #if DEBUG
+                if result?.token != nil {
+                    fxdPrint(result?.token.appID as Any)
+                    fxdPrint(result?.token.expirationDate as Any)
+                    fxdPrint(result?.token.refreshDate as Any)
+                    fxdPrint(result?.token.tokenString as Any)
+                    fxdPrint(result?.token.userID as Any)
+                }
 
-				fxdPrint(result?.token.appID as Any)
-				fxdPrint(result?.token.expirationDate as Any)
-				fxdPrint(result?.token.refreshDate as Any)
-				fxdPrint(result?.token.tokenString as Any)
-				fxdPrint(result?.token.userID as Any)
+                if result?.grantedPermissions != nil {
+                    fxdPrint(result?.grantedPermissions.description as Any)
+                }
 
+                if result?.declinedPermissions != nil {
+                    fxdPrint(result?.declinedPermissions.description as Any)
+                }
 
-				fxdPrint(result?.grantedPermissions.description as Any)
-				fxdPrint(result?.declinedPermissions.description as Any)
-
-				fxdPrint(result?.isCancelled as Any)
+                fxdPrint(result?.isCancelled as Any)
+                #endif
 
 				guard result?.isCancelled == false else {
 					callback(false, nil)
