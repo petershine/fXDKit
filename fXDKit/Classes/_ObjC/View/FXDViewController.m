@@ -115,24 +115,6 @@
 	return preferredInterfaceOrientation;
 }
 
-#pragma mark - For <= iOS 7
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {	//FXDLog_DEFAULT;
-	[super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
-
-	[self sceneTransitionForSize:self.view.bounds.size
-					forTransform:CGAffineTransformIdentity
-					 forDuration:duration
-					withCallback:nil];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
 #pragma mark -
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	//FXDLog_DEFAULT;
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -244,57 +226,41 @@
 	return canPerform;
 }
 
-//FIXME: Deprecated. Override the allowedChildViewControllersForUnwindingFromSource: method instead.
-- (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
-	// Custom containers should override this method and search their children for an action handler (using -canPerformUnwindSegueAction:fromViewController:sender:). If a handler is found, the controller should return it. Otherwise, the result of invoking super's implementation should be returned.
+- (NSArray<UIViewController *> *)allowedChildViewControllersForUnwindingFromSource:(UIStoryboardUnwindSegueSource *)source {
 
-	FXDLogSelector(action);
-	FXDLogObject(fromViewController);
-	FXDLogObject(sender);
+    NSMutableArray *allowedScenes = [[NSMutableArray alloc] initWithCapacity:0];
 
-	__block UIViewController *viewController = nil;
+    for (UIViewController *childScene in self.childViewControllers.reverseObjectEnumerator.allObjects) {
 
-	//MARK: Iterate backward
-	for (NSInteger index = self.childViewControllers.count-1; index >= 0; index--) {
-		UIViewController *childScene = self.childViewControllers[index];
+        if ([childScene canPerformUnwindSegueAction:source.unwindAction fromViewController:source.sourceViewController withSender:source.sender]) {
 
-		FXDLog(@"%@ %@ %@", _Variable(index), _Object(childScene), _Object(viewController));
+            [allowedScenes insertObject:childScene atIndex:0];
+        }
+    }
 
-		if (viewController == nil) {
-			if (childScene) {
-				if ([(UIViewController*)childScene canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender]) {
-					viewController = (UIViewController*)childScene;
-					FXDLog(@"1.%@", _Object(viewController));
-				}
-			}
-			else {
-				viewController = [super viewControllerForUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
-				FXDLog(@"1.([super]) %@", _Object(viewController));
-			}
-		}
-	}
+    if (allowedScenes.count == 0) {
+        return [super allowedChildViewControllersForUnwindingFromSource:source];
+    }
 
-	FXDLog(@"2.%@", _Object(viewController));
+    FXDLog_OVERRIDE;
 
-	return viewController;
+    FXDLogSelector(source.unwindAction);
+    FXDLogObject(source.sourceViewController);
+    FXDLogObject(source.sender);
+
+    FXDLogObject(allowedScenes);
+
+    return [allowedScenes copy];
 }
 
-//FIXME: Deprecated. Use unwindForSegue:towardsViewController: instead.
-- (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController fromViewController:(UIViewController *)fromViewController identifier:(NSString *)identifier {	FXDLog_OVERRIDE;
-	// Custom container view controllers should override this method and return segue instances that will perform the navigation portion of segue unwinding.
+- (void)unwindForSegue:(UIStoryboardSegue *)unwindSegue towardsViewController:(UIViewController *)subsequentVC {	FXDLog_OVERRIDE;
 
-	FXDLogObject(toViewController);
-	FXDLogObject(fromViewController);
-	FXDLogObject(identifier);
+    FXDLogObject(subsequentVC);
+    FXDLogObject(unwindSegue.sourceViewController);
+    FXDLogObject(unwindSegue.destinationViewController);
+    FXDLogObject(unwindSegue.identifier);
 
-	UIStoryboardSegue *segue =
-	[super segueForUnwindingToViewController:toViewController
-						  fromViewController:fromViewController
-								  identifier:identifier];
-
-	FXDLogObject(segue);
-
-	return segue;
+    [super unwindForSegue:unwindSegue towardsViewController:subsequentVC];
 }
 
 @end
