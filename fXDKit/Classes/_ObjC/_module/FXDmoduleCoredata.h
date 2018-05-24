@@ -15,6 +15,7 @@
 #import "FXDOperationQueue.h"
 #import "FXDManagedObjectContext.h"
 #import "FXDManagedDocument.h"
+#import "FXDFileManager.h"
 #import "FXDWindow.h"
 
 

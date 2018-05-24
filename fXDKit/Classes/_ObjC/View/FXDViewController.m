@@ -225,7 +225,7 @@
 		FXDLogObject(segue);
 	}
 	else {
-		FXDLogObject([segue fullDescription]);
+        FXDLogObject([segue performSelector:@selector(fullDescription:)]);
 	}
 
 	[super prepareForSegue:segue sender:sender];
