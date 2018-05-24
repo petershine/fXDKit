@@ -4,7 +4,7 @@
 #define FXDKit_FXDconfigDeveloper_h
 
 
-#if ForDEVELOPER
+#if DEBUG
 	#define USE_FXDLog	TRUE
 #else
 	#define USE_FXDLog	FALSE

@@ -49,7 +49,7 @@
 	if (_sqlitePathComponent == nil) {
 		_sqlitePathComponent = [NSString stringWithFormat:@"%@.sqlite", self.coredataName];
 
-	#if ForDEVELOPER
+	#if DEBUG
 		_sqlitePathComponent = [NSString stringWithFormat:@"DEV_%@.sqlite", self.coredataName];
 	#endif
 
@@ -202,7 +202,7 @@
 
 	FXDLog(@"1.%@", _BOOL(didConfigure));
 
-#if ForDEVELOPER
+#if DEBUG
 	NSPersistentStoreCoordinator *storeCoordinator = self.mainDocument.managedObjectContext.persistentStoreCoordinator;
 
 	for (NSPersistentStore *persistentStore in storeCoordinator.persistentStores) {
@@ -229,7 +229,7 @@
 	 upgradeAllAttributesForNewDataModelWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
 		 FXDLog_BLOCK(self, caller);
 
-#if ForDEVELOPER
+#if DEBUG
 		 if (ubiquityContainerURL) {
 			 NSFileManager *fileManager = [NSFileManager defaultManager];
 			 FXDLogObject([fileManager infoDictionaryForFolderURL:ubiquityContainerURL]);

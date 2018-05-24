@@ -58,7 +58,7 @@
 	NSString *version = application_BundleVersion;
 	FXDLogObject(version);
 
-#if ForDEVELOPER
+#if DEBUG
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [userDefaults objectForKey:@"AppleLanguages"];
 	NSString *currentLanguage = languages.firstObject;

@@ -154,8 +154,7 @@
 - (void)observedMPMediaLibraryDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
 	FXDLogObject(notification);
 
-#if	ForDEVELOPER
-
+#if DEBUG
 	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 	FXDLogObject(mediaLibrary.lastModifiedDate);
 

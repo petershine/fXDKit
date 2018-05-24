@@ -136,7 +136,7 @@
 		}
 	}
 
-#if ForDEVELOPER
+#if DEBUG
 	if (view == nil) {	FXDLog_DEFAULT;
 		FXDLog(@"%@ %@", _Object([self class]), _Object(viewArray));
 	}

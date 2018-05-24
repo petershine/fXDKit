@@ -319,7 +319,7 @@
 	UIView *sceneView = viewArray.firstObject;	
 	FXDLogObject(sceneView);
 	
-#if ForDEVELOPER
+#if DEBUG
 	if (sceneView == nil) {
 		FXDLog(@"%@ %@", _Object([self class]), _Object(viewArray));
 	}

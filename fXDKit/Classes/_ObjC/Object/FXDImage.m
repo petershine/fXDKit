@@ -40,7 +40,7 @@
 	bundledImage = [UIImage imageNamed:imageName];
 
 	
-#if ForDEVELOPER
+#if DEBUG
 	if (bundledImage == nil) {
 		FXDLog(@"%@ %@", _Object(imageName), _Object(bundledImage));
 	}

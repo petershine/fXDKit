@@ -164,7 +164,7 @@
 	 }];
 
 
-#if ForDEVELOPER
+#if DEBUG
 	NSString *alertBody = nil;
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

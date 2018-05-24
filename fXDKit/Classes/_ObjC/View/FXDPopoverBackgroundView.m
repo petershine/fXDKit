@@ -26,7 +26,7 @@
 
 	//MARK: Cannot use awakeFromNib
     if (self) {
-#if ForDEVELOPER
+#if DEBUG
 		self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:alphaValue05];
 #endif
     }
@@ -98,7 +98,7 @@
 										  self.frame.size.width,
 										  self.frame.size.height -arrowHeight)];
 
-#if ForDEVELOPER
+#if DEBUG
 		self.viewBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue05];
 #else
 		self.viewBackground.backgroundColor = [UIColor clearColor];
@@ -117,7 +117,7 @@
 										  arrowBase,
 										  arrowHeight)];
 
-#if ForDEVELOPER
+#if DEBUG
 		self.imageviewArrow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alphaValue05];
 #else
 		self.imageviewArrow.backgroundColor = [UIColor clearColor];

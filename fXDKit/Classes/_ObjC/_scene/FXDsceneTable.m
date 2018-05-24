@@ -66,7 +66,7 @@
 }
 
 - (void)configureTableCell:(FXDTableViewCell*)cell forIndexPath:(NSIndexPath*)indexPath {
-#if ForDEVELOPER
+#if DEBUG
 	if (self.mainCellNib) {
 		FXDLog(@"WARNING: %@", @"Make sure to configure properly");
 	}

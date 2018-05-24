@@ -172,7 +172,7 @@
 	if (self.mainResultsController) {
 		NSUInteger fetchedCount = self.mainResultsController.fetchedObjects.count;
 		
-#if ForDEVELOPER
+#if DEBUG
 		NSArray *sections = self.mainResultsController.sections;
 		
 		if (section < sections.count) {
@@ -194,7 +194,7 @@
 	else if (self.itemCounts) {
 		numberOfItems = [(self.itemCounts)[section] integerValue];
 	}
-#if ForDEVELOPER
+#if DEBUG
 	else {
 		FXDLog_OVERRIDE;
 	}
@@ -206,7 +206,7 @@
 #pragma mark -
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
 	
-#if ForDEVELOPER
+#if DEBUG
 	if (scrollView == nil) {
 		scrollView = self.mainScrollview;
 	}
