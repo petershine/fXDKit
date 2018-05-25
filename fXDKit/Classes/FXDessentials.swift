@@ -5,6 +5,9 @@ public let MARGIN_DEFAULT: CGFloat = 8.0
 public let DIMENSION_TOUCHABLE: CGFloat = 44.0
 public let DURATION_ANIMATION: TimeInterval = 0.3
 
+public let DURATION_ONE_SECOND: TimeInterval = 1.0
+public let DURATION_QUARTER: TimeInterval = (DURATION_ONE_SECOND/4.0)
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
