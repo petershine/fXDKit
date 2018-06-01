@@ -198,20 +198,23 @@ extension UIView {
 }
 
 extension UIView {
-	@objc public func superView(forClassName className: String?) -> Any? {
-		var superView: Any? = nil
+	@objc public func superView(forClassName className: String) -> UIView? {
 
-		if self.superview != nil {
-			if String(describing: self.superview) == className {
-				superView = self.superview
-			}
-			else {
-				// Recursive call
-				superView = self.superview?.superView(forClassName: className)
-			}
-		}
+        guard superview != nil else {
+            return nil
+        }
 
-		return superView
+		var foundView: UIView? = nil
+
+        if String(describing: superview!.classForCoder.self) == className {
+            foundView = superview
+        }
+        else {
+            // Recursive call
+            foundView = superview?.superView(forClassName: className)
+        }
+
+		return foundView
 	}
 }
 
