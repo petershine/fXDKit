@@ -10,6 +10,8 @@ public let DURATION_SLOW_ANIMATION: TimeInterval = (DURATION_ANIMATION*2.0)
 public let DURATION_ONE_SECOND: TimeInterval = 1.0
 public let DURATION_QUARTER: TimeInterval = (DURATION_ONE_SECOND/4.0)
 
+public let DURATION_FULL_MINUTE: TimeInterval = (DURATION_ONE_SECOND*60.0)
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
