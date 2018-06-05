@@ -34,7 +34,11 @@ import os.log
 
 public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     #if DEBUG
-    os_log("%@", items.debugDescription)
+    for item in items {
+        if let variable = item as? CVarArg {
+            os_log("%@", variable)
+        }
+    }
     #endif
 }
 
