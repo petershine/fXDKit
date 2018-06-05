@@ -34,7 +34,7 @@ import os.log
 
 public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     #if DEBUG
-    debugPrint(items, separator: separator, terminator: terminator)
+    os_log("%@", items.debugDescription)
     #endif
 }
 
