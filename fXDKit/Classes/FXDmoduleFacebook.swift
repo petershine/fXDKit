@@ -306,7 +306,7 @@ open class FXDmoduleFacebook: NSObject {
 				}
 
 
-				self!.batchFinishedClosure = {
+				self?.batchFinishedClosure = {
 					[weak self] (shouldContinue: Bool) in
 
 					fxdPrint(shouldContinue)
@@ -338,8 +338,12 @@ open class FXDmoduleFacebook: NSObject {
 
 			fxdPrint(message)
 
+            guard let facebookId = self?.currentFacebookAccount?["id"] as? String else {
+                callback(false, nil)
+                return
+            }
 
-			let facebookId:String = self?.currentFacebookAccount?["id"] as! String
+
 			let graphPath = "\(facebookId)/feed"
 			fxdPrint(graphPath)
 

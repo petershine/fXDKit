@@ -117,9 +117,12 @@ open class FXDmoduleTwitter: NSObject {
 			style: .destructive) {
 				[weak self] (action: UIAlertAction) in
 
-				let userID = self?.authenticatedSession?.userID
-				sessionStore.logOutUserID(userID!)
+                guard let userID = self?.authenticatedSession?.userID else {
+                    callback(false, nil)
+                    return
+                }
 
+				sessionStore.logOutUserID(userID)
 				callback(true, nil)
 		}
 
