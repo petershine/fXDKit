@@ -11,7 +11,7 @@
 @property (nonatomic) MKUserTrackingMode initialTrackingMode;
 @property (nonatomic) BOOL shouldResumeTracking;
 
-@property (strong, nonatomic) IBOutlet FXDMapView *mainMapview;
+@property (strong, nonatomic, nullable) IBOutlet FXDMapView *mainMapview;
 
 
 - (void)refreshMapviewWithCoordinate:(CLLocationCoordinate2D)coordinate;
