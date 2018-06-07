@@ -36,7 +36,7 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
     #if DEBUG
     for item in items {
         if let variable = item as? CVarArg {
-            os_log("%@", variable)
+            os_log("%@", (String(describing: variable) as NSString))
         }
     }
     #endif
