@@ -151,39 +151,4 @@
 	return isSame;
 }
 
-#pragma mark -
-- (NSString*)formattedAgeTextSinceDate:(NSDate*)date {
-
-	if (date == nil) {
-		date = [NSDate date];
-	}
-
-
-	NSString *ageText = nil;
-
-	NSInteger age = (NSInteger)(date.timeIntervalSince1970 -self.timeIntervalSince1970);
-
-	NSInteger days = (NSInteger)(age/60/60/24);
-
-	if (days > 7) {
-		ageText = [NSString stringWithFormat:@"%@", [self.description componentsSeparatedByString:@" "].firstObject];
-	}
-	else if (days > 0 && days <= 7) {
-		ageText = [NSString stringWithFormat:@"%ld day", (long)days];
-
-		if (days > 1) {
-			ageText = [ageText stringByAppendingString:@"s"];
-		}
-	}
-	else {
-		NSInteger seconds = age % 60;
-		NSInteger minutes = (NSInteger)(age/60) % 60;
-		NSInteger hours = (NSInteger)(age/60/60) % 24;
-
-		ageText = [NSString stringWithFormat:@"%.2ld:%.2ld:%.2ld", (long)hours, (long)minutes, (long)seconds];
-	}
-
-	return ageText;
-}
-
 @end

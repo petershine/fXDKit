@@ -1,4 +1,38 @@
 
+extension Date {
+    public func formattedAgeText(sinceDate: Date?) -> String? {
+        var date = sinceDate
+
+        if date == nil {
+            date = Date.init()
+        }
+
+        let age = Int((date?.timeIntervalSince1970)! - timeIntervalSince1970)
+        let days = Int(age/60/60/24)
+
+        var ageText: String? = nil
+        
+        if days > 7 {
+            ageText = description.components(separatedBy: " ").first
+        }
+        else if days > 0 && days <= 7 {
+            ageText = "\(days) day"
+
+            if (days > 1) {
+                ageText = ageText! + "s"
+            }
+        }
+        else {
+            let seconds = age % 60
+            let minutes = (age/60) % 60
+            let hours = (age/60/60) % 24
+
+            ageText = "\(hours):\(minutes):\(seconds)"
+        }
+
+        return ageText
+    }
+}
 
 extension UIApplication {
 	@objc public class func mainWindow() -> UIWindow? {

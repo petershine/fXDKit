@@ -20,6 +20,4 @@
 
 - (BOOL)isYearMonthDaySameAsAnotherDate:(NSDate*)anotherDate;
 
-- (NSString*)formattedAgeTextSinceDate:(NSDate*)date;
-
 @end
