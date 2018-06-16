@@ -29,6 +29,23 @@ extension Date {
     }
 }
 
+extension Double {
+    public func formattedDistanceText(format: String = "%0.1f") -> String? {
+        var distanceText: String? = nil
+
+        if self >= 1000.0 {
+            distanceText = String(format: format + " km", self/1000.0)
+        }
+        else {
+            distanceText = String(format: format + " m", self)
+        }
+
+        //TODO: use miles for US users
+
+        return distanceText
+    }
+}
+
 extension UIApplication {
 	@objc public class func mainWindow() -> UIWindow? {
 		var mainWindow: UIWindow? = nil
