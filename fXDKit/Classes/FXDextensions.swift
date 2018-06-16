@@ -22,7 +22,7 @@ extension Date {
             let minutes = (age/60) % 60
             let hours = (age/60/60) % 24
 
-            ageText = "\(hours):\(minutes):\(seconds)"
+            ageText = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
 
         return ageText
