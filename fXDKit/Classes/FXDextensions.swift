@@ -1,13 +1,8 @@
 
 extension Date {
-    public func formattedAgeText(sinceDate: Date?) -> String? {
-        var date = sinceDate
+    public func formattedAgeText(since: Date = Date.init()) -> String? {
 
-        if date == nil {
-            date = Date.init()
-        }
-
-        let age = Int((date?.timeIntervalSince1970)! - timeIntervalSince1970)
+        let age = Int((since.timeIntervalSince1970) - timeIntervalSince1970)
         let days = Int(age/60/60/24)
 
         var ageText: String? = nil
