@@ -436,7 +436,7 @@
 
 	CLLocationDistance distance = [self distanceFromLocation:location];
 
-	//FIXME: use miles for US users"
+	//TODO: use miles for US users"
 
 	if (distance >= 1000.0) {
 		distance /= 1000.0;

@@ -145,7 +145,7 @@
 		return YES;
 	}
 
-	//FIXME: Overridden by subclass
+	//TODO: Overridden by subclass
 
 	return NO;
 }

@@ -6,7 +6,7 @@ import TwitterCore
 import TwitterKit
 
 
-//FIXME: Prepare formatter function
+//TODO: Prepare formatter function
 //#define urlrootTwitterAPI			@"https://api.twitter.com/1.1/"
 //#define urlstringTwitter(method)	[NSString stringWithFormat:@"%@%@", urlrootTwitterAPI, method]
 //#define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
@@ -130,7 +130,7 @@ open class FXDmoduleTwitter: NSObject {
 		alertController?.addAction(signOutAction)
 
 		if sessionStore.existingUserSessions().count > 1 {
-			//FIXME: 'Could not cast value of type 'TWTRSession' (0x105c6e370) to 'TWTRSession' (0x1059a5cc8).'
+			//TODO: 'Could not cast value of type 'TWTRSession' (0x105c6e370) to 'TWTRSession' (0x1059a5cc8).'
 			for account: TWTRSession in sessionStore.existingUserSessions() as! [TWTRSession] {
 
 				let selectAction: UIAlertAction = UIAlertAction(
@@ -190,7 +190,7 @@ open class FXDmoduleTwitter: NSObject {
 			fxdPrint(response as Any)
 			fxdPrint(connectionError as Any)
 
-			//FIXME: Reconsider bringing evaluation to be more generic function
+			//TODO: Reconsider bringing evaluation to be more generic function
 		}
 	}
 
@@ -246,7 +246,7 @@ open class FXDmoduleTwitter: NSObject {
 			fxdPrint(response as Any)
 			fxdPrint(connectionError as Any)
 
-			//FIXME: Reconsider bringing evaluation to be more generic function
+			//TODO: Reconsider bringing evaluation to be more generic function
 
 			callback(connectionError == nil, nil)
 		}

@@ -94,7 +94,7 @@
 	 addExecutionBlock:^{
 
 		 if (weakOperation.isCancelled == NO) {
-			 //FIXME:
+			 //TODO:
 		 }
 		 
 

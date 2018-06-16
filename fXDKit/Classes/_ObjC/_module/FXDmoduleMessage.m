@@ -18,7 +18,7 @@
 
 
 	if ([MFMailComposeViewController canSendMail] == NO) {
-		//FIXME: alert user
+		//TODO: alert user
 		return;
 	}
 
