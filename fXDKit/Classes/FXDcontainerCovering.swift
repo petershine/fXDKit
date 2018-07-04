@@ -1,46 +1,37 @@
 
 
-/*protocol FXDCoveringContainerChildScene {
-var coverDirectionType: COVER_DIRECTION_TYPE { get }
-
-var shouldCoverAbove: Bool { get }
-var shouldStayFixed: Bool { get }
-
-var offsetYforUncovering: NSNumber? { get }
-func didFinishAnimation()
-}*/
-extension UIViewController {	//FXDCoveringContainerChildScene {
-	@objc var coverDirectionType: COVER_DIRECTION_TYPE {
+extension UIViewController {
+	@objc open var coverDirectionType: COVER_DIRECTION_TYPE {
 		get {
 			return .top
 		}
 	}
 
-	@objc var shouldCoverAbove: Bool {
+	@objc open var shouldCoverAbove: Bool {
 		get {
 			return false
 		}
 	}
 
-	@objc var shouldStayFixed: Bool {
+	@objc open var shouldStayFixed: Bool {
 		get {
 			return false
 		}
 	}
 
-	@objc var offsetYforUncovering: NSNumber? {
+	@objc open var offsetYforUncovering: NSNumber? {
 		get {
 			return nil
 		}
 	}
 
-	@objc func didFinishAnimation() {
+	@objc open func didFinishAnimation() {
 		fxd_log_func()
 	}
 }
 
 
-@objc enum COVER_DIRECTION_TYPE: Int {
+@objc public enum COVER_DIRECTION_TYPE: Int {
 	case top
 	case bottom
 }
