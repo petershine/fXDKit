@@ -1,31 +1,31 @@
 
 
 extension UIViewController {
-	@objc open var coverDirectionType: COVER_DIRECTION_TYPE {
+	@objc public var coverDirectionType: COVER_DIRECTION_TYPE {
 		get {
 			return .top
 		}
 	}
 
-	@objc open var shouldCoverAbove: Bool {
+	@objc public var shouldCoverAbove: Bool {
 		get {
 			return false
 		}
 	}
 
-	@objc open var shouldStayFixed: Bool {
+	@objc public var shouldStayFixed: Bool {
 		get {
 			return false
 		}
 	}
 
-	@objc open var offsetYforUncovering: NSNumber? {
+	@objc public var offsetYforUncovering: NSNumber? {
 		get {
 			return nil
 		}
 	}
 
-	@objc open func didFinishAnimation() {
+	@objc public func didFinishAnimation() {
 		fxd_log_func()
 	}
 }
