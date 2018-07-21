@@ -8,6 +8,9 @@
 @protocol FXDsceneWithCells
 @required
 - (void)registerMainCellNib;
+- (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
+- (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
+
 @end
 
 @interface FXDsceneScroll : UIViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
@@ -50,10 +53,6 @@
 
 
 @property (strong, nullable, nonatomic) IBOutlet UIScrollView *mainScrollview;
-
-
-- (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
-- (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
 
 - (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView;
 

@@ -1,5 +1,5 @@
 
-public protocol FXDsceneWithTableCells: FXDsceneWithCells {
+public protocol FXDsceneWithTableCells {
 	func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
 	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
 	func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!)
@@ -38,7 +38,7 @@ open class FXDsceneTable: FXDsceneScroll {
 	}
 }
 
-extension FXDsceneTable: FXDsceneWithTableCells {
+extension FXDsceneTable: FXDsceneWithCells {
 	public func registerMainCellNib() {
 		guard mainTableview != nil
 			&& mainCellNib != nil
@@ -53,6 +53,56 @@ extension FXDsceneTable: FXDsceneWithTableCells {
 		mainTableview?.register(mainCellNib!, forCellReuseIdentifier: mainCellIdentifier!)
 	}
 
+	public func numberOfSections(for scrollView: UIScrollView!) -> Int {
+		var numberOfSections = 1
+
+		if (mainResultsController != nil) {
+			numberOfSections = (mainResultsController.sections?.count)!
+		}
+		else if (mainDataSource != nil) {
+			//MARK: Assume it's just one array
+		}
+		else if (itemCounts != nil) {
+			numberOfSections = itemCounts.count
+		}
+
+		return numberOfSections
+	}
+
+	public func numberOfItems(for scrollView: UIScrollView!, atSection section: Int) -> Int {
+		var numberOfItems = 0
+
+		if (mainResultsController != nil) {
+			let fetchedCount = mainResultsController.fetchedObjects?.count
+
+			#if DEBUG
+			let sections = mainResultsController.sections
+
+			if (section < (sections?.count)!) {
+				let sectionInfo = sections![section]
+
+				numberOfItems = sectionInfo.numberOfObjects
+			}
+
+			if (numberOfItems != fetchedCount) {	fxd_log_func()
+				fxdPrint("\(section) \(numberOfItems) == \(String(describing: fetchedCount))")
+			}
+			#else
+			numberOfItems = fetchedCount
+			#endif
+		}
+		else if (mainDataSource != nil) {
+			numberOfItems = self.mainDataSource.count
+		}
+		else if (itemCounts != nil) {
+			numberOfItems = (itemCounts[section] as? Int)!
+		}
+
+		return numberOfItems
+	}
+}
+
+extension FXDsceneTable: FXDsceneWithTableCells {
 	@objc open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {	fxd_log_func()
 		fxdPrint("NEED TO BE OVERRIDDEN")
 	}
