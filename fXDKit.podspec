@@ -18,6 +18,8 @@ Pod::Spec.new do |s|
   s.source_files = 'fXDKit/Classes/**/*'
   s.resource_bundles = {'fXDKit' => ['fXDKit/Resources/*.*']}
 
+  s.frameworks = 'CoreLocation', 'MapKit'
+
 	s.dependency 'Bolts'
 	s.dependency 'FBSDKCoreKit'
 	s.dependency 'FBSDKLoginKit'
