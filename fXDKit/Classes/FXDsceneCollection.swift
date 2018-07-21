@@ -1,8 +1,8 @@
 
 
-class FXDsceneCollection: FXDsceneTable {
+open class FXDsceneCollection: FXDsceneTable {
 
-	@IBOutlet override var mainScrollview: UIScrollView? {
+	@IBOutlet override open var mainScrollview: UIScrollView? {
 		get {
 			if mainCollectionview == nil {
 				return super.mainScrollview
@@ -15,9 +15,9 @@ class FXDsceneCollection: FXDsceneTable {
 		}
 	}
 
-	@IBOutlet var mainCollectionview: UICollectionView?
+	@IBOutlet open var mainCollectionview: UICollectionView?
 
-	override func willMove(toParentViewController parent: UIViewController?) {
+	override open func willMove(toParentViewController parent: UIViewController?) {
 		if parent == nil {
 			mainCollectionview?.delegate = nil
 			mainCollectionview?.dataSource = nil
@@ -27,8 +27,8 @@ class FXDsceneCollection: FXDsceneTable {
 	}
 }
 
-extension FXDsceneCollection {	//FXDsceneWithCells
-	override func registerMainCellNib() {
+extension FXDsceneCollection {
+	override open func registerMainCellNib() {
 		guard mainCollectionview != nil
 			&& mainCellNib != nil
 			&& mainCellIdentifier != nil else {
@@ -46,22 +46,20 @@ extension FXDsceneCollection {	//FXDsceneWithCells
 
 extension FXDsceneCollection: UICollectionViewDataSource {
 
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
+	public func numberOfSections(in collectionView: UICollectionView) -> Int {
 		let sectionCount = numberOfSections(for: collectionView)
 
 		return sectionCount
 	}
 
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
 		let itemCount = numberOfItems(for: collectionView, atSection: section)
 
 		return itemCount
 	}
 
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		assert(mainCellIdentifier != nil, "MUST configure mainCellIdentifier")
-
+	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellIdentifier!, for: indexPath)
 
 		let operation = BlockOperation()
@@ -85,7 +83,7 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 }
 
 extension FXDsceneCollection: UICollectionViewDelegate {
-	func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+	public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
 		_ = cellOperationQueue.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
 	}
