@@ -35,8 +35,8 @@
 
 @property (nonatomic) CGFloat offsetYdismissingController;
 
-@property (strong, nonatomic) UINib *mainCellNib;
-@property (strong, nonatomic) NSString *mainCellIdentifier;
+@property (strong, nullable, nonatomic) UINib *mainCellNib;
+@property (strong, nullable, nonatomic) NSString *mainCellIdentifier;
 
 @property (strong, nonatomic) NSArray *itemCounts;
 @property (strong, nonatomic) NSDictionary *cellTitleDictionary;
