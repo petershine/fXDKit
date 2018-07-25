@@ -168,7 +168,11 @@ extension FXDsceneTable: UITableViewDataSource {
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var cell = tableView.dequeueReusableCell(withIdentifier: mainCellIdentifier!)
+		var cell: UITableViewCell?
+
+		if mainCellIdentifier != nil {
+			cell = tableView.dequeueReusableCell(withIdentifier: mainCellIdentifier!)
+		}
 
 		if cell == nil {
 			cell = FXDTableViewCell.init(style: .subtitle, reuseIdentifier: mainCellIdentifier)
