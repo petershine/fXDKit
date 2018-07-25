@@ -88,26 +88,6 @@
 
 #pragma mark - Public
 
-#pragma mark -
-- (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView {	FXDLog_OVERRIDE;
-	
-#if DEBUG
-	if (scrollView == nil) {
-		scrollView = self.mainScrollview;
-	}
-	
-	FXDLog(@"%@ %@", _Variable(scrollView.contentOffset.y), _BOOL(self.didStartDismissingByPullingDown));
-#endif
-	
-	if (self.didStartDismissingByPullingDown) {
-		return;
-	}
-	
-	
-	self.didStartDismissingByPullingDown = YES;
-}
-
-
 #pragma mark - Observer
 
 #pragma mark - Delegate

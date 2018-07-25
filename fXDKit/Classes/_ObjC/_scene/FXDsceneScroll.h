@@ -5,6 +5,11 @@
 #define scaleSceneDismissingOffset	0.275
 
 
+@protocol FXDsceneWithScroll
+@optional
+- (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView;
+@end
+
 @protocol FXDsceneWithCells
 @required
 @property (strong, nullable, nonatomic, readonly) NSString *mainCellIdentifier;
@@ -15,13 +20,7 @@
 - (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
 @end
 
-@interface FXDsceneScroll : UIViewController <UIScrollViewDelegate> {
-	
-	NSMutableArray *_mainDataSource;
-	
-	NSOperationQueue *_cellOperationQueue;
-	NSMutableDictionary *_cellOperationDictionary;
-}
+@interface FXDsceneScroll : UIViewController <FXDsceneWithScroll, UIScrollViewDelegate>
 
 @property (nonatomic) BOOL didStartAutoScrollingToTop;
 
@@ -35,9 +34,6 @@
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
 
-
 @property (strong, nullable, nonatomic) IBOutlet UIScrollView *mainScrollview;
-
-- (void)dismissByPullingDownScrollView:(UIScrollView*)scrollView;
 
 @end
