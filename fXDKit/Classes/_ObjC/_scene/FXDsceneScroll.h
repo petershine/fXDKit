@@ -7,27 +7,20 @@
 
 @protocol FXDsceneWithCells
 @required
+@property (strong, nullable, nonatomic, readonly) NSString *mainCellIdentifier;
+@property (strong, nullable, nonatomic, readonly) UINib *mainCellNib;
+@property (strong, nonatomic, readonly) NSArray *itemCounts;
 - (void)registerMainCellNib;
 - (NSInteger)numberOfSectionsForScrollView:(UIScrollView*)scrollView;
 - (NSInteger)numberOfItemsForScrollView:(UIScrollView*)scrollView atSection:(NSInteger)section;
-
 @end
 
-
-	NSString *_mainCellIdentifier;
-	UINib *_mainCellNib;
-	
-	NSDictionary *_cellTitleDictionary;
-	NSDictionary *_cellSubTitleDictionary;
-	NSArray *_itemCounts;
 @interface FXDsceneScroll : UIViewController <UIScrollViewDelegate> {
 	
 	NSMutableArray *_mainDataSource;
 	
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_cellOperationDictionary;
-	
-	UIScrollView *_mainScrollview;
 }
 
 @property (nonatomic) BOOL didStartAutoScrollingToTop;
@@ -36,13 +29,6 @@
 @property (nonatomic) BOOL didStartDismissingByPullingDown;
 
 @property (nonatomic) CGFloat offsetYdismissingController;
-
-@property (strong, nullable, nonatomic) UINib *mainCellNib;
-@property (strong, nullable, nonatomic) NSString *mainCellIdentifier;
-
-@property (strong, nonatomic) NSArray *itemCounts;
-@property (strong, nonatomic) NSDictionary *cellTitleDictionary;
-@property (strong, nonatomic) NSDictionary *cellSubTitleDictionary;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
 

@@ -64,53 +64,6 @@
 
 
 #pragma mark - Property overriding
-- (UINib*)mainCellNib {
-	if (_mainCellNib == nil) {
-		if (self.mainCellIdentifier) {
-			_mainCellNib = [UINib nibWithNibName:self.mainCellIdentifier bundle:nil];
-		}
-
-		if (_mainCellNib) {	FXDLog_DEFAULT;
-			FXDLogObject(_mainCellNib);
-		}
-	}
-	
-	return _mainCellNib;
-}
-
-- (NSString*)mainCellIdentifier {
-	if (_mainCellIdentifier == nil) {
-	}
-	return _mainCellIdentifier;
-}
-
-#pragma mark -
-- (NSArray*)itemCounts {
-	if (_itemCounts == nil) {
-	}
-	return _itemCounts;
-}
-
-- (NSDictionary*)cellTitleDictionary {
-	if (_cellTitleDictionary == nil) {
-	}
-	return _cellTitleDictionary;
-}
-
-- (NSDictionary*)cellSubTitleDictionary {
-	if (_cellSubTitleDictionary == nil) {
-	}
-	return _cellSubTitleDictionary;
-}
-
-#pragma mark -
-- (NSMutableArray*)mainDataSource {
-	if (_mainDataSource == nil) {
-	}
-	return _mainDataSource;
-}
-
-#pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	if (_cellOperationQueue == nil) {	//FXDLog_DEFAULT;
 		_cellOperationQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];

@@ -1,16 +1,4 @@
 
-public protocol FXDsceneWithTableCells {
-	func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
-	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
-	func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!)
-	func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func highlightedMainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func accessoryViewForTableCell(at indexPath: IndexPath!) -> UIView?
-	func sectionDividerView(forWidth width: CGFloat, andHeight height: CGFloat) -> UIView?
-}
-
 open class FXDsceneTable: FXDsceneScroll {
 
 	@IBOutlet override open var mainScrollview: UIScrollView? {
@@ -38,7 +26,25 @@ open class FXDsceneTable: FXDsceneScroll {
 	}
 }
 
+
 extension FXDsceneTable: FXDsceneWithCells {
+
+	open var mainCellIdentifier: String? {
+		return nil
+	}
+
+	open var mainCellNib: UINib? {
+		guard mainCellIdentifier != nil else {
+			return nil
+		}
+
+		return UINib.init(nibName: mainCellIdentifier!, bundle: nil)
+	}
+
+	open var itemCounts: [Any] {
+		return []
+	}
+
 	public func registerMainCellNib() {
 		guard mainTableview != nil
 			&& mainCellNib != nil
@@ -56,9 +62,10 @@ extension FXDsceneTable: FXDsceneWithCells {
 	public func numberOfSections(for scrollView: UIScrollView!) -> Int {
 		var numberOfSections = 1
 
+		if (mainDataSource != nil) {
 			//MARK: Assume it's just one array
 		}
-		else if (itemCounts != nil) {
+		else if (itemCounts.count > 0) {
 			numberOfSections = itemCounts.count
 		}
 
@@ -68,9 +75,10 @@ extension FXDsceneTable: FXDsceneWithCells {
 	public func numberOfItems(for scrollView: UIScrollView!, atSection section: Int) -> Int {
 		var numberOfItems = 0
 
+		if (mainDataSource != nil) {
 			numberOfItems = self.mainDataSource.count
 		}
-		else if (itemCounts != nil) {
+		else if (itemCounts.count > 0) {
 			numberOfItems = (itemCounts[section] as? Int)!
 		}
 
@@ -78,7 +86,31 @@ extension FXDsceneTable: FXDsceneWithCells {
 	}
 }
 
+
+public protocol FXDsceneWithTableCells {
+	var cellTitleDictionary: [AnyHashable : Any] { get }
+	var cellSubTitleDictionary: [AnyHashable : Any] { get }
+
+	func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
+	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
+	func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!)
+	func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
+	func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
+	func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
+	func highlightedMainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
+	func accessoryViewForTableCell(at indexPath: IndexPath!) -> UIView?
+	func sectionDividerView(forWidth width: CGFloat, andHeight height: CGFloat) -> UIView?
+}
+
 extension FXDsceneTable: FXDsceneWithTableCells {
+	@objc open var cellTitleDictionary: [AnyHashable : Any] {
+		return [:]
+	}
+
+	@objc open var cellSubTitleDictionary: [AnyHashable : Any] {
+		return [:]
+	}
+
 	@objc open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {	fxd_log_func()
 		fxdPrint("NEED TO BE OVERRIDDEN")
 	}
