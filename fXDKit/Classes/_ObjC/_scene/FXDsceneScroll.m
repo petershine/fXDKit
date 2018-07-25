@@ -15,10 +15,6 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	if (self.mainResultsController && self.mainResultsController.delegate == nil) {
-		self.mainResultsController.delegate = self;
-	}
-	
 	if (self.mainScrollview) {
 		//MARK: Following should be closely related to scroll view configuration
 		FXDLogObject(self.mainScrollview);
@@ -57,10 +53,6 @@
 
 	if (parent == nil) {
 		[self.cellOperationQueue resetOperationQueueAndDictionary:self.cellOperationDictionary];
-
-		if (self.mainResultsController.delegate == self) {
-			self.mainResultsController.delegate = nil;
-		}
 
 		if ([self.mainScrollview respondsToSelector:@selector(setDelegate:)]) {
 			[self.mainScrollview performSelector:@selector(setDelegate:) withObject:nil];
@@ -118,12 +110,6 @@
 	return _mainDataSource;
 }
 
-- (NSFetchedResultsController*)mainResultsController {
-	if (_mainResultsController == nil) {
-	}
-	return _mainResultsController;
-}
-
 #pragma mark -
 - (NSOperationQueue*)cellOperationQueue {
 	if (_cellOperationQueue == nil) {	//FXDLog_DEFAULT;
@@ -172,55 +158,6 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//MARK: NSFetchedResultsControllerDelegate
-- (void)controllerWillChangeContent:(NSFetchedResultsController*)controller {
-	if ([self.mainScrollview respondsToSelector:@selector(beginUpdates)]) {
-		[self.mainScrollview performSelector:@selector(beginUpdates)];
-	}
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController*)controller {
-	if ([self.mainScrollview respondsToSelector:@selector(endUpdates)]) {
-		[self.mainScrollview performSelector:@selector(endUpdates)];
-	}
-}
-
-- (void)controller:(NSFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-	
-	if ([self.mainScrollview isKindOfClass:[UITableView class]] == NO) {
-		return;
-	}
-
-
-	if (indexPath == nil) {
-		return;
-	}
-
-
-	UITableView *tableView = (UITableView*)self.mainScrollview;
-	
-	if (type == NSFetchedResultsChangeInsert) {
-		[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-	}
-	else if (type == NSFetchedResultsChangeDelete) {
-		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-	}
-	else if (type == NSFetchedResultsChangeUpdate) {
-		[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-	}
-
-
-	if (newIndexPath == nil) {
-		return;
-	}
-
-
-	if (type == NSFetchedResultsChangeMove) {
-		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-		[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-	}
-}
-
 //MARK: UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {	
 	

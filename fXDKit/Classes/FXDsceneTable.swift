@@ -56,10 +56,6 @@ extension FXDsceneTable: FXDsceneWithCells {
 	public func numberOfSections(for scrollView: UIScrollView!) -> Int {
 		var numberOfSections = 1
 
-		if (mainResultsController != nil) {
-			numberOfSections = (mainResultsController.sections?.count)!
-		}
-		else if (mainDataSource != nil) {
 			//MARK: Assume it's just one array
 		}
 		else if (itemCounts != nil) {
@@ -72,26 +68,6 @@ extension FXDsceneTable: FXDsceneWithCells {
 	public func numberOfItems(for scrollView: UIScrollView!, atSection section: Int) -> Int {
 		var numberOfItems = 0
 
-		if (mainResultsController != nil) {
-			let fetchedCount = mainResultsController.fetchedObjects?.count
-
-			#if DEBUG
-			let sections = mainResultsController.sections
-
-			if (section < (sections?.count)!) {
-				let sectionInfo = sections![section]
-
-				numberOfItems = sectionInfo.numberOfObjects
-			}
-
-			if (numberOfItems != fetchedCount) {	fxd_log_func()
-				fxdPrint("\(section) \(numberOfItems) == \(String(describing: fetchedCount))")
-			}
-			#else
-			numberOfItems = fetchedCount
-			#endif
-		}
-		else if (mainDataSource != nil) {
 			numberOfItems = self.mainDataSource.count
 		}
 		else if (itemCounts != nil) {

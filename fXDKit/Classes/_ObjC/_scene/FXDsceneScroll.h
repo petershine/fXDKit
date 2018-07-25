@@ -13,7 +13,6 @@
 
 @end
 
-@interface FXDsceneScroll : UIViewController <UIScrollViewDelegate, NSFetchedResultsControllerDelegate> {
 
 	NSString *_mainCellIdentifier;
 	UINib *_mainCellNib;
@@ -21,9 +20,9 @@
 	NSDictionary *_cellTitleDictionary;
 	NSDictionary *_cellSubTitleDictionary;
 	NSArray *_itemCounts;
+@interface FXDsceneScroll : UIViewController <UIScrollViewDelegate> {
 	
 	NSMutableArray *_mainDataSource;
-	NSFetchedResultsController *_mainResultsController;
 	
 	NSOperationQueue *_cellOperationQueue;
 	NSMutableDictionary *_cellOperationDictionary;
@@ -46,7 +45,6 @@
 @property (strong, nonatomic) NSDictionary *cellSubTitleDictionary;
 
 @property (strong, nonatomic) NSMutableArray *mainDataSource;
-@property (strong, nonatomic) NSFetchedResultsController *mainResultsController;
 
 @property (strong, nonatomic) NSOperationQueue *cellOperationQueue;
 @property (strong, nonatomic) NSMutableDictionary *cellOperationDictionary;
