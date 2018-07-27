@@ -60,7 +60,7 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 	}
 
 	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellIdentifier!, for: indexPath)
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellIdentifier, for: indexPath)
 
 		let operation = BlockOperation()
 
@@ -72,11 +72,11 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 			OperationQueue.current?.addOperation({
 				[weak self] in
 
-				self?.cellOperationQueue.removeOperation(forKey: indexPath, with: self?.cellOperationDictionary)
+				self?.cellOperationQueue?.removeOperation(forKey: indexPath, with: self?.cellOperationDictionary)
 			})
 		}
 
-		cellOperationQueue.enqueOperation(operation, forKey: indexPath, with: cellOperationDictionary)
+		cellOperationQueue?.enqueOperation(operation, forKey: indexPath, with: cellOperationDictionary)
 
 		return cell
 	}
@@ -85,6 +85,6 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 extension FXDsceneCollection: UICollectionViewDelegate {
 	public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
-		_ = cellOperationQueue.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
+		_ = cellOperationQueue?.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
 	}
 }

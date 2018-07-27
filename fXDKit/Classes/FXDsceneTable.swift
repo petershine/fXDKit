@@ -221,6 +221,6 @@ extension FXDsceneTable: UITableViewDataSource {
 extension FXDsceneTable: UITableViewDelegate {
 	open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
-		_ = cellOperationQueue.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
+		_ = cellOperationQueue?.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
 	}
 }
