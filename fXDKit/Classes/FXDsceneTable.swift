@@ -4,6 +4,9 @@ public protocol FXDsceneWithCells {
 	var mainCellIdentifier: String { get }
 	var itemCounts: [Any] { get }
 
+	var cellOperationQueue: OperationQueue? { get }
+	var cellOperationDictionary: NSMutableDictionary? { get }
+
 	func registerMainCellNib()
 	func numberOfSections(for scrollView: UIScrollView!) -> Int
 	func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int
@@ -25,9 +28,11 @@ public protocol FXDsceneWithTableCells {
 }
 
 
-open class FXDsceneTable: FXDsceneScroll {
-
+open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCells {
 	open var mainDataSource: NSMutableArray?
+
+	@IBOutlet open var mainTableview: UITableView?
+
 
 	@IBOutlet override open var mainScrollview: UIScrollView? {
 		get {
@@ -42,33 +47,28 @@ open class FXDsceneTable: FXDsceneScroll {
 		}
 	}
 
-	@IBOutlet open var mainTableview: UITableView?
 
-	override open func viewDidLoad() {
-		super.viewDidLoad()
-
-		registerMainCellNib()
-	}
-}
-
-
-extension FXDsceneTable: FXDsceneWithCells {
-	@objc open var mainCellIdentifier: String {
+	open var mainCellIdentifier: String {
 		let cellIdentifier = "CELL_\(String(describing: type(of: self)))"
 		return cellIdentifier
 	}
-
-	@objc open var itemCounts: [Any] {
+	open var itemCounts: [Any] {
 		return []
 	}
 
-	@objc open func registerMainCellNib() {
+	open lazy var cellOperationQueue: OperationQueue? = {
+		return OperationQueue.newSerialQueue(withName: String(describing: self))
+	}()
+	open lazy var cellOperationDictionary: NSMutableDictionary? = {
+		return NSMutableDictionary.init()
+	}()
+
+	open func registerMainCellNib() {
 		guard mainTableview != nil,
 			Bundle.main.path(forResource: mainCellIdentifier, ofType: "nib") != nil else {
 				//MARK: Cell maybe already prototyped in Storyboard, or dynamically instantiated
 				return
 		}
-
 
 		fxd_log_func()
 		fxdPrint(mainTableview!)
@@ -105,23 +105,20 @@ extension FXDsceneTable: FXDsceneWithCells {
 
 		return numberOfItems
 	}
-}
 
 
-extension FXDsceneTable: FXDsceneWithTableCells {
-	@objc open var cellTitleDictionary: [AnyHashable : Any] {
+	open var cellTitleDictionary: [AnyHashable : Any] {
 		return [:]
 	}
 
-	@objc open var cellSubTitleDictionary: [AnyHashable : Any] {
+	open var cellSubTitleDictionary: [AnyHashable : Any] {
 		return [:]
 	}
 
-	@objc open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {	fxd_log_func()
-		fxdPrint("NEED TO BE OVERRIDDEN")
+	open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {	fxd_log_func()
 	}
 
-	@objc open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
+	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
 		configureSectionPostionType(forTableCell: cell, for: indexPath)
 
 		cell?.textLabel?.text = cellTitleDictionary[indexPath] as? String
@@ -139,7 +136,7 @@ extension FXDsceneTable: FXDsceneWithTableCells {
 		}
 	}
 
-	@objc open func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!) {
+	open func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!) {
 		guard let rowCount = itemCounts[indexPath.section] as? Int,
 			let fxdCell = cell as? FXDTableViewCell else {
 				return
@@ -161,27 +158,27 @@ extension FXDsceneTable: FXDsceneWithTableCells {
 		}
 	}
 
-	@objc open func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
+	open func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
 		return nil
 	}
 
-	@objc open func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
+	open func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
 		return nil
 	}
 
-	@objc open func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
+	open func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
 		return nil
 	}
 
-	@objc open func highlightedMainImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
+	open func highlightedMainImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
 		return nil
 	}
 
-	@objc open func accessoryViewForTableCell(at indexPath: IndexPath!) -> UIView? {
+	open func accessoryViewForTableCell(at indexPath: IndexPath!) -> UIView? {
 		return nil
 	}
 
-	@objc open func sectionDividerView(forWidth width: CGFloat, andHeight height: CGFloat) -> UIView? {
+	open func sectionDividerView(forWidth width: CGFloat, andHeight height: CGFloat) -> UIView? {
 		let dividerFrame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
 
 		let sectionDividingView = UIView(frame: dividerFrame)
@@ -190,6 +187,24 @@ extension FXDsceneTable: FXDsceneWithTableCells {
 		return sectionDividingView
 	}
 }
+
+extension FXDsceneTable {
+	override open func viewDidLoad() {
+		super.viewDidLoad()
+
+		registerMainCellNib()
+	}
+
+	override open func willMove(toParentViewController parent: UIViewController?) {
+
+		if parent == nil {
+			cellOperationQueue?.resetOperationQueueAndDictionary(cellOperationDictionary)
+		}
+
+		super.willMove(toParentViewController: parent)
+	}
+}
+
 
 extension FXDsceneTable: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int {

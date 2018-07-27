@@ -54,7 +54,6 @@ extension UIViewController {
 	}
 
 	@objc public func fadeOutScene(callback: FXDcallback?) {
-
 		UIView.animate(
 			withDuration: DURATION_ONE_SECOND,
 			delay: 0.0,

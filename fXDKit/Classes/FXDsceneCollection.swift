@@ -1,6 +1,7 @@
 
 
 open class FXDsceneCollection: FXDsceneTable {
+	@IBOutlet open var mainCollectionview: UICollectionView?
 
 	@IBOutlet override open var mainScrollview: UIScrollView? {
 		get {
@@ -14,8 +15,6 @@ open class FXDsceneCollection: FXDsceneTable {
 			super.mainScrollview = newValue
 		}
 	}
-
-	@IBOutlet open var mainCollectionview: UICollectionView?
 }
 
 

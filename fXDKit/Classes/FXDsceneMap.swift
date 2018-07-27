@@ -5,14 +5,12 @@ open class FXDsceneMap: FXDsceneTable {
 	open var shouldResumeTracking: Bool = false
 
 	@IBOutlet open var mainMapview: FXDMapView?
-}
 
 
-extension FXDsceneMap {
-	@objc open func refreshMapview(coordinate: CLLocationCoordinate2D) {	fxd_log_func()
+	open func refreshMapview(coordinate: CLLocationCoordinate2D) {	fxd_log_func()
 	}
 
-	@objc open func refreshMapview(annotationArray: NSArray) {	fxd_log_func()
+	open func refreshMapview(annotationArray: NSArray) {	fxd_log_func()
 	}
 
 	@objc func resumeTrackingUser() {
@@ -21,6 +19,7 @@ extension FXDsceneMap {
 		}
 	}
 }
+
 
 extension FXDsceneMap: MKMapViewDelegate {
 	open func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
