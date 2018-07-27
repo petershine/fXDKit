@@ -80,14 +80,13 @@
 	if ([previousRootScene isKindOfClass:[FXDsceneLaunching class]]) {
 
 		[(FXDsceneLaunching*)previousRootScene
-		 dismissLaunchSceneWithFinishCallback:^(SEL caller, BOOL didFinish, id responseObj) {
-			 FXDLog_BLOCK(previousRootScene, caller);
-			 FXDLogBOOL(didFinish);
+		 fadeOutSceneWithCallback:^(BOOL finished, id _Nullable responseObj) {
+			 FXDLogBOOL(finished);
 
 			 [previousRootScene.view removeFromSuperview];
 
 			 if (finishCallback) {
-				 finishCallback(_cmd, didFinish, responseObj);
+				 finishCallback(_cmd, finished, responseObj);
 			 }
 		 }];
 

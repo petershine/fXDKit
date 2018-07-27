@@ -6,7 +6,6 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;
 
-
-- (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)callback;
+- (void)fadeOutSceneWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))finishCallback;
 
 @end

@@ -5,11 +5,6 @@
 
 @implementation FXDsceneLaunching
 
-#pragma mark - Memory management
-
-#pragma mark - Initialization
-
-#pragma mark - StatusBar
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
 	return UIStatusBarAnimationFade;
 }
@@ -18,25 +13,11 @@
 	return YES;
 }
 
-
-#pragma mark - Autorotating
 - (BOOL)shouldAutorotate {
 	return NO;
 }
 
-
-#pragma mark - View Appearing
-
-#pragma mark - Property overriding
-
-#pragma mark - Method overriding
-
-#pragma mark - Segues
-
-#pragma mark - IBActions
-
-#pragma mark - Public
-- (void)dismissLaunchSceneWithFinishCallback:(FXDcallbackFinish)callback {
+- (void)fadeOutSceneWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))callback {
 	__weak typeof(self) weakSelf = self;
 
 	[UIView
@@ -46,12 +27,11 @@
 	 animations:^{
 		 (weakSelf.view).alpha = 0.0;
 
-	 } completion:^(BOOL didFinish) {
-		 
+	 } completion:^(BOOL finished) {
+
 		 if (callback) {
-			 callback(_cmd, YES, nil);
+			 callback(finished, nil);
 		 }
 	 }];
 }
-
 @end
