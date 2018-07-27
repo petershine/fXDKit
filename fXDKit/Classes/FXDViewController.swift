@@ -1,18 +1,6 @@
 
 
 extension UIViewController {
-
-	@IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log_func()
-
-		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
-
-		if (self.parent != nil) {
-			self.parent?.dismiss(animated: true, completion: nil)
-		} else {
-			self.dismiss(animated: true, completion: nil)
-		}
-	}
-
 	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log_func()
 
 		var fromNibName = nibName
@@ -52,3 +40,36 @@ extension UIViewController {
 	}
 }
 
+extension UIViewController {
+
+	@IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log_func()
+
+		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
+
+		if (self.parent != nil) {
+			self.parent?.dismiss(animated: true, completion: nil)
+		} else {
+			self.dismiss(animated: true, completion: nil)
+		}
+	}
+
+	@objc public func fadeOutScene(callback: FXDcallback?) {
+
+		UIView.animate(
+			withDuration: DURATION_ONE_SECOND,
+			delay: 0.0,
+			options: .curveEaseIn,
+			animations: {
+				[weak self] in
+				
+				self?.view.alpha = 0.0
+			}
+		) {
+			(finished: Bool) in
+			
+			if callback != nil {
+				callback!(true, nil)
+			}
+		}
+	}
+}
