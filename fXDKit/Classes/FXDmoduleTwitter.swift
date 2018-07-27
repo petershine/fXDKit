@@ -24,9 +24,7 @@ open class FXDmoduleTwitter: NSObject {
 	let reasonForConnecting = NSLocalizedString("Please go to device's Settings and add your Twitter account", comment: "")
 
 	@objc public var authenticatedSession: TWTRAuthSession? {
-		get {
-			return TWTRTwitter.sharedInstance().sessionStore.session()
-		}
+		return TWTRTwitter.sharedInstance().sessionStore.session()
 	}
 
 
