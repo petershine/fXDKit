@@ -2,7 +2,7 @@
 
 public protocol FXDsceneWithCells {
 	var mainCellIdentifier: String { get }
-	var itemCounts: [Any] { get }
+	var itemCounts: [Int] { get }
 
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
@@ -13,8 +13,8 @@ public protocol FXDsceneWithCells {
 }
 
 public protocol FXDsceneWithTableCells {
-	var cellTitleDictionary: [AnyHashable : Any] { get }
-	var cellSubTitleDictionary: [AnyHashable : Any] { get }
+	var cellTitleDictionary: [String : String] { get }
+	var cellSubTitleDictionary: [String : String] { get }
 
 	func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
 	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
@@ -49,10 +49,9 @@ open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCe
 
 
 	open var mainCellIdentifier: String {
-		let cellIdentifier = "CELL_\(String(describing: type(of: self)))"
-		return cellIdentifier
+		return "CELL_\(String(describing: type(of: self)))"
 	}
-	open var itemCounts: [Any] {
+	open var itemCounts: [Int] {
 		return []
 	}
 
@@ -100,18 +99,18 @@ open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCe
 			numberOfItems = (mainDataSource?.count)!
 		}
 		else if (itemCounts.count > 0) {
-			numberOfItems = (itemCounts[section] as? Int)!
+			numberOfItems = itemCounts[section]
 		}
 
 		return numberOfItems
 	}
 
 
-	open var cellTitleDictionary: [AnyHashable : Any] {
+	open var cellTitleDictionary: [String : String] {
 		return [:]
 	}
 
-	open var cellSubTitleDictionary: [AnyHashable : Any] {
+	open var cellSubTitleDictionary: [String : String] {
 		return [:]
 	}
 
@@ -121,8 +120,8 @@ open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCe
 	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
 		configureSectionPostionType(forTableCell: cell, for: indexPath)
 
-		cell?.textLabel?.text = cellTitleDictionary[indexPath] as? String
-		cell?.detailTextLabel?.text = cellSubTitleDictionary[indexPath] as? String
+		cell?.textLabel?.text = cellTitleDictionary[String(describing: indexPath)]
+		cell?.detailTextLabel?.text = cellSubTitleDictionary[String(describing: indexPath)]
 		cell?.accessoryView = accessoryViewForTableCell(at: indexPath)
 
 		if let fxdCell = cell as? FXDTableViewCell {
@@ -137,10 +136,11 @@ open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCe
 	}
 
 	open func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!) {
-		guard let rowCount = itemCounts[indexPath.section] as? Int,
-			let fxdCell = cell as? FXDTableViewCell else {
-				return
+		guard let fxdCell = cell as? FXDTableViewCell else {
+			return
 		}
+
+		let rowCount = itemCounts[indexPath.section]
 
 		if (rowCount == 1) {
 			fxdCell.sectionPositionCase = .one
