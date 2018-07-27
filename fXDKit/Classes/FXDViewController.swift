@@ -68,7 +68,7 @@ extension UIViewController {
 			(finished: Bool) in
 			
 			if callback != nil {
-				callback!(true, nil)
+				callback!(finished, nil)
 			}
 		}
 	}
