@@ -16,33 +16,8 @@ open class FXDsceneCollection: FXDsceneTable {
 	}
 
 	@IBOutlet open var mainCollectionview: UICollectionView?
-
-	override open func willMove(toParentViewController parent: UIViewController?) {
-		if parent == nil {
-			mainCollectionview?.delegate = nil
-			mainCollectionview?.dataSource = nil
-		}
-
-		super.willMove(toParentViewController: parent)
-	}
 }
 
-extension FXDsceneCollection {
-	override open func registerMainCellNib() {
-		guard mainCollectionview != nil
-			&& mainCellNib != nil
-			&& mainCellIdentifier != nil else {
-				super.registerMainCellNib()
-				return
-		}
-
-		fxd_log_func()
-		fxdPrint(mainCollectionview!)
-		fxdPrint(mainCellIdentifier!)
-
-		mainCollectionview?.register(mainCellNib!, forCellWithReuseIdentifier: mainCellIdentifier!)
-	}
-}
 
 extension FXDsceneCollection: UICollectionViewDataSource {
 
@@ -54,7 +29,7 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 
 	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-		let itemCount = numberOfItems(for: collectionView, atSection: section)
+		let itemCount = numberOfItems(for: collectionView, section: section)
 
 		return itemCount
 	}
