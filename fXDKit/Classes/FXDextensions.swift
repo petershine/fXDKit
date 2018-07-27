@@ -46,6 +46,12 @@ extension Double {
     }
 }
 
+extension IndexPath {
+	public func stringKey() -> String {
+		return "\(row)_\(section)"
+	}
+}
+
 extension UIApplication {
 	@objc public class func mainWindow() -> UIWindow? {
 		var mainWindow: UIWindow? = nil
