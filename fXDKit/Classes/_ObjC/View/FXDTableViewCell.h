@@ -1,16 +1,16 @@
 
 #import "FXDimportEssential.h"
 
-typedef NS_ENUM(NSInteger, SectionPlacement) {
-	SectionPlacementOne,
-	SectionPlacementTop,
-	SectionPlacementMiddle,
-	SectionPlacementBottom
+typedef NS_ENUM(NSInteger, SectionPosition) {
+	single,
+	top,
+	middle,
+	bottom
 };
 
 
 @interface FXDTableViewCell : UITableViewCell
-@property (nonatomic) SectionPlacement sectionPositionCase;
+@property (nonatomic) SectionPosition positionCase;
 
 @property (strong, nonatomic) id addedObj;
 
