@@ -7,10 +7,17 @@ public protocol FXDsceneWithCells {
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
 
-	func registerMainCellNib()
 	func numberOfSections(for scrollView: UIScrollView!) -> Int
 	func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int
 }
+
+extension FXDsceneWithCells {
+	public var mainCellIdentifier: String {
+		fxd_overridable()
+		return "CELL_\(String(describing: type(of: self)))"
+	}
+}
+
 
 public protocol FXDsceneWithTableCells {
 	var cellTitleDictionary: [String : String] { get }
@@ -37,10 +44,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 		return mainTableview
 	}
 
-
-	open var mainCellIdentifier: String {
-		return "CELL_\(String(describing: type(of: self)))"
-	}
 	open var mainDataSource: NSMutableArray?
 
 
@@ -51,23 +54,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 		return NSMutableDictionary.init()
 	}()
 
-	open func registerMainCellNib() {
-		guard mainTableview != nil,
-			Bundle.main.path(forResource: mainCellIdentifier, ofType: "nib") != nil else {
-				//MARK: Cell maybe already prototyped in Storyboard, or dynamically instantiated
-				return
-		}
-
-		fxd_log_func()
-		fxdPrint(mainTableview!)
-		fxdPrint(mainCellIdentifier)
-
-		let mainCellNib = UINib.init(nibName: mainCellIdentifier, bundle: nil)
-		fxdPrint(mainCellNib)
-
-		mainTableview?.register(mainCellNib, forCellReuseIdentifier: mainCellIdentifier)
-	}
-
 	open func numberOfSections(for scrollView: UIScrollView!) -> Int {
 		//MARK: Assume it's just one array
 		let numberOfSections = 1
@@ -75,7 +61,7 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 	}
 
 	open func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int {
-		let numberOfItems = (mainDataSource?.count)!
+		let numberOfItems = (mainDataSource != nil) ? (mainDataSource?.count)! : 0
 		return numberOfItems
 	}
 
@@ -163,12 +149,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 }
 
 extension FXDsceneTable {
-	override open func viewDidLoad() {
-		super.viewDidLoad()
-
-		registerMainCellNib()
-	}
-
 	override open func willMove(toParentViewController parent: UIViewController?) {
 		if parent == nil {
 			cellOperationQueue?.resetOperationQueueAndDictionary(cellOperationDictionary)
