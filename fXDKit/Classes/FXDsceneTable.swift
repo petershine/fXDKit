@@ -120,8 +120,8 @@ open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCe
 	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
 		configureSectionPostionType(forTableCell: cell, for: indexPath)
 
-		cell?.textLabel?.text = cellTitleDictionary[indexPath.stringKey()]
-		cell?.detailTextLabel?.text = cellSubTitleDictionary[indexPath.stringKey()]
+		cell?.textLabel?.text = cellTitleDictionary[indexPath.stringKey]
+		cell?.detailTextLabel?.text = cellSubTitleDictionary[indexPath.stringKey]
 		cell?.accessoryView = accessoryViewForTableCell(at: indexPath)
 
 		if let fxdCell = cell as? FXDTableViewCell {

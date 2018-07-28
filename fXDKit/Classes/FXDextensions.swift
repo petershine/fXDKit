@@ -47,7 +47,7 @@ extension Double {
 }
 
 extension IndexPath {
-	public func stringKey() -> String {
+	public var stringKey: String {
 		return "\(row)_\(section)"
 	}
 }
