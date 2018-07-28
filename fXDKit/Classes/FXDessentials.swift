@@ -48,3 +48,10 @@ public func fxd_log_func(_ filename: String = #file, function: String = #functio
     os_log("\n\n[%@ %@]", (filename as NSString).lastPathComponent, function)
     #endif
 }
+
+public func fxd_overridable(_ filename: String = #file, function: String = #function) {
+	#if DEBUG
+	os_log(" ")
+	os_log("\n\nOVERRIDABLE [%@ %@]", (filename as NSString).lastPathComponent, function)
+	#endif
+}

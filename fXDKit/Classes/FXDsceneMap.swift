@@ -7,10 +7,12 @@ open class FXDsceneMap: FXDsceneTable {
 	@IBOutlet open var mainMapview: FXDMapView?
 
 
-	open func refreshMapview(coordinate: CLLocationCoordinate2D) {	fxd_log_func()
+	open func refreshMapview(coordinate: CLLocationCoordinate2D) {
+		fxd_overridable()
 	}
 
-	open func refreshMapview(annotationArray: NSArray) {	fxd_log_func()
+	open func refreshMapview(annotationArray: NSArray) {
+		fxd_overridable()
 	}
 
 	@objc func resumeTrackingUser() {
@@ -23,7 +25,8 @@ open class FXDsceneMap: FXDsceneTable {
 
 extension FXDsceneMap: MKMapViewDelegate {
 	open func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-		if shouldResumeTracking {	//MARK: Keep canceling until scrolling is stopped
+		if shouldResumeTracking {
+			//MARK: Keep canceling until scrolling is stopped
 			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(resumeTrackingUser), object: nil)
 		}
 	}

@@ -28,8 +28,7 @@ open class FXDmoduleTwitter: NSObject {
 	}
 
 
-	@objc required public init(withTwitterKey twitterKey: String!, twitterSecret: String!) {
-		fxd_log_func()
+	@objc required public init(withTwitterKey twitterKey: String!, twitterSecret: String!) {	fxd_log_func()
 		super.init()
 
 		TWTRTwitter.sharedInstance().start(withConsumerKey: twitterKey!, consumerSecret: twitterSecret!)

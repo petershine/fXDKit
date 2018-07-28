@@ -114,7 +114,8 @@ open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCe
 		return [:]
 	}
 
-	open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {	fxd_log_func()
+	open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
+		fxd_overridable()
 	}
 
 	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
