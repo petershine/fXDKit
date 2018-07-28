@@ -2,7 +2,6 @@
 
 public protocol FXDsceneWithCells {
 	var mainCellIdentifier: String { get }
-	var itemCounts: [Int] { get }
 
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
@@ -18,7 +17,8 @@ public protocol FXDsceneWithTableCells {
 
 	func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
 	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
-	func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!)
+	func configureSectionPosition(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!)
+
 	func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
 	func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
 	func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
@@ -41,9 +41,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 
 	open var mainCellIdentifier: String {
 		return "CELL_\(String(describing: type(of: self)))"
-	}
-	open var itemCounts: [Int] {
-		return []
 	}
 
 	open lazy var cellOperationQueue: OperationQueue? = {
@@ -70,29 +67,14 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 		mainTableview?.register(mainCellNib, forCellReuseIdentifier: mainCellIdentifier)
 	}
 
-	public func numberOfSections(for scrollView: UIScrollView!) -> Int {
-		var numberOfSections = 1
-
-		if (mainDataSource != nil) {
-			//MARK: Assume it's just one array
-		}
-		else if (itemCounts.count > 0) {
-			numberOfSections = itemCounts.count
-		}
-
+	open func numberOfSections(for scrollView: UIScrollView!) -> Int {
+		//MARK: Assume it's just one array
+		let numberOfSections = 1
 		return numberOfSections
 	}
 
-	public func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int {
-		var numberOfItems = 0
-
-		if (mainDataSource != nil) {
-			numberOfItems = (mainDataSource?.count)!
-		}
-		else if (itemCounts.count > 0) {
-			numberOfItems = itemCounts[section]
-		}
-
+	open func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int {
+		let numberOfItems = (mainDataSource?.count)!
 		return numberOfItems
 	}
 
@@ -110,8 +92,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 	}
 
 	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
-		configureSectionPostionType(forTableCell: cell, for: indexPath)
-
 		cell?.textLabel?.text = cellTitleDictionary[indexPath.stringKey]
 		cell?.detailTextLabel?.text = cellSubTitleDictionary[indexPath.stringKey]
 		cell?.accessoryView = accessoryViewForTableCell(at: indexPath)
@@ -127,28 +107,29 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 		}
 	}
 
-	open func configureSectionPostionType(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!) {
+	open func configureSectionPosition(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!) {
 		guard let fxdCell = cell as? FXDTableViewCell else {
 			return
 		}
 
-		let rowCount = itemCounts[indexPath.section]
+		let itemCount = numberOfItems(for: mainTableview, section: indexPath.section)
 
-		if (rowCount == 1) {
-			fxdCell.sectionPositionCase = .one
+		if (itemCount == 1) {
+			fxdCell.positionCase = .single
 		}
-		else if (rowCount > 1) {
+		else if (itemCount > 1) {
 			if (indexPath.row == 0) {
-				fxdCell.sectionPositionCase = .top
+				fxdCell.positionCase = .top
 			}
-			else if (indexPath.row == rowCount-1) {
-				fxdCell.sectionPositionCase = .bottom
+			else if (indexPath.row == itemCount-1) {
+				fxdCell.positionCase = .bottom
 			}
 			else {
-				fxdCell.sectionPositionCase = .middle
+				fxdCell.positionCase = .middle
 			}
 		}
 	}
+
 
 	open func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
 		return nil
@@ -200,16 +181,11 @@ extension FXDsceneTable {
 
 extension FXDsceneTable: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int {
-		let sectionCount = numberOfSections(for: tableView)
-
-		return sectionCount
+		return numberOfSections(for: tableView)
 	}
 
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-		let itemCount = numberOfItems(for: tableView, section: section)
-
-		return itemCount
+		return numberOfItems(for: tableView, section: section)
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
