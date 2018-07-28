@@ -2,6 +2,7 @@
 
 public protocol FXDsceneWithCells {
 	var mainCellIdentifier: String { get }
+	var mainDataSource: NSMutableArray? { get set }
 
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
@@ -29,8 +30,6 @@ public protocol FXDsceneWithTableCells {
 
 
 open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCells, FXDsceneWithTableCells {
-	open var mainDataSource: NSMutableArray?
-
 	@IBOutlet open var mainTableview: UITableView?
 
 
@@ -42,6 +41,8 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 	open var mainCellIdentifier: String {
 		return "CELL_\(String(describing: type(of: self)))"
 	}
+	open var mainDataSource: NSMutableArray?
+
 
 	open lazy var cellOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: String(describing: self))
@@ -169,7 +170,6 @@ extension FXDsceneTable {
 	}
 
 	override open func willMove(toParentViewController parent: UIViewController?) {
-
 		if parent == nil {
 			cellOperationQueue?.resetOperationQueueAndDictionary(cellOperationDictionary)
 		}
@@ -205,7 +205,6 @@ extension FXDsceneTable: UITableViewDataSource {
 
 extension FXDsceneTable: UITableViewDelegate {
 	open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
 		_ = cellOperationQueue?.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
 	}
 }
