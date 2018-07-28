@@ -3,17 +3,8 @@
 open class FXDsceneCollection: FXDsceneTable {
 	@IBOutlet open var mainCollectionview: UICollectionView?
 
-	@IBOutlet override open var mainScrollview: UIScrollView? {
-		get {
-			if mainCollectionview == nil {
-				return super.mainScrollview
-			}
-
-			return mainCollectionview
-		}
-		set {
-			super.mainScrollview = newValue
-		}
+	override open var mainScrollview: UIScrollView? {
+		return mainCollectionview
 	}
 }
 

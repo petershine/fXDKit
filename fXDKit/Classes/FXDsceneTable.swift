@@ -28,23 +28,14 @@ public protocol FXDsceneWithTableCells {
 }
 
 
-open class FXDsceneTable: FXDsceneScroll, FXDsceneWithCells, FXDsceneWithTableCells {
+open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCells, FXDsceneWithTableCells {
 	open var mainDataSource: NSMutableArray?
 
 	@IBOutlet open var mainTableview: UITableView?
 
 
-	@IBOutlet override open var mainScrollview: UIScrollView? {
-		get {
-			if mainTableview == nil {
-				return super.mainScrollview
-			}
-
-			return mainTableview
-		}
-		set {
-			super.mainScrollview = newValue
-		}
+	open var mainScrollview: UIScrollView? {
+		return mainTableview
 	}
 
 
