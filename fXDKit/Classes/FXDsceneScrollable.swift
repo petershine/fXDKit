@@ -5,7 +5,6 @@ public protocol FXDsceneScrollable {
 	var heightOffsetForSceneDismissing: CGFloat { get }
 
 	func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat
-	func dismissByPullingDown(_ scrollView: UIScrollView?)
 
 	var mainScrollview: UIScrollView? { get }
 }
@@ -35,7 +34,4 @@ extension FXDsceneScrollable {
 
 		return (distance/maximumDistance)
 	}
-	public func dismissByPullingDown(_ scrollView: UIScrollView?) {	fxd_overridable()
-	}
 }
-
