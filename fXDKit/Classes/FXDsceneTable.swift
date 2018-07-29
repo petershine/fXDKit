@@ -1,14 +1,5 @@
 
 
-public protocol FXDscrollableCells: FXDsceneScrollable {
-	var cellOperationQueue: OperationQueue? { get }
-	var cellOperationDictionary: NSMutableDictionary? { get }
-
-	var mainCellIdentifier: String { get }
-	var mainDataSource: NSMutableArray? { get set }
-}
-
-
 open class FXDsceneTable: UIViewController, FXDscrollableCells {
 	@IBOutlet public weak var mainTableview: UITableView!
 
@@ -17,7 +8,7 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells {
 	}
 
 
-	//MARK: FXDsceneScrollable
+	//MARK: FXDprotocolScrollable
 	open var mainScrollview: UIScrollView? {
 		return mainTableview
 	}

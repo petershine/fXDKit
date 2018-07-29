@@ -1,20 +1,29 @@
 
 
-public protocol FXDsceneScrollable {
+public protocol FXDprotocolScrollable {
 	var mainScrollview: UIScrollView? { get }
 	
-	var heightRaioForSceneDismissing: CGFloat { get }
+	var heightRatioForSceneDismissing: CGFloat { get }
 	var heightOffsetForSceneDismissing: CGFloat { get }
 
 	func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat
 }
 
-extension FXDsceneScrollable {
-	public var heightRaioForSceneDismissing: CGFloat {
+public protocol FXDscrollableCells: FXDprotocolScrollable {
+	var cellOperationQueue: OperationQueue? { get }
+	var cellOperationDictionary: NSMutableDictionary? { get }
+
+	var mainCellIdentifier: String { get }
+	var mainDataSource: NSMutableArray? { get set }
+}
+
+
+extension FXDprotocolScrollable {
+	public var heightRatioForSceneDismissing: CGFloat {
 		 return 0.275
 	}
 	public var heightOffsetForSceneDismissing: CGFloat {
-		return (0.0 - (UIScreen.main.bounds.size.height*heightRaioForSceneDismissing))
+		return (0.0 - (UIScreen.main.bounds.size.height*heightRatioForSceneDismissing))
 	}
 
 	public func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat {
