@@ -10,18 +10,11 @@ open class FXDsceneCollection: FXDsceneTable {
 
 
 extension FXDsceneCollection: UICollectionViewDataSource {
-
 	public func numberOfSections(in collectionView: UICollectionView) -> Int {
-		let sectionCount = numberOfSections(for: collectionView)
-
-		return sectionCount
+		return 1	//MARK: Assume it's often just one array
 	}
-
 	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-		let itemCount = numberOfItems(for: collectionView, section: section)
-
-		return itemCount
+		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0
 	}
 
 	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

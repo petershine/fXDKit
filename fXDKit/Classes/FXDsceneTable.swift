@@ -6,9 +6,6 @@ public protocol FXDsceneWithCells {
 
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
-
-	func numberOfSections(for scrollView: UIScrollView!) -> Int
-	func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int
 }
 
 extension FXDsceneWithCells {
@@ -54,17 +51,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 		return NSMutableDictionary.init()
 	}()
 
-	open func numberOfSections(for scrollView: UIScrollView!) -> Int {
-		//MARK: Assume it's just one array
-		let numberOfSections = 1
-		return numberOfSections
-	}
-
-	open func numberOfItems(for scrollView: UIScrollView!, section: Int) -> Int {
-		let numberOfItems = (mainDataSource != nil) ? (mainDataSource?.count)! : 0
-		return numberOfItems
-	}
-
 
 	open var cellTitleDictionary: [String : String] {
 		return [:]
@@ -99,7 +85,7 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 			return
 		}
 
-		let itemCount = numberOfItems(for: mainTableview, section: indexPath.section)
+		let itemCount = tableView(mainTableview!, numberOfRowsInSection: indexPath.section)
 
 		if (itemCount == 1) {
 			fxdCell.positionCase = .single
@@ -161,11 +147,11 @@ extension FXDsceneTable {
 
 extension FXDsceneTable: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int {
-		return numberOfSections(for: tableView)
+		return 1	//MARK: Assume it's often just one array
 	}
 
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return numberOfItems(for: tableView, section: section)
+		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0
 	}
 
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
