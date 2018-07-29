@@ -4,7 +4,7 @@ open class FXDsceneCollection: FXDsceneTable {
 	@IBOutlet open var mainCollectionview: UICollectionView?
 
 	//MARK: FXDprotocolScrollable
-	open override var mainScrollview: UIScrollView? {
+	open override weak var mainScrollview: UIScrollView? {
 		return mainCollectionview
 	}
 }

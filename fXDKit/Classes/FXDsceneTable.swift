@@ -9,7 +9,7 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells {
 
 
 	//MARK: FXDprotocolScrollable
-	open var mainScrollview: UIScrollView? {
+	open weak var mainScrollview: UIScrollView? {
 		return mainTableview
 	}
 
