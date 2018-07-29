@@ -47,3 +47,12 @@ public protocol FXDscrollableCells: FXDprotocolScrollable {
 	func enqueueCellOperation(for cell: UIView, indexPath: IndexPath)
 }
 
+public protocol FXDscrollableMap: FXDprotocolScrollable {
+	var mainMapview: FXDMapView? { get set }
+
+	func refreshMapview(coordinate: CLLocationCoordinate2D)
+
+	func cancelTrackingUserOnMapView()
+	func delayedTrackingUserOnMapView(afterDelay: TimeInterval)
+	func startTrackingUserOnMapView()
+}
