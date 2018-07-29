@@ -15,6 +15,9 @@ public protocol FXDscrollableCells: FXDprotocolScrollable {
 
 	var mainCellIdentifier: String { get }
 	var mainDataSource: NSMutableArray? { get set }
+
+	func configureCell(_ cell: UIView, for indexPath: IndexPath)
+	func enqueueCellOperation(for cell: UIView, indexPath: IndexPath)
 }
 
 
@@ -27,7 +30,6 @@ extension FXDprotocolScrollable {
 	}
 
 	public func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat {
-
 		var distance: CGFloat = scrollView.contentOffset.y + scrollView.contentInset.top
 
 		if #available(iOS 11.0, *) {

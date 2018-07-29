@@ -1,31 +1,39 @@
 
 
-open class FXDsceneCollection: FXDsceneTable {
-	@IBOutlet open var mainCollectionview: UICollectionView?
+open class FXDsceneCollection: UIViewController, FXDscrollableCells {
+	@IBOutlet public weak var mainCollectionview: UICollectionView!
+
 
 	//MARK: FXDprotocolScrollable
-	open override weak var mainScrollview: UIScrollView? {
+	open weak var mainScrollview: UIScrollView? {
 		return mainCollectionview
 	}
-}
 
+	//MARK: FXDscrollableCells
+	public lazy var cellOperationQueue: OperationQueue? = {
+		return OperationQueue.newSerialQueue(withName: String(describing: self))
+	}()
+	public lazy var cellOperationDictionary: NSMutableDictionary? = {
+		return NSMutableDictionary.init()
+	}()
 
-extension FXDsceneCollection: UICollectionViewDataSource {
-	public func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 1	//MARK: Assume it's often just one array
+	open var mainDataSource: NSMutableArray?
+
+	open var mainCellIdentifier: String {
+		fxd_overridable()
+		return "CELL_\(String(describing: type(of: self)))"
 	}
-	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0
+	open func configureCell(_ cell: UIView, for indexPath: IndexPath) {
+		fxd_overridable()
 	}
-
-	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellIdentifier, for: indexPath)
+	open func enqueueCellOperation(for cell: UIView, indexPath: IndexPath) {
+		fxd_overridable()
 
 		let operation = BlockOperation()
 
 		operation.addExecutionBlock {
 			if operation.isCancelled == false {
-				// Do something
+				//TODO:
 			}
 
 			OperationQueue.current?.addOperation({
@@ -35,7 +43,23 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 			})
 		}
 
-		cellOperationQueue?.enqueOperation(operation, forKey: indexPath, with: cellOperationDictionary)
+		cellOperationQueue?.enqueueOperation(operation, forKey: indexPath, with: cellOperationDictionary)
+	}
+}
+
+extension FXDsceneCollection: UICollectionViewDataSource {
+	open func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return 1	//MARK: Assume it's often just one array
+	}
+	open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0
+	}
+
+	open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellIdentifier, for: indexPath)
+
+		configureCell(cell, for: indexPath)
+		enqueueCellOperation(for: cell, indexPath: indexPath)
 
 		return cell
 	}
@@ -43,7 +67,6 @@ extension FXDsceneCollection: UICollectionViewDataSource {
 
 extension FXDsceneCollection: UICollectionViewDelegate {
 	public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-
 		_ = cellOperationQueue?.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
 	}
 }

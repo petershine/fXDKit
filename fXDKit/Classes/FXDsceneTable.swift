@@ -3,11 +3,6 @@
 open class FXDsceneTable: UIViewController, FXDscrollableCells {
 	@IBOutlet public weak var mainTableview: UITableView!
 
-	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
-		fxd_overridable()
-	}
-
-
 	//MARK: FXDprotocolScrollable
 	open weak var mainScrollview: UIScrollView? {
 		return mainTableview
@@ -21,18 +16,40 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells {
 		return NSMutableDictionary.init()
 	}()
 
+	open var mainDataSource: NSMutableArray?
+
 	open var mainCellIdentifier: String {
 		fxd_overridable()
 		return "CELL_\(String(describing: type(of: self)))"
 	}
-	open var mainDataSource: NSMutableArray?
+	open func configureCell(_ cell: UIView, for indexPath: IndexPath) {
+		fxd_overridable()
+	}
+	open func enqueueCellOperation(for cell: UIView, indexPath: IndexPath) {
+		fxd_overridable()
+
+		let operation = BlockOperation()
+
+		operation.addExecutionBlock {
+			if operation.isCancelled == false {
+				//TODO:
+			}
+
+			OperationQueue.current?.addOperation({
+				[weak self] in
+
+				self?.cellOperationQueue?.removeOperation(forKey: indexPath, with: self?.cellOperationDictionary)
+			})
+		}
+
+		cellOperationQueue?.enqueueOperation(operation, forKey: indexPath, with: cellOperationDictionary)
+	}
 }
 
 extension FXDsceneTable: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int {
 		return 1	//MARK: Assume it's often just one array
 	}
-
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0
 	}
@@ -44,7 +61,8 @@ extension FXDsceneTable: UITableViewDataSource {
 			cell = FXDTableViewCell.init(style: .subtitle, reuseIdentifier: mainCellIdentifier)
 		}
 
-		configureTableCell(cell, for: indexPath)
+		configureCell(cell!, for: indexPath)
+		enqueueCellOperation(for: cell!, indexPath: indexPath)
 
 		return cell!
 	}
