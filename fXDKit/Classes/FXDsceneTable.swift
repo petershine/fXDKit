@@ -1,74 +1,41 @@
 
 
 public protocol FXDscrollableCells: FXDsceneScrollable {
-	var mainCellIdentifier: String { get }
-	var mainDataSource: NSMutableArray? { get set }
-
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
 
-	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
-
-	func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
-	func highlightedMainImageForTableCell(at indexPath: IndexPath!) -> UIImage?
+	var mainCellIdentifier: String { get }
+	var mainDataSource: NSMutableArray? { get set }
 }
 
 
 open class FXDsceneTable: UIViewController, FXDscrollableCells {
-	deinit {
-		cellOperationQueue?.resetOperationQueueAndDictionary(cellOperationDictionary)
+	@IBOutlet public weak var mainTableview: UITableView!
+
+	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
+		fxd_overridable()
 	}
 
 
-	@IBOutlet open var mainTableview: UITableView?
-
-
+	//MARK: FXDsceneScrollable
 	open var mainScrollview: UIScrollView? {
 		return mainTableview
 	}
+
+	//MARK: FXDscrollableCells
+	public lazy var cellOperationQueue: OperationQueue? = {
+		return OperationQueue.newSerialQueue(withName: String(describing: self))
+	}()
+	public lazy var cellOperationDictionary: NSMutableDictionary? = {
+		return NSMutableDictionary.init()
+	}()
 
 	open var mainCellIdentifier: String {
 		fxd_overridable()
 		return "CELL_\(String(describing: type(of: self)))"
 	}
 	open var mainDataSource: NSMutableArray?
-
-	open lazy var cellOperationQueue: OperationQueue? = {
-		return OperationQueue.newSerialQueue(withName: String(describing: self))
-	}()
-	open lazy var cellOperationDictionary: NSMutableDictionary? = {
-		return NSMutableDictionary.init()
-	}()
-
-	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
-		guard let fxdCell = cell as? FXDTableViewCell else {
-			return
-		}
-
-		let backgroundImage = backgroundImageForTableCell(at: indexPath)
-		let highlightedImage = selectedBackgroundImageForTableCell(at: indexPath)
-		fxdCell.customizeBackground(with: backgroundImage, withHighlightedImage: highlightedImage)
-
-		let mainImage = mainImageForTableCell(at: indexPath)
-		let highlightedMainImage = highlightedMainImageForTableCell(at: indexPath)
-		fxdCell.customize(withMainImage: mainImage, withHighlightedMainImage: highlightedMainImage)
-	}
-	open func backgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
-		return nil
-	}
-	open func selectedBackgroundImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
-		return nil
-	}
-	open func mainImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
-		return nil
-	}
-	open func highlightedMainImageForTableCell(at indexPath: IndexPath!) -> UIImage? {
-		return nil
-	}
 }
-
 
 extension FXDsceneTable: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int {
