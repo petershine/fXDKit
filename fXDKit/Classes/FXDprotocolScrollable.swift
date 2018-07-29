@@ -49,6 +49,11 @@ public protocol FXDscrollableCells: FXDprotocolScrollable {
 
 public protocol FXDscrollableMap: FXDprotocolScrollable {
 	var mainMapview: FXDMapView? { get set }
+	var isMapviewFadingIn: Bool { get set }
+	var durationBeforeStartUserTracking: TimeInterval { get }
+
+	func unloadMapScene()
+	func initializeMapview()
 
 	func refreshMapview(coordinate: CLLocationCoordinate2D)
 
