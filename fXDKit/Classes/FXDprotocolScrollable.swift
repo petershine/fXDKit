@@ -9,18 +9,6 @@ public protocol FXDprotocolScrollable {
 	func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat
 }
 
-public protocol FXDscrollableCells: FXDprotocolScrollable {
-	var cellOperationQueue: OperationQueue? { get }
-	var cellOperationDictionary: NSMutableDictionary? { get }
-
-	var mainCellIdentifier: String { get }
-	var mainDataSource: NSMutableArray? { get set }
-
-	func configureCell(_ cell: UIView, for indexPath: IndexPath)
-	func enqueueCellOperation(for cell: UIView, indexPath: IndexPath)
-}
-
-
 extension FXDprotocolScrollable {
 	public var heightRatioForSceneDismissing: CGFloat {
 		 return 0.275
@@ -46,3 +34,16 @@ extension FXDprotocolScrollable {
 		return (distance/maximumDistance)
 	}
 }
+
+
+public protocol FXDscrollableCells: FXDprotocolScrollable {
+	var cellOperationQueue: OperationQueue? { get }
+	var cellOperationDictionary: NSMutableDictionary? { get }
+
+	var mainCellIdentifier: String { get }
+	var mainDataSource: NSMutableArray? { get set }
+
+	func configureCell(_ cell: UIView, for indexPath: IndexPath)
+	func enqueueCellOperation(for cell: UIView, indexPath: IndexPath)
+}
+
