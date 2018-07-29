@@ -1,12 +1,12 @@
 
 
 public protocol FXDsceneScrollable {
+	var mainScrollview: UIScrollView? { get }
+	
 	var heightRaioForSceneDismissing: CGFloat { get }
 	var heightOffsetForSceneDismissing: CGFloat { get }
 
 	func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat
-
-	var mainScrollview: UIScrollView? { get }
 }
 
 extension FXDsceneScrollable {
