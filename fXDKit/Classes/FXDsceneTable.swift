@@ -1,6 +1,6 @@
 
 
-public protocol FXDsceneWithCells {
+public protocol FXDsceneWithCells: FXDsceneScrollable {
 	var mainCellIdentifier: String { get }
 	var mainDataSource: NSMutableArray? { get set }
 
@@ -16,11 +16,10 @@ extension FXDsceneWithCells {
 }
 
 
-public protocol FXDsceneWithTableCells {
+public protocol FXDsceneWithTableCells: FXDsceneWithCells {
 	var cellTitleDictionary: [String : String] { get }
 	var cellSubTitleDictionary: [String : String] { get }
 
-	func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
 	func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!)
 	func configureSectionPosition(forTableCell cell: UITableViewCell?, for indexPath: IndexPath!)
 
@@ -33,7 +32,7 @@ public protocol FXDsceneWithTableCells {
 }
 
 
-open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCells, FXDsceneWithTableCells {
+open class FXDsceneTable: UIViewController, FXDsceneWithTableCells {
 	@IBOutlet open var mainTableview: UITableView?
 
 
@@ -58,10 +57,6 @@ open class FXDsceneTable: UIViewController, FXDsceneScrollable, FXDsceneWithCell
 
 	open var cellSubTitleDictionary: [String : String] {
 		return [:]
-	}
-
-	open func initializeTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
-		fxd_overridable()
 	}
 
 	open func configureTableCell(_ cell: UITableViewCell?, for indexPath: IndexPath!) {
@@ -159,8 +154,6 @@ extension FXDsceneTable: UITableViewDataSource {
 
 		if cell == nil {
 			cell = FXDTableViewCell.init(style: .subtitle, reuseIdentifier: mainCellIdentifier)
-
-			initializeTableCell(cell, for: indexPath)
 		}
 
 		configureTableCell(cell, for: indexPath)
