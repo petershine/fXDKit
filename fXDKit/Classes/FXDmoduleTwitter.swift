@@ -228,8 +228,15 @@ open class FXDmoduleTwitter: NSObject {
 		client.sendTwitterRequest(request) {
 			(response, data, connectionError) in
 
-			if connectionError != nil {
+			guard connectionError == nil else {
 				fxdPrint("Error: \(String(describing: connectionError))")
+				callback(false, nil)
+				return
+			}
+
+			guard data != nil else {
+				callback(false, nil)
+				return
 			}
 
 			do {
@@ -245,7 +252,7 @@ open class FXDmoduleTwitter: NSObject {
 
 			//TODO: Reconsider bringing evaluation to be more generic function
 
-			callback(connectionError == nil, nil)
+			callback(true, nil)
 		}
 	}
 }
