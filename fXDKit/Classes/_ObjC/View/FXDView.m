@@ -121,7 +121,7 @@
 	if (nib == nil) {
 		NSString *nibName = NSStringFromClass([self class]);
 
-		nib = [UINib nibWithNibName:nibName bundle:nil];
+		nib = [UINib nibWithNibName:nibName bundle:[NSBundle bundleForClass:[self class]]];
 	}
 
 	UIView *view = nil;

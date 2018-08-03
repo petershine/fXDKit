@@ -277,8 +277,7 @@
 		nibNameOrNil = NSStringFromClass([self class]);
 	}
 	
-	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:nil];
-	
+	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:[NSBundle bundleForClass:[self class]]];
 	
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
 
