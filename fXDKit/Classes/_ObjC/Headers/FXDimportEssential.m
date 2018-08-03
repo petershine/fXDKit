@@ -211,8 +211,9 @@
 	}
 
 	FXDLogObject(storyboardName);
+	NSBundle *resourceBundle = [NSBundle bundleForClass:[self class]];
 
-	UIStoryboard *storyboard = [self storyboardWithName:storyboardName bundle:nil];
+	UIStoryboard *storyboard = [self storyboardWithName:storyboardName bundle:resourceBundle];
 
 	return storyboard;
 }

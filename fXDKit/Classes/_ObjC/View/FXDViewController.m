@@ -14,21 +14,35 @@
 		nibNameOrNil = NSStringFromClass([self class]);
 	}
 
+	if (nibBundleOrNil == nil) {
+		nibBundleOrNil = [NSBundle bundleForClass:NSClassFromString(nibNameOrNil)];
+
+		if (nibBundleOrNil == nil) {
+			nibBundleOrNil = [NSBundle mainBundle];
+		}
+	}
+
 
 	//MARK: Should use nib instead of xib for file type
-	NSString *resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
+	NSString *resourcePath = [nibBundleOrNil pathForResource:nibNameOrNil ofType:@"nib"];
 	BOOL nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 	FXDLog(@"SELF: %@ %@", _BOOL(nibExists), _Object(resourcePath));
 
 	if (nibExists == NO) {
 		nibNameOrNil = NSStringFromClass(self.superclass);
+		nibBundleOrNil = [NSBundle bundleForClass:NSClassFromString(nibNameOrNil)];
 
-		resourcePath = [[NSBundle mainBundle] pathForResource:nibNameOrNil ofType:@"nib"];
+		if (nibBundleOrNil == nil) {
+			nibBundleOrNil = [NSBundle mainBundle];
+		}
+
+		resourcePath = [nibBundleOrNil pathForResource:nibNameOrNil ofType:@"nib"];
 		nibExists = [[NSFileManager defaultManager] fileExistsAtPath:resourcePath];
 		FXDLog(@"SUPER: %@ %@", _BOOL(nibExists), _Object(resourcePath));
 
 		if (nibExists == NO) {
 			nibNameOrNil = nil;
+			nibBundleOrNil = nil;
 		}
 	}
 
@@ -276,8 +290,11 @@
 	if (nibNameOrNil == nil) {
 		nibNameOrNil = NSStringFromClass([self class]);
 	}
+
+	Class sceneClass = NSClassFromString(nibNameOrNil);
+	NSBundle *resourceBundle = [NSBundle bundleForClass:sceneClass];
 	
-	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:[NSBundle bundleForClass:[self class]]];
+	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:resourceBundle];
 	
 	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
 
@@ -286,7 +303,7 @@
 	
 #if DEBUG
 	if (sceneView == nil) {
-		FXDLog(@"%@ %@", _Object([self class]), _Object(viewArray));
+		FXDLog(@"%@ %@", _Object(sceneClass), _Object(viewArray));
 	}
 #endif
 	

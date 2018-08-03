@@ -22,7 +22,8 @@
 - (UIStoryboard*)mainStoryboard {
 	if (_mainStoryboard == nil) {
 		if (self.mainStoryboardName) {
-			_mainStoryboard = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:nil];
+			NSBundle *resourceBundle = [NSBundle bundleForClass:NSClassFromString(self.mainStoryboardName)];
+			_mainStoryboard = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:resourceBundle];
 		}
 	}
 

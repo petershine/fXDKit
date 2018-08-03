@@ -109,8 +109,10 @@
 	if (nibName == nil) {
 		nibName = NSStringFromClass([self class]);
 	}
+	Class viewClass = NSClassFromString(nibName);
+	NSBundle *resourceBundle = [NSBundle bundleForClass:viewClass];
 
-	UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
+	UINib *nib = [UINib nibWithNibName:nibName bundle:resourceBundle];
 
 	UIView *view = [self viewFromNib:nib withOwner:ownerOrNil];
 
@@ -120,8 +122,8 @@
 + (instancetype _Nullable )viewFromNib:(UINib*_Nullable)nib withOwner:(id _Nullable )ownerOrNil {
 	if (nib == nil) {
 		NSString *nibName = NSStringFromClass([self class]);
-
-		nib = [UINib nibWithNibName:nibName bundle:[NSBundle bundleForClass:[self class]]];
+		NSBundle *resourceBundle = [NSBundle bundleForClass:[self class]];
+		nib = [UINib nibWithNibName:nibName bundle:resourceBundle];
 	}
 
 	UIView *view = nil;

@@ -102,7 +102,10 @@ extension UIView {
 		}
 		fxdPrint("fromNibName: \(String(describing: fromNibName))")
 
-		let fromNib: UINib? = UINib.init(nibName:fromNibName!, bundle: nil)
+		let resourceBundle = Bundle.init(for: self.classForCoder())
+		fxdPrint("resourceBundle: \(String(describing: resourceBundle))")
+
+		let fromNib: UINib? = UINib.init(nibName:fromNibName!, bundle: resourceBundle)
 		fxdPrint("fromNib: \(String(describing: fromNib))")
 
 		let viewArray: [UIView]? = fromNib?.instantiate(withOwner: owner, options: nil) as? [UIView]

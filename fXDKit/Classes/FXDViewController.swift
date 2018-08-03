@@ -9,7 +9,9 @@ extension UIViewController {
 			fromNibName = String(describing: self)
 		}
 
-		let fromNib: UINib? = UINib.init(nibName:fromNibName!, bundle: nil)
+		let resourceBundle = Bundle.init(for: self.classForCoder)
+
+		let fromNib: UINib? = UINib.init(nibName:fromNibName!, bundle: resourceBundle)
 
 		//MARK: self must be the owner
 		let viewArray: [UIView]? = fromNib?.instantiate(withOwner: self, options: nil) as? [UIView]

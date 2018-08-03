@@ -123,10 +123,11 @@
 	}
 
 
-	Class overlayClass = [FXDsubviewInformation class];
-	NSString *className = NSStringFromClass(overlayClass);
+	NSString *informationViewNibName = NSStringFromClass([FXDsubviewInformation class]);
+	Class informationViewClass = [FXDsubviewInformation class];
+	NSBundle *resourceBundle = [NSBundle bundleForClass:informationViewClass];
 
-	UINib *nib = [UINib nibWithNibName:className bundle:[NSBundle bundleForClass:overlayClass]];
+	UINib *nib = [UINib nibWithNibName:informationViewNibName bundle:resourceBundle];
 
 	if (nib == nil) {
 		return;
@@ -138,7 +139,7 @@
 
 	for (id subview in viewArray) {	//Assumes there is only one root object
 
-		if ([[subview class] isSubclassOfClass:[FXDsubviewInformation class]]) {
+		if ([[subview class] isSubclassOfClass:informationViewClass]) {
 			self.informationSubview = (FXDsubviewInformation*)subview;
 			break;
 		}
