@@ -24,21 +24,6 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-+ (void)showWaiting {
-	UIWindow *window = ([UIApplication sharedApplication].delegate).window;
-
-	if ([window isKindOfClass:[self class]]) {
-		[(FXDWindow*)window showInformationViewAfterDelay:0.0];
-	}
-}
-
-+ (void)hideWaiting {
-	UIWindow *window = ([UIApplication sharedApplication].delegate).window;
-
-	if ([window isKindOfClass:[self class]]) {
-		[(FXDWindow*)window	hideInformationViewAfterDelay:0.0];
-	}
-}
 
 #pragma mark -
 - (void)configureRootViewController:(UIViewController*)rootScene shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
@@ -116,8 +101,8 @@
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{
 
-		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showInformationViewWithClassName:) object:nil];
-		 [self performSelector:@selector(showInformationViewWithClassName:) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+		 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showInformationView) object:nil];
+		 [self performSelector:@selector(showInformationView) withObject:nil afterDelay:delay inModes:@[NSRunLoopCommonModes]];
 	 }];
 }
 
@@ -131,7 +116,7 @@
 }
 
 #pragma mark -
-- (void)showInformationViewWithClassName:(NSString*)className {
+- (void)showInformationView {
 
 	if (self.informationSubview) {
 		return;

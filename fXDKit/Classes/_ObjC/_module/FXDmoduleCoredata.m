@@ -401,7 +401,7 @@
 	
 	if (shouldShowProgressView) {
 		mainWindow = (FXDWindow*)[UIApplication sharedApplication].delegate.window;
-		[mainWindow showInformationViewWithClassName:nil];
+		[mainWindow showInformationView];
 	}
 	
 	
