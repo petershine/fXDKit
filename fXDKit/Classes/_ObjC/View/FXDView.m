@@ -130,7 +130,7 @@
 
 	for (id subview in viewArray) {	//Assumes there is only one root object
 
-		if ([[self class] isSubclassOfClass:[subview class]]) {
+		if ([[subview class] isSubclassOfClass:[self class]]) {
 			view = subview;
 			break;
 		}
