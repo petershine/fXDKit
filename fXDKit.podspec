@@ -16,7 +16,8 @@ Pod::Spec.new do |s|
 
   s.swift_version = '4.0'
   s.source_files = 'fXDKit/Classes/**/*'
-  s.resource_bundles = {'fXDKit' => ['fXDKit/Resources/*.*']}
+  s.resources = 'fXDKit/Resources/*.*'
+  s.resource_bundles = {'fXDKit' => ['Pod/**/*.xib']}
 
   s.frameworks = 'CoreLocation', 'MapKit'
 
