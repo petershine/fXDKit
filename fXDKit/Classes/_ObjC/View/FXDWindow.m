@@ -138,31 +138,22 @@
 	}
 
 
-	if (className == nil) {
-		className = NSStringFromClass([FXDsubviewInformation class]);
-	}
+	Class overlayClass = [FXDsubviewInformation class];
+	NSString *className = NSStringFromClass(overlayClass);
 
-
-	Class informationClass = NSClassFromString(className);
-	NSAssert([informationClass isSubclassOfClass:[FXDsubviewInformation class]], nil);
-
-	if (informationClass == nil) {
-		return;
-	}
-
-
-	UINib *nib = [UINib nibWithNibName:className bundle:nil];
+	UINib *nib = [UINib nibWithNibName:className bundle:[NSBundle bundleForClass:overlayClass]];
 
 	if (nib == nil) {
 		return;
 	}
 
 
+	//MARK: If nib is manually loaded like this, should it NOT have inheriting Module specified?
 	NSArray *viewArray = [nib instantiateWithOwner:nil options:nil];
 
 	for (id subview in viewArray) {	//Assumes there is only one root object
 
-		if ([informationClass isSubclassOfClass:[subview class]]) {
+		if ([[subview class] isSubclassOfClass:[FXDsubviewInformation class]]) {
 			self.informationSubview = (FXDsubviewInformation*)subview;
 			break;
 		}
