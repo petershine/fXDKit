@@ -27,7 +27,7 @@
 }
 
 #pragma mark -
-- (BOOL)shouldEnqueueOperationForKey:(id)operationKey withDictionary:(nullable NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers {
+- (BOOL)shouldEnqueueOperationForKey:(NSString*)operationKey withDictionary:(nullable NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers {
 
 	BOOL shouldEnque = YES;
 
@@ -63,12 +63,12 @@
 }
 
 #pragma mark -
-- (void)enqueueOperation:(NSOperation*)operation forKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (void)enqueueOperation:(NSOperation*)operation forKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
 	operationDictionary[operationKey] = operation;
 	[self addOperation:operation];
 }
 
-- (BOOL)removeOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (BOOL)removeOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
 	//TEST: May not have to cancel when removing is decided
 	//BOOL didRemove = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
 	BOOL didRemove = YES;
@@ -78,7 +78,7 @@
 	return didRemove;
 }
 
-- (BOOL)cancelOperationForKey:(id)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (BOOL)cancelOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
 	if (operationKey == nil) {
 		return NO;
 	}

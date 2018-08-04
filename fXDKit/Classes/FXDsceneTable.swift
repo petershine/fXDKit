@@ -38,11 +38,11 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells {
 			OperationQueue.current?.addOperation({
 				[weak self] in
 
-				self?.cellOperationQueue?.removeOperation(forKey: indexPath, with: self?.cellOperationDictionary)
+				self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
 			})
 		}
 
-		cellOperationQueue?.enqueueOperation(operation, forKey: indexPath, with: cellOperationDictionary)
+		cellOperationQueue?.enqueueOperation(operation, forKey: indexPath.stringKey, with: cellOperationDictionary)
 	}
 }
 
@@ -70,6 +70,6 @@ extension FXDsceneTable: UITableViewDataSource {
 
 extension FXDsceneTable: UITableViewDelegate {
 	open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		_ = cellOperationQueue?.cancelOperation(forKey: indexPath, with: cellOperationDictionary)
+		_ = cellOperationQueue?.cancelOperation(forKey: indexPath.stringKey, with: cellOperationDictionary)
 	}
 }
