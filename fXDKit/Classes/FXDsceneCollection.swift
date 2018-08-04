@@ -1,7 +1,7 @@
 
 
 open class FXDsceneCollection: UIViewController, FXDscrollableCells {
-	@IBOutlet public weak var mainCollectionview: UICollectionView!
+	@IBOutlet public weak var mainCollectionview: UICollectionView?
 
 	//MARK: FXDprotocolScrollable
 	open weak var mainScrollview: UIScrollView? {
