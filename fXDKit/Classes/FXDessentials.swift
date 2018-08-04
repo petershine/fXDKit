@@ -42,16 +42,28 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
     #endif
 }
 
-public func fxd_log_func(_ filename: String = #file, function: String = #function) {
-    #if DEBUG
-    os_log(" ")
-    os_log("\n\n[%@ %@]", (filename as NSString).lastPathComponent, function)
-    #endif
+public func fxd_log(_ message: String? = nil, filename: String = #file, function: String = #function) {
+	#if DEBUG
+	os_log(" ")
+	os_log("\n\n[%@ %@]: %@", (filename as NSString).lastPathComponent, function, ((message == nil) ? "" : message!))
+	#endif
 }
 
 public func fxd_overridable(_ filename: String = #file, function: String = #function) {
 	#if DEBUG
-	os_log(" ")
-	os_log("\n\nOVERRIDABLE [%@ %@]", (filename as NSString).lastPathComponent, function)
+	fxd_log("OVERRIDABLE")
 	#endif
 }
+
+public func fxd_todo(_ filename: String = #file, function: String = #function) {
+	#if DEBUG
+	fxd_log("//TODO:")
+	#endif
+}
+
+public func fxd_log_func(_ filename: String = #file, function: String = #function) {
+    #if DEBUG
+    fxd_log()
+    #endif
+}
+

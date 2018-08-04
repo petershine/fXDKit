@@ -1,7 +1,7 @@
 
 
 extension UIResponder {
-	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) {	fxd_log_func()
+	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) {	fxd_log()
 
 		guard launchOptions != nil else {
 			return
@@ -29,7 +29,7 @@ extension UIResponder {
 	}
 
 
-	@objc public func isUsable(_ launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {	fxd_log_func()
+	@objc public func isUsable(_ launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {	fxd_log()
 
 		guard launchOptions != nil else {
 			return false

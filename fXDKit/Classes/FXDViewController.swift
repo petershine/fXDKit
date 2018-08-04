@@ -1,7 +1,7 @@
 
 
 extension UIViewController {
-	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log_func()
+	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log()
 
 		var fromNibName = nibName
 
@@ -44,7 +44,7 @@ extension UIViewController {
 
 extension UIViewController {
 
-	@IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log_func()
+	@IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log()
 
 		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
 
