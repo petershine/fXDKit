@@ -42,27 +42,23 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
     #endif
 }
 
-public func fxd_log(_ prefix: String? = nil, _ suffix: String? = nil, filename: String = #file, function: String = #function) {
+public func fxd_log(_ prefix: String? = nil, _ suffix: String? = nil, filename: String = #file, function: String = #function, line: Int = #line) {
 	#if DEBUG
 	os_log(" ")
 	os_log("\n\n%@[%@ %@]%@", ((prefix == nil) ? "" : prefix!), (filename as NSString).lastPathComponent, function, ((suffix == nil) ? "" : suffix!))
 	#endif
 }
 
-public func fxd_overridable(_ filename: String = #file, function: String = #function) {
+public func fxd_overridable(_ filename: String = #file, function: String = #function, line: Int = #line) {
 	#if DEBUG
-	fxd_log("OVERRIDABLE: ", nil, filename: filename, function: function)
+	fxd_log("OVERRIDABLE: ", nil, filename: filename, function: function, line: line)
 	#endif
 }
 
-public func fxd_todo(_ filename: String = #file, function: String = #function) {
+public func fxd_todo(_ filename: String = #file, function: String = #function, line: Int = #line, message: String? = nil) {
 	#if DEBUG
-	fxd_log("//TODO: ", nil, filename: filename, function: function)
+	let suffix = "\(message ?? "") (at \(line))"
+	fxd_log("//TODO: ", suffix, filename: filename, function: function, line: line)
 	#endif
 }
 
-public func fxd_log_func(_ filename: String = #file, function: String = #function) {
-    #if DEBUG
-    fxd_log(nil, nil, filename: filename, function: function)
-    #endif
-}
