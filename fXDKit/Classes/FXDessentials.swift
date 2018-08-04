@@ -51,18 +51,18 @@ public func fxd_log(_ prefix: String? = nil, _ suffix: String? = nil, filename: 
 
 public func fxd_overridable(_ filename: String = #file, function: String = #function) {
 	#if DEBUG
-	fxd_log("OVERRIDABLE: ", nil)
+	fxd_log("OVERRIDABLE: ", nil, filename: filename, function: function)
 	#endif
 }
 
 public func fxd_todo(_ filename: String = #file, function: String = #function) {
 	#if DEBUG
-	fxd_log("//TODO: ", nil)
+	fxd_log("//TODO: ", nil, filename: filename, function: function)
 	#endif
 }
 
 public func fxd_log_func(_ filename: String = #file, function: String = #function) {
     #if DEBUG
-    fxd_log()
+    fxd_log(nil, nil, filename: filename, function: function)
     #endif
 }
