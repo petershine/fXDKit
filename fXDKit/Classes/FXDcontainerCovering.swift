@@ -1,11 +1,11 @@
 
 
-enum COVER_DIRECTION_TYPE: Int {
+public enum COVER_DIRECTION_TYPE: Int {
 	case top
 	case bottom
 }
 
-protocol FXDprotocolCovered {
+public protocol FXDprotocolCovered {
 	var coverDirectionType: COVER_DIRECTION_TYPE { get set }
 	var shouldCoverAbove: Bool { get set }
 	var shouldStayFixed: Bool { get set }
@@ -14,23 +14,23 @@ protocol FXDprotocolCovered {
 	func didFinishAnimation()
 }
 
-class FXDsegueCover: FXDStoryboardSegue {
-	override func perform() {
+public class FXDsegueCover: FXDStoryboardSegue {
+	override public func perform() {
 		if let coveringContainer = mainContainer(of: FXDcontainerCovering.classForCoder()) as? FXDcontainerCovering {
 			coveringContainer.cover(segue: self)
 		}
 	}
 }
 
-class FXDsegueUncover: FXDStoryboardSegue {
-	override func perform() {
+public class FXDsegueUncover: FXDStoryboardSegue {
+	override public func perform() {
 		if let coveringContainer = mainContainer(of: FXDcontainerCovering.classForCoder()) as? FXDcontainerCovering {
 			coveringContainer.uncover(segue: self)
 		}
 	}
 }
 
-class FXDcontainerCovering: UIViewController {
+open class FXDcontainerCovering: UIViewController {
 	var minimumChildCount: Int = 0
 	var shouldFadeOutUncovering: Bool = false
 
@@ -42,7 +42,7 @@ class FXDcontainerCovering: UIViewController {
 }
 
 extension FXDcontainerCovering {
-	override func viewDidLoad() {
+	override open func viewDidLoad() {
 		super.viewDidLoad()
 
 		minimumChildCount = childViewControllers.count
