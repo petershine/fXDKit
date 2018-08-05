@@ -61,7 +61,7 @@
 	if ([previousRootScene isKindOfClass:[FXDsceneLaunching class]]) {
 
 		[(FXDsceneLaunching*)previousRootScene
-		 fadeOutSceneWithCallback:^(BOOL finished, id _Nullable responseObj) {
+		 dismissFadingOutWithCallback:^(BOOL finished, id _Nullable responseObj) {
 			 FXDLogBOOL(finished);
 
 			 [previousRootScene.view removeFromSuperview];

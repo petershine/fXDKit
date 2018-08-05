@@ -17,7 +17,7 @@
 	return NO;
 }
 
-- (void)fadeOutSceneWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))callback {
+- (void)dismissFadingOutWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))callback {
 	__weak typeof(self) weakSelf = self;
 
 	[UIView

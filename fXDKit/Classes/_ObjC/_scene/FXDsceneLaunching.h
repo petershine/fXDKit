@@ -6,6 +6,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageviewDefault;
 
-- (void)fadeOutSceneWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))finishCallback;
+- (void)dismissFadingOutWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))finishCallback;
 
 @end
