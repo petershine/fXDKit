@@ -34,10 +34,6 @@
 	return description;
 }
 
-- (void)perform {	FXDLog_DEFAULT;
-	FXDLogObject(self);
-}
-
 @end
 
 

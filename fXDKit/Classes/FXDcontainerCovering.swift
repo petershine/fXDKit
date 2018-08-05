@@ -5,7 +5,7 @@ public enum COVER_DIRECTION_TYPE: Int {
 	case bottom
 }
 
-public protocol FXDprotocolCovered {
+public protocol FXDprotocolCovering {
 	var coverDirectionType: COVER_DIRECTION_TYPE { get set }
 	var shouldCoverAbove: Bool { get set }
 	var shouldStayFixed: Bool { get set }
@@ -15,7 +15,7 @@ public protocol FXDprotocolCovered {
 }
 
 public class FXDsegueCover: FXDStoryboardSegue {
-	override public func perform() {
+	override public func perform() {	fxd_log()
 		if let coveringContainer = mainContainer(of: FXDcontainerCovering.classForCoder()) as? FXDcontainerCovering {
 			coveringContainer.cover(segue: self)
 		}
@@ -23,7 +23,7 @@ public class FXDsegueCover: FXDStoryboardSegue {
 }
 
 public class FXDsegueUncover: FXDStoryboardSegue {
-	override public func perform() {
+	override public func perform() {	fxd_log()
 		if let coveringContainer = mainContainer(of: FXDcontainerCovering.classForCoder()) as? FXDcontainerCovering {
 			coveringContainer.uncover(segue: self)
 		}
@@ -72,7 +72,7 @@ extension FXDcontainerCovering {
 
 	func cover(segue: FXDsegueCover) {	fxd_log()
 		guard (isCovering == false && isUncovering == false),
-			let presentedScene = segue.destination as? (UIViewController & FXDprotocolCovered)
+			let presentedScene = segue.destination as? (UIViewController & FXDprotocolCovering)
 			else {
 				return
 		}
@@ -106,7 +106,7 @@ extension FXDcontainerCovering {
 			//MARK: Including newly added child, the count should be bigger than one
 
 			for child in childViewControllers {
-				let childScene = child as? (UIViewController & FXDprotocolCovered)
+				let childScene = child as? (UIViewController & FXDprotocolCovering)
 				if childScene == nil {
 					continue
 				}
@@ -167,7 +167,7 @@ extension FXDcontainerCovering {
 	func uncover(segue: FXDsegueUncover) {	fxd_log()
 
 		guard (isCovering == false && isUncovering == false),
-			let dismissedScene = segue.source as? (UIViewController & FXDprotocolCovered)
+			let dismissedScene = segue.source as? (UIViewController & FXDprotocolCovering)
 			else {
 				return
 		}
@@ -204,7 +204,7 @@ extension FXDcontainerCovering {
 			//MARK: Including newly added child, the count should be bigger than one
 
 			for child in childViewControllers {
-				let childScene = child as? (UIViewController & FXDprotocolCovered)
+				let childScene = child as? (UIViewController & FXDprotocolCovering)
 				if childScene == nil {
 					continue
 				}
@@ -273,7 +273,7 @@ extension FXDcontainerCovering {
 		var lateAddedSceneArray = Array<UIViewController>.init()
 
 		for child in childViewControllers {
-			let childScene = child as? (UIViewController & FXDprotocolCovered)
+			let childScene = child as? (UIViewController & FXDprotocolCovering)
 			if childScene == nil {
 				continue
 			}
