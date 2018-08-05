@@ -29,6 +29,10 @@
 
 	 } completion:^(BOOL finished) {
 
+		 [weakSelf willMoveToParentViewController:nil];
+		 [weakSelf.view removeFromSuperview];
+		 [weakSelf removeFromParentViewController];
+
 		 if (callback) {
 			 callback(finished, nil);
 		 }

@@ -4,7 +4,7 @@
 
 @interface FXDsceneLaunching : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIImageView *imageviewDefault;
+@property (weak, nonatomic) IBOutlet UIImageView *imageviewDefault;
 
 - (void)fadeOutSceneWithCallback:(void(^)(BOOL finished, id _Nullable responseObj))finishCallback;
 

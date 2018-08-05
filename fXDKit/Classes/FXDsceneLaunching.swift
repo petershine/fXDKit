@@ -15,5 +15,5 @@ class FXDsceneLaunching: UIViewController {
 		return false
 	}
 
-	@IBOutlet var imageviewDefault: UIImageView?
+	@IBOutlet weak var imageviewDefault: UIImageView!
 }

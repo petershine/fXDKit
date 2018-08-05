@@ -16,10 +16,6 @@
 #pragma mark - Property overriding
 
 #pragma mark - Method overriding
-- (void)makeKeyAndVisible {	FXDLog_SEPARATE;
-	[super makeKeyAndVisible];
-	
-}
 
 #pragma mark - IBActions
 

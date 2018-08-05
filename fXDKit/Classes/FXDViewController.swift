@@ -66,8 +66,12 @@ extension UIViewController {
 				self?.view.alpha = 0.0
 			}
 		) {
-			(finished: Bool) in
+			[weak self] (finished: Bool) in
 			
+			self?.willMove(toParentViewController: nil)
+			self?.view.removeFromSuperview()
+			self?.removeFromParentViewController()
+
 			if callback != nil {
 				callback!(finished, nil)
 			}
