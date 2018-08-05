@@ -16,7 +16,7 @@ open class FXDsceneCollection: UIViewController, FXDscrollableCells {
 		return NSMutableDictionary.init()
 	}()
 
-	open var mainDataSource: NSMutableArray?
+	open var mainDataSource: Array<Any>?
 
 	open var mainCellIdentifier: String {
 		fxd_overridable()

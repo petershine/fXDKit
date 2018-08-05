@@ -41,7 +41,7 @@ public protocol FXDscrollableCells: FXDprotocolScrollable {
 	var cellOperationDictionary: NSMutableDictionary? { get }
 
 	var mainCellIdentifier: String { get }
-	var mainDataSource: NSMutableArray? { get set }
+	var mainDataSource: Array<Any>? { get set }
 
 	func configureCell(_ cell: UIView, for indexPath: IndexPath)
 	func enqueueCellOperation(for cell: UIView, indexPath: IndexPath)
