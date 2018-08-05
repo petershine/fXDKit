@@ -31,14 +31,14 @@ public class FXDsegueUncover: FXDStoryboardSegue {
 }
 
 open class FXDcontainerCovering: UIViewController {
-	var minimumChildCount: Int = 0
+	public var minimumChildCount: Int = 0
 	var shouldFadeOutUncovering: Bool = false
 
-	var isCovering: Bool = false
-	var isUncovering: Bool = false
+	public var isCovering: Bool = false
+	public var isUncovering: Bool = false
 
-	@IBOutlet weak var mainNavigationbar:  UIView!
-	@IBOutlet weak var mainToolbar: UIView!
+	@IBOutlet public weak var mainNavigationbar:  UIView!
+	@IBOutlet public weak var mainToolbar: UIView!
 }
 
 extension FXDcontainerCovering {
