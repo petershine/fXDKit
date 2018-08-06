@@ -1,17 +1,16 @@
 
 
-class FXDsceneLaunching: UIViewController {
-	override var preferredStatusBarStyle: UIStatusBarStyle {
+open class FXDsceneLaunching: UIViewController {
+	override open var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
-	override var prefersStatusBarHidden: Bool {
+	override open var prefersStatusBarHidden: Bool {
 		return true
 	}
-	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+	override open var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
 		return .fade
 	}
-
-	override var shouldAutorotate: Bool {
+	override open var shouldAutorotate: Bool {
 		return false
 	}
 

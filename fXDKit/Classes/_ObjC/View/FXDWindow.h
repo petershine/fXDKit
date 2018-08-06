@@ -1,9 +1,6 @@
 
 #import "FXDimportEssential.h"
 
-#import "FXDsceneLaunching.h"
-
-
 @interface FXDsubviewInformation : UIView
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;

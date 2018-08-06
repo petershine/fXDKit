@@ -43,9 +43,7 @@ extension UIViewController {
 }
 
 extension UIViewController {
-
-	@IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log()
-
+    @IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log()
 		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
 
 		if (self.parent != nil) {
