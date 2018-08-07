@@ -1,8 +1,6 @@
 
 #import "FXDimportEssential.h"
 
-#import "FXDsceneLaunching.h"
-
 
 @interface FXDsubviewInformation : UIView
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
@@ -17,8 +15,6 @@
 @interface FXDWindow : UIWindow
 
 @property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
-
-- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)showInformationViewAfterDelay:(NSTimeInterval)delay;
 - (void)hideInformationViewAfterDelay:(NSTimeInterval)delay;
