@@ -3,22 +3,19 @@
 extension UIViewController {
 	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log()
 
-		var fromNibName = nibName
-
-		if (fromNibName == nil) {
-			fromNibName = String(describing: self)
-		}
-
 		let resourceBundle = Bundle.init(for: self.classForCoder)
 
-		let fromNib: UINib? = UINib.init(nibName:fromNibName!, bundle: resourceBundle)
+		let nib: UINib? = UINib.init(nibName: nibName ?? String(describing: self), bundle: resourceBundle)
 
-		//MARK: self must be the owner
-		let viewArray: [UIView]? = fromNib?.instantiate(withOwner: self, options: nil) as? [UIView]
+		let views: [UIView]? = nib?.instantiate(withOwner: self, options: nil) as? [UIView]
 
-		fxdPrint("\(String(describing: viewArray?.first))")
+		fxdPrint("nibName: \(String(describing: nibName ?? String(describing: self)))")
+		fxdPrint("resourceBundle: \(String(describing: resourceBundle))")
+		fxdPrint("nib: \(String(describing: nib))")
+		fxdPrint("views: \(String(describing: views))")
+		fxdPrint("views?.first: \(String(describing: views?.first))")
 
-		return viewArray?.first
+		return views?.first
 	}
 }
 
