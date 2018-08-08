@@ -1,6 +1,5 @@
 
 #import "FXDimportEssential.h"
-#import "FXDWindow.h"
 
 
 @interface FXDmoduleMessage : NSObject <MFMailComposeViewControllerDelegate>

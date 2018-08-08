@@ -230,7 +230,7 @@ open class FXDmoduleFacebook: NSObject {
 		
 
 		//TODO: Evaluate necessity
-		//(UIApplication.mainWindow() as! FXDWindow).hideInformationView(afterDelay: (1.0/4.0))	//delayQuarterSecond
+		//UIApplication.mainWindow().hideInformationView(afterDelay: (1.0/4.0))	//delayQuarterSecond
 
 		presentingScene.present(alertController, animated: true)
 	}

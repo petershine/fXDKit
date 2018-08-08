@@ -397,11 +397,11 @@
 	FXDLogVariable(weakSelf.enumeratingTask);
 	
 	
-	FXDWindow *mainWindow = nil;
+	UIWindow *mainWindow = nil;
 	
 	if (shouldShowProgressView) {
-		mainWindow = (FXDWindow*)[UIApplication sharedApplication].delegate.window;
-		[mainWindow showInformationView];
+		mainWindow = [UIApplication sharedApplication].delegate.window;
+		[mainWindow performSelector:NSSelectorFromString(@"showInformationView")];
 	}
 	
 	
@@ -447,7 +447,7 @@
 			  FXDLog_BLOCK(weakSelf, _cmd);
 
 			  if (shouldShowProgressView) {
-				  [mainWindow hideInformationView];
+				  [mainWindow performSelector:NSSelectorFromString(@"hideInformationView")];
 			  }
 
 			  FXDLogBOOL(!shouldBreak);

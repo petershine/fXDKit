@@ -16,7 +16,6 @@
 #import "FXDManagedObjectContext.h"
 #import "FXDManagedDocument.h"
 #import "FXDFileManager.h"
-#import "FXDWindow.h"
 
 
 @interface FXDmoduleCoredata : NSObject {
