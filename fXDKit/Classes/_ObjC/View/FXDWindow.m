@@ -22,6 +22,8 @@
 #pragma mark - Public
 
 #pragma mark -
+
+#pragma mark -
 - (void)showInformationViewAfterDelay:(NSTimeInterval)delay {
 	[[NSOperationQueue mainQueue]
 	 addOperationWithBlock:^{

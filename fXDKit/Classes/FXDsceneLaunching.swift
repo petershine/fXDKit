@@ -10,7 +10,6 @@ open class FXDsceneLaunching: UIViewController {
 	override open var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
 		return .fade
 	}
-
 	override open var shouldAutorotate: Bool {
 		return false
 	}

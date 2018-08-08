@@ -1,7 +1,6 @@
 
 #import "FXDimportEssential.h"
 
-
 @interface FXDsubviewInformation : UIView
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorActivity;
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
@@ -15,6 +14,8 @@
 @interface FXDWindow : UIWindow
 
 @property (strong, nonatomic) IBOutlet FXDsubviewInformation *informationSubview;
+
+- (void)configureRootViewController:(UIViewController*)rootViewController shouldAnimate:(BOOL)shouldAnimate willBecomeBlock:(void(^)(void))willBecomeBlock didBecomeBlock:(void(^)(void))didBecomeBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
 
 - (void)showInformationViewAfterDelay:(NSTimeInterval)delay;
 - (void)hideInformationViewAfterDelay:(NSTimeInterval)delay;
