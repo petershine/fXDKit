@@ -33,7 +33,7 @@
 
 	NSBlockOperation *enqueuedOperation = operationDictionary[operationKey];
 
-	if (enqueuedOperation && enqueuedOperation.isCancelled == NO) {
+	if (enqueuedOperation && enqueuedOperation.isCancelled == NO && enqueuedOperation.isFinished == NO) {
 		shouldEnque = NO;
 	}
 
