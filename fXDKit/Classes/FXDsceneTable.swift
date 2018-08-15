@@ -31,15 +31,14 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells {
 		let operation = BlockOperation()
 
 		operation.addExecutionBlock {
-			if operation.isCancelled == false {
-				fxd_todo()
+			[weak self] in
+
+			guard operation.isCancelled == false else {
+				self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
+				return
 			}
 
-			OperationQueue.current?.addOperation({
-				[weak self] in
-
-				self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
-			})
+			fxd_todo()
 		}
 
 		cellOperationQueue?.enqueueOperation(operation, forKey: indexPath.stringKey, with: cellOperationDictionary)
