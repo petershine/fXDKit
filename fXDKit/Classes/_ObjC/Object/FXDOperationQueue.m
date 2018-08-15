@@ -42,7 +42,7 @@
 	}
 
 
-	NSMutableArray *removedKeyArray = [[NSMutableArray alloc] initWithCapacity:0];
+	NSMutableArray *otherCanceledOperationKeyArray = [[NSMutableArray alloc] initWithCapacity:0];
 
 	for (NSString *key in operationDictionary.allKeys) {
 		if ([operationKey isEqualToString:key]) {
@@ -51,13 +51,12 @@
 
 
 		BOOL isCancelled = [self cancelOperationForKey:key withDictionary:operationDictionary];
-		if (isCancelled) {}
 		FXDLog(@"%@ %@", _Object(key), _BOOL(isCancelled));
 
-		[removedKeyArray addObject:key];
+		[otherCanceledOperationKeyArray addObject:key];
 	}
 
-	[operationDictionary removeObjectsForKeys:removedKeyArray];
+	[operationDictionary removeObjectsForKeys:otherCanceledOperationKeyArray];
 
 	return shouldEnque;
 }
@@ -68,14 +67,11 @@
 	[self addOperation:operation];
 }
 
-- (BOOL)removeOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
-	//TEST: May not have to cancel when removing is decided
-	//BOOL didRemove = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
-	BOOL didRemove = YES;
-	
-	[operationDictionary removeObjectForKey:operationKey];
+- (void)removeOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+	BOOL isCancelled = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
 
-	return didRemove;
+	[operationDictionary removeObjectForKey:operationKey];
+	NSAssert2(([operationDictionary objectForKey:operationKey] == nil), @"NOT REMOVED: %@ isCancelled: %@", operationKey, @(isCancelled));
 }
 
 - (BOOL)cancelOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
