@@ -50,8 +50,7 @@
 		}
 
 
-		BOOL isCancelled = [self cancelOperationForKey:key withDictionary:operationDictionary];
-		FXDLog(@"%@ %@", _Object(key), _BOOL(isCancelled));
+		[self cancelOperationForKey:key withDictionary:operationDictionary];
 
 		[otherCanceledOperationKeyArray addObject:key];
 	}
@@ -68,22 +67,23 @@
 }
 
 - (void)removeOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
-	BOOL isCancelled = [self cancelOperationForKey:operationKey withDictionary:operationDictionary];
+	[self cancelOperationForKey:operationKey withDictionary:operationDictionary];
 
 	[operationDictionary removeObjectForKey:operationKey];
-	NSAssert2(([operationDictionary objectForKey:operationKey] == nil), @"NOT REMOVED: %@ isCancelled: %@", operationKey, @(isCancelled));
 }
 
-- (BOOL)cancelOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (void)cancelOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
 	if (operationKey == nil) {
-		return NO;
+		return;
 	}
 
 	
 	NSOperation *operation = operationDictionary[operationKey];
 	[operation cancel];
 
-	return operation.isCancelled;
+	/*if (operation.isFinished == NO) {
+		FXDLog(@"CANCELED: %@ isCancelled: %@ isFinished: %@", operationKey, @(operation.isCancelled), @(operation.isFinished));
+	}*/
 }
 
 @end
