@@ -285,32 +285,6 @@
 #pragma mark - IBActions
 
 #pragma mark - Public
-- (UIView*)sceneViewFromNibNameOrNil:(NSString*)nibNameOrNil {	FXDLog_DEFAULT;
-	
-	if (nibNameOrNil == nil) {
-		nibNameOrNil = NSStringFromClass([self class]);
-	}
-
-	Class sceneClass = NSClassFromString(nibNameOrNil);
-	NSBundle *resourceBundle = [NSBundle bundleForClass:sceneClass];
-	
-	UINib *nib = [UINib nibWithNibName:nibNameOrNil bundle:resourceBundle];
-	
-	NSArray *viewArray = [nib instantiateWithOwner:self options:nil];	//MARK: self must be the owner
-
-	UIView *sceneView = viewArray.firstObject;	
-	FXDLogObject(sceneView);
-	
-#if DEBUG
-	if (sceneView == nil) {
-		FXDLog(@"%@ %@", _Object(sceneClass), _Object(viewArray));
-	}
-#endif
-	
-	return sceneView;
-}
-
-#pragma mark -
 - (void)sceneTransitionForSize:(CGSize)size forTransform:(CGAffineTransform)transform forDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_OVERRIDE;
 	FXDLog(@"%@ %@ %@", _Size(size), _Transform(transform), _Variable(duration));
 }
