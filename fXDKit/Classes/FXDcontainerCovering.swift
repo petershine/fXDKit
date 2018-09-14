@@ -1,4 +1,4 @@
-
+import fXDObjC
 
 public enum COVER_DIRECTION_TYPE: Int {
 	case top

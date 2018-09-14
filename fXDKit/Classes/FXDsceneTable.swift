@@ -1,4 +1,4 @@
-
+import fXDObjC
 
 open class FXDsceneTable: UIViewController, FXDscrollableCells {
 	@IBOutlet public weak var mainTableview: UITableView?

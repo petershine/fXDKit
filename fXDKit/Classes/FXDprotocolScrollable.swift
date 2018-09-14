@@ -1,4 +1,4 @@
-
+import fXDObjC
 
 public protocol FXDprotocolScrollable {
 	var mainScrollview: UIScrollView? { get }

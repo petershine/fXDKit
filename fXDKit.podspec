@@ -15,15 +15,15 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
 
   s.swift_version = '4.0'
-  s.source_files = 'fXDKit/Classes/**/*'
+  s.source_files = 'fXDKit/Classes/**/*.swift'
   s.resources = 'fXDKit/Resources/*.*'
   s.resource_bundles = {'fXDKit' => ['Pod/**/*.xib']}
 
-  s.frameworks = 'CoreLocation', 'MapKit'
-
-	s.dependency 'Bolts'
-	s.dependency 'FBSDKCoreKit'
-	s.dependency 'FBSDKLoginKit'
-	s.dependency 'FBSDKShareKit'
-	s.dependency 'TwitterKit'
+  s.dependency 'fXDObjC'
+  
+  s.dependency 'Bolts'
+  s.dependency 'FBSDKCoreKit'
+  s.dependency 'FBSDKLoginKit'
+  s.dependency 'FBSDKShareKit'
+  s.dependency 'TwitterKit'
 end
