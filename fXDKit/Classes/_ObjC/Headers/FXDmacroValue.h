@@ -63,19 +63,6 @@
 //Twitter
 #define maximumTweetLength	140
 
-#define urlrootTwitterAPI			@"https://api.twitter.com/1.1/"
-#define urlstringTwitter(method)	[NSString stringWithFormat:@"%@%@", urlrootTwitterAPI, method]
-
-#define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
-#define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
-
-#define objkeyTwitterScreenName			@"screen_name"
-#define objkeyTwitterStatus				@"status"
-#define objkeyTwitterLat				@"lat"
-#define objkeyTwitterLong				@"long"
-#define objkeyTwitterPlaceId			@"place_id"
-#define objkeyTwitterDisplayCoordinates	@"display_coordinates"
-
 
 //Facebook
 #define facebookGraphProfileFeed	@"%@/feed"

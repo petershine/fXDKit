@@ -6,19 +6,6 @@ import TwitterCore
 import TwitterKit
 
 
-//TODO: Prepare formatter function
-//#define urlrootTwitterAPI			@"https://api.twitter.com/1.1/"
-//#define urlstringTwitter(method)	[NSString stringWithFormat:@"%@%@", urlrootTwitterAPI, method]
-//#define urlstringTwitterUserShow		urlstringTwitter(@"users/show.json")
-//#define urlstringTwitterStatusUpdate	urlstringTwitter(@"statuses/update.json")
-let objkeyTwitterScreenName = "screen_name"
-let objkeyTwitterStatus = "status"
-let objkeyTwitterLat = "lat"
-let objkeyTwitterLong = "long"
-let objkeyTwitterPlaceId = "place_id"
-let objkeyTwitterDisplayCoordinates = "display_coordinates"
-
-
 open class FXDmoduleTwitter: NSObject {
 	
 	let reasonForConnecting = NSLocalizedString("Please go to device's Settings and add your Twitter account", comment: "")
@@ -147,7 +134,6 @@ open class FXDmoduleTwitter: NSObject {
 	}
 
 
-	//MARK: Twitter specific
 	func twitterUserShow(withScreenName screenName: String) {	fxd_log()
 
 		fxdPrint(self.authenticatedSession as Any)
@@ -159,7 +145,7 @@ open class FXDmoduleTwitter: NSObject {
 
 		let method = "GET"
 		let requestURL: URL = URL(string: "https://api.twitter.com/1.1/users/show.json")!
-		let parameters: Dictionary = [objkeyTwitterScreenName: screenName]
+		let parameters: Dictionary = ["screen_name": screenName]
 
 		let client = TWTRAPIClient(userID: self.authenticatedSession?.userID)
 		var clientError : NSError?
@@ -204,16 +190,16 @@ open class FXDmoduleTwitter: NSObject {
 		let method = "POST"
 		let requestURL: URL = URL(string: "https://api.twitter.com/1.1/statuses/update.json")!
 
-		var parameters: Dictionary<String, Any> = [objkeyTwitterStatus: tweetText ?? ""]
-		parameters[objkeyTwitterDisplayCoordinates] = "true"
+		var parameters: Dictionary<String, Any> = ["status": tweetText ?? ""]
+		parameters["display_coordinates"] = "true"
 
 		if latitude != 0.0 && longitude != 0.0 {
-			parameters[objkeyTwitterLat] = String(latitude)
-			parameters[objkeyTwitterLong] = String(longitude)
+			parameters["lat"] = String(latitude)
+			parameters["long"] = String(longitude)
 		}
 
 		if placeId != nil {
-			parameters[objkeyTwitterPlaceId] = placeId
+			parameters["place_id"] = placeId
 		}
 
 
