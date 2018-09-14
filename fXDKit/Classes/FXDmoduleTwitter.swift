@@ -14,9 +14,27 @@ open class FXDmoduleTwitter: NSObject {
 		return TWTRTwitter.sharedInstance().sessionStore.session()
 	}
 
+	@objc public lazy var currentUserName: String? = {
+		var userName: String? = nil
 
-	@objc required public init(withTwitterKey twitterKey: String!, twitterSecret: String!) {	fxd_log()
-		super.init()
+		if let userID = authenticatedSession?.userID {
+			let existingUserSessions = TWTRTwitter.sharedInstance().sessionStore.existingUserSessions()
+
+			for session in existingUserSessions {
+				let sessionDescription = String(describing: session)
+				fxdPrint(sessionDescription)
+
+				let components = sessionDescription.components(separatedBy: " ")
+				fxdPrint(components)
+			}
+		}
+
+		return userName
+	}()
+
+
+	@objc required public convenience init(withTwitterKey twitterKey: String!, twitterSecret: String!) {	fxd_log()
+		self.init()
 
 		TWTRTwitter.sharedInstance().start(withConsumerKey: twitterKey!, consumerSecret: twitterSecret!)
 	}
