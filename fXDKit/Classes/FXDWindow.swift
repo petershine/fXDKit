@@ -60,7 +60,7 @@ extension UIWindow {
 		information.isHidden = false
 
 		addSubview(information)
-		bringSubview(toFront: information)
+		bringSubviewToFront(information)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
@@ -88,14 +88,14 @@ extension UIWindow {
 	@objc public func showInformationView(afterDelay: TimeInterval) {
 		DispatchQueue.main.async {
 			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.showInformation), object: nil)
-			self.perform(#selector(self.showInformation), with: nil, afterDelay: afterDelay, inModes: [RunLoopMode.commonModes])
+			self.perform(#selector(self.showInformation), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
 		}
 	}
 
 	@objc public func hideInformationView(afterDelay: TimeInterval) {
 		DispatchQueue.main.async {
 			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.hideInformation), object: nil)
-			self.perform(#selector(self.hideInformation), with: nil, afterDelay: afterDelay, inModes: [RunLoopMode.commonModes])
+			self.perform(#selector(self.hideInformation), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
 		}
 	}
 }

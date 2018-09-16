@@ -148,7 +148,7 @@ extension UIView {
 		subview?.alpha = 0.0
 
 		self.addSubview(subview!)
-		self.bringSubview(toFront: subview!)
+		self.bringSubviewToFront(subview!)
 
 		UIView.animate(
 			withDuration: DURATION_ANIMATION,

@@ -86,12 +86,12 @@ class FXDmoduleGeo: NSObject {
 
 		NotificationCenter.default.addObserver(self,
 		                                       selector: #selector(observedUIApplicationDidBecomeActive(_:)),
-		                                       name: NSNotification.Name.UIApplicationDidBecomeActive,
+		                                       name: UIApplication.didBecomeActiveNotification,
 		                                       object: nil)
 
 		NotificationCenter.default.addObserver(self,
 		                                       selector: #selector(observedUIApplicationDidEnterBackground(_:)),
-		                                       name: NSNotification.Name.UIApplicationDidEnterBackground,
+		                                       name: UIApplication.didEnterBackgroundNotification,
 		                                       object: nil)
 	}
 

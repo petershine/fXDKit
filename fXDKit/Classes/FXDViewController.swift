@@ -28,7 +28,7 @@ extension UIViewController {
 
 		var lastChildScene: UIViewController? = nil
 
-		for childScene in self.childViewControllers.reversed() {
+		for childScene in self.children.reversed() {
 			if childScene.isKind(of: sceneClass!) {
 				lastChildScene = childScene
 				break
@@ -63,9 +63,9 @@ extension UIViewController {
 		) {
 			[weak self] (finished: Bool) in
 			
-			self?.willMove(toParentViewController: nil)
+			self?.willMove(toParent: nil)
 			self?.view.removeFromSuperview()
-			self?.removeFromParentViewController()
+			self?.removeFromParent()
 
 			if callback != nil {
 				callback!(finished, nil)

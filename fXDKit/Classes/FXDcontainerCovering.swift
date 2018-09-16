@@ -45,7 +45,7 @@ extension FXDcontainerCovering {
 	override open func viewDidLoad() {
 		super.viewDidLoad()
 
-		minimumChildCount = childViewControllers.count
+		minimumChildCount = children.count
 	}
 }
 
@@ -79,7 +79,7 @@ extension FXDcontainerCovering {
 
 		isCovering = true
 
-		addChildViewController(presentedScene)
+		addChild(presentedScene)
 
 
 		let offset = coveringOffset(directionType: presentedScene.coverDirectionType)
@@ -101,11 +101,11 @@ extension FXDcontainerCovering {
 		var animatedPushedFrame = CGRect.zero
 
 		if (presentedScene.shouldCoverAbove == false
-			&& childViewControllers.count > minimumChildCount),
-			let destinationIndex = childViewControllers.index(of: presentedScene) {
+			&& children.count > minimumChildCount),
+			let destinationIndex = children.index(of: presentedScene) {
 			//MARK: Including newly added child, the count should be bigger than one
 
-			for child in childViewControllers {
+			for child in children {
 				let childScene = child as? (UIViewController & FXDprotocolCovering)
 				if childScene == nil {
 					continue
@@ -113,7 +113,7 @@ extension FXDcontainerCovering {
 
 				fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
 
-				if let childIndex = childViewControllers.index(of: childScene!),
+				if let childIndex = children.index(of: childScene!),
 					(childIndex < destinationIndex && childScene?.shouldStayFixed == false) {
 
 					//MARK: If the childScene is last slid one, which is in previous index
@@ -140,7 +140,7 @@ extension FXDcontainerCovering {
 
 
 		view.insertSubview(presentedScene.view, belowSubview: mainNavigationbar)
-		presentedScene.didMove(toParentViewController: self)
+		presentedScene.didMove(toParent: self)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
@@ -156,7 +156,7 @@ extension FXDcontainerCovering {
 			}) {
 				[weak self] (didFinish) in	fxd_log()
 
-				fxdPrint(String(describing: self?.childViewControllers))
+				fxdPrint(String(describing: self?.children))
 
 				self?.isCovering = false
 
@@ -199,11 +199,11 @@ extension FXDcontainerCovering {
 		var animatedPulledFrame = CGRect.zero
 
 		if (dismissedScene.shouldCoverAbove == false
-			&& childViewControllers.count > minimumChildCount),
-			let sourceIndex = childViewControllers.index(of: dismissedScene) {
+			&& children.count > minimumChildCount),
+			let sourceIndex = children.index(of: dismissedScene) {
 			//MARK: Including newly added child, the count should be bigger than one
 
-			for child in childViewControllers {
+			for child in children {
 				let childScene = child as? (UIViewController & FXDprotocolCovering)
 				if childScene == nil {
 					continue
@@ -211,7 +211,7 @@ extension FXDcontainerCovering {
 
 				fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
 
-				if let childIndex = childViewControllers.index(of: childScene!),
+				if let childIndex = children.index(of: childScene!),
 					(childIndex < sourceIndex && childScene?.shouldStayFixed == false) {
 
 					//MARK: If the childController is last slid one, which is in previous index
@@ -234,7 +234,7 @@ extension FXDcontainerCovering {
 
 		fxdPrint("\(String(describing: pulledScene)), \(animatedPulledFrame)")
 
-		dismissedScene.willMove(toParentViewController: nil)
+		dismissedScene.willMove(toParent: nil)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
@@ -254,7 +254,7 @@ extension FXDcontainerCovering {
 				fxdPrint("\(didFinish), \(String(describing: pulledScene))")
 
 				dismissedScene.view.removeFromSuperview()
-				dismissedScene.removeFromParentViewController()
+				dismissedScene.removeFromParent()
 
 				self?.isUncovering = false
 
@@ -264,7 +264,7 @@ extension FXDcontainerCovering {
 
 	func uncoverAllScenes(callback: @escaping FXDcallback) {
 		//MARK: Assume direction is only vertical
-		guard childViewControllers.count > 0 else {
+		guard children.count > 0 else {
 			callback(true, nil)
 			return
 		}
@@ -272,7 +272,7 @@ extension FXDcontainerCovering {
 
 		var lateAddedSceneArray = Array<UIViewController>.init()
 
-		for child in childViewControllers {
+		for child in children {
 			let childScene = child as? (UIViewController & FXDprotocolCovering)
 			if childScene == nil {
 				continue
@@ -295,7 +295,7 @@ extension FXDcontainerCovering {
 		isUncovering = true
 
 		fxd_log()
-		fxdPrint("1.\(childViewControllers)")
+		fxdPrint("1.\(children)")
 		fxdPrint(lateAddedSceneArray)
 
 		var totalUncoveringOffsetY: CGFloat = 0.0
@@ -315,7 +315,7 @@ extension FXDcontainerCovering {
 
 			animatedFrameObjArray.append(animatedFrame)
 
-			childScene.willMove(toParentViewController: nil)
+			childScene.willMove(toParent: nil)
 		}
 
 		fxdPrint(animatedFrameObjArray)
@@ -337,10 +337,10 @@ extension FXDcontainerCovering {
 
 			for childScene in lateAddedSceneArray {
 				childScene.view.removeFromSuperview()
-				childScene.removeFromParentViewController()
+				childScene.removeFromParent()
 			}
 
-			fxdPrint("2.\(String(describing: self?.childViewControllers))")
+			fxdPrint("2.\(String(describing: self?.children))")
 
 			self?.isUncovering = false
 

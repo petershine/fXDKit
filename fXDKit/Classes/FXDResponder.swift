@@ -1,7 +1,7 @@
 
 
 extension UIResponder {
-	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) {	fxd_log()
+	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) {	fxd_log()
 
 		guard launchOptions != nil else {
 			return
@@ -19,7 +19,7 @@ extension UIResponder {
 		}
 
 
-		let openOptions: [UIApplicationOpenURLOptionsKey : Any]
+		let openOptions: [UIApplication.OpenURLOptionsKey : Any]
 			= [.sourceApplication : sourceApplication!,
 			   .annotation : annotation!]
 		
@@ -29,7 +29,7 @@ extension UIResponder {
 	}
 
 
-	@objc public func isUsable(_ launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {	fxd_log()
+	@objc public func isUsable(_ launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {	fxd_log()
 
 		guard launchOptions != nil else {
 			return false
