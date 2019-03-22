@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   s.dependency 'FBSDKCoreKit'
   s.dependency 'FBSDKLoginKit'
   s.dependency 'FBSDKShareKit'
-  s.dependency 'TwitterKit'
+  #s.dependency 'TwitterKit'
 end
