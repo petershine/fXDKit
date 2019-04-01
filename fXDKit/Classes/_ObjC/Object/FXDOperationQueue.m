@@ -4,11 +4,11 @@
 
 
 @implementation NSOperationQueue (Essential)
-+ (instancetype)newSerialQueue {
++ (instancetype _Nullable)newSerialQueue {
 	return [self newSerialQueueWithName:nil];
 }
 
-+ (instancetype)newSerialQueueWithName:(NSString*)queueName {
++ (instancetype _Nullable)newSerialQueueWithName:(NSString*_Nullable)queueName {
 	NSOperationQueue *serialQueue = [[[self class] alloc] init];
 	serialQueue.maxConcurrentOperationCount = 1;
 
@@ -20,14 +20,14 @@
 }
 
 #pragma mark -
-- (void)resetOperationQueueAndDictionary:(NSMutableDictionary*)operationDictionary {
+- (void)resetOperationQueueAndDictionary:(NSMutableDictionary*_Nullable)operationDictionary {
 	[self cancelAllOperations];
 
 	[operationDictionary removeAllObjects];
 }
 
 #pragma mark -
-- (BOOL)shouldEnqueueOperationForKey:(NSString*)operationKey withDictionary:(nullable NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers {
+- (BOOL)shouldEnqueueOperationForKey:(NSString*_Nullable)operationKey withDictionary:(nullable NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers {
 
 	BOOL shouldEnque = YES;
 
@@ -61,18 +61,18 @@
 }
 
 #pragma mark -
-- (void)enqueueOperation:(NSOperation*)operation forKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (void)enqueueOperation:(NSOperation*_Nullable)operation forKey:(NSString*_Nullable)operationKey withDictionary:(NSMutableDictionary*_Nullable)operationDictionary {
 	operationDictionary[operationKey] = operation;
 	[self addOperation:operation];
 }
 
-- (void)removeOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (void)removeOperationForKey:(NSString*_Nullable)operationKey withDictionary:(NSMutableDictionary*_Nullable)operationDictionary {
 	[self cancelOperationForKey:operationKey withDictionary:operationDictionary];
 
 	[operationDictionary removeObjectForKey:operationKey];
 }
 
-- (void)cancelOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary {
+- (void)cancelOperationForKey:(NSString*_Nullable)operationKey withDictionary:(NSMutableDictionary*_Nullable)operationDictionary {
 	if (operationKey == nil) {
 		return;
 	}

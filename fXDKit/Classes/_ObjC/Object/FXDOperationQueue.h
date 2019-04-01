@@ -3,15 +3,15 @@
 
 
 @interface NSOperationQueue (Essential)
-+ (instancetype)newSerialQueue;
-+ (instancetype)newSerialQueueWithName:(NSString*)queueName;
++ (instancetype _Nullable)newSerialQueue;
++ (instancetype _Nullable)newSerialQueueWithName:(NSString*_Nullable)queueName;
 
-- (void)resetOperationQueueAndDictionary:(NSMutableDictionary*)operationDictionary;
+- (void)resetOperationQueueAndDictionary:(NSMutableDictionary*_Nullable)operationDictionary;
 
-- (BOOL)shouldEnqueueOperationForKey:(NSString*)operationKey withDictionary:(nullable NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers;
+- (BOOL)shouldEnqueueOperationForKey:(NSString*_Nullable)operationKey withDictionary:(nullable NSMutableDictionary*)operationDictionary shouldCancelOthers:(BOOL)shouldCancelOthers;
 
-- (void)enqueueOperation:(NSOperation*)operation forKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary;
-- (void)removeOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary;
-- (void)cancelOperationForKey:(NSString*)operationKey withDictionary:(NSMutableDictionary*)operationDictionary;
+- (void)enqueueOperation:(NSOperation*_Nullable)operation forKey:(NSString*_Nullable)operationKey withDictionary:(NSMutableDictionary*_Nullable)operationDictionary;
+- (void)removeOperationForKey:(NSString*_Nullable)operationKey withDictionary:(NSMutableDictionary*_Nullable)operationDictionary;
+- (void)cancelOperationForKey:(NSString*_Nullable)operationKey withDictionary:(NSMutableDictionary*_Nullable)operationDictionary;
 
 @end

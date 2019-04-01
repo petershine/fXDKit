@@ -45,6 +45,6 @@ typedef UIView* _Nullable (^FXDcallbackHitTest)(UIView * _Nullable hitView, CGPo
 
 
 @interface UIView (Glowing)
-- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview;
+- (void)addGlowingSubview:(FXDsubviewGlowing*_Nullable)glowingSubview;
 @end
 

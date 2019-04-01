@@ -382,7 +382,7 @@
 
 
 @implementation UIView (Glowing)
-- (void)addGlowingSubview:(FXDsubviewGlowing*)glowingSubview {
+- (void)addGlowingSubview:(FXDsubviewGlowing*_Nullable)glowingSubview {
 
 	if (glowingSubview == nil) {
 		glowingSubview = [[FXDsubviewGlowing alloc]
