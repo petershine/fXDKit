@@ -33,7 +33,7 @@ open class FXDmoduleFacebook: NSObject {
 	@objc public func signInBySelectingAccount(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log()
 
 		fxdPrint(presentingScene)
-		fxdPrint(FBSDKAccessToken.current())
+		fxdPrint(FBSDKAccessToken.current() ?? "")
 
 
 		guard FBSDKAccessToken.current() == nil else {
@@ -116,7 +116,7 @@ open class FXDmoduleFacebook: NSObject {
 	func showActionSheet(presentingScene: UIViewController, callback: @escaping FXDcallback) {	fxd_log()
 
 		fxdPrint(presentingScene)
-		fxdPrint(FBSDKAccessToken.current())
+		fxdPrint(FBSDKAccessToken.current() ?? "")
 
 		//FBSDKLog: starting with Graph API v2.4, GET requests for /me/accounts should contain an explicit "fields" parameter
 		//https://developers.facebook.com/docs/graph-api/reference/user/
@@ -440,7 +440,7 @@ extension FXDmoduleFacebook: FBSDKGraphRequestConnectionDelegate {
 	}
 
 	public func requestConnection(_ connection: FBSDKGraphRequestConnection!, didFailWithError error: Error!) {	fxd_log()
-		fxdPrint(error)
+		fxdPrint(error ?? "")
 
 		assert(self.batchFinishedClosure != nil)
 		self.batchFinishedClosure?(false)
