@@ -102,7 +102,7 @@ extension FXDcontainerCovering {
 
 		if (presentedScene.shouldCoverAbove == false
 			&& children.count > minimumChildCount),
-			let destinationIndex = children.index(of: presentedScene) {
+			let destinationIndex = children.firstIndex(of: presentedScene) {
 			//MARK: Including newly added child, the count should be bigger than one
 
 			for child in children {
@@ -113,7 +113,7 @@ extension FXDcontainerCovering {
 
 				fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
 
-				if let childIndex = children.index(of: childScene!),
+				if let childIndex = children.firstIndex(of: childScene!),
 					(childIndex < destinationIndex && childScene?.shouldStayFixed == false) {
 
 					//MARK: If the childScene is last slid one, which is in previous index
@@ -200,7 +200,7 @@ extension FXDcontainerCovering {
 
 		if (dismissedScene.shouldCoverAbove == false
 			&& children.count > minimumChildCount),
-			let sourceIndex = children.index(of: dismissedScene) {
+			let sourceIndex = children.firstIndex(of: dismissedScene) {
 			//MARK: Including newly added child, the count should be bigger than one
 
 			for child in children {
@@ -211,7 +211,7 @@ extension FXDcontainerCovering {
 
 				fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
 
-				if let childIndex = children.index(of: childScene!),
+				if let childIndex = children.firstIndex(of: childScene!),
 					(childIndex < sourceIndex && childScene?.shouldStayFixed == false) {
 
 					//MARK: If the childController is last slid one, which is in previous index
@@ -327,7 +327,7 @@ extension FXDcontainerCovering {
 				 options: .curveLinear,
 				 animations: {
 					for childScene in lateAddedSceneArray {
-						if let childIndex = lateAddedSceneArray.index(of: childScene) {
+						if let childIndex = lateAddedSceneArray.firstIndex(of: childScene) {
 							let animatedFrame = animatedFrameObjArray[childIndex]
 							childScene.view.frame = animatedFrame
 						}
