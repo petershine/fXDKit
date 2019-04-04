@@ -18,33 +18,22 @@
 #pragma mark - Observer
 
 #pragma mark - Delegate
-//MARK: UIApplicationDelegate
-
-//MARK: For the app with any remote (even including local) notification, override following implementation
-/*
- e.g. Request snippet
-	UIUserNotificationType notificationTypes = (UIUserNotificationTypeNone|UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert);
-	UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
-	[[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {	FXDLog_SEPARATE;
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken NS_AVAILABLE_IOS(3_0) {	FXDLog_SEPARATE;
 	FXDLogObject(deviceToken);
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {	FXDLog_SEPARATE;
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error NS_AVAILABLE_IOS(3_0) {	FXDLog_SEPARATE;
 	FXDLog_ERROR;
 }
 
-//MARK: Be careful with the case for older version, which cannot fetch.
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {	FXDLog_SEPARATE;
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler NS_AVAILABLE_IOS(7_0) {	FXDLog_SEPARATE;
 	FXDLogObject(userInfo);
 	FXDLogObject(completionHandler);
 
-	if (completionHandler) {
-		completionHandler(UIBackgroundFetchResultNoData);
+	if (completionHandler != nil) {
+		completionHandler(UIBackgroundFetchResultNewData);
 	}
 }
- */
 
 #pragma mark -
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options {	FXDLog_SEPARATE;
@@ -63,8 +52,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {	FXDLog_SEPARATE;
-
-	FXDLog_OVERRIDE;
+	FXDLogObject(launchOptions);;
 	
 	return YES;
 }
