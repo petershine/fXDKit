@@ -47,7 +47,7 @@ open class FXDmoduleFacebook: NSObject {
 
 		//MARK: For some reason system account login is not working
 		//loginManager.loginBehavior = FBSDKLoginBehavior.systemAccount
-		loginManager.loginBehavior = FBSDKLoginBehavior.native
+		loginManager.loginBehavior = FBSDKLoginBehavior.browser
 
 
 		/*
