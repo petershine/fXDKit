@@ -45,7 +45,7 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
 public func fxd_log(_ prefix: String? = nil, _ suffix: String? = nil, filename: String = #file, function: String = #function, line: Int = #line) {
 	#if DEBUG
 	os_log(" ")
-	os_log("\n\n%@[%@ %@]%@", ((prefix == nil) ? "" : prefix!), (filename as NSString).lastPathComponent, function, ((suffix == nil) ? "" : suffix!))
+	os_log("\n\n    %@[%@ %@]%@", ((prefix == nil) ? "" : prefix!), (filename as NSString).lastPathComponent, function, ((suffix == nil) ? "" : suffix!))
 	#endif
 }
 
