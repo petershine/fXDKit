@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.version          = '0.0.1'
   s.summary          = 'Objective-C module of fXDKit. Separated for robust compilation'
 
-  s.description      = 'Objective-C module of fXDKit. Separated for robust compilation. Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012'
+  s.description      = 'Objective-C module of fXDKit. Separated for robust compilation'
 
   s.homepage         = 'https://github.com/petershine/fXDKit'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
