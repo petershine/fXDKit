@@ -12,6 +12,8 @@ public let DURATION_QUARTER: TimeInterval = (DURATION_ONE_SECOND/4.0)
 
 public let DURATION_FULL_MINUTE: TimeInterval = (DURATION_ONE_SECOND*60.0)
 
+public let LIMIT_CACHED_OBJ: Int = 1000
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
