@@ -36,7 +36,6 @@
 	
 	if (disclaimerView) {
 		FXDLogObject(disclaimerView);
-		FXDLogObject([(UILabel*)disclaimerView font]);
 
 		CGRect modifiedFrame = disclaimerView.frame;
 		FXDLog(@"1.%@", _Rect(modifiedFrame));
@@ -55,7 +54,7 @@
 
 @implementation MKMapView (Essential)
 
-- (id)disclaimerView {
+- (nullable id)disclaimerView {
     id disclaimerView = nil;
 	
     for (id subview in self.subviews) {

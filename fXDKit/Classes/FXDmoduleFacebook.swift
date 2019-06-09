@@ -440,7 +440,7 @@ extension FXDmoduleFacebook: GraphRequestConnectionDelegate {
 	}
 
 	public func requestConnection(_ connection: GraphRequestConnection, didFailWithError error: Error) {	fxd_log()
-		fxdPrint(error ?? "")
+		fxdPrint(error)
 
 		assert(self.batchFinishedClosure != nil)
 		self.batchFinishedClosure?(false)
