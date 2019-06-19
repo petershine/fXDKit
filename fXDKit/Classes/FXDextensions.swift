@@ -52,6 +52,68 @@ extension IndexPath {
 	}
 }
 
+extension String {
+    public func sharableMessageWith(videoId: String?) -> String? {
+        var formatted = self
+        
+        let videoPath = (videoId != nil && (videoId?.count)! > 0) ? "\(HOST_SHORT_YOUTUBE)\(videoId!)" : ""
+        
+        guard let swiftrange = formatted.range(of: HOST_SHORT_YOUTUBE) else {
+            return "\(formatted) \(videoPath)".trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        
+        
+        var replacingRange = NSRange(swiftrange, in: formatted)
+        replacingRange.length = videoPath.count //MARK: Assume every short url is same length
+        if let swiftrange = Range(replacingRange, in: formatted) {
+            formatted = formatted.replacingCharacters(in: swiftrange, with: videoPath).trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        
+        return formatted
+    }
+    
+    public func sharableMessageWith(appConfig: FXDprotocolAppConfig) -> String? {
+        var formatted = self
+        
+        let insertedLinkArray = [
+            " via \(appConfig.homeURL)",
+            " \(appConfig.homeURL)",
+            
+            " via \(appConfig.shortHomeURL)",
+            " \(appConfig.shortHomeURL)",
+        ]
+        
+        for insertedLink in insertedLinkArray {
+            if self.count + insertedLink.count <= MAXIMUM_LENGTH_TWEET,
+                let replacedRange = self.range(of: "\(HOST_SHORT_YOUTUBE)") {
+                
+                if NSRange(replacedRange, in: self).length == 0 {
+                    formatted = self + insertedLink
+                }
+                else {
+                    formatted = self.replacingCharacters(in: replacedRange, with: "\(insertedLink) ")
+                }
+                
+                return formatted
+            }
+        }
+        
+        
+        let appendedLinkArray = [
+            " via \(appConfig.twitterName)",
+            " \(appConfig.twitterName)",
+        ]
+        
+        for appendedLink in appendedLinkArray {
+            if self.count + appendedLink.count <= MAXIMUM_LENGTH_TWEET {
+                formatted = self + appendedLink
+            }
+        }
+        
+        return formatted
+    }
+}
+
 extension UIApplication {
 	@objc public class func mainWindow() -> UIWindow? {
 		var mainWindow: UIWindow? = nil
