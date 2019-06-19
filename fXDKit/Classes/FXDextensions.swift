@@ -75,38 +75,21 @@ extension String {
     public func sharableMessageWith(appConfig: FXDprotocolAppConfig) -> String? {
         var formatted = self
         
-        let insertedLinkArray = [
+        let appendedLinkArray = [
             " via \(appConfig.homeURL)",
             " \(appConfig.homeURL)",
             
             " via \(appConfig.shortHomeURL)",
             " \(appConfig.shortHomeURL)",
-        ]
-        
-        for insertedLink in insertedLinkArray {
-            if self.count + insertedLink.count <= MAXIMUM_LENGTH_TWEET,
-                let replacedRange = self.range(of: "\(HOST_SHORT_YOUTUBE)") {
-                
-                if NSRange(replacedRange, in: self).length == 0 {
-                    formatted = self + insertedLink
-                }
-                else {
-                    formatted = self.replacingCharacters(in: replacedRange, with: "\(insertedLink) ")
-                }
-                
-                return formatted
-            }
-        }
-        
-        
-        let appendedLinkArray = [
+            
             " via \(appConfig.twitterName)",
             " \(appConfig.twitterName)",
         ]
         
         for appendedLink in appendedLinkArray {
-            if self.count + appendedLink.count <= MAXIMUM_LENGTH_TWEET {
-                formatted = self + appendedLink
+            if formatted.count + appendedLink.count <= MAXIMUM_LENGTH_TWEET {
+                formatted = formatted + appendedLink
+                break
             }
         }
         
