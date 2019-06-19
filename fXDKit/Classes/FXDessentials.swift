@@ -14,6 +14,10 @@ public let DURATION_FULL_MINUTE: TimeInterval = (DURATION_ONE_SECOND*60.0)
 
 public let LIMIT_CACHED_OBJ: Int = 1000
 
+public let MAXIMUM_LENGTH_TWEET: Int = 140
+
+public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
@@ -28,6 +32,19 @@ public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
 
 	func observedUIDeviceBatteryLevelDidChange(_ notification: NSNotification)
 	func observedUIDeviceOrientationDidChange(_ notification: NSNotification)
+}
+
+public protocol FXDprotocolAppConfig {
+    var appStoreID: String { get }
+    
+    var URIscheme: String { get }
+    var facebookURIscheme: String { get }
+    
+    var homeURL: String { get }
+    var shortHomeURL: String { get }
+    var twitterName: String { get }
+    
+    var contactEmail: String { get }
 }
 
 
@@ -64,16 +81,3 @@ public func fxd_todo(_ filename: String = #file, function: String = #function, l
 	#endif
 }
 
-
-public protocol FXDprotocolAppConfig {
-    var appStoreID: String { get }
-    
-    var URIscheme: String { get }
-    var facebookURIscheme: String { get }
-    
-    var homeURL: String { get }
-    var shortHomeURL: String { get }
-    var twitterName: String { get }
-    
-    var contactEmail: String { get }
-}
