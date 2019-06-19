@@ -64,3 +64,7 @@ public func fxd_todo(_ filename: String = #file, function: String = #function, l
 	#endif
 }
 
+
+open class FXDconfigApplication: NSObject {
+    //TODO: prepare as a class
+}
