@@ -65,6 +65,15 @@ public func fxd_todo(_ filename: String = #file, function: String = #function, l
 }
 
 
-open class FXDconfigApplication: NSObject {
-    //TODO: prepare as a class
+public protocol FXDprotocolAppConfig {
+    var appStoreID: String { get }
+    
+    var URIscheme: String { get }
+    var facebookURIscheme: String { get }
+    
+    var homeURL: String { get }
+    var shortHomeURL: String { get }
+    var twitterName: String { get }
+    
+    var contactEmail: String { get }
 }
