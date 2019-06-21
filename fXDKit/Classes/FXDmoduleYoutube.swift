@@ -1,7 +1,6 @@
 
 
 let urlformatYoutubeSearch = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
-let urlformatYoutubeShortLink = "youtu.be/%@"	//MARK: No http:// for Twitter length
 
 let objkeyVideoId = "videoId"
 let objkeyVideoChannel = "channelTitle"
@@ -9,8 +8,10 @@ let objkeyVideoPublishedAt = "publishedAt"
 let objkeyVideoThumbnail = "thumbnail"
 let objkeyVideoTitle = "title"
 
+public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
-class FXDmoduleYoutube {
+
+class FXDmoduleYoutube: NSObject {
 
 	var apikeyGoogleForBrowser: String?
 
