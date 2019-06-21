@@ -412,7 +412,7 @@
     return UTCdateString;
 }
 
-- (NSDate*)UTCdateForLocalDate:(NSDate*)localDate {
+- (nullable NSDate*)UTCdateForLocalDate:(nullable NSDate*)localDate {
 
 	NSString *UTCdateString = [self UTCdateStringForLocalDate:localDate];
 

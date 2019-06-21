@@ -48,7 +48,7 @@
 
 - (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*)appStoreID withCallback:(FXDcallbackFinish)finishCallback;
 
-- (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
+- (nullable NSDate*)UTCdateForLocalDate:(nullable NSDate*)localDate;
 - (NSDate*)UTCdateForLocalDate:(NSDate*)localDate;
 - (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
 - (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
