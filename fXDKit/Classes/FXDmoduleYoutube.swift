@@ -1,12 +1,12 @@
 
 
-let urlformatYoutubeSearch = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
+public let urlformatYoutubeSearch = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
 
-let objkeyVideoId = "videoId"
-let objkeyVideoChannel = "channelTitle"
-let objkeyVideoPublishedAt = "publishedAt"
-let objkeyVideoThumbnail = "thumbnail"
-let objkeyVideoTitle = "title"
+public let objkeyVideoId = "videoId"
+public let objkeyVideoChannel = "channelTitle"
+public let objkeyVideoPublishedAt = "publishedAt"
+public let objkeyVideoThumbnail = "thumbnail"
+public let objkeyVideoTitle = "title"
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 

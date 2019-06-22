@@ -9,23 +9,6 @@
 #pragma mark - Initialization
 
 #pragma mark - Property overriding
-- (NSString*)mainRootURLformat {
-	if (_mainRootURLformat == nil) {	FXDLog_OVERRIDE;
-	}
-	return _mainRootURLformat;
-}
-
-- (NSString*)mainAPIkey {
-	if (_mainAPIkey == nil) {	FXDLog_OVERRIDE;
-	}
-	return _mainAPIkey;
-}
-
-- (NSString*)mainJSONrootKey {
-	if (_mainJSONrootKey == nil) {	FXDLog_OVERRIDE;
-	}
-	return _mainJSONrootKey;
-}
 
 #pragma mark - Public
 - (void)collectingRequestWithQueryText:(NSString*)queryText withDidCollectBlock:(void(^)(NSMutableArray* collectedItemArray))didCollectBlock {

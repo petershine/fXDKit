@@ -2,15 +2,11 @@
 #import "FXDimportEssential.h"
 
 
-@interface FXDmoduleNetworking : NSObject {
-	NSString *_mainRootURLformat;
-	NSString *_mainAPIkey;
-	NSString *_mainJSONrootKey;
-}
+@interface FXDmoduleNetworking : NSObject
 
-@property (strong, nonatomic) NSString *mainRootURLformat;
-@property (strong, nonatomic) NSString *mainAPIkey;
-@property (strong, nonatomic) NSString *mainJSONrootKey;
+@property (strong, nonatomic, readonly, nonnull) NSString *mainRootURLformat;
+@property (strong, nonatomic, readonly, nonnull) NSString *mainAPIkey;
+@property (strong, nonatomic, readonly, nonnull) NSString *mainJSONrootKey;
 
 
 - (void)collectingRequestWithQueryText:(NSString*)queryText withDidCollectBlock:(void(^)(NSMutableArray* collectedItemArray))didCollectBlock;
