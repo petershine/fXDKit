@@ -1,12 +1,14 @@
 
 
-public let urlformatYoutubeSearch = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
+public let ENDPOINT_YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
 
-public let objkeyVideoId = "videoId"
-public let objkeyVideoChannel = "channelTitle"
-public let objkeyVideoPublishedAt = "publishedAt"
-public let objkeyVideoThumbnail = "thumbnail"
-public let objkeyVideoTitle = "title"
+public let NODE_YOUTUBE_ROOT = "items"
+
+public let KEY_VIDEO_ID = "videoId"
+public let KEY_VIDEO_CHANNEL = "channelTitle"
+public let KEY_VIDEO_PUBLISHED_AT = "publishedAt"
+public let KEY_VIDEO_TITLE = "title"
+public let KEY_VIDEO_THUMBNAIL = "thumbnail"
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
@@ -59,7 +61,7 @@ class FXDmoduleYoutube: NSObject {
 			do {
 				let jsonObject = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 
-				results = (jsonObject as! Dictionary<String, Any>)["items"] as? Array<Any>;
+				results = (jsonObject as! Dictionary<String, Any>)[NODE_YOUTUBE_ROOT] as? Array<Any>;
 			}
 			catch {
 				//MARK://TODO
