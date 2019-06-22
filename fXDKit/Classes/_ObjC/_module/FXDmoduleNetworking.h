@@ -9,9 +9,9 @@
 @property (strong, nonatomic, readonly, nonnull) NSString *mainJSONrootKey;
 
 
-- (void)collectingRequestWithQueryText:(NSString*)queryText withDidCollectBlock:(void(^)(NSMutableArray* collectedItemArray))didCollectBlock;
-- (NSURLRequest*)requestWithQueryText:(NSString*)queryText;
-- (NSMutableArray*)collectedItemArrayFromJSONobj:(id)jsonObj;
-- (id)simplerItemFromItem:(id)item;
+- (void)collectingRequestWithQueryText:(nullable NSString*)queryText withDidCollectBlock:(void(^_Nullable)(NSMutableArray* _Nullable collectedItemArray))didCollectBlock;
+- (nullable NSURLRequest*)requestWithQueryText:(nullable NSString*)queryText;
+- (nullable NSMutableArray*)collectedItemArrayFromJSONobj:(nullable id)jsonObj;
+- (nullable id)simplerItemFromItem:(nullable id)item;
 
 @end

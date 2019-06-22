@@ -11,7 +11,7 @@
 #pragma mark - Property overriding
 
 #pragma mark - Public
-- (void)collectingRequestWithQueryText:(NSString*)queryText withDidCollectBlock:(void(^)(NSMutableArray* collectedItemArray))didCollectBlock {
+- (void)collectingRequestWithQueryText:(nullable NSString*)queryText withDidCollectBlock:(void(^_Nullable)(NSMutableArray* _Nullable collectedItemArray))didCollectBlock {
 
 	NSURLRequest *searchRequest = [self requestWithQueryText:queryText];
 
@@ -64,7 +64,7 @@
 	[searchTask resume];
 }
 
-- (NSURLRequest*)requestWithQueryText:(NSString*)queryText {
+- (nullable NSURLRequest*)requestWithQueryText:(nullable NSString*)queryText {
 	if (self.mainRootURLformat == nil || self.mainAPIkey == nil) {
 		return nil;
 	}
@@ -82,7 +82,7 @@
 	return request;
 }
 
-- (NSMutableArray*)collectedItemArrayFromJSONobj:(id)jsonObj {
+- (nullable NSMutableArray*)collectedItemArrayFromJSONobj:(nullable id)jsonObj {
 	FXDLogObject(self.mainJSONrootKey);
 	FXDLogObject(jsonObj);
 
@@ -104,7 +104,7 @@
 	return collectedItemArray;
 }
 
-- (id)simplerItemFromItem:(id)item {	FXDLog_OVERRIDE;
+- (nullable id)simplerItemFromItem:(nullable id)item {	FXDLog_OVERRIDE;
 	FXDLogObject(item);
 	
 	return item;
