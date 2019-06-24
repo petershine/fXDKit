@@ -21,9 +21,9 @@ Pod::Spec.new do |s|
 
   s.dependency 'fXDObjC'
   
-  s.dependency 'Bolts'
-  s.dependency 'FBSDKCoreKit'
-  s.dependency 'FBSDKLoginKit'
-  s.dependency 'FBSDKShareKit'
-  #s.dependency 'TwitterKit'
+#  s.dependency 'Bolts'
+#  s.dependency 'FBSDKCoreKit'
+#  s.dependency 'FBSDKLoginKit'
+#  s.dependency 'FBSDKShareKit'
+#  s.dependency 'TwitterKit'
 end
