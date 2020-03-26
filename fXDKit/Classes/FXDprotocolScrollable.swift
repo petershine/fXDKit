@@ -55,7 +55,7 @@ public protocol FXDscrollableMap: FXDprotocolScrollable {
 	func unloadMapScene()
 	func initializeMapview()
 
-	func refreshMapview(coordinate: CLLocationCoordinate2D)
+	func refreshMapview(coordinate: CLLocationCoordinate2D?)
 
 	func cancelTrackingUserOnMapView()
 	func delayedTrackingUserOnMapView(afterDelay: TimeInterval)
