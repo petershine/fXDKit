@@ -12,7 +12,8 @@
 #import <TargetConditionals.h>
 
 @import SystemConfiguration;
-@import MobileCoreServices;
+@import MobileCoreServices;	// MobileCoreServices has been renamed. Use CoreServices instead.
+@import CoreServices;
 
 @import CoreData;
 
@@ -126,10 +127,12 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 @import CoreMedia;
 @import CoreVideo;
-@import OpenGLES;
+@import OpenGLES;	// OpenGLES is deprecated. Consider migrating to Metal instead.
+@import Metal;
 
 @import AVFoundation;
-@import AssetsLibrary;
+@import AssetsLibrary;	// AssetsLibrary is deprecated. Consider migrating to Photos instead.
+@import Photos;
 
 @import MediaPlayer;
 @import MediaToolbox;
