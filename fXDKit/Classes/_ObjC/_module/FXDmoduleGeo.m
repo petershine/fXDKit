@@ -36,6 +36,22 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
+- (BOOL)didUserAuthorize {
+	if ([CLLocationManager locationServicesEnabled] == NO
+		|| ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse)) {
+
+		FXDLog_DEFAULT
+		FXDLogBOOL([CLLocationManager locationServicesEnabled]);
+		FXDLogObject(@([CLLocationManager authorizationStatus]));
+		FXDLogObject(_mainLocationManager.location);
+
+		return NO;
+	}
+
+	return YES;
+}
+
+#pragma mark -
 - (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
 	FXDLogObject(launchOptions[UIApplicationLaunchOptionsLocationKey]);
 
@@ -76,16 +92,9 @@
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationWhenInUseUsageDescription"]);
 
 
-	BOOL isAuthorized = YES;
-
 	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
 		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
-		isAuthorized = NO;
-	}
 
-	FXDLogBOOL(isAuthorized);
-
-	if (isAuthorized == NO) {
 		//MARK: iOS 11 allows user to choose with UIAlertController
 		[self.mainLocationManager requestAlwaysAuthorization];
 

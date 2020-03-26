@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) CLLocation *lastLocation;
 
+- (BOOL)didUserAuthorize;
 
 - (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions;
 - (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus;
