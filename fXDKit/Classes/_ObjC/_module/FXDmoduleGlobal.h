@@ -16,42 +16,42 @@
 
 @property (nonatomic, readonly) NSInteger appLaunchCount;
 
-@property (strong, nonatomic) NSString *mainStoryboardName;
-@property (strong, nonatomic) UIStoryboard *mainStoryboard;
+@property (strong, nonatomic) NSString * _Nullable mainStoryboardName;
+@property (strong, nonatomic) UIStoryboard * _Nullable mainStoryboard;
 
-@property (strong, nonatomic) NSString *deviceLanguageCode;
-@property (strong, nonatomic) NSString *deviceCountryCode;
-@property (strong, nonatomic) NSString *deviceModelName;
+@property (strong, nonatomic) NSString * _Nullable deviceLanguageCode;
+@property (strong, nonatomic) NSString * _Nullable deviceCountryCode;
+@property (strong, nonatomic) NSString * _Nullable deviceModelName;
 
-@property (strong, nonatomic) NSNumber *isDevice_iPhoneFour;
-@property (strong, nonatomic) NSNumber *isDevice_iPhoneSix;
+@property (strong, nonatomic) NSNumber * _Nullable isDevice_iPhoneFour;
+@property (strong, nonatomic) NSNumber * _Nullable isDevice_iPhoneSix;
 
-@property (strong, nonatomic) NSDateFormatter *dateformatterUTC;
-@property (strong, nonatomic) NSDateFormatter *dateformatterLocal;
-
-
-@property (strong, nonatomic) id initialScene;
+@property (strong, nonatomic) NSDateFormatter * _Nullable dateformatterUTC;
+@property (strong, nonatomic) NSDateFormatter * _Nullable dateformatterLocal;
 
 
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)finishCallback;
+@property (strong, nonatomic) id _Nullable initialScene;
+
+
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )finishCallback;
 
 - (void)incrementAppLaunchCount;
 
 - (void)configureUserDefaultsInfo;
 - (void)configureGlobalAppearance;
 
-- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions;
+- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*_Nullable)launchOptions;
 
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldUpgradeForNewAppVersion;
 - (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger;
 - (void)updateLastUpgradedAppVersionAfterLaunch;
 
-- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*)appStoreID withCallback:(FXDcallbackFinish)finishCallback;
+- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*_Nullable)appStoreID withCallback:(FXDcallbackFinish _Nullable )finishCallback;
 
-- (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate;
-- (nullable NSDate*)UTCdateForLocalDate:(nullable NSDate*)localDate;
-- (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate;
-- (NSDate*)localDateForUTCdate:(NSDate*)UTCdate;
+- (NSString*_Nullable)UTCdateStringForLocalDate:(NSDate*_Nullable)localDate;
+- (NSDate*_Nullable)UTCdateForLocalDate:(NSDate*_Nullable)localDate;
+- (NSString*_Nullable)localDateStringForUTCdate:(NSDate*_Nullable)UTCdate;
+- (NSDate*_Nullable)localDateForUTCdate:(NSDate*_Nullable)UTCdate;
 
 @end
 

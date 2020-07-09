@@ -237,7 +237,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT;
 	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
 	//FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
@@ -279,7 +279,7 @@
 }
 
 #pragma mark -
-- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_OVERRIDE;
+- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*_Nullable)launchOptions {	FXDLog_OVERRIDE;
 }
 
 #pragma mark -
@@ -316,7 +316,7 @@
 }
 
 #pragma mark -
-- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*)appStoreID withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*_Nullable)appStoreID withCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT;
 	FXDLogObject(appStoreID);
 
 #ifdef application_AppStoreID
@@ -402,7 +402,7 @@
 }
 
 #pragma mark -
-- (NSString*)UTCdateStringForLocalDate:(NSDate*)localDate {
+- (NSString*_Nullable)UTCdateStringForLocalDate:(NSDate*_Nullable)localDate {
 	if (localDate == nil) {
 		localDate = [NSDate date];
 	}
@@ -412,7 +412,7 @@
     return UTCdateString;
 }
 
-- (nullable NSDate*)UTCdateForLocalDate:(nullable NSDate*)localDate {
+- (NSDate*_Nullable)UTCdateForLocalDate:(NSDate*_Nullable)localDate {
 
 	NSString *UTCdateString = [self UTCdateStringForLocalDate:localDate];
 
@@ -421,14 +421,14 @@
 	return UTCdate;
 }
 
-- (NSString*)localDateStringForUTCdate:(NSDate*)UTCdate {
+- (NSString*_Nullable)localDateStringForUTCdate:(NSDate*_Nullable)UTCdate {
 
 	NSString *localDateString = [self.dateformatterLocal stringFromDate:UTCdate];
 
 	return localDateString;
 }
 
-- (NSDate*)localDateForUTCdate:(NSDate*)UTCdate {
+- (NSDate*_Nullable)localDateForUTCdate:(NSDate*_Nullable)UTCdate {
 	NSString *localDateString = [self localDateStringForUTCdate:UTCdate];
 	
 	NSDate *localDate = [self.dateformatterLocal dateFromString:localDateString];
