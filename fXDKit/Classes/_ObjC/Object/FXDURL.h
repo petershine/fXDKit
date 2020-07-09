@@ -1,5 +1,5 @@
 
-#import "FXDimportEssential.h"
+#import <fXDObjC/FXDimportEssential.h>
 
 typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindUndefined,

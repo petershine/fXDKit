@@ -1,7 +1,7 @@
 
-#import "FXDimportEssential.h"
-#import "FXDOperationQueue.h"
-#import "FXDFileManager.h"
+#import <fXDObjC/FXDimportEssential.h>
+#import <fXDObjC/FXDOperationQueue.h>
+#import <fXDObjC/FXDFileManager.h>
 
 #define userdefaultObjSavedUbiquityIdentityToken	@"SavedUbiquityIdentityTokenObjKey"
 #define userdefaultStringSavedUbiquityContainerURL	@"SavedUbiquityContainerURLstringKey"

@@ -1,5 +1,5 @@
 
-#import "FXDimportEssential.h"
+#import <fXDObjC/FXDimportEssential.h>
 
 #define periodicintervalDivisor	3
 #define periodicintervalDefault	CMTimeMultiplyByRatio(CMTimeMake(1, 3), 1, periodicintervalDivisor)

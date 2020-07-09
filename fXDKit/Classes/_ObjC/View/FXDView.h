@@ -1,5 +1,5 @@
 
-#import "FXDimportEssential.h"
+#import <fXDObjC/FXDimportEssential.h>
 
 #define UIViewAutoresizingKeepCenter	(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin)
 

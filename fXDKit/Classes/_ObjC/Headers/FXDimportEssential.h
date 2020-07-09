@@ -31,14 +31,14 @@
 @import UserNotificationsUI;
 
 
-#import "FXDconfigDeveloper.h"
+#import <fXDObjC/FXDconfigDeveloper.h>
 
-#import "FXDmacroValue.h"
-#import "FXDmacroFunction.h"
+#import <fXDObjC/FXDmacroValue.h>
+#import <fXDObjC/FXDmacroFunction.h>
 
-#import "FXDNumber.h"
-#import "FXDString.h"
-#import "FXDURL.h"
+#import <fXDObjC/FXDNumber.h>
+#import <fXDObjC/FXDString.h>
+#import <fXDObjC/FXDURL.h>
 
 
 typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);

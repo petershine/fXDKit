@@ -1,11 +1,11 @@
 
-#import "FXDimportEssential.h"
-#import "FXDOperationQueue.h"
+#import <fXDObjC/FXDimportEssential.h>
+#import <fXDObjC/FXDOperationQueue.h>
 
 #define prefixCached	@"_cached_"
 
 
-#import "FXDmoduleQuery.h"
+#import <fXDObjC/FXDmoduleQuery.h>
 @interface FXDmoduleCaches : FXDmoduleQuery
 
 

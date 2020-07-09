@@ -1,5 +1,5 @@
 
-#import "FXDimportEssential.h"
+#import <fXDObjC/FXDimportEssential.h>
 
 #define filternameScale		@"CILanczosScaleTransform"
 #define filternameTransform		@"CIAffineTransform"

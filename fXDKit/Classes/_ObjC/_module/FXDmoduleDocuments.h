@@ -1,7 +1,7 @@
 
-#import "FXDimportEssential.h"
-#import "FXDOperationQueue.h"
-#import "FXDFileManager.h"
+#import <fXDObjC/FXDimportEssential.h>
+#import <fXDObjC/FXDOperationQueue.h>
+#import <fXDObjC/FXDFileManager.h>
 
 
 @interface FXDinfoEnumerated : NSObject
@@ -10,7 +10,7 @@
 @end
 
 
-#import "FXDmoduleQuery.h"
+#import <fXDObjC/FXDmoduleQuery.h>
 @interface FXDmoduleDocuments : FXDmoduleQuery
 @property (strong, nonatomic) NSOperationQueue *evictingQueue;
 

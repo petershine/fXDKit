@@ -1,6 +1,6 @@
 
-#import "FXDimportEssential.h"
-#import "FXDStoryboardSegue.h"
+#import <fXDObjC/FXDimportEssential.h>
+#import <fXDObjC/FXDStoryboardSegue.h>
 
 
 @interface FXDViewController : UIViewController {

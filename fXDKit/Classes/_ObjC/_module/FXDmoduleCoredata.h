@@ -11,11 +11,11 @@
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
 
-#import "FXDimportEssential.h"
-#import "FXDOperationQueue.h"
-#import "FXDManagedObjectContext.h"
-#import "FXDManagedDocument.h"
-#import "FXDFileManager.h"
+#import <fXDObjC/FXDimportEssential.h>
+#import <fXDObjC/FXDOperationQueue.h>
+#import <fXDObjC/FXDManagedObjectContext.h>
+#import <fXDObjC/FXDManagedDocument.h>
+#import <fXDObjC/FXDFileManager.h>
 
 
 @interface FXDmoduleCoredata : NSObject {
