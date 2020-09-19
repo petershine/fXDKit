@@ -10,18 +10,14 @@ Currently, this kit is undergoing evolution, by translating source from Objectiv
 [![License](https://img.shields.io/cocoapods/l/fXDKit.svg?style=flat)](http://cocoapods.org/pods/fXDKit)
 [![Platform](https://img.shields.io/cocoapods/p/fXDKit.svg?style=flat)](http://cocoapods.org/pods/fXDKit)
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
-fXDKit is available through [CocoaPods](http://cocoapods.org). To install
+fXDKit is available using [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
+pod 'fXDObjC', :git => 'https://github.com/petershine/fXDKit.git' # Obj-C dependency
 pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
 ```
 
