@@ -96,16 +96,19 @@
 
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-	id identityToken = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken]];
+	NSError *error = nil;
+	id<NSObject,NSCopying,NSCoding> identityToken = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSObject class] fromData:[userDefaults objectForKey:userdefaultObjSavedUbiquityIdentityToken] error:&error];
 	FXDLogObject(identityToken);
 	FXDLogBOOL([identityToken isEqual:fileManager.ubiquityIdentityToken]);
+	FXDLog_ERROR
 
 	if (identityToken == nil
 		|| [identityToken isEqual:fileManager.ubiquityIdentityToken] == NO) {
 
 		identityToken = fileManager.ubiquityIdentityToken;
 
-		NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:identityToken];
+		NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:identityToken requiringSecureCoding:NO error:&error];
+		FXDLog_ERROR
 
 		[userDefaults setObject:archivedData forKey:userdefaultObjSavedUbiquityIdentityToken];
 		[userDefaults synchronize];

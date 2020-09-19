@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/petershine/fXDKit.git', :tag => s.version.to_s }
   s.social_media_url = 'https://www.linkedin.com/in/petershine/'
 
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '13.6'
 
   s.swift_version = '5.0'
   s.source_files = 'fXDKit/Classes/**/*.swift'

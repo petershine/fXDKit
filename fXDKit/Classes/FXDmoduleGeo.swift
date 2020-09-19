@@ -21,18 +21,17 @@ class FXDmoduleGeo: NSObject {
 		fxdPrint(CLLocationManager.locationServicesEnabled().description)
 		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
 		fxdPrint(CLLocationManager.isRangingAvailable().description)
-		fxdPrint(CLLocationManager.deferredLocationUpdatesAvailable().description)
 
 		guard CLLocationManager.locationServicesEnabled() != false else {
 			return
 		}
 
 
-		self.mainLocationManager = CLLocationManager()
-		self.mainLocationManager?.delegate = self
-		self.mainLocationManager?.distanceFilter = 100
+		mainLocationManager = CLLocationManager()
+		mainLocationManager?.delegate = self
+		mainLocationManager?.distanceFilter = 100
 
-		self.mainLocationManager?.pausesLocationUpdatesAutomatically = false
+		mainLocationManager?.pausesLocationUpdatesAutomatically = false
 		/*
 		*      With UIBackgroundModes set to include "location" in Info.plist, you must
 		*      also set this property to YES at runtime whenever calling
@@ -41,19 +40,24 @@ class FXDmoduleGeo: NSObject {
 		*      Setting this property to YES when UIBackgroundModes does not include
 		*      "location" is a fatal error.
 		*/
-		self.mainLocationManager?.allowsBackgroundLocationUpdates = true
+		mainLocationManager?.allowsBackgroundLocationUpdates = true
 
 
-		let status = CLLocationManager.authorizationStatus()
-		fxdPrint(String(status.rawValue))
+		var authorizationStatus: CLAuthorizationStatus
+		if #available(iOS 14.0, *) {
+			authorizationStatus = (mainLocationManager?.authorizationStatus)!
+		} else {
+			authorizationStatus = CLLocationManager.authorizationStatus()
+		}
+		fxdPrint(String(describing: authorizationStatus))
 
-		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
-			self.startLocationManager(self.mainLocationManager)
+		if (authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse) {
+			startLocationManager(mainLocationManager)
 		}
 		else {
 			//MARK: If the NSLocationAlwaysAndWhenInUseUsageDescription, NSLocationAlwaysUsageDescription, NSLocationWhenInUseUsageDescription key is not specified in your Info.plist, this method will do nothing, as your app will be assumed not to support Always authorization.
 
-			self.mainLocationManager?.requestAlwaysAuthorization()
+			mainLocationManager?.requestAlwaysAuthorization()
 		}
 	}
 
@@ -65,14 +69,14 @@ class FXDmoduleGeo: NSObject {
 		}
 		
 
-		fxdPrint(self.didStartLocationManager as Any)
+		fxdPrint(didStartLocationManager as Any)
 
-		guard self.didStartLocationManager != true else {
+		guard didStartLocationManager != true else {
 			return
 		}
 
 
-		self.didStartLocationManager = true
+		didStartLocationManager = true
 
 
 		manager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -107,14 +111,14 @@ class FXDmoduleGeo: NSObject {
 
 	func updatePlacemarks() {	fxd_log()
 
-		guard self.mainLocationManager?.location != nil else {
+		guard mainLocationManager?.location != nil else {
 			return
 		}
 
 
 		let geocoder: CLGeocoder = CLGeocoder()
 
-		geocoder.reverseGeocodeLocation((self.mainLocationManager?.location)!) {
+		geocoder.reverseGeocodeLocation((mainLocationManager?.location)!) {
 			(placemarks, error) in
 
 			fxdPrint(error as Any)
@@ -128,15 +132,15 @@ extension FXDmoduleGeo: FXDprotocolObserver {
 	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxd_log()
 		fxdPrint(notification)
 
-		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers*2.0
-		fxdPrint(self.mainLocationManager?.desiredAccuracy as Any)
+		mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers*2.0
+		fxdPrint(mainLocationManager?.desiredAccuracy as Any)
 	}
 
 	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	fxd_log()
 		fxdPrint(notification)
 		
-		self.mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
-		fxdPrint(self.mainLocationManager?.desiredAccuracy as Any)
+		mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
+		fxdPrint(mainLocationManager?.desiredAccuracy as Any)
 	}
 
 	func observedUIApplicationWillTerminate(_ notification: NSNotification) {
@@ -164,20 +168,20 @@ extension FXDmoduleGeo: CLLocationManagerDelegate {
 
 
 		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
-			self.startLocationManager(manager)
+			startLocationManager(manager)
 		}
 		else {
-			self.stopLocationManager(manager)
+			stopLocationManager(manager)
 		}
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		/*
-		if (self.lastLocation == nil ||
-		(locations.last?.distance(from: self.lastLocation!))! > 10.0 as CLLocationDistance) {
+		if (lastLocation == nil ||
+		(locations.last?.distance(from: lastLocation!))! > 10.0 as CLLocationDistance) {
 		*/
 
-		self.lastLocation = locations.last
-		fxdPrint(self.lastLocation as Any)
+		lastLocation = locations.last
+		fxdPrint(lastLocation as Any)
 	}
 }

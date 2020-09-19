@@ -206,7 +206,7 @@
 + (UIStoryboard*)storyboardWithDefaultName {	FXDLog_SEPARATE;
 	NSString *storyboardName = NSStringFromClass([self class]);
 
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+	if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
 		storyboardName = [storyboardName stringByAppendingString:@"_iPad"];
 	}
 
@@ -317,7 +317,7 @@
 	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(validOrientation) == NO) {
-		validOrientation = (UIDeviceOrientation)[UIApplication sharedApplication].statusBarOrientation;
+		validOrientation = (UIDeviceOrientation)[UIApplication sharedApplication].delegate.window.windowScene.interfaceOrientation;
 	}
 
 	return validOrientation;

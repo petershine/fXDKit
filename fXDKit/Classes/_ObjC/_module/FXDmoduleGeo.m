@@ -37,12 +37,23 @@
 
 #pragma mark - Public
 - (BOOL)didUserAuthorize {
-	if ([CLLocationManager locationServicesEnabled] == NO
-		|| ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse)) {
+	if ([CLLocationManager locationServicesEnabled] == NO) {
+		return NO;
+	}
 
+	CLAuthorizationStatus authorizationStatus = kCLAuthorizationStatusNotDetermined;
+	if (@available(iOS 14.0, *)) {
+		authorizationStatus = _mainLocationManager.authorizationStatus;
+	}
+	else {
+		authorizationStatus = [CLLocationManager authorizationStatus];
+	}
+
+	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
+		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
 		FXDLog_DEFAULT
 		FXDLogBOOL([CLLocationManager locationServicesEnabled]);
-		FXDLogObject(@([CLLocationManager authorizationStatus]));
+		FXDLogVariable(authorizationStatus);
 		FXDLogObject(_mainLocationManager.location);
 
 		return NO;
@@ -75,16 +86,21 @@
 	 name:UIApplicationWillTerminateNotification
 	 object:nil];
 
-	[self startMainLocationManagerForAuthorizationStatus:[CLLocationManager authorizationStatus]];
+
+	CLAuthorizationStatus authorizationStatus = kCLAuthorizationStatusNotDetermined;
+	if (@available(iOS 14.0, *)) {
+		authorizationStatus = _mainLocationManager.authorizationStatus;
+	}
+	else {
+		authorizationStatus = [CLLocationManager authorizationStatus];
+	}
+
+	[self startMainLocationManagerForAuthorizationStatus:authorizationStatus];
 }
 
 - (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
-	FXDLogVariable([CLLocationManager authorizationStatus]);
-	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
-	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
-
 	FXDLogVariable(authorizationStatus);
-	FXDLogBOOL(authorizationStatus == [CLLocationManager authorizationStatus]);
+	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 
 	FXDLogObject([UIDevice currentDevice].systemVersion);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysAndWhenInUseUsageDescription"]);
@@ -121,21 +137,11 @@
 - (void)maximizeUpdatingForActiveState {	//FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
-
-	[_mainLocationManager disallowDeferredLocationUpdates];
 }
 
 - (void)minimizeUpdatingForBackgroundState {	//FXDLog_DEFAULT;
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
 	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
-
-	//MARK: Learn how to use deferred location updates
-	FXDLogBOOL([CLLocationManager deferredLocationUpdatesAvailable]);
-	if ([CLLocationManager deferredLocationUpdatesAvailable]) {
-		[_mainLocationManager
-		 allowDeferredLocationUpdatesUntilTraveled:CLLocationDistanceMax
-		 timeout:CLTimeIntervalMax];
-	}
 }
 
 - (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	//FXDLog_DEFAULT;
@@ -244,7 +250,14 @@
 
 #pragma mark - Delegate
 //MARK: CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
+- (void)locationManagerDidChangeAuthorization:(CLLocationManager *)manager {	FXDLog_DEFAULT
+	CLAuthorizationStatus authorizationStatus = kCLAuthorizationStatusNotDetermined;
+	if (@available(iOS 14.0, *)) {
+		authorizationStatus = _mainLocationManager.authorizationStatus;
+	}
+	else {
+		authorizationStatus = [CLLocationManager authorizationStatus];
+	}
 	FXDLogVariable(authorizationStatus);
 
 	BOOL isAuthorized = YES;

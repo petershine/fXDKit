@@ -81,7 +81,7 @@
 - (void)setNeedsStatusBarAppearanceUpdate {
 	[super setNeedsStatusBarAppearanceUpdate];
 
-	if ([UIApplication sharedApplication].statusBarHidden == NO) {	//FXDLog_DEFAULT;
+	if ([UIApplication sharedApplication].delegate.window.windowScene.statusBarManager.statusBarHidden == NO) {	//FXDLog_DEFAULT;
 		//FXDLogVariable([UIApplication sharedApplication].statusBarStyle);
 	}
 }
@@ -227,14 +227,14 @@
 	[super prepareForSegue:segue sender:sender];
 }
 
-- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender {	FXDLog_OVERRIDE;
+- (BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController sender:(id)sender {	FXDLog_OVERRIDE;
 	// View controllers will receive this message during segue unwinding. The default implementation returns the result of -respondsToSelector: - controllers can override this to perform any ancillary checks, if necessary.
 
 	FXDLogSelector(action);
 	FXDLogObject(fromViewController);
 	FXDLogObject(sender);
 
-	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
+	BOOL canPerform = [super canPerformUnwindSegueAction:action fromViewController:fromViewController sender:sender];
 	FXDLogBOOL(canPerform);
 
 	return canPerform;
@@ -246,7 +246,7 @@
 
     for (UIViewController *childScene in self.childViewControllers.reverseObjectEnumerator.allObjects) {
 
-        if ([childScene canPerformUnwindSegueAction:source.unwindAction fromViewController:source.sourceViewController withSender:source.sender]) {
+		if ([childScene canPerformUnwindSegueAction:source.unwindAction fromViewController:source.sourceViewController sender:source.sender]) {
 
             [allowedScenes insertObject:childScene atIndex:0];
         }
