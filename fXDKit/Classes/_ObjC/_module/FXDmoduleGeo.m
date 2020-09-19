@@ -63,7 +63,7 @@
 }
 
 #pragma mark -
-- (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT;
+- (void)startMainLocationManagerWithLaunchOptions:(NSDictionary*)launchOptions {	FXDLog_DEFAULT
 	FXDLogObject(launchOptions[UIApplicationLaunchOptionsLocationKey]);
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -98,7 +98,7 @@
 	[self startMainLocationManagerForAuthorizationStatus:authorizationStatus];
 }
 
-- (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT;
+- (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT
 	FXDLogVariable(authorizationStatus);
 	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 
@@ -123,7 +123,7 @@
 }
 
 #pragma mark -
-- (void)configureUpdatingForApplicationState {	//FXDLog_DEFAULT;
+- (void)configureUpdatingForApplicationState {	//FXDLog_DEFAULT
 	//FXDLogVariable([UIApplication sharedApplication].applicationState);
 	
 	if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
@@ -134,17 +134,17 @@
 	[self maximizeUpdatingForActiveState];
 }
 
-- (void)maximizeUpdatingForActiveState {	//FXDLog_DEFAULT;
+- (void)maximizeUpdatingForActiveState {	//FXDLog_DEFAULT
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
-- (void)minimizeUpdatingForBackgroundState {	//FXDLog_DEFAULT;
+- (void)minimizeUpdatingForBackgroundState {	//FXDLog_DEFAULT
 	_mainLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
 	//FXDLogVariable(_mainLocationManager.desiredAccuracy);
 }
 
-- (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	//FXDLog_DEFAULT;
+- (void)pauseMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	//FXDLog_DEFAULT
 	//FXDLogVariable(authorizationStatus);
 
 	[_mainLocationManager stopUpdatingLocation];
@@ -280,7 +280,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager
-didFinishDeferredUpdatesWithError:(nullable NSError *)error {	FXDLog_DEFAULT;
+didFinishDeferredUpdatesWithError:(nullable NSError *)error {	FXDLog_DEFAULT
 	FXDLog_ERROR;
 }
 
@@ -294,7 +294,7 @@ didFinishDeferredUpdatesWithError:(nullable NSError *)error {	FXDLog_DEFAULT;
 	CGRect tileCGRect = [self tileCGRectForMinimumDimension:dimensionMinimumTile];
 	MKMapRect tileMapRect = [self tileMapRectForMinimumDiagonalDistance:distanceDiagonalSatelliteMinimum];
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	FXDLog(@"%@ %@", _Object(MKStringFromMapRect(tileMapRect)), _Rect(tileCGRect));
 
 	CLLocationDistance diagonalDistance = MKMetersBetweenMapPoints(MKMapPointMake(0, 0),
@@ -321,7 +321,7 @@ didFinishDeferredUpdatesWithError:(nullable NSError *)error {	FXDLog_DEFAULT;
 }
 
 #pragma mark -
-- (CGRect)tileCGRectForMinimumDimension:(CGFloat)minimumDimension {	FXDLog_DEFAULT;
+- (CGRect)tileCGRectForMinimumDimension:(CGFloat)minimumDimension {	FXDLog_DEFAULT
 	Float64 dividedBy = 1.0;
 
 	CGRect tileCGRect = [UIScreen mainScreen].bounds;
@@ -346,7 +346,7 @@ didFinishDeferredUpdatesWithError:(nullable NSError *)error {	FXDLog_DEFAULT;
 	return tileCGRect;
 }
 
-- (MKMapRect)tileMapRectForMinimumDiagonalDistance:(CLLocationDistance)minimumDiagonalDistance {	FXDLog_DEFAULT;
+- (MKMapRect)tileMapRectForMinimumDiagonalDistance:(CLLocationDistance)minimumDiagonalDistance {	FXDLog_DEFAULT
 	Float64 dividedBy = 1.0;
 
 	MKMapRect tileMapRect = MKMapRectWorld;

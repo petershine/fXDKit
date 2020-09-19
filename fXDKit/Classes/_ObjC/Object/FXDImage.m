@@ -85,7 +85,7 @@
 }
 
 #pragma mark -
-- (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect {	FXDLog_DEFAULT;
+- (UIImage*)croppedImageUsingCropRect:(CGRect)cropRect {	FXDLog_DEFAULT
 	FXDLogSize(self.size);
 	FXDLogRect(cropRect);
 	

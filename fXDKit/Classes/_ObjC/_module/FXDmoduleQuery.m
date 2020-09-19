@@ -15,7 +15,7 @@
 #pragma mark - Property overriding
 - (NSMetadataQuery*)mainMetadataQuery {
 
-	if (_mainMetadataQuery == nil) {	FXDLog_DEFAULT;
+	if (_mainMetadataQuery == nil) {	FXDLog_DEFAULT
 		_mainMetadataQuery = [[NSMetadataQuery alloc] init];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %@", NSMetadataItemURLKey, @""];
@@ -30,7 +30,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT;
+- (void)startObservingMetadataQueryNotifications {	FXDLog_DEFAULT
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
@@ -69,7 +69,7 @@
 }
 
 #pragma mark - Observer
-- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedNSMetadataQueryDidStartGathering:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 
 	if (_metadataQueryCallback) {
@@ -77,7 +77,7 @@
 	}
 }
 
-- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedNSMetadataQueryGatheringProgress:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 
 	if (_metadataQueryCallback) {
@@ -85,7 +85,7 @@
 	}
 }
 
-- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedNSMetadataQueryDidFinishGathering:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 
 	if (_metadataQueryCallback) {
@@ -93,7 +93,7 @@
 	}
 }
 
-- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedNSMetadataQueryDidUpdate:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 
 	if (_metadataQueryCallback) {

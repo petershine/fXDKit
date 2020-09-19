@@ -8,7 +8,7 @@
 	return [AVPlayerLayer class];
 }
 
-+ (instancetype)assetDisplay {	FXDLog_DEFAULT;
++ (instancetype)assetDisplay {	FXDLog_DEFAULT
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice validDeviceOrientation]];
 
@@ -30,7 +30,7 @@
 }
 
 #pragma mark -
-- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT
 	FXDLog(@"%@ %@", _Size(forcedSize), _Size(presentationSize));
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {
@@ -121,7 +121,7 @@
 
 #pragma mark - Property overriding
 - (FXDdisplayPlayback*)mainDisplay {
-	if (_mainDisplay == nil) {	FXDLog_DEFAULT;
+	if (_mainDisplay == nil) {	FXDLog_DEFAULT
 		_mainDisplay = [FXDdisplayPlayback assetDisplay];
 	}
 	return _mainDisplay;
@@ -130,7 +130,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)preparePlaybackManagerWithMovieFileURL:(NSURL*)movieFileURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
@@ -227,7 +227,7 @@
 
 - (void)startSeekingToTime:(CMTime)seekedTime withCallback:(FXDcallbackFinish)finishCallback {
 
-	if (CMTIME_IS_VALID(seekedTime) == NO) {	FXDLog_DEFAULT;
+	if (CMTIME_IS_VALID(seekedTime) == NO) {	FXDLog_DEFAULT
 		FXDLogBOOL(CMTIME_IS_VALID(seekedTime));
 
 		if (finishCallback) {
@@ -239,7 +239,7 @@
 
 	//MARK: Make sure loading is completed for correct preview updating
 	if (self.moviePlayer.status != AVPlayerStatusReadyToPlay
-		&& self.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT;
+		&& self.moviePlayer.currentItem.status != AVPlayerItemStatusReadyToPlay) {	FXDLog_DEFAULT
 		FXDLog(@"%@ %@", _Variable(self.moviePlayer.status), _Variable(self.moviePlayer.currentItem.status));
 
 		if (finishCallback) {
@@ -268,7 +268,7 @@
 }
 
 #pragma mark -
-- (void)resumeMoviePlayerWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)resumeMoviePlayerWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
 
 	__weak FXDmodulePlayback *weakSelf = self;
 
@@ -313,7 +313,7 @@
 	 }];
 }
 
-- (void)pauseAndRemovePeriodicObserver {	//FXDLog_DEFAULT;
+- (void)pauseAndRemovePeriodicObserver {	//FXDLog_DEFAULT
 	[self.moviePlayer pause];
 	self.moviePlayer.volume = 1.0;
 	

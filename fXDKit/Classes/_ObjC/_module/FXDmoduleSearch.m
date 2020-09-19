@@ -71,7 +71,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startSearchWithSearchString:(NSString*)searchString withDidFinishBlock:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)startSearchWithSearchString:(NSString*)searchString withDidFinishBlock:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	
 	FXDLogVariable(self.searchingOperationQueue.operationCount);
 	FXDLog(@"1.%@", _Variable(self.searchingOperationDictionary.count));
@@ -151,7 +151,7 @@
 	[self.searchingOperationQueue addOperation:searchOperation];
 }
 
-- (void)cancelSearchWithDidFinishBlock:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)cancelSearchWithDidFinishBlock:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	FXDLogVariable(self.searchingOperationQueue.operationCount);
 	
 	if ([self.searchingOperationQueue operationCount] > 0) {
@@ -167,7 +167,7 @@
 }
 
 #pragma mark -
-- (void)deleteSearchedObj:(id)searchedObj {	FXDLog_DEFAULT;
+- (void)deleteSearchedObj:(id)searchedObj {	FXDLog_DEFAULT
 	FXDLog(@"1.%@", _Variable(_searchedObjArray.count));
 	[_searchedObjArray removeObject:searchedObj];
 	FXDLog(@"2.%@", _Variable(_searchedObjArray.count));

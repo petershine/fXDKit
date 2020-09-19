@@ -81,7 +81,7 @@
 - (void)setNeedsStatusBarAppearanceUpdate {
 	[super setNeedsStatusBarAppearanceUpdate];
 
-	if ([UIApplication sharedApplication].delegate.window.windowScene.statusBarManager.statusBarHidden == NO) {	//FXDLog_DEFAULT;
+	if ([UIApplication sharedApplication].delegate.window.windowScene.statusBarManager.statusBarHidden == NO) {	//FXDLog_DEFAULT
 		//FXDLogVariable([UIApplication sharedApplication].statusBarStyle);
 	}
 }
@@ -109,7 +109,7 @@
 
 
 #pragma mark - Autorotating
-- (BOOL)shouldAutorotate {	//FXDLog_DEFAULT;
+- (BOOL)shouldAutorotate {	//FXDLog_DEFAULT
 	BOOL shouldAutorotate = super.shouldAutorotate;
 	//FXDLogBOOL(shouldAutorotate);
 
@@ -122,7 +122,7 @@
 	return supportedInterface;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_DEFAULT;
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {	//FXDLog_DEFAULT
 	UIInterfaceOrientation preferredInterfaceOrientation = super.preferredInterfaceOrientationForPresentation;
 	//FXDLogVariable(preferredInterfaceOrientation);
 
@@ -130,7 +130,7 @@
 }
 
 #pragma mark -
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	//FXDLog_DEFAULT;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {	//FXDLog_DEFAULT
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
 	[coordinator
@@ -152,7 +152,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent {
 
 	if (parent == nil) {
-		FXDLog_DEFAULT;
+		FXDLog_DEFAULT
 	}
 
 	[super willMoveToParentViewController:parent];
@@ -162,7 +162,7 @@
 	[super didMoveToParentViewController:parent];
 
 	if (parent) {
-		FXDLog_DEFAULT;
+		FXDLog_DEFAULT
 	}
 }
 
@@ -195,7 +195,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Segues
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT
 	//MARK: This method is not invoked when -performSegueWithIdentifier:sender: is used.
 
 	FXDLogObject(sender);
@@ -207,14 +207,14 @@
 	return shouldPerform;
 }
 
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT;
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {	FXDLog_DEFAULT
 	FXDLogObject(sender);
 	FXDLogObject(identifier);
 
 	[super performSegueWithIdentifier:identifier sender:sender];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT
 	FXDLogObject(sender);
 
 	if ([segue isKindOfClass:[FXDStoryboardSegue class]]) {
@@ -373,7 +373,7 @@
 }
 
 #pragma mark -
-- (void)presentBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)presentBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	CGRect sceneFrame = self.view.frame;
 	FXDLogRect(sceneFrame);
 
@@ -399,7 +399,7 @@
 	 }];
 }
 
-- (void)dismissBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)dismissBySlidingForDuration:(NSTimeInterval)duration withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 
 	CGRect sceneFrame = self.view.frame;
 	sceneFrame.origin.y = self.view.frame.size.height;
@@ -420,7 +420,7 @@
 }
 
 #pragma mark -
-- (void)presentScene:(UIViewController*)presentedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)presentScene:(UIViewController*)presentedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	FXDLogObject(self.view);
 	FXDLogObject(presentedScene.view);
 	FXDLogBOOL(shouldSlide);
@@ -486,7 +486,7 @@
 	 }];
 }
 
-- (void)dismissScene:(UIViewController*)dismissedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)dismissScene:(UIViewController*)dismissedScene shouldSlide:(BOOL)shouldSlide withCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	FXDLogObject(self.view);
 	FXDLogObject(dismissedScene.view);
 	FXDLogBOOL(shouldSlide);
@@ -530,7 +530,7 @@
 }
 
 #pragma mark -
-- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT;
+- (CGRect)centeredDisplayFrameForForcedSize:(CGSize)forcedSize withPresentationSize:(CGSize)presentationSize {	FXDLog_DEFAULT
 	FXDLog(@"%@ %@", _Size(forcedSize), _Size(presentationSize));
 
 	if (CGSizeEqualToSize(presentationSize, CGSizeZero)) {

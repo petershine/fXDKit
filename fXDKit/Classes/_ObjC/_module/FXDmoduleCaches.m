@@ -126,7 +126,7 @@
 	}
 }
 
-- (void)enumerateMetadataQueryResultsWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)enumerateMetadataQueryResultsWithCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
 
 	NSOperationQueue *enumeratingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 

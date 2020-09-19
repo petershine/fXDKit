@@ -4,7 +4,7 @@
 
 
 @implementation UIImageView (Essential)
-- (void)modifyHeightForContainedImage {	FXDLog_DEFAULT;
+- (void)modifyHeightForContainedImage {	FXDLog_DEFAULT
 
 	__weak UIImageView *weakSelf = self;
 
@@ -32,7 +32,7 @@
 	 }];
 }
 
-- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	FXDLog_DEFAULT;
+- (void)replaceImageWithResizableImageWithCapInsets:(UIEdgeInsets)capInsets {	FXDLog_DEFAULT
 	FXDLogStruct(capInsets);
 
 	__weak UIImageView *weakSelf = self;

@@ -8,7 +8,7 @@
 #pragma mark - Memory management
 
 #pragma mark - Initialization
-- (instancetype)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {	FXDLog_DEFAULT;
+- (instancetype)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {	FXDLog_DEFAULT
 	
 	self = [super initWithIdentifier:identifier source:source destination:destination];
 
@@ -87,7 +87,7 @@
 
 #pragma mark - Subclass
 @implementation FXDsegueEmbedding;
-- (void)perform {	FXDLog_DEFAULT;
+- (void)perform {	FXDLog_DEFAULT
 	UIViewController *parentController = (UIViewController*)self.sourceViewController;
 	UIViewController *embeddedController = (UIViewController*)self.destinationViewController;
 	

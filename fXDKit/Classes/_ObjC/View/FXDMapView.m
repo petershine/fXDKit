@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)awakeFromNib {	FXDLog_DEFAULT;
+- (void)awakeFromNib {	FXDLog_DEFAULT
 	[super awakeFromNib];
 
 	self.initialDisclaimerFrame = [self.disclaimerView frame];
@@ -126,7 +126,7 @@
 	}
 	
 	
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	FXDLog(@"%@ %@", _Variable([self mapZoomScale]), _Variable(mapZoomScale));
 	
 	Float64 mapWidth = self.frame.size.width /mapZoomScale;

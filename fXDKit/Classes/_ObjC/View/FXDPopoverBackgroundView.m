@@ -6,7 +6,7 @@
 @implementation FXDPopoverBackgroundView
 
 #pragma mark - Memory management
-- (void)dealloc {	FXDLog_DEFAULT;
+- (void)dealloc {	FXDLog_DEFAULT
 	__weak FXDPopoverBackgroundView *weakInstance = [[self class] sharedInstance];
 
 	weakInstance.shouldHideArrowView = NO;
@@ -21,7 +21,7 @@
 }
 
 #pragma mark -
-- (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT;
+- (instancetype)initWithFrame:(CGRect)frame {	FXDLog_DEFAULT
     self = [super initWithFrame:frame];
 
 	//MARK: Cannot use awakeFromNib
@@ -82,7 +82,7 @@
 	return UIEdgeInsetsMake(minimumInset, minimumInset, minimumInset, minimumInset);
 }
 
-- (void)layoutSubviews {	FXDLog_DEFAULT;
+- (void)layoutSubviews {	FXDLog_DEFAULT
 	[super layoutSubviews];
 
 	CGFloat arrowHeight = [[self class] arrowHeight];

@@ -11,7 +11,7 @@
 										   mediaType:AVMediaTypeVideo
 										   position:cameraPosition];
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	[videoCaptureDevice
 	 applyConfigurationWithFlashMode:flashMode
 	 withFocusMode:focusMode];
@@ -59,7 +59,7 @@
 		[self unlockForConfiguration];
 	}
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 
 	FXDLogVariable(flashMode);
 	FXDLogVariable(focusMode);
@@ -107,7 +107,7 @@
 	}
 
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	_mainCaptureSession = [[AVCaptureSession alloc] init];
 
 	NSString *captureSessionPreset = AVCaptureSessionPresetHigh;
@@ -170,7 +170,7 @@
 	_mainPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	FXDLog(@"%@ %@", _Rect(_mainPreviewLayer.frame), _Rect(_mainPreviewLayer.bounds));
 
 	return _mainPreviewLayer;
@@ -245,7 +245,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareCaptureManager {	FXDLog_DEFAULT;
+- (void)prepareCaptureManager {	FXDLog_DEFAULT
 	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
 
 	[self.mainCaptureSession startRunning];
@@ -264,14 +264,14 @@
 }
 
 #pragma mark -
-- (void)switchCameraPosition {	FXDLog_DEFAULT;
+- (void)switchCameraPosition {	FXDLog_DEFAULT
 	AVCaptureDevicePosition cameraPosition = (self.cameraPosition == AVCaptureDevicePositionBack) ? AVCaptureDevicePositionFront:AVCaptureDevicePositionBack;
 	FXDLogVariable(cameraPosition);
 
 	[self configureSessionWithCameraPosition:cameraPosition];
 }
 
-- (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPosition {	FXDLog_DEFAULT;
+- (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPosition {	FXDLog_DEFAULT
 
 	self.cameraPosition = cameraPosition;
 

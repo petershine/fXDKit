@@ -40,7 +40,7 @@
 
 #pragma mark -
 - (NSString*)deviceLanguageCode {
-	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT;
+	if (_deviceLanguageCode == nil) {	FXDLog_DEFAULT
 		NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
 		
 		_deviceLanguageCode = languages.firstObject;
@@ -69,7 +69,7 @@
 }
 
 - (NSString*)deviceCountryCode {
-	if (_deviceCountryCode == nil) {	FXDLog_DEFAULT;
+	if (_deviceCountryCode == nil) {	FXDLog_DEFAULT
 		NSString *localeIdentifier = [NSLocale currentLocale].localeIdentifier;
 		
 		NSArray *components = [localeIdentifier componentsSeparatedByString:@"_"];
@@ -146,7 +146,7 @@
 
 		_deviceModelName = commonNamesDictionary[machineName];
 
-		if (_deviceModelName == nil) {	FXDLog_DEFAULT;
+		if (_deviceModelName == nil) {	FXDLog_DEFAULT
 			FXDLogObject(machineName);
 
 			_deviceModelName = machineName;
@@ -188,7 +188,7 @@
 #pragma mark -
 - (NSDateFormatter*)dateformatterUTC {
 	
-	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT;
+	if (_dateformatterUTC == nil) {	FXDLog_DEFAULT
 		_dateformatterUTC = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *UTCtimezone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -203,7 +203,7 @@
 
 - (NSDateFormatter*)dateformatterLocal {
 	
-	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT;
+	if (_dateformatterLocal == nil) {	FXDLog_DEFAULT
 		_dateformatterLocal = [[NSDateFormatter alloc] init];
 		
 		NSTimeZone *localTimeZone = [NSTimeZone defaultTimeZone];
@@ -227,7 +227,7 @@
 		_initialScene = [self.mainStoryboard instantiateInitialViewController];
 	}
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	FXDLogObject(_initialScene);
 
 	return _initialScene;
@@ -237,7 +237,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT;
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT
 	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
 	//FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
@@ -262,7 +262,7 @@
 }
 
 #pragma mark -
-- (void)incrementAppLaunchCount {	FXDLog_DEFAULT;
+- (void)incrementAppLaunchCount {	FXDLog_DEFAULT
 	//MARK: Make sure value is retrieved from userDefaults first
 	_appLaunchCount = (self.appLaunchCount)+1;
 	FXDLogVariable(_appLaunchCount);
@@ -307,7 +307,7 @@
 	return isOlder;
 }
 
-- (void)updateLastUpgradedAppVersionAfterLaunch {	FXDLog_DEFAULT;
+- (void)updateLastUpgradedAppVersionAfterLaunch {	FXDLog_DEFAULT
 	NSInteger versionInteger = [application_BundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""].integerValue;
 
 	[[NSUserDefaults standardUserDefaults] setInteger:versionInteger forKey:userdefaultIntegerLastUpgradedAppVersion];
@@ -316,7 +316,7 @@
 }
 
 #pragma mark -
-- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*_Nullable)appStoreID withCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT;
+- (void)shouldAlertAboutCurrentVersionForAppStoreID:(NSString*_Nullable)appStoreID withCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT
 	FXDLogObject(appStoreID);
 
 #ifdef application_AppStoreID

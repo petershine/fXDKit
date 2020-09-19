@@ -14,7 +14,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message withRecipients:(NSArray*)recipients {	FXDLog_DEFAULT;
+- (void)presentEmailScene:(MFMailComposeViewController*)emailScene forPresentingScene:(UIViewController*)presentingController usingImage:(UIImage*)image usingMessage:(NSString*)message withRecipients:(NSArray*)recipients {	FXDLog_DEFAULT
 
 
 	if ([MFMailComposeViewController canSendMail] == NO) {
@@ -51,7 +51,7 @@
 	 completion:nil];
 }
 
-- (MFMailComposeViewController*)emailSceneWithMailBodyWithRecipients:(NSArray*)recipients {	FXDLog_DEFAULT;
+- (MFMailComposeViewController*)emailSceneWithMailBodyWithRecipients:(NSArray*)recipients {	FXDLog_DEFAULT
 	FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 	FXDLogObject(recipients);
 
@@ -92,7 +92,7 @@
 	return emailScene;
 }
 
-- (MFMailComposeViewController*)emailSceneForSharingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT;
+- (MFMailComposeViewController*)emailSceneForSharingImage:(UIImage*)image usingMessage:(NSString*)message {	FXDLog_DEFAULT
 
 	MFMailComposeViewController *emailScene = [[MFMailComposeViewController alloc] initWithNavigationBarClass:nil toolbarClass:nil];
 	[emailScene setSubject:[NSString stringWithFormat:@"[%@]", application_DisplayName]];
@@ -112,7 +112,7 @@
 
 #pragma mark - Delegate
 //MARK: MFMailComposeViewControllerDelegate
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {	FXDLog_DEFAULT;
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {	FXDLog_DEFAULT
 
 	FXDLogVariable(result);
 

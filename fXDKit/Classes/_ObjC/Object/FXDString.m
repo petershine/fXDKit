@@ -30,7 +30,7 @@
 }
 
 #pragma mark -
-- (NSString*)leftAlignedParagraph {	FXDLog_DEFAULT;
+- (NSString*)leftAlignedParagraph {	FXDLog_DEFAULT
 	NSArray *components = [self componentsSeparatedByString:@"\n"];
 	
 	// Find the longest component

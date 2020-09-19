@@ -32,7 +32,7 @@
 
 #pragma mark -
 - (NSOperationQueue*)evictingQueue {
-	if (_evictingQueue == nil) {	FXDLog_DEFAULT;
+	if (_evictingQueue == nil) {	FXDLog_DEFAULT
 		_evictingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 	}
 
@@ -43,7 +43,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)enumerateMetadataItemsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)enumerateMetadataItemsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
 
 	if (folderURL == nil) {
 		NSAssert1(folderURL, @"MUST NOT be nil: %@", _Object(folderURL));
@@ -107,7 +107,7 @@
 	 }];
 }
 
-- (void)enumerateDocumentsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)enumerateDocumentsAtFolderURL:(NSURL*)folderURL withCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
 
 	if (folderURL == nil) {
 		NSAssert1(folderURL, @"MUST NOT be nil: %@", _Object(folderURL));
@@ -171,7 +171,7 @@
 	NSArray *copiedURLarray = [URLarray copy];
 
 	[self.evictingQueue
-	 addOperationWithBlock:^{	FXDLog_DEFAULT;
+	 addOperationWithBlock:^{	FXDLog_DEFAULT
 		 for (NSURL *itemURL in copiedURLarray) {
 			 BOOL didEvict = [self evictUploadedUbiquitousItemURL:itemURL];
 

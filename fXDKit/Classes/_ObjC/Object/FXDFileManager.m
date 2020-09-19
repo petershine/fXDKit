@@ -4,7 +4,7 @@
 
 
 @implementation NSFileManager (Essential)
-- (NSString*)prepareDirectoryAtPath:(NSString *)directoryPath withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error {	FXDLog_DEFAULT;
+- (NSString*)prepareDirectoryAtPath:(NSString *)directoryPath withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error {	FXDLog_DEFAULT
 
 	FXDLogObject(directoryPath);
 
@@ -29,11 +29,11 @@
 }
 
 #pragma mark -
-- (void)clearTempDirectory {	FXDLog_DEFAULT;
+- (void)clearTempDirectory {	FXDLog_DEFAULT
 	[self clearDirectory:NSTemporaryDirectory()];
 }
 
-- (void)clearDirectory:(NSString*)directory {	FXDLog_DEFAULT;
+- (void)clearDirectory:(NSString*)directory {	FXDLog_DEFAULT
 	FXDLogObject(directory);
 	
 	NSError *error = nil;
@@ -57,7 +57,7 @@
 	 enumeratorAtURL:rootURL
 	 includingPropertiesForKeys:nil
 	 options:0
-	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT
 		 FXDLog_ERROR;
 		 FXDLogObject(url);
 
@@ -74,7 +74,7 @@
 	 enumeratorAtURL:rootURL
 	 includingPropertiesForKeys:nil
 	 options:NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
-	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT;
+	 errorHandler:^BOOL(NSURL *url, NSError *error) {	FXDLog_DEFAULT
 		 FXDLog_ERROR;
 		 FXDLogObject(url);
 
@@ -140,7 +140,7 @@
 }
 
 #pragma mark -
-- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atFolderURL:(NSURL*)folderURL {	FXDLog_DEFAULT;
+- (void)setUbiquitousForLocalItemURLarray:(NSArray*)localItemURLarray atFolderURL:(NSURL*)folderURL {	FXDLog_DEFAULT
 	FXDLogObject(folderURL);
 
 	if (folderURL == nil) {
@@ -169,7 +169,7 @@
 	}
 }
 
-- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)resultError {	//FXDLog_DEFAULT;
+- (void)handleFailedLocalItemURL:(NSURL*)localItemURL withDestinationURL:(NSURL*)destinationURL withResultError:(NSError*)resultError {	//FXDLog_DEFAULT
 
 	/*
 	 domain: NSCocoaErrorDomain
@@ -231,7 +231,7 @@
 		}
 	}
 
-	if (alertTitle) {	FXDLog_DEFAULT;
+	if (alertTitle) {	FXDLog_DEFAULT
 		FXDLogObject(alertTitle);
 		//TODO: Handle error with alert of notification
 	}

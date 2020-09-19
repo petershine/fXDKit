@@ -17,7 +17,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareContainerURLwithIdentifier:(NSString*)containerIdentifier withStatusCallback:(FXDcallbackFinish)statusCallback {	FXDLog_DEFAULT;
+- (void)prepareContainerURLwithIdentifier:(NSString*)containerIdentifier withStatusCallback:(FXDcallbackFinish)statusCallback {	FXDLog_DEFAULT
 
 	FXDLogObject(containerIdentifier);
 	FXDLogObject(statusCallback);
@@ -30,7 +30,7 @@
 }
 
 #pragma mark -
-- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver withAlertBody:(NSString*)alertBody {	FXDLog_DEFAULT;
+- (void)notifyCallbackWithContainerURL:(NSURL*)containerURL shouldAddObserver:(BOOL)shouldAddObserver withAlertBody:(NSString*)alertBody {	FXDLog_DEFAULT
 
 	//MARK: Assume if notification is nil, observer should be added
 	if (shouldAddObserver) {
@@ -79,7 +79,7 @@
 
 
 #pragma mark - Observer
-- (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedNSUbiquityIdentityDidChange:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -122,7 +122,7 @@
 	NSOperationQueue *containerURLupdatingQueue = [NSOperationQueue newSerialQueueWithName:NSStringFromSelector(_cmd)];
 
 	[containerURLupdatingQueue
-	 addOperationWithBlock:^{	FXDLog_DEFAULT;
+	 addOperationWithBlock:^{	FXDLog_DEFAULT
 		 FXDLogObject(self.containerIdentifier);
 
 		 NSURL *ubiquityContainerURL = [fileManager URLForUbiquityContainerIdentifier:self.containerIdentifier];
@@ -130,7 +130,7 @@
 
 
 		 [[NSOperationQueue mainQueue]
-		  addOperationWithBlock:^{	FXDLog_DEFAULT;
+		  addOperationWithBlock:^{	FXDLog_DEFAULT
 			  FXDLogObject(self.containerURL);
 
 			  FXDLogBOOL([[ubiquityContainerURL absoluteString] isEqualToString:[self.containerURL absoluteString]]);

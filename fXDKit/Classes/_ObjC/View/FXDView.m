@@ -139,7 +139,7 @@
 	}
 
 #if DEBUG
-	if (view == nil) {	FXDLog_DEFAULT;
+	if (view == nil) {	FXDLog_DEFAULT
 		FXDLog(@"%@ %@", _Object([self class]), _Object(viewArray));
 	}
 #endif
@@ -152,7 +152,7 @@
 	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
 }
 
-- (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	//FXDLog_DEFAULT;
+- (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	//FXDLog_DEFAULT
 
 	UIImage *renderedImage = nil;
 
@@ -171,7 +171,7 @@
 		BOOL didDraw = [self drawViewHierarchyInRect:self.bounds
 								  afterScreenUpdates:afterScreenUpdates];
 
-		if (didDraw == NO) {	FXDLog_DEFAULT;
+		if (didDraw == NO) {	FXDLog_DEFAULT
 			FXDLogBOOL(didDraw);
 		}
 	}
@@ -208,7 +208,7 @@
 
 	CGRect animatedFrame = CGRectApplyAffineTransform(self.bounds, transform);
 
-	if (self.constraints.count > 0) {	//FXDLog_DEFAULT;
+	if (self.constraints.count > 0) {	//FXDLog_DEFAULT
 		//FXDLogObject([self constraints]);
 
 		//TEST: Make sure this works OK with other apps
@@ -245,7 +245,7 @@
 
 - (void)updateForSize:(CGSize)size forDuration:(NSTimeInterval)duration withRotation:(CGFloat)withRotation {
 
-	if (self.constraints.count > 0) {	FXDLog_DEFAULT;
+	if (self.constraints.count > 0) {	FXDLog_DEFAULT
 		FXDLogObject([self constraints]);
 		return;
 	}

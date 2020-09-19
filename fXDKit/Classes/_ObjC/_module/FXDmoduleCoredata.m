@@ -86,7 +86,7 @@
 	}
 
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 
 	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
 	FXDLogObject(bundledSqlitePath);
@@ -101,7 +101,7 @@
 	}
 
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	
 	NSString *pathComponent = [NSString stringWithFormat:@"%@.sqlite", sqliteFile];
 
@@ -111,7 +111,7 @@
 	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
 }
 
-- (BOOL)doesStoredSqliteExist {	FXDLog_DEFAULT;
+- (BOOL)doesStoredSqliteExist {	FXDLog_DEFAULT
 	NSString *storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.sqlitePathComponent];
 	FXDLogObject(storedPath);
 
@@ -121,7 +121,7 @@
 	return storedSqliteExists;
 }
 
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {	FXDLog_DEFAULT;
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {	FXDLog_DEFAULT
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 
 	BOOL sqliteExists = [fileManager fileExistsAtPath:sqlitePath];
@@ -147,7 +147,7 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withProtectionOption:(NSString*)protectionOption withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT;
+- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withProtectionOption:(NSString*)protectionOption withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
 
 	if (managedDocument == nil) {
 		FXDLog(@"CHECK if bundle has more than 1 momd");
@@ -257,7 +257,7 @@
 }
 
 #pragma mark -
-- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT;
+- (void)startObservingCoreDataNotifications {	FXDLog_DEFAULT
 	
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
@@ -307,7 +307,7 @@
 }
 
 #pragma mark -
-- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 
 	UIAlertController *alertController = [UIAlertController
 										  alertControllerWithTitle:nil
@@ -366,7 +366,7 @@
 }
 
 #pragma mark -
-- (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT;
+- (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	
 	FXDLogBOOL(shouldUsePrivateContext);
 	FXDLogVariable(self.enumeratingOperationQueue.operationCount);
@@ -504,7 +504,7 @@
 		BOOL didSave = [managedContext save:&error];
 		FXDLog_ERROR;
 
-		FXDLog_DEFAULT;
+		FXDLog_DEFAULT
 		FXDLog(@"%@ %@", _BOOL(didSave), _Variable(managedContext.concurrencyType));
 		FXDLog(@"4.%@ %@", _BOOL(managedContext.hasChanges), _Variable(managedContext.concurrencyType));
 		
@@ -553,7 +553,7 @@
 
 
 #pragma mark - Observer
-- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedUIApplicationWillTerminate:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLog_REMAINING;
 
 	UIApplication *application = [UIApplication sharedApplication];
@@ -588,7 +588,7 @@
 }
 
 #pragma mark -
-- (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 	FXDLogObject(self.mainDocument.fileModificationDate);
 	FXDLogVariable(self.mainDocument.documentState);

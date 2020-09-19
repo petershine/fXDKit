@@ -4,7 +4,7 @@
 
 
 @implementation UIScrollView (Essential)
-- (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT;
+- (void)configureZoomValueForImageView:(UIImageView*)imageView forSize:(CGSize)size shouldAnimate:(BOOL)shouldAnimate {	FXDLog_DEFAULT
 
 	if (CGSizeEqualToSize(size, CGSizeZero)) {
 		size = self.bounds.size;
@@ -61,7 +61,7 @@
 	self.contentInset = modifiedInset;
 }
 
-- (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT;
+- (void)configureContentInsetForClippingFrame:(CGRect)clippingFrame {	FXDLog_DEFAULT
 	FXDLogRect(self.frame);
 	FXDLogRect(clippingFrame);
 	

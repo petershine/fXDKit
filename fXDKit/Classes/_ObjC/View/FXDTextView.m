@@ -34,7 +34,7 @@
 	}
 
 
-	FXDLog_DEFAULT;
+	FXDLog_DEFAULT
 	FXDLog(@"%@ %@ %@ %@", _Variable(verticalOffset), _Struct(modifiedInset), _Point(modifiedOffset), _Object(self.text));
 
 	self.contentInset = modifiedInset;
@@ -54,7 +54,7 @@
 }
 
 #pragma mark -
-- (void)applyShadowColor:(UIColor*)shadowColor {	//FXDLog_DEFAULT;
+- (void)applyShadowColor:(UIColor*)shadowColor {	//FXDLog_DEFAULT
 	//FXDLogObject(shadowColor);
 
 	if (shadowColor == nil) {

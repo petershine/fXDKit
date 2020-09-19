@@ -109,7 +109,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)startObservingPlayerNotifications {	FXDLog_DEFAULT;
+- (void)startObservingPlayerNotifications {	FXDLog_DEFAULT
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
 	[notificationCenter
@@ -127,7 +127,7 @@
 	[self.musicPlayer beginGeneratingPlaybackNotifications];
 }
 
-- (void)startObservingLibraryNotifications {	FXDLog_DEFAULT;
+- (void)startObservingLibraryNotifications {	FXDLog_DEFAULT
 	MPMediaLibrary *mediaLibrary = [MPMediaLibrary defaultMediaLibrary];
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -151,7 +151,7 @@
 }
 
 #pragma mark -
-- (void)observedMPMediaLibraryDidChange:(NSNotification*)notification {	FXDLog_DEFAULT;
+- (void)observedMPMediaLibraryDidChange:(NSNotification*)notification {	FXDLog_DEFAULT
 	FXDLogObject(notification);
 
 #if DEBUG

@@ -97,7 +97,7 @@
 + (instancetype)newTextLayerFromTextControl:(id)textControl forRenderingScale:(CGFloat)renderingScale {
 
 	if ([textControl isKindOfClass:[UITextField class]] == NO
-		&& [textControl isKindOfClass:[UITextView class]] == NO) {	FXDLog_DEFAULT;
+		&& [textControl isKindOfClass:[UITextView class]] == NO) {	FXDLog_DEFAULT
 		FXDLogObject(textControl);
 		return nil;
 	}
@@ -455,7 +455,7 @@
 
 
 @implementation CALayer (MultimediaFrameworks)
-- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT;
+- (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration {	FXDLog_DEFAULT
 	//MARK: Use removedOnCompletion & fillMode appropriately
 	//http://stackoverflow.com/a/14598962/259765
 	self.opacity = 0.0;
@@ -516,7 +516,7 @@
 
 
 @implementation AVAudioSession (MultimediaFrameworks)
-- (void)enableAudioPlaybackCategory {	FXDLog_DEFAULT;
+- (void)enableAudioPlaybackCategory {	FXDLog_DEFAULT
 	FXDAssert_IsMainThread;
 
 	FXDLog(@"1.%@", _Object(self.category));
@@ -533,7 +533,7 @@
 	FXDLog(@"2.%@", _Object(self.category));
 }
 
-- (void)disableAudioPlaybackCategory {	FXDLog_DEFAULT;
+- (void)disableAudioPlaybackCategory {	FXDLog_DEFAULT
 	//FXDAssert_IsMainThread;
 
 	NSString *category = AVAudioSessionCategoryPlayAndRecord;
