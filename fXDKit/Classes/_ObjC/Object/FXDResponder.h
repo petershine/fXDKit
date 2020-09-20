@@ -8,7 +8,5 @@
 @property (nonatomic) BOOL isAppLaunching;
 @property (nonatomic) BOOL didFinishLaunching;
 
-@property (strong, nonatomic) UIWindow *window;
-
 @end
 

@@ -317,7 +317,7 @@
 	UIDeviceOrientation validOrientation = [[self class] currentDevice].orientation;
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(validOrientation) == NO) {
-		validOrientation = (UIDeviceOrientation)[UIApplication sharedApplication].delegate.window.windowScene.interfaceOrientation;
+		validOrientation = (UIDeviceOrientation)[[UIApplication sharedApplication] mainWindow].windowScene.interfaceOrientation;
 	}
 
 	return validOrientation;

@@ -1,5 +1,21 @@
 
 
+extension UIApplication {
+	@objc public func mainWindow() -> UIWindow? {
+		var foundWindow: UIWindow? = nil
+		for window in windows {
+			if window.isKeyWindow {
+				foundWindow = window
+				break
+			}
+
+			fxdPrint(window)
+		}
+
+		return foundWindow
+	}
+}
+
 extension UIResponder {
 	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) {	fxd_log()
 

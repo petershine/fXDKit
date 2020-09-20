@@ -353,10 +353,10 @@
 	[alertController addAction:deleteAllAction];
 	[alertController addAction:cancelAction];
 
-	UIWindow *currentWindow = (UIWindow*)[UIApplication sharedApplication].windows.lastObject;
-	FXDLogObject(currentWindow);
+	UIWindow *mainWindow = (UIWindow*)[[UIApplication sharedApplication] mainWindow];
+	FXDLogObject(mainWindow);
 
-	UIViewController *presentingScene = currentWindow.rootViewController;
+	UIViewController *presentingScene = mainWindow.rootViewController;
 	FXDLogObject(presentingScene);
 
 	[presentingScene

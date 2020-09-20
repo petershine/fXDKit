@@ -388,7 +388,7 @@
 		deviceOrientation = (UIDeviceOrientation)self.videoOrientation;
 
 		if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-			deviceOrientation = (UIDeviceOrientation)[UIApplication sharedApplication].delegate.window.windowScene.interfaceOrientation;
+			deviceOrientation = (UIDeviceOrientation)[[UIApplication sharedApplication] mainWindow].windowScene.interfaceOrientation;
 		}
 	}
 

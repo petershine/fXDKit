@@ -93,9 +93,9 @@ extension FXDcontainerCovering {
 		var modifiedFrame = presentedScene.view.frame
 		modifiedFrame.origin.x -= offset.x
 		modifiedFrame.origin.y -= offset.y
-		#warning ("//TODO: Figure out how to use, extension method implemented in Obj-C")
-		if let window = UIApplication.shared.windows.last {
-			modifiedFrame.origin.y += (window.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0.0 * direction.y)
+
+		if let mainWindow = UIApplication.shared.mainWindow() {
+			modifiedFrame.origin.y += (mainWindow.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0.0 * direction.y)
 		}
 		presentedScene.view.frame = modifiedFrame
 
