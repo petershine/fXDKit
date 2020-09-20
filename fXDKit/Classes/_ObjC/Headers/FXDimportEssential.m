@@ -264,6 +264,22 @@
 		  }];
 	 }];
 }
+
+#warning //TODO: start here, to Swiftify Obj-C implementation
+- (UIWindow*)mainWindow {
+	UIWindow *foundWindow = nil;
+
+	for (UIWindow *window in self.windows) {
+		if ([window isKeyWindow]) {
+			foundWindow = window;
+			break;
+		}
+
+		FXDLogObject(window);
+	}
+
+	return foundWindow;
+}
 @end
 
 

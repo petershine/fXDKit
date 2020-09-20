@@ -400,7 +400,7 @@
 	UIWindow *mainWindow = nil;
 	
 	if (shouldShowProgressView) {
-		mainWindow = [UIApplication sharedApplication].delegate.window;
+		mainWindow = [[UIApplication sharedApplication] mainWindow];
 		[mainWindow performSelector:NSSelectorFromString(@"showInformationView")];
 	}
 	

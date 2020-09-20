@@ -91,6 +91,7 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 @interface UIApplication (Essential)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
+- (UIWindow*)mainWindow;
 @end
 
 
