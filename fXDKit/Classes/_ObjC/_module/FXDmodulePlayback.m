@@ -9,8 +9,8 @@
 }
 
 + (instancetype)assetDisplay {	FXDLog_DEFAULT
-
-	CGRect screenBounds = [UIScreen screenBoundsForOrientation:[UIDevice validDeviceOrientation]];
+	UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] performSelector:@selector(validDeviceOrientation:)];
+	CGRect screenBounds = [UIScreen screenBoundsForOrientation:deviceOrientation];
 
 	FXDdisplayPlayback *assetDisplay = [[[self class] alloc] initWithFrame:screenBounds];
 

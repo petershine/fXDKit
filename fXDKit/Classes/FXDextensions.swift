@@ -153,3 +153,26 @@ extension UIAlertController {
 		}
 	}
 }
+
+
+extension UIApplication {
+	@objc public func mainWindow() -> UIWindow? {
+		let foundWindow = windows.filter { (window) -> Bool in
+			return window.isKeyWindow
+		}.first
+
+		return foundWindow
+	}
+}
+
+
+extension UIDevice {
+	@objc public func validDeviceOrientation() -> UIDeviceOrientation {
+		guard orientation.isValidInterfaceOrientation else {
+			let mainWindow = UIApplication.shared.mainWindow()
+			return UIDeviceOrientation(rawValue: Int(mainWindow?.windowScene?.interfaceOrientation.rawValue ?? UIInterfaceOrientation.portrait.rawValue)) ?? .portrait
+		}
+
+		return orientation
+	}
+}

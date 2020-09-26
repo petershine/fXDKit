@@ -315,7 +315,7 @@
 
 
 	//MARK: Assume center of the screen is where label should be
-	UIDeviceOrientation deviceOrientation = [UIDevice validDeviceOrientation];
+	UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] performSelector:@selector(validDeviceOrientation:)];
 
 	CGRect screenBounds = [UIScreen screenBoundsForOrientation:deviceOrientation];
 

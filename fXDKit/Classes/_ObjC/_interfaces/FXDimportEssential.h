@@ -91,7 +91,6 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 @interface UIApplication (Essential)
 - (void)localNotificationWithAlertBody:(NSString*)alertBody afterDelay:(NSTimeInterval)delay;
-- (UIWindow*)mainWindow;
 @end
 
 
@@ -106,7 +105,6 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 
 @interface UIDevice (Essential)
-+ (UIDeviceOrientation)validDeviceOrientation;
 - (CGAffineTransform)affineTransformForOrientation:(UIDeviceOrientation)deviceOrientation;
 @end
 

@@ -353,7 +353,7 @@
 	[alertController addAction:deleteAllAction];
 	[alertController addAction:cancelAction];
 
-	UIWindow *mainWindow = (UIWindow*)[[UIApplication sharedApplication] mainWindow];
+	UIWindow *mainWindow = [[UIApplication sharedApplication] performSelector:@selector(mainWindow:)];
 	FXDLogObject(mainWindow);
 
 	UIViewController *presentingScene = mainWindow.rootViewController;
@@ -400,8 +400,8 @@
 	UIWindow *mainWindow = nil;
 	
 	if (shouldShowProgressView) {
-		mainWindow = [[UIApplication sharedApplication] mainWindow];
-		[mainWindow performSelector:NSSelectorFromString(@"showInformationView")];
+		mainWindow = [[UIApplication sharedApplication] performSelector:@selector(mainWindow:)];
+		[mainWindow performSelector:@selector(showInformationView:)];
 	}
 	
 	
@@ -447,7 +447,7 @@
 			  FXDLog_BLOCK(weakSelf, _cmd);
 
 			  if (shouldShowProgressView) {
-				  [mainWindow performSelector:NSSelectorFromString(@"hideInformationView")];
+				  [mainWindow performSelector:@selector(hideInformationView:)];
 			  }
 
 			  FXDLogBOOL(!shouldBreak);

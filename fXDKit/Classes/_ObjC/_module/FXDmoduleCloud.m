@@ -60,7 +60,7 @@
 		[alertController addAction:cancelAction];
 
 
-		UIWindow *mainWindow = (UIWindow*)[[UIApplication sharedApplication] mainWindow];
+		UIWindow *mainWindow = [[UIApplication sharedApplication] performSelector:@selector(mainWindow:)];
 		FXDLogObject(mainWindow);
 
 		UIViewController *presentingScene = mainWindow.rootViewController;

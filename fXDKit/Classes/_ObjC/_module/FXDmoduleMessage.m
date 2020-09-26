@@ -33,7 +33,7 @@
 	}
 
 	if (presentingController == nil) {
-		UIWindow *mainWindow = [[UIApplication sharedApplication] mainWindow];
+		UIWindow *mainWindow = [[UIApplication sharedApplication] performSelector:@selector(mainWindow:)];
 
 		if (mainWindow.rootViewController) {
 			FXDLogObject(mainWindow.rootViewController);
