@@ -14,7 +14,7 @@ extension UIWindow {
 		fxdPrint("UIScreen.main.nativeScale: \(UIScreen.main.nativeScale)")
 
 		let newWindow: UIWindow? = self.init(frame: screenBounds)
-		newWindow?.autoresizesSubviews = true
+		fxdPrint("newWindow?.autoresizesSubviews: \(String(describing: newWindow?.autoresizesSubviews))")
 
 		return newWindow
 	}
