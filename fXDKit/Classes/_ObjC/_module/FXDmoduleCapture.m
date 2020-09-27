@@ -382,7 +382,7 @@
 	}
 
 
-	UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] performSelector:@selector(validDeviceOrientation:)];
+	UIDeviceOrientation deviceOrientation = (UIDeviceOrientation)[[UIDevice currentDevice] performSelector:@selector(validDeviceOrientation:)];
 
 	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
 		deviceOrientation = (UIDeviceOrientation)self.videoOrientation;
