@@ -22,7 +22,7 @@ public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
 
 
 //MARK: Protocols
-@objc protocol FXDprotocolObserver {
+@objc public protocol FXDprotocolObserver {
 	func observedUIApplicationDidEnterBackground(_ notification: NSNotification)
 	func observedUIApplicationDidBecomeActive(_ notification: NSNotification)
 	func observedUIApplicationWillTerminate(_ notification: NSNotification)
