@@ -164,4 +164,19 @@ extension UIApplication {
 
 		return foundWindow
 	}
+
+	@objc public static func openContactEmail(email: String) {
+		let mailToPath = "mailto:\(email)"
+
+		let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "(unknown bundlen name)"
+		let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "(unknown bundle version)"
+
+		var body: String = "\n\n\n\n\n_______________________________\n"
+		body += "\(displayName) \(appVersion)\n"
+		body += "\(UIDevice.current.systemName) \(UIDevice.current.systemVersion)\n"
+
+		if let mailToURL = URL(string: mailToPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") {
+			Self.shared.open(mailToURL, options: [:], completionHandler: nil)
+		}
+	}
 }
