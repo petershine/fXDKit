@@ -165,7 +165,7 @@ extension UIApplication {
 		return foundWindow
 	}
 
-	@objc public static func openContactEmail(email: String) {
+	@objc public func openContactEmail(email: String) {
 		let mailToPath = "mailto:\(email)"
 
 		let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "(unknown bundlen name)"
