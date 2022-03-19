@@ -2,7 +2,7 @@
 
 open class FXDsceneLaunching: UIViewController {
 	override open var preferredStatusBarStyle: UIStatusBarStyle {
-		return .lightContent
+		return .default
 	}
 	override open var prefersStatusBarHidden: Bool {
 		return true
