@@ -41,13 +41,7 @@
 		return NO;
 	}
 
-	CLAuthorizationStatus authorizationStatus = kCLAuthorizationStatusNotDetermined;
-	if (@available(iOS 14.0, *)) {
-		authorizationStatus = _mainLocationManager.authorizationStatus;
-	}
-	else {
-		authorizationStatus = [CLLocationManager authorizationStatus];
-	}
+	CLAuthorizationStatus authorizationStatus = _mainLocationManager.authorizationStatus;
 
 	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
 		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
@@ -87,13 +81,7 @@
 	 object:nil];
 
 
-	CLAuthorizationStatus authorizationStatus = kCLAuthorizationStatusNotDetermined;
-	if (@available(iOS 14.0, *)) {
-		authorizationStatus = _mainLocationManager.authorizationStatus;
-	}
-	else {
-		authorizationStatus = [CLLocationManager authorizationStatus];
-	}
+	CLAuthorizationStatus authorizationStatus = _mainLocationManager.authorizationStatus;
 
 	[self startMainLocationManagerForAuthorizationStatus:authorizationStatus];
 }
@@ -251,13 +239,7 @@
 #pragma mark - Delegate
 //MARK: CLLocationManagerDelegate
 - (void)locationManagerDidChangeAuthorization:(CLLocationManager *)manager {	FXDLog_DEFAULT
-	CLAuthorizationStatus authorizationStatus = kCLAuthorizationStatusNotDetermined;
-	if (@available(iOS 14.0, *)) {
-		authorizationStatus = _mainLocationManager.authorizationStatus;
-	}
-	else {
-		authorizationStatus = [CLLocationManager authorizationStatus];
-	}
+	CLAuthorizationStatus authorizationStatus = _mainLocationManager.authorizationStatus;
 	FXDLogVariable(authorizationStatus);
 
 	BOOL isAuthorized = YES;
