@@ -45,6 +45,14 @@ public protocol FXDprotocolAppConfig {
     var contactEmail: String { get }
 }
 
+public protocol FXDrawRepresentable {	//}: RawRepresentable {	// until ready to remove ALL ObjC
+	var stringValue: String { get }
+}
+
+public protocol FXDrawString {
+	func stringValue(for enumCase: Int) -> String?
+}
+
 
 //MARK: Logging
 import os.log
