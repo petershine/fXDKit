@@ -1,8 +1,6 @@
 
 
-@objc public protocol FXDApplicationDelegate: UIApplicationDelegate {
-	func applicationFirstTimeBecameActiveAtLaunch(_ application: UIApplication)
-}
+import Foundation
 
 
 extension UIResponder {
@@ -55,4 +53,22 @@ extension UIResponder {
 
 		return true
 	}
+}
+
+
+public protocol FXDApplicationDelegate: UIApplicationDelegate {
+	func applicationFirstTimeBecameActiveAtLaunch(_ application: UIApplication)
+}
+
+extension FXDApplicationDelegate {
+	public func applicationFirstTimeBecameActiveAtLaunch(_ application: UIApplication) {
+		fxd_overridable()
+	}
+}
+
+open class FXDResponder: UIResponder {
+	@objc open var window: UIWindow?
+
+	open var isAppLaunching: Bool = false
+	open var didFinishLaunching: Bool = false
 }
