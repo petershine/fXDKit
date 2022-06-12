@@ -1,5 +1,10 @@
 
 
+@objc public protocol FXDApplicationDelegate: UIApplicationDelegate {
+	func applicationFirstTimeBecameActiveAtLaunch(_ application: UIApplication)
+}
+
+
 extension UIResponder {
 	@objc public func executeOperations(for application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) {	fxd_log()
 

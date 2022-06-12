@@ -147,7 +147,7 @@
 }
 
 #pragma mark -
-- (void)prepareWithUbiquityContainerURL:(NSURL*)ubiquityContainerURL withProtectionOption:(NSString*)protectionOption withManagedDocument:(FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)callback {	FXDLog_DEFAULT
+- (void)prepareWithUbiquityContainerURL:(nullable NSURL*)ubiquityContainerURL protectionOption:(nullable NSString*)protectionOption managedDocument:(nullable FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 
 	if (managedDocument == nil) {
 		FXDLog(@"CHECK if bundle has more than 1 momd");
@@ -238,8 +238,8 @@
 		 }
 #endif
 
-		 if (callback) {
-			 callback(_cmd, didConfigure, nil);
+		 if (finishCallback) {
+			 finishCallback(_cmd, didConfigure, nil);
 		 }
 
 		 //MARK: Careful with order of operations
