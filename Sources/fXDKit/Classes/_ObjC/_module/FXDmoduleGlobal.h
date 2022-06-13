@@ -33,7 +33,7 @@
 @property (strong, nonatomic) id _Nullable initialScene;
 
 
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )finishCallback;
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )callback;
 
 - (void)incrementAppLaunchCount;
 

@@ -237,7 +237,7 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )finishCallback {	FXDLog_DEFAULT
+- (void)prepareGlobalModuleWithCallback:(FXDcallbackFinish _Nullable )callback {	FXDLog_DEFAULT
 	FXDLogObject([[UIDevice currentDevice].identifierForVendor UUIDString]);
 	//FXDLogObject([[NSBundle mainBundle] infoDictionary]);
 
@@ -256,8 +256,8 @@
 	[self configureGlobalAppearance];
 
 
-	if (finishCallback) {
-		finishCallback(_cmd, YES, nil);
+	if (callback) {
+		callback(_cmd, YES, nil);
 	}
 }
 
