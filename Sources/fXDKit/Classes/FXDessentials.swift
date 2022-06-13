@@ -36,13 +36,19 @@ public protocol FXDprotocolAppConfig {
     var appStoreID: String { get }
     
     var URIscheme: String { get }
-    var facebookURIscheme: String { get }
-    
+
     var homeURL: String { get }
     var shortHomeURL: String { get }
+
+	var facebookURIscheme: String { get }
     var twitterName: String { get }
     
     var contactEmail: String { get }
+
+	var launchScene: String { get }
+	var bundledSqliteFile: String { get }
+
+	var delayBeforeClearForMemory: TimeInterval { get }
 }
 
 public protocol FXDrawRepresentable {	//}: RawRepresentable {	// until ready to remove ALL ObjC
