@@ -91,7 +91,9 @@
 	}
 
 	// When finished, release the context
-	CGContextRelease(cgctx);
+	// But what we got is "autoreleased" so...
+	// 4. Incorrect decrement of the reference count of an object that is not owned at this point by the caller
+//	CGContextRelease(cgctx);
 	// Free image data memory for the context
 	if (data) { free(data); }
 
@@ -151,11 +153,13 @@
 		free (bitmapData);
 		fprintf (stderr, "Context not created!");
 	}
+	else {
+		CFAutorelease(context);
+	}
 
 	// Make sure and release colorspace before returning
 	CGColorSpaceRelease( colorSpace );
 
-	CFAutorelease(context);
 
 	return context;
 }
