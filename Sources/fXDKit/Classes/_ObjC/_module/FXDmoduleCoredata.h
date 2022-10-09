@@ -35,46 +35,46 @@
 @property (nonatomic) UIBackgroundTaskIdentifier enumeratingTask;
 @property (nonatomic) UIBackgroundTaskIdentifier dataSavingTask;
 
-@property (strong, nonatomic) NSOperationQueue *enumeratingOperationQueue;
+@property (strong, nonatomic) NSOperationQueue * _Nullable enumeratingOperationQueue;
 
-@property (strong, nonatomic) NSString *coredataName;
-@property (strong, nonatomic) NSString *ubiquitousContentName;
-@property (strong, nonatomic) NSString *sqlitePathComponent;
+@property (strong, nonatomic) NSString * _Nullable coredataName;
+@property (strong, nonatomic) NSString * _Nullable ubiquitousContentName;
+@property (strong, nonatomic) NSString * _Nullable sqlitePathComponent;
 
-@property (strong, nonatomic) NSString *mainEntityName;
-@property (strong, nonatomic) NSArray *mainSortDescriptors;
+@property (strong, nonatomic) NSString * _Nullable mainEntityName;
+@property (strong, nonatomic) NSArray * _Nullable mainSortDescriptors;
 
-@property (strong, nonatomic) FXDManagedDocument *mainDocument;
+@property (strong, nonatomic) FXDManagedDocument * _Nullable mainDocument;
 
 
-- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile;
-- (void)tranferFromOldSqliteFile:(NSString*)oldSqliteFile;
+- (void)initializeWithBundledSqliteFile:(NSString*_Nullable)sqliteFile;
+- (void)tranferFromOldSqliteFile:(NSString*_Nullable)oldSqliteFile;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL doesStoredSqliteExist;
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath;
+- (BOOL)storeCopiedItemFromSqlitePath:(NSString* _Nullable)sqlitePath toStoredPath:(NSString* _Nullable)storedPath;
 
 
-- (void)prepareWithUbiquityContainerURL:(nullable NSURL*)ubiquityContainerURL protectionOption:(nullable NSString*)protectionOption managedDocument:(nullable FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)finishCallback;
+- (void)prepareWithUbiquityContainerURL:(nullable NSURL*)ubiquityContainerURL protectionOption:(nullable NSString*)protectionOption managedDocument:(nullable FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
-- (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
 - (void)startObservingCoreDataNotifications;
 
 
-- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)deleteAllDataWithFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
-- (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback;
-
-
-- (void)saveManagedContext:(NSManagedObjectContext*)managedContext withFinishCallback:(FXDcallbackFinish)finishCallback;
-- (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish)finishCallback;
+- (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^_Nullable)(NSManagedObjectContext * _Nullable managedContext, NSManagedObject * _Nullable mainEntityObj, BOOL * _Nullable shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
 
-- (void)observedUIDocumentStateChanged:(NSNotification*)notification;
+- (void)saveManagedContext:(NSManagedObjectContext* _Nullable)managedContext withFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
+- (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
-- (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification;
-- (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification;
-- (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification;
 
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification;
+- (void)observedUIDocumentStateChanged:(NSNotification* _Nullable)notification;
+
+- (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification* _Nullable)notification;
+- (void)observedNSManagedObjectContextWillSave:(NSNotification* _Nullable)notification;
+- (void)observedNSManagedObjectContextDidSave:(NSNotification* _Nullable)notification;
+
+- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification* _Nullable)notification;
 
 @end
