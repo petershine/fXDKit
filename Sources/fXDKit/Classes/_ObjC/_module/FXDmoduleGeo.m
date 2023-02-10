@@ -37,16 +37,16 @@
 
 #pragma mark - Public
 - (BOOL)didUserAuthorize {
-	if ([CLLocationManager locationServicesEnabled] == NO) {
-		return NO;
-	}
+//	if ([CLLocationManager locationServicesEnabled] == NO) {
+//		return NO;
+//	}
 
 	CLAuthorizationStatus authorizationStatus = _mainLocationManager.authorizationStatus;
 
 	if (authorizationStatus != kCLAuthorizationStatusAuthorizedAlways
 		&& authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
 		FXDLog_DEFAULT
-		FXDLogBOOL([CLLocationManager locationServicesEnabled]);
+//		FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 		FXDLogVariable(authorizationStatus);
 		FXDLogObject(_mainLocationManager.location);
 
@@ -88,7 +88,9 @@
 
 - (void)startMainLocationManagerForAuthorizationStatus:(CLAuthorizationStatus)authorizationStatus {	FXDLog_DEFAULT
 	FXDLogVariable(authorizationStatus);
-	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
+
+	//This method can cause UI unresponsiveness if invoked on the main thread. Instead, consider waiting for the `-locationManagerDidChangeAuthorization:` callback and checking `authorizationStatus` first.
+//	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
 
 	FXDLogObject([UIDevice currentDevice].systemVersion);
 	FXDLogObject([NSBundle mainBundle].infoDictionary[@"NSLocationAlwaysAndWhenInUseUsageDescription"]);
