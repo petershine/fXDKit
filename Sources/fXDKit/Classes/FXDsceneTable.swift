@@ -1,6 +1,13 @@
 import fXDObjC
 
 open class FXDsceneTable: UIViewController, FXDscrollableCells {
+	deinit {
+		self.cellOperationQueue?.cancelAllOperations()
+		self.cellOperationQueue = nil
+		self.cellOperationDictionary = nil
+	}
+
+	
 	@IBOutlet public weak var mainTableview: UITableView?
 
 	//MARK: FXDprotocolScrollable

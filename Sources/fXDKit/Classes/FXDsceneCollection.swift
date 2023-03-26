@@ -1,6 +1,13 @@
 
 
 open class FXDsceneCollection: UIViewController, FXDscrollableCells {
+	deinit {
+		self.cellOperationQueue?.cancelAllOperations()
+		self.cellOperationQueue = nil
+		self.cellOperationDictionary = nil
+	}
+
+
 	@IBOutlet public weak var mainCollectionview: UICollectionView?
 
 	//MARK: FXDprotocolScrollable
