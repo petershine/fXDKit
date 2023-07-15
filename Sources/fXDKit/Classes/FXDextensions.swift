@@ -157,19 +157,9 @@ extension UIAlertController {
 
 extension UIApplication {
 	@objc public func mainWindow() -> UIWindow? {
-		if #available(iOS 13, *) {
-			return connectedScenes
-				.flatMap {($0 as? UIWindowScene)?.windows ?? [] }
-				.first {$0.isKeyWindow }
-		}
-		else {
-			let foundWindow: UIWindow? = windows.filter {
-				(window) -> Bool in
-				return window.isKeyWindow
-			}.first
-
-			return foundWindow
-		}
+		return connectedScenes
+			.flatMap {($0 as? UIWindowScene)?.windows ?? [] }
+			.first {$0.isKeyWindow }
 	}
 
 	@objc public func openContactEmail(email: String) {
