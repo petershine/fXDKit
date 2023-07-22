@@ -113,6 +113,16 @@ extension UIStoryboardSegue {
 	}
 }
 
+extension Bundle {
+	@objc public class func bundleVersion() -> String? {
+		return self.main.infoDictionary?["CFBundleVersion"] as? String
+	}
+
+	@objc public class func bundleDisplayName() -> String? {
+		return self.main.infoDictionary?["CFBundleDisplayName"] as? String
+	}
+}
+
 extension UIAlertController {
 	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
 		self.simpleAlert(withTitle: title,
@@ -175,5 +185,27 @@ extension UIApplication {
 		if let mailToURL = URL(string: mailToPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") {
 			Self.shared.open(mailToURL, options: [:], completionHandler: nil)
 		}
+	}
+}
+
+
+extension UIDevice {
+	@objc public class func machineNameCode() -> String? {
+		/*
+		struct utsname systemInfo;
+		uname(&systemInfo);
+
+		NSString *machineName = @(systemInfo.machine);
+		*/
+
+		var systemInfo = utsname()
+		uname(&systemInfo)
+		let machineNameCode = withUnsafePointer(to: &systemInfo.machine) {
+			$0.withMemoryRebound(to: CChar.self, capacity: 1) {
+				ptr in String.init(validatingUTF8: ptr)
+			}
+		}
+
+		return machineNameCode
 	}
 }
