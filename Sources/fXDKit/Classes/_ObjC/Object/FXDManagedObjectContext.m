@@ -4,7 +4,7 @@
 
 
 @implementation NSManagedObjectContext (Essential)
-- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
@@ -34,7 +34,7 @@
 	return resultsController;
 }
 
-- (id)firstFetchedObjForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (id)firstFetchedObjForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSArray *fetchedObjArray = [self
 								fetchedObjArrayForEntityName:entityName
@@ -45,7 +45,7 @@
 	return fetchedObjArray.firstObject;
 }
 
-- (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
@@ -65,7 +65,7 @@
 	return fetchedObjArray;
 }
 
-- (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(NSPredicate*)predicate withLimit:(NSUInteger)limit {	
+- (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: %@, %@", _Object(entityName), _Object(sortDescriptors));
 	
