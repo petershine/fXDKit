@@ -94,7 +94,7 @@
 	[self storeCopiedItemFromSqlitePath:bundledSqlitePath toStoredPath:nil];
 }
 
-- (void)tranferFromOldSqliteFile:(NSString*)sqliteFile {
+- (void)transferFromOldSqliteFile:(NSString*)sqliteFile {
 
 	if (self.doesStoredSqliteExist) {
 		return;

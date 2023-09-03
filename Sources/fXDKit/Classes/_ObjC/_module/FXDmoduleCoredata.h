@@ -48,7 +48,7 @@
 
 
 - (void)initializeWithBundledSqliteFile:(NSString*_Nullable)sqliteFile;
-- (void)tranferFromOldSqliteFile:(NSString*_Nullable)oldSqliteFile;
+- (void)transferFromOldSqliteFile:(NSString*_Nullable)oldSqliteFile;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL doesStoredSqliteExist;
 - (BOOL)storeCopiedItemFromSqlitePath:(NSString* _Nullable)sqlitePath toStoredPath:(NSString* _Nullable)storedPath;
 
