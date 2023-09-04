@@ -97,6 +97,16 @@ extension String {
     }
 }
 
+extension Bundle {
+	@objc public class func bundleVersion() -> String? {
+		return self.main.infoDictionary?["CFBundleVersion"] as? String
+	}
+
+	@objc public class func bundleDisplayName() -> String? {
+		return self.main.infoDictionary?["CFBundleDisplayName"] as? String
+	}
+}
+
 extension UIStoryboardSegue {
 	@objc public func fullDescription() -> Dictionary<String, Any>? {
 		var fullDescription: Dictionary<String, Any>? = [:]
@@ -108,18 +118,8 @@ extension UIStoryboardSegue {
 		fullDescription!["source"] = self.source
 		fullDescription!["destination"] = self.destination
 		fullDescription!["class"] = self.description
-		
+
 		return fullDescription
-	}
-}
-
-extension Bundle {
-	@objc public class func bundleVersion() -> String? {
-		return self.main.infoDictionary?["CFBundleVersion"] as? String
-	}
-
-	@objc public class func bundleDisplayName() -> String? {
-		return self.main.infoDictionary?["CFBundleDisplayName"] as? String
 	}
 }
 
