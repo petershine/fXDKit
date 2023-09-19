@@ -56,19 +56,17 @@ extension UIResponder {
 }
 
 
-public protocol FXDApplicationDelegate: UIApplicationDelegate {
+public protocol FXDAppDelegate: UIApplicationDelegate {
+	var window: UIWindow? { get set }
+
+	var isAppLaunching: Bool { get set }
+	var didFinishLaunching: Bool { get set }
+
 	func applicationFirstTimeBecameActiveAtLaunch(_ application: UIApplication)
 }
 
-extension FXDApplicationDelegate {
+extension FXDAppDelegate {
 	public func applicationFirstTimeBecameActiveAtLaunch(_ application: UIApplication) {
 		fxd_overridable()
 	}
-}
-
-open class FXDResponder: UIResponder {
-	@objc open var window: UIWindow?
-
-	open var isAppLaunching: Bool = false
-	open var didFinishLaunching: Bool = false
 }

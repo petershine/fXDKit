@@ -51,7 +51,7 @@ public protocol FXDprotocolAppConfig {
 	var delayBeforeClearForMemory: TimeInterval { get }
 }
 
-public protocol FXDrawRepresentable {	//}: RawRepresentable {	// until ready to remove ALL ObjC
+public protocol FXDrawRepresentable {
 	var stringValue: String { get }
 }
 
