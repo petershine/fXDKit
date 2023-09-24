@@ -4,20 +4,33 @@ import SwiftUI
 
 
 public struct FXDswiftuiLaunching: View {
-	@State var shouldHideStatusBar: Bool = true
+	@State var shouldHideStatusBar: Bool
 
 	@State var backgroundImagename: String
+	
 	@State var foregroundImagename: String
+	@State var foregroundSize: CGSize
 
-	public init(backgroundImagename: String, foregroundImagename: String) {
+	public init(shouldHideStatusBar: Bool = true, backgroundImagename: String, foregroundImagename: String, foregroundSize: CGSize = .zero) {
+
+		self.shouldHideStatusBar = shouldHideStatusBar
+
 		self.backgroundImagename = backgroundImagename
+		
 		self.foregroundImagename = foregroundImagename
+		self.foregroundSize = foregroundSize
 	}
 
 	public var body: some View {
 		ZStack {
 			Image(backgroundImagename, bundle: nil).resizable().scaledToFill().ignoresSafeArea()
-			Image(foregroundImagename, bundle: nil).fixedSize()
+
+			if foregroundSize != .zero {
+				Image(foregroundImagename, bundle: nil).resizable().frame(width: foregroundSize.width, height: foregroundSize.height, alignment: .center)
+			}
+			else {
+				Image(foregroundImagename, bundle: nil).fixedSize()
+			}
 
 			VStack {
 				Spacer()
@@ -35,7 +48,7 @@ public struct FXDswiftuiLaunching: View {
 
 
 // Usage for hosted
-open class FXDhostingLaunching: UIHostingController<FXDswiftuiLaunching> {
+open class FXDhostedLaunching: UIHostingController<FXDswiftuiLaunching> {
 	 override open var preferredStatusBarStyle: UIStatusBarStyle {
 		 return .default
 	 }

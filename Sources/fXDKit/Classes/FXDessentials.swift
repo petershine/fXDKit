@@ -45,10 +45,15 @@ public protocol FXDprotocolAppConfig {
     
     var contactEmail: String { get }
 
-	var launchScene: String { get }
+	var launchingBackgroundImagename: String { get }
+	var launchingForegroundImagename: String { get }
+	var launchingForegroundSize: CGSize { get }
+
 	var bundledSqliteFile: String { get }
 
 	var delayBeforeClearForMemory: TimeInterval { get }
+
+	var minimumDeviceBatteryLevel: Float { get }
 }
 
 public protocol FXDrawRepresentable {
