@@ -54,6 +54,7 @@ public protocol FXDprotocolAppConfig {
 	var delayBeforeClearForMemory: TimeInterval { get }
 
 	var minimumDeviceBatteryLevel: Float { get }
+	var badgeCountKeyName: String { get }
 }
 
 public protocol FXDrawRepresentable {
