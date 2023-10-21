@@ -6,12 +6,12 @@ import SwiftUI
 public struct FXDswiftuiLaunching: View {
 	@State var shouldHideStatusBar: Bool
 
-	@State var backgroundImagename: String
-	
-	@State var foregroundImagename: String
+	@State var backgroundImagename: String?
+
+	@State var foregroundImagename: String?
 	@State var foregroundSize: CGSize
 
-	public init(shouldHideStatusBar: Bool = true, backgroundImagename: String, foregroundImagename: String, foregroundSize: CGSize = .zero) {
+	public init(shouldHideStatusBar: Bool = true, backgroundImagename: String?, foregroundImagename: String?, foregroundSize: CGSize = .zero) {
 
 		self.shouldHideStatusBar = shouldHideStatusBar
 
@@ -23,23 +23,30 @@ public struct FXDswiftuiLaunching: View {
 
 	public var body: some View {
 		ZStack {
-			Image(backgroundImagename, bundle: nil).resizable().scaledToFill().ignoresSafeArea()
-
-			if foregroundSize != .zero {
-				Image(foregroundImagename, bundle: nil).resizable().frame(width: foregroundSize.width, height: foregroundSize.height, alignment: .center)
+			if let backgroundImagename {
+				Image(backgroundImagename, bundle: nil).resizable().scaledToFill().ignoresSafeArea()
 			}
-			else {
-				Image(foregroundImagename, bundle: nil).fixedSize()
+
+			if foregroundImagename == nil {
+				VStack {
+					Image(systemName: "globe")
+						.imageScale(.large)
+						.foregroundStyle(.tint)
+					Text("Hello, world!")
+				}
+			}
+			else if let foregroundImagename {
+				if foregroundSize != .zero {
+					Image(foregroundImagename, bundle: nil).resizable().frame(width: foregroundSize.width, height: foregroundSize.height, alignment: .center)
+				}
+				else {
+					Image(foregroundImagename, bundle: nil).fixedSize()
+				}
 			}
 
 			VStack {
 				Spacer()
-				if #available(iOS 15.0, *) {
-					ProgressView().controlSize(.large).tint(.black)
-				}
-				else {
-					ProgressView()
-				}
+				ProgressView().controlSize(.large)
 			}
 		}
 		.statusBarHidden(shouldHideStatusBar)
@@ -65,5 +72,5 @@ open class FXDhostedLaunching: UIHostingController<FXDswiftuiLaunching> {
 
 
 #Preview {
-	FXDswiftuiLaunching(backgroundImagename: "backgroundImagename", foregroundImagename: "foregroundImagename")
+	FXDswiftuiLaunching(backgroundImagename: nil, foregroundImagename: nil)
 }
