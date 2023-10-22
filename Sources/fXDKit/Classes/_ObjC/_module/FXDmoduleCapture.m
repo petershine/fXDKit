@@ -85,6 +85,9 @@
 	for (AVCaptureDeviceInput *deviceInput in _mainCaptureSession.inputs) {
 		[_mainCaptureSession removeInput:deviceInput];
 	}
+
+	_mainCaptureSession = nil;
+	_mainPreviewLayer = nil;
 }
 
 #pragma mark - Initialization
@@ -155,6 +158,7 @@
 
 	[_mainCaptureSession commitConfiguration];
 
+	[self configureSessionWithCameraPosition:AVCaptureDevicePositionBack];
 
 	return _mainCaptureSession;
 }
@@ -213,7 +217,7 @@
 	if (_deviceInputAudio == nil) {
 
 		AVCaptureDevice *audioCapture = [AVCaptureDevice
-										 defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInMicrophone
+										 defaultDeviceWithDeviceType:AVCaptureDeviceTypeMicrophone
 										 mediaType:AVMediaTypeAudio
 										 position:AVCaptureDevicePositionUnspecified];
 
@@ -245,11 +249,47 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)prepareCaptureManager {	FXDLog_DEFAULT
+- (void)prepareAndStartCaptureManager:(nullable UIView *)containerView {
+	//This app has crashed because it attempted to access privacy-sensitive data without a usage description.  
+	//The app's Info.plist must contain an NSMicrophoneUsageDescription key with a string value explaining to the user how the app uses this data.
+	//The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.
+
+	AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+	if (authorizationStatus == AVAuthorizationStatusAuthorized) {
+		[self startCaptureManager:containerView];
+		return;
+	}
+
+
+	[AVCaptureDevice
+	 requestAccessForMediaType:AVMediaTypeVideo
+	 completionHandler:^(BOOL granted) {
+		if (granted) {
+			[self startCaptureManager:containerView];
+			return;
+		}
+
+
+		FXDLog_DEFAULT
+		FXDLogBOOL(granted);
+	}];
+}
+
+- (void)startCaptureManager:(nullable UIView *)containerView {	FXDLog_DEFAULT
+	if (containerView != nil) {
+		self.mainPreviewLayer.frame = containerView.bounds;
+		[containerView.layer addSublayer:self.mainPreviewLayer];
+	}
+
 	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
 
-	[self.mainCaptureSession startRunning];
-
+	AVCaptureSession *instantiatedSession = self.mainCaptureSession;
+	const char *captureManagerName = [NSStringFromClass([self class]) UTF8String];
+	dispatch_queue_t backgroundQueue = dispatch_queue_create(captureManagerName, 0);
+	dispatch_async(backgroundQueue, ^{
+		//-[AVCaptureSession startRunning] should be called from background thread. Calling it on the main thread can lead to UI unresponsiveness
+		[instantiatedSession startRunning];
+	});
 
 	[self observedUIDeviceOrientationDidChange:nil];
 

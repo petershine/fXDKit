@@ -37,7 +37,8 @@
 @property (strong, nonatomic) AVCaptureAudioDataOutput *dataOutputAudio;
 
 
-- (void)prepareCaptureManager;
+- (void)prepareAndStartCaptureManager:(nullable UIView *)containerView;
+- (void)startCaptureManager:(nullable UIView *)containerView;
 
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
