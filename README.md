@@ -21,7 +21,7 @@ pod 'fXDObjC', :git => 'https://github.com/petershine/fXDKit.git' # Obj-C depend
 pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
 ```
 
-**Or, you can use Swift Package Manager, using git URL to this repository.**
+~~**Or, you can use Swift Package Manager, using git URL to this repository.**~~
 
 And import in your files as:
 ```swift
