@@ -6,7 +6,7 @@
 
 
 @interface AVCaptureDevice (MultimediaFrameworks)
-+ (AVCaptureDevice*)videoCaptureDeviceForPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode;
++ (AVCaptureDevice*_Nullable)videoCaptureDeviceForPosition:(AVCaptureDevicePosition)cameraPosition withFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode;
 - (void)applyConfigurationWithFlashMode:(AVCaptureFlashMode)flashMode withFocusMode:(AVCaptureFocusMode)focusMode;
 @end
 
@@ -14,6 +14,7 @@
 @interface FXDmoduleCapture : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
 	AVCaptureSession *_mainCaptureSession;
 	AVCaptureVideoPreviewLayer *_mainPreviewLayer;
+	AVCaptureDeviceRotationCoordinator *_mainRotationCoordinator;
 }
 
 @property (nonatomic) BOOL didStartCapturing;
@@ -23,18 +24,18 @@
 
 @property (nonatomic) AVCaptureDevicePosition cameraPosition;
 @property (nonatomic) AVCaptureFlashMode flashMode;
-@property (nonatomic) AVCaptureVideoOrientation videoOrientation;
 
 
-@property (strong, nonatomic) AVCaptureSession *mainCaptureSession;
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer *mainPreviewLayer;
+@property (strong, nonatomic) AVCaptureSession * _Nullable mainCaptureSession;
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer * _Nullable mainPreviewLayer;
+@property (strong, nonatomic) AVCaptureDeviceRotationCoordinator * _Nullable mainRotationCoordinator;
 
-@property (strong, nonatomic) AVCaptureDeviceInput *deviceInputBack;
-@property (strong, nonatomic) AVCaptureDeviceInput *deviceInputFront;
-@property (strong, nonatomic) AVCaptureDeviceInput *deviceInputAudio;
+@property (strong, nonatomic) AVCaptureDeviceInput * _Nullable deviceInputBack;
+@property (strong, nonatomic) AVCaptureDeviceInput * _Nullable deviceInputFront;
+@property (strong, nonatomic) AVCaptureDeviceInput * _Nullable deviceInputAudio;
 
-@property (strong, nonatomic) AVCaptureVideoDataOutput *dataOutputVideo;
-@property (strong, nonatomic) AVCaptureAudioDataOutput *dataOutputAudio;
+@property (strong, nonatomic) AVCaptureVideoDataOutput * _Nullable dataOutputVideo;
+@property (strong, nonatomic) AVCaptureAudioDataOutput * _Nullable dataOutputAudio;
 
 
 - (void)prepareAndStartCaptureManager:(nullable UIView *)containerView;
@@ -43,6 +44,6 @@
 - (void)switchCameraPosition;
 - (void)configureSessionWithCameraPosition:(AVCaptureDevicePosition)cameraPostion;
 
-- (CIImage*)coreImageForCVImageBuffer:(CVImageBufferRef)imageBuffer withScale:(NSNumber*)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoOrientation:(AVCaptureVideoOrientation)videoOrientation shouldUseMirroring:(BOOL)shouldUseMirroring;
+- (CIImage*_Nullable)coreImageForCVImageBuffer:(CVImageBufferRef _Nullable )imageBuffer withScale:(NSNumber*_Nullable)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoRotationAngle:(CGFloat)rotationAngle shouldUseMirroring:(BOOL)shouldUseMirroring;
 
 @end

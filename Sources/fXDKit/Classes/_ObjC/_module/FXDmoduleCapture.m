@@ -77,7 +77,7 @@
 @implementation FXDmoduleCapture
 
 #pragma mark - Memory management
-- (void)dealloc {	
+- (void)dealloc {
 	[_mainCaptureSession stopRunning];
 
 	[_mainPreviewLayer removeFromSuperlayer];
@@ -88,6 +88,10 @@
 
 	_mainCaptureSession = nil;
 	_mainPreviewLayer = nil;
+
+	[_mainRotationCoordinator removeObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelCapture))];
+	[_mainRotationCoordinator removeObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelPreview))];
+	_mainRotationCoordinator = nil;
 }
 
 #pragma mark - Initialization
@@ -97,7 +101,6 @@
 	if (self) {
 		_cameraPosition = AVCaptureDevicePositionBack;
 		_flashMode = AVCaptureFlashModeAuto;
-		_videoOrientation = AVCaptureVideoOrientationPortrait;
 	}
 
 	return self;
@@ -178,6 +181,22 @@
 	FXDLog(@"%@ %@", _Rect(_mainPreviewLayer.frame), _Rect(_mainPreviewLayer.bounds));
 
 	return _mainPreviewLayer;
+}
+
+- (AVCaptureDeviceRotationCoordinator*)mainRotationCoordinator {
+	if (_mainRotationCoordinator) {
+		return _mainRotationCoordinator;;
+	}
+
+
+	_mainRotationCoordinator = [[AVCaptureDeviceRotationCoordinator alloc]
+								initWithDevice:self.deviceInputBack.device
+								previewLayer:self.mainPreviewLayer];
+
+	FXDLog_DEFAULT
+	FXDLog(@"%@ %@", _mainRotationCoordinator.device, _mainRotationCoordinator.previewLayer);
+
+	return _mainRotationCoordinator;
 }
 
 #pragma mark -
@@ -277,11 +296,18 @@
 
 - (void)startCaptureManager:(nullable UIView *)containerView {	FXDLog_DEFAULT
 	if (containerView != nil) {
-		self.mainPreviewLayer.frame = containerView.bounds;
-		[containerView.layer addSublayer:self.mainPreviewLayer];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			self.mainPreviewLayer.frame = containerView.bounds;
+			[containerView.layer addSublayer:self.mainPreviewLayer];
+		});
 	}
 
 	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
+
+	AVCaptureDeviceRotationCoordinator *instantiatedCoordinator = self.mainRotationCoordinator;
+	[instantiatedCoordinator addObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelCapture)) options:NSKeyValueObservingOptionNew context:nil];
+	[instantiatedCoordinator addObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelPreview)) options:NSKeyValueObservingOptionNew context:nil];
+
 
 	AVCaptureSession *instantiatedSession = self.mainCaptureSession;
 	const char *captureManagerName = [NSStringFromClass([self class]) UTF8String];
@@ -290,17 +316,6 @@
 		//-[AVCaptureSession startRunning] should be called from background thread. Calling it on the main thread can lead to UI unresponsiveness
 		[instantiatedSession startRunning];
 	});
-
-	[self observedUIDeviceOrientationDidChange:nil];
-
-
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	
-	[notificationCenter
-	 addObserver:self
-	 selector:@selector(observedUIDeviceOrientationDidChange:)
-	 name:UIDeviceOrientationDidChangeNotification
-	 object:nil];
 }
 
 #pragma mark -
@@ -354,7 +369,7 @@
 }
 
 #pragma mark -
-- (CIImage*)coreImageForCVImageBuffer:(CVImageBufferRef)imageBuffer withScale:(NSNumber*)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoOrientation:(AVCaptureVideoOrientation)videoOrientation shouldUseMirroring:(BOOL)shouldUseMirroring {
+- (CIImage*_Nullable)coreImageForCVImageBuffer:(CVImageBufferRef _Nullable )imageBuffer withScale:(NSNumber*_Nullable)scale withCameraPosition:(AVCaptureDevicePosition)cameraPosition withVideoRotationAngle:(CGFloat)rotationAngle shouldUseMirroring:(BOOL)shouldUseMirroring {
 
 	//MARK: Other method	http://www.fantageek.com/598/convert-cmsamplebufferref-to-uiimage/
 
@@ -370,7 +385,7 @@
 	}
 
 
-	if (UIDeviceOrientationIsPortrait((UIDeviceOrientation)videoOrientation) == NO
+	if (rotationAngle == 90.0
 		&& cameraPosition == AVCaptureDevicePositionBack) {
 		return originalImage;
 	}
@@ -389,7 +404,7 @@
 	}
 
 
-	if (UIDeviceOrientationIsPortrait((UIDeviceOrientation)videoOrientation) == NO) {
+	if (rotationAngle == 90.0) {
 		if (cameraPosition != AVCaptureDevicePositionBack
 			&& shouldUseMirroring == NO) {
 
@@ -415,31 +430,20 @@
 }
 
 #pragma mark - Observer
-- (void)observedUIDeviceOrientationDidChange:(NSNotification*)notification {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+	FXDLog_DEFAULT
+	FXDLog(@"keyPath: %@, object: %@, change: %@, context: %@", keyPath, object, change, context);
 
-	if (self.didStartCapturing) {
-		return;
+	if ([keyPath isEqualToString:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelPreview))]) {
+		AVCaptureDeviceRotationCoordinator *coordinator = object;
+		AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer*)coordinator.previewLayer;
+		previewLayer.connection.videoRotationAngle = coordinator.videoRotationAngleForHorizonLevelPreview;
+
+		dispatch_async(dispatch_get_main_queue(), ^{
+			previewLayer.frame = previewLayer.superlayer.bounds;
+		});
 	}
-
-
-	UIDeviceOrientation deviceOrientation = (UIDeviceOrientation)[[UIDevice currentDevice] orientation];
-
-	if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-		deviceOrientation = (UIDeviceOrientation)self.videoOrientation;
-
-		if (UIDeviceOrientationIsValidInterfaceOrientation(deviceOrientation) == NO) {
-			UIWindow *mainWindow = [[UIApplication sharedApplication] performSelector:@selector(mainWindow:)];
-			deviceOrientation = (UIDeviceOrientation)mainWindow.windowScene.interfaceOrientation;
-		}
-	}
-
-
-	self.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-
-	(self.mainPreviewLayer.connection).videoOrientation = self.videoOrientation;
 }
-
-#pragma mark - Delegate
 
 
 @end
