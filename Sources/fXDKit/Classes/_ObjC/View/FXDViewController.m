@@ -105,13 +105,6 @@
 
 
 #pragma mark - Autorotating
-- (BOOL)shouldAutorotate {	//FXDLog_DEFAULT
-	BOOL shouldAutorotate = super.shouldAutorotate;
-	//FXDLogBOOL(shouldAutorotate);
-
-	return shouldAutorotate;
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
 	UIInterfaceOrientationMask supportedInterface = super.supportedInterfaceOrientations;
 

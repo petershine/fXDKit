@@ -53,6 +53,10 @@ public struct FXDswiftuiLaunching: View {
 	}
 }
 
+#Preview {
+	FXDswiftuiLaunching(backgroundImagename: nil, foregroundImagename: nil)
+}
+
 
 // Usage for hosted
 open class FXDhostedLaunching: UIHostingController<FXDswiftuiLaunching> {
@@ -68,9 +72,4 @@ open class FXDhostedLaunching: UIHostingController<FXDswiftuiLaunching> {
 	 override open var shouldAutorotate: Bool {
 		 return false
 	 }
-}
-
-
-#Preview {
-	FXDswiftuiLaunching(backgroundImagename: nil, foregroundImagename: nil)
 }
