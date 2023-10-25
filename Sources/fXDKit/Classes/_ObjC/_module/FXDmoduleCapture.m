@@ -295,26 +295,26 @@
 }
 
 - (void)startCaptureManager:(nullable UIView *)containerView {	FXDLog_DEFAULT
-	if (containerView != nil) {
-		dispatch_async(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if (containerView != nil) {
 			self.mainPreviewLayer.frame = containerView.bounds;
 			[containerView.layer addSublayer:self.mainPreviewLayer];
+		}
+
+		self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
+
+		AVCaptureDeviceRotationCoordinator *instantiatedCoordinator = self.mainRotationCoordinator;
+		[instantiatedCoordinator addObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelCapture)) options:NSKeyValueObservingOptionNew context:nil];
+		[instantiatedCoordinator addObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelPreview)) options:NSKeyValueObservingOptionNew context:nil];
+
+
+		AVCaptureSession *instantiatedSession = self.mainCaptureSession;
+		const char *captureManagerName = [NSStringFromClass([self class]) UTF8String];
+		dispatch_queue_t backgroundQueue = dispatch_queue_create(captureManagerName, 0);
+		dispatch_async(backgroundQueue, ^{
+			//-[AVCaptureSession startRunning] should be called from background thread. Calling it on the main thread can lead to UI unresponsiveness
+			[instantiatedSession startRunning];
 		});
-	}
-
-	self.mainPreviewLayer.connection.automaticallyAdjustsVideoMirroring = self.shouldUseMirroring;
-
-	AVCaptureDeviceRotationCoordinator *instantiatedCoordinator = self.mainRotationCoordinator;
-	[instantiatedCoordinator addObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelCapture)) options:NSKeyValueObservingOptionNew context:nil];
-	[instantiatedCoordinator addObserver:self forKeyPath:NSStringFromSelector(@selector(videoRotationAngleForHorizonLevelPreview)) options:NSKeyValueObservingOptionNew context:nil];
-
-
-	AVCaptureSession *instantiatedSession = self.mainCaptureSession;
-	const char *captureManagerName = [NSStringFromClass([self class]) UTF8String];
-	dispatch_queue_t backgroundQueue = dispatch_queue_create(captureManagerName, 0);
-	dispatch_async(backgroundQueue, ^{
-		//-[AVCaptureSession startRunning] should be called from background thread. Calling it on the main thread can lead to UI unresponsiveness
-		[instantiatedSession startRunning];
 	});
 }
 
