@@ -27,7 +27,7 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 """
 		)
 		
-		return FXDswiftuiLaunching(backgroundImagename: nil, foregroundImagename: nil)
+		return FXDswiftuiLaunching(backgroundImage: nil, foregroundImage: nil)
 	}()
 
 
