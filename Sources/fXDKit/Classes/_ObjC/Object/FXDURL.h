@@ -1,6 +1,9 @@
 
 #import <fXDObjC/FXDimportEssential.h>
 
+@import UniformTypeIdentifiers;
+
+
 typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
 	fileKindUndefined,
 	fileKindImage,

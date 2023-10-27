@@ -122,44 +122,40 @@
 	[self getResourceValue:&typeIdentifier forKey:NSURLTypeIdentifierKey error:&error];
 	FXDLog_ERROR_ignored(260);
 	
-	if ([typeIdentifier isEqual:(NSString*)kUTTypeImage]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeJPEG2000]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeTIFF]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypePICT]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeGIF]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypePNG]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeQuickTimeImage]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeAppleICNS]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeBMP]
-		|| [typeIdentifier isEqualToString:(NSString*)kUTTypeICO]) {
-		
+	if ([typeIdentifier isEqual:(NSString*)UTTypeImage]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypeJPEG]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypeTIFF]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypeGIF]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypePNG]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypeBMP]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypeICO]
+		|| [typeIdentifier isEqualToString:(NSString*)UTTypeICNS]) {
+
 		fileKindType = fileKindImage;
 	}
-	else if ([typeIdentifier isEqual:(NSString*)kUTTypeRTF]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypePDF]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeRTFD]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeFlatRTFD]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeTXNTextAndMultimediaData]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeWebArchive]
+	else if ([typeIdentifier isEqual:(NSString*)UTTypeRTF]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypePDF]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeRTFD]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeFlatRTFD]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeWebArchive]
 			 
 			 || [typeIdentifier rangeOfString:@"org.openxmlformats"].length > 0) {
 		
 		fileKindType = fileKindDocument;
 	}
-	else if ([typeIdentifier isEqual:(NSString*)kUTTypeAudio]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMP3]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMPEG4Audio]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeAppleProtectedMPEG4Audio]) {
+	else if ([typeIdentifier isEqual:(NSString*)UTTypeAudio]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeMP3]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeMPEG4Audio]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeAppleProtectedMPEG4Audio]) {
 		
 		fileKindType = fileKindAudio;
 	}
-	else if ([typeIdentifier isEqual:(NSString*)kUTTypeMovie]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeVideo]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeQuickTimeMovie]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMPEG]
-			 || [typeIdentifier isEqualToString:(NSString*)kUTTypeMPEG4]) {
-		
+	else if ([typeIdentifier isEqual:(NSString*)UTTypeMovie]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeVideo]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeQuickTimeMovie]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeMPEG]
+			 || [typeIdentifier isEqualToString:(NSString*)UTTypeMPEG4Movie]) {
+
 		fileKindType = fileKindMovie;
 	}
 	
