@@ -4,11 +4,29 @@ import Foundation
 
 
 public protocol FXDAppDelegateProtocols: UIApplicationDelegate, ObservableObject {
-	var sceneDelegateClass: AnyClass? { get set }
+	var sceneDelegateClass: AnyClass? { get }
 }
 
+
 open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols {
-	open var sceneDelegateClass: AnyClass? = nil
+	open var sceneDelegateClass: AnyClass? {
+		get {
+			fxd_overridable()
+			fxdPrint(
+"""
+//MUST: specify what class to be utilized, by overriding \"sceneDelegateClass\", like:
+class SubClassedAppDelegate: FXDAppDelegate {
+ override lazy var sceneDelegateClass: AnyClass? = {
+   return SubClassedSceneDelegate.self
+ }()
+}
+"""
+			)
+
+			return FXDSceneDelegate.self
+		}
+	}
+
 
 	override init() {
 		super.init()
@@ -26,19 +44,6 @@ open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols {
 		fxd_overridable()
 		fxdPrint("connectingSceneSession: \(String(describing: connectingSceneSession))")
 
-		assert(self.sceneDelegateClass != nil,
-"""
-//MUST: specify what class to be utilized, by overriding \"sceneDelegateClass\", like:
-class SubClassedAppDelegate: FXDAppDelegate {
- override var sceneDelegateClass: AnyClass? {
-  get {
-   return SubClassedSceneDelegate.self
-  }
-  set { }
- }
-}
-"""
-		)
 
 		let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
 		sceneConfig.delegateClass = self.sceneDelegateClass

@@ -10,6 +10,7 @@ public protocol FXDSceneDelegateProtocols: UIWindowSceneDelegate, ObservableObje
 	func sceneFirstTimeBecameActiveAtLaunch(_ scene: UIScene)
 }
 
+
 open class FXDSceneDelegate: UIResponder, FXDSceneDelegateProtocols {
 	@Published open var isAppLaunching: Bool = false
 	@Published open var didFinishLaunching: Bool = false
