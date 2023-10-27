@@ -22,7 +22,7 @@
 }
 
 + (NSString*)filenameWithWithPrefix:(NSString*)prefix withUniqueKey:(NSString*)uniqueKey forType:(CFStringRef)type {
-	NSString *extension = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(type, kUTTagClassFilenameExtension));
+	NSString *extension = [UTType typeWithFilenameExtension:CFBridgingRelease(type)].preferredFilenameExtension;
 
 	NSString *filename = [NSString stringWithFormat:@"%@_%@.%@", prefix, uniqueKey, extension];
 
