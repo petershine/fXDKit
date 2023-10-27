@@ -205,13 +205,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {	FXDLog_DEFAULT
 	FXDLogObject(sender);
-
-	if ([segue isKindOfClass:[FXDStoryboardSegue class]]) {
-		FXDLogObject(segue);
-	}
-	else {
-        FXDLogObject([segue performSelector:@selector(fullDescription:)]);
-	}
+	FXDLogObject(segue);
 
 	[super prepareForSegue:segue sender:sender];
 }

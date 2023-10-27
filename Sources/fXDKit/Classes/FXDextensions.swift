@@ -107,21 +107,6 @@ extension Bundle {
 	}
 }
 
-extension UIStoryboardSegue {
-	@objc public func fullDescription() -> Dictionary<String, Any>? {
-		var fullDescription: Dictionary<String, Any>? = [:]
-
-		if (self.identifier?.count)! > 0 {
-			fullDescription!["identifier"] = self.identifier!
-		}
-
-		fullDescription!["source"] = self.source
-		fullDescription!["destination"] = self.destination
-		fullDescription!["class"] = self.description
-
-		return fullDescription
-	}
-}
 
 extension UIAlertController {
 	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
