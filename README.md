@@ -2,13 +2,7 @@
 Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012.
 
 
-Currently, this kit is undergoing evolution, by translating source from Objective-C to Swift
-
-
-[![CI Status](http://img.shields.io/travis/petershine/fXDKit.svg?style=flat)](https://travis-ci.org/petershine/fXDKit)
-[![Version](https://img.shields.io/cocoapods/v/fXDKit.svg?style=flat)](http://cocoapods.org/pods/fXDKit)
-[![License](https://img.shields.io/cocoapods/l/fXDKit.svg?style=flat)](http://cocoapods.org/pods/fXDKit)
-[![Platform](https://img.shields.io/cocoapods/p/fXDKit.svg?style=flat)](http://cocoapods.org/pods/fXDKit)
+Currently, this kit is undergoing evolution, by translating source from Objective-C to Swift, and adopting modern practices.
 
 
 ## Installation
@@ -25,7 +19,8 @@ pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
 
 And import in your files as:
 ```swift
-import fXDKit	// for Swift
+import fXDObjC
+import fXDKit
 ```
 ```objectivec
 @import fXDObjC;
