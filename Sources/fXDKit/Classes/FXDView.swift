@@ -3,7 +3,7 @@
 
 extension UIView {
 
-	@objc public class func view(fromNibName nibName: String?, owner: Any? = nil) -> UIView? {	fxd_log()
+	@objc public class func view(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log()
 
 		let resourceBundle = Bundle.init(for: self.classForCoder())
 

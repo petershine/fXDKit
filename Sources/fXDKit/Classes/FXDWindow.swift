@@ -3,7 +3,7 @@
 extension UIWindow {
 	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log()
 		guard nibName == nil else {
-			let newWindow: UIWindow? = Self.view(fromNibName: nibName!, owner: owner) as! UIWindow?
+			let newWindow: UIWindow? = Self.view(fromNibName: nibName, owner: owner) as! UIWindow?
 			return newWindow
 		}
 
@@ -48,7 +48,7 @@ extension UIWindow {
 			return
 		}
 
-		guard let information = FXDviewInformation.view(fromNibName: nil, owner: nil) else {
+		guard let information = FXDviewInformation.view() else {
 			return
 		}
 
