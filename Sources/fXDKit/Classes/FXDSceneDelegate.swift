@@ -1,5 +1,6 @@
 
 
+import SwiftUI
 import Foundation
 
 
@@ -7,29 +8,36 @@ public protocol FXDSceneDelegateProtocols: UIWindowSceneDelegate, ObservableObje
 	var isAppLaunching: Bool { get set }
 	var didFinishLaunching: Bool { get set }
 
+	var launchingView: AnyView? { get }
+
 	func sceneFirstTimeBecameActiveAtLaunch(_ scene: UIScene)
 }
 
 
 open class FXDSceneDelegate: UIResponder, FXDSceneDelegateProtocols {
+	
 	@Published open var isAppLaunching: Bool = false
 	@Published open var didFinishLaunching: Bool = false
 
-	lazy public var fxdLaunchingView: FXDswiftuiLaunching = {
-		fxd_overridable()
-		fxdPrint(
+	open var launchingView: AnyView? {
+		get {
+			fxd_overridable()
+			fxdPrint(
 """
 //MUST: subclass should specify what SwiftUI to be utilized as launchingView like:
 class SubClassedSceneDelegate: FXDSceneDelegate {
- lazy var launchingView: ViewForLaunching = {
-  return ViewForLaunching()
- }()
+ override var launchingView: AnyView? {
+  get {
+   return AnyView(OwnLaunchView())
+  }
+ }
 }
 """
-		)
-		
-		return FXDswiftuiLaunching(backgroundImage: nil, foregroundImage: nil)
-	}()
+			)
+
+			return AnyView(FXDswiftuiLaunching(backgroundImage: nil, foregroundImage: nil))
+		}
+	}
 
 
 	override init() {
@@ -50,7 +58,7 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 
 
 		fxd_overridable()
-		fxdPrint("scene: \(scene) isAppLaunching: \(String(describing: isAppLaunching)) didFinishLaunching: \(String(describing: didFinishLaunching))")
+		fxdPrint("scene: \(scene)")
 	}
 
 	open func sceneWillResignActive(_ scene: UIScene) {

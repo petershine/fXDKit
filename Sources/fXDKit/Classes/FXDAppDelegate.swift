@@ -16,9 +16,11 @@ open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols {
 """
 //MUST: specify what class to be utilized, by overriding \"sceneDelegateClass\", like:
 class SubClassedAppDelegate: FXDAppDelegate {
- override lazy var sceneDelegateClass: AnyClass? = {
+ override var sceneDelegateClass: AnyClass? {
+  get {
    return SubClassedSceneDelegate.self
- }()
+  }
+ }
 }
 """
 			)
