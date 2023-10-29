@@ -22,12 +22,12 @@ extension UIWindow {
 
 
 open class FXDviewInformation: UIView {
-	@IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
-	@IBOutlet weak var labelTitle: UILabel!
-	@IBOutlet weak var labelMessage_0: UILabel!
-	@IBOutlet weak var labelMessage_1: UILabel!
-	@IBOutlet weak var sliderProgress: UISlider!
-	@IBOutlet weak var indicatorProgress: UIProgressView!
+	@IBOutlet open var indicatorActivity: UIActivityIndicatorView?
+	@IBOutlet open var labelTitle: UILabel?
+	@IBOutlet open var labelMessage_0: UILabel?
+	@IBOutlet open var labelMessage_1: UILabel?
+	@IBOutlet open var sliderProgress: UISlider?
+	@IBOutlet open var indicatorProgress: UIProgressView?
 }
 
 extension UIWindow {
