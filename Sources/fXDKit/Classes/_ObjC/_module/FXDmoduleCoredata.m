@@ -588,21 +588,6 @@
 }
 
 #pragma mark -
-- (void)observedUIDocumentStateChanged:(NSNotification*)notification {	FXDLog_DEFAULT
-	FXDLogObject(notification);
-	FXDLogObject(self.mainDocument.fileModificationDate);
-	FXDLogVariable(self.mainDocument.documentState);
-}
-
-#pragma mark -
-- (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
-}
-
-- (void)observedNSManagedObjectContextWillSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
-}
-
 - (void)observedNSManagedObjectContextDidSave:(NSNotification*)notification {	FXDLog_OVERRIDE;
 	FXDLogVariable([(NSManagedObjectContext*)notification.object concurrencyType]);
 
@@ -646,12 +631,6 @@
 		 FXDLog(@"DID MERGE: %@", _BOOL(self.mainDocument.managedObjectContext.hasChanges));
 	 }];
 }
-
-#pragma mark -
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification*)notification {	FXDLog_OVERRIDE;
-	FXDLogObject(notification);
-}
-
 
 #pragma mark - Delegate
 

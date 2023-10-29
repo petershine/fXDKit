@@ -69,12 +69,6 @@
 - (void)saveMainDocumentWithFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
 
-- (void)observedUIDocumentStateChanged:(NSNotification* _Nullable)notification;
-
-- (void)observedNSManagedObjectContextObjectsDidChange:(NSNotification* _Nullable)notification;
-- (void)observedNSManagedObjectContextWillSave:(NSNotification* _Nullable)notification;
 - (void)observedNSManagedObjectContextDidSave:(NSNotification* _Nullable)notification;
-
-- (void)observedNSPersistentStoreDidImportUbiquitousContentChanges:(NSNotification* _Nullable)notification;
 
 @end
