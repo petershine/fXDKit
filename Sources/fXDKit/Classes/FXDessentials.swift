@@ -32,6 +32,16 @@ public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
 	func observedUIDeviceOrientationDidChange(_ notification: NSNotification)
 }
 
+public protocol FXDobserverNSManagedObject {
+	func observedUIDocumentStateChanged(_ notification: Notification?)
+
+	func observedNSPersistentStoreDidImportUbiquitousContentChanges(_ notification: Notification?)
+
+	func observedNSManagedObjectContextObjectsDidChange(_ notification: Notification?)
+	func observedNSManagedObjectContextWillSave(_ notification: Notification?)
+	func observedNSManagedObjectContextDidSave(_ notification: Notification?)
+}
+
 public protocol FXDprotocolAppConfig {
     var appStoreID: String { get }
     
