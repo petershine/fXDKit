@@ -58,9 +58,18 @@
 	}
 
 
+	NSArray *fetchedObjArray = nil;
 	NSError *error = nil;
-	NSArray *fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];
-	FXDLog_ERROR;
+	@try {
+		fetchedObjArray = [self executeFetchRequest:fetchRequest error:&error];
+	} @catch (NSException *exception) {
+		FXDLog_ERROR;
+		FXDLogObject(exception);
+	} @finally {
+		if (error != nil) {
+			fetchedObjArray = nil;
+		}
+	}
 
 	return fetchedObjArray;
 }
