@@ -79,40 +79,8 @@
 #pragma mark - Method overriding
 
 #pragma mark - Public
-- (void)initializeWithBundledSqliteFile:(NSString*)sqliteFile {
-
-	if (self.doesStoredSqliteExist) {
-		return;
-	}
-
-
-	FXDLog_DEFAULT
-
-	NSString *bundledSqlitePath = [[NSBundle mainBundle] pathForResource:sqliteFile ofType:@"sqlite"];
-	FXDLogObject(bundledSqlitePath);
-
-	[self storeCopiedItemFromSqlitePath:bundledSqlitePath toStoredPath:nil];
-}
-
-- (void)transferFromOldSqliteFile:(NSString*)sqliteFile {
-
-	if (self.doesStoredSqliteExist) {
-		return;
-	}
-
-
-	FXDLog_DEFAULT
-	
-	NSString *pathComponent = [NSString stringWithFormat:@"%@.sqlite", sqliteFile];
-
-	NSString *oldSqlitePath = [appSearhPath_Document stringByAppendingPathComponent:pathComponent];
-	FXDLogObject(oldSqlitePath);
-
-	[self storeCopiedItemFromSqlitePath:oldSqlitePath toStoredPath:nil];
-}
-
 - (BOOL)doesStoredSqliteExist {	FXDLog_DEFAULT
-	NSString *storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.sqlitePathComponent];
+	NSString *storedPath = [appSearchPath_Document stringByAppendingPathComponent:self.sqlitePathComponent];
 	FXDLogObject(storedPath);
 
 	BOOL storedSqliteExists = [[NSFileManager defaultManager] fileExistsAtPath:storedPath];
@@ -121,30 +89,6 @@
 	return storedSqliteExists;
 }
 
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString*)sqlitePath toStoredPath:(NSString*)storedPath {	FXDLog_DEFAULT
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-
-	BOOL sqliteExists = [fileManager fileExistsAtPath:sqlitePath];
-	FXDLogBOOL(sqliteExists);
-
-	if (sqliteExists == NO) {
-		return NO;
-	}
-
-
-	if (storedPath == nil) {
-		storedPath = [appSearhPath_Document stringByAppendingPathComponent:self.sqlitePathComponent];
-	}
-
-	NSError *error = nil;
-
-	BOOL didCopy = [fileManager copyItemAtPath:sqlitePath toPath:storedPath error:&error];
-	FXDLogBOOL(didCopy);
-	FXDLog_ERROR;
-
-
-	return didCopy;
-}
 
 #pragma mark -
 - (void)prepareWithUbiquityContainerURL:(nullable NSURL*)ubiquityContainerURL protectionOption:(nullable NSString*)protectionOption managedDocument:(nullable FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT

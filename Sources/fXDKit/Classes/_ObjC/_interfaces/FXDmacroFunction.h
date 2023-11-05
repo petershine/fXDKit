@@ -26,7 +26,7 @@
 #define pathcomponentDocuments @"Documents/"
 #define pathcomponentCaches	@"Caches/"
 
-#define appSearhPath_Document	(NSString*)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
+#define appSearchPath_Document	(NSString*)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 #define appSearhPath_Caches		(NSString*)[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
 
 #define appDirectory_Document	(NSURL*)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]
@@ -34,7 +34,7 @@
 
 #define temporaryPathFor(folderName)	[NSTemporaryDirectory() stringByAppendingPathComponent:folderName]
 #define cachedPathFor(folderName)		[appSearhPath_Caches stringByAppendingPathComponent:folderName]
-#define documentPathFor(folderName)		[appSearhPath_Document stringByAppendingPathComponent:folderName]
+#define documentPathFor(folderName)		[appSearchPath_Document stringByAppendingPathComponent:folderName]
 
 
 

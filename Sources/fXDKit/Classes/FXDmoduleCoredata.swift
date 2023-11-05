@@ -9,10 +9,64 @@ class __temp__: FXDmoduleCoredata {
 
 extension FXDmoduleCoredata {
 	public static var documentSearchPath: String = {
-		let searchPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last
-
-		return searchPath ?? ""
+		return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
 	}()
+
+	@objc public func initialize(withBundledSqliteFile sqliteFile: String) -> Bool {
+		guard self.doesStoredSqliteExist == false else {
+			return false
+		}
+
+
+		fxd_log()
+		let bundledSqlitePath = Bundle.main.path(forResource: sqliteFile, ofType: "sqlite") ?? ""
+		fxdPrint("bundledSqlitePath: \(bundledSqlitePath)")
+
+		return storeCopiedItem(fromSqlitePath: bundledSqlitePath, toStoredPath: nil)
+	}
+
+	@objc open func transfer(fromOldSqliteFile oldSqliteFile: String) -> Bool {
+		fxd_overridable()
+		guard self.doesStoredSqliteExist == false else {
+			return false
+		}
+
+
+		let pathComponent = "\(oldSqliteFile).sqlite"
+		let oldSqlitePath = (Self.documentSearchPath as NSString).appendingPathComponent(pathComponent)
+		fxdPrint("oldSqlitePath: \(oldSqlitePath)")
+
+		return storeCopiedItem(fromSqlitePath: oldSqlitePath, toStoredPath: nil)
+	}
+
+	@objc public func storeCopiedItem(fromSqlitePath sqlitePath: String, toStoredPath storedPath: String?) -> Bool {	fxd_log()
+		let sqliteExists = FileManager.default.fileExists(atPath: sqlitePath)
+		fxdPrint("sqliteExists: \(sqliteExists)")
+		guard sqliteExists else {
+			return false
+		}
+
+
+		var defaultStoredPath = storedPath
+		if defaultStoredPath == nil {
+			let pathComponent = self.sqlitePathComponent ?? ""
+			defaultStoredPath = (Self.documentSearchPath as NSString).appendingPathComponent(pathComponent)
+		}
+
+
+		var didCopy = true
+		do {
+			try FileManager.default.copyItem(atPath: sqlitePath, toPath: defaultStoredPath ?? "")
+		}
+		catch let error {
+			fxdPrint("error: \(error)")
+			didCopy = false
+		}
+
+		fxdPrint("didCopy: \(didCopy)")
+
+		return didCopy
+	}
 
 	@objc public func startObservingCoreDataNotifications() {
 		let notificationCenter = NotificationCenter.default

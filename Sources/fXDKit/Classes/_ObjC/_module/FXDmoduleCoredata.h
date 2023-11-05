@@ -47,10 +47,7 @@
 @property (strong, nonatomic) FXDManagedDocument * _Nullable mainDocument;
 
 
-- (void)initializeWithBundledSqliteFile:(NSString*_Nullable)sqliteFile;
-- (void)transferFromOldSqliteFile:(NSString*_Nullable)oldSqliteFile;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL doesStoredSqliteExist;
-- (BOOL)storeCopiedItemFromSqlitePath:(NSString* _Nullable)sqlitePath toStoredPath:(NSString* _Nullable)storedPath;
 
 
 - (void)prepareWithUbiquityContainerURL:(nullable NSURL*)ubiquityContainerURL protectionOption:(nullable NSString*)protectionOption managedDocument:(nullable FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish _Nullable)finishCallback;
