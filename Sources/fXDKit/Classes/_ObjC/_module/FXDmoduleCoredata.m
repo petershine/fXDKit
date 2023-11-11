@@ -192,15 +192,6 @@
 }
 
 #pragma mark -
-- (void)upgradeAllAttributesForNewDataModelWithFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_OVERRIDE;
-	//TODO: Learn about NSMigrationPolicy implementation
-
-	if (finishCallback) {
-		finishCallback(_cmd, YES, nil);
-	}
-}
-
-#pragma mark -
 - (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^)(NSManagedObjectContext *managedContext, NSManagedObject *mainEntityObj, BOOL *shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish)finishCallback {	FXDLog_DEFAULT
 	
 	FXDLogBOOL(shouldUsePrivateContext);

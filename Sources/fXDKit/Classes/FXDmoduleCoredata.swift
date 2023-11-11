@@ -39,6 +39,12 @@ extension FXDmoduleCoredata {
 		return storeCopiedItem(fromSqlitePath: oldSqlitePath, toStoredPath: nil)
 	}
 
+	@objc open func upgradeAllAttributesForNewDataModel(finishCallback: FXDcallbackFinish? = nil) {	fxd_overridable()
+		//TODO: Learn about NSMigrationPolicy implementation
+
+		finishCallback?(#function, true, nil)
+	}
+
 	@objc public func storeCopiedItem(fromSqlitePath sqlitePath: String, toStoredPath storedPath: String?) -> Bool {	fxd_log()
 		let sqliteExists = FileManager.default.fileExists(atPath: sqlitePath)
 		fxdPrint("sqliteExists: \(sqliteExists)")
