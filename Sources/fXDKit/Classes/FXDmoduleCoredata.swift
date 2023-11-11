@@ -131,6 +131,58 @@ extension FXDmoduleCoredata {
 		presentingViewController?.present(alertController, animated: true)
 	}
 
+	@objc public func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+		//TODO: Evaluate if this method is necessary
+		fxdPrint("1. managedContext?.hasChanges: \(String(describing: managedContext?.hasChanges)) concurrencyType: \(String(describing: managedContext?.concurrencyType))")
+
+		var mainManagedContext = managedContext
+		if mainManagedContext == nil {
+
+			mainManagedContext = self.mainDocument?.managedObjectContext
+			fxdPrint("2. managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+
+			if mainManagedContext?.hasChanges == false
+				&& mainManagedContext?.concurrencyType != self.mainDocument?.managedObjectContext.parent?.concurrencyType {
+
+				mainManagedContext = self.mainDocument?.managedObjectContext.parent
+				fxdPrint("3. managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+			}
+		}
+
+
+		fxdPrint("4. mainManagedContext: \(String(describing: mainManagedContext)) managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+
+		guard (mainManagedContext != nil && mainManagedContext!.hasChanges) else {
+			finishCallback?(#function, false, nil)
+			return
+		}
+
+
+		let ManagedContextSavingBlock = {
+			var didSave: Bool = true
+			do {
+				try mainManagedContext?.save()
+			}
+			catch let exception {
+				fxdPrint("exception: \(exception)")
+				didSave = false
+			}
+
+			fxd_log()
+			fxdPrint("5. didSave \(didSave) mainManagedContext: \(String(describing: mainManagedContext)) managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+		}
+
+		fxdPrint("Thread.isMainThread: \(Thread.isMainThread)")
+		if Thread.isMainThread {
+			mainManagedContext?.performAndWait {
+				ManagedContextSavingBlock()
+			}
+		}
+		else {
+			ManagedContextSavingBlock()
+		}
+	}
+
 	@objc public func saveMainDocument(finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 		fxdPrint("documentState: \(String(describing: mainDocument?.documentState))")
 		fxdPrint("hasUnsavedChanges: \(String(describing: mainDocument?.hasUnsavedChanges))")
