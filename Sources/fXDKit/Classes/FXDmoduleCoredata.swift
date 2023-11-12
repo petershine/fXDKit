@@ -43,14 +43,14 @@ open class FXDmoduleCoredata: NSObject {
 	}()
 
 	lazy open var ubiquitousContentName: String? = {	fxd_overridable()
-		return self.coredataName?.replacingOccurrences(of: ".", with: "_")
+		return coredataName?.replacingOccurrences(of: ".", with: "_")
 	}()
 
 	lazy open var sqlitePathComponent: String? = {	fxd_overridable()
 		#if DEBUG
-		return "DEV_\(self.coredataName ?? "").sqlite"
+		return "DEV_\(coredataName ?? "").sqlite"
 		#else
-		return "\(self.coredataName ?? "").sqlite"
+		return "\(coredataName ?? "").sqlite"
 		#endif
 	}()
 
@@ -66,7 +66,7 @@ open class FXDmoduleCoredata: NSObject {
 
 
 	public var doesStoredSqliteExist: Bool {	fxd_log()
-		let storedPath = (Self.documentSearchPath as NSString).appendingPathComponent(self.sqlitePathComponent ?? "")
+		let storedPath = (Self.documentSearchPath as NSString).appendingPathComponent(sqlitePathComponent ?? "")
 		fxdPrint("storedPath: \(storedPath)")
 
 		let doesExist = FileManager.default.fileExists(atPath: storedPath)
@@ -77,11 +77,11 @@ open class FXDmoduleCoredata: NSObject {
 
 	
 	deinit {
-		self.enumeratingOperationQueue?.cancelAllOperations()
+		enumeratingOperationQueue?.cancelAllOperations()
 	}
 
 	public func initialize(withBundledSqliteFile sqliteFile: String) -> Bool {
-		guard self.doesStoredSqliteExist == false else {
+		guard doesStoredSqliteExist == false else {
 			return false
 		}
 
@@ -95,7 +95,7 @@ open class FXDmoduleCoredata: NSObject {
 
 	open func transfer(fromOldSqliteFile oldSqliteFile: String) -> Bool {
 		fxd_overridable()
-		guard self.doesStoredSqliteExist == false else {
+		guard doesStoredSqliteExist == false else {
 			return false
 		}
 
@@ -127,7 +127,7 @@ extension FXDmoduleCoredata {
 
 		var defaultStoredPath = storedPath
 		if defaultStoredPath == nil {
-			let pathComponent = self.sqlitePathComponent ?? ""
+			let pathComponent = sqlitePathComponent ?? ""
 			defaultStoredPath = (Self.documentSearchPath as NSString).appendingPathComponent(pathComponent)
 		}
 
@@ -152,7 +152,7 @@ extension FXDmoduleCoredata {
 		if mainManagedDocument == nil {
 			fxdPrint("CHECK if bundle has more than 1 momd")
 
-			if let documentURL = Self.appDocumentDirectory?.appending(path: "managedDocument.\(self.coredataName ?? "")") {
+			if let documentURL = Self.appDocumentDirectory?.appending(path: "managedDocument.\(coredataName ?? "")") {
 
 				mainManagedDocument = FXDManagedDocument(fileURL: documentURL)
 			}
@@ -164,11 +164,11 @@ extension FXDmoduleCoredata {
 		fxdPrint("protectionOption: \(String(describing: protectionOption))")
 		fxdPrint("mainManagedDocument: \(String(describing: mainManagedDocument))")
 
-		self.mainDocument = mainManagedDocument
+		mainDocument = mainManagedDocument
 
 
 		let rootURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
-		let storeURL = rootURL?.appending(path: self.sqlitePathComponent ?? "")
+		let storeURL = rootURL?.appending(path: sqlitePathComponent ?? "")
 		fxdPrint("storeURL: \(String(describing: storeURL))")
 
 
@@ -179,7 +179,7 @@ extension FXDmoduleCoredata {
 		if ubiquityContainerURL != nil {
 			//DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
 			/*
-			storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.ubiquitousContentName;
+			storeOptions[NSPersistentStoreUbiquitousContentNameKey] = ubiquitousContentName;
 			storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquityContainerURL;
 			 */
 		}
@@ -194,7 +194,7 @@ extension FXDmoduleCoredata {
 		var didConfigure: Bool = true
 		do {
 			if storeURL != nil {
-				try self.mainDocument?.configurePersistentStoreCoordinator(for: storeURL!, ofType: NSSQLiteStoreType, modelConfiguration: nil, storeOptions: storeOptions)
+				try mainDocument?.configurePersistentStoreCoordinator(for: storeURL!, ofType: NSSQLiteStoreType, modelConfiguration: nil, storeOptions: storeOptions)
 			}
 			else {
 				didConfigure = false
@@ -208,7 +208,7 @@ extension FXDmoduleCoredata {
 		fxdPrint("1. didConfigure: \(didConfigure)")
 
 		#if DEBUG
-		let storeCoordinator: NSPersistentStoreCoordinator? = self.mainDocument?.managedObjectContext.persistentStoreCoordinator
+		let storeCoordinator: NSPersistentStoreCoordinator? = mainDocument?.managedObjectContext.persistentStoreCoordinator
 		storeCoordinator?.persistentStores.forEach({
 			(persistentStore: NSPersistentStore) in
 
@@ -224,11 +224,11 @@ extension FXDmoduleCoredata {
 
 		fxdPrint("UIManagedDocument.persistentStoreName: \(UIManagedDocument.persistentStoreName)")
 
-		fxdPrint("modelConfiguration: \(String(describing: self.mainDocument?.modelConfiguration))")
-		fxdPrint("managedObjectModel.versionIdentifiers: \(String(describing: self.mainDocument?.managedObjectModel.versionIdentifiers))")
-		fxdPrint("managedObjectModel.entities: \(String(describing: self.mainDocument?.managedObjectModel.entities))")
+		fxdPrint("modelConfiguration: \(String(describing: mainDocument?.modelConfiguration))")
+		fxdPrint("managedObjectModel.versionIdentifiers: \(String(describing: mainDocument?.managedObjectModel.versionIdentifiers))")
+		fxdPrint("managedObjectModel.entities: \(String(describing: mainDocument?.managedObjectModel.entities))")
 
-		self.upgradeAllAttributesForNewDataModel {
+		upgradeAllAttributesForNewDataModel {
 			(caller, didFinish, responseObj) in
 
 			#if DEBUG
@@ -312,15 +312,15 @@ extension FXDmoduleCoredata {
 	func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowInformationView shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: ((NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 
 		fxdPrint("shouldUsePrivateContext: \(shouldUsePrivateContext)")
-		fxdPrint("self.enumeratingOperationQueue?.operationCount: \(String(describing: self.enumeratingOperationQueue?.operationCount))")
+		fxdPrint("enumeratingOperationQueue?.operationCount: \(String(describing: enumeratingOperationQueue?.operationCount))")
 
-		guard self.enumeratingOperationQueue?.operationCount == 0 else {
+		guard enumeratingOperationQueue?.operationCount == 0 else {
 			finishCallback?(#function, false, nil)
 			return
 		}
 
 
-		self.enumeratingTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+		enumeratingTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
 			[weak self] in
 
 			if let validTask = self?.enumeratingTask {
@@ -328,7 +328,7 @@ extension FXDmoduleCoredata {
 				self?.enumeratingTask = .invalid
 			}
 		})
-		fxdPrint("self.enumeratingTask: \(String(describing: self.enumeratingTask))")
+		fxdPrint("enumeratingTask: \(String(describing: enumeratingTask))")
 
 		if shouldShowProgressView {
 			let mainWindow = UIApplication.shared.mainWindow()
@@ -338,9 +338,9 @@ extension FXDmoduleCoredata {
 
 		var shouldBreak: Bool = false
 
-		let managedContext = shouldUsePrivateContext ? self.mainDocument?.managedObjectContext.parent : self.mainDocument?.managedObjectContext
+		let managedContext = shouldUsePrivateContext ? mainDocument?.managedObjectContext.parent : mainDocument?.managedObjectContext
 
-		self.enumeratingOperationQueue?.addOperation {
+		enumeratingOperationQueue?.addOperation {
 			[weak self] in
 
 			let fetchedObjArray = managedContext?.fetchedObjArray(forEntityName: self?.mainEntityName, withSortDescriptors: self?.mainSortDescriptors, with: nil, withLimit: UInt(limitInfiniteFetch)) as? Array<NSManagedObject>
@@ -397,13 +397,13 @@ extension FXDmoduleCoredata {
 		var mainManagedContext = managedContext
 		if mainManagedContext == nil {
 
-			mainManagedContext = self.mainDocument?.managedObjectContext
+			mainManagedContext = mainDocument?.managedObjectContext
 			fxdPrint("2. managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
 
 			if mainManagedContext?.hasChanges == false
-				&& mainManagedContext?.concurrencyType != self.mainDocument?.managedObjectContext.parent?.concurrencyType {
+				&& mainManagedContext?.concurrencyType != mainDocument?.managedObjectContext.parent?.concurrencyType {
 
-				mainManagedContext = self.mainDocument?.managedObjectContext.parent
+				mainManagedContext = mainDocument?.managedObjectContext.parent
 				fxdPrint("3. managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
 			}
 		}
