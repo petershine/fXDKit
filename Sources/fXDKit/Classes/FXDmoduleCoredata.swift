@@ -12,6 +12,14 @@ extension FXDmoduleCoredata {
 		return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
 	}()
 
+	public static var appDocumentDirectory: URL? = {
+		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
+	}()
+
+	public static var appCachesDirectory: URL? = {
+		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
+	}()
+
 	@objc public func initialize(withBundledSqliteFile sqliteFile: String) -> Bool {
 		guard self.doesStoredSqliteExist == false else {
 			return false
@@ -60,7 +68,7 @@ extension FXDmoduleCoredata {
 		}
 
 
-		var didCopy = true
+		var didCopy: Bool = true
 		do {
 			try FileManager.default.copyItem(atPath: sqlitePath, toPath: defaultStoredPath ?? "")
 		}
@@ -72,6 +80,106 @@ extension FXDmoduleCoredata {
 		fxdPrint("didCopy: \(didCopy)")
 
 		return didCopy
+	}
+
+	@objc public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: FXDManagedDocument?, finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+
+		var mainManagedDocument = managedDocument
+		if mainManagedDocument == nil {
+			fxdPrint("CHECK if bundle has more than 1 momd")
+
+			if let documentURL = Self.appDocumentDirectory?.appending(path: "managedDocument.\(self.coredataName ?? "")") {
+
+				mainManagedDocument = FXDManagedDocument(fileURL: documentURL)
+			}
+		}
+		assert(mainManagedDocument != nil, "[SHOULD NOT BE nil] mainManagedDocument: \(String(describing: mainManagedDocument))")
+
+
+		fxdPrint("ubiquityContainerURL: \(String(describing: ubiquityContainerURL))")
+		fxdPrint("protectionOption: \(String(describing: protectionOption))")
+		fxdPrint("mainManagedDocument: \(String(describing: mainManagedDocument))")
+
+		self.mainDocument = mainManagedDocument
+
+
+		let rootURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
+		let storeURL = rootURL?.appending(path: self.sqlitePathComponent ?? "")
+		fxdPrint("storeURL: \(String(describing: storeURL))")
+
+
+		var storeOptions : Dictionary<String , Any> = [:]
+		storeOptions[NSMigratePersistentStoresAutomaticallyOption] = true
+		storeOptions[NSInferMappingModelAutomaticallyOption] = true
+
+		if ubiquityContainerURL != nil {
+			//DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
+			/*
+			storeOptions[NSPersistentStoreUbiquitousContentNameKey] = self.ubiquitousContentName;
+			storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquityContainerURL;
+			 */
+		}
+
+		//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
+		if protectionOption?.isEmpty == false {
+			storeOptions[NSPersistentStoreFileProtectionKey] = protectionOption
+		}
+
+		fxdPrint("storeOptions: \(storeOptions)")
+
+		var didConfigure: Bool = true
+		do {
+			if storeURL != nil {
+				try self.mainDocument?.configurePersistentStoreCoordinator(for: storeURL!, ofType: NSSQLiteStoreType, modelConfiguration: nil, storeOptions: storeOptions)
+			}
+			else {
+				didConfigure = false
+			}
+		}
+		catch let exception {
+			fxdPrint("exception: \(exception)")
+			didConfigure = false
+		}
+
+		fxdPrint("1. didConfigure: \(didConfigure)")
+
+		#if DEBUG
+		let storeCoordinator: NSPersistentStoreCoordinator? = self.mainDocument?.managedObjectContext.persistentStoreCoordinator
+		storeCoordinator?.persistentStores.forEach({
+			(persistentStore: NSPersistentStore) in
+
+			fxdPrint("\(String(describing: persistentStore.url))")
+			fxdPrint("\(String(describing: storeCoordinator?.metadata(for: persistentStore)))")
+		})
+		#endif
+
+		assert(Thread.isMainThread)
+		fxdPrint("2. didConfigure: \(didConfigure)")
+
+		//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+
+		fxdPrint("UIManagedDocument.persistentStoreName: \(UIManagedDocument.persistentStoreName)")
+
+		fxdPrint("modelConfiguration: \(String(describing: self.mainDocument?.modelConfiguration))")
+		fxdPrint("managedObjectModel.versionIdentifiers: \(String(describing: self.mainDocument?.managedObjectModel.versionIdentifiers))")
+		fxdPrint("managedObjectModel.entities: \(String(describing: self.mainDocument?.managedObjectModel.entities))")
+
+		self.upgradeAllAttributesForNewDataModel {
+			(caller, didFinish, responseObj) in
+
+			#if DEBUG
+			if ubiquityContainerURL != nil {
+				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: ubiquityContainerURL)))")
+				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: Self.appCachesDirectory)))")
+				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: Self.appDocumentDirectory)))")
+			}
+			#endif
+
+			finishCallback?(#function, didConfigure, nil)
+			//MARK: Careful with order of operations
+			
+			self.startObservingCoreDataNotifications()
+		}
 	}
 
 	@objc public func startObservingCoreDataNotifications() {

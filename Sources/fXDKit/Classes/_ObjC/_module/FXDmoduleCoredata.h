@@ -50,8 +50,6 @@
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL doesStoredSqliteExist;
 
 
-- (void)prepareWithUbiquityContainerURL:(nullable NSURL*)ubiquityContainerURL protectionOption:(nullable NSString*)protectionOption managedDocument:(nullable FXDManagedDocument*)managedDocument finishCallback:(FXDcallbackFinish _Nullable)finishCallback;
-
 - (void)enumerateAllDataWithPrivateContext:(BOOL)shouldUsePrivateContext shouldShowInformationView:(BOOL)shouldShowProgressView withEnumerationBlock:(void(^_Nullable)(NSManagedObjectContext * _Nullable managedContext, NSManagedObject * _Nullable mainEntityObj, BOOL * _Nullable shouldBreak))enumerationBlock withFinishCallback:(FXDcallbackFinish _Nullable)finishCallback;
 
 @end
