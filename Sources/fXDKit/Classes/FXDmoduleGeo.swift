@@ -127,7 +127,7 @@ class FXDmoduleGeo: NSObject {
 	}
 }
 
-extension FXDmoduleGeo: FXDprotocolObserver {
+extension FXDmoduleGeo: FXDobserverApplication {
 
 	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxd_log()
 		fxdPrint(notification)
