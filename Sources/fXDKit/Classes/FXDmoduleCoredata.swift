@@ -3,11 +3,27 @@
 import fXDObjC
 
 
-class __temp__: FXDmoduleCoredata {
+//MARK: For subclass to define names or keys
+/* SAMPLE:
+ #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
+ #define attribkey<#AttributeName#> @"<#AttributeName#>"
+ */
+
+//MARK: Logging options
+// -com.apple.CoreData.SQLDebug 1 || 2 || 3
+// -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
+
+protocol FXDmoduleCoredataProperties {
 
 }
 
-extension FXDmoduleCoredata {
+class FXDmoduleCoredata: NSObject {
+	private var enumeratingTask: UIBackgroundTaskIdentifier? = nil
+	private var dataSavingTask: UIBackgroundTaskIdentifier? = nil
+
+	private var mainDocument: FXDManagedDocument? = nil
+
+
 	public static var documentSearchPath: String = {
 		return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
 	}()
@@ -19,6 +35,53 @@ extension FXDmoduleCoredata {
 	public static var appCachesDirectory: URL? = {
 		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
 	}()
+
+
+	lazy var enumeratingOperationQueue: OperationQueue? = {
+		return OperationQueue.newSerialQueue(withName: #function)
+	}()
+
+	lazy open var coredataName: String? = {	fxd_overridable()
+		return Bundle.main.bundleIdentifier
+	}()
+
+	lazy open var ubiquitousContentName: String? = {	fxd_overridable()
+		return self.coredataName?.replacingOccurrences(of: ".", with: "_")
+	}()
+
+	@objc lazy open var sqlitePathComponent: String? = {	fxd_overridable()
+		#if DEBUG
+		return "DEV_\(self.coredataName ?? "").sqlite"
+		#else
+		return "\(self.coredataName ?? "").sqlite"
+		#endif
+	}()
+
+	lazy open var mainEntityName: String? = {	fxd_overridable()
+		//SAMPLE: _mainEntityName = entityname<#DefaultClass#>
+		return nil
+	}()
+
+	lazy open var mainSortDescriptors: [Any]? = {	fxd_overridable()
+		//SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
+		return nil
+	}()
+
+
+	var doesStoredSqliteExist: Bool {	fxd_log()
+		let storedPath = (Self.documentSearchPath as NSString).appendingPathComponent(self.sqlitePathComponent ?? "")
+		fxdPrint("storedPath: \(storedPath)")
+
+		let doesExist = FileManager.default.fileExists(atPath: storedPath)
+		fxdPrint("doesExist: \(doesExist)")
+
+		return doesExist
+	}
+
+	
+	deinit {
+		self.enumeratingOperationQueue?.cancelAllOperations()
+	}
 
 	public func initialize(withBundledSqliteFile sqliteFile: String) -> Bool {
 		guard self.doesStoredSqliteExist == false else {
@@ -32,7 +95,10 @@ extension FXDmoduleCoredata {
 
 		return storeCopiedItem(fromSqlitePath: bundledSqlitePath, toStoredPath: nil)
 	}
+}
 
+
+extension FXDmoduleCoredata {
 	@objc open func transfer(fromOldSqliteFile oldSqliteFile: String) -> Bool {
 		fxd_overridable()
 		guard self.doesStoredSqliteExist == false else {
@@ -259,12 +325,12 @@ extension FXDmoduleCoredata {
 		self.enumeratingTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
 			[weak self] in
 
-			if let strongSelf = self {
-				UIApplication.shared.endBackgroundTask(strongSelf.enumeratingTask)
-				strongSelf.enumeratingTask = .invalid
+			if let validTask = self?.enumeratingTask {
+				UIApplication.shared.endBackgroundTask(validTask)
+				self?.enumeratingTask = .invalid
 			}
 		})
-		fxdPrint("self.enumeratingTask: \(self.enumeratingTask)")
+		fxdPrint("self.enumeratingTask: \(String(describing: self.enumeratingTask))")
 
 		if shouldShowProgressView {
 			let mainWindow = UIApplication.shared.mainWindow()
@@ -429,7 +495,7 @@ extension FXDmoduleCoredata: FXDobserverApplication {
 			}
 		})
 
-		fxdPrint("dataSavingTask: \(dataSavingTask)")
+		fxdPrint("dataSavingTask: \(String(describing: dataSavingTask))")
 
 		saveMainDocument {
 			[weak self] (caller, didFinish, responseObj) in
