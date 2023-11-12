@@ -220,8 +220,8 @@ extension FXDmoduleCoredata {
 				shouldShowInformationView: true) {
 					(managedContext, mainEntityObj, shouldBrake) in
 
-					if shouldBrake?.pointee.boolValue == true {
-						fxdPrint("shouldBrake?.pointee.boolValue: \(String(describing: shouldBrake?.pointee.boolValue))")
+					if shouldBrake?.pointee == true {
+						fxdPrint("shouldBrake?.pointee.boolValue: \(String(describing: shouldBrake?.pointee))")
 					}
 
 					if mainEntityObj != nil {
@@ -243,6 +243,87 @@ extension FXDmoduleCoredata {
 		let mainWindow = UIApplication.shared.mainWindow()
 		let presentingViewController = mainWindow?.rootViewController
 		presentingViewController?.present(alertController, animated: true)
+	}
+
+	func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowInformationView shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: ((NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+
+		fxdPrint("shouldUsePrivateContext: \(shouldUsePrivateContext)")
+		fxdPrint("self.enumeratingOperationQueue?.operationCount: \(String(describing: self.enumeratingOperationQueue?.operationCount))")
+
+		guard self.enumeratingOperationQueue?.operationCount == 0 else {
+			finishCallback?(#function, false, nil)
+			return
+		}
+
+
+		self.enumeratingTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+			[weak self] in
+
+			if let strongSelf = self {
+				UIApplication.shared.endBackgroundTask(strongSelf.enumeratingTask)
+				strongSelf.enumeratingTask = .invalid
+			}
+		})
+		fxdPrint("self.enumeratingTask: \(self.enumeratingTask)")
+
+		if shouldShowProgressView {
+			let mainWindow = UIApplication.shared.mainWindow()
+			mainWindow?.showInformationView(afterDelay: DURATION_QUARTER)
+		}
+
+
+		var shouldBreak: Bool = false
+
+		let managedContext = shouldUsePrivateContext ? self.mainDocument?.managedObjectContext.parent : self.mainDocument?.managedObjectContext
+
+		self.enumeratingOperationQueue?.addOperation {
+			[weak self] in
+
+			let fetchedObjArray = managedContext?.fetchedObjArray(forEntityName: self?.mainEntityName, withSortDescriptors: self?.mainSortDescriptors, with: nil, withLimit: UInt(limitInfiniteFetch)) as? Array<NSManagedObject>
+
+			for fetchedObj in fetchedObjArray ?? Array<NSManagedObject>() {
+				guard shouldBreak == false else {
+					break
+				}
+
+				if enumerationBlock != nil {
+					let mainEntityObj = managedContext?.object(with: fetchedObj.objectID)
+
+					if shouldUsePrivateContext {
+						enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
+					}
+					else {
+						DispatchQueue.main.async {
+							enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
+						}
+					}
+				}
+
+				fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
+			}
+
+
+			OperationQueue.current?.addOperation {
+				[weak self] in
+
+				if shouldShowProgressView {
+					let mainWindow = UIApplication.shared.mainWindow()
+					mainWindow?.hideInformationView(afterDelay: DURATION_QUARTER)
+				}
+
+				fxdPrint("!shouldBreak: \(!shouldBreak)")
+
+				finishCallback?(#function, !shouldBreak, nil)
+
+				fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
+				fxdPrint("self?.enumeratingTask: \(String(describing: self?.enumeratingTask))")
+
+				if let validTask = self?.enumeratingTask {
+					UIApplication.shared.endBackgroundTask(validTask)
+					self?.enumeratingTask = .invalid
+				}
+			}
+		}
 	}
 
 	public func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
