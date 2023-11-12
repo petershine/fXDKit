@@ -20,7 +20,7 @@ extension FXDmoduleCoredata {
 		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
 	}()
 
-	@objc public func initialize(withBundledSqliteFile sqliteFile: String) -> Bool {
+	public func initialize(withBundledSqliteFile sqliteFile: String) -> Bool {
 		guard self.doesStoredSqliteExist == false else {
 			return false
 		}
@@ -53,7 +53,7 @@ extension FXDmoduleCoredata {
 		finishCallback?(#function, true, nil)
 	}
 
-	@objc public func storeCopiedItem(fromSqlitePath sqlitePath: String, toStoredPath storedPath: String?) -> Bool {	fxd_log()
+	public func storeCopiedItem(fromSqlitePath sqlitePath: String, toStoredPath storedPath: String?) -> Bool {	fxd_log()
 		let sqliteExists = FileManager.default.fileExists(atPath: sqlitePath)
 		fxdPrint("sqliteExists: \(sqliteExists)")
 		guard sqliteExists else {
@@ -82,7 +82,7 @@ extension FXDmoduleCoredata {
 		return didCopy
 	}
 
-	@objc public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: FXDManagedDocument?, finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+	public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: FXDManagedDocument?, finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 
 		var mainManagedDocument = managedDocument
 		if mainManagedDocument == nil {
@@ -182,7 +182,7 @@ extension FXDmoduleCoredata {
 		}
 	}
 
-	@objc public func startObservingCoreDataNotifications() {
+	public func startObservingCoreDataNotifications() {
 		let notificationCenter = NotificationCenter.default
 
 		//FXDobserverApplication
@@ -205,7 +205,7 @@ extension FXDmoduleCoredata {
 		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextDidSave(_:)), name: NSManagedObjectContext.didSaveObjectsNotification, object: observedContext)
 	}
 
-	@objc public func deleteAllData(finishCallback: FXDcallbackFinish? = nil) {
+	public func deleteAllData(finishCallback: FXDcallbackFinish? = nil) {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
 		let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { action in
@@ -245,7 +245,7 @@ extension FXDmoduleCoredata {
 		presentingViewController?.present(alertController, animated: true)
 	}
 
-	@objc public func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+	public func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 		//TODO: Evaluate if this method is necessary
 		fxdPrint("1. managedContext?.hasChanges: \(String(describing: managedContext?.hasChanges)) concurrencyType: \(String(describing: managedContext?.concurrencyType))")
 
@@ -297,7 +297,7 @@ extension FXDmoduleCoredata {
 		}
 	}
 
-	@objc public func saveMainDocument(finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+	public func saveMainDocument(finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 		fxdPrint("documentState: \(String(describing: mainDocument?.documentState))")
 		fxdPrint("hasUnsavedChanges: \(String(describing: mainDocument?.hasUnsavedChanges))")
 		fxdPrint("fileURL: \(String(describing: mainDocument?.fileURL))")
