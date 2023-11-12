@@ -13,26 +13,23 @@ import fXDObjC
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
-protocol FXDmoduleCoredataProperties {
 
-}
-
-class FXDmoduleCoredata: NSObject {
+open class FXDmoduleCoredata: NSObject {
 	private var enumeratingTask: UIBackgroundTaskIdentifier? = nil
 	private var dataSavingTask: UIBackgroundTaskIdentifier? = nil
 
-	private var mainDocument: FXDManagedDocument? = nil
+	public var mainDocument: FXDManagedDocument? = nil
 
 
 	public static var documentSearchPath: String = {
 		return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
 	}()
 
-	public static var appDocumentDirectory: URL? = {
+	static var appDocumentDirectory: URL? = {
 		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
 	}()
 
-	public static var appCachesDirectory: URL? = {
+	static var appCachesDirectory: URL? = {
 		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
 	}()
 
@@ -49,7 +46,7 @@ class FXDmoduleCoredata: NSObject {
 		return self.coredataName?.replacingOccurrences(of: ".", with: "_")
 	}()
 
-	@objc lazy open var sqlitePathComponent: String? = {	fxd_overridable()
+	lazy open var sqlitePathComponent: String? = {	fxd_overridable()
 		#if DEBUG
 		return "DEV_\(self.coredataName ?? "").sqlite"
 		#else
@@ -68,7 +65,7 @@ class FXDmoduleCoredata: NSObject {
 	}()
 
 
-	var doesStoredSqliteExist: Bool {	fxd_log()
+	public var doesStoredSqliteExist: Bool {	fxd_log()
 		let storedPath = (Self.documentSearchPath as NSString).appendingPathComponent(self.sqlitePathComponent ?? "")
 		fxdPrint("storedPath: \(storedPath)")
 
@@ -95,11 +92,8 @@ class FXDmoduleCoredata: NSObject {
 
 		return storeCopiedItem(fromSqlitePath: bundledSqlitePath, toStoredPath: nil)
 	}
-}
 
-
-extension FXDmoduleCoredata {
-	@objc open func transfer(fromOldSqliteFile oldSqliteFile: String) -> Bool {
+	open func transfer(fromOldSqliteFile oldSqliteFile: String) -> Bool {
 		fxd_overridable()
 		guard self.doesStoredSqliteExist == false else {
 			return false
@@ -113,12 +107,16 @@ extension FXDmoduleCoredata {
 		return storeCopiedItem(fromSqlitePath: oldSqlitePath, toStoredPath: nil)
 	}
 
-	@objc open func upgradeAllAttributesForNewDataModel(finishCallback: FXDcallbackFinish? = nil) {	fxd_overridable()
+	open func upgradeAllAttributesForNewDataModel(finishCallback: FXDcallbackFinish? = nil) {	fxd_overridable()
 		//TODO: Learn about NSMigrationPolicy implementation
 
 		finishCallback?(#function, true, nil)
 	}
 
+}
+
+
+extension FXDmoduleCoredata {
 	public func storeCopiedItem(fromSqlitePath sqlitePath: String, toStoredPath storedPath: String?) -> Bool {	fxd_log()
 		let sqliteExists = FileManager.default.fileExists(atPath: sqlitePath)
 		fxdPrint("sqliteExists: \(sqliteExists)")
@@ -248,7 +246,7 @@ extension FXDmoduleCoredata {
 		}
 	}
 
-	public func startObservingCoreDataNotifications() {
+	func startObservingCoreDataNotifications() {
 		let notificationCenter = NotificationCenter.default
 
 		//FXDobserverApplication
@@ -271,7 +269,7 @@ extension FXDmoduleCoredata {
 		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextDidSave(_:)), name: NSManagedObjectContext.didSaveObjectsNotification, object: observedContext)
 	}
 
-	public func deleteAllData(finishCallback: FXDcallbackFinish? = nil) {
+	func deleteAllData(finishCallback: FXDcallbackFinish? = nil) {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
 		let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { action in
@@ -392,7 +390,7 @@ extension FXDmoduleCoredata {
 		}
 	}
 
-	public func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+	func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 		//TODO: Evaluate if this method is necessary
 		fxdPrint("1. managedContext?.hasChanges: \(String(describing: managedContext?.hasChanges)) concurrencyType: \(String(describing: managedContext?.concurrencyType))")
 

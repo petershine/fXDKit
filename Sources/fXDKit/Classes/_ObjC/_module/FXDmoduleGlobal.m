@@ -2,8 +2,6 @@
 
 #import "FXDmoduleGlobal.h"
 
-#import "FXDmoduleCoredata.h"
-
 
 @implementation FXDmoduleGlobal
 
