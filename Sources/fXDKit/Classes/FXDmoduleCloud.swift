@@ -68,7 +68,7 @@ class FXDmoduleCloud : NSObject {
 			identityToken = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSCoding.self, NSCopying.self, NSObjectProtocol.self], from: savedIdentityTokenData!) as? any NSCoding & NSCopying & NSObjectProtocol
 		}
 		catch {
-			fxdPrint("error: \(error)")
+			fxdPrint("\(error)")
 		}
 
 		fxdPrint("identityToken: \(String(describing: identityToken))")
@@ -85,7 +85,7 @@ class FXDmoduleCloud : NSObject {
 				UserDefaults.standard.synchronize()
 			}
 			catch {
-				fxdPrint("error: \(error)")
+				fxdPrint("\(error)")
 			}
 		}
 

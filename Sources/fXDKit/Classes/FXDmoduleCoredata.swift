@@ -136,8 +136,8 @@ extension FXDmoduleCoredata {
 		do {
 			try FileManager.default.copyItem(atPath: sqlitePath, toPath: defaultStoredPath ?? "")
 		}
-		catch let error {
-			fxdPrint("error: \(error)")
+		catch {
+			fxdPrint("\(error)")
 			didCopy = false
 		}
 
@@ -200,8 +200,8 @@ extension FXDmoduleCoredata {
 				didConfigure = false
 			}
 		}
-		catch let exception {
-			fxdPrint("exception: \(exception)")
+		catch {
+			fxdPrint("\(error)")
 			didConfigure = false
 		}
 
@@ -422,8 +422,8 @@ extension FXDmoduleCoredata {
 			do {
 				try mainManagedContext?.save()
 			}
-			catch let exception {
-				fxdPrint("exception: \(exception)")
+			catch {
+				fxdPrint("\(error)")
 				didSave = false
 			}
 
