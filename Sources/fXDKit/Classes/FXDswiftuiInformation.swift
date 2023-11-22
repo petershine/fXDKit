@@ -3,16 +3,19 @@
 import SwiftUI
 
 
-open class FXDconfigurationInformation: NSObject, ObservableObject {
-	@Published var overlayColor: UIColor? = nil
-	@Published var shouldIgnoreUserInteraction: Bool
+open class FXDconfigurationInformation: ObservableObject {
+	@Published open var shouldDismiss: Bool = false
 
-	@Published var informationTitle: String
-	@Published var message_0: String
-	@Published var message_1: String
+	@Published open var overlayColor: UIColor? = nil
+	@Published open var shouldIgnoreUserInteraction: Bool
 
-	@Published var sliderValue: Float
-	@Published var sliderTint: Color? = nil
+	@Published open var informationTitle: String
+	@Published open var message_0: String
+	@Published open var message_1: String
+
+	@Published open var sliderValue: Float
+	@Published open var sliderTint: Color? = nil
+
 
 	public init(overlayColor: UIColor? = nil, 
 				shouldIgnoreUserInteraction: Bool? = false,
@@ -76,8 +79,13 @@ public struct FXDswiftuiInformation: View {
 		)
 		.allowsHitTesting(!configuration.shouldIgnoreUserInteraction)
 		.onTapGesture {
-			dismiss()
+			configuration.shouldDismiss = true
 		}
+		.onChange(of: configuration.shouldDismiss, initial: false, {
+			if configuration.shouldDismiss {
+				dismiss()
+			}
+		})
     }
 }
 
@@ -89,3 +97,32 @@ struct POPswiftuiSettings_Previews: PreviewProvider {
 			.preferredColorScheme(.dark)
 	}
 }
+
+
+
+// Example usage
+extension FXDconfigurationInformation {
+	public class func exampleCountingUp() -> FXDconfigurationInformation {
+
+		let testingConfiguration = FXDconfigurationInformation(
+			shouldIgnoreUserInteraction: false,
+			sliderValue: 0.0)
+
+
+		let taskInterval = 1.0
+		Task {
+			for step in 0...10 {
+				testingConfiguration.sliderValue = Float(step) * 0.1
+
+				do {
+					try await Task.sleep(nanoseconds: UInt64((taskInterval * 1_000_000_000).rounded()))
+				}
+			}
+
+			testingConfiguration.shouldDismiss = true
+		}
+
+		return testingConfiguration
+	}
+}
+
