@@ -112,14 +112,20 @@ extension FXDconfigurationInformation {
 		let taskInterval = 1.0
 		Task {
 			for step in 0...10 {
-				testingConfiguration.sliderValue = Float(step) * 0.1
+				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
+
+				DispatchQueue.main.async {
+					testingConfiguration.sliderValue = Float(step) * 0.1
+				}
 
 				do {
 					try await Task.sleep(nanoseconds: UInt64((taskInterval * 1_000_000_000).rounded()))
 				}
 			}
 
-			testingConfiguration.shouldDismiss = true
+			DispatchQueue.main.async {
+				testingConfiguration.shouldDismiss = true
+			}
 		}
 
 		return testingConfiguration
