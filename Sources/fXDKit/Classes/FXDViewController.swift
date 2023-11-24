@@ -50,9 +50,9 @@ extension UIViewController {
 		}
 	}
 
-	@objc public func dismissFadingOut(callback: FXDcallback?) {
+	public func dismissFadingOut(duration: TimeInterval? = nil, callback: FXDcallback? = nil) {
 		UIView.animate(
-			withDuration: DURATION_ONE_SECOND,
+			withDuration: duration ?? DURATION_ONE_SECOND,
 			delay: 0.0,
 			options: .curveEaseIn,
 			animations: {
