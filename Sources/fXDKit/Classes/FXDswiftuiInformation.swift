@@ -9,9 +9,9 @@ open class FXDconfigurationInformation: ObservableObject {
 	@Published open var overlayColor: UIColor? = nil
 	@Published open var shouldIgnoreUserInteraction: Bool
 
-	@Published open var informationTitle: String
-	@Published open var message_0: String
-	@Published open var message_1: String
+	@Published open var informationTitle: String = ""
+	@Published open var message_0: String = ""
+	@Published open var message_1: String = ""
 
 	@Published open var sliderValue: CGFloat
 	@Published open var sliderTint: Color? = nil
@@ -19,10 +19,6 @@ open class FXDconfigurationInformation: ObservableObject {
 
 	public init(overlayColor: UIColor? = nil, 
 				shouldIgnoreUserInteraction: Bool? = false,
-		
-				informationTitle: String? = nil,
-				message_0: String? = nil,
-				message_1: String? = nil,
 				
 				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
@@ -30,11 +26,7 @@ open class FXDconfigurationInformation: ObservableObject {
 		self.overlayColor = overlayColor
 		self.shouldIgnoreUserInteraction = shouldIgnoreUserInteraction ?? false
 		
-		self.informationTitle = informationTitle ?? "TITLE"
-		self.message_0 = message_0 ?? "MESSAGE 0"
-		self.message_1 = message_1 ?? "MESSAGE 1"
-		
-		self.sliderValue = sliderValue ?? 0.5
+		self.sliderValue = sliderValue ?? 0.0
 		self.sliderTint = sliderTint ?? Color(uiColor: .systemBlue)
 	}
 }
@@ -64,6 +56,7 @@ public struct FXDswiftuiInformation: View {
 
 			FXDProgressBar(value: $configuration.sliderValue)
 				.tint(configuration.sliderTint)
+				.opacity(configuration.sliderValue > 0.0 ? 1.0 : 0.0)
 				.allowsHitTesting(false)
 				.padding()
 
