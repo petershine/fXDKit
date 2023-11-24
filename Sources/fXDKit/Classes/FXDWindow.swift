@@ -22,7 +22,7 @@ extension UIWindow {
 
 
 extension UIWindow {
-	private weak var presentedController: FXDhostedInformation? {
+	private weak var currentWaitingController: FXDhostedInformation? {
 		guard let activeController = rootViewController?.children.last as? FXDhostedInformation else {
 			return nil
 		}
@@ -30,15 +30,14 @@ extension UIWindow {
 		return activeController
 	}
 
-	@objc public func showInformation() {
-		let activeController = presentedController
+	@objc public func showWaiting() {
+		let activeController = currentWaitingController
 		guard activeController == nil && activeController?.view.superview == nil else {
 			return
 		}
 
 
-		let configuration = FXDconfigurationInformation()
-		let informationController = FXDhostedInformation(rootView: FXDswiftuiInformation(configuration: configuration))
+		let informationController = FXDhostedInformation(rootView: FXDswiftuiInformation())
 
 		rootViewController?.addChild(informationController)
 		rootViewController?.view.addSubview(informationController.view)
@@ -56,8 +55,8 @@ extension UIWindow {
 			})
 	}
 
-	@objc public func hideInformation() {
-		let activeController = presentedController
+	@objc public func hideWaiting() {
+		let activeController = currentWaitingController
 		guard activeController != nil && activeController?.view.superview != nil else {
 			return
 		}
@@ -77,17 +76,17 @@ extension UIWindow {
 		}
 	}
 
-	@objc public func showInformationView(afterDelay: TimeInterval) {
+	@objc public func showWaitingView(afterDelay: TimeInterval) {
 		DispatchQueue.main.async {
-			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.showInformation), object: nil)
-			self.perform(#selector(self.showInformation), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
+			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.showWaiting), object: nil)
+			self.perform(#selector(self.showWaitingView), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
 		}
 	}
 
-	@objc public func hideInformationView(afterDelay: TimeInterval) {
+	@objc public func hideWaitingView(afterDelay: TimeInterval) {
 		DispatchQueue.main.async {
-			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.hideInformation), object: nil)
-			self.perform(#selector(self.hideInformation), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
+			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.hideWaiting), object: nil)
+			self.perform(#selector(self.hideWaiting), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
 		}
 	}
 }
