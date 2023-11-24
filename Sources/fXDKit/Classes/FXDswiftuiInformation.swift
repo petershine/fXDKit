@@ -38,8 +38,8 @@ public struct FXDswiftuiInformation: View {
 	@ObservedObject var configuration: FXDconfigurationInformation
 
 
-	public init(information: FXDconfigurationInformation = FXDconfigurationInformation()) {
-		self.configuration = information
+	public init(configuration: FXDconfigurationInformation = FXDconfigurationInformation()) {
+		self.configuration = configuration
 	}
 
     public var body: some View {
@@ -88,6 +88,54 @@ struct POPswiftuiSettings_Previews: PreviewProvider {
 		FXDswiftuiInformation()
 		FXDswiftuiInformation()
 			.preferredColorScheme(.dark)
+	}
+}
+
+
+public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
+	@ObservedObject var configuration: FXDconfigurationInformation = FXDconfigurationInformation()
+
+
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
+	
+	override init(rootView: FXDswiftuiInformation) {
+		super.init(rootView: rootView)
+
+		self.configuration = rootView.configuration
+	}
+
+	override public func didMove(toParent parent: UIViewController?) {
+		super.didMove(toParent: parent)
+
+		guard parent != nil else {
+			return
+		}
+
+
+		self.view.frame.size = parent!.view.frame.size
+		self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+	}
+
+	override public func viewDidLoad() {
+		super.viewDidLoad()
+
+		let reactToTraitChanges = {
+			[weak self] in
+
+			let interfaceStyle = self?.traitCollection.userInterfaceStyle
+
+			self?.view.backgroundColor = self?.configuration.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(0.75)
+		}
+
+		reactToTraitChanges()
+
+		registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
+			(self: Self, previousTraitCollection: UITraitCollection) in
+
+			reactToTraitChanges()
+		}
 	}
 }
 

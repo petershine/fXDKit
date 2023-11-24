@@ -21,67 +21,59 @@ extension UIWindow {
 }
 
 
-open class FXDviewInformation: UIView {
-	@IBOutlet open var indicatorActivity: UIActivityIndicatorView?
-	@IBOutlet open var labelTitle: UILabel?
-	@IBOutlet open var labelMessage_0: UILabel?
-	@IBOutlet open var labelMessage_1: UILabel?
-	@IBOutlet open var sliderProgress: UISlider?
-	@IBOutlet open var indicatorProgress: UIProgressView?
-}
-
 extension UIWindow {
-	public weak var informationSubview: FXDviewInformation? {
-		var found: FXDviewInformation? = nil
-		for subview in subviews {
-			if let informationSubview = subview as? FXDviewInformation {
-				found = informationSubview
-				break
-			}
+	private weak var presentedController: FXDhostedInformation? {
+		guard let activeController = rootViewController?.children.last as? FXDhostedInformation else {
+			return nil
 		}
-		return found
+
+		return activeController
 	}
 
 	@objc public func showInformation() {
-		let overlay = informationSubview
-		guard overlay == nil else {
+		let activeController = presentedController
+		guard activeController == nil && activeController?.view.superview == nil else {
 			return
 		}
 
-		guard let information = FXDviewInformation.view() else {
-			return
-		}
 
-		var modifiedFrame = information.frame
-		modifiedFrame.size = frame.size
-		information.frame = modifiedFrame
+		let configuration = FXDconfigurationInformation()
+		let informationController = FXDhostedInformation(rootView: FXDswiftuiInformation(configuration: configuration))
 
-		information.alpha = 0.0
-		information.isHidden = false
+		rootViewController?.addChild(informationController)
+		rootViewController?.view.addSubview(informationController.view)
+		informationController.didMove(toParent: rootViewController)
 
-		addSubview(information)
-		bringSubviewToFront(information)
+		informationController.view.alpha = 0.0
+		informationController.view.isHidden = false
+
+		bringSubviewToFront(informationController.view)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
 					 animations: {
-						information.alpha = 1.0
+						informationController.view.alpha = 1.0
 			})
 	}
 
 	@objc public func hideInformation() {
-		guard let information = informationSubview else {
+		let activeController = presentedController
+		guard activeController != nil && activeController?.view.superview != nil else {
 			return
 		}
+
+
+		activeController?.willMove(toParent: nil)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
 					 animations: {
-						information.alpha = 0.0
+				activeController!.view.alpha = 0.0
 			}) {
 				(finished) in
 
-				information.removeFromSuperview()
+				activeController!.view.removeFromSuperview()
+				activeController?.removeFromParent()
 		}
 	}
 
