@@ -30,28 +30,28 @@ extension UIWindow {
 		return activeController
 	}
 
-	@objc public func showWaiting() {
+	public func showWaiting(configuration: FXDconfigurationInformation? = nil) {
 		let activeController = currentWaitingController
 		guard activeController == nil && activeController?.view.superview == nil else {
 			return
 		}
 
 
-		let informationController = FXDhostedInformation(rootView: FXDswiftuiInformation())
+		let waitingController = FXDhostedInformation(rootView: FXDswiftuiInformation(configuration: configuration ?? FXDconfigurationInformation()))
 
-		rootViewController?.addChild(informationController)
-		rootViewController?.view.addSubview(informationController.view)
-		informationController.didMove(toParent: rootViewController)
+		rootViewController?.addChild(waitingController)
+		rootViewController?.view.addSubview(waitingController.view)
+		waitingController.didMove(toParent: rootViewController)
 
-		informationController.view.alpha = 0.0
-		informationController.view.isHidden = false
+		waitingController.view.alpha = 0.0
+		waitingController.view.isHidden = false
 
-		bringSubviewToFront(informationController.view)
+		bringSubviewToFront(waitingController.view)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
 					 animations: {
-						informationController.view.alpha = 1.0
+						waitingController.view.alpha = 1.0
 			})
 	}
 
@@ -73,13 +73,6 @@ extension UIWindow {
 
 				activeController!.view.removeFromSuperview()
 				activeController?.removeFromParent()
-		}
-	}
-
-	@objc public func showWaitingView(afterDelay: TimeInterval) {
-		DispatchQueue.main.async {
-			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.showWaiting), object: nil)
-			self.perform(#selector(self.showWaitingView), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
 		}
 	}
 

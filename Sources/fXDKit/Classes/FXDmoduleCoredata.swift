@@ -332,7 +332,7 @@ extension FXDmoduleCoredata {
 
 		if shouldShowProgressView {
 			let mainWindow = UIApplication.shared.mainWindow()
-			mainWindow?.showWaitingView(afterDelay: DURATION_QUARTER)
+			mainWindow?.showWaiting()
 		}
 
 

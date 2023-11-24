@@ -92,19 +92,10 @@ struct POPswiftuiSettings_Previews: PreviewProvider {
 }
 
 
+import Combine
+
 public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
-	@ObservedObject var configuration: FXDconfigurationInformation = FXDconfigurationInformation()
-
-
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
-	
-	override init(rootView: FXDswiftuiInformation) {
-		super.init(rootView: rootView)
-
-		self.configuration = rootView.configuration
-	}
+	fileprivate var cancellableSet = Set<AnyCancellable>()
 
 	override public func didMove(toParent parent: UIViewController?) {
 		super.didMove(toParent: parent)
@@ -126,7 +117,7 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 			let interfaceStyle = self?.traitCollection.userInterfaceStyle
 
-			self?.view.backgroundColor = self?.configuration.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(0.75)
+			self?.view.backgroundColor = self?.rootView.configuration.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(0.75)
 		}
 
 		reactToTraitChanges()
@@ -136,6 +127,17 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 			reactToTraitChanges()
 		}
+
+
+		self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
+			[weak self] (shouldDismiss) in
+
+			if shouldDismiss {
+				DispatchQueue.main.async {
+					self?.dismissFadingOut(duration: DURATION_QUARTER, callback: nil)
+				}
+			}
+		}).store(in: &self.cancellableSet)
 	}
 }
 
