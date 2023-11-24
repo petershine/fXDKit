@@ -13,7 +13,7 @@ open class FXDconfigurationInformation: ObservableObject {
 	@Published open var message_0: String
 	@Published open var message_1: String
 
-	@Published open var sliderValue: Float
+	@Published open var sliderValue: CGFloat
 	@Published open var sliderTint: Color? = nil
 
 
@@ -24,7 +24,7 @@ open class FXDconfigurationInformation: ObservableObject {
 				message_0: String? = nil,
 				message_1: String? = nil,
 				
-				sliderValue: Float? = nil,
+				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
 
 		self.overlayColor = overlayColor
@@ -61,11 +61,11 @@ public struct FXDswiftuiInformation: View {
 			ProgressView()
 				.controlSize(.large)
 				.frame(alignment: .center)
-				.padding()
 
-			Slider(value: $configuration.sliderValue)
+			FXDProgressBar(value: $configuration.sliderValue)
 				.tint(configuration.sliderTint)
 				.allowsHitTesting(false)
+				.padding()
 
 			Text(configuration.message_1)
 		}
@@ -115,7 +115,7 @@ extension FXDconfigurationInformation {
 				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 
 				DispatchQueue.main.async {
-					testingConfiguration.sliderValue = Float(step) * 0.1
+					testingConfiguration.sliderValue = CGFloat(step) * 0.1
 				}
 
 				do {
