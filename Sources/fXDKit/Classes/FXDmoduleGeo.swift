@@ -1,37 +1,21 @@
-
+import fXDObjC
 
 import CoreLocation
 import MapKit
 
 
-class FXDmoduleGeo: NSObject {
-
-	var didStartLocationManager: Bool? = false
+open class FXDmoduleGeo: NSObject {
+	private var monitoringTask: UIBackgroundTaskIdentifier? = nil
 	
-	var mainLocationManager: CLLocationManager?
-    var lastLocation: CLLocation?
+	open var lastLocation: CLLocation? = nil
+	open var didStartSignificantMonitoring: Bool = false
 
+	public var mainLocationManager: CLLocationManager? = {
+		let locationManager = CLLocationManager()
+		locationManager.activityType = .other
+		locationManager.distanceFilter = kCLDistanceFilterNone
 
-	deinit {	fxd_log()
-		stopLocationManager(mainLocationManager)
-	}
-
-
-	func startGeoModule() {	fxd_log()
-		fxdPrint(CLLocationManager.locationServicesEnabled().description)
-		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
-		fxdPrint(CLLocationManager.isRangingAvailable().description)
-
-		guard CLLocationManager.locationServicesEnabled() != false else {
-			return
-		}
-
-
-		mainLocationManager = CLLocationManager()
-		mainLocationManager?.delegate = self
-		mainLocationManager?.distanceFilter = 100
-
-		mainLocationManager?.pausesLocationUpdatesAutomatically = false
+		locationManager.pausesLocationUpdatesAutomatically = false
 		/*
 		*      With UIBackgroundModes set to include "location" in Info.plist, you must
 		*      also set this property to YES at runtime whenever calling
@@ -40,142 +24,208 @@ class FXDmoduleGeo: NSObject {
 		*      Setting this property to YES when UIBackgroundModes does not include
 		*      "location" is a fatal error.
 		*/
-		mainLocationManager?.allowsBackgroundLocationUpdates = true
+		locationManager.allowsBackgroundLocationUpdates = true
 
+		return locationManager
+	}()
 
-		var authorizationStatus: CLAuthorizationStatus
-		if #available(iOS 14.0, *) {
-			authorizationStatus = (mainLocationManager?.authorizationStatus)!
-		} else {
-			authorizationStatus = CLLocationManager.authorizationStatus()
+	open var distantEnoughFromLastLocation: Bool {
+		get {
+			if lastLocation == nil {
+				lastLocation = mainLocationManager?.location
+				return true
+			}
+
+			fxd_overridable()
+
+			return false
 		}
+		set { }
+	}
+
+	open var didUserAuthorize: Bool {
+		get {
+			let authorizationStatus: CLAuthorizationStatus = mainLocationManager?.authorizationStatus ?? .notDetermined
+
+			guard authorizationStatus == .authorizedAlways
+					|| authorizationStatus == .authorizedWhenInUse
+			else {	fxd_log()
+				fxdPrint(authorizationStatus)
+				fxdPrint("\(String(describing: mainLocationManager?.location))")
+
+				return false
+			}
+
+
+			return true
+		}
+		set { }
+	}
+
+
+	deinit {	fxd_log()
+		NotificationCenter.default.removeObserver(self)
+		mainLocationManager?.stopUpdatingLocation()
+	}
+
+	override public init() {
+		super.init()
+
+		mainLocationManager?.delegate = self
+	}
+
+	
+	open func startMainLocationManager(launchOptions: [AnyHashable : Any]! = [:]) {	fxd_log()
+		fxdPrint(launchOptions ?? [:])
+
+		let authorizationStatus: CLAuthorizationStatus = (mainLocationManager?.authorizationStatus)!
 		fxdPrint(String(describing: authorizationStatus))
 
-		if (authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse) {
-			startLocationManager(mainLocationManager)
-		}
+		startMainLocationManager(for: authorizationStatus)
+	}
+
+	func startMainLocationManager(for authorizationStatus: CLAuthorizationStatus) {	fxd_log()
+		fxdPrint(authorizationStatus)
+
+		//This method can cause UI unresponsiveness if invoked on the main thread. Instead, consider waiting for the `-locationManagerDidChangeAuthorization:` callback and checking `authorizationStatus` first.
+		//	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
+
+		fxdPrint(UIDevice.current.systemVersion)
+		fxdPrint(CLLocationManager.locationServicesEnabled().description)
+		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
+		fxdPrint(CLLocationManager.isRangingAvailable().description)
+		fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysAndWhenInUseUsageDescription"] ?? "")
+		fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysUsageDescription"] ?? "")
+		fxdPrint(Bundle.main.infoDictionary?["NSLocationWhenInUseUsageDescription"] ?? "")
+
+		guard authorizationStatus == .authorizedAlways
+				|| authorizationStatus == .authorizedWhenInUse
 		else {
-			//MARK: If the NSLocationAlwaysAndWhenInUseUsageDescription, NSLocationAlwaysUsageDescription, NSLocationWhenInUseUsageDescription key is not specified in your Info.plist, this method will do nothing, as your app will be assumed not to support Always authorization.
-
 			mainLocationManager?.requestAlwaysAuthorization()
-		}
-	}
-
-
-	func startLocationManager(_ manager: CLLocationManager?) {	fxd_log()
-
-		guard manager != nil else {
-			return
-		}
-		
-
-		fxdPrint(didStartLocationManager as Any)
-
-		guard didStartLocationManager != true else {
 			return
 		}
 
 
-		didStartLocationManager = true
-
-
-		manager?.desiredAccuracy = kCLLocationAccuracyBest
-
-		if (UIApplication.shared.applicationState == .background) {
-			manager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-		}
-
-		manager?.startUpdatingLocation()
-
-
-		NotificationCenter.default.addObserver(self,
-		                                       selector: #selector(observedUIApplicationDidBecomeActive(_:)),
-		                                       name: UIApplication.didBecomeActiveNotification,
-		                                       object: nil)
-
-		NotificationCenter.default.addObserver(self,
-		                                       selector: #selector(observedUIApplicationDidEnterBackground(_:)),
-		                                       name: UIApplication.didEnterBackgroundNotification,
-		                                       object: nil)
+		mainLocationManager?.startUpdatingLocation()
+		configureUpdatingForApplicationState()
 	}
 
-	func stopLocationManager(_ manager: CLLocationManager?) {	fxd_log()
+	func configureUpdatingForApplicationState() {
+		let notificationCenter = NotificationCenter.default
+		notificationCenter.addObserver(self,
+									   selector: #selector(observedUIApplicationDidBecomeActive(_:)),
+									   name: UIApplication.didBecomeActiveNotification,
+									   object: nil)
 
-		NotificationCenter.default.removeObserver(self)
+		notificationCenter.addObserver(self,
+									   selector: #selector(observedUIApplicationDidEnterBackground(_:)),
+									   name: UIApplication.didEnterBackgroundNotification,
+									   object: nil)
 
-		manager?.stopUpdatingLocation()
+		notificationCenter.addObserver(self,
+									   selector: #selector(observedUIApplicationWillTerminate(_:)),
+									   name: UIApplication.willTerminateNotification,
+									   object: nil)
 
 
-		didStartLocationManager = false
-	}
-
-	func updatePlacemarks() {	fxd_log()
-
-		guard mainLocationManager?.location != nil else {
+		if UIApplication.shared.applicationState != .active {
+			minimizeUpdatingForBackgroundState()
 			return
 		}
 
-
-		let geocoder: CLGeocoder = CLGeocoder()
-
-		geocoder.reverseGeocodeLocation((mainLocationManager?.location)!) {
-			(placemarks, error) in
-
-			fxdPrint(error as Any)
-			fxdPrint(placemarks as Any)
-		}
-	}
-}
-
-extension FXDmoduleGeo: FXDobserverApplication {
-
-	func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxd_log()
-		fxdPrint(notification)
-
-		mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers*2.0
-		fxdPrint(mainLocationManager?.desiredAccuracy as Any)
+		maximizeUpdatingForActiveState()
 	}
 
-	func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	fxd_log()
-		fxdPrint(notification)
-		
+	open func maximizeUpdatingForActiveState() {
 		mainLocationManager?.desiredAccuracy = kCLLocationAccuracyBest
-		fxdPrint(mainLocationManager?.desiredAccuracy as Any)
 	}
 
-	func observedUIApplicationWillTerminate(_ notification: NSNotification) {
-
+	open func minimizeUpdatingForBackgroundState() {
+		mainLocationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
 	}
 
-	func observedUIApplicationDidReceiveMemoryWarning(_ notification: NSNotification) {
-
-	}
-
-	func observedUIDeviceBatteryLevelDidChange(_ notification: NSNotification) {
-
-	}
-
-	func observedUIDeviceOrientationDidChange(_ notification: NSNotification) {
-
+	func pauseMainLocationManager(for authorizationStatus: CLAuthorizationStatus) {
+		mainLocationManager?.stopUpdatingLocation()
+		mainLocationManager?.stopMonitoringSignificantLocationChanges()
 	}
 }
+
+extension FXDmoduleGeo {
+	func notifySignificantChange(withNewLocation newLocation: CLLocation!) {
+		monitoringTask = UIApplication.shared.beginBackgroundTask(
+			expirationHandler: {
+				[weak self] in
+
+				if let monitoringTask = self?.monitoringTask {
+					UIApplication.shared.endBackgroundTask(monitoringTask)
+				}
+				self?.monitoringTask = .invalid
+			})
+
+		persisteMonitoredLocation(newLocation: newLocation)
+
+		fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
+
+		if let monitoringTask = monitoringTask {
+			UIApplication.shared.endBackgroundTask(monitoringTask)
+		}
+		monitoringTask = .invalid
+	}
+
+	func persisteMonitoredLocation(newLocation: CLLocation) {
+#if DEBUG
+		let userDefaults = UserDefaults.standard
+		if let lastTimestamp = userDefaults.object(forKey: "LastTimestampObjKey") as? Date,
+			let lastLatitude = userDefaults.object(forKey: "LastLatitudeObjKey") as? Double,
+			let lastLongitude = userDefaults.object(forKey: "LastLongitudeObjKey") as? Double {
+
+			let monitoredCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lastLatitude, longitude: lastLongitude)
+
+			let monitoredLocation = CLLocation(coordinate: monitoredCoordinate, altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, timestamp: lastTimestamp)
+
+			let lastDistance = newLocation.distance(from: monitoredLocation)
+			let lastInterval = Date.now.timeIntervalSince(monitoredLocation.timestamp)
+
+			let alertBody: String = "MONITORED: \(lastDistance) m,  \(lastInterval) s"
+
+			fxdPrint(alertBody)
+		}
+
+		userDefaults.setValue(newLocation.timestamp, forKey: "LastTimestampObjKey")
+		userDefaults.setValue(newLocation.coordinate.latitude, forKey: "LastLatitudeObjKey")
+		userDefaults.setValue(newLocation.coordinate.longitude, forKey: "LastLongitudeObjKey")
+
+
+		//MARK: For future need to debug geomodule usage
+		/*
+		if (alertBody.length > 0) {
+			UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
+			localNotifcation.repeatInterval = 0;
+			localNotifcation.hasAction = YES;
+			localNotifcation.alertBody = (alertBody) ? alertBody:newLocation.description;
+			localNotifcation.soundName = UILocalNotificationDefaultSoundName;
+			localNotifcation.applicationIconBadgeNumber = ([UIApplication sharedApplication].applicationIconBadgeNumber+1);
+
+			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotifcation];
+		}
+		 */
+#endif
+	}
+}
+
 
 extension FXDmoduleGeo: CLLocationManagerDelegate {
-	
-	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
-
+	open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
 		fxdPrint(String(status.rawValue))
-
-
 		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
-			startLocationManager(manager)
+			pauseMainLocationManager(for: status)
 		}
 		else {
-			stopLocationManager(manager)
+			startMainLocationManager(for: status)
 		}
 	}
 
-	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+	open func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {	fxd_overridable()
 		/*
 		if (lastLocation == nil ||
 		(locations.last?.distance(from: lastLocation!))! > 10.0 as CLLocationDistance) {
@@ -183,5 +233,34 @@ extension FXDmoduleGeo: CLLocationManagerDelegate {
 
 		lastLocation = locations.last
 		fxdPrint(lastLocation as Any)
+	}
+
+	open func locationManager(_ manager: CLLocationManager, didFinishDeferredUpdatesWithError error: Error?) {	fxd_overridable()
+		fxdPrint("\(String(describing: error))")
+	}
+}
+
+
+extension FXDmoduleGeo: FXDobserverApplication {
+	@objc public func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxd_overridable()
+		fxdPrint(notification)
+		minimizeUpdatingForBackgroundState()
+	}
+
+	@objc public func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {	fxd_overridable()
+		fxdPrint(notification)
+		maximizeUpdatingForActiveState()
+	}
+
+	@objc public func observedUIApplicationWillTerminate(_ notification: NSNotification) {
+	}
+
+	@objc public func observedUIApplicationDidReceiveMemoryWarning(_ notification: NSNotification) {
+	}
+
+	@objc public func observedUIDeviceBatteryLevelDidChange(_ notification: NSNotification) {
+	}
+
+	@objc public func observedUIDeviceOrientationDidChange(_ notification: NSNotification) {
 	}
 }
