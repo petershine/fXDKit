@@ -31,12 +31,10 @@ open class FXDmoduleGeo: NSObject {
 
 	open var distantEnoughFromLastLocation: Bool {
 		get {
-			if lastLocation == nil {
+			if lastLocation == nil {	fxd_overridable()
 				lastLocation = mainLocationManager?.location
 				return true
 			}
-
-			fxd_overridable()
 
 			return false
 		}
@@ -87,11 +85,12 @@ open class FXDmoduleGeo: NSObject {
 	func startMainLocationManager(for authorizationStatus: CLAuthorizationStatus) {	fxd_log()
 		fxdPrint(authorizationStatus)
 
-		//This method can cause UI unresponsiveness if invoked on the main thread. Instead, consider waiting for the `-locationManagerDidChangeAuthorization:` callback and checking `authorizationStatus` first.
-		//	FXDLogBOOL([CLLocationManager locationServicesEnabled]);
+		Task {
+			//This method can cause UI unresponsiveness if invoked on the main thread. Instead, consider waiting for the `-locationManagerDidChangeAuthorization:` callback and checking `authorizationStatus` first.
+			fxdPrint(CLLocationManager.locationServicesEnabled().description)
+		}
 
 		fxdPrint(UIDevice.current.systemVersion)
-		fxdPrint(CLLocationManager.locationServicesEnabled().description)
 		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
 		fxdPrint(CLLocationManager.isRangingAvailable().description)
 		fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysAndWhenInUseUsageDescription"] ?? "")
