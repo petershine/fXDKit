@@ -130,12 +130,10 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 
 		self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
-			[weak self] (shouldDismiss) in
+			(shouldDismiss) in
 
 			if shouldDismiss {
-				DispatchQueue.main.async {
-					self?.dismissFadingOut(duration: DURATION_QUARTER, callback: nil)
-				}
+				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
 			}
 		}).store(in: &self.cancellableSet)
 	}
