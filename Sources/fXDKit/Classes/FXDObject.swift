@@ -1,6 +1,4 @@
 
-import Combine
-
 
 fileprivate var cancellablesKey: UInt8 = 0
 
@@ -13,19 +11,43 @@ extension NSObject {
 			objc_setAssociatedObject(self, &cancellablesKey, newValue, .OBJC_ASSOCIATION_RETAIN)
 		}
 	}
+}
 
-	fileprivate func performAsyncTaskPublisher(identifier: String, afterDelay: TimeInterval, attachedTask: (() -> Void?)?) -> AnyPublisher<String, Error> {
+
+import Combine
+
+extension NSObject {
+	public func cancelAllAsyncTask() {
+		cancellables?.forEach({ (key: String, value: AnyCancellable?) in
+			value?.cancel()
+		})
+		cancellables?.removeAll()
+		cancellables = nil
+	}
+
+	public func cancelAsyncTask(identifier: String = #function) {
+		cancellables = cancellables?.filter({
+			(key: String, value: AnyCancellable?) in
+			if key == identifier {
+				value?.cancel()
+				fxdPrint("cancel(): \(identifier)")
+			}
+			return key != identifier
+		})
+	}
+	
+	public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil) -> AnyPublisher<String, Error> {
 		return Future<String, Error> { promise in
 			DispatchQueue.global().asyncAfter(deadline: .now() + afterDelay) {
 				attachedTask?()
-				promise(.success("Completed: \(identifier) attachedTask: \(attachedTask)"))
+				promise(.success(".success: \(String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
 			}
 		}
 		.eraseToAnyPublisher()
 	}
 
 	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)?) {
-		let cancellable = performAsyncTaskPublisher(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask)
+		let cancellable = publisherForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask)
 			.sink(receiveCompletion: { 
 				[weak self] (completion) in
 				switch completion {
@@ -42,31 +64,12 @@ extension NSObject {
 				}
 
 			}, receiveValue: { result in
-				fxdPrint("promise result: \(result)")
+				fxdPrint("promise: \(result)")
 			})
 
 		if cancellables == nil {
 			cancellables = [String : AnyCancellable?]()
 		}
 		cancellables?[identifier] = cancellable
-	}
-
-	public func cancelAllAsyncTask() {
-		cancellables?.forEach({ (key: String, value: AnyCancellable?) in
-			value?.cancel()
-		})
-		cancellables?.removeAll()
-		cancellables = nil
-	}
-
-	public func cancelAndRemoveAsyncTask(identifier: String = #function) {
-		cancellables = cancellables?.filter({
-			(key: String, value: AnyCancellable?) in
-			if key == identifier {
-				value?.cancel()
-				fxdPrint("cancel(): \(identifier)")
-			}
-			return key != identifier
-		})
 	}
 }
