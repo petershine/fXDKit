@@ -18,13 +18,15 @@ import Combine
 
 extension NSObject {
 	public func cancelAsyncTask(identifier: String = #function) {
+		let extendedIdentifier = String(describing: self) + identifier
+
 		cancellables = cancellables?.filter({
 			(key: String, value: AnyCancellable?) in
-			if key == identifier {
+			if key == extendedIdentifier {
 				value?.cancel()
-				fxdPrint("cancel(): \(identifier)")
+				fxdPrint("cancel(): \(extendedIdentifier)")
 			}
-			return key != identifier
+			return key != extendedIdentifier
 		})
 	}
 	
@@ -32,27 +34,30 @@ extension NSObject {
 		return Future<String, Error> { promise in
 			DispatchQueue.global().asyncAfter(deadline: .now() + afterDelay) {
 				attachedTask?()
-				promise(.success(".success: \(String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
+				promise(.success(".success: \(String(describing: self) + String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
 			}
 		}
 		.eraseToAnyPublisher()
 	}
 
 	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)?) {
+		let extendedIdentifier = String(describing: self) + identifier
+
 		let cancellable = publisherForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask)
-			.sink(receiveCompletion: { 
+			.sink(receiveCompletion: {
 				[weak self] (completion) in
 				switch completion {
 					case .finished:
-						fxdPrint(".finished: \(identifier)")
-						break // Task completed successfully
+						fxdPrint(".finished: \(extendedIdentifier)")
+						break
 
 					case .failure(let error):
-						fxdPrint(".failure: \(identifier) : \(error)")
+						fxdPrint(".failure: \(extendedIdentifier) : \(error)")
 				}
 
-				if var currentCancellables = self?.cancellables as? [String : AnyCancellable?] {
-					currentCancellables[identifier] = nil
+				if var modified = self?.cancellables as? [String : AnyCancellable?] {
+					modified[extendedIdentifier] = nil
+					self?.cancellables = modified
 				}
 
 			}, receiveValue: { result in
@@ -62,6 +67,6 @@ extension NSObject {
 		if cancellables == nil {
 			cancellables = [String : AnyCancellable?]()
 		}
-		cancellables?[identifier] = cancellable
+		cancellables?[extendedIdentifier] = cancellable
 	}
 }
