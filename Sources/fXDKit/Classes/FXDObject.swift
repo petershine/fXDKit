@@ -17,14 +17,6 @@ extension NSObject {
 import Combine
 
 extension NSObject {
-	public func cancelAllAsyncTask() {
-		cancellables?.forEach({ (key: String, value: AnyCancellable?) in
-			value?.cancel()
-		})
-		cancellables?.removeAll()
-		cancellables = nil
-	}
-
 	public func cancelAsyncTask(identifier: String = #function) {
 		cancellables = cancellables?.filter({
 			(key: String, value: AnyCancellable?) in
