@@ -77,8 +77,8 @@ extension UIWindow {
 	}
 
 	public func showWaitingView(afterDelay: TimeInterval, configuration: FXDconfigurationInformation? = nil) {
-		self.cancelAsyncTask()
-		self.performAsyncTask(afterDelay: afterDelay) {
+		cancelAsyncTask()
+		performAsyncTask(afterDelay: afterDelay) {
 			DispatchQueue.main.async {
 				[weak self] in
 				self?.showWaiting(configuration: configuration)
@@ -87,8 +87,8 @@ extension UIWindow {
 	}
 
 	public func hideWaitingView(afterDelay: TimeInterval) {
-		self.cancelAsyncTask()
-		self.performAsyncTask(afterDelay: afterDelay) {
+		cancelAsyncTask()
+		performAsyncTask(afterDelay: afterDelay) {
 			DispatchQueue.main.async {
 				[weak self] in
 				self?.hideWaiting()
