@@ -95,7 +95,7 @@ struct POPswiftuiSettings_Previews: PreviewProvider {
 import Combine
 
 public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
-	fileprivate var cancellableSet = Set<AnyCancellable>()
+	fileprivate var observedCancellable: AnyCancellable? = nil
 
 	override public func didMove(toParent parent: UIViewController?) {
 		super.didMove(toParent: parent)
@@ -129,13 +129,15 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 		}
 
 
-		self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
-			(shouldDismiss) in
+		self.observedCancellable = self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
+			[weak self] (shouldDismiss) in
 
 			if shouldDismiss {
 				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
 			}
-		}).store(in: &self.cancellableSet)
+
+			self?.observedCancellable = nil
+		})
 	}
 }
 
