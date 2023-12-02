@@ -1,7 +1,7 @@
 
 
 extension UIWindow {
-	@objc public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log()
+	public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log()
 		guard nibName == nil else {
 			let newWindow: UIWindow? = Self.view(fromNibName: nibName, owner: owner) as! UIWindow?
 			return newWindow
@@ -22,7 +22,7 @@ extension UIWindow {
 
 
 extension UIWindow {
-	private weak var currentWaitingController: FXDhostedInformation? {
+	private weak var currentActiveController: FXDhostedInformation? {
 		guard let activeController = rootViewController?.children.last as? FXDhostedInformation else {
 			return nil
 		}
@@ -31,7 +31,7 @@ extension UIWindow {
 	}
 
 	public func showWaiting(configuration: FXDconfigurationInformation? = nil) {
-		let activeController = currentWaitingController
+		let activeController = currentActiveController
 		guard activeController == nil && activeController?.view.superview == nil else {
 			return
 		}
@@ -55,8 +55,8 @@ extension UIWindow {
 			})
 	}
 
-	@objc public func hideWaiting() {
-		let activeController = currentWaitingController
+	public func hideWaiting() {
+		let activeController = currentActiveController
 		guard activeController != nil && activeController?.view.superview != nil else {
 			return
 		}
@@ -76,10 +76,23 @@ extension UIWindow {
 		}
 	}
 
-	@objc public func hideWaitingView(afterDelay: TimeInterval) {
-		DispatchQueue.main.async {
-			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.hideWaiting), object: nil)
-			self.perform(#selector(self.hideWaiting), with: nil, afterDelay: afterDelay, inModes: [RunLoop.Mode.common])
+	public func showWaitingView(afterDelay: TimeInterval, configuration: FXDconfigurationInformation? = nil) {
+		self.cancelAsyncTask()
+		self.performAsyncTask(afterDelay: afterDelay) {
+			DispatchQueue.main.async {
+				[weak self] in
+				self?.showWaiting(configuration: configuration)
+			}
+		}
+	}
+
+	public func hideWaitingView(afterDelay: TimeInterval) {
+		self.cancelAsyncTask()
+		self.performAsyncTask(afterDelay: afterDelay) {
+			DispatchQueue.main.async {
+				[weak self] in
+				self?.hideWaiting()
+			}
 		}
 	}
 }
