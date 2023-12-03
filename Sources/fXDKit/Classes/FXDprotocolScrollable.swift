@@ -1,5 +1,8 @@
 import fXDObjC
 
+import Combine
+
+
 public protocol FXDprotocolScrollable {
 	var mainScrollview: UIScrollView? { get }
 	
@@ -57,6 +60,7 @@ public protocol FXDscrollableMap: FXDprotocolScrollable {
 
 	func refreshMapview(coordinate: CLLocationCoordinate2D?)
 
+	var observedCancellableForUserTracking: AnyCancellable? { get set }
 	func cancelTrackingUserOnMapView()
 	func delayedTrackingUserOnMapView(afterDelay: TimeInterval)
 	func startTrackingUserOnMapView()
