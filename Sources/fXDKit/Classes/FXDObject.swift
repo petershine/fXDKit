@@ -17,6 +17,62 @@ extension NSObject {
 import Combine
 
 extension NSObject {
+	public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil) -> AnyPublisher<String, Error> {
+		return Future<String, Error> { promise in
+			DispatchQueue.global().asyncAfter(deadline: .now() + afterDelay) {
+				attachedTask?()
+				promise(.success(".success: \(String(describing: self) + String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
+			}
+		}
+		.eraseToAnyPublisher()
+	}
+
+	public func cancellableForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil, afterCompletion: (() -> Void?)? = nil) -> AnyCancellable {
+
+		let publisher = publisherForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask)
+		let cancellable = publisher
+			.sink(receiveCompletion: {
+				(completion) in
+
+				switch completion {
+					case .finished:
+						fxdPrint(".finished: \(String(describing: identifier))")
+						break
+
+					case .failure(let error):
+						fxdPrint(".failure: \(String(describing: identifier)) : \(error)")
+				}
+
+				afterCompletion?()
+
+			}, receiveValue: { result in
+				fxdPrint("promise: \(result)")
+			})
+
+		return cancellable
+	}
+}
+
+extension NSObject {
+	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)?) {
+		let extendedIdentifier = String(describing: self) + identifier
+
+		let cancellable = cancellableForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask) {
+			[weak self] in
+
+			if var modified = self?.cancellables as? [String : AnyCancellable?] {
+				modified[extendedIdentifier] = nil
+				self?.cancellables = modified
+			}
+		}
+
+		if cancellables == nil {
+			cancellables = [String : AnyCancellable?]()
+		}
+
+		cancellables?[extendedIdentifier] = cancellable
+	}
+
 	public func cancelAsyncTask(identifier: String = #function) {
 		let extendedIdentifier = String(describing: self) + identifier
 
@@ -28,45 +84,5 @@ extension NSObject {
 			}
 			return key != extendedIdentifier
 		})
-	}
-	
-	public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil) -> AnyPublisher<String, Error> {
-		return Future<String, Error> { promise in
-			DispatchQueue.global().asyncAfter(deadline: .now() + afterDelay) {
-				attachedTask?()
-				promise(.success(".success: \(String(describing: self) + String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
-			}
-		}
-		.eraseToAnyPublisher()
-	}
-
-	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)?) {
-		let extendedIdentifier = String(describing: self) + identifier
-
-		let cancellable = publisherForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask)
-			.sink(receiveCompletion: {
-				[weak self] (completion) in
-				switch completion {
-					case .finished:
-						fxdPrint(".finished: \(extendedIdentifier)")
-						break
-
-					case .failure(let error):
-						fxdPrint(".failure: \(extendedIdentifier) : \(error)")
-				}
-
-				if var modified = self?.cancellables as? [String : AnyCancellable?] {
-					modified[extendedIdentifier] = nil
-					self?.cancellables = modified
-				}
-
-			}, receiveValue: { result in
-				fxdPrint("promise: \(result)")
-			})
-
-		if cancellables == nil {
-			cancellables = [String : AnyCancellable?]()
-		}
-		cancellables?[extendedIdentifier] = cancellable
 	}
 }
