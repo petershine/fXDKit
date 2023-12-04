@@ -48,3 +48,23 @@ extension URLSession {
 		return randomImage
 	}
 }
+
+
+extension URLSession {
+	public func startSerializedURLRequest(urlRequests: [URLRequest]) async -> [(Data, URLResponse)] {
+		var dataTuples: [(Data, URLResponse)] = []
+
+		for urlRequest in urlRequests {
+			do {
+				let (data, response) = try await self.data(for: urlRequest)
+				fxdPrint(response)
+				dataTuples.append((data, response))
+			}
+			catch {
+				fxdPrint("\(error)")
+			}
+		}
+
+		return dataTuples
+	}
+}
