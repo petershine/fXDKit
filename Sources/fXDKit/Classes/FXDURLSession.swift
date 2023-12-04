@@ -51,14 +51,22 @@ extension URLSession {
 
 
 extension URLSession {
-	public func startSerializedURLRequest(urlRequests: [URLRequest]) async -> [(Data, URLResponse)] {
+	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async -> [(Data, URLResponse)] {
+		guard urlRequests.count > 0 else {
+			return []
+		}
+
 		var dataTuples: [(Data, URLResponse)] = []
 
-		for urlRequest in urlRequests {
+		for (index, urlRequest) in urlRequests.enumerated() {
 			do {
 				let (data, response) = try await self.data(for: urlRequest)
 				fxdPrint(response)
 				dataTuples.append((data, response))
+
+				DispatchQueue.main.async {
+					progressConfiguration?.sliderValue = CGFloat(Float(index+1)/Float(urlRequests.count))
+				}
 			}
 			catch {
 				fxdPrint("\(error)")

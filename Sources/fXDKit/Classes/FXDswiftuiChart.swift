@@ -88,7 +88,8 @@ public struct FXDswiftuiChart: View {
 // Example:
 extension FXDdataChart {
 	public func testChartData() {
-		UIApplication.shared.mainWindow()?.showWaiting()
+		let progressConfiguration: FXDconfigurationInformation? = FXDconfigurationInformation()
+		UIApplication.shared.mainWindow()?.showWaiting(configuration: progressConfiguration)
 
 		let tickers = [
 			"avgo",
@@ -110,9 +111,9 @@ extension FXDdataChart {
 
 
 		Task {
-			let dataTuples = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests)
+			let dataTuples = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
 
-			for (data, response) in dataTuples {
+			for (data, _) in dataTuples {
 				do {
 					try self.processData(jsonData: data)
 				}
