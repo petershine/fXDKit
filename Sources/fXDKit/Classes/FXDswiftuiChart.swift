@@ -88,7 +88,7 @@ public struct FXDswiftuiChart: View {
 // Example:
 extension FXDdataChart {
 	public func testChartData() {
-		let progressConfiguration: FXDconfigurationInformation? = FXDconfigurationInformation()
+		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
 		UIApplication.shared.mainWindow()?.showWaiting(configuration: progressConfiguration)
 
 		let tickers = [
