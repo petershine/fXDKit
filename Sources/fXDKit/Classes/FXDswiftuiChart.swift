@@ -31,7 +31,55 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 	open var urlRequestHOST: String = ""
 
-	private enum ChartDataValidation: Error {
+	open func startRetrievingTask(tickers: [String], completion: ((Bool)->Void?)? = nil) {
+		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
+		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
+
+		Task {
+			[weak self] in
+
+			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers) ?? []
+
+			let dataAndResponseArray = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
+
+			self?.processDataAndResponseArray(dataAndResponseArray: dataAndResponseArray)
+
+			DispatchQueue.main.async {
+				[weak self] in
+
+				let didFail = self?.evaluateAndAlertIfFailed(dataAndResponseArray: dataAndResponseArray, tickers: tickers)
+				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
+
+				completion?(didFail ?? false)
+			}
+		}
+	}
+
+	open func urlRequestsFromTickers(tickers: [String]) -> [URLRequest] {
+		let urlRequests = tickers.map {
+			assert(!(urlRequestHOST.isEmpty), "[OVERRIDABLE] urlRequestHOST should not be empty")
+			let url = URL(string: "\(urlRequestHOST)/prices/\($0.uppercased())")!
+			let request = URLRequest(url: url)
+			return request
+		}
+
+		return urlRequests
+	}
+
+	open func processDataAndResponseArray(dataAndResponseArray: [(Data, URLResponse)]) {
+		for (data, response) in dataAndResponseArray {
+			fxdPrint("\(response)")
+			do {
+				try processData(jsonData: data)
+			}
+			catch {
+				fxdPrint("\(error)")
+			}
+		}
+	}
+
+
+	public enum ChartDataValidation: Error {
 		case pricesWithoutTicker
 		case notDecodable
 	}
@@ -54,6 +102,19 @@ open class FXDdataChart: NSObject, ObservableObject {
 			[weak self] in
 			self?.pricesLineMarks[ticker] = sortedPrices
 		}
+	}
+
+
+	open func evaluateAndAlertIfFailed(dataAndResponseArray: [(Data, URLResponse)], tickers: [String]) -> Bool {
+		fxdPrint("dataAndResponseArray.count: \(dataAndResponseArray.count)")
+		let didFail = (dataAndResponseArray.count == 0)
+		if didFail {
+			UIAlertController.simpleAlert(
+				withTitle: "Failed to retrieve",
+				message: "FROM: \(urlRequestHOST)\nTICKERS: \(tickers)")
+		}
+
+		return didFail
 	}
 }
 
@@ -89,54 +150,21 @@ public struct FXDswiftuiChart: View {
 // Example:
 extension FXDdataChart {
 	public func testChartData() {
-		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
-		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
+		let tickers = [
+			"avgo",
+			"AAPL",
+			"MSFT",
+			"UNH",
+			"ARM",
+		]+[
+			//"GOOG",	//TODO: need splited price tracking
+			//"TSLA",
+		]
 
-		Task {
-			[weak self] in
+		startRetrievingTask(tickers: tickers) { 
+			[weak self] (didFail) in
 
-			let tickers = [
-				"avgo",
-				"AAPL",
-				"MSFT",
-				"UNH",
-				"ARM",
-			]+[
-				//"GOOG",	//TODO: need splited price tracking
-				//"TSLA",
-			]
-
-			let urlRequests = tickers.map {
-				assert(!(self?.urlRequestHOST.isEmpty ?? true), "[OVERRIDABLE] urlRequestHOST should not be empty")
-				let url = URL(string: "\(self?.urlRequestHOST ?? "")/prices/\($0.uppercased())")!
-				let request = URLRequest(url: url)
-				return request
-			}
-
-
-			let dataTuples = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
-
-			for (data, _) in dataTuples {
-				do {
-					try self?.processData(jsonData: data)
-				}
-				catch {
-					fxdPrint("\(error)")
-				}
-			}
-
-			DispatchQueue.main.async {
-				[weak self] in
-				fxdPrint("dataTuples.count: \(dataTuples.count)")
-				fxdPrint("self.pricesLineMarks.count: \(String(describing: self?.pricesLineMarks.count))")
-
-				self?.didFailToRetrieve = (self?.pricesLineMarks.count ?? 0 == 0)
-				if self?.didFailToRetrieve ?? false == true {
-					UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self?.urlRequestHOST ?? "(unspecified)")")
-				}
-
-				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
-			}
+			self?.didFailToRetrieve = didFail
 		}
 	}
 }

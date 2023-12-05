@@ -56,13 +56,12 @@ extension URLSession {
 			return []
 		}
 
-		var dataTuples: [(Data, URLResponse)] = []
+		var dataAndResponseArray: [(Data, URLResponse)] = []
 
 		for (index, urlRequest) in urlRequests.enumerated() {
 			do {
 				let (data, response) = try await self.data(for: urlRequest)
-				fxdPrint(response)
-				dataTuples.append((data, response))
+				dataAndResponseArray.append((data, response))
 
 				DispatchQueue.main.async {
 					progressConfiguration?.sliderValue = CGFloat(Float(index+1)/Float(urlRequests.count))
@@ -73,6 +72,6 @@ extension URLSession {
 			}
 		}
 
-		return dataTuples
+		return dataAndResponseArray
 	}
 }
