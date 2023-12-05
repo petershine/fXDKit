@@ -90,29 +90,29 @@ public struct FXDswiftuiChart: View {
 extension FXDdataChart {
 	public func testChartData() {
 		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
-		UIApplication.shared.mainWindow()?.showWaiting(configuration: progressConfiguration)
-
-		let tickers = [
-			"avgo",
-			"AAPL",
-			"MSFT",
-			"UNH",
-			"ARM",
-		]+[
-			//"GOOG",	//TODO: need splited price tracking
-			//"TSLA",
-		]
-
-		let urlRequests = tickers.map {
-			assert(!(urlRequestHOST.isEmpty), "[OVERRIDABLE] urlRequestHOST should not be empty")
-			let url = URL(string: "\(urlRequestHOST)/prices/\($0.uppercased())")!
-			let request = URLRequest(url: url)
-			return request
-		}
-
+		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
 
 		Task {
 			[weak self] in
+
+			let tickers = [
+				"avgo",
+				"AAPL",
+				"MSFT",
+				"UNH",
+				"ARM",
+			]+[
+				//"GOOG",	//TODO: need splited price tracking
+				//"TSLA",
+			]
+
+			let urlRequests = tickers.map {
+				assert(!(self?.urlRequestHOST.isEmpty ?? true), "[OVERRIDABLE] urlRequestHOST should not be empty")
+				let url = URL(string: "\(self?.urlRequestHOST ?? "")/prices/\($0.uppercased())")!
+				let request = URLRequest(url: url)
+				return request
+			}
+
 
 			let dataTuples = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
 
