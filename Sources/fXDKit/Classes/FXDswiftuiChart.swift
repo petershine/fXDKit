@@ -120,12 +120,16 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 
 public struct FXDswiftuiChart: View {
+	@State fileprivate var assignedColors: Dictionary<String, UIColor> = [:]
+
+
 	@Binding var pricesLineMarks: Dictionary<String, [Price]>
 
 	public init(pricesLineMarks: Binding<Dictionary<String, [Price]>>) {
 		_pricesLineMarks = pricesLineMarks
 	}
 
+	
 	public var body: some View {
 		Chart {
 			ForEach(Array(pricesLineMarks.keys), id: \.self) {
@@ -140,8 +144,26 @@ public struct FXDswiftuiChart: View {
 						series: .value(ticker, ticker)
 					)
 				}
+				.lineStyle(.init(lineWidth: 1))
+				.foregroundStyle(Color(uiColor: colorForTicker(ticker: ticker)))
 			}
 		}
+	}
+}
+
+extension FXDswiftuiChart {
+	fileprivate func colorForTicker(ticker: String) -> UIColor {
+		var colorForTicker: UIColor? = assignedColors[ticker]
+		if colorForTicker == nil {
+			let nextColor = UIColor.nextColor()
+			colorForTicker = nextColor
+
+			DispatchQueue.main.async {
+				assignedColors[ticker] = nextColor
+			}
+		}
+
+		return colorForTicker!
 	}
 }
 
@@ -151,17 +173,12 @@ public struct FXDswiftuiChart: View {
 extension FXDdataChart {
 	public func testChartData() {
 		let tickers = [
-			"avgo",
-			"AAPL",
-			"MSFT",
-			"UNH",
-			"ARM",
-		]+[
-			//"GOOG",	//TODO: need splited price tracking
-			//"TSLA",
+			"SPY",
+			"DIA",
+			"QQQ",
 		]
 
-		startRetrievingTask(tickers: tickers) { 
+		startRetrievingTask(tickers: tickers) {
 			[weak self] (didFail) in
 
 			self?.didFailToRetrieve = didFail
