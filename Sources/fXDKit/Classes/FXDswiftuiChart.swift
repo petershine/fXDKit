@@ -27,6 +27,7 @@ public struct Price: Decodable, Identifiable {
 
 open class FXDdataChart: NSObject, ObservableObject {
 	@Published open var pricesLineMarks: Dictionary<String, [Price]> = [:]
+	@Published public var didFailToRetrieve: Bool = false
 
 	open var urlRequestHOST: String = ""
 
@@ -111,11 +112,13 @@ extension FXDdataChart {
 
 
 		Task {
+			[weak self] in
+
 			let dataTuples = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
 
 			for (data, _) in dataTuples {
 				do {
-					try self.processData(jsonData: data)
+					try self?.processData(jsonData: data)
 				}
 				catch {
 					fxdPrint("\(error)")
@@ -123,6 +126,15 @@ extension FXDdataChart {
 			}
 
 			DispatchQueue.main.async {
+				[weak self] in
+				fxdPrint("dataTuples.count: \(dataTuples.count)")
+				fxdPrint("self.pricesLineMarks.count: \(String(describing: self?.pricesLineMarks.count))")
+
+				self?.didFailToRetrieve = (self?.pricesLineMarks.count ?? 0 == 0)
+				if self?.didFailToRetrieve ?? false == true {
+					UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self?.urlRequestHOST ?? "(unspecified)")")
+				}
+
 				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
 			}
 		}

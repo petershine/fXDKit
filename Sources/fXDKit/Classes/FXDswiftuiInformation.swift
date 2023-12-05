@@ -74,11 +74,11 @@ public struct FXDswiftuiInformation: View {
 		.onTapGesture {
 			configuration.shouldDismiss = true
 		}
-		.onChange(of: configuration.shouldDismiss, initial: false, {
+		.onChange(of: configuration.shouldDismiss) {
 			if configuration.shouldDismiss {
 				dismiss()
 			}
-		})
+		}
     }
 }
 
