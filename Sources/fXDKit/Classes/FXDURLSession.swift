@@ -61,7 +61,9 @@ extension URLSession {
 		for (index, urlRequest) in urlRequests.enumerated() {
 			do {
 				let (data, response) = try await self.data(for: urlRequest)
-				dataAndResponseArray.append((data, response))
+				if (response as? HTTPURLResponse)?.statusCode == 200 {
+					dataAndResponseArray.append((data, response))
+				}
 
 				DispatchQueue.main.async {
 					progressConfiguration?.sliderValue = CGFloat(Float(index+1)/Float(urlRequests.count))
