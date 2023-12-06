@@ -27,11 +27,18 @@ public struct Price: Decodable, Identifiable {
 
 open class FXDdataChart: NSObject, ObservableObject {
 	public static var colorsForTickers: Dictionary<String, UIColor> = [:]
+	public static var tickers: Array<String> = {
+		return [
+			"SPY",
+			"DIA",
+			"QQQ",
+		]
+	}()
+
 
 	@Published open var pricesLineMarks: Dictionary<String, [Price]> = [:]
 	@Published public var didFailToRetrieve: Bool = false
 
-	open var urlRequestHOST: String = ""
 
 	open func startRetrievingTask(tickers: [String], completion: ((Bool)->Void?)? = nil) {
 		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
@@ -57,6 +64,8 @@ open class FXDdataChart: NSObject, ObservableObject {
 		}
 	}
 
+
+	open var urlRequestHOST: String = ""
 	open func urlRequestsFromTickers(tickers: [String]) -> [URLRequest] {
 		let urlRequests = tickers.map {
 			assert(!(urlRequestHOST.isEmpty), "[OVERRIDABLE] urlRequestHOST should not be empty")
@@ -81,7 +90,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 	}
 
 
-	public enum ChartDataValidation: Error {
+	enum ChartDataValidation: Error {
 		case pricesWithoutTicker
 		case notDecodable
 	}
@@ -171,13 +180,7 @@ extension FXDswiftuiChart {
 // Example:
 extension FXDdataChart {
 	public func testChartData() {
-		let tickers = [
-			"SPY",
-			"DIA",
-			"QQQ",
-		]
-
-		startRetrievingTask(tickers: tickers) {
+		startRetrievingTask(tickers: Self.tickers) {
 			[weak self] (didFail) in
 
 			self?.didFailToRetrieve = didFail
