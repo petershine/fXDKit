@@ -26,6 +26,8 @@ public struct Price: Decodable, Identifiable {
 
 
 open class FXDdataChart: NSObject, ObservableObject {
+	public static var colorsForTickers: Dictionary<String, UIColor> = [:]
+
 	@Published open var pricesLineMarks: Dictionary<String, [Price]> = [:]
 	@Published public var didFailToRetrieve: Bool = false
 
@@ -120,9 +122,6 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 
 public struct FXDswiftuiChart: View {
-	@State fileprivate var assignedColors: Dictionary<String, UIColor> = [:]
-
-
 	@Binding var pricesLineMarks: Dictionary<String, [Price]>
 
 	public init(pricesLineMarks: Binding<Dictionary<String, [Price]>>) {
@@ -153,13 +152,13 @@ public struct FXDswiftuiChart: View {
 
 extension FXDswiftuiChart {
 	fileprivate func colorForTicker(ticker: String) -> UIColor {
-		var colorForTicker: UIColor? = assignedColors[ticker]
+		var colorForTicker: UIColor? = FXDdataChart.colorsForTickers[ticker]
 		if colorForTicker == nil {
 			let nextColor = UIColor.nextColor()
 			colorForTicker = nextColor
 
 			DispatchQueue.main.async {
-				assignedColors[ticker] = nextColor
+				FXDdataChart.colorsForTickers[ticker] = nextColor
 			}
 		}
 
