@@ -4,6 +4,7 @@ import SwiftUI
 
 
 public struct FXDswiftuiLaunching: View {
+	@State var appDisplayedName: String
 	@State var shouldHideStatusBar: Bool
 
 	@State var backgroundImage: UIImage?
@@ -11,8 +12,8 @@ public struct FXDswiftuiLaunching: View {
 	@State var foregroundImage: UIImage?
 	@State var foregroundSize: CGSize
 
-	public init(shouldHideStatusBar: Bool = true, backgroundImage: UIImage?, foregroundImage: UIImage?, foregroundSize: CGSize = .zero) {
-
+	public init(appDisplayedName: String? = nil, shouldHideStatusBar: Bool = true, backgroundImage: UIImage?, foregroundImage: UIImage?, foregroundSize: CGSize = .zero) {
+		self.appDisplayedName = appDisplayedName ?? "Hello, world!"
 		self.shouldHideStatusBar = shouldHideStatusBar
 
 		self.backgroundImage = backgroundImage
@@ -33,7 +34,7 @@ public struct FXDswiftuiLaunching: View {
 					Image(systemName: "globe")
 						.imageScale(.large)
 						.foregroundStyle(.tint)
-					Text("Hello, world!")
+					Text(appDisplayedName)
 				}
 			}
 			else if let foregroundImage {
