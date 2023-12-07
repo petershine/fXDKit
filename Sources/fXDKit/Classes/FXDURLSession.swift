@@ -75,21 +75,47 @@ extension URLSession {
 			return []
 		}
 
+
 		var dataAndResponseArray: [(Data, URLResponse)] = []
+		var reattemptedRequests: [URLRequest] = []
 
-		for (index, urlRequest) in urlRequests.enumerated() {
+		func requesting(urlRequest: URLRequest) async throws {
+			let (data, response) = try await self.data(for: urlRequest)
+			guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+				return
+			}
+
+
+			dataAndResponseArray.append((data, response))
+			
+			let progressValue: CGFloat = CGFloat(Float(dataAndResponseArray.count)/Float(urlRequests.count+reattemptedRequests.count))
+			DispatchQueue.main.async {
+				progressConfiguration?.sliderValue = progressValue
+			}
+		}
+
+		for urlRequest in urlRequests {
 			do {
-				let (data, response) = try await self.data(for: urlRequest)
-				if (response as? HTTPURLResponse)?.statusCode == 200 {
-					dataAndResponseArray.append((data, response))
-				}
-
-				DispatchQueue.main.async {
-					progressConfiguration?.sliderValue = CGFloat(Float(index+1)/Float(urlRequests.count))
-				}
+				try await requesting(urlRequest: urlRequest)
 			}
 			catch {
-				fxdPrint("\(error)")
+				fxdPrint("[\(#function)] \(error)")
+				if let urlError = error as? URLError,
+				   urlError.code.rawValue == NSURLErrorTimedOut {
+					var modifiedRequest = urlRequest
+					modifiedRequest.timeoutInterval = .infinity
+					reattemptedRequests.append(modifiedRequest)
+				}
+			}
+		}
+
+		fxdPrint("[\(#function)] \(reattemptedRequests.count)")
+		for reattempted in reattemptedRequests {
+			do {
+				try await requesting(urlRequest: reattempted)
+			}
+			catch {
+				fxdPrint("[\(#function)] \(error)")
 			}
 		}
 
