@@ -40,14 +40,14 @@ open class FXDdataChart: NSObject, ObservableObject {
 	@Published public var didFailToRetrieve: Bool = false
 
 
-	open func startRetrievingTask(tickers: [String], completion: ((Bool)->Void?)? = nil) {
+	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, completion: ((Bool)->Void?)? = nil) {
 		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
 		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
 
 		Task {
 			[weak self] in
 
-			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers) ?? []
+			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers, timeout: timeout) ?? []
 
 			let dataAndResponseArray = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
 
@@ -66,11 +66,12 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 
 	open var urlRequestHOST: String = ""
-	open func urlRequestsFromTickers(tickers: [String]) -> [URLRequest] {
+	open func urlRequestsFromTickers(tickers: [String], timeout: TimeInterval) -> [URLRequest] {
 		let urlRequests = tickers.map {
 			assert(!(urlRequestHOST.isEmpty), "[OVERRIDABLE] urlRequestHOST should not be empty")
 			let url = URL(string: "\(urlRequestHOST)/prices/\($0.uppercased())")!
-			let request = URLRequest(url: url)
+			let request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: timeout)
+
 			return request
 		}
 
@@ -180,7 +181,9 @@ extension FXDswiftuiChart {
 // Example:
 extension FXDdataChart {
 	public func testChartData() {
-		startRetrievingTask(tickers: Self.tickers) {
+		// ... "The default timeout interval is 60 seconds." ...
+		startRetrievingTask(tickers: Self.tickers, timeout: 60.0) {
+
 			[weak self] (didFail) in
 
 			self?.didFailToRetrieve = didFail
