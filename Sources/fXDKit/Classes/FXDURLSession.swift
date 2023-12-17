@@ -69,6 +69,8 @@ extension URLSession {
 }
 
 
+public let TIMEOUT_LONGER = (60.0*2.0)
+
 extension URLSession {
 	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> [(Data, URLResponse)] {
 		guard urlRequests.count > 0 else {
@@ -109,7 +111,7 @@ extension URLSession {
 				   urlError.code.rawValue == NSURLErrorTimedOut {
 
 					var modifiedRequest = urlRequest
-					modifiedRequest.timeoutInterval = .infinity
+					modifiedRequest.timeoutInterval = TIMEOUT_LONGER
 					reattemptedRequests.append(modifiedRequest)
 				}
 			}
