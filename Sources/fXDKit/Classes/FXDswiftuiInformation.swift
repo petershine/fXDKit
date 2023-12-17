@@ -16,6 +16,7 @@ open class FXDconfigurationInformation: ObservableObject {
 	@Published open var sliderValue: CGFloat
 	@Published open var sliderTint: Color? = nil
 
+	var cancellableTask: Task<Void, Error>? = nil
 
 	public init(overlayColor: UIColor? = nil, 
 				shouldIgnoreUserInteraction: Bool? = false,
@@ -73,6 +74,7 @@ public struct FXDswiftuiInformation: View {
 		.allowsHitTesting(!configuration.shouldIgnoreUserInteraction)
 		.onTapGesture {
 			configuration.shouldDismiss = true
+			configuration.cancellableTask?.cancel()
 		}
 		.onChange(of: configuration.shouldDismiss) {
 			if configuration.shouldDismiss {

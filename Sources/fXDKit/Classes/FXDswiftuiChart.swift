@@ -27,39 +27,55 @@ public struct Price: Decodable, Identifiable {
 
 open class FXDdataChart: NSObject, ObservableObject {
 	public static var colorsForTickers: Dictionary<String, UIColor> = [:]
-	public static var tickers: Array<String> = {
-		return [
-			"SPY",
-			"DIA",
-			"QQQ",
-		]
-	}()
+	public static var tickers: Array<String> = ["SPY","DIA","QQQ"]
 
 
 	@Published open var pricesLineMarks: Dictionary<String, [Price]> = [:]
 	@Published public var didFailToRetrieve: Bool = false
 
 
-	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, completion: ((Bool)->Void?)? = nil) {
-		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: true)
+	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
+		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: !(isCancellable))
 		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
 
-		Task {
+		actor DataAndResponseActor {
+			var dataAndResponseArray: [(Data, URLResponse)] = []
+			func assign(_ newArray: [(Data, URLResponse)]) {
+				dataAndResponseArray = newArray
+			}
+		}
+
+		let safeActor = DataAndResponseActor()
+
+		progressConfiguration.cancellableTask = Task {
 			[weak self] in
 
 			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers, timeout: timeout) ?? []
 
-			let dataAndResponseArray = await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
+			do {
+				let received = try await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
+				await safeActor.assign(received)
+			}
+			catch {
+				fxdPrint("\(error)")
+			}
 
-			self?.processDataAndResponseArray(dataAndResponseArray: dataAndResponseArray)
+			await self?.processDataAndResponseArray(dataAndResponseArray: safeActor.dataAndResponseArray)
 
+			let mainUsable = await safeActor.dataAndResponseArray
 			DispatchQueue.main.async {
 				[weak self] in
 
-				let didFail = self?.evaluateAndAlertIfFailed(dataAndResponseArray: dataAndResponseArray, tickers: tickers)
-				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
+				var didSucceed = false
+				if progressConfiguration.cancellableTask?.isCancelled ?? false {
+					UIAlertController.simpleAlert(withTitle: "CANCELLED", message: nil)
+				}
+				else {
+					didSucceed = self?.evaluateAndAlertIfFailed(dataAndResponseArray: mainUsable, tickers: tickers) ?? false
+				}
 
-				completion?(didFail ?? false)
+				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
+				completion?(didSucceed)
 			}
 		}
 	}
@@ -119,14 +135,14 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 	open func evaluateAndAlertIfFailed(dataAndResponseArray: [(Data, URLResponse)], tickers: [String]) -> Bool {
 		fxdPrint("dataAndResponseArray.count: \(dataAndResponseArray.count)")
-		let didFail = (dataAndResponseArray.count == 0)
-		if didFail {
+		let didSucceed = (dataAndResponseArray.count > 0)
+		if !didSucceed {
 			UIAlertController.simpleAlert(
 				withTitle: "Failed to retrieve",
 				message: "FROM: \(urlRequestHOST)\nTICKERS: \(tickers)")
 		}
 
-		return didFail
+		return didSucceed
 	}
 }
 
@@ -182,11 +198,10 @@ extension FXDswiftuiChart {
 extension FXDdataChart {
 	public func testChartData() {
 		// ... "The default timeout interval is 60 seconds." ...
-		startRetrievingTask(tickers: Self.tickers, timeout: 60.0) {
+		startRetrievingTask(tickers: Self.tickers, timeout: 60.0, isCancellable: true) {
+			[weak self] (didSucceed) in
 
-			[weak self] (didFail) in
-
-			self?.didFailToRetrieve = didFail
+			self?.didFailToRetrieve = !didSucceed
 		}
 	}
 }

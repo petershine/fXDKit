@@ -70,7 +70,7 @@ extension URLSession {
 
 
 extension URLSession {
-	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async -> [(Data, URLResponse)] {
+	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> [(Data, URLResponse)] {
 		guard urlRequests.count > 0 else {
 			return []
 		}
@@ -80,6 +80,11 @@ extension URLSession {
 		var reattemptedRequests: [URLRequest] = []
 
 		func requesting(urlRequest: URLRequest) async throws {
+			guard !(progressConfiguration?.cancellableTask?.isCancelled ?? false) else {
+				fxdPrint("[\(#function)] isCancelled: \((progressConfiguration?.cancellableTask?.isCancelled ?? false))")
+				return
+			}
+
 			let (data, response) = try await self.data(for: urlRequest)
 			guard (response as? HTTPURLResponse)?.statusCode == 200 else {
 				return
@@ -102,6 +107,7 @@ extension URLSession {
 				fxdPrint("[\(#function)] \(error)")
 				if let urlError = error as? URLError,
 				   urlError.code.rawValue == NSURLErrorTimedOut {
+
 					var modifiedRequest = urlRequest
 					modifiedRequest.timeoutInterval = .infinity
 					reattemptedRequests.append(modifiedRequest)
@@ -116,6 +122,7 @@ extension URLSession {
 			}
 			catch {
 				fxdPrint("[\(#function)] \(error)")
+				throw error
 			}
 		}
 
