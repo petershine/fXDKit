@@ -69,65 +69,90 @@ extension URLSession {
 }
 
 
-public let TIMEOUT_LONGER = (60.0*2.0)
+public let TIMEOUT_DEFAULT = 60.0	// ... "The default timeout interval is 60 seconds." ...
+public let TIMEOUT_LONGER = (TIMEOUT_DEFAULT*2.0)
+
+public enum SerializedURLRequestError: Error {
+	case noRequests
+	case userCancelled
+	case timeoutExpired
+}
+
+public actor DataAndResponseActor {
+	var dataAndResponseArray: [(Data, URLResponse)] = []
+
+	func assign(_ newArray: [(Data, URLResponse)]) {
+		dataAndResponseArray = newArray
+	}
+	func append(_ newElement: (Data, URLResponse)) {
+		dataAndResponseArray.append(newElement)
+	}
+	func count() -> Int {
+		return dataAndResponseArray.count
+	}
+}
 
 extension URLSession {
 	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> [(Data, URLResponse)] {
 		guard urlRequests.count > 0 else {
-			return []
+			throw SerializedURLRequestError.noRequests
 		}
 
 
-		var dataAndResponseArray: [(Data, URLResponse)] = []
-		var reattemptedRequests: [URLRequest] = []
+		let safeDataAndReponseTuples = DataAndResponseActor()
 
-		func requesting(urlRequest: URLRequest) async throws {
+		func requesting(urlRequest: URLRequest, reattemptedRequests: [URLRequest] = []) async throws {
 			guard !(progressConfiguration?.cancellableTask?.isCancelled ?? false) else {
 				fxdPrint("[\(#function)] isCancelled: \((progressConfiguration?.cancellableTask?.isCancelled ?? false))")
-				return
+				throw SerializedURLRequestError.userCancelled
 			}
 
 			let (data, response) = try await self.data(for: urlRequest)
 			guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-				return
+				throw SerializedURLRequestError.timeoutExpired
 			}
 
 
-			dataAndResponseArray.append((data, response))
-			
-			let progressValue: CGFloat = CGFloat(Float(dataAndResponseArray.count)/Float(urlRequests.count+reattemptedRequests.count))
+			await safeDataAndReponseTuples.append((data, response))
+
+			let finishedCount = await safeDataAndReponseTuples.count()
+			let progressValue: CGFloat = CGFloat(Float(finishedCount)/Float(urlRequests.count+reattemptedRequests.count))
 			DispatchQueue.main.async {
 				progressConfiguration?.sliderValue = progressValue
 			}
 		}
 
+		var reattemptedRequests: [URLRequest] = []
 		for urlRequest in urlRequests {
 			do {
 				try await requesting(urlRequest: urlRequest)
 			}
 			catch {
-				fxdPrint("[\(#function)] \(error)")
-				if let urlError = error as? URLError,
-				   urlError.code.rawValue == NSURLErrorTimedOut {
-
-					var modifiedRequest = urlRequest
-					modifiedRequest.timeoutInterval = TIMEOUT_LONGER
-					reattemptedRequests.append(modifiedRequest)
+				guard let urlError = error as? URLError,
+					  urlError.code.rawValue == NSURLErrorTimedOut else {
+					fxdPrint("[\(#function)] \(error)")
+					throw error
 				}
+
+
+				var modifiedRequest = urlRequest
+				modifiedRequest.timeoutInterval = TIMEOUT_LONGER
+				reattemptedRequests.append(modifiedRequest)
 			}
 		}
 
+		// using recursive could be considered, however, it's unnecessaril complication.
 		fxdPrint("[\(#function)] \(reattemptedRequests.count)")
 		for reattempted in reattemptedRequests {
 			do {
-				try await requesting(urlRequest: reattempted)
+				try await requesting(urlRequest: reattempted, reattemptedRequests:reattemptedRequests)
 			}
 			catch {
-				fxdPrint("[\(#function)] \(error)")
+				fxdPrint("[\(#function)] reattempted: \(error)")
 				throw error
 			}
 		}
 
-		return dataAndResponseArray
+		return await safeDataAndReponseTuples.dataAndResponseArray
 	}
 }
