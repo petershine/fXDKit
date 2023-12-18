@@ -90,6 +90,11 @@ public actor DataAndResponseActor {
 	func count() -> Int {
 		return dataAndResponseArray.count
 	}
+
+	var caughtError: Error? = nil
+	func assignError(_ newError: Error?) {
+		caughtError = newError
+	}
 }
 
 extension URLSession {

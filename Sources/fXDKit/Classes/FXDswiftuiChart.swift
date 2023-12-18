@@ -51,12 +51,14 @@ open class FXDdataChart: NSObject, ObservableObject {
 			}
 			catch {
 				fxdPrint("\(error)")
+				await safeDataAndResponse.assignError(error)
 			}
 
 			await self?.processDataAndResponseArray(dataAndResponseArray: safeDataAndResponse.dataAndResponseArray)
 
 			await fxdPrint("dataAndResponseArray.count: \(safeDataAndResponse.count())")
 			let didSucceed = await safeDataAndResponse.count() > 0
+			let caughtError = await safeDataAndResponse.caughtError as? URLError
 
 			DispatchQueue.main.async {
 				[weak self] in
@@ -66,6 +68,11 @@ open class FXDdataChart: NSObject, ObservableObject {
 				}
 				else if !didSucceed {
 					UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self?.urlRequestHOST ?? "")\nTICKERS: \(tickers)")
+				}
+				else if caughtError != nil {
+					let errorTitle = (caughtError?.errorCode as? String) ?? "(no errorCode)"
+					let errorMessage = caughtError?.localizedDescription ?? "(no localizedDescription)"
+					UIAlertController.simpleAlert(withTitle: errorTitle, message: errorMessage)
 				}
 
 				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
