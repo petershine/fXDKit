@@ -35,7 +35,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 
 	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
-		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: !(timeout > TIMEOUT_LONGER || isCancellable))
+		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
 		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
 
 		let safeDataAndResponse = DataAndResponseActor()
