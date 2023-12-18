@@ -79,16 +79,16 @@ public enum SerializedURLRequestError: Error {
 }
 
 public actor DataAndResponseActor {
-	var dataAndResponseArray: [(Data, URLResponse)] = []
+	var dataAndResponseTuples: [(Data, URLResponse)] = []
 
 	func assign(_ newArray: [(Data, URLResponse)]) {
-		dataAndResponseArray = newArray
+		dataAndResponseTuples = newArray
 	}
 	func append(_ newElement: (Data, URLResponse)) {
-		dataAndResponseArray.append(newElement)
+		dataAndResponseTuples.append(newElement)
 	}
 	func count() -> Int {
-		return dataAndResponseArray.count
+		return dataAndResponseTuples.count
 	}
 
 	var caughtError: Error? = nil
@@ -98,14 +98,13 @@ public actor DataAndResponseActor {
 }
 
 extension URLSession {
-	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> [(Data, URLResponse)] {
+	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> DataAndResponseActor? {
 		guard urlRequests.count > 0 else {
 			throw SerializedURLRequestError.noRequests
 		}
 
 
-		let safeDataAndReponseTuples = DataAndResponseActor()
-
+		let safeDataAndResponse = DataAndResponseActor()
 		func requesting(urlRequest: URLRequest, reattemptedRequests: [URLRequest] = []) async throws {
 			guard !(progressConfiguration?.cancellableTask?.isCancelled ?? false) else {
 				fxdPrint("[\(#function)] isCancelled: \((progressConfiguration?.cancellableTask?.isCancelled ?? false))")
@@ -118,9 +117,9 @@ extension URLSession {
 			}
 
 
-			await safeDataAndReponseTuples.append((data, response))
+			await safeDataAndResponse.append((data, response))
 
-			let finishedCount = await safeDataAndReponseTuples.count()
+			let finishedCount = await safeDataAndResponse.count()
 			let progressValue: CGFloat = CGFloat(Float(finishedCount)/Float(urlRequests.count+reattemptedRequests.count))
 			DispatchQueue.main.async {
 				progressConfiguration?.sliderValue = progressValue
@@ -158,6 +157,6 @@ extension URLSession {
 			}
 		}
 
-		return await safeDataAndReponseTuples.dataAndResponseArray
+		return safeDataAndResponse
 	}
 }

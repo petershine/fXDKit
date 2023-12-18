@@ -38,29 +38,31 @@ open class FXDdataChart: NSObject, ObservableObject {
 		let progressConfiguration = FXDconfigurationInformation(shouldIgnoreUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
 		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
 
-		let safeDataAndResponse = DataAndResponseActor()
 
 		progressConfiguration.cancellableTask = Task {
 			[weak self] in
 
 			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers, timeout: timeout) ?? []
 
+			var safeDataAndResponse: DataAndResponseActor? = nil
 			do {
-				let received = try await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
-				await safeDataAndResponse.assign(received)
+				safeDataAndResponse = try await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
 			}
 			catch {
 				fxdPrint("\(error)")
-				await safeDataAndResponse.assignError(error)
+				if safeDataAndResponse == nil {
+					safeDataAndResponse = DataAndResponseActor()
+				}
+				await safeDataAndResponse?.assignError(error)
 			}
 
-			await self?.processDataAndResponseArray(dataAndResponseArray: safeDataAndResponse.dataAndResponseArray)
+			await self?.processDataAndResponseArray(dataAndResponseArray: safeDataAndResponse?.dataAndResponseTuples ?? [])
 
-			await fxdPrint("dataAndResponseArray.count: \(safeDataAndResponse.count())")
-			let didSucceed = await safeDataAndResponse.count() > 0
-			let caughtError = await safeDataAndResponse.caughtError as? URLError
+			await fxdPrint("dataAndResponseArray.count: \(safeDataAndResponse?.count() ?? 0)")
+			let didSucceed = await safeDataAndResponse?.count() ?? 0 > 0
+			let caughtError = await safeDataAndResponse?.caughtError
 
-			DispatchQueue.main.async {
+			await MainActor.run {
 				[weak self] in
 
 				if progressConfiguration.cancellableTask?.isCancelled ?? false {
@@ -70,7 +72,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 					UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self?.urlRequestHOST ?? "")\nTICKERS: \(tickers)")
 				}
 				else if caughtError != nil {
-					let errorTitle = (caughtError?.errorCode as? String) ?? "(no errorCode)"
+					let errorTitle = ((caughtError as? URLError)?.errorCode as? String) ?? "(no errorCode)"
 					let errorMessage = caughtError?.localizedDescription ?? "(no localizedDescription)"
 					UIAlertController.simpleAlert(withTitle: errorTitle, message: errorMessage)
 				}
