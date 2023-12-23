@@ -24,26 +24,18 @@ public struct FXDswiftuiLaunching: View {
 
 	public var body: some View {
 		ZStack {
-			if let backgroundImage {
-				Image(uiImage: backgroundImage)
+			if backgroundImage != nil {
+				Image(uiImage: backgroundImage!)
 					.resizable().scaledToFill().ignoresSafeArea()
 			}
 
-			if foregroundImage == nil {
-				VStack {
-					Image(systemName: "globe")
-						.imageScale(.large)
-						.foregroundStyle(.tint)
-					Text(appDisplayedName)
-				}
-			}
-			else if let foregroundImage {
+			if foregroundImage != nil {
 				if foregroundSize != .zero {
-					Image(uiImage: foregroundImage)
+					Image(uiImage: foregroundImage!)
 						.resizable().frame(width: foregroundSize.width, height: foregroundSize.height, alignment: .center)
 				}
 				else {
-					Image(uiImage: foregroundImage)
+					Image(uiImage: foregroundImage!)
 						.fixedSize()
 				}
 			}
