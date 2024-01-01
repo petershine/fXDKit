@@ -37,6 +37,28 @@ extension UIViewController {
 
 		return lastChildScene
 	}
+
+	public func addChildForScaleFit(child: UIViewController?) -> Bool {
+		guard let child else {
+			return false
+		}
+
+
+		addChild(child)
+		view.addSubview(child.view)
+
+		child.view.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			child.view.topAnchor.constraint(equalTo: view.topAnchor),
+			child.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+		])
+
+		child.didMove(toParent: self)
+
+		return true
+	}
 }
 
 extension UIViewController {
