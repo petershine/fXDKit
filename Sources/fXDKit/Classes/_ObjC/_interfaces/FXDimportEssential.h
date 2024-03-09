@@ -130,7 +130,7 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 @import Metal;
 
 @import AVFoundation;
-@import AssetsLibrary;	// AssetsLibrary is deprecated. Consider migrating to Photos instead.
+//@import AssetsLibrary;	// #warning AssetsLibrary will be removed from the iOS SDK in the next major release
 @import Photos;
 
 @import MediaPlayer;
