@@ -10,8 +10,6 @@ public let KEY_VIDEO_PUBLISHED_AT = "publishedAt"
 public let KEY_VIDEO_TITLE = "title"
 public let KEY_VIDEO_THUMBNAIL = "thumbnail"
 
-public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
-
 
 class FXDmoduleYoutube: NSObject {
 

@@ -16,6 +16,8 @@ public let LIMIT_CACHED_OBJ: Int = 1000
 
 public let MAXIMUM_LENGTH_TWEET: Int = 140
 
+public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
