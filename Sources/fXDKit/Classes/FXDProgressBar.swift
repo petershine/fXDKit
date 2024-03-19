@@ -4,6 +4,7 @@ import SwiftUI
 import Foundation
 
 
+@available(iOS 17.0, *)
 public struct FXDProgressBar: View {
 	fileprivate var maxValue: CGFloat = 1.0
 	fileprivate var barHeight: CGFloat = 4.0

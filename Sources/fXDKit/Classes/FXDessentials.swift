@@ -1,5 +1,8 @@
 
 
+import Foundation
+
+
 //MARK: Static constants
 public let MARGIN_DEFAULT: CGFloat = 8.0
 public let DIMENSION_TOUCHABLE: CGFloat = 44.0
@@ -45,17 +48,17 @@ public protocol FXDobserverNSManagedObject {
 }
 
 public protocol FXDprotocolAppConfig {
-    var appStoreID: String { get }
-    
-    var URIscheme: String { get }
+	var appStoreID: String { get }
 
-    var homeURL: String { get }
-    var shortHomeURL: String { get }
+	var URIscheme: String { get }
+
+	var homeURL: String { get }
+	var shortHomeURL: String { get }
 
 	var facebookURIscheme: String { get }
-    var twitterName: String { get }
-    
-    var contactEmail: String { get }
+	var twitterName: String { get }
+
+	var contactEmail: String { get }
 
 	var launchingBackgroundImagename: String { get }
 	var launchingForegroundImagename: String { get }
@@ -82,13 +85,13 @@ public protocol FXDrawString {
 import os.log
 
 public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    #if DEBUG
-    for item in items {
-        if let variable = item as? CVarArg {
-            os_log("%@", (String(describing: variable) as NSString))
-        }
-    }
-    #endif
+	#if DEBUG
+	for item in items {
+		if let variable = item as? CVarArg {
+			os_log("%@", (String(describing: variable) as NSString))
+		}
+	}
+	#endif
 }
 
 public func fxd_log(_ prefix: String? = nil, _ suffix: String? = nil, filename: String = #file, function: String = #function, line: Int = #line) {

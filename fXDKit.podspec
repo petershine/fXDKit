@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
 	s.name             = 'fXDKit'
-	s.version          = '0.1.7'
+	s.version          = '1.0.0'
 	s.summary          = 'Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012'
 	
 	s.description      = s.summary

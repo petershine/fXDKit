@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
 	s.name             = 'fXDObjC'
-	s.version          = '0.0.4'
+	s.version          = '0.0.5'
 	s.summary          = 'Objective-C module of fXDKit. Separated for robust compilation'
 	
 	s.description      = s.summary

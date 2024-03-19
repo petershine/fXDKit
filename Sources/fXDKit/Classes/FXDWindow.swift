@@ -1,5 +1,8 @@
 
 
+import UIKit
+
+
 extension UIWindow {
 	public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log()
 		guard nibName == nil else {
@@ -20,7 +23,7 @@ extension UIWindow {
 	}
 }
 
-
+@available(iOS 17.0, *)
 extension UIWindow {
 	private weak var currentActiveController: FXDhostedInformation? {
 		guard let activeController = rootViewController?.children.last as? FXDhostedInformation else {

@@ -2,7 +2,8 @@
 Personal and Professional collection of implementations and snippets, which have been included in most of my projects, since 2012.
 
 
-Currently, this kit is undergoing evolution, by translating source from Objective-C to Swift, and adopting modern practices.
+Currently, this kit is undergoing evolution, by translating sources from Objective-C to Swift, and adopting modern practices.\
+And reorganizing to follow Swift Package standards.
 
 
 ## Installation
@@ -17,7 +18,11 @@ pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
 
 ~~**Or, you can use Swift Package Manager, using git URL to this repository.**~~
 
-And import in your files as:
+**Some essentials are ready to be installed as Swift Package.\
+Currently available: 1.0.0**
+
+
+From the hosting app, import in your app as:
 ```swift
 import fXDObjC
 import fXDKit

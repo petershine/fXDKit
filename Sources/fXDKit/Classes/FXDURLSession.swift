@@ -1,6 +1,7 @@
 
 
 import Foundation
+import UIKit
 
 
 extension URLSession {
@@ -78,6 +79,7 @@ public enum SerializedURLRequestError: Error {
 	case timeoutExpired
 }
 
+@available(iOS 17.0, *)
 public actor DataAndResponseActor {
 	var dataAndResponseTuples: [(Data, URLResponse)] = []
 
@@ -97,6 +99,7 @@ public actor DataAndResponseActor {
 	}
 }
 
+@available(iOS 17.0, *)
 extension URLSession {
 	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> DataAndResponseActor? {
 		guard urlRequests.count > 0 else {

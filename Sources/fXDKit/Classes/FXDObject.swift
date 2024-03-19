@@ -1,7 +1,11 @@
 
 
+import Foundation
+
+
 fileprivate var cancellablesKey: UInt8 = 0
 
+@available(iOS 17.0, *)
 extension NSObject {
 	fileprivate var cancellables: [String : AnyCancellable?]? {
 		get {
@@ -16,6 +20,7 @@ extension NSObject {
 
 import Combine
 
+@available(iOS 17.0, *)
 extension NSObject {
 	public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil) -> AnyPublisher<String, Error> {
 		return Future<String, Error> { promise in
@@ -53,6 +58,7 @@ extension NSObject {
 	}
 }
 
+@available(iOS 17.0, *)
 extension NSObject {
 	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)?) {
 		let extendedIdentifier = String(describing: self) + identifier

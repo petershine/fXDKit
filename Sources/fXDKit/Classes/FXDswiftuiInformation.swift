@@ -3,6 +3,7 @@
 import SwiftUI
 
 
+@available(iOS 17.0, *)
 open class FXDconfigurationInformation: ObservableObject {
 	@Published open var shouldDismiss: Bool = false
 
@@ -32,6 +33,7 @@ open class FXDconfigurationInformation: ObservableObject {
 	}
 }
 
+@available(iOS 17.0, *)
 public struct FXDswiftuiInformation: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
@@ -85,17 +87,9 @@ public struct FXDswiftuiInformation: View {
 }
 
 
-struct POPswiftuiSettings_Previews: PreviewProvider {
-	static var previews: some View {
-		FXDswiftuiInformation()
-		FXDswiftuiInformation()
-			.preferredColorScheme(.dark)
-	}
-}
-
-
 import Combine
 
+@available(iOS 17.0, *)
 public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 	fileprivate var observedCancellable: AnyCancellable? = nil
 
@@ -146,6 +140,7 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 
 // Example usage
+@available(iOS 17.0, *)
 extension FXDconfigurationInformation {
 	public class func exampleCountingUp() -> FXDconfigurationInformation {
 

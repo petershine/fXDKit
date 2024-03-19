@@ -1,49 +1,54 @@
 
+
+import Foundation
+import UIKit
+
+
 extension Date {
-    public func formattedAgeText(since: Date = Date.init()) -> String? {
+	public func formattedAgeText(since: Date = Date.init()) -> String? {
 
-        let age = Int((since.timeIntervalSince1970) - timeIntervalSince1970)
-        let days = Int(age/60/60/24)
+		let age = Int((since.timeIntervalSince1970) - timeIntervalSince1970)
+		let days = Int(age/60/60/24)
 
-        var ageText: String? = nil
-        
-        if days > 7 {
-            ageText = description.components(separatedBy: " ").first
-        }
-        else if days > 0 && days <= 7 {
-            ageText = "\(days) day"
+		var ageText: String? = nil
 
-            if (days > 1) {
-                ageText = ageText! + "s"
-            }
-        }
-        else {
-            let seconds = age % 60
-            let minutes = (age/60) % 60
-            let hours = (age/60/60) % 24
+		if days > 7 {
+			ageText = description.components(separatedBy: " ").first
+		}
+		else if days > 0 && days <= 7 {
+			ageText = "\(days) day"
 
-            ageText = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-        }
+			if (days > 1) {
+				ageText = ageText! + "s"
+			}
+		}
+		else {
+			let seconds = age % 60
+			let minutes = (age/60) % 60
+			let hours = (age/60/60) % 24
 
-        return ageText
-    }
+			ageText = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+		}
+
+		return ageText
+	}
 }
 
 extension Double {
-    public func formattedDistanceText(format: String = "%0.1f") -> String? {
-        var distanceText: String? = nil
+	public func formattedDistanceText(format: String = "%0.1f") -> String? {
+		var distanceText: String? = nil
 
-        if self >= 1000.0 {
-            distanceText = String(format: format + " km", self/1000.0)
-        }
-        else {
-            distanceText = String(format: format + " m", self)
-        }
+		if self >= 1000.0 {
+			distanceText = String(format: format + " km", self/1000.0)
+		}
+		else {
+			distanceText = String(format: format + " m", self)
+		}
 
-        //TODO: use miles for US users
+		//TODO: use miles for US users
 
-        return distanceText
-    }
+		return distanceText
+	}
 }
 
 extension IndexPath {
@@ -53,48 +58,75 @@ extension IndexPath {
 }
 
 extension String {
-    public func sharableMessageWith(videoId: String?) -> String? {
-        var formatted = self
-        
-        let videoPath = (videoId != nil && (videoId?.count)! > 0) ? "\(HOST_SHORT_YOUTUBE)\(videoId!)" : ""
-        
-        guard let swiftrange = formatted.range(of: HOST_SHORT_YOUTUBE) else {
-            return "\(formatted) \(videoPath)".trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        
-        
-        var replacingRange = NSRange(swiftrange, in: formatted)
-        replacingRange.length = videoPath.count //MARK: Assume every short url is same length
-        if let swiftrange = Range(replacingRange, in: formatted) {
-            formatted = formatted.replacingCharacters(in: swiftrange, with: videoPath).trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        
-        return formatted
-    }
-    
-    public func sharableMessageWith(appConfig: FXDprotocolAppConfig) -> String? {
-        var formatted = self
-        
-        let appendedLinkArray = [
-            " via \(appConfig.homeURL)",
-            " \(appConfig.homeURL)",
-            
-            " via \(appConfig.shortHomeURL)",
-            " \(appConfig.shortHomeURL)",
-            
-            " via \(appConfig.twitterName)",
-            " \(appConfig.twitterName)",
-        ]
-        
-        for appendedLink in appendedLinkArray {
-            if formatted.count + appendedLink.count <= MAXIMUM_LENGTH_TWEET {
-                formatted = formatted + appendedLink
-                break
-            }
-        }
-        
-        return formatted
-    }
+	public func sharableMessageWith(videoId: String?) -> String? {
+		var formatted = self
+
+		let videoPath = (videoId != nil && (videoId?.count)! > 0) ? "\(HOST_SHORT_YOUTUBE)\(videoId!)" : ""
+
+		guard let swiftrange = formatted.range(of: HOST_SHORT_YOUTUBE) else {
+			return "\(formatted) \(videoPath)".trimmingCharacters(in: .whitespacesAndNewlines)
+		}
+
+
+		var replacingRange = NSRange(swiftrange, in: formatted)
+		replacingRange.length = videoPath.count //MARK: Assume every short url is same length
+		if let swiftrange = Range(replacingRange, in: formatted) {
+			formatted = formatted.replacingCharacters(in: swiftrange, with: videoPath).trimmingCharacters(in: .whitespacesAndNewlines)
+		}
+
+		return formatted
+	}
+
+	public func sharableMessageWith(appConfig: FXDprotocolAppConfig) -> String? {
+		var formatted = self
+
+		let appendedLinkArray = [
+			" via \(appConfig.homeURL)",
+			" \(appConfig.homeURL)",
+
+			" via \(appConfig.shortHomeURL)",
+			" \(appConfig.shortHomeURL)",
+
+			" via \(appConfig.twitterName)",
+			" \(appConfig.twitterName)",
+		]
+
+		for appendedLink in appendedLinkArray {
+			if formatted.count + appendedLink.count <= MAXIMUM_LENGTH_TWEET {
+				formatted = formatted + appendedLink
+				break
+			}
+		}
+
+		return formatted
+	}
+
+	public func processedJSONData() -> Data? {
+		var resultString = ""
+		var isInQuotes = false
+		var previousCharacter: Character?
+
+		for character in self {
+			switch character {
+			case "\"":
+				if previousCharacter != "\\" {
+					isInQuotes = !isInQuotes
+				}
+				resultString.append(character)
+			case "\n", "\r":
+				if isInQuotes {
+					resultString.append("\\n")
+				} else {
+					resultString.append(character)
+				}
+			default:
+				resultString.append(character)
+			}
+			previousCharacter = character
+		}
+
+		return resultString.data(using: .utf8)
+	}
 }
 
 extension Bundle {
@@ -108,27 +140,28 @@ extension Bundle {
 }
 
 
+@available(iOS 17.0, *)
 extension UIAlertController {
 	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
 		self.simpleAlert(withTitle: title,
-		                 message: message,
-		                 cancelText: nil,
-		                 fromScene: nil,
-		                 handler: nil)
+						 message: message,
+						 cancelText: nil,
+						 fromScene: nil,
+						 handler: nil)
 	}
 
 	@objc public class func simpleAlert(withTitle title: String?, message: String?,
-	                             cancelText: String?,
-	                             fromScene: UIViewController?,
-	                             handler: ((UIAlertAction) -> Swift.Void)?) {
+								 cancelText: String?,
+								 fromScene: UIViewController?,
+								 handler: ((UIAlertAction) -> Swift.Void)?) {
 
 		let alert = UIAlertController(title: title,
-		                              message: message,
-		                              preferredStyle: .alert)
+									  message: message,
+									  preferredStyle: .alert)
 
 		let cancelAction = UIAlertAction(title: ((cancelText != nil) ? cancelText! : NSLocalizedString("OK", comment: "")),
-		                                 style: .cancel,
-		                                 handler: handler)
+										 style: .cancel,
+										 handler: handler)
 
 		alert.addAction(cancelAction)
 
@@ -143,13 +176,14 @@ extension UIAlertController {
 
 		DispatchQueue.main.async {
 			presentingScene?.present(alert,
-			                         animated: true,
-			                         completion: nil)
+									 animated: true,
+									 completion: nil)
 		}
 	}
 }
 
 
+@available(iOS 17.0, *)
 extension UIApplication {
 	@objc public func mainWindow() -> UIWindow? {
 		return connectedScenes
