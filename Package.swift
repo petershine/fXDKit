@@ -23,11 +23,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "fXDKit",
-//			dependencies: [.target(name: "fXDObjC")],
-			path: "Sources/fXDKit",
-            exclude: ["Classes/_ObjC", "Classes/_dependent"],
-            sources: ["Classes"]
-//            resources: [.process("Resources")],
+			exclude: ["../fXDObjC", "_to_be_packaged"]
 		)
     ]
 )
