@@ -81,7 +81,7 @@ public enum SerializedURLRequestError: Error {
 
 @available(iOS 17.0, *)
 public actor DataAndResponseActor {
-	var dataAndResponseTuples: [(Data, URLResponse)] = []
+	public var dataAndResponseTuples: [(Data, URLResponse)] = []
 
 	func assign(_ newArray: [(Data, URLResponse)]) {
 		dataAndResponseTuples = newArray
@@ -93,7 +93,7 @@ public actor DataAndResponseActor {
 		return dataAndResponseTuples.count
 	}
 
-	var caughtError: Error? = nil
+	public var caughtError: Error? = nil
 	func assignError(_ newError: Error?) {
 		caughtError = newError
 	}
