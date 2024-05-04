@@ -3,33 +3,25 @@ Personal and Professional collection of implementations and snippets, which have
 
 
 Currently, this kit is undergoing evolution, by translating sources from Objective-C to Swift, and adopting modern practices.\
-And reorganizing to follow Swift Package standards.
+Recently, this kit is reorganized to follow Swift Package standards.
 
 
 ## Installation
 
-fXDKit is available using [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+fXDKit is available using SPM (while using old fXDObjC as .xcframework) and CocoaPods.
 
+
+To install using CocoaPods, simply add the following line to your Podfile:
 ```ruby
-pod 'fXDObjC', :git => 'https://github.com/petershine/fXDKit.git' # Obj-C dependency
 pod 'fXDKit', :git => 'https://github.com/petershine/fXDKit.git'
+pod 'fXDObjC', :git => 'https://github.com/petershine/fXDKit.git' # Obj-C dependency
 ```
-
-~~**Or, you can use Swift Package Manager, using git URL to this repository.**~~
-
-**Some essentials are ready to be installed as Swift Package.\
-Currently available: 1.0.0**
 
 
 From the hosting app, import in your app as:
 ```swift
-import fXDObjC
 import fXDKit
-```
-```objectivec
-@import fXDObjC;
-@import fXDKit;
+import fXDObjC
 ```
 
 ## Author
