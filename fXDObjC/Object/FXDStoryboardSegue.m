@@ -63,7 +63,7 @@
 	return shouldUseNavigationPush;
 }
 
-- (instancetype)mainContainerOfClass:(Class)classObject {
+- (id)mainContainerOfClass:(Class)classObject {
 
 	id mainContainer = self.sourceViewController;
 	

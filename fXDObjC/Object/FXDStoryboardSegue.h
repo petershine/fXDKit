@@ -10,7 +10,7 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldUseNavigationPush;
 
-- (instancetype)mainContainerOfClass:(Class)classObject;
+- (id)mainContainerOfClass:(Class)classObject;	//"id" is utilized to avoid "Cast from 'FXDsegueCover?' to unrelated type failure"
 
 @end
 
