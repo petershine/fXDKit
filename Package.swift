@@ -28,7 +28,8 @@ let package = Package(
 		.target(
 			name: "fXDKit",
 			dependencies: ["fXDObjC"],
-			path: "Sources"
+			path: "Sources",
+			exclude: ["../fXDObjC"]
 		)
 	]
 )
