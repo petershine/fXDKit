@@ -10,7 +10,7 @@
 
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldUseNavigationPush;
 
-- (id)mainContainerOfClass:(Class)class;
+- (instancetype)mainContainerOfClass:(Class)classObject;
 
 @end
 
