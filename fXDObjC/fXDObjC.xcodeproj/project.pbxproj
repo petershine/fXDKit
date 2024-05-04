@@ -1,0 +1,636 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D939ED922BE6AD7400267D9C /* FXDImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4B2BE6AD7400267D9C /* FXDImageView.h */; };
+		D939ED932BE6AD7400267D9C /* FXDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED4C2BE6AD7400267D9C /* FXDImageView.m */; };
+		D939ED942BE6AD7400267D9C /* FXDMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4D2BE6AD7400267D9C /* FXDMapView.h */; };
+		D939ED952BE6AD7400267D9C /* FXDMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED4E2BE6AD7400267D9C /* FXDMapView.m */; };
+		D939ED962BE6AD7400267D9C /* FXDPopoverBackgroundView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4F2BE6AD7400267D9C /* FXDPopoverBackgroundView.h */; };
+		D939ED972BE6AD7400267D9C /* FXDPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED502BE6AD7400267D9C /* FXDPopoverBackgroundView.m */; };
+		D939ED982BE6AD7400267D9C /* FXDScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED512BE6AD7400267D9C /* FXDScrollView.h */; };
+		D939ED992BE6AD7400267D9C /* FXDScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED522BE6AD7400267D9C /* FXDScrollView.m */; };
+		D939ED9A2BE6AD7400267D9C /* FXDTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED532BE6AD7400267D9C /* FXDTableViewCell.h */; };
+		D939ED9B2BE6AD7400267D9C /* FXDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED542BE6AD7400267D9C /* FXDTableViewCell.m */; };
+		D939ED9C2BE6AD7400267D9C /* FXDTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED552BE6AD7400267D9C /* FXDTextView.h */; };
+		D939ED9D2BE6AD7400267D9C /* FXDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED562BE6AD7400267D9C /* FXDTextView.m */; };
+		D939ED9E2BE6AD7400267D9C /* FXDView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED572BE6AD7400267D9C /* FXDView.h */; };
+		D939ED9F2BE6AD7400267D9C /* FXDView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED582BE6AD7400267D9C /* FXDView.m */; };
+		D939EDA02BE6AD7400267D9C /* FXDViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED592BE6AD7400267D9C /* FXDViewController.h */; };
+		D939EDA12BE6AD7400267D9C /* FXDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED5A2BE6AD7400267D9C /* FXDViewController.m */; };
+		D939EDA22BE6AD7400267D9C /* FXDconfigDeveloper.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED5C2BE6AD7400267D9C /* FXDconfigDeveloper.h */; };
+		D939EDA32BE6AD7400267D9C /* FXDimportEssential.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED5D2BE6AD7400267D9C /* FXDimportEssential.h */; };
+		D939EDA42BE6AD7400267D9C /* FXDimportEssential.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED5E2BE6AD7400267D9C /* FXDimportEssential.m */; };
+		D939EDA52BE6AD7400267D9C /* FXDmacroFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED5F2BE6AD7400267D9C /* FXDmacroFunction.h */; };
+		D939EDA62BE6AD7400267D9C /* FXDmacroValue.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED602BE6AD7400267D9C /* FXDmacroValue.h */; };
+		D939EDA72BE6AD7400267D9C /* FXDmoduleCaches.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED622BE6AD7400267D9C /* FXDmoduleCaches.h */; };
+		D939EDA82BE6AD7400267D9C /* FXDmoduleCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED632BE6AD7400267D9C /* FXDmoduleCaches.m */; };
+		D939EDA92BE6AD7400267D9C /* FXDmoduleCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED642BE6AD7400267D9C /* FXDmoduleCapture.h */; };
+		D939EDAA2BE6AD7400267D9C /* FXDmoduleCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED652BE6AD7400267D9C /* FXDmoduleCapture.m */; };
+		D939EDAB2BE6AD7400267D9C /* FXDmoduleDocuments.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED662BE6AD7400267D9C /* FXDmoduleDocuments.h */; };
+		D939EDAC2BE6AD7400267D9C /* FXDmoduleDocuments.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED672BE6AD7400267D9C /* FXDmoduleDocuments.m */; };
+		D939EDAD2BE6AD7400267D9C /* FXDmoduleGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED682BE6AD7400267D9C /* FXDmoduleGlobal.h */; };
+		D939EDAE2BE6AD7400267D9C /* FXDmoduleGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED692BE6AD7400267D9C /* FXDmoduleGlobal.m */; };
+		D939EDAF2BE6AD7400267D9C /* FXDmoduleMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED6A2BE6AD7400267D9C /* FXDmoduleMusic.h */; };
+		D939EDB02BE6AD7400267D9C /* FXDmoduleMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED6B2BE6AD7400267D9C /* FXDmoduleMusic.m */; };
+		D939EDB12BE6AD7400267D9C /* FXDmoduleNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED6C2BE6AD7400267D9C /* FXDmoduleNetworking.h */; };
+		D939EDB22BE6AD7400267D9C /* FXDmoduleNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED6D2BE6AD7400267D9C /* FXDmoduleNetworking.m */; };
+		D939EDB32BE6AD7400267D9C /* FXDmodulePlayback.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED6E2BE6AD7400267D9C /* FXDmodulePlayback.h */; };
+		D939EDB42BE6AD7400267D9C /* FXDmodulePlayback.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED6F2BE6AD7400267D9C /* FXDmodulePlayback.m */; };
+		D939EDB52BE6AD7400267D9C /* FXDmoduleQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED702BE6AD7400267D9C /* FXDmoduleQuery.h */; };
+		D939EDB62BE6AD7400267D9C /* FXDmoduleQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED712BE6AD7400267D9C /* FXDmoduleQuery.m */; };
+		D939EDB72BE6AD7400267D9C /* FXDmoduleSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED722BE6AD7400267D9C /* FXDmoduleSearch.h */; };
+		D939EDB82BE6AD7400267D9C /* FXDmoduleSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED732BE6AD7400267D9C /* FXDmoduleSearch.m */; };
+		D939EDB92BE6AD7400267D9C /* FXDmoduleTile.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED742BE6AD7400267D9C /* FXDmoduleTile.h */; };
+		D939EDBA2BE6AD7400267D9C /* FXDmoduleTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED752BE6AD7400267D9C /* FXDmoduleTile.m */; };
+		D939EDBB2BE6AD7400267D9C /* FXDCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED772BE6AD7400267D9C /* FXDCollectionViewLayout.h */; };
+		D939EDBC2BE6AD7400267D9C /* FXDCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED782BE6AD7400267D9C /* FXDCollectionViewLayout.m */; };
+		D939EDBD2BE6AD7400267D9C /* FXDDate.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED792BE6AD7400267D9C /* FXDDate.h */; };
+		D939EDBE2BE6AD7400267D9C /* FXDDate.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED7A2BE6AD7400267D9C /* FXDDate.m */; };
+		D939EDBF2BE6AD7400267D9C /* FXDFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED7B2BE6AD7400267D9C /* FXDFileManager.h */; };
+		D939EDC02BE6AD7400267D9C /* FXDFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED7C2BE6AD7400267D9C /* FXDFileManager.m */; };
+		D939EDC12BE6AD7400267D9C /* FXDImage.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED7D2BE6AD7400267D9C /* FXDImage.h */; };
+		D939EDC22BE6AD7400267D9C /* FXDImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED7E2BE6AD7400267D9C /* FXDImage.m */; };
+		D939EDC32BE6AD7400267D9C /* FXDManagedDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED7F2BE6AD7400267D9C /* FXDManagedDocument.h */; };
+		D939EDC42BE6AD7400267D9C /* FXDManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED802BE6AD7400267D9C /* FXDManagedDocument.m */; };
+		D939EDC52BE6AD7400267D9C /* FXDManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED812BE6AD7400267D9C /* FXDManagedObject.h */; };
+		D939EDC62BE6AD7400267D9C /* FXDManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED822BE6AD7400267D9C /* FXDManagedObject.m */; };
+		D939EDC72BE6AD7400267D9C /* FXDManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED832BE6AD7400267D9C /* FXDManagedObjectContext.h */; };
+		D939EDC82BE6AD7400267D9C /* FXDManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED842BE6AD7400267D9C /* FXDManagedObjectContext.m */; };
+		D939EDC92BE6AD7400267D9C /* FXDMetadataQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED852BE6AD7400267D9C /* FXDMetadataQuery.h */; };
+		D939EDCA2BE6AD7400267D9C /* FXDMetadataQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED862BE6AD7400267D9C /* FXDMetadataQuery.m */; };
+		D939EDCB2BE6AD7400267D9C /* FXDNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED872BE6AD7400267D9C /* FXDNumber.h */; };
+		D939EDCC2BE6AD7400267D9C /* FXDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED882BE6AD7400267D9C /* FXDNumber.m */; };
+		D939EDCD2BE6AD7400267D9C /* FXDOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED892BE6AD7400267D9C /* FXDOperationQueue.h */; };
+		D939EDCE2BE6AD7400267D9C /* FXDOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED8A2BE6AD7400267D9C /* FXDOperationQueue.m */; };
+		D939EDCF2BE6AD7400267D9C /* FXDStoryboardSegue.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED8B2BE6AD7400267D9C /* FXDStoryboardSegue.h */; };
+		D939EDD02BE6AD7400267D9C /* FXDStoryboardSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED8C2BE6AD7400267D9C /* FXDStoryboardSegue.m */; };
+		D939EDD12BE6AD7400267D9C /* FXDString.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED8D2BE6AD7400267D9C /* FXDString.h */; };
+		D939EDD22BE6AD7400267D9C /* FXDString.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED8E2BE6AD7400267D9C /* FXDString.m */; };
+		D939EDD32BE6AD7400267D9C /* FXDURL.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED8F2BE6AD7400267D9C /* FXDURL.h */; };
+		D939EDD42BE6AD7400267D9C /* FXDURL.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED902BE6AD7400267D9C /* FXDURL.m */; };
+		D939EDD62BE6AD8900267D9C /* fXDObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = D939EDD52BE6AD8900267D9C /* fXDObjC.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D939ED3F2BE6AC8600267D9C /* fXDObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = fXDObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D939ED4B2BE6AD7400267D9C /* FXDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDImageView.h; sourceTree = "<group>"; };
+		D939ED4C2BE6AD7400267D9C /* FXDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDImageView.m; sourceTree = "<group>"; };
+		D939ED4D2BE6AD7400267D9C /* FXDMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDMapView.h; sourceTree = "<group>"; };
+		D939ED4E2BE6AD7400267D9C /* FXDMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDMapView.m; sourceTree = "<group>"; };
+		D939ED4F2BE6AD7400267D9C /* FXDPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDPopoverBackgroundView.h; sourceTree = "<group>"; };
+		D939ED502BE6AD7400267D9C /* FXDPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDPopoverBackgroundView.m; sourceTree = "<group>"; };
+		D939ED512BE6AD7400267D9C /* FXDScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDScrollView.h; sourceTree = "<group>"; };
+		D939ED522BE6AD7400267D9C /* FXDScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDScrollView.m; sourceTree = "<group>"; };
+		D939ED532BE6AD7400267D9C /* FXDTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDTableViewCell.h; sourceTree = "<group>"; };
+		D939ED542BE6AD7400267D9C /* FXDTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDTableViewCell.m; sourceTree = "<group>"; };
+		D939ED552BE6AD7400267D9C /* FXDTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDTextView.h; sourceTree = "<group>"; };
+		D939ED562BE6AD7400267D9C /* FXDTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDTextView.m; sourceTree = "<group>"; };
+		D939ED572BE6AD7400267D9C /* FXDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDView.h; sourceTree = "<group>"; };
+		D939ED582BE6AD7400267D9C /* FXDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDView.m; sourceTree = "<group>"; };
+		D939ED592BE6AD7400267D9C /* FXDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDViewController.h; sourceTree = "<group>"; };
+		D939ED5A2BE6AD7400267D9C /* FXDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDViewController.m; sourceTree = "<group>"; };
+		D939ED5C2BE6AD7400267D9C /* FXDconfigDeveloper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDconfigDeveloper.h; sourceTree = "<group>"; };
+		D939ED5D2BE6AD7400267D9C /* FXDimportEssential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDimportEssential.h; sourceTree = "<group>"; };
+		D939ED5E2BE6AD7400267D9C /* FXDimportEssential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDimportEssential.m; sourceTree = "<group>"; };
+		D939ED5F2BE6AD7400267D9C /* FXDmacroFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmacroFunction.h; sourceTree = "<group>"; };
+		D939ED602BE6AD7400267D9C /* FXDmacroValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmacroValue.h; sourceTree = "<group>"; };
+		D939ED622BE6AD7400267D9C /* FXDmoduleCaches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleCaches.h; sourceTree = "<group>"; };
+		D939ED632BE6AD7400267D9C /* FXDmoduleCaches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleCaches.m; sourceTree = "<group>"; };
+		D939ED642BE6AD7400267D9C /* FXDmoduleCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleCapture.h; sourceTree = "<group>"; };
+		D939ED652BE6AD7400267D9C /* FXDmoduleCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleCapture.m; sourceTree = "<group>"; };
+		D939ED662BE6AD7400267D9C /* FXDmoduleDocuments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleDocuments.h; sourceTree = "<group>"; };
+		D939ED672BE6AD7400267D9C /* FXDmoduleDocuments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleDocuments.m; sourceTree = "<group>"; };
+		D939ED682BE6AD7400267D9C /* FXDmoduleGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleGlobal.h; sourceTree = "<group>"; };
+		D939ED692BE6AD7400267D9C /* FXDmoduleGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleGlobal.m; sourceTree = "<group>"; };
+		D939ED6A2BE6AD7400267D9C /* FXDmoduleMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleMusic.h; sourceTree = "<group>"; };
+		D939ED6B2BE6AD7400267D9C /* FXDmoduleMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleMusic.m; sourceTree = "<group>"; };
+		D939ED6C2BE6AD7400267D9C /* FXDmoduleNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleNetworking.h; sourceTree = "<group>"; };
+		D939ED6D2BE6AD7400267D9C /* FXDmoduleNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleNetworking.m; sourceTree = "<group>"; };
+		D939ED6E2BE6AD7400267D9C /* FXDmodulePlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmodulePlayback.h; sourceTree = "<group>"; };
+		D939ED6F2BE6AD7400267D9C /* FXDmodulePlayback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmodulePlayback.m; sourceTree = "<group>"; };
+		D939ED702BE6AD7400267D9C /* FXDmoduleQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleQuery.h; sourceTree = "<group>"; };
+		D939ED712BE6AD7400267D9C /* FXDmoduleQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleQuery.m; sourceTree = "<group>"; };
+		D939ED722BE6AD7400267D9C /* FXDmoduleSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleSearch.h; sourceTree = "<group>"; };
+		D939ED732BE6AD7400267D9C /* FXDmoduleSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleSearch.m; sourceTree = "<group>"; };
+		D939ED742BE6AD7400267D9C /* FXDmoduleTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDmoduleTile.h; sourceTree = "<group>"; };
+		D939ED752BE6AD7400267D9C /* FXDmoduleTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDmoduleTile.m; sourceTree = "<group>"; };
+		D939ED772BE6AD7400267D9C /* FXDCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDCollectionViewLayout.h; sourceTree = "<group>"; };
+		D939ED782BE6AD7400267D9C /* FXDCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDCollectionViewLayout.m; sourceTree = "<group>"; };
+		D939ED792BE6AD7400267D9C /* FXDDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDDate.h; sourceTree = "<group>"; };
+		D939ED7A2BE6AD7400267D9C /* FXDDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDDate.m; sourceTree = "<group>"; };
+		D939ED7B2BE6AD7400267D9C /* FXDFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDFileManager.h; sourceTree = "<group>"; };
+		D939ED7C2BE6AD7400267D9C /* FXDFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDFileManager.m; sourceTree = "<group>"; };
+		D939ED7D2BE6AD7400267D9C /* FXDImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDImage.h; sourceTree = "<group>"; };
+		D939ED7E2BE6AD7400267D9C /* FXDImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDImage.m; sourceTree = "<group>"; };
+		D939ED7F2BE6AD7400267D9C /* FXDManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDManagedDocument.h; sourceTree = "<group>"; };
+		D939ED802BE6AD7400267D9C /* FXDManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDManagedDocument.m; sourceTree = "<group>"; };
+		D939ED812BE6AD7400267D9C /* FXDManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDManagedObject.h; sourceTree = "<group>"; };
+		D939ED822BE6AD7400267D9C /* FXDManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDManagedObject.m; sourceTree = "<group>"; };
+		D939ED832BE6AD7400267D9C /* FXDManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDManagedObjectContext.h; sourceTree = "<group>"; };
+		D939ED842BE6AD7400267D9C /* FXDManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDManagedObjectContext.m; sourceTree = "<group>"; };
+		D939ED852BE6AD7400267D9C /* FXDMetadataQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDMetadataQuery.h; sourceTree = "<group>"; };
+		D939ED862BE6AD7400267D9C /* FXDMetadataQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDMetadataQuery.m; sourceTree = "<group>"; };
+		D939ED872BE6AD7400267D9C /* FXDNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDNumber.h; sourceTree = "<group>"; };
+		D939ED882BE6AD7400267D9C /* FXDNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDNumber.m; sourceTree = "<group>"; };
+		D939ED892BE6AD7400267D9C /* FXDOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDOperationQueue.h; sourceTree = "<group>"; };
+		D939ED8A2BE6AD7400267D9C /* FXDOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDOperationQueue.m; sourceTree = "<group>"; };
+		D939ED8B2BE6AD7400267D9C /* FXDStoryboardSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDStoryboardSegue.h; sourceTree = "<group>"; };
+		D939ED8C2BE6AD7400267D9C /* FXDStoryboardSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDStoryboardSegue.m; sourceTree = "<group>"; };
+		D939ED8D2BE6AD7400267D9C /* FXDString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDString.h; sourceTree = "<group>"; };
+		D939ED8E2BE6AD7400267D9C /* FXDString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDString.m; sourceTree = "<group>"; };
+		D939ED8F2BE6AD7400267D9C /* FXDURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDURL.h; sourceTree = "<group>"; };
+		D939ED902BE6AD7400267D9C /* FXDURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDURL.m; sourceTree = "<group>"; };
+		D939EDD52BE6AD8900267D9C /* fXDObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fXDObjC.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D939ED3C2BE6AC8600267D9C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D939ED352BE6AC8600267D9C = {
+			isa = PBXGroup;
+			children = (
+				D939EDD52BE6AD8900267D9C /* fXDObjC.h */,
+				D939ED612BE6AD7400267D9C /* _interfaces */,
+				D939ED762BE6AD7400267D9C /* _module */,
+				D939ED912BE6AD7400267D9C /* Object */,
+				D939ED5B2BE6AD7400267D9C /* View */,
+				D939ED402BE6AC8600267D9C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D939ED402BE6AC8600267D9C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D939ED3F2BE6AC8600267D9C /* fXDObjC.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D939ED5B2BE6AD7400267D9C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D939ED4B2BE6AD7400267D9C /* FXDImageView.h */,
+				D939ED4C2BE6AD7400267D9C /* FXDImageView.m */,
+				D939ED4D2BE6AD7400267D9C /* FXDMapView.h */,
+				D939ED4E2BE6AD7400267D9C /* FXDMapView.m */,
+				D939ED4F2BE6AD7400267D9C /* FXDPopoverBackgroundView.h */,
+				D939ED502BE6AD7400267D9C /* FXDPopoverBackgroundView.m */,
+				D939ED512BE6AD7400267D9C /* FXDScrollView.h */,
+				D939ED522BE6AD7400267D9C /* FXDScrollView.m */,
+				D939ED532BE6AD7400267D9C /* FXDTableViewCell.h */,
+				D939ED542BE6AD7400267D9C /* FXDTableViewCell.m */,
+				D939ED552BE6AD7400267D9C /* FXDTextView.h */,
+				D939ED562BE6AD7400267D9C /* FXDTextView.m */,
+				D939ED572BE6AD7400267D9C /* FXDView.h */,
+				D939ED582BE6AD7400267D9C /* FXDView.m */,
+				D939ED592BE6AD7400267D9C /* FXDViewController.h */,
+				D939ED5A2BE6AD7400267D9C /* FXDViewController.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D939ED612BE6AD7400267D9C /* _interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				D939ED5C2BE6AD7400267D9C /* FXDconfigDeveloper.h */,
+				D939ED5D2BE6AD7400267D9C /* FXDimportEssential.h */,
+				D939ED5E2BE6AD7400267D9C /* FXDimportEssential.m */,
+				D939ED5F2BE6AD7400267D9C /* FXDmacroFunction.h */,
+				D939ED602BE6AD7400267D9C /* FXDmacroValue.h */,
+			);
+			path = _interfaces;
+			sourceTree = "<group>";
+		};
+		D939ED762BE6AD7400267D9C /* _module */ = {
+			isa = PBXGroup;
+			children = (
+				D939ED622BE6AD7400267D9C /* FXDmoduleCaches.h */,
+				D939ED632BE6AD7400267D9C /* FXDmoduleCaches.m */,
+				D939ED642BE6AD7400267D9C /* FXDmoduleCapture.h */,
+				D939ED652BE6AD7400267D9C /* FXDmoduleCapture.m */,
+				D939ED662BE6AD7400267D9C /* FXDmoduleDocuments.h */,
+				D939ED672BE6AD7400267D9C /* FXDmoduleDocuments.m */,
+				D939ED682BE6AD7400267D9C /* FXDmoduleGlobal.h */,
+				D939ED692BE6AD7400267D9C /* FXDmoduleGlobal.m */,
+				D939ED6A2BE6AD7400267D9C /* FXDmoduleMusic.h */,
+				D939ED6B2BE6AD7400267D9C /* FXDmoduleMusic.m */,
+				D939ED6C2BE6AD7400267D9C /* FXDmoduleNetworking.h */,
+				D939ED6D2BE6AD7400267D9C /* FXDmoduleNetworking.m */,
+				D939ED6E2BE6AD7400267D9C /* FXDmodulePlayback.h */,
+				D939ED6F2BE6AD7400267D9C /* FXDmodulePlayback.m */,
+				D939ED702BE6AD7400267D9C /* FXDmoduleQuery.h */,
+				D939ED712BE6AD7400267D9C /* FXDmoduleQuery.m */,
+				D939ED722BE6AD7400267D9C /* FXDmoduleSearch.h */,
+				D939ED732BE6AD7400267D9C /* FXDmoduleSearch.m */,
+				D939ED742BE6AD7400267D9C /* FXDmoduleTile.h */,
+				D939ED752BE6AD7400267D9C /* FXDmoduleTile.m */,
+			);
+			path = _module;
+			sourceTree = "<group>";
+		};
+		D939ED912BE6AD7400267D9C /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				D939ED772BE6AD7400267D9C /* FXDCollectionViewLayout.h */,
+				D939ED782BE6AD7400267D9C /* FXDCollectionViewLayout.m */,
+				D939ED792BE6AD7400267D9C /* FXDDate.h */,
+				D939ED7A2BE6AD7400267D9C /* FXDDate.m */,
+				D939ED7B2BE6AD7400267D9C /* FXDFileManager.h */,
+				D939ED7C2BE6AD7400267D9C /* FXDFileManager.m */,
+				D939ED7D2BE6AD7400267D9C /* FXDImage.h */,
+				D939ED7E2BE6AD7400267D9C /* FXDImage.m */,
+				D939ED7F2BE6AD7400267D9C /* FXDManagedDocument.h */,
+				D939ED802BE6AD7400267D9C /* FXDManagedDocument.m */,
+				D939ED812BE6AD7400267D9C /* FXDManagedObject.h */,
+				D939ED822BE6AD7400267D9C /* FXDManagedObject.m */,
+				D939ED832BE6AD7400267D9C /* FXDManagedObjectContext.h */,
+				D939ED842BE6AD7400267D9C /* FXDManagedObjectContext.m */,
+				D939ED852BE6AD7400267D9C /* FXDMetadataQuery.h */,
+				D939ED862BE6AD7400267D9C /* FXDMetadataQuery.m */,
+				D939ED872BE6AD7400267D9C /* FXDNumber.h */,
+				D939ED882BE6AD7400267D9C /* FXDNumber.m */,
+				D939ED892BE6AD7400267D9C /* FXDOperationQueue.h */,
+				D939ED8A2BE6AD7400267D9C /* FXDOperationQueue.m */,
+				D939ED8B2BE6AD7400267D9C /* FXDStoryboardSegue.h */,
+				D939ED8C2BE6AD7400267D9C /* FXDStoryboardSegue.m */,
+				D939ED8D2BE6AD7400267D9C /* FXDString.h */,
+				D939ED8E2BE6AD7400267D9C /* FXDString.m */,
+				D939ED8F2BE6AD7400267D9C /* FXDURL.h */,
+				D939ED902BE6AD7400267D9C /* FXDURL.m */,
+			);
+			path = Object;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D939ED3A2BE6AC8600267D9C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D939ED962BE6AD7400267D9C /* FXDPopoverBackgroundView.h in Headers */,
+				D939EDAF2BE6AD7400267D9C /* FXDmoduleMusic.h in Headers */,
+				D939ED942BE6AD7400267D9C /* FXDMapView.h in Headers */,
+				D939EDA52BE6AD7400267D9C /* FXDmacroFunction.h in Headers */,
+				D939EDCF2BE6AD7400267D9C /* FXDStoryboardSegue.h in Headers */,
+				D939EDC52BE6AD7400267D9C /* FXDManagedObject.h in Headers */,
+				D939EDB32BE6AD7400267D9C /* FXDmodulePlayback.h in Headers */,
+				D939EDD32BE6AD7400267D9C /* FXDURL.h in Headers */,
+				D939EDB72BE6AD7400267D9C /* FXDmoduleSearch.h in Headers */,
+				D939EDBD2BE6AD7400267D9C /* FXDDate.h in Headers */,
+				D939EDBF2BE6AD7400267D9C /* FXDFileManager.h in Headers */,
+				D939EDC32BE6AD7400267D9C /* FXDManagedDocument.h in Headers */,
+				D939EDBB2BE6AD7400267D9C /* FXDCollectionViewLayout.h in Headers */,
+				D939EDCD2BE6AD7400267D9C /* FXDOperationQueue.h in Headers */,
+				D939ED982BE6AD7400267D9C /* FXDScrollView.h in Headers */,
+				D939EDCB2BE6AD7400267D9C /* FXDNumber.h in Headers */,
+				D939EDC12BE6AD7400267D9C /* FXDImage.h in Headers */,
+				D939EDAB2BE6AD7400267D9C /* FXDmoduleDocuments.h in Headers */,
+				D939EDC72BE6AD7400267D9C /* FXDManagedObjectContext.h in Headers */,
+				D939EDAD2BE6AD7400267D9C /* FXDmoduleGlobal.h in Headers */,
+				D939EDC92BE6AD7400267D9C /* FXDMetadataQuery.h in Headers */,
+				D939ED922BE6AD7400267D9C /* FXDImageView.h in Headers */,
+				D939EDA92BE6AD7400267D9C /* FXDmoduleCapture.h in Headers */,
+				D939EDA62BE6AD7400267D9C /* FXDmacroValue.h in Headers */,
+				D939EDA32BE6AD7400267D9C /* FXDimportEssential.h in Headers */,
+				D939EDA22BE6AD7400267D9C /* FXDconfigDeveloper.h in Headers */,
+				D939ED9E2BE6AD7400267D9C /* FXDView.h in Headers */,
+				D939EDD12BE6AD7400267D9C /* FXDString.h in Headers */,
+				D939EDB92BE6AD7400267D9C /* FXDmoduleTile.h in Headers */,
+				D939EDD62BE6AD8900267D9C /* fXDObjC.h in Headers */,
+				D939EDB12BE6AD7400267D9C /* FXDmoduleNetworking.h in Headers */,
+				D939EDB52BE6AD7400267D9C /* FXDmoduleQuery.h in Headers */,
+				D939ED9A2BE6AD7400267D9C /* FXDTableViewCell.h in Headers */,
+				D939ED9C2BE6AD7400267D9C /* FXDTextView.h in Headers */,
+				D939EDA72BE6AD7400267D9C /* FXDmoduleCaches.h in Headers */,
+				D939EDA02BE6AD7400267D9C /* FXDViewController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D939ED3E2BE6AC8600267D9C /* fXDObjC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D939ED482BE6AC8600267D9C /* Build configuration list for PBXNativeTarget "fXDObjC" */;
+			buildPhases = (
+				D939ED3A2BE6AC8600267D9C /* Headers */,
+				D939ED3B2BE6AC8600267D9C /* Sources */,
+				D939ED3C2BE6AC8600267D9C /* Frameworks */,
+				D939ED3D2BE6AC8600267D9C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fXDObjC;
+			productName = fXDObjC;
+			productReference = D939ED3F2BE6AC8600267D9C /* fXDObjC.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D939ED362BE6AC8600267D9C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					D939ED3E2BE6AC8600267D9C = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = D939ED392BE6AC8600267D9C /* Build configuration list for PBXProject "fXDObjC" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D939ED352BE6AC8600267D9C;
+			productRefGroup = D939ED402BE6AC8600267D9C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D939ED3E2BE6AC8600267D9C /* fXDObjC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D939ED3D2BE6AC8600267D9C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D939ED3B2BE6AC8600267D9C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D939EDB22BE6AD7400267D9C /* FXDmoduleNetworking.m in Sources */,
+				D939ED9D2BE6AD7400267D9C /* FXDTextView.m in Sources */,
+				D939EDC22BE6AD7400267D9C /* FXDImage.m in Sources */,
+				D939EDBE2BE6AD7400267D9C /* FXDDate.m in Sources */,
+				D939ED9F2BE6AD7400267D9C /* FXDView.m in Sources */,
+				D939ED9B2BE6AD7400267D9C /* FXDTableViewCell.m in Sources */,
+				D939EDCC2BE6AD7400267D9C /* FXDNumber.m in Sources */,
+				D939EDBA2BE6AD7400267D9C /* FXDmoduleTile.m in Sources */,
+				D939EDAC2BE6AD7400267D9C /* FXDmoduleDocuments.m in Sources */,
+				D939ED972BE6AD7400267D9C /* FXDPopoverBackgroundView.m in Sources */,
+				D939EDCA2BE6AD7400267D9C /* FXDMetadataQuery.m in Sources */,
+				D939EDC02BE6AD7400267D9C /* FXDFileManager.m in Sources */,
+				D939EDA12BE6AD7400267D9C /* FXDViewController.m in Sources */,
+				D939EDA42BE6AD7400267D9C /* FXDimportEssential.m in Sources */,
+				D939EDC62BE6AD7400267D9C /* FXDManagedObject.m in Sources */,
+				D939ED992BE6AD7400267D9C /* FXDScrollView.m in Sources */,
+				D939EDAE2BE6AD7400267D9C /* FXDmoduleGlobal.m in Sources */,
+				D939ED952BE6AD7400267D9C /* FXDMapView.m in Sources */,
+				D939EDB42BE6AD7400267D9C /* FXDmodulePlayback.m in Sources */,
+				D939EDCE2BE6AD7400267D9C /* FXDOperationQueue.m in Sources */,
+				D939EDB62BE6AD7400267D9C /* FXDmoduleQuery.m in Sources */,
+				D939EDC42BE6AD7400267D9C /* FXDManagedDocument.m in Sources */,
+				D939EDC82BE6AD7400267D9C /* FXDManagedObjectContext.m in Sources */,
+				D939EDBC2BE6AD7400267D9C /* FXDCollectionViewLayout.m in Sources */,
+				D939EDD02BE6AD7400267D9C /* FXDStoryboardSegue.m in Sources */,
+				D939EDAA2BE6AD7400267D9C /* FXDmoduleCapture.m in Sources */,
+				D939ED932BE6AD7400267D9C /* FXDImageView.m in Sources */,
+				D939EDB82BE6AD7400267D9C /* FXDmoduleSearch.m in Sources */,
+				D939EDD42BE6AD7400267D9C /* FXDURL.m in Sources */,
+				D939EDA82BE6AD7400267D9C /* FXDmoduleCaches.m in Sources */,
+				D939EDB02BE6AD7400267D9C /* FXDmoduleMusic.m in Sources */,
+				D939EDD22BE6AD7400267D9C /* FXDString.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D939ED462BE6AC8600267D9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D939ED472BE6AC8600267D9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D939ED492BE6AC8600267D9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 63DC79S99Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fxceed.fXDObjC;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D939ED4A2BE6AC8600267D9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 63DC79S99Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fxceed.fXDObjC;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D939ED392BE6AC8600267D9C /* Build configuration list for PBXProject "fXDObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D939ED462BE6AC8600267D9C /* Debug */,
+				D939ED472BE6AC8600267D9C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D939ED482BE6AC8600267D9C /* Build configuration list for PBXNativeTarget "fXDObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D939ED492BE6AC8600267D9C /* Debug */,
+				D939ED4A2BE6AC8600267D9C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D939ED362BE6AC8600267D9C /* Project object */;
+}
