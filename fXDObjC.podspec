@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
 	'fXDObjC/View/*.{h,m}',
 	'fXDObjC/Object/*.{h,m}']
 	
-	s.exclude_files = ['fXDObjC/fXDObj.h']
+	s.exclude_files = ['fXDObjC/fXDObj.h','fXDObjC/xcframeworks/*.*']
 
 end
