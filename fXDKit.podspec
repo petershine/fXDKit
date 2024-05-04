@@ -17,7 +17,6 @@ Pod::Spec.new do |s|
 	s.swift_version = '5.0'
 	s.source_files = 'Sources/**/*.swift'
 	s.resources = 'Sources/Resources/*.*'
-	s.resource_bundles = {'fXDKit' => ['Pod/**/*.xib']}
 	
 	s.dependency 'fXDObjC'
 end

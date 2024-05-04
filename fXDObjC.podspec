@@ -1,9 +1,9 @@
 
 Pod::Spec.new do |s|
 	s.name             = 'fXDObjC'
-	s.version          = '0.0.5'
-	s.summary          = 'Objective-C module of fXDKit. Separated for robust compilation'
-	
+	s.version          = '1.0.0'
+	s.summary          = 'Objective-C module of fXDKit. Separated for stable compilation'
+
 	s.description      = s.summary
 	
 	s.homepage         = 'https://github.com/petershine/fXDKit'
@@ -15,6 +15,12 @@ Pod::Spec.new do |s|
 	s.ios.deployment_target = '17.0'
 	
 	s.swift_version = '5.0'
-	s.source_files = 'fXDObjC/**/*.{h,m}'
+	s.source_files = [
+	'fXDObjC/_interfaces/*.{h,m}',
+	'fXDObjC/_module/*.{h,m}',
+	'fXDObjC/View/*.{h,m}',
+	'fXDObjC/Object/*.{h,m}']
 	
+	s.exclude_files = ['fXDObjC/fXDObj.h']
+
 end
