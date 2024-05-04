@@ -1,5 +1,8 @@
 
 
+import Foundation
+
+
 public let ENDPOINT_YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
 
 public let NODE_YOUTUBE_ROOT = "items"

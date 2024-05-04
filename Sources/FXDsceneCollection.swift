@@ -1,5 +1,8 @@
 
 
+import UIKit
+
+
 open class FXDsceneCollection: UIViewController, FXDscrollableCells {
 	deinit {
 		self.cellOperationQueue?.cancelAllOperations()
