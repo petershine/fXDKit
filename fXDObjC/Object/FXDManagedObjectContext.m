@@ -4,7 +4,7 @@
 
 
 @implementation NSManagedObjectContext (Essential)
-- (NSFetchedResultsController*)resultsControllerForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSFetchedResultsController*_Nullable)resultsControllerForEntityName:(NSString*_Nullable)entityName withSortDescriptors:(NSArray*_Nullable)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
@@ -34,7 +34,7 @@
 	return resultsController;
 }
 
-- (id)firstFetchedObjForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (id _Nullable )firstFetchedObjForEntityName:(NSString*_Nullable)entityName withSortDescriptors:(NSArray*_Nullable)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSArray *fetchedObjArray = [self
 								fetchedObjArrayForEntityName:entityName
@@ -45,7 +45,7 @@
 	return fetchedObjArray.firstObject;
 }
 
-- (NSArray*)fetchedObjArrayForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSArray*_Nullable)fetchedObjArrayForEntityName:(NSString*_Nullable)entityName withSortDescriptors:(NSArray*_Nullable)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSFetchRequest *fetchRequest = [self
 									fetchRequestForEntityName:entityName
@@ -74,7 +74,7 @@
 	return fetchedObjArray;
 }
 
-- (NSFetchRequest*)fetchRequestForEntityName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
+- (NSFetchRequest*_Nullable)fetchRequestForEntityName:(NSString*_Nullable)entityName withSortDescriptors:(NSArray*_Nullable)sortDescriptors withPredicate:(nullable NSPredicate*)predicate withLimit:(NSUInteger)limit {
 
 	NSAssert2((entityName && sortDescriptors), @"MUST NOT be nil: %@, %@", _Object(entityName), _Object(sortDescriptors));
 	
