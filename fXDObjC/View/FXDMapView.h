@@ -1,6 +1,6 @@
 
 
-@import MapKit;
+#import <MapKit/MapKit.h>
 
 #import <fXDObjC/FXDimportEssential.h>
 

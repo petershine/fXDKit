@@ -1,12 +1,12 @@
 
+
+#import <CoreData/CoreData.h>
+
 #import <fXDObjC/FXDimportEssential.h>
 
 #define limitInfiniteFetch	0
 #define limitDefaultFetch	1000
 #define sizeDefaultBatch	20
-
-
-@import CoreData;
 
 
 @interface NSManagedObjectContext (Essential)

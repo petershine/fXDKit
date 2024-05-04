@@ -11,24 +11,23 @@
 #import <Availability.h>
 #import <TargetConditionals.h>
 
-@import SystemConfiguration;
-@import MobileCoreServices;	// MobileCoreServices has been renamed. Use CoreServices instead.
-@import CoreServices;
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <CoreServices/CoreServices.h>
 
-@import CoreData;
+#import <CoreData/CoreData.h>
 
-@import CoreGraphics;
-@import CoreImage;
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreImage/CoreImage.h>
 
-@import QuartzCore;
-@import ImageIO;
+#import <QuartzCore/QuartzCore.h>
+#import <ImageIO/ImageIO.h>
 
-@import MessageUI;
-@import Accounts;
-@import Social;
+#import <MessageUI/MessageUI.h>
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 
-@import UserNotifications;
-@import UserNotificationsUI;
+#import <UserNotifications/UserNotifications.h>
+#import <UserNotificationsUI/UserNotificationsUI.h>
 
 
 #import <fXDObjC/FXDconfigDeveloper.h>
@@ -116,25 +115,25 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 @end
 
 
-@import CoreLocation;
-@import MapKit;
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 @interface CLLocation (LocationFrameworks)
 - (NSString*)formattedDistanceTextFromLocation:(CLLocation*)location;
 @end
 
 
-@import CoreMedia;
-@import CoreVideo;
-@import OpenGLES;	// OpenGLES is deprecated. Consider migrating to Metal instead.
-@import Metal;
+#import <CoreMedia/CoreMedia.h>
+#import <CoreVideo/CoreVideo.h>
+#import <OpenGLES/OpenGLESAvailability.h>	// OpenGLES is deprecated. Consider migrating to Metal instead.
+#import <Metal/Metal.h>
 
-@import AVFoundation;
-//@import AssetsLibrary;	// #warning AssetsLibrary will be removed from the iOS SDK in the next major release
-@import Photos;
+#import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>	// #warning AssetsLibrary will be removed from the iOS SDK in the next major release
+#import <Photos/Photos.h>
 
-@import MediaPlayer;
-@import MediaToolbox;
+#import <MediaPlayer/MediaPlayer.h>
+#import <MediaToolbox/MediaToolbox.h>
 
 @interface CALayer (MultimediaFrameworks)
 - (void)applyFadeInOutWithFadeInTime:(CFTimeInterval)fadeInTime withFadeOutTime:(CFTimeInterval)fadeOutTime withDuration:(CFTimeInterval)duration;

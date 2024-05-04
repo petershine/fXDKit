@@ -1,7 +1,7 @@
 
 #import <fXDObjC/FXDimportEssential.h>
 
-@import UniformTypeIdentifiers;
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 
 typedef NS_ENUM(NSInteger, FILE_KIND_TYPE) {
