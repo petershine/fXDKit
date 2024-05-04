@@ -129,7 +129,6 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 #import <Metal/Metal.h>
 
 #import <AVFoundation/AVFoundation.h>
-#import <AssetsLibrary/AssetsLibrary.h>	// #warning AssetsLibrary will be removed from the iOS SDK in the next major release
 #import <Photos/Photos.h>
 
 #import <MediaPlayer/MediaPlayer.h>
