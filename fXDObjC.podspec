@@ -16,11 +16,14 @@ Pod::Spec.new do |s|
 	
 	s.swift_version = '5.0'
 	s.source_files = [
-	'fXDObjC/_interfaces/*.{h,m}',
-	'fXDObjC/_module/*.{h,m}',
-	'fXDObjC/View/*.{h,m}',
-	'fXDObjC/Object/*.{h,m}']
+		'fXDObjC/_interfaces/*.{h,m}',
+		'fXDObjC/_module/*.{h,m}',
+		'fXDObjC/View/*.{h,m}',
+		'fXDObjC/Object/*.{h,m}']
 	
-	s.exclude_files = ['fXDObjC/fXDObj.h','fXDObjC/xcframeworks/*.*']
+	s.exclude_files = [
+		'fXDObjC/*.h',
+		'fXDObjC/*.sh',
+		'fXDObjC/xcframeworks/*.*']
 
 end
