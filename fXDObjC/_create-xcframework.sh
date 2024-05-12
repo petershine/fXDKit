@@ -19,11 +19,14 @@ xcodebuild archive -project "$projectName".xcodeproj \
     -archivePath "$folderName/$archiveName-Simulator"
 
 
-rm -rf $folderName/$frameworkName.xcframework
-
 xcodebuild -create-xcframework \
     -archive $folderName/$archiveName.xcarchive \
     -framework $frameworkName.framework \
     -archive $folderName/$archiveName-Simulator.xcarchive \
     -framework $frameworkName.framework \
     -output $folderName/$frameworkName.xcframework
+
+
+cp -pRP $folderName/$frameworkName.xcframework ../
+
+rm -rf $folderName

@@ -147,6 +147,7 @@
 		D939ED8F2BE6AD7400267D9C /* FXDURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDURL.h; sourceTree = "<group>"; };
 		D939ED902BE6AD7400267D9C /* FXDURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDURL.m; sourceTree = "<group>"; };
 		D939EDD52BE6AD8900267D9C /* fXDObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fXDObjC.h; sourceTree = "<group>"; };
+		D9AB7E642BF14D4C008DC691 /* _create-xcframework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "_create-xcframework.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +164,7 @@
 		D939ED352BE6AC8600267D9C = {
 			isa = PBXGroup;
 			children = (
+				D9AB7E642BF14D4C008DC691 /* _create-xcframework.sh */,
 				D939EDD52BE6AD8900267D9C /* fXDObjC.h */,
 				D939ED612BE6AD7400267D9C /* _interfaces */,
 				D939ED762BE6AD7400267D9C /* _module */,
