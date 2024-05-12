@@ -23,7 +23,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
 		.binaryTarget(
 			name: "fXDObjC",
-			path: "fXDObjC/xcframeworks/fXDObjC.xcframework"
+			path: "fXDObjC.xcframework"
 		),
 		.target(
 			name: "fXDKit",
