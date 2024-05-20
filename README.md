@@ -18,7 +18,7 @@ pod 'fXDObjC', :git => 'https://github.com/petershine/fXDKit.git' # Obj-C depend
 ```
 
 
-From the hosting app, import in your app as:
+For the hosting app, import fXDKit like:
 ```swift
 import fXDKit
 import fXDObjC
