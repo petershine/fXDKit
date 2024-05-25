@@ -6,8 +6,8 @@ import UIKit
 
 extension URLSession {
 	public func synchronousURLRequest(urlRequest: URLRequest, asyncOperation: BlockOperation?, synchronousDataHandling:((Data?)->Void)?) {
-		assert((Thread.isMainThread == false || asyncOperation == nil), "\(#function) : Thread.isMainThread : \(Thread.isMainThread), asyncOperation == nil : \(asyncOperation == nil)")
-		guard (Thread.isMainThread == false || asyncOperation == nil) else {
+		assert((Thread.isMainThread == false || asyncOperation != nil), "\(#function) : Thread.isMainThread : \(Thread.isMainThread), asyncOperation != nil : \(asyncOperation != nil)")
+		guard (Thread.isMainThread == false || asyncOperation != nil) else {
 			synchronousDataHandling?(nil)
 			return	// while this operation is synchronous, it should be run inside non-mainThread, for data transferring and data transforming, without blocking mainThread
 		}
