@@ -8,6 +8,7 @@ open class FXDconfigurationInformation: ObservableObject {
 	@Published open var shouldDismiss: Bool = false
 
 	@Published open var overlayColor: UIColor? = nil
+	@Published open var overlayAlpha: CGFloat
 	@Published open var shouldIgnoreUserInteraction: Bool
 
 	@Published open var informationTitle: String = ""
@@ -19,13 +20,15 @@ open class FXDconfigurationInformation: ObservableObject {
 
 	var cancellableTask: Task<Void, Error>? = nil
 
-	public init(overlayColor: UIColor? = nil, 
+	public init(overlayColor: UIColor? = nil,
+				overlayAlpha: CGFloat = 0.75,
 				shouldIgnoreUserInteraction: Bool? = false,
 				
 				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
 
 		self.overlayColor = overlayColor
+		self.overlayAlpha = overlayAlpha
 		self.shouldIgnoreUserInteraction = shouldIgnoreUserInteraction ?? false
 		
 		self.sliderValue = sliderValue ?? 0.0
@@ -71,7 +74,7 @@ public struct FXDswiftuiInformation: View {
 		.contentShape(Rectangle())
 		.presentationBackground(
 			Color(uiColor: configuration.overlayColor ?? (colorScheme == .dark ? .black : .white))
-				.opacity(0.75)
+				.opacity(configuration.overlayAlpha)
 		)
 		.allowsHitTesting(!configuration.shouldIgnoreUserInteraction)
 		.onTapGesture {
@@ -113,7 +116,7 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 			let interfaceStyle = self?.traitCollection.userInterfaceStyle
 
-			self?.view.backgroundColor = self?.rootView.configuration.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(0.75)
+			self?.view.backgroundColor = self?.rootView.configuration.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(self?.rootView.configuration.overlayAlpha ?? 0.75)
 		}
 
 		reactToTraitChanges()
