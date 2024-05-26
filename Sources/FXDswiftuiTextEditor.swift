@@ -8,7 +8,7 @@ struct FXDTextEditorModifier: ViewModifier {
 	func body(content: Content) -> some View {
 		content
 			.scrollContentBackground(.hidden)
-			.background(.black)
+			.backgroundStyle(.black)
 			.foregroundStyle(.white)
 			.cornerRadius(10.0)
 			.overlay {
@@ -73,10 +73,12 @@ public struct FXDswiftuiTextEditor: View {
 				HStack {
 					Spacer()
 
-					FXDswiftuiButton(action: {
-						finishedEditing(editedParagraph_0, editedParagraph_1, editedText)
-						dismiss()
-					}, systemImageName: "pencil.and.list.clipboard")
+					FXDswiftuiButton(
+						systemImageName: "pencil.and.list.clipboard",
+						action: {
+							finishedEditing(editedParagraph_0, editedParagraph_1, editedText)
+							dismiss()
+						})
 				}
 			}
 			.padding()

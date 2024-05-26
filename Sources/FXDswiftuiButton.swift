@@ -9,19 +9,19 @@ let touchableDimension: CGFloat = 50.0
 @available(iOS 17.0, *)
 struct FXDButtonModifier: ViewModifier {
 	var frame: CGRect = CGRect(x: 0.0, y: 0.0, width: touchableDimension, height: touchableDimension)
-	var backgroundColor: Color = .white
-	var foregroundColor: Color = .black
+	var foregroundStyle: Color = .black
+	var backgroundStyle: Color = .white
 	var cornerRadius: CGFloat = (touchableDimension/5.0)
 
 	func body(content: Content) -> some View {
 		content
 			.frame(width: frame.size.width, height: frame.size.height)
-			.background(backgroundColor)
-			.foregroundColor(foregroundColor)
+			.foregroundStyle(foregroundStyle)
+			.backgroundStyle(backgroundStyle)
 			.cornerRadius(cornerRadius)
 			.overlay {
 				RoundedRectangle(cornerRadius: cornerRadius)
-					.stroke(Color.black, lineWidth: (cornerRadius/2.0))
+					.stroke(foregroundStyle, lineWidth: (cornerRadius/2.0))
 			}
 	}
 }
@@ -29,12 +29,16 @@ struct FXDButtonModifier: ViewModifier {
 
 @available(iOS 17.0, *)
 public struct FXDswiftuiButton: View {
-	var action: () -> Void
 	var systemImageName: String
+	var foregroundStyle: Color
+	var backgroundStyle: Color
+	var action: () -> Void
 
-	public init(action: @escaping () -> Void, systemImageName: String) {
-		self.action = action
+	public init(systemImageName: String, foregroundStyle: Color = .black, backgroundStyle: Color = .white, action: @escaping () -> Void) {
 		self.systemImageName = systemImageName
+		self.foregroundStyle = foregroundStyle
+		self.backgroundStyle = backgroundStyle
+		self.action = action
 	}
 	
 	public var body: some View {
@@ -44,6 +48,6 @@ public struct FXDswiftuiButton: View {
 				.aspectRatio(contentMode: .fit)
 				.padding(5.0)
 		}
-		.modifier(FXDButtonModifier())
+		.modifier(FXDButtonModifier(foregroundStyle: foregroundStyle, backgroundStyle: backgroundStyle))
 	}
 }
