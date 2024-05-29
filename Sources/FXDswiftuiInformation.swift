@@ -94,7 +94,7 @@ import Combine
 
 @available(iOS 17.0, *)
 public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
-	fileprivate var observedCancellable: AnyCancellable? = nil
+	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
 	override public func didMove(toParent parent: UIViewController?) {
 		super.didMove(toParent: parent)
@@ -128,15 +128,25 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 		}
 
 
-		self.observedCancellable = self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
+		self.rootView.configuration.$overlayAlpha.sink {
+			(overlayAlpha) in
+
+			reactToTraitChanges()
+		}
+		.store(in: &self.cancellableObservers)
+
+
+		self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
 			[weak self] (shouldDismiss) in
 
 			if shouldDismiss {
 				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
 			}
 
-			self?.observedCancellable = nil
+			self?.cancellableObservers.forEach({ $0.cancel() })
+			self?.cancellableObservers = []
 		})
+		.store(in: &self.cancellableObservers)
 	}
 }
 
