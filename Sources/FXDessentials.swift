@@ -84,8 +84,13 @@ public protocol FXDrawString {
 //MARK: Logging
 import os.log
 
-public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n", quiet: Bool = false) {
 	#if DEBUG
+	// Instead of just not using this function, "quiet=" can keep it in the source, and later control it as needed.
+	guard !quiet else {
+		return
+	}
+
 	for item in items {
 		if let variable = item as? CVarArg {
 			os_log("%@", (String(describing: variable) as NSString))
