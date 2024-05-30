@@ -7,7 +7,7 @@ public protocol FXDprotocolInformation: ObservableObject {
 	var shouldDismiss: Bool { get set }
 
 	var overlayColor: UIColor? { get set }
-	var overlayAlpha: CGFloat? { get set }
+	var overlayAlpha: CGFloat { get set }
 	var shouldIgnoreUserInteraction: Bool { get set }
 
 	var informationTitle: String? { get set }
@@ -24,7 +24,7 @@ open class FXDconfigurationInformation: FXDprotocolInformation {
 	@Published open var shouldDismiss: Bool = false
 
 	@Published open var overlayColor: UIColor? = nil
-	@Published open var overlayAlpha: CGFloat? = nil
+	@Published open var overlayAlpha: CGFloat
 	@Published open var shouldIgnoreUserInteraction: Bool = false
 
 	@Published open var informationTitle: String? = nil
@@ -37,14 +37,14 @@ open class FXDconfigurationInformation: FXDprotocolInformation {
 	public var cancellableTask: Task<Void, Error>? = nil
 
 	public init(overlayColor: UIColor? = nil,
-				overlayAlpha: CGFloat = 0.75,
+				overlayAlpha: CGFloat? = 0.75,
 				shouldIgnoreUserInteraction: Bool? = false,
 				
 				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
 
 		self.overlayColor = overlayColor
-		self.overlayAlpha = overlayAlpha
+		self.overlayAlpha = overlayAlpha ?? 0.75
 		self.shouldIgnoreUserInteraction = shouldIgnoreUserInteraction ?? false
 		
 		self.sliderValue = sliderValue ?? 0.0
@@ -89,7 +89,7 @@ public struct FXDswiftuiInformation: View {
 		.contentShape(Rectangle())
 		.presentationBackground(
 			Color(uiColor: configuration.overlayColor ?? (colorScheme == .dark ? .black : .white))
-				.opacity(configuration.overlayAlpha ?? 0.0)
+				.opacity(configuration.overlayAlpha)
 		)
 		.allowsHitTesting(!configuration.shouldIgnoreUserInteraction)
 		.onTapGesture {
