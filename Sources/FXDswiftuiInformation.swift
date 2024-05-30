@@ -3,22 +3,38 @@
 import SwiftUI
 
 
-@available(iOS 17.0, *)
-open class FXDconfigurationInformation: ObservableObject {
+public protocol FXDprotocolInformation: ObservableObject {
+	var shouldDismiss: Bool { get set }
+
+	var overlayColor: UIColor? { get set }
+	var overlayAlpha: CGFloat? { get set }
+	var shouldIgnoreUserInteraction: Bool { get set }
+
+	var informationTitle: String? { get set }
+	var message_0: String? { get set }
+	var message_1: String? { get set }
+
+	var sliderValue: CGFloat? { get set }
+	var sliderTint: Color? { get set }
+
+	var cancellableTask: Task<Void, Error>? { get set }
+}
+
+open class FXDconfigurationInformation: FXDprotocolInformation {
 	@Published open var shouldDismiss: Bool = false
 
 	@Published open var overlayColor: UIColor? = nil
-	@Published open var overlayAlpha: CGFloat
-	@Published open var shouldIgnoreUserInteraction: Bool
+	@Published open var overlayAlpha: CGFloat? = nil
+	@Published open var shouldIgnoreUserInteraction: Bool = false
 
-	@Published open var informationTitle: String = ""
-	@Published open var message_0: String = ""
-	@Published open var message_1: String = ""
+	@Published open var informationTitle: String? = nil
+	@Published open var message_0: String? = nil
+	@Published open var message_1: String? = nil
 
-	@Published open var sliderValue: CGFloat
+	@Published open var sliderValue: CGFloat? = nil
 	@Published open var sliderTint: Color? = nil
 
-	var cancellableTask: Task<Void, Error>? = nil
+	public var cancellableTask: Task<Void, Error>? = nil
 
 	public init(overlayColor: UIColor? = nil,
 				overlayAlpha: CGFloat = 0.75,
@@ -36,7 +52,6 @@ open class FXDconfigurationInformation: ObservableObject {
 	}
 }
 
-@available(iOS 17.0, *)
 public struct FXDswiftuiInformation: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
@@ -50,23 +65,23 @@ public struct FXDswiftuiInformation: View {
 
     public var body: some View {
 		VStack {
-			Text(configuration.informationTitle)
+			Text(configuration.informationTitle ?? "TITLE")
 				.font(.title)
 				.fontWeight(.bold)
 
-			Text(configuration.message_0)
+			Text(configuration.message_0 ?? "MESSAGE_0")
 
 			ProgressView()
 				.controlSize(.large)
 				.frame(alignment: .center)
 
-			FXDProgressBar(value: $configuration.sliderValue)
+			FXDProgressBar(value: Binding.constant(configuration.sliderValue ?? 0.0))
 				.tint(configuration.sliderTint)
-				.opacity(configuration.sliderValue > 0.0 ? 1.0 : 0.0)
+				.opacity((configuration.sliderValue ?? 0.0) > 0.0 ? 1.0 : 0.0)
 				.allowsHitTesting(false)
 				.padding()
 
-			Text(configuration.message_1)
+			Text(configuration.message_1 ?? "MESSAGE_1")
 		}
 		.ignoresSafeArea(.all)
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -74,7 +89,7 @@ public struct FXDswiftuiInformation: View {
 		.contentShape(Rectangle())
 		.presentationBackground(
 			Color(uiColor: configuration.overlayColor ?? (colorScheme == .dark ? .black : .white))
-				.opacity(configuration.overlayAlpha)
+				.opacity(configuration.overlayAlpha ?? 0.0)
 		)
 		.allowsHitTesting(!configuration.shouldIgnoreUserInteraction)
 		.onTapGesture {
@@ -92,7 +107,6 @@ public struct FXDswiftuiInformation: View {
 
 import Combine
 
-@available(iOS 17.0, *)
 public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
@@ -153,7 +167,6 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 
 // Example usage
-@available(iOS 17.0, *)
 extension FXDconfigurationInformation {
 	public class func exampleCountingUp() -> FXDconfigurationInformation {
 
