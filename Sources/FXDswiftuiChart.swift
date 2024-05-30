@@ -35,18 +35,18 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 
 	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
-		let progressConfiguration = FXDobservableOverlay(shouldIgnoreUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
-		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, configuration: progressConfiguration)
+		let progressObservable = FXDobservableOverlay(shouldIgnoreUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
+		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, observable: progressObservable)
 
 
-		progressConfiguration.cancellableTask = Task {
+		progressObservable.cancellableTask = Task {
 			[weak self] in
 
 			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers, timeout: timeout) ?? []
 
 			var safeDataAndResponse: DataAndResponseActor? = nil
 			do {
-				safeDataAndResponse = try await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressConfiguration)
+				safeDataAndResponse = try await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressObservable)
 			}
 			catch {
 				fxdPrint("\(error)")
@@ -65,7 +65,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 			await MainActor.run {
 				[weak self] in
 
-				if progressConfiguration.cancellableTask?.isCancelled ?? false {
+				if progressObservable.cancellableTask?.isCancelled ?? false {
 					UIAlertController.simpleAlert(withTitle: "CANCELLED", message: nil)
 				}
 				else if !didSucceed {

@@ -33,28 +33,28 @@ extension UIWindow {
 		return activeController
 	}
 
-	public func showWaiting(configuration: FXDobservableOverlay? = nil) {
+	public func showWaiting(observable: FXDobservableOverlay? = nil) {
 		let activeController = currentActiveController
 		guard activeController == nil && activeController?.view.superview == nil else {
 			return
 		}
 
 
-		let waitingController = FXDhostedOverlay(rootView: FXDswiftuiOverlay(configuration: configuration ?? FXDobservableOverlay()))
+		let waitingOverlay = FXDhostedOverlay(rootView: FXDswiftuiOverlay(observable: observable))
 
-		rootViewController?.addChild(waitingController)
-		rootViewController?.view.addSubview(waitingController.view)
-		waitingController.didMove(toParent: rootViewController)
+		rootViewController?.addChild(waitingOverlay)
+		rootViewController?.view.addSubview(waitingOverlay.view)
+		waitingOverlay.didMove(toParent: rootViewController)
 
-		waitingController.view.alpha = 0.0
-		waitingController.view.isHidden = false
+		waitingOverlay.view.alpha = 0.0
+		waitingOverlay.view.isHidden = false
 
-		bringSubviewToFront(waitingController.view)
+		bringSubviewToFront(waitingOverlay.view)
 
 		UIView
 			.animate(withDuration: DURATION_ANIMATION,
 					 animations: {
-						waitingController.view.alpha = 1.0
+						waitingOverlay.view.alpha = 1.0
 			})
 	}
 
@@ -79,12 +79,12 @@ extension UIWindow {
 		}
 	}
 
-	public func showWaitingView(afterDelay: TimeInterval, configuration: FXDobservableOverlay? = nil) {
+	public func showWaitingView(afterDelay: TimeInterval, observable: FXDobservableOverlay? = nil) {
 		cancelAsyncTask()
 		performAsyncTask(afterDelay: afterDelay) {
 			DispatchQueue.main.async {
 				[weak self] in
-				self?.showWaiting(configuration: configuration)
+				self?.showWaiting(observable: observable)
 			}
 		}
 	}

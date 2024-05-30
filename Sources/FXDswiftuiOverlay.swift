@@ -56,48 +56,48 @@ public struct FXDswiftuiOverlay: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
 	
-	@ObservedObject var configuration: FXDobservableOverlay
+	@ObservedObject var observable: FXDobservableOverlay
 
 
-	public init(configuration: FXDobservableOverlay = FXDobservableOverlay()) {
-		self.configuration = configuration
+	public init(observable: FXDobservableOverlay? = nil) {
+		self.observable = observable ?? FXDobservableOverlay()
 	}
 
     public var body: some View {
 		VStack {
-			Text(configuration.overlayTitle ?? "")
+			Text(observable.overlayTitle ?? "")
 				.font(.title)
 				.fontWeight(.bold)
 
-			Text(configuration.message_0 ?? "")
+			Text(observable.message_0 ?? "")
 
 			ProgressView()
 				.controlSize(.large)
 				.frame(alignment: .center)
 
-			FXDProgressBar(value: Binding.constant(configuration.sliderValue ?? 0.0))
-				.tint(configuration.sliderTint)
-				.opacity((configuration.sliderValue ?? 0.0) > 0.0 ? 1.0 : 0.0)
+			FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
+				.tint(observable.sliderTint)
+				.opacity((observable.sliderValue ?? 0.0) > 0.0 ? 1.0 : 0.0)
 				.allowsHitTesting(false)
 				.padding()
 
-			Text(configuration.message_1 ?? "")
+			Text(observable.message_1 ?? "")
 		}
 		.ignoresSafeArea(.all)
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
 		.padding([.leading, .trailing])
 		.contentShape(Rectangle())
 		.presentationBackground(
-			Color(uiColor: configuration.overlayColor ?? (colorScheme == .dark ? .black : .white))
-				.opacity(configuration.overlayAlpha)
+			Color(uiColor: observable.overlayColor ?? (colorScheme == .dark ? .black : .white))
+				.opacity(observable.overlayAlpha)
 		)
-		.allowsHitTesting(!configuration.shouldIgnoreUserInteraction)
+		.allowsHitTesting(!observable.shouldIgnoreUserInteraction)
 		.onTapGesture {
-			configuration.shouldDismiss = true
-			configuration.cancellableTask?.cancel()
+			observable.shouldDismiss = true
+			observable.cancellableTask?.cancel()
 		}
-		.onChange(of: configuration.shouldDismiss) {
-			if configuration.shouldDismiss {
+		.onChange(of: observable.shouldDismiss) {
+			if observable.shouldDismiss {
 				dismiss()
 			}
 		}
@@ -130,7 +130,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 
 			let interfaceStyle = self?.traitCollection.userInterfaceStyle
 
-			self?.view.backgroundColor = self?.rootView.configuration.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(self?.rootView.configuration.overlayAlpha ?? 0.75)
+			self?.view.backgroundColor = self?.rootView.observable.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(self?.rootView.observable.overlayAlpha ?? 0.75)
 		}
 
 		reactToTraitChanges()
@@ -142,7 +142,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 		}
 
 
-		self.rootView.configuration.$overlayAlpha.sink {
+		self.rootView.observable.$overlayAlpha.sink {
 			(overlayAlpha) in
 
 			reactToTraitChanges()
@@ -150,7 +150,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 		.store(in: &self.cancellableObservers)
 
 
-		self.rootView.configuration.$shouldDismiss.sink(receiveValue: {
+		self.rootView.observable.$shouldDismiss.sink(receiveValue: {
 			[weak self] (shouldDismiss) in
 
 			if shouldDismiss {
