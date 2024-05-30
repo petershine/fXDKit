@@ -37,16 +37,16 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 	public var cancellableTask: Task<Void, Error>? = nil
 
 	public init(overlayColor: UIColor? = nil,
-				overlayAlpha: CGFloat? = 0.75,
-				shouldIgnoreUserInteraction: Bool? = false,
-				
+				overlayAlpha: CGFloat? = nil,
+				shouldIgnoreUserInteraction: Bool? = nil,
+
 				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
 
 		self.overlayColor = overlayColor
-		self.overlayAlpha = overlayAlpha ?? 0.75
-		self.shouldIgnoreUserInteraction = shouldIgnoreUserInteraction ?? false
-		
+		self.overlayAlpha = overlayAlpha ?? 0.5
+		self.shouldIgnoreUserInteraction = shouldIgnoreUserInteraction ?? true
+
 		self.sliderValue = sliderValue ?? 0.0
 		self.sliderTint = sliderTint ?? Color(uiColor: .systemBlue)
 	}
@@ -64,33 +64,32 @@ public struct FXDswiftuiOverlay: View {
 	}
 
     public var body: some View {
-		VStack {
-			Text(observable.overlayTitle ?? "")
-				.font(.title)
-				.fontWeight(.bold)
+		ZStack {
+			Color(observable.overlayColor ?? (colorScheme == .dark ? .black : .white))
+				.opacity(observable.overlayAlpha)
 
-			Text(observable.message_0 ?? "")
+			VStack {
+				Text(observable.overlayTitle ?? "")
+					.font(.title)
+					.fontWeight(.bold)
 
-			ProgressView()
-				.controlSize(.large)
-				.frame(alignment: .center)
+				Text(observable.message_0 ?? "")
 
-			FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
-				.tint(observable.sliderTint)
-				.opacity((observable.sliderValue ?? 0.0) > 0.0 ? 1.0 : 0.0)
-				.allowsHitTesting(false)
-				.padding()
+				ProgressView()
+					.controlSize(.large)
+					.frame(alignment: .center)
 
-			Text(observable.message_1 ?? "")
+				FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
+					.tint(observable.sliderTint)
+					.opacity((observable.sliderValue ?? 0.0) > 0.0 ? 1.0 : 0.0)
+					.allowsHitTesting(false)
+					.padding()
+
+				Text(observable.message_1 ?? "")
+			}
 		}
 		.ignoresSafeArea(.all)
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
-		.padding([.leading, .trailing])
-		.contentShape(Rectangle())
-		.presentationBackground(
-			Color(uiColor: observable.overlayColor ?? (colorScheme == .dark ? .black : .white))
-				.opacity(observable.overlayAlpha)
-		)
 		.allowsHitTesting(!observable.shouldIgnoreUserInteraction)
 		.onTapGesture {
 			observable.shouldDismiss = true
@@ -118,8 +117,8 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 		}
 
 
-		self.view.frame.size = parent!.view.frame.size
-		self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		view.frame.size = parent!.view.frame.size
+		view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 	}
 
 	override public func viewDidLoad() {
@@ -142,15 +141,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 		}
 
 
-		self.rootView.observable.$overlayAlpha.sink {
-			(overlayAlpha) in
-
-			reactToTraitChanges()
-		}
-		.store(in: &self.cancellableObservers)
-
-
-		self.rootView.observable.$shouldDismiss.sink(receiveValue: {
+		rootView.observable.$shouldDismiss.sink(receiveValue: {
 			[weak self] (shouldDismiss) in
 
 			if shouldDismiss {
@@ -160,7 +151,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 			self?.cancellableObservers.forEach({ $0.cancel() })
 			self?.cancellableObservers = []
 		})
-		.store(in: &self.cancellableObservers)
+		.store(in: &cancellableObservers)
 	}
 }
 
