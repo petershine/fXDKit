@@ -281,7 +281,7 @@ extension FXDmoduleCoredata {
 
 			self?.enumerateAllData(
 				withPrivateContext: false,
-				shouldShowInformationView: true) {
+				shouldShowOverlay: true) {
 					(managedContext, mainEntityObj, shouldBrake) in
 
 					if shouldBrake?.pointee == true {
@@ -309,7 +309,7 @@ extension FXDmoduleCoredata {
 		presentingViewController?.present(alertController, animated: true)
 	}
 
-	func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowInformationView shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: ((NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+	func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowOverlay shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: ((NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 
 		fxdPrint("shouldUsePrivateContext: \(shouldUsePrivateContext)")
 		fxdPrint("enumeratingOperationQueue?.operationCount: \(String(describing: enumeratingOperationQueue?.operationCount))")

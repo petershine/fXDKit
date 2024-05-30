@@ -3,14 +3,14 @@
 import SwiftUI
 
 
-public protocol FXDprotocolInformation: ObservableObject {
+public protocol FXDprotocolOverlay {
 	var shouldDismiss: Bool { get set }
 
 	var overlayColor: UIColor? { get set }
 	var overlayAlpha: CGFloat { get set }
 	var shouldIgnoreUserInteraction: Bool { get set }
 
-	var informationTitle: String? { get set }
+	var overlayTitle: String? { get set }
 	var message_0: String? { get set }
 	var message_1: String? { get set }
 
@@ -20,14 +20,14 @@ public protocol FXDprotocolInformation: ObservableObject {
 	var cancellableTask: Task<Void, Error>? { get set }
 }
 
-open class FXDconfigurationInformation: FXDprotocolInformation {
+open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 	@Published open var shouldDismiss: Bool = false
 
 	@Published open var overlayColor: UIColor? = nil
 	@Published open var overlayAlpha: CGFloat
-	@Published open var shouldIgnoreUserInteraction: Bool = false
+	@Published open var shouldIgnoreUserInteraction: Bool = true
 
-	@Published open var informationTitle: String? = nil
+	@Published open var overlayTitle: String? = nil
 	@Published open var message_0: String? = nil
 	@Published open var message_1: String? = nil
 
@@ -52,20 +52,20 @@ open class FXDconfigurationInformation: FXDprotocolInformation {
 	}
 }
 
-public struct FXDswiftuiInformation: View {
+public struct FXDswiftuiOverlay: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
 	
-	@ObservedObject var configuration: FXDconfigurationInformation
+	@ObservedObject var configuration: FXDobservableOverlay
 
 
-	public init(configuration: FXDconfigurationInformation = FXDconfigurationInformation()) {
+	public init(configuration: FXDobservableOverlay = FXDobservableOverlay()) {
 		self.configuration = configuration
 	}
 
     public var body: some View {
 		VStack {
-			Text(configuration.informationTitle ?? "")
+			Text(configuration.overlayTitle ?? "")
 				.font(.title)
 				.fontWeight(.bold)
 
@@ -107,7 +107,7 @@ public struct FXDswiftuiInformation: View {
 
 import Combine
 
-public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
+public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
 	override public func didMove(toParent parent: UIViewController?) {
@@ -167,10 +167,10 @@ public class FXDhostedInformation: UIHostingController<FXDswiftuiInformation> {
 
 
 // Example usage
-extension FXDconfigurationInformation {
-	public class func exampleCountingUp() -> FXDconfigurationInformation {
+extension FXDobservableOverlay {
+	public class func exampleCountingUp() -> FXDobservableOverlay {
 
-		let testingConfiguration = FXDconfigurationInformation(
+		let testingConfiguration = FXDobservableOverlay(
 			shouldIgnoreUserInteraction: false,
 			sliderValue: 0.0)
 

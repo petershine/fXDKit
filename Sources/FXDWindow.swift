@@ -25,22 +25,22 @@ extension UIWindow {
 
 @available(iOS 17.0, *)
 extension UIWindow {
-	private weak var currentActiveController: FXDhostedInformation? {
-		guard let activeController = rootViewController?.children.last as? FXDhostedInformation else {
+	private weak var currentActiveController: FXDhostedOverlay? {
+		guard let activeController = rootViewController?.children.last as? FXDhostedOverlay else {
 			return nil
 		}
 
 		return activeController
 	}
 
-	public func showWaiting(configuration: FXDconfigurationInformation? = nil) {
+	public func showWaiting(configuration: FXDobservableOverlay? = nil) {
 		let activeController = currentActiveController
 		guard activeController == nil && activeController?.view.superview == nil else {
 			return
 		}
 
 
-		let waitingController = FXDhostedInformation(rootView: FXDswiftuiInformation(configuration: configuration ?? FXDconfigurationInformation()))
+		let waitingController = FXDhostedOverlay(rootView: FXDswiftuiOverlay(configuration: configuration ?? FXDobservableOverlay()))
 
 		rootViewController?.addChild(waitingController)
 		rootViewController?.view.addSubview(waitingController.view)
@@ -79,7 +79,7 @@ extension UIWindow {
 		}
 	}
 
-	public func showWaitingView(afterDelay: TimeInterval, configuration: FXDconfigurationInformation? = nil) {
+	public func showWaitingView(afterDelay: TimeInterval, configuration: FXDobservableOverlay? = nil) {
 		cancelAsyncTask()
 		performAsyncTask(afterDelay: afterDelay) {
 			DispatchQueue.main.async {

@@ -96,7 +96,7 @@ public actor DataAndResponseActor {
 
 @available(iOS 17.0, *)
 extension URLSession {
-	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDconfigurationInformation? = nil) async throws -> DataAndResponseActor? {
+	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDobservableOverlay? = nil) async throws -> DataAndResponseActor? {
 		guard urlRequests.count > 0 else {
 			throw SerializedURLRequestError.noRequests
 		}
