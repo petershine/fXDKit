@@ -65,11 +65,11 @@ public struct FXDswiftuiInformation: View {
 
     public var body: some View {
 		VStack {
-			Text(configuration.informationTitle ?? "TITLE")
+			Text(configuration.informationTitle ?? "")
 				.font(.title)
 				.fontWeight(.bold)
 
-			Text(configuration.message_0 ?? "MESSAGE_0")
+			Text(configuration.message_0 ?? "")
 
 			ProgressView()
 				.controlSize(.large)
@@ -81,7 +81,7 @@ public struct FXDswiftuiInformation: View {
 				.allowsHitTesting(false)
 				.padding()
 
-			Text(configuration.message_1 ?? "MESSAGE_1")
+			Text(configuration.message_1 ?? "")
 		}
 		.ignoresSafeArea(.all)
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -181,6 +181,7 @@ extension FXDconfigurationInformation {
 				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 
 				DispatchQueue.main.async {
+					testingConfiguration.overlayAlpha = 1.0 - (CGFloat(step)*0.1)
 					testingConfiguration.sliderValue = CGFloat(step) * 0.1
 				}
 
