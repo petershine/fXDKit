@@ -332,7 +332,7 @@ extension FXDmoduleCoredata {
 
 		if shouldShowProgressView {
 			let mainWindow = UIApplication.shared.mainWindow()
-			mainWindow?.showWaiting()
+			mainWindow?.showOverlay()
 		}
 
 
@@ -372,7 +372,7 @@ extension FXDmoduleCoredata {
 
 				if shouldShowProgressView {
 					let mainWindow = UIApplication.shared.mainWindow()
-					mainWindow?.hideWaitingView(afterDelay: DURATION_QUARTER)
+					mainWindow?.hideOverlay(afterDelay: DURATION_QUARTER)
 				}
 
 				fxdPrint("!shouldBreak: \(!shouldBreak)")

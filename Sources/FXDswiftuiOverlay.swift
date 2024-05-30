@@ -145,7 +145,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 			[weak self] (shouldDismiss) in
 
 			if shouldDismiss {
-				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
+				UIApplication.shared.mainWindow()?.hideOverlay(afterDelay: DURATION_QUARTER)
 			}
 
 			self?.cancellableObservers.forEach({ $0.cancel() })

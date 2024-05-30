@@ -33,7 +33,7 @@ extension UIWindow {
 		return activeController
 	}
 
-	public func showWaiting(observable: FXDobservableOverlay? = nil) {
+	public func showOverlay(observable: FXDobservableOverlay? = nil) {
 		let activeController = currentActiveController
 		guard activeController == nil && activeController?.view.superview == nil else {
 			return
@@ -58,7 +58,7 @@ extension UIWindow {
 			})
 	}
 
-	public func hideWaiting() {
+	public func hideOverlay() {
 		let activeController = currentActiveController
 		guard activeController != nil && activeController?.view.superview != nil else {
 			return
@@ -79,22 +79,22 @@ extension UIWindow {
 		}
 	}
 
-	public func showWaitingView(afterDelay: TimeInterval, observable: FXDobservableOverlay? = nil) {
+	public func showOverlay(afterDelay: TimeInterval, observable: FXDobservableOverlay? = nil) {
 		cancelAsyncTask()
 		performAsyncTask(afterDelay: afterDelay) {
 			DispatchQueue.main.async {
 				[weak self] in
-				self?.showWaiting(observable: observable)
+				self?.showOverlay(observable: observable)
 			}
 		}
 	}
 
-	public func hideWaitingView(afterDelay: TimeInterval) {
+	public func hideOverlay(afterDelay: TimeInterval) {
 		cancelAsyncTask()
 		performAsyncTask(afterDelay: afterDelay) {
 			DispatchQueue.main.async {
 				[weak self] in
-				self?.hideWaiting()
+				self?.hideOverlay()
 			}
 		}
 	}

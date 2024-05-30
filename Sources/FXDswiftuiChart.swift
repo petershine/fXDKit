@@ -36,7 +36,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 
 	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
 		let progressObservable = FXDobservableOverlay(shouldIgnoreUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
-		UIApplication.shared.mainWindow()?.showWaitingView(afterDelay: 0.0, observable: progressObservable)
+		UIApplication.shared.mainWindow()?.showOverlay(afterDelay: 0.0, observable: progressObservable)
 
 
 		progressObservable.cancellableTask = Task {
@@ -77,7 +77,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 					UIAlertController.simpleAlert(withTitle: errorTitle, message: errorMessage)
 				}
 
-				UIApplication.shared.mainWindow()?.hideWaitingView(afterDelay: DURATION_QUARTER)
+				UIApplication.shared.mainWindow()?.hideOverlay(afterDelay: DURATION_QUARTER)
 				completion?(didSucceed)
 			}
 		}
