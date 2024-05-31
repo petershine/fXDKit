@@ -42,10 +42,11 @@ public struct FXDswiftuiLaunching: View {
 
 			VStack {
 				Spacer()
-				ProgressView().controlSize(.large)
+				ProgressView().controlSize(.large).padding()
 			}
 		}
 		.statusBarHidden(shouldHideStatusBar)
+		.backgroundStyle(.black)
 	}
 }
 
