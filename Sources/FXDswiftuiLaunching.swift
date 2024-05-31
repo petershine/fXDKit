@@ -7,15 +7,17 @@ public struct FXDswiftuiLaunching: View {
 	@State var appDisplayedName: String
 	@State var shouldHideStatusBar: Bool
 
+	@State var overlayColor: UIColor?
 	@State var backgroundImage: UIImage?
 
 	@State var foregroundImage: UIImage?
 	@State var foregroundSize: CGSize
 
-	public init(appDisplayedName: String? = nil, shouldHideStatusBar: Bool = true, backgroundImage: UIImage?, foregroundImage: UIImage?, foregroundSize: CGSize = .zero) {
+	public init(appDisplayedName: String? = nil, shouldHideStatusBar: Bool = true, overlayColor: UIColor? = nil, backgroundImage: UIImage?, foregroundImage: UIImage?, foregroundSize: CGSize = .zero) {
 		self.appDisplayedName = appDisplayedName ?? "Hello, world!"
 		self.shouldHideStatusBar = shouldHideStatusBar
 
+		self.overlayColor = overlayColor
 		self.backgroundImage = backgroundImage
 		
 		self.foregroundImage = foregroundImage
@@ -24,6 +26,10 @@ public struct FXDswiftuiLaunching: View {
 
 	public var body: some View {
 		ZStack {
+			Color(overlayColor ?? .black)
+				.ignoresSafeArea(.all)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
+
 			if backgroundImage != nil {
 				Image(uiImage: backgroundImage!)
 					.resizable().scaledToFill().ignoresSafeArea()
@@ -46,7 +52,6 @@ public struct FXDswiftuiLaunching: View {
 			}
 		}
 		.statusBarHidden(shouldHideStatusBar)
-		.backgroundStyle(.black)
 	}
 }
 
@@ -69,4 +74,10 @@ open class FXDhostedLaunching: UIHostingController<FXDswiftuiLaunching> {
 	 override open var shouldAutorotate: Bool {
 		 return false
 	 }
+
+	override open func viewDidLoad() {
+		super.viewDidLoad()
+
+		view.backgroundColor = rootView.overlayColor ?? UIColor.black
+	}
 }
