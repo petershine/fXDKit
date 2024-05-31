@@ -5,6 +5,8 @@ projectName="fXDObjC"
 schemeName=$projectName
 archiveName=$projectName
 archiveNameForSimulator="$projectName-Simulator"
+archiveNameForMacOS="$projectName-MacOS"
+
 frameworkName=$projectName
 folderName="xcframeworks"
 
@@ -19,12 +21,15 @@ xcodebuild archive -project "$projectName".xcodeproj \
     -destination "generic/platform=iOS Simulator" \
     -archivePath "$folderName/$archiveNameForSimulator"
 
+#xcodebuild archive -project "$projectName".xcodeproj \
+    -scheme $schemeName \
+    -destination "generic/platform=macOS,variant=Mac Catalyst" \
+    -archivePath "$folderName/$archiveNameForMacOS"
+
 
 xcodebuild -create-xcframework \
-    -archive $folderName/$archiveName.xcarchive \
-    -framework $frameworkName.framework \
-    -archive $folderName/$archiveNameForSimulator.xcarchive \
-    -framework $frameworkName.framework \
+    -archive $folderName/$archiveName.xcarchive -framework $frameworkName.framework \
+    -archive $folderName/$archiveNameForSimulator.xcarchive -framework $frameworkName.framework \
     -output $folderName/$frameworkName.xcframework
 
 
