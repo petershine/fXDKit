@@ -34,7 +34,7 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 	@Published open var sliderValue: CGFloat? = nil
 	@Published open var sliderTint: Color? = nil
 
-	public var cancellableTask: Task<Void, Error>? = nil
+	open var cancellableTask: Task<Void, Error>? = nil
 
 	public init(overlayColor: UIColor? = nil,
 				overlayAlpha: CGFloat? = nil,
@@ -106,10 +106,10 @@ public struct FXDswiftuiOverlay: View {
 
 import Combine
 
-public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
+open class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
-	override public func didMove(toParent parent: UIViewController?) {
+	override open func didMove(toParent parent: UIViewController?) {
 		super.didMove(toParent: parent)
 
 		guard parent != nil else {
@@ -121,7 +121,7 @@ public class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 		view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 	}
 
-	override public func viewDidLoad() {
+	override open func viewDidLoad() {
 		super.viewDidLoad()
 
 		let reactToTraitChanges = {
