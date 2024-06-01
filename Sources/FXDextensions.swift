@@ -127,6 +127,15 @@ extension String {
 
 		return resultString.isEmpty ? nil : resultString.data(using: .utf8)
 	}
+
+	public func lineReBroken() -> String {
+		guard self.contains("\\n") else {
+			return self
+		}
+
+		let reBroken = self.replacingOccurrences(of: "\\n", with: "\n")
+		return reBroken.lineReBroken()
+	}
 }
 
 extension Bundle {
