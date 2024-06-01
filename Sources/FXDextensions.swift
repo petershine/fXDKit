@@ -125,7 +125,7 @@ extension String {
 			previousCharacter = character
 		}
 
-		return resultString.data(using: .utf8)
+		return resultString.isEmpty ? nil : resultString.data(using: .utf8)
 	}
 }
 
