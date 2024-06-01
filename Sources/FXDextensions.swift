@@ -142,6 +142,13 @@ extension Bundle {
 
 @available(iOS 17.0, *)
 extension UIAlertController {
+	@objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
+		let localizedDescription = error?.localizedDescription ?? title ?? ""
+		let failureReason: String = (error as? NSError)?.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? message ?? ""
+
+		self.simpleAlert(withTitle: localizedDescription, message: failureReason)
+	}
+
 	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
 		self.simpleAlert(withTitle: title,
 						 message: message,
