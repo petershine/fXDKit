@@ -5,31 +5,36 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 public struct FXDswiftuiMediaDisplay: View {
-	@Binding var mediaImage: UIImage?
+	@Environment(\.colorScheme) var colorScheme
 
-	public init(mediaImage: UIImage? = nil) {
-		_mediaImage = Binding.constant(mediaImage)
+	@Binding var diaplayedImage: UIImage?
+
+
+	public init(displayedImage: UIImage? = nil) {
+		_diaplayedImage = Binding.constant(displayedImage)
 	}
-	
-    public var body: some View {
-		Color.black
+
+	public var body: some View {
+		Color(.black)
 			.overlay {
-				if let availableImage = mediaImage {
+				if let availableImage = diaplayedImage {
 					Image(uiImage: availableImage)
 						.resizable()
 						.aspectRatio(contentMode: .fill)
 						.gesture(
 							LongPressGesture().onEnded { _ in
-								if let availableImage = mediaImage {
+								if let availableImage = diaplayedImage {
 									showActivitySheet(items: [availableImage])
 								}
 							})
 				}
 			}
 			.ignoresSafeArea()
-    }
+	}
+}
 
-	private func showActivitySheet(items: [Any]) {
+fileprivate extension FXDswiftuiMediaDisplay {
+	func showActivitySheet(items: [Any]) {
 		guard let rootViewController = UIApplication.shared.mainWindow()?.rootViewController else {
 			return
 		}
@@ -51,5 +56,5 @@ public struct FXDswiftuiMediaDisplay: View {
 
 @available(iOS 17.0, *)
 #Preview {
-	FXDswiftuiMediaDisplay(mediaImage: UIImage())
+	FXDswiftuiMediaDisplay(displayedImage: UIImage())
 }
