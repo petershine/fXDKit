@@ -99,6 +99,14 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
 	#endif
 }
 
+public func fxdPrint(dictionary: Dictionary<String, Any?>) {
+	#if DEBUG
+	for (_, pair) in dictionary.enumerated() {
+		os_log("%@ : %@", (pair.key as NSString), (pair.value as? CVarArg ?? ""))
+	}
+	#endif
+}
+
 public func fxd_log(_ prefix: String? = nil, _ suffix: String? = nil, filename: String = #file, function: String = #function, line: Int = #line) {
 	#if DEBUG
 	os_log(" ")
