@@ -91,11 +91,8 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
 		return
 	}
 
-	for item in items {
-		if let variable = item as? CVarArg {
-			os_log("%@", (String(describing: variable) as NSString))
-		}
-	}
+
+	debugPrint(items, separator: separator, terminator: terminator)
 	#endif
 }
 
