@@ -4,6 +4,24 @@ import Foundation
 import UIKit
 
 
+extension Data {
+	public func jsonObject(quiet: Bool = false) -> Dictionary<String, Any?>? {
+		var jsonObject: Dictionary<String, Any?>? = nil
+		do {
+			jsonObject = try JSONSerialization.jsonObject(with: self, options: .mutableContainers) as? Dictionary<String, Any?>
+		}
+		catch {	fxd_log()
+			fxdPrint(error)
+			if let stringObject = String(data: self, encoding: .utf8) {
+				fxdPrint(stringObject)
+			}
+		}
+
+		return jsonObject
+	}
+}
+
+
 extension Date {
 	public func formattedAgeText(since: Date = Date.init()) -> String? {
 
@@ -135,6 +153,18 @@ extension String {
 
 		let reBroken = self.replacingOccurrences(of: "\\n", with: "\n")
 		return reBroken.lineReBroken()
+	}
+
+	public func decodedImage() -> UIImage? {
+		guard let imageData = Data(base64Encoded: self) else {
+			return nil
+		}
+
+		guard let decoded = UIImage(data: imageData) else {
+			return nil
+		}
+
+		return decoded
 	}
 }
 
