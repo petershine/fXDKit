@@ -99,7 +99,7 @@ public func fxdPrint(_ items: Any..., separator: String = " ", terminator: Strin
 public func fxdPrint(dictionary: Dictionary<String, Any?>) {
 	#if DEBUG
 	for (_, pair) in dictionary.enumerated() {
-		os_log("%@ : %@", (pair.key as NSString), (pair.value as? CVarArg ?? ""))
+		fxdPrint("\(pair.key) : \(String(describing: pair.value))")
 	}
 	#endif
 }
