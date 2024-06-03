@@ -1,0 +1,6 @@
+framework module fXDObjC {
+  umbrella header "fXDObjC.h"
+  export *
+
+  module * { export * }
+}
