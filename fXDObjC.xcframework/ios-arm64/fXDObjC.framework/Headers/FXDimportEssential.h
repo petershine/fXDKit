@@ -125,7 +125,6 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 #import <CoreMedia/CoreMedia.h>
 #import <CoreVideo/CoreVideo.h>
-#import <OpenGLES/OpenGLESAvailability.h>	// OpenGLES is deprecated. Consider migrating to Metal instead.
 #import <Metal/Metal.h>
 
 #import <AVFoundation/AVFoundation.h>
