@@ -179,7 +179,6 @@ extension Bundle {
 }
 
 
-@available(iOS 17.0, *)
 extension UIAlertController {
 	@objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
 		let localizedDescription = error?.localizedDescription ?? title ?? ""
@@ -229,7 +228,7 @@ extension UIAlertController {
 }
 
 
-@available(iOS 17.0, *)
+
 extension UIApplication {
 	@objc public func mainWindow() -> UIWindow? {
 		return connectedScenes
@@ -272,5 +271,17 @@ extension UIDevice {
 		}
 
 		return machineNameCode
+	}
+}
+
+
+extension UIImage {
+	public func addCustomInfo(image: UIImage?, customInfo: Dictionary<String, Any?>) -> UIImage? {
+		var modifiedImage: UIImage? = nil
+
+		//https://github.com/kylehowells/ikyle.me-code-examples/blob/master/Read%20Write%20Image%20Metadata%20Swift/Read%20Write%20Image%20Metadata%20Swift/ViewController.swift#L89
+		//https://developer.apple.com/documentation/imageio/image_i_o_functions
+
+		return modifiedImage
 	}
 }
