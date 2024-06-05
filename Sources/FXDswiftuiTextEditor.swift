@@ -3,7 +3,6 @@
 import SwiftUI
 
 
-@available(iOS 17.0, *)
 struct FXDTextEditorModifier: ViewModifier {
 	func body(content: Content) -> some View {
 		content
@@ -13,88 +12,113 @@ struct FXDTextEditorModifier: ViewModifier {
 			.cornerRadius(10.0)
 			.overlay {
 				RoundedRectangle(cornerRadius: 10.0)
-					.stroke(Color.white, lineWidth:5.0)
+					.stroke(.black, lineWidth:4.0)
 			}
+			.padding()
 	}
 }
 
-@available(iOS 17.0, *)
-public struct FXDswiftuiTextEditor: View {
-	@Environment(\.dismiss) private var dismiss
 
-	@FocusState private var focusedEditor: Int?
-	@State private var editorsVStackHeight: CGFloat = 0.0
+public class FXDobservableTextEditor: ObservableObject {
+	@FocusState var focusedEditor: Int?
+	@State var editorsVStackHeight: CGFloat = 0.0
 
-	@State private var editedParagraph_0: String = ""
-	@State private var editedParagraph_1: String = ""
-	@State private var editedText: String = ""
+	@State var editedParagraph_0: String = ""
+	@State var editedParagraph_1: String = ""
+	@State var editedText: String = ""
 
-	var finishedEditing: ((String, String, String) -> Void)
+	var finishedEditing: ((String, String, String) -> Void)?
 
-
-	public init(editedText: String, finishedEditing: @escaping (String, String, String) -> Void) {
+	public init(focusedEditor: Int? = 0,
+				editorsVStackHeight: CGFloat = 0.0,
+				editedParagraph_0: String,
+				editedParagraph_1: String,
+				editedText: String = "",
+				finishedEditing: ((String, String, String) -> Void)?) {
+		
+		self.focusedEditor = focusedEditor
+		self.editorsVStackHeight = editorsVStackHeight
+		self.editedParagraph_0 = editedParagraph_0
+		self.editedParagraph_1 = editedParagraph_1
 		self.editedText = editedText
 		self.finishedEditing = finishedEditing
 	}
+}
+
+
+public struct FXDswiftuiTextEditor: View {
+	@Environment(\.dismiss) private var dismiss
+
+	@ObservedObject var observable: FXDobservableTextEditor
+
+	public init(observable: FXDobservableTextEditor? = nil) {
+		self.observable = observable ?? FXDobservableTextEditor(editedParagraph_0: "", editedParagraph_1: "", finishedEditing: nil)
+	}
 
 	public var body: some View {
-		ZStack {
-			GeometryReader { outerGeometry in
+		GeometryReader { outerGeometry in
+			ZStack {
+				Color(.black)
+					.opacity(0.75)
+					.ignoresSafeArea()
+
 				VStack {
-					TextEditor(text: $editedParagraph_0)
+					TextEditor(text: observable.$editedParagraph_0)
 						.frame(height: self.height(for: 0))
-						.focused($focusedEditor, equals: 0)
+						.focused(observable.$focusedEditor, equals: 0)
 						.modifier(FXDTextEditorModifier())
 
-					TextEditor(text: $editedParagraph_1)
+					TextEditor(text: observable.$editedParagraph_1)
 						.frame(height: self.height(for: 1))
-						.focused($focusedEditor, equals: 1)
+						.focused(observable.$focusedEditor, equals: 1)
 						.modifier(FXDTextEditorModifier())
 
-					TextEditor(text: $editedText)
+					TextEditor(text: observable.$editedText)
 						.frame(height: self.height(for: 2))
-						.focused($focusedEditor, equals: 2)
+						.focused(observable.$focusedEditor, equals: 2)
 						.modifier(FXDTextEditorModifier())
 				}
 				.onAppear {
-					editorsVStackHeight = outerGeometry.size.height
+					observable.editorsVStackHeight = outerGeometry.size.height
 				}
 				.onChange(of: outerGeometry.size.height) {
 					(oldValue, newValue) in
-					editorsVStackHeight = newValue
+					observable.editorsVStackHeight = newValue
 				}
-				.animation(.easeInOut(duration: 0.2), value: focusedEditor)
-			}
+				.animation(.easeInOut(duration: 0.2), value: observable.focusedEditor)
 
-
-			VStack {
-				Spacer()
-
-				HStack {
+				VStack {
 					Spacer()
 
-					FXDswiftuiButton(
-						systemImageName: "pencil.and.list.clipboard",
-						action: {
-							finishedEditing(editedParagraph_0, editedParagraph_1, editedText)
-							dismiss()
-						})
+					HStack {
+						Spacer()
+
+						FXDswiftuiButton(
+							systemImageName: "pencil.and.list.clipboard",
+							action: {
+								observable.finishedEditing?(
+									observable.editedParagraph_0,
+									observable.editedParagraph_1,
+									observable.editedText)
+								dismiss()
+							})
+					}
 				}
+				.padding()
 			}
-			.padding()
-		}
-		.onAppear {
-			focusedEditor = 2
+			.onAppear {
+				observable.focusedEditor = 0
+			}
 		}
 	}
 
 
 	private func height(for editorIndex: Int) -> CGFloat {
-		if let focusedEditor = self.focusedEditor, 
+		if let focusedEditor = observable.focusedEditor,
 			focusedEditor == editorIndex {
-			return (editorsVStackHeight * 0.45)
+			return (observable.editorsVStackHeight * 0.45)
 		} else {
-			return (editorsVStackHeight * 0.20)
+			return (observable.editorsVStackHeight * 0.20)
 		}
 	}
 }

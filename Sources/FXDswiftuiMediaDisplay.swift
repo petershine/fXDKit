@@ -3,7 +3,6 @@
 import SwiftUI
 
 
-@available(iOS 17.0, *)
 public struct FXDswiftuiMediaDisplay: View {
 	@Environment(\.colorScheme) var colorScheme
 
@@ -54,7 +53,6 @@ fileprivate extension FXDswiftuiMediaDisplay {
 }
 
 
-@available(iOS 17.0, *)
 #Preview {
 	FXDswiftuiMediaDisplay(displayedImage: UIImage())
 }
