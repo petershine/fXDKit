@@ -54,12 +54,11 @@ public struct FXDswiftuiTextEditor: View {
 
 
 	public var body: some View {
-		GeometryReader { outerGeometry in
-			ZStack {
-				Color(.black)
-					.opacity(0.75)
-					.ignoresSafeArea()
+		ZStack {
+			Color(.black)
+				.opacity(0.75)
 
+			GeometryReader { outerGeometry in
 				VStack {
 					TextEditor(text: $editedParagraph_0)
 						.frame(height: self.height(for: 0))
@@ -84,27 +83,27 @@ public struct FXDswiftuiTextEditor: View {
 					editorsVStackHeight = newValue
 				}
 				.animation(.easeInOut(duration: 0.2), value: focusedEditor)
+			}
 
-				VStack {
+			VStack {
+				Spacer()
+
+				HStack {
 					Spacer()
 
-					HStack {
-						Spacer()
-
-						FXDswiftuiButton(
-							systemImageName: "pencil.and.list.clipboard",
-							foregroundStyle: .white,
-							action: {
-								finishedEditing?(editedParagraph_0, editedParagraph_1, editedText)
-								shouldPresentPromptEditor = false
-							})
-					}
+					FXDswiftuiButton(
+						systemImageName: "pencil.and.list.clipboard",
+						foregroundStyle: .white,
+						action: {
+							finishedEditing?(editedParagraph_0, editedParagraph_1, editedText)
+							shouldPresentPromptEditor = false
+						})
 				}
-				.padding()
 			}
-			.onAppear {
-				focusedEditor = 0
-			}
+			.padding()
+		}
+		.onAppear {
+			focusedEditor = 0
 		}
 	}
 
