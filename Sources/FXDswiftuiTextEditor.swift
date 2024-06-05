@@ -19,7 +19,9 @@ struct FXDTextEditorModifier: ViewModifier {
 }
 
 
-public class FXDobservableTextEditor: ObservableObject {
+public struct FXDswiftuiTextEditor: View {
+	@Environment(\.dismiss) private var dismiss
+
 	@FocusState var focusedEditor: Int?
 	@State var editorsVStackHeight: CGFloat = 0.0
 
@@ -29,13 +31,14 @@ public class FXDobservableTextEditor: ObservableObject {
 
 	var finishedEditing: ((String, String, String) -> Void)?
 
+
 	public init(focusedEditor: Int? = 0,
 				editorsVStackHeight: CGFloat = 0.0,
-				editedParagraph_0: String,
-				editedParagraph_1: String,
+				editedParagraph_0: String = "",
+				editedParagraph_1: String = "",
 				editedText: String = "",
-				finishedEditing: ((String, String, String) -> Void)?) {
-		
+				finishedEditing: ((String, String, String) -> Void)? = nil) {
+
 		self.focusedEditor = focusedEditor
 		self.editorsVStackHeight = editorsVStackHeight
 		self.editedParagraph_0 = editedParagraph_0
@@ -43,17 +46,7 @@ public class FXDobservableTextEditor: ObservableObject {
 		self.editedText = editedText
 		self.finishedEditing = finishedEditing
 	}
-}
 
-
-public struct FXDswiftuiTextEditor: View {
-	@Environment(\.dismiss) private var dismiss
-
-	@ObservedObject var observable: FXDobservableTextEditor
-
-	public init(observable: FXDobservableTextEditor? = nil) {
-		self.observable = observable ?? FXDobservableTextEditor(editedParagraph_0: "", editedParagraph_1: "", finishedEditing: nil)
-	}
 
 	public var body: some View {
 		GeometryReader { outerGeometry in
@@ -63,29 +56,29 @@ public struct FXDswiftuiTextEditor: View {
 					.ignoresSafeArea()
 
 				VStack {
-					TextEditor(text: observable.$editedParagraph_0)
+					TextEditor(text: $editedParagraph_0)
 						.frame(height: self.height(for: 0))
-						.focused(observable.$focusedEditor, equals: 0)
+						.focused($focusedEditor, equals: 0)
 						.modifier(FXDTextEditorModifier())
 
-					TextEditor(text: observable.$editedParagraph_1)
+					TextEditor(text: $editedParagraph_1)
 						.frame(height: self.height(for: 1))
-						.focused(observable.$focusedEditor, equals: 1)
+						.focused($focusedEditor, equals: 1)
 						.modifier(FXDTextEditorModifier())
 
-					TextEditor(text: observable.$editedText)
+					TextEditor(text: $editedText)
 						.frame(height: self.height(for: 2))
-						.focused(observable.$focusedEditor, equals: 2)
+						.focused($focusedEditor, equals: 2)
 						.modifier(FXDTextEditorModifier())
 				}
 				.onAppear {
-					observable.editorsVStackHeight = outerGeometry.size.height
+					editorsVStackHeight = outerGeometry.size.height
 				}
 				.onChange(of: outerGeometry.size.height) {
 					(oldValue, newValue) in
-					observable.editorsVStackHeight = newValue
+					editorsVStackHeight = newValue
 				}
-				.animation(.easeInOut(duration: 0.2), value: observable.focusedEditor)
+				.animation(.easeInOut(duration: 0.2), value: focusedEditor)
 
 				VStack {
 					Spacer()
@@ -96,10 +89,7 @@ public struct FXDswiftuiTextEditor: View {
 						FXDswiftuiButton(
 							systemImageName: "pencil.and.list.clipboard",
 							action: {
-								observable.finishedEditing?(
-									observable.editedParagraph_0,
-									observable.editedParagraph_1,
-									observable.editedText)
+								finishedEditing?(editedParagraph_0, editedParagraph_1, editedText)
 								dismiss()
 							})
 					}
@@ -107,18 +97,18 @@ public struct FXDswiftuiTextEditor: View {
 				.padding()
 			}
 			.onAppear {
-				observable.focusedEditor = 0
+				focusedEditor = 0
 			}
 		}
 	}
 
 
 	private func height(for editorIndex: Int) -> CGFloat {
-		if let focusedEditor = observable.focusedEditor,
+		if let focusedEditor = focusedEditor,
 			focusedEditor == editorIndex {
-			return (observable.editorsVStackHeight * 0.45)
+			return (editorsVStackHeight * 0.45)
 		} else {
-			return (observable.editorsVStackHeight * 0.20)
+			return (editorsVStackHeight * 0.20)
 		}
 	}
 }
