@@ -20,7 +20,7 @@ struct FXDTextEditorModifier: ViewModifier {
 
 
 public struct FXDswiftuiTextEditor: View {
-	@Environment(\.dismiss) private var dismiss
+	@Binding var shouldPresentPromptEditor: Bool
 
 	@FocusState var focusedEditor: Int?
 	@State var editorsVStackHeight: CGFloat = 0.0
@@ -30,20 +30,24 @@ public struct FXDswiftuiTextEditor: View {
 	@State var editedText: String = ""
 
 	var finishedEditing: ((String, String, String) -> Void)?
+	
 
-
-	public init(focusedEditor: Int? = 0,
+	public init(shouldPresentPromptEditor: Binding<Bool>,
+				focusedEditor: Int? = 0,
 				editorsVStackHeight: CGFloat = 0.0,
 				editedParagraph_0: String = "",
 				editedParagraph_1: String = "",
 				editedText: String = "",
 				finishedEditing: ((String, String, String) -> Void)? = nil) {
+		
+		_shouldPresentPromptEditor = shouldPresentPromptEditor
 
 		self.focusedEditor = focusedEditor
 		self.editorsVStackHeight = editorsVStackHeight
 		self.editedParagraph_0 = editedParagraph_0
 		self.editedParagraph_1 = editedParagraph_1
 		self.editedText = editedText
+
 		self.finishedEditing = finishedEditing
 	}
 
@@ -88,9 +92,10 @@ public struct FXDswiftuiTextEditor: View {
 
 						FXDswiftuiButton(
 							systemImageName: "pencil.and.list.clipboard",
+							foregroundStyle: .white,
 							action: {
 								finishedEditing?(editedParagraph_0, editedParagraph_1, editedText)
-								dismiss()
+								shouldPresentPromptEditor = false
 							})
 					}
 				}
