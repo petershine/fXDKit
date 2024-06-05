@@ -20,12 +20,12 @@ public struct FXDswiftuiMediaDisplay: View {
 					Image(uiImage: availableImage)
 						.resizable()
 						.aspectRatio(contentMode: .fill)
-						.gesture(
-							LongPressGesture().onEnded { _ in
-								if let availableImage = diaplayedImage {
-									showActivitySheet(items: [availableImage])
-								}
-							})
+//						.gesture(
+//							LongPressGesture().onEnded { _ in
+//								if let availableImage = diaplayedImage {
+//									showActivitySheet(items: [availableImage])
+//								}
+//							})
 				}
 			}
 			.ignoresSafeArea()
