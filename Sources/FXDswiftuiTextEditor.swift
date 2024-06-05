@@ -57,6 +57,7 @@ public struct FXDswiftuiTextEditor: View {
 		ZStack {
 			Color(.black)
 				.opacity(0.75)
+				.ignoresSafeArea()
 
 			GeometryReader { outerGeometry in
 				VStack {
