@@ -41,17 +41,17 @@ extension NSObject {
 
 				switch completion {
 					case .finished:
-						fxdPrint(".finished: \(String(describing: identifier))")
+						fxdPrint(".finished: \(String(describing: identifier))", quiet: true)
 						break
 
 					case .failure(let error):
-						fxdPrint(".failure: \(String(describing: identifier)) : \(error)")
+						fxdPrint(".failure: \(String(describing: identifier)) : \(error)", quiet: true)
 				}
 
 				afterCompletion?()
 
 			}, receiveValue: { result in
-				fxdPrint("promise: \(result)")
+				fxdPrint("promise: \(result)", quiet: true)
 			})
 
 		return cancellable
@@ -86,7 +86,7 @@ extension NSObject {
 			(key: String, value: AnyCancellable?) in
 			if key == extendedIdentifier {
 				value?.cancel()
-				fxdPrint("cancel(): \(extendedIdentifier)")
+				fxdPrint("cancel(): \(extendedIdentifier)", quiet: true)
 			}
 			return key != extendedIdentifier
 		})
