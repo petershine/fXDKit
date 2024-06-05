@@ -22,31 +22,32 @@ struct FXDTextEditorModifier: ViewModifier {
 public struct FXDswiftuiTextEditor: View {
 	@Binding var shouldPresentPromptEditor: Bool
 
+	@State var editedParagraph_0: String
+	@State var editedParagraph_1: String
+	@State var editedText: String? = nil
+
 	@FocusState var focusedEditor: Int?
 	@State var editorsVStackHeight: CGFloat = 0.0
 
-	@State var editedParagraph_0: String = ""
-	@State var editedParagraph_1: String = ""
-	@State var editedText: String = ""
+	var finishedEditing: ((String, String, String?) -> Void)?
 
-	var finishedEditing: ((String, String, String) -> Void)?
-	
 
 	public init(shouldPresentPromptEditor: Binding<Bool>,
+				editedParagraph_0: String,
+				editedParagraph_1: String,
+				editedText: String? = nil,
 				focusedEditor: Int? = 0,
 				editorsVStackHeight: CGFloat = 0.0,
-				editedParagraph_0: String = "",
-				editedParagraph_1: String = "",
-				editedText: String = "",
-				finishedEditing: ((String, String, String) -> Void)? = nil) {
+				finishedEditing: ((String, String, String?) -> Void)? = nil) {
 		
 		_shouldPresentPromptEditor = shouldPresentPromptEditor
 
-		self.focusedEditor = focusedEditor
-		self.editorsVStackHeight = editorsVStackHeight
 		self.editedParagraph_0 = editedParagraph_0
 		self.editedParagraph_1 = editedParagraph_1
 		self.editedText = editedText
+
+		self.focusedEditor = focusedEditor
+		self.editorsVStackHeight = editorsVStackHeight
 
 		self.finishedEditing = finishedEditing
 	}
@@ -70,7 +71,7 @@ public struct FXDswiftuiTextEditor: View {
 						.focused($focusedEditor, equals: 1)
 						.modifier(FXDTextEditorModifier())
 
-					TextEditor(text: $editedText)
+					TextEditor(text: Binding.constant(editedText ?? ""))
 						.frame(height: self.height(for: 2))
 						.focused($focusedEditor, equals: 2)
 						.modifier(FXDTextEditorModifier())
