@@ -84,22 +84,24 @@ public protocol FXDrawString {
 //MARK: Logging
 import os.log
 
-public func fxdPrint(_ items: Any..., separator: String = " ", terminator: String = "\n", quiet: Bool = false) {
+public func fxdPrint(_ items: Any?..., separator: String = " ", terminator: String = "\n", quiet: Bool = false) {
 	#if DEBUG
-	// Instead of just not using this function, "quiet=" can keep it in the source, and later control it as needed.
+	// Instead of just not using this function, "quiet=" can keep it in the source, and later control its function as needed.
 	guard !quiet else {
 		return
 	}
 
 
-	debugPrint(items, separator: separator, terminator: terminator)
+	let unwrapped: [Any] = items.map { ($0 != nil ? ($0)! : ($0) as Any) }
+	
+	debugPrint(unwrapped, separator: separator, terminator: terminator)
 	#endif
 }
 
 public func fxdPrint(dictionary: Dictionary<String, Any?>) {
 	#if DEBUG
 	for (_, pair) in dictionary.enumerated() {
-		fxdPrint("\(pair.key) : \(String(describing: pair.value))")
+		fxdPrint("\(pair.key) : ", pair.value)
 	}
 	#endif
 }
