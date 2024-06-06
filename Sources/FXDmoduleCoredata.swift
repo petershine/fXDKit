@@ -160,16 +160,16 @@ extension FXDmoduleCoredata {
 		assert(mainManagedDocument != nil, "[SHOULD NOT BE nil] mainManagedDocument: \(String(describing: mainManagedDocument))")
 
 
-		fxdPrint("ubiquityContainerURL: \(String(describing: ubiquityContainerURL))")
-		fxdPrint("protectionOption: \(String(describing: protectionOption))")
-		fxdPrint("mainManagedDocument: \(String(describing: mainManagedDocument))")
+		fxdPrint("ubiquityContainerURL: ", ubiquityContainerURL)
+		fxdPrint("protectionOption: ", protectionOption)
+		fxdPrint("mainManagedDocument: ", mainManagedDocument)
 
 		mainDocument = mainManagedDocument
 
 
 		let rootURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
 		let storeURL = rootURL?.appending(path: sqlitePathComponent ?? "")
-		fxdPrint("storeURL: \(String(describing: storeURL))")
+		fxdPrint("storeURL: ", storeURL)
 
 
 		var storeOptions : Dictionary<String , Any> = [:]
@@ -212,8 +212,8 @@ extension FXDmoduleCoredata {
 		storeCoordinator?.persistentStores.forEach({
 			(persistentStore: NSPersistentStore) in
 
-			fxdPrint("\(String(describing: persistentStore.url))")
-			fxdPrint("\(String(describing: storeCoordinator?.metadata(for: persistentStore)))")
+			fxdPrint("", persistentStore.url)
+			fxdPrint("", storeCoordinator?.metadata(for: persistentStore))
 		})
 		#endif
 
@@ -224,18 +224,18 @@ extension FXDmoduleCoredata {
 
 		fxdPrint("UIManagedDocument.persistentStoreName: \(UIManagedDocument.persistentStoreName)")
 
-		fxdPrint("modelConfiguration: \(String(describing: mainDocument?.modelConfiguration))")
-		fxdPrint("managedObjectModel.versionIdentifiers: \(String(describing: mainDocument?.managedObjectModel.versionIdentifiers))")
-		fxdPrint("managedObjectModel.entities: \(String(describing: mainDocument?.managedObjectModel.entities))")
+		fxdPrint("modelConfiguration: ", mainDocument?.modelConfiguration)
+		fxdPrint("managedObjectModel.versionIdentifiers: ", mainDocument?.managedObjectModel.versionIdentifiers)
+		fxdPrint("managedObjectModel.entities: ", mainDocument?.managedObjectModel.entities)
 
 		upgradeAllAttributesForNewDataModel {
 			(caller, didFinish, responseObj) in
 
 			#if DEBUG
 			if ubiquityContainerURL != nil {
-				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: ubiquityContainerURL)))")
-				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: Self.appCachesDirectory)))")
-				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: Self.appDocumentDirectory)))")
+				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: ubiquityContainerURL))
+				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: Self.appCachesDirectory))
+				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: Self.appDocumentDirectory))
 			}
 			#endif
 
@@ -262,7 +262,7 @@ extension FXDmoduleCoredata {
 		 */
 
 		let observedContext = mainDocument?.managedObjectContext.parent
-		fxdPrint("observedContext: \(String(describing: observedContext))")
+		fxdPrint("observedContext: ", observedContext)
 
 		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextObjectsDidChange(_:)), name: NSManagedObjectContext.didChangeObjectsNotification, object: observedContext)
 		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextWillSave(_:)), name: NSManagedObjectContext.willSaveObjectsNotification, object: observedContext)
@@ -285,7 +285,7 @@ extension FXDmoduleCoredata {
 					(managedContext, mainEntityObj, shouldBrake) in
 
 					if shouldBrake?.pointee == true {
-						fxdPrint("shouldBrake?.pointee.boolValue: \(String(describing: shouldBrake?.pointee))")
+						fxdPrint("shouldBrake?.pointee.boolValue: ", shouldBrake?.pointee)
 					}
 
 					if mainEntityObj != nil {
@@ -295,7 +295,7 @@ extension FXDmoduleCoredata {
 				} withFinishCallback: {
 					(caller, didFinish, responseObj) in
 
-					fxdPrint("\(String(describing: caller)) \(didFinish) \(String(describing: responseObj))")
+					fxdPrint(caller, didFinish, responseObj)
 
 					self?.saveMainDocument(finishCallback: finishCallback)
 				}
@@ -312,7 +312,7 @@ extension FXDmoduleCoredata {
 	func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowOverlay shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: ((NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 
 		fxdPrint("shouldUsePrivateContext: \(shouldUsePrivateContext)")
-		fxdPrint("enumeratingOperationQueue?.operationCount: \(String(describing: enumeratingOperationQueue?.operationCount))")
+		fxdPrint("enumeratingOperationQueue?.operationCount: ", enumeratingOperationQueue?.operationCount)
 
 		guard enumeratingOperationQueue?.operationCount == 0 else {
 			finishCallback?(#function, false, nil)
@@ -328,7 +328,7 @@ extension FXDmoduleCoredata {
 				self?.enumeratingTask = .invalid
 			}
 		})
-		fxdPrint("enumeratingTask: \(String(describing: enumeratingTask))")
+		fxdPrint("enumeratingTask: ", enumeratingTask)
 
 		if shouldShowProgressView {
 			let mainWindow = UIApplication.shared.mainWindow()
@@ -380,7 +380,7 @@ extension FXDmoduleCoredata {
 				finishCallback?(#function, !shouldBreak, nil)
 
 				fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
-				fxdPrint("self?.enumeratingTask: \(String(describing: self?.enumeratingTask))")
+				fxdPrint("self?.enumeratingTask: ", self?.enumeratingTask)
 
 				if let validTask = self?.enumeratingTask {
 					UIApplication.shared.endBackgroundTask(validTask)
@@ -392,24 +392,24 @@ extension FXDmoduleCoredata {
 
 	func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 		//TODO: Evaluate if this method is necessary
-		fxdPrint("1. managedContext?.hasChanges: \(String(describing: managedContext?.hasChanges)) concurrencyType: \(String(describing: managedContext?.concurrencyType))")
+		fxdPrint("1. managedContext?.hasChanges: ", managedContext?.hasChanges, "concurrencyType: ", managedContext?.concurrencyType)
 
 		var mainManagedContext = managedContext
 		if mainManagedContext == nil {
 
 			mainManagedContext = mainDocument?.managedObjectContext
-			fxdPrint("2. managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+			fxdPrint("2. managedContext?.hasChanges: ", mainManagedContext?.hasChanges, "concurrencyType: ", mainManagedContext?.concurrencyType)
 
 			if mainManagedContext?.hasChanges == false
 				&& mainManagedContext?.concurrencyType != mainDocument?.managedObjectContext.parent?.concurrencyType {
 
 				mainManagedContext = mainDocument?.managedObjectContext.parent
-				fxdPrint("3. managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+				fxdPrint("3. managedContext?.hasChanges: ", mainManagedContext?.hasChanges, "concurrencyType: ", mainManagedContext?.concurrencyType)
 			}
 		}
 
 
-		fxdPrint("4. mainManagedContext: \(String(describing: mainManagedContext)) managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+		fxdPrint("4. mainManagedContext: ", mainManagedContext, "managedContext?.hasChanges: ", mainManagedContext?.hasChanges, "concurrencyType: ", mainManagedContext?.concurrencyType)
 
 		guard (mainManagedContext != nil && mainManagedContext!.hasChanges) else {
 			finishCallback?(#function, false, nil)
@@ -428,7 +428,7 @@ extension FXDmoduleCoredata {
 			}
 
 			fxd_log()
-			fxdPrint("5. didSave \(didSave) mainManagedContext: \(String(describing: mainManagedContext)) managedContext?.hasChanges: \(String(describing: mainManagedContext?.hasChanges)) concurrencyType: \(String(describing: mainManagedContext?.concurrencyType))")
+			fxdPrint("5. didSave \(didSave) mainManagedContext: ", mainManagedContext, "managedContext?.hasChanges: ", mainManagedContext?.hasChanges, "concurrencyType: ", mainManagedContext?.concurrencyType)
 		}
 
 		fxdPrint("Thread.isMainThread: \(Thread.isMainThread)")
@@ -443,9 +443,9 @@ extension FXDmoduleCoredata {
 	}
 
 	public func saveMainDocument(finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
-		fxdPrint("documentState: \(String(describing: mainDocument?.documentState))")
-		fxdPrint("hasUnsavedChanges: \(String(describing: mainDocument?.hasUnsavedChanges))")
-		fxdPrint("fileURL: \(String(describing: mainDocument?.fileURL))")
+		fxdPrint("documentState: ", mainDocument?.documentState)
+		fxdPrint("hasUnsavedChanges: ", mainDocument?.hasUnsavedChanges)
+		fxdPrint("fileURL: ", mainDocument?.fileURL)
 
 		guard let fileURL = mainDocument?.fileURL else {
 			DispatchQueue.main.async {
@@ -459,10 +459,10 @@ extension FXDmoduleCoredata {
 			let didSave = await self?.mainDocument?.save(to: fileURL, for: .forOverwriting) ?? false
 
 			fxd_log()
-			fxdPrint("didSave: \(String(describing: didSave))")
+			fxdPrint("didSave: ", didSave)
 			
-			fxdPrint("documentState: \(await String(describing: self?.mainDocument?.documentState))")
-			fxdPrint("hasUnsavedChanges: \(await String(describing: self?.mainDocument?.hasUnsavedChanges))")
+			fxdPrint("documentState: ", await self?.mainDocument?.documentState)
+			fxdPrint("hasUnsavedChanges: ", await self?.mainDocument?.hasUnsavedChanges)
 
 			DispatchQueue.main.async {
 				finishCallback?(#function, didSave, nil)
@@ -493,7 +493,7 @@ extension FXDmoduleCoredata: FXDobserverApplication {
 			}
 		})
 
-		fxdPrint("dataSavingTask: \(String(describing: dataSavingTask))")
+		fxdPrint("dataSavingTask: ", dataSavingTask)
 
 		saveMainDocument {
 			[weak self] (caller, didFinish, responseObj) in
@@ -501,7 +501,7 @@ extension FXDmoduleCoredata: FXDobserverApplication {
 			fxdPrint(caller as Any)
 			fxdPrint("backgroundTimeRemaining: \(application.backgroundTimeRemaining)")
 
-			fxdPrint("dataSavingTask: \(String(describing: self?.dataSavingTask))")
+			fxdPrint("dataSavingTask: ", self?.dataSavingTask)
 
 			if let dataSavingTask = self?.dataSavingTask {
 				application.endBackgroundTask(dataSavingTask)
@@ -523,33 +523,33 @@ extension FXDmoduleCoredata: FXDobserverApplication {
 
 extension FXDmoduleCoredata: FXDobserverNSManagedObject {
 	@objc public func observedUIDocumentStateChanged(_ notification: Notification?) {	fxd_log()
-		fxdPrint("notification: \(String(describing: notification))")
-		fxdPrint("fileModificationDate: \(String(describing: mainDocument?.fileModificationDate))")
-		fxdPrint("documentState: \(String(describing: mainDocument?.documentState))")
+		fxdPrint("notification: ", notification)
+		fxdPrint("fileModificationDate: ", mainDocument?.fileModificationDate)
+		fxdPrint("documentState: ", mainDocument?.documentState)
 	}
 
 	@objc public func observedNSPersistentStoreDidImportUbiquitousContentChanges(_ notification: Notification?) {
 		fxd_overridable()
-		fxdPrint("notification: \(String(describing: notification))")
+		fxdPrint("notification: ", notification)
 	}
 
 	@objc public func observedNSManagedObjectContextObjectsDidChange(_ notification: Notification?) {
 		fxd_overridable()
-		fxdPrint("concurrencyType: \(String(describing: (notification?.object as? NSManagedObjectContext)?.concurrencyType))")
+		fxdPrint("concurrencyType: ", (notification?.object as? NSManagedObjectContext)?.concurrencyType)
 	}
 
 	@objc public func observedNSManagedObjectContextWillSave(_ notification: Notification?) {
 		fxd_overridable()
-		fxdPrint("concurrencyType: \(String(describing: (notification?.object as? NSManagedObjectContext)?.concurrencyType))")
+		fxdPrint("concurrencyType: ", (notification?.object as? NSManagedObjectContext)?.concurrencyType)
 	}
 
 	@objc public func observedNSManagedObjectContextDidSave(_ notification: Notification?) {
 		fxd_overridable()
-		fxdPrint("concurrencyType: \(String(describing: (notification?.object as? NSManagedObjectContext)?.concurrencyType))")
+		fxdPrint("concurrencyType: ", (notification?.object as? NSManagedObjectContext)?.concurrencyType)
 
 		//MARK: Distinguish notification from main managedObjectContext and private managedObjectContext
 		let observedContext = notification?.object as? NSManagedObjectContext
-		fxdPrint("observedContext: \(String(describing: observedContext))")
+		fxdPrint("observedContext: ", observedContext)
 
 		guard observedContext?.isEqual(mainDocument?.managedObjectContext.parent) ?? false else {
 			return
@@ -576,9 +576,9 @@ extension FXDmoduleCoredata: FXDobserverNSManagedObject {
 
 		#if DEBUG
 		if let userInfo: [String : Any?] = notification?.userInfo as? [String : Any?] {
-			fxdPrint("inserted.count : \(String(describing: (userInfo["inserted"] as? Array<Any?>)?.count))")
-			fxdPrint("deleted.count : \(String(describing: (userInfo["deleted"] as? Array<Any?>)?.count))")
-			fxdPrint("updated.count : \(String(describing: (userInfo["updated"] as? Array<Any?>)?.count))")
+			fxdPrint("inserted.count : ", (userInfo["inserted"] as? Array<Any?>)?.count)
+			fxdPrint("deleted.count : ", (userInfo["deleted"] as? Array<Any?>)?.count)
+			fxdPrint("updated.count : ", (userInfo["updated"] as? Array<Any?>)?.count)
 		}
 		#endif
 
@@ -588,7 +588,7 @@ extension FXDmoduleCoredata: FXDobserverNSManagedObject {
 			if notification != nil {
 				self.mainDocument?.managedObjectContext.mergeChanges(fromContextDidSave: notification!)
 			}
-			fxdPrint("DID MERGE: hasChanges: \(String(describing: self.mainDocument?.managedObjectContext.hasChanges))")
+			fxdPrint("DID MERGE: hasChanges: ", self.mainDocument?.managedObjectContext.hasChanges)
 		}
 	}
 }

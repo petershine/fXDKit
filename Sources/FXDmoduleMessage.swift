@@ -45,11 +45,11 @@ open class FXDmoduleMessage: NSObject {
 
 	func emailSceneWithMailBody(withRecipients recipients: [String]?) -> MFMailComposeViewController! {	fxd_log()
 #if DEBUG
-		fxdPrint("Bundle.main.infoDictionary: \(String(describing: Bundle.main.infoDictionary))")
-		fxdPrint("recipients: \(String(describing: recipients))")
+		fxdPrint("Bundle.main.infoDictionary: ", Bundle.main.infoDictionary)
+		fxdPrint("recipients: ", recipients)
 
 		if let currentLanguage = (UserDefaults.standard.object(forKey: "AppleLanguages") as? Array<Any?>)?.first {
-			fxdPrint("currentLanguage: \(String(describing: currentLanguage))")
+			fxdPrint("currentLanguage: ", currentLanguage)
 		}
 #endif
 

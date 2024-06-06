@@ -12,11 +12,11 @@ extension UIViewController {
 
 		let views: [UIView]? = nib?.instantiate(withOwner: self, options: nil) as? [UIView]
 
-		fxdPrint("nibName: \(String(describing: nibName ?? String(describing: self)))")
-		fxdPrint("resourceBundle: \(String(describing: resourceBundle))")
-		fxdPrint("nib: \(String(describing: nib))")
-		fxdPrint("views: \(String(describing: views))")
-		fxdPrint("views?.first: \(String(describing: views?.first))")
+		fxdPrint("nibName: ", nibName ?? self)
+		fxdPrint("resourceBundle: ", resourceBundle)
+		fxdPrint("nib: ", nib)
+		fxdPrint("views: ", views)
+		fxdPrint("views?.first: ", views?.first)
 
 		return views?.first
 	}
@@ -66,7 +66,7 @@ extension UIViewController {
 
 extension UIViewController {
     @IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log()
-		fxdPrint("\(String(describing: self.parent)) \(String(describing: self.presentingViewController))")
+		fxdPrint(self.parent, self.presentingViewController)
 
 		if (self.parent != nil) {
 			self.parent?.dismiss(animated: true, completion: nil)

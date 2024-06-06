@@ -41,11 +41,11 @@ extension NSObject {
 
 				switch completion {
 					case .finished:
-						fxdPrint(".finished: \(String(describing: identifier))", quiet: true)
+						fxdPrint(".finished: ", identifier, quiet: true)
 						break
 
 					case .failure(let error):
-						fxdPrint(".failure: \(String(describing: identifier)) : \(error)", quiet: true)
+						fxdPrint(".failure: ", identifier, " : ", error, quiet: true)
 				}
 
 				afterCompletion?()

@@ -21,7 +21,7 @@ extension URLSession {
 			retrievedData = data
 
 			if error != nil {
-				fxdPrint("[\(#function)] error: \(String(describing: error))\nresponse: \(String(describing: response))")
+				fxdPrint("[\(#function)] error: ", error, "\nresponse: ", response)
 			}
 
 			synchronousRequestSemaphore.signal()
@@ -30,7 +30,7 @@ extension URLSession {
 		fxdPrint("[\(#function)] semaphore result : \(result)")
 
 		fxdPrint("[\(#function)] cancelled during transferring: \(asyncOperation?.isCancelled ?? true)")
-		fxdPrint("[\(#function)] retrievedData : \(String(describing: retrievedData))")
+		fxdPrint("[\(#function)] retrievedData : ", retrievedData)
 
 		synchronousDataHandling?(retrievedData)
 	}

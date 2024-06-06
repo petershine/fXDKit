@@ -13,10 +13,10 @@ extension UIView {
 
 		let views = nib.instantiate(withOwner: owner, options: nil) as? [UIView]
 
-		fxdPrint("nibName: \(String(describing: nibName ?? String(describing: self)))")
-		fxdPrint("resourceBundle: \(String(describing: resourceBundle))")
-		fxdPrint("nib: \(String(describing: nib))")
-		fxdPrint("views: \(String(describing: views))")
+		fxdPrint("nibName: ", nibName ?? self)
+		fxdPrint("resourceBundle: ", resourceBundle)
+		fxdPrint("nib: ", nib)
+		fxdPrint("views: ", views)
 
 		return views?.first
 	}

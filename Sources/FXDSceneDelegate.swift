@@ -81,7 +81,7 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 		isAppLaunching = true
 
 		fxdPrint("scene: \(scene)")
-		fxdPrint("isAppLaunching: \(String(describing: isAppLaunching)) didFinishLaunching: \(String(describing: didFinishLaunching))")
+		fxdPrint("isAppLaunching: ", isAppLaunching, "didFinishLaunching: ", didFinishLaunching)
 
 		let taskInterval = 1.0
 		fxdPrint("STARTED firstTime launched task \(Date.now) taskInterval: \(taskInterval)")
@@ -96,7 +96,7 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 
 
 			fxdPrint("ENDED firstTime launched task \(Date.now)")
-			fxdPrint("isAppLaunching: \(String(describing: isAppLaunching)) didFinishLaunching: \(String(describing: didFinishLaunching))")
+			fxdPrint("isAppLaunching: ", isAppLaunching, "didFinishLaunching: ", didFinishLaunching)
 		}
 	}
 }

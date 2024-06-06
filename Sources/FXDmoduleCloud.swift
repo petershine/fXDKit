@@ -20,8 +20,8 @@ class FXDmoduleCloud : NSObject {
 
 
 	open func prepareContainerURLwithIdentifier(_ containerIdentifier: String?, withStatusCallback statusCallback: FXDcallback?) {	fxd_log()
-		fxdPrint("containerIdentifier: \(String(describing: containerIdentifier))")
-		fxdPrint("statusCallback: \(String(describing: statusCallback))")
+		fxdPrint("containerIdentifier: ", containerIdentifier)
+		fxdPrint("statusCallback: ", statusCallback)
 
 		self.containerIdentifier = containerIdentifier
 		self.statusCallback = statusCallback
@@ -50,9 +50,9 @@ class FXDmoduleCloud : NSObject {
 	}
 
 	@objc open func observedNSUbiquityIdentityDidChange(_ notification: Notification?) {	fxd_log()
-		fxdPrint("notification: \(String(describing: notification))")
+		fxdPrint("notification: ", notification)
 
-		fxdPrint("FileManager.default.ubiquityIdentityToken: \(String(describing: FileManager.default.ubiquityIdentityToken))")
+		fxdPrint("FileManager.default.ubiquityIdentityToken: ", FileManager.default.ubiquityIdentityToken)
 
 		guard FileManager.default.ubiquityIdentityToken != nil else {
 			notifyCallback(
@@ -72,8 +72,8 @@ class FXDmoduleCloud : NSObject {
 			fxdPrint("\(error)")
 		}
 
-		fxdPrint("identityToken: \(String(describing: identityToken))")
-		fxdPrint("identityToken?.isEqual(fileManager.ubiquityIdentityToken): \(String(describing: identityToken?.isEqual(FileManager.default.ubiquityIdentityToken)))")
+		fxdPrint("identityToken: ", identityToken)
+		fxdPrint("identityToken?.isEqual(fileManager.ubiquityIdentityToken): ", identityToken?.isEqual(FileManager.default.ubiquityIdentityToken))
 
 		if identityToken == nil
 			|| identityToken!.isEqual(FileManager.default.ubiquityIdentityToken) == false  {
@@ -93,16 +93,16 @@ class FXDmoduleCloud : NSObject {
 
 		let savedContainerURL = UserDefaults.standard.object(forKey: userdefaultStringSavedUbiquityContainerURL) as? String
 		containerURL = NSURL.evaluatedURLforPath(savedContainerURL)
-		fxdPrint("containerURL: \(String(describing: containerURL))")
+		fxdPrint("containerURL: ", containerURL)
 
 
 		let containerURLupdatingQueue = OperationQueue.newSerialQueue(withName: #function)
 
 		containerURLupdatingQueue?.addOperation {	fxd_log()
-			fxdPrint("containerIdentifier: \(String(describing: self.containerIdentifier))")
+			fxdPrint("containerIdentifier: ", self.containerIdentifier)
 
 			let ubiquityContainerURL = FileManager.default.url(forUbiquityContainerIdentifier: self.containerIdentifier)
-			fxdPrint("ubiquityContainerURL: \(String(describing: ubiquityContainerURL))")
+			fxdPrint("ubiquityContainerURL: ", ubiquityContainerURL)
 
 			DispatchQueue.main.async {	fxd_log()
 				guard ubiquityContainerURL != nil
@@ -120,7 +120,7 @@ class FXDmoduleCloud : NSObject {
 
 
 				self.containerURL = ubiquityContainerURL
-				fxdPrint("\(String(describing: FileManager.default.infoDictionary(forFolderURL: self.containerURL)))")
+				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.containerURL))
 
 				self.notifyCallback(
 					withContainerURL: self.containerURL,

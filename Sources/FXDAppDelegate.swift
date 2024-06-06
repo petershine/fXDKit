@@ -39,18 +39,18 @@ class SubClassedAppDelegate: FXDAppDelegate {
 
 	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 		fxd_overridable()
-		fxdPrint("launchOptions: \(String(describing: launchOptions))")
+		fxdPrint("launchOptions: ", launchOptions)
 		return true
 	}
 
 	open func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
 		fxd_overridable()
-		fxdPrint("connectingSceneSession: \(String(describing: connectingSceneSession))")
+		fxdPrint("connectingSceneSession: ", connectingSceneSession)
 
 
 		let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
 		sceneConfig.delegateClass = self.sceneDelegateClass
-		fxdPrint("sceneConfig.delegateClass: \(String(describing: sceneConfig.delegateClass))")
+		fxdPrint("sceneConfig.delegateClass: ", sceneConfig.delegateClass)
 		fxdPrint("sceneConfig: \(sceneConfig)")
 
 		return sceneConfig
@@ -58,6 +58,6 @@ class SubClassedAppDelegate: FXDAppDelegate {
 
 	open func applicationWillTerminate(_ application: UIApplication) {
 		fxd_overridable()
-		fxdPrint("applicationState: \(application.applicationState)")
+		fxdPrint("applicationState: ", application.applicationState)
 	}
 }

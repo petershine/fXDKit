@@ -114,7 +114,7 @@ extension FXDcontainerCovering {
 					continue
 				}
 
-				fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
+				fxdPrint("\(childScene!), ", childScene?.shouldStayFixed)
 
 				if let childIndex = children.firstIndex(of: childScene!),
 					(childIndex < destinationIndex && childScene?.shouldStayFixed == false) {
@@ -137,7 +137,7 @@ extension FXDcontainerCovering {
 			}
 		}
 
-		fxdPrint("\(String(describing: pushedScene)), \(animatedPushedFrame)")
+		fxdPrint(pushedScene, animatedPushedFrame)
 
 		presentedScene.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
@@ -189,13 +189,13 @@ extension FXDcontainerCovering {
 
 		if let offsetY = dismissedScene.offsetYforUncovering?.floatValue,
 			(offsetY > 0.0) {
-			fxdPrint("1.\(String(describing: offsetY))")
+			fxdPrint("1.", offsetY)
 			animatedFrame.origin.y -= (CGFloat(offsetY) * direction.y)
 		}
 		else {
 			animatedFrame.origin.y -= (animatedFrame.size.height * direction.y)
 		}
-		fxdPrint("2.CALCULATED offsetY: \(dismissedScene.view.frame.origin.y) - \(animatedFrame.origin.y) = \((dismissedScene.view.frame.origin.y - animatedFrame.origin.y))")
+		fxdPrint("2.CALCULATED offsetY: ", dismissedScene.view.frame.origin.y, " - ", animatedFrame.origin.y, " = ", (dismissedScene.view.frame.origin.y - animatedFrame.origin.y))
 
 
 		var pulledScene: UIViewController? = nil
@@ -212,7 +212,7 @@ extension FXDcontainerCovering {
 					continue
 				}
 
-				fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
+				fxdPrint("\(childScene!), ", childScene?.shouldStayFixed)
 
 				if let childIndex = children.firstIndex(of: childScene!),
 					(childIndex < sourceIndex && childScene?.shouldStayFixed == false) {
@@ -235,7 +235,7 @@ extension FXDcontainerCovering {
 			}
 		}
 
-		fxdPrint("\(String(describing: pulledScene)), \(animatedPulledFrame)")
+		fxdPrint(pulledScene, animatedPulledFrame)
 
 		dismissedScene.willMove(toParent: nil)
 
@@ -254,7 +254,7 @@ extension FXDcontainerCovering {
 			}) {
 				[weak self] (didFinish) in
 
-				fxdPrint("\(didFinish), \(String(describing: pulledScene))")
+				fxdPrint(didFinish, pulledScene)
 
 				dismissedScene.view.removeFromSuperview()
 				dismissedScene.removeFromParent()
@@ -281,7 +281,7 @@ extension FXDcontainerCovering {
 				continue
 			}
 
-			fxdPrint("\(childScene!), \(String(describing: childScene?.shouldStayFixed))")
+			fxdPrint("\(childScene!), ", childScene?.shouldStayFixed)
 
 			if childScene?.shouldStayFixed == false {
 				lateAddedSceneArray.append(childScene!)
@@ -343,7 +343,7 @@ extension FXDcontainerCovering {
 				childScene.removeFromParent()
 			}
 
-			fxdPrint("2.\(String(describing: self?.children))")
+			fxdPrint("2.", self?.children)
 
 			self?.isUncovering = false
 

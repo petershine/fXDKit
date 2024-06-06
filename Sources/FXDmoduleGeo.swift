@@ -49,7 +49,7 @@ open class FXDmoduleGeo: NSObject {
 					|| authorizationStatus == .authorizedWhenInUse
 			else {	fxd_log()
 				fxdPrint(authorizationStatus)
-				fxdPrint("\(String(describing: mainLocationManager?.location))")
+				fxdPrint(mainLocationManager?.location)
 
 				return false
 			}
@@ -235,7 +235,7 @@ extension FXDmoduleGeo: CLLocationManagerDelegate {
 	}
 
 	open func locationManager(_ manager: CLLocationManager, didFinishDeferredUpdatesWithError error: Error?) {	fxd_overridable()
-		fxdPrint("\(String(describing: error))")
+		fxdPrint(error)
 	}
 }
 
