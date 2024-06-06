@@ -98,11 +98,9 @@ public func fxdPrint(_ items: Any?..., separator: String = " ", terminator: Stri
 	#endif
 }
 
-public func fxdPrint(dictionary: Dictionary<String, Any?>) {
+public func fxdPrint(name: String? = nil, dictionary: Dictionary<String, Any?>) {
 	#if DEBUG
-	for (_, pair) in dictionary.enumerated() {
-		fxdPrint("\(pair.key) : ", pair.value)
-	}
+	os_log("[%@]:\n%@\n\n", (name ?? "dictionary"), dictionary)
 	#endif
 }
 
