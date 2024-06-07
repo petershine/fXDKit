@@ -24,27 +24,24 @@ public struct FXDswiftuiTextEditor: View {
 
 	@State var editedParagraph_0: String
 	@State var editedParagraph_1: String
-	@State var editedText: String? = nil
 
 	@FocusState var focusedEditor: Int?
 	@State var editorsVStackHeight: CGFloat = 0.0
 
-	var finishedEditing: ((String, String, String?) -> Void)?
+	var finishedEditing: ((String, String) -> Void)?
 
 
 	public init(shouldPresentPromptEditor: Binding<Bool>,
 				editedParagraph_0: String,
 				editedParagraph_1: String,
-				editedText: String? = nil,
 				focusedEditor: Int? = 0,
 				editorsVStackHeight: CGFloat = 0.0,
-				finishedEditing: ((String, String, String?) -> Void)? = nil) {
+				finishedEditing: ((String, String) -> Void)? = nil) {
 		
 		_shouldPresentPromptEditor = shouldPresentPromptEditor
 
 		self.editedParagraph_0 = editedParagraph_0
 		self.editedParagraph_1 = editedParagraph_1
-		self.editedText = editedText
 
 		self.focusedEditor = focusedEditor
 		self.editorsVStackHeight = editorsVStackHeight
@@ -70,11 +67,6 @@ public struct FXDswiftuiTextEditor: View {
 						.frame(height: self.height(for: 1))
 						.focused($focusedEditor, equals: 1)
 						.modifier(FXDTextEditorModifier())
-
-					TextEditor(text: Binding.constant(editedText ?? ""))
-						.frame(height: self.height(for: 2))
-						.focused($focusedEditor, equals: 2)
-						.modifier(FXDTextEditorModifier())
 				}
 				.onAppear {
 					editorsVStackHeight = outerGeometry.size.height
@@ -96,7 +88,7 @@ public struct FXDswiftuiTextEditor: View {
 						systemImageName: "pencil.and.list.clipboard",
 						foregroundStyle: .white,
 						action: {
-							finishedEditing?(editedParagraph_0, editedParagraph_1, editedText)
+							finishedEditing?(editedParagraph_0, editedParagraph_1)
 							shouldPresentPromptEditor = false
 						})
 				}
