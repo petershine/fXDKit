@@ -85,7 +85,7 @@ public struct FXDswiftuiTextEditor: View {
 					Spacer()
 
 					FXDswiftuiButton(
-						systemImageName: "pencil.and.list.clipboard",
+						systemImageName: "checkmark.circle",
 						foregroundStyle: .white,
 						action: {
 							finishedEditing?(editedParagraph_0, editedParagraph_1)
