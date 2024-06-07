@@ -20,35 +20,9 @@ public struct FXDswiftuiMediaDisplay: View {
 					Image(uiImage: availableImage)
 						.resizable()
 						.aspectRatio(contentMode: .fill)
-//						.gesture(
-//							LongPressGesture().onEnded { _ in
-//								if let availableImage = diaplayedImage {
-//									showActivitySheet(items: [availableImage])
-//								}
-//							})
 				}
 			}
 			.ignoresSafeArea()
-	}
-}
-
-fileprivate extension FXDswiftuiMediaDisplay {
-	func showActivitySheet(items: [Any]) {
-		guard let rootViewController = UIApplication.shared.mainWindow()?.rootViewController else {
-			return
-		}
-
-
-		let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-		if let popoverController = activityController.popoverPresentationController {
-			let sourceRectCenter = CGPoint(x: rootViewController.view.bounds.midX, y: rootViewController.view.bounds.midY)
-			
-			popoverController.sourceView = rootViewController.view
-			popoverController.sourceRect = CGRect(origin: sourceRectCenter, size: CGSize(width: 1, height: 1))
-			popoverController.permittedArrowDirections = []
-		}
-		
-		rootViewController.present(activityController, animated: true)
 	}
 }
 

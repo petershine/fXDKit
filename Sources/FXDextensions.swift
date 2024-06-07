@@ -179,6 +179,26 @@ extension Bundle {
 }
 
 
+extension UIActivityViewController {
+	public class func show(items: [Any]) {
+		guard let rootViewController = UIApplication.shared.mainWindow()?.rootViewController else {
+			return
+		}
+
+
+		let activityController = Self(activityItems: items, applicationActivities: nil)
+		if let popoverController = activityController.popoverPresentationController {
+			let sourceRectCenter = CGPoint(x: rootViewController.view.bounds.midX, y: rootViewController.view.bounds.midY)
+
+			popoverController.sourceView = rootViewController.view
+			popoverController.sourceRect = CGRect(origin: sourceRectCenter, size: CGSize(width: 1, height: 1))
+			popoverController.permittedArrowDirections = []
+		}
+
+		rootViewController.present(activityController, animated: true)
+	}
+}
+
 extension UIAlertController {
 	@objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
 		let localizedDescription = error?.localizedDescription ?? title ?? ""
