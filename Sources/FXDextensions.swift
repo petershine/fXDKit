@@ -294,14 +294,3 @@ extension UIDevice {
 	}
 }
 
-
-extension UIImage {
-	public func addCustomInfo(image: UIImage?, customInfo: Dictionary<String, Any?>) -> UIImage? {
-		var modifiedImage: UIImage? = nil
-
-		//https://github.com/kylehowells/ikyle.me-code-examples/blob/master/Read%20Write%20Image%20Metadata%20Swift/Read%20Write%20Image%20Metadata%20Swift/ViewController.swift#L89
-		//https://developer.apple.com/documentation/imageio/image_i_o_functions
-
-		return modifiedImage
-	}
-}
