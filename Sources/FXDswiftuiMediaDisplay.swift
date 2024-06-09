@@ -7,10 +7,12 @@ public struct FXDswiftuiMediaDisplay: View {
 	@Environment(\.colorScheme) var colorScheme
 
 	@Binding var diaplayedImage: UIImage?
+	@Binding var contentMode: ContentMode
 
 
-	public init(displayedImage: UIImage? = nil) {
-		_diaplayedImage = Binding.constant(displayedImage)
+	public init(displayedImage: Binding<UIImage?>, contentMode: Binding<ContentMode>) {
+		_diaplayedImage = displayedImage
+		_contentMode = contentMode
 	}
 
 	public var body: some View {
@@ -19,14 +21,9 @@ public struct FXDswiftuiMediaDisplay: View {
 				if let availableImage = diaplayedImage {
 					Image(uiImage: availableImage)
 						.resizable()
-						.aspectRatio(contentMode: .fill)
+						.aspectRatio(contentMode: contentMode)
 				}
 			}
 			.ignoresSafeArea()
 	}
-}
-
-
-#Preview {
-	FXDswiftuiMediaDisplay(displayedImage: UIImage())
 }
