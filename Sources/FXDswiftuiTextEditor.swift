@@ -19,7 +19,7 @@ struct FXDTextEditorModifier: ViewModifier {
 }
 
 
-public struct FXDswiftuiTextEditor: View {
+public struct FXDswiftuiTextEditor<Content: View>: View {
 	@Binding var shouldPresentPromptEditor: Bool
 
 	@State var editedParagraph_0: String
@@ -30,14 +30,16 @@ public struct FXDswiftuiTextEditor: View {
 
 	var finishedEditing: ((String, String) -> Void)?
 
+	var attachedView: Content?
 
 	public init(shouldPresentPromptEditor: Binding<Bool>,
 				editedParagraph_0: String,
 				editedParagraph_1: String,
 				focusedEditor: Int? = 0,
 				editorsVStackHeight: CGFloat = 0.0,
-				finishedEditing: ((String, String) -> Void)? = nil) {
-		
+				finishedEditing: ((String, String) -> Void)? = nil,
+				@ViewBuilder attachedView: () -> Content?) {
+
 		_shouldPresentPromptEditor = shouldPresentPromptEditor
 
 		self.editedParagraph_0 = editedParagraph_0
@@ -47,6 +49,8 @@ public struct FXDswiftuiTextEditor: View {
 		self.editorsVStackHeight = editorsVStackHeight
 
 		self.finishedEditing = finishedEditing
+
+		self.attachedView = attachedView()
 	}
 
 
@@ -82,6 +86,8 @@ public struct FXDswiftuiTextEditor: View {
 				Spacer()
 
 				HStack {
+					self.attachedView
+
 					Spacer()
 
 					FXDswiftuiButton(
