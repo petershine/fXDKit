@@ -5,16 +5,28 @@ import UIKit
 
 
 extension Data {
+	public func decode<T>(_ type: T.Type) -> T? where T : Decodable {
+		var decoded: T? = nil
+		do {
+			decoded = try JSONDecoder().decode(type, from: self)
+		}
+		catch {	fxd_log()
+			fxdPrint(error)
+		}
+
+		return decoded
+	}
+
 	public func jsonObject(quiet: Bool = false) -> Dictionary<String, Any?>? {
 		var jsonObject: Dictionary<String, Any?>? = nil
 		do {
 			jsonObject = try JSONSerialization.jsonObject(with: self, options: .mutableContainers) as? Dictionary<String, Any?>
 		}
 		catch {	fxd_log()
-			fxdPrint(error)
 			if let stringObject = String(data: self, encoding: .utf8) {
 				fxdPrint(stringObject)
 			}
+			fxdPrint(error)
 		}
 
 		return jsonObject
