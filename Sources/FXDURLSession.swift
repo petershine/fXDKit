@@ -74,7 +74,6 @@ public enum SerializedURLRequestError: Error {
 	case timeoutExpired
 }
 
-@available(iOS 17.0, *)
 public actor DataAndResponseActor {
 	public var dataAndResponseTuples: [(Data, URLResponse)] = []
 
@@ -94,7 +93,6 @@ public actor DataAndResponseActor {
 	}
 }
 
-@available(iOS 17.0, *)
 extension URLSession {
 	public func startSerializedURLRequest(urlRequests: [URLRequest], progressConfiguration: FXDobservableOverlay? = nil) async throws -> DataAndResponseActor? {
 		guard urlRequests.count > 0 else {

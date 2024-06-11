@@ -22,10 +22,7 @@ extension FXDprotocolScrollable {
 
 	public func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat {
 		var distance: CGFloat = scrollView.contentOffset.y + scrollView.contentInset.top
-
-		if #available(iOS 11.0, *) {
-			distance += scrollView.safeAreaInsets.top
-		}
+		distance += scrollView.safeAreaInsets.top
 
 		if (distance < 0.0) {
 			distance = 0.0

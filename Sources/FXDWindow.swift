@@ -23,7 +23,6 @@ extension UIWindow {
 	}
 }
 
-@available(iOS 17.0, *)
 extension UIWindow {
 	private weak var currentActiveController: FXDhostedOverlay? {
 		guard let activeController = rootViewController?.children.last as? FXDhostedOverlay else {
