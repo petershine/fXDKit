@@ -4,15 +4,13 @@ import SwiftUI
 
 
 public struct FXDswiftuiMediaDisplay: View {
-	@Environment(\.colorScheme) var colorScheme
 
 	@Binding var diaplayedImage: UIImage?
 	@Binding var contentMode: ContentMode
 
-
-	public init(displayedImage: Binding<UIImage?>, contentMode: Binding<ContentMode>) {
-		_diaplayedImage = displayedImage
-		_contentMode = contentMode
+	public init(displayedImage: UIImage?, contentMode: ContentMode) {
+		_diaplayedImage = Binding.constant(displayedImage)
+		_contentMode =  Binding.constant(contentMode)
 	}
 
 	public var body: some View {
