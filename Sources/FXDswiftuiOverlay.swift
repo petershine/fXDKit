@@ -88,7 +88,7 @@ public struct FXDswiftuiOverlay: View {
 				Text(observable.message_1 ?? "")
 			}
 		}
-		.ignoresSafeArea(.all)
+		.ignoresSafeArea()
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
 		.allowsHitTesting(!observable.shouldIgnoreUserInteraction)
 		.onTapGesture {
