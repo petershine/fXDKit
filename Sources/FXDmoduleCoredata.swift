@@ -21,15 +21,15 @@ open class FXDmoduleCoredata: NSObject {
 	public var mainDocument: FXDManagedDocument? = nil
 
 
-	public static var documentSearchPath: String = {
+	public var documentSearchPath: String = {
 		return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
 	}()
 
-	static var appDocumentDirectory: URL? = {
+	var appDocumentDirectory: URL? = {
 		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
 	}()
 
-	static var appCachesDirectory: URL? = {
+	var appCachesDirectory: URL? = {
 		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
 	}()
 
@@ -66,7 +66,7 @@ open class FXDmoduleCoredata: NSObject {
 
 
 	public var doesStoredSqliteExist: Bool {	fxd_log()
-		let storedPath = (Self.documentSearchPath as NSString).appendingPathComponent(sqlitePathComponent ?? "")
+		let storedPath = (documentSearchPath as NSString).appendingPathComponent(sqlitePathComponent ?? "")
 		fxdPrint("storedPath: \(storedPath)")
 
 		let doesExist = FileManager.default.fileExists(atPath: storedPath)
@@ -101,7 +101,7 @@ open class FXDmoduleCoredata: NSObject {
 
 
 		let pathComponent = "\(oldSqliteFile).sqlite"
-		let oldSqlitePath = (Self.documentSearchPath as NSString).appendingPathComponent(pathComponent)
+		let oldSqlitePath = (documentSearchPath as NSString).appendingPathComponent(pathComponent)
 		fxdPrint("oldSqlitePath: \(oldSqlitePath)")
 
 		return storeCopiedItem(fromSqlitePath: oldSqlitePath, toStoredPath: nil)
@@ -128,7 +128,7 @@ extension FXDmoduleCoredata {
 		var defaultStoredPath = storedPath
 		if defaultStoredPath == nil {
 			let pathComponent = sqlitePathComponent ?? ""
-			defaultStoredPath = (Self.documentSearchPath as NSString).appendingPathComponent(pathComponent)
+			defaultStoredPath = (documentSearchPath as NSString).appendingPathComponent(pathComponent)
 		}
 
 
@@ -152,7 +152,7 @@ extension FXDmoduleCoredata {
 		if mainManagedDocument == nil {
 			fxdPrint("CHECK if bundle has more than 1 momd")
 
-			if let documentURL = Self.appDocumentDirectory?.appending(path: "managedDocument.\(coredataName ?? "")") {
+			if let documentURL = appDocumentDirectory?.appending(path: "managedDocument.\(coredataName ?? "")") {
 
 				mainManagedDocument = FXDManagedDocument(fileURL: documentURL)
 			}
@@ -234,8 +234,8 @@ extension FXDmoduleCoredata {
 			#if DEBUG
 			if ubiquityContainerURL != nil {
 				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: ubiquityContainerURL))
-				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: Self.appCachesDirectory))
-				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: Self.appDocumentDirectory))
+				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.appCachesDirectory))
+				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.appDocumentDirectory))
 			}
 			#endif
 
