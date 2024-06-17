@@ -219,28 +219,32 @@ extension UIAlertController {
 		self.simpleAlert(withTitle: localizedDescription, message: failureReason)
 	}
 
-	@objc public class func simpleAlert(withTitle title: String?, message: String?) {
-		self.simpleAlert(withTitle: title,
-						 message: message,
-						 cancelText: nil,
-						 fromScene: nil,
-						 handler: nil)
-	}
-
-	@objc public class func simpleAlert(withTitle title: String?, message: String?,
-								 cancelText: String?,
-								 fromScene: UIViewController?,
-								 handler: ((UIAlertAction) -> Swift.Void)?) {
+	@objc public class func simpleAlert(withTitle title: String?, 
+										message: String?,
+										fromScene: UIViewController? = nil,
+										destructiveText: String? = nil,
+										cancelText: String? = NSLocalizedString("OK", comment: ""),
+										destructiveHandler: ((UIAlertAction) -> Swift.Void)? = nil,
+										cancelHandler: ((UIAlertAction) -> Swift.Void)? = nil) {
 
 		let alert = UIAlertController(title: title,
 									  message: message,
 									  preferredStyle: .alert)
 
-		let cancelAction = UIAlertAction(title: ((cancelText != nil) ? cancelText! : NSLocalizedString("OK", comment: "")),
+		let cancelAction = UIAlertAction(title: cancelText,
 										 style: .cancel,
-										 handler: handler)
-
+										 handler: cancelHandler)
 		alert.addAction(cancelAction)
+
+
+		if !(destructiveText?.isEmpty ?? true)
+			&& destructiveHandler != nil {
+			let destructiveAction = UIAlertAction(title: destructiveText,
+											 style: .destructive,
+											 handler: destructiveHandler)
+			alert.addAction(destructiveAction)
+		}
+
 
 
 		var presentingScene: UIViewController? = fromScene

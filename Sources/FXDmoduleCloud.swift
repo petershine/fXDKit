@@ -40,10 +40,7 @@ class FXDmoduleCloud : NSObject {
 		if alertBody?.isEmpty ?? false {
 			UIAlertController.simpleAlert(
 				withTitle: alertBody,
-				message: nil,
-				cancelText: NSLocalizedString("OK", comment: ""),
-				fromScene: nil,
-				handler: nil)
+				message: nil)
 		}
 
 		statusCallback?((containerURL != nil), containerURL)
