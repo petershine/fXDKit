@@ -9,6 +9,9 @@ Recently, this kit is reorganized to follow Swift Package standards.
 ## Installation
 
 fXDKit is available using SPM (while using old fXDObjC as .xcframework) and CocoaPods.
+```swift
+.package(url: "https://github.com/petershine/fXDKit", branch: "master")
+```
 
 
 To install using CocoaPods, simply add the following line to your Podfile:
