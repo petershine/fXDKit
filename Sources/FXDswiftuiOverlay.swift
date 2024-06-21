@@ -25,7 +25,7 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 
 	@Published open var overlayColor: UIColor? = nil
 	@Published open var overlayAlpha: CGFloat
-	@Published open var allowUserInteraction: Bool = true
+	@Published open var allowUserInteraction: Bool = false
 
 	@Published open var overlayTitle: String? = nil
 	@Published open var message_0: String? = nil
@@ -45,7 +45,7 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 
 		self.overlayColor = overlayColor
 		self.overlayAlpha = overlayAlpha ?? 0.5
-		self.allowUserInteraction = allowUserInteraction ?? true
+		self.allowUserInteraction = allowUserInteraction ?? false
 
 		self.sliderValue = sliderValue ?? 0.0
 		self.sliderTint = sliderTint ?? Color(uiColor: .systemBlue)
@@ -161,9 +161,7 @@ open class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 extension FXDobservableOverlay {
 	public class func exampleCountingUp() -> FXDobservableOverlay {
 
-		let testingConfiguration = FXDobservableOverlay(
-			allowUserInteraction: false,
-			sliderValue: 0.0)
+		let testingConfiguration = FXDobservableOverlay(sliderValue: 0.0)
 
 
 		let taskInterval = 1.0
