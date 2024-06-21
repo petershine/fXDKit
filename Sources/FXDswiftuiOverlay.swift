@@ -8,7 +8,7 @@ public protocol FXDprotocolOverlay {
 
 	var overlayColor: UIColor? { get set }
 	var overlayAlpha: CGFloat { get set }
-	var shouldIgnoreUserInteraction: Bool { get set }
+	var allowUserInteraction: Bool { get set }
 
 	var overlayTitle: String? { get set }
 	var message_0: String? { get set }
@@ -25,7 +25,7 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 
 	@Published open var overlayColor: UIColor? = nil
 	@Published open var overlayAlpha: CGFloat
-	@Published open var shouldIgnoreUserInteraction: Bool = true
+	@Published open var allowUserInteraction: Bool = true
 
 	@Published open var overlayTitle: String? = nil
 	@Published open var message_0: String? = nil
@@ -38,14 +38,14 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 
 	public init(overlayColor: UIColor? = nil,
 				overlayAlpha: CGFloat? = nil,
-				shouldIgnoreUserInteraction: Bool? = nil,
+				allowUserInteraction: Bool? = nil,
 
 				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
 
 		self.overlayColor = overlayColor
 		self.overlayAlpha = overlayAlpha ?? 0.5
-		self.shouldIgnoreUserInteraction = shouldIgnoreUserInteraction ?? true
+		self.allowUserInteraction = allowUserInteraction ?? true
 
 		self.sliderValue = sliderValue ?? 0.0
 		self.sliderTint = sliderTint ?? Color(uiColor: .systemBlue)
@@ -90,7 +90,7 @@ public struct FXDswiftuiOverlay: View {
 		}
 		.ignoresSafeArea()
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
-		.allowsHitTesting(!observable.shouldIgnoreUserInteraction)
+		.allowsHitTesting(!observable.allowUserInteraction)
 		.onTapGesture {
 			observable.shouldDismiss = true
 			observable.cancellableTask?.cancel()
@@ -162,7 +162,7 @@ extension FXDobservableOverlay {
 	public class func exampleCountingUp() -> FXDobservableOverlay {
 
 		let testingConfiguration = FXDobservableOverlay(
-			shouldIgnoreUserInteraction: false,
+			allowUserInteraction: false,
 			sliderValue: 0.0)
 
 
