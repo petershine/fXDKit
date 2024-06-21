@@ -20,7 +20,7 @@ struct FXDTextEditorModifier: ViewModifier {
 
 
 public struct FXDswiftuiTextEditor<Content: View>: View {
-	@Binding var shouldPresentPromptEditor: Bool
+	@Binding var shouldPresentTextEditor: Bool
 
 	@State var editedParagraph_0: String
 	@State var editedParagraph_1: String
@@ -32,7 +32,7 @@ public struct FXDswiftuiTextEditor<Content: View>: View {
 
 	var attachedView: Content?
 
-	public init(shouldPresentPromptEditor: Binding<Bool>,
+	public init(shouldPresentTextEditor: Binding<Bool>,
 				editedParagraph_0: String,
 				editedParagraph_1: String,
 				focusedEditor: Int? = 0,
@@ -40,7 +40,7 @@ public struct FXDswiftuiTextEditor<Content: View>: View {
 				finishedEditing: ((String, String) -> Void)? = nil,
 				@ViewBuilder attachedView: () -> Content?) {
 
-		_shouldPresentPromptEditor = shouldPresentPromptEditor
+		_shouldPresentTextEditor = shouldPresentTextEditor
 
 		self.editedParagraph_0 = editedParagraph_0
 		self.editedParagraph_1 = editedParagraph_1
@@ -95,7 +95,7 @@ public struct FXDswiftuiTextEditor<Content: View>: View {
 						foregroundStyle: .white,
 						action: {
 							finishedEditing?(editedParagraph_0, editedParagraph_1)
-							shouldPresentPromptEditor = false
+							shouldPresentTextEditor = false
 						})
 				}
 			}
