@@ -213,10 +213,12 @@ extension UIActivityViewController {
 
 extension UIAlertController {
 	@objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
-		let localizedDescription = error?.localizedDescription ?? title ?? ""
-		let failureReason: String = (error as? NSError)?.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? message ?? ""
+		let alertTitle = title ?? error?.localizedDescription ?? ""
+		
+		let failureReason: String = (error as? NSError)?.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? error?.localizedDescription ?? ""
+		let alertMessage = message ?? failureReason
 
-		self.simpleAlert(withTitle: localizedDescription, message: failureReason)
+		self.simpleAlert(withTitle: alertTitle, message: alertMessage)
 	}
 
 	@objc public class func simpleAlert(withTitle title: String?, 
