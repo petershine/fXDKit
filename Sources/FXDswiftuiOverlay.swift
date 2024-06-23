@@ -23,6 +23,8 @@ public protocol FXDprotocolOverlay {
 open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 	@Published open var shouldDismiss: Bool = false
 
+	@Published open var progressSpinnerAlpha: CGFloat = 1.0
+
 	@Published open var overlayColor: UIColor? = nil
 	@Published open var overlayAlpha: CGFloat
 	@Published open var allowUserInteraction: Bool = false
@@ -36,12 +38,16 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 
 	open var cancellableTask: Task<Void, Error>? = nil
 
-	public init(overlayColor: UIColor? = nil,
+	public init(progressSpinnerAlpha: CGFloat? = 1.0,
+
+				overlayColor: UIColor? = nil,
 				overlayAlpha: CGFloat? = nil,
 				allowUserInteraction: Bool? = nil,
 
 				sliderValue: CGFloat? = nil,
 				sliderTint: Color? = nil) {
+
+		self.progressSpinnerAlpha = progressSpinnerAlpha ?? 1.0
 
 		self.overlayColor = overlayColor
 		self.overlayAlpha = overlayAlpha ?? 0.5
@@ -78,6 +84,7 @@ public struct FXDswiftuiOverlay: View {
 				ProgressView()
 					.controlSize(.large)
 					.frame(alignment: .center)
+					.opacity(observable.progressSpinnerAlpha)
 
 				FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
 					.tint(observable.sliderTint)
