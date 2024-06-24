@@ -17,10 +17,15 @@ extension Data {
 		return decoded
 	}
 
-	public func jsonObject(quiet: Bool = false) -> Dictionary<String, Any?>? {
-		var jsonObject: Dictionary<String, Any?>? = nil
+	public func jsonDictionary(quiet: Bool = false) -> Dictionary<String, Any?>? {
+		let jsonDictionary: Dictionary<String, Any?>? = self.jsonObject(quiet: quiet) as? Dictionary<String, Any?>
+		return jsonDictionary
+	}
+
+	public func jsonObject(quiet: Bool = false) -> Any? {
+		var jsonObject: Any? = nil
 		do {
-			jsonObject = try JSONSerialization.jsonObject(with: self, options: .mutableContainers) as? Dictionary<String, Any?>
+			jsonObject = try JSONSerialization.jsonObject(with: self, options: .mutableContainers)
 		}
 		catch {	fxd_log()
 			if let stringObject = String(data: self, encoding: .utf8) {
