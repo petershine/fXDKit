@@ -85,11 +85,9 @@ public struct FXDswiftuiTextEditor<Content: View>: View {
 			VStack {
 				Spacer()
 
+				self.attachedView
+
 				HStack {
-					self.attachedView
-
-					Spacer()
-
 					FXDswiftuiButton(
 						systemImageName: "checkmark.circle",
 						foregroundStyle: .white,
