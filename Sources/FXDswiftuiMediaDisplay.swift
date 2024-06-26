@@ -25,8 +25,10 @@ public struct FXDswiftuiMediaDisplay: View {
 					.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
 			}
 		}
+		.background {
+			Color(.black)
+		}
 		.ignoresSafeArea()
-		.backgroundStyle(.black)
 		.onTapGesture(count: 2) {
 			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
 		}
