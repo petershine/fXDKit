@@ -54,15 +54,12 @@ public struct FXDswiftuiMediaDisplay: View {
 
 extension FXDswiftuiMediaDisplay {
 	func updateDisplayImage(for newContentMode: ContentMode) {
-		fxdPrint(newContentMode)
 		guard let displayImage else {
 			return
 		}
 
 
 		let newSize = displayImage.aspectSize(for: displayContentMode, containerSize: UIScreen.main.bounds.size)
-
-		fxdPrint(newSize)
 		withAnimation {
 			displaySize = newSize
 		}
