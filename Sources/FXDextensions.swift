@@ -318,11 +318,44 @@ extension UIDevice {
 }
 
 
+import SwiftUI
+
 extension UIImage {
-	public func aspectFillSize(maxSize: CGSize) -> CGSize {
-		let aspectRatio = CGFloat(self.size.width) / CGFloat(self.size.height)
-		var fillSize = maxSize
-		fillSize.width = fillSize.height * aspectRatio
-		return fillSize
+	public func aspectSize(for contentMode: ContentMode, containerSize: CGSize) -> CGSize {
+
+		let aspectRatio = min(self.size.width, self.size.height)/max(self.size.width, self.size.height)
+
+		let isVerticalImage = self.size.width < self.size.height
+		let isVerticalContainer = containerSize.width < containerSize.height
+
+
+		var aspectSize: CGSize = self.size
+
+		if contentMode == .fit {
+			let minDimension = min(containerSize.width, containerSize.height)
+
+			if (isVerticalImage && isVerticalContainer)
+				|| (!isVerticalImage && isVerticalContainer) {
+				aspectSize = CGSize(width: minDimension, height: minDimension/aspectRatio)
+			}
+			else if (isVerticalImage && !isVerticalContainer)
+						|| (!isVerticalImage && !isVerticalContainer) {
+				aspectSize = CGSize(width: minDimension*aspectRatio, height: minDimension)
+			}
+		}
+		else {
+			let maxDimension = max(containerSize.width, containerSize.height)
+
+			if (isVerticalImage && isVerticalContainer)
+				|| (!isVerticalImage && isVerticalContainer) {
+				aspectSize = CGSize(width: maxDimension*aspectRatio, height: maxDimension)
+			}
+			else if (isVerticalImage && !isVerticalContainer)
+						|| (!isVerticalImage && !isVerticalContainer) {
+				aspectSize = CGSize(width: maxDimension, height: maxDimension/aspectRatio)
+			}
+		}
+
+		return aspectSize
 	}
 }

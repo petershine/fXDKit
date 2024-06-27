@@ -59,38 +59,7 @@ extension FXDswiftuiMediaDisplay {
 		}
 
 
-		let aspectRatio = min(displayImage.size.width, displayImage.size.height)/max(displayImage.size.width, displayImage.size.height)
-
-		let isPortraitImage = displayImage.size.width < displayImage.size.height
-		let isPortraitScreen = UIScreen.main.bounds.width < UIScreen.main.bounds.height
-
-
-		var newSize: CGSize = displaySize ?? displayImage.size
-
-		if newContentMode == .fit {
-			let minDimension = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-
-			if (isPortraitImage && isPortraitScreen)
-				|| (!isPortraitImage && isPortraitScreen) {
-				newSize = CGSize(width: minDimension, height: minDimension/aspectRatio)
-			}
-			else if (isPortraitImage && !isPortraitScreen)
-						|| (!isPortraitImage && !isPortraitScreen) {
-				newSize = CGSize(width: minDimension*aspectRatio, height: minDimension)
-			}
-		}
-		else {
-			let maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-
-			if (isPortraitImage && isPortraitScreen)
-				|| (!isPortraitImage && isPortraitScreen) {
-				newSize = CGSize(width: maxDimension*aspectRatio, height: maxDimension)
-			}
-			else if (isPortraitImage && !isPortraitScreen)
-						|| (!isPortraitImage && !isPortraitScreen) {
-				newSize = CGSize(width: maxDimension, height: maxDimension/aspectRatio)
-			}
-		}
+		let newSize = displayImage.aspectSize(for: displayContentMode, containerSize: UIScreen.main.bounds.size)
 
 		fxdPrint(newSize)
 		withAnimation {
