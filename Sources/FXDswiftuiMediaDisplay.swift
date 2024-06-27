@@ -17,7 +17,8 @@ public struct FXDswiftuiMediaDisplay: View {
 	}
 
 	public var body: some View {
-		ScrollView([.horizontal, .vertical]) {
+		ScrollView([.horizontal, .vertical],
+				   showsIndicators: false) {
 			if let displayImage {
 				Image(uiImage: displayImage)
 					.resizable()
