@@ -323,7 +323,7 @@ import SwiftUI
 extension UIImage {
 	public func aspectSize(for contentMode: ContentMode, containerSize: CGSize) -> CGSize {
 
-		let aspectRatio = min(self.size.width, self.size.height)/max(self.size.width, self.size.height)
+		let aspectRatio = self.size.width/self.size.height
 
 		let isVerticalImage = self.size.width < self.size.height
 		let isVerticalContainer = containerSize.width < containerSize.height
