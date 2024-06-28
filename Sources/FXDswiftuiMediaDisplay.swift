@@ -20,16 +20,21 @@ public struct FXDswiftuiMediaDisplay: View {
 	public var body: some View {
 		ScrollView(displayAxisSet,
 				   showsIndicators: false) {
-			if let displayImage {
-				Image(uiImage: displayImage)
-					.resizable()
-					.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
+			ZStack {
+				Spacer().containerRelativeFrame([.horizontal, .vertical])
+				
+				if let displayImage {
+					Image(uiImage: displayImage)
+						.resizable()
+						.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
+				}
 			}
 		}
 		.background {
 			Color(.black)
 		}
 		.ignoresSafeArea()
+		.scrollBounceBehavior(.basedOnSize)
 		.onTapGesture(count: 2) {
 			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
 		}
