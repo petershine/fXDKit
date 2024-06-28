@@ -6,6 +6,7 @@ import SwiftUI
 public struct FXDswiftuiMediaDisplay: View {
 	@State private var displayContentMode: ContentMode = .fit
 	@State private var displaySize: CGSize?
+	@State private var displayAxisSet: Axis.Set = []
 
 	@Binding var displayImage: UIImage?
 
@@ -17,12 +18,11 @@ public struct FXDswiftuiMediaDisplay: View {
 	}
 
 	public var body: some View {
-		ScrollView([.horizontal, .vertical],
+		ScrollView(displayAxisSet,
 				   showsIndicators: false) {
 			if let displayImage {
 				Image(uiImage: displayImage)
 					.resizable()
-					.aspectRatio(contentMode: .fill)
 					.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
 			}
 		}
@@ -36,32 +36,45 @@ public struct FXDswiftuiMediaDisplay: View {
 		.onChange(of: displayContentMode) {
 			oldValue, newValue in
 
-			updateDisplayImage(for: newValue)
+			updateScrollViewConfiguration(for: newValue)
 		}
 		.onChange(of: displayImage) {
 			oldValue, newValue in
 
-			updateDisplayImage(for: displayContentMode)
+			updateScrollViewConfiguration(for: displayContentMode)
 		}
 		.onReceive(NotificationCenter.default.publisher(
 			for: UIDevice.orientationDidChangeNotification)) { _ in
 				DispatchQueue.main.async {
-					updateDisplayImage(for: displayContentMode)
+					updateScrollViewConfiguration(for: displayContentMode)
 				}
 			}
 	}
 }
 
-extension FXDswiftuiMediaDisplay {
-	func updateDisplayImage(for newContentMode: ContentMode) {
+fileprivate extension FXDswiftuiMediaDisplay {
+	func updateScrollViewConfiguration(for newContentMode: ContentMode) {
 		guard let displayImage else {
 			return
 		}
 
 
-		let newSize = displayImage.aspectSize(for: displayContentMode, containerSize: UIScreen.main.bounds.size)
+		let containerSize = UIScreen.main.bounds.size
+		let aspectSize = displayImage.aspectSize(for: displayContentMode, containerSize: containerSize)
 		withAnimation {
-			displaySize = newSize
+			displaySize = aspectSize
+		}
+
+		if newContentMode == .fit
+			|| (aspectSize.width <= containerSize.width && aspectSize.height <= containerSize.height) {
+
+			displayAxisSet = []
+		}
+		else if aspectSize.width > containerSize.width {
+			displayAxisSet = [.horizontal]
+		}
+		else if aspectSize.height > containerSize.height {
+			displayAxisSet = [.vertical]
 		}
 	}
 }
