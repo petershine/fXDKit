@@ -101,7 +101,7 @@ extension FXDmoduleMessage: MFMailComposeViewControllerDelegate {
 	public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {	fxd_log()
 
 		fxdPrint(result)
-		fxdPrint(error as Any)
+		fxdPrint(error)
 
 		controller.dismiss(animated: true, completion: nil)
 	}

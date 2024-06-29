@@ -52,9 +52,9 @@ class FXDmoduleYoutube: NSObject {
 		let searchTask = URLSession.shared.dataTask(with: request) {
 			(data:Data?, response:URLResponse?, error:Error?) in
 
-			fxdPrint(data as Any)
-			fxdPrint(response as Any)
-			fxdPrint(error as Any)
+			fxdPrint(data)
+			fxdPrint(response)
+			fxdPrint(error)
 
 
 			var results:Array<Any>?
