@@ -98,9 +98,14 @@ public func fxdPrint(_ items: Any?..., separator: String = " ", terminator: Stri
 	#endif
 }
 
-public func fxdPrint(name: String? = nil, dictionary: Dictionary<String, Any?>) {
+public func fxdPrint(name: String? = nil, dictionary: Dictionary<String, Any?>?) {
 	#if DEBUG
-	os_log("[%@]:\n%@\n\n", (name ?? "dictionary"), dictionary)
+	if let dictionary {
+		os_log("[%@]:\n%@\n\n", (name ?? "dictionary"), dictionary)
+	}
+	else {
+		fxdPrint("[\(name ?? "dictionary")]", dictionary)
+	}
 	#endif
 }
 
