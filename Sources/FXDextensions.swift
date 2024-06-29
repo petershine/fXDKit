@@ -222,7 +222,7 @@ extension UIAlertController {
 		let alertMessage = message ?? failureReason
 		let alertTitle = title ?? error?.localizedDescription ?? ""
 
-		guard !alertTitle.isEmpty && !alertMessage.isEmpty else {
+		guard !alertTitle.isEmpty || !alertMessage.isEmpty else {
 			return
 		}
 
