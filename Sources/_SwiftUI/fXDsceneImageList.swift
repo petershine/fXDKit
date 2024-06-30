@@ -9,10 +9,10 @@ public struct fXDsceneImageList: View {
 	@Binding var imageURLs: [URL]
 	@Binding var selectedImageURL: URL?
 
-	@State var action_LongPress: ((_ imageURLs: [URL]) -> Void)? = nil
+	@State var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
 
 
-	public init(minDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURLs: [URL]) -> Void)? = nil) {
+	public init(minDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
 		self.minDimension = minDimension ?? (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 100.0)
 
 		_imageURLs = imageURLs
@@ -49,7 +49,7 @@ public struct fXDsceneImageList: View {
 					selectedImageURL = imageURL
 				})
 				.onLongPressGesture {
-					action_LongPress?(imageURLs)
+					action_LongPress?(imageURL)
 				}
 			}
 			.listRowBackground(Color.clear)
