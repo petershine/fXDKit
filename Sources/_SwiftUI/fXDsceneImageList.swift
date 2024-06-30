@@ -9,7 +9,7 @@ public struct fXDsceneImageList: View {
 	@Binding var imageURLs: [URL]
 	@Binding var selectedImageURL: URL?
 
-	@State var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
+	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
 
 
 	public init(minDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
