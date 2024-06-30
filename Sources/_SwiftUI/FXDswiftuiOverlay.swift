@@ -50,7 +50,7 @@ open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
 		self.progressSpinnerAlpha = progressSpinnerAlpha ?? 1.0
 
 		self.overlayColor = overlayColor
-		self.overlayAlpha = overlayAlpha ?? 0.5
+		self.overlayAlpha = overlayAlpha ?? 0.8
 		self.allowUserInteraction = allowUserInteraction ?? false
 
 		self.sliderValue = sliderValue ?? 0.0
@@ -136,7 +136,7 @@ open class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
 
 			let interfaceStyle = self?.traitCollection.userInterfaceStyle
 
-			self?.view.backgroundColor = self?.rootView.observable.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(self?.rootView.observable.overlayAlpha ?? 0.75)
+			self?.view.backgroundColor = self?.rootView.observable.overlayColor ?? (interfaceStyle == .dark ? UIColor.black : UIColor.white).withAlphaComponent(self?.rootView.observable.overlayAlpha ?? 0.8)
 		}
 
 		reactToTraitChanges()
