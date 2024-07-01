@@ -42,12 +42,13 @@ public struct fXDsceneImageScrollview: View {
 		}
 		.ignoresSafeArea()
 		.scrollBounceBehavior(.basedOnSize)
-		.onTapGesture {
-			self.action_OnTap?()
-		}
-		.onTapGesture(count: 2) {
-			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
-		}
+		.gesture(
+			TapGesture(count: 2).onEnded {
+				displayContentMode = (displayContentMode == .fit) ? .fill : .fit
+			}.exclusively(before: TapGesture(count: 1).onEnded {
+				action_OnTap?()
+			})
+		)
 		.onChange(of: displayContentMode) {
 			oldValue, newValue in
 
