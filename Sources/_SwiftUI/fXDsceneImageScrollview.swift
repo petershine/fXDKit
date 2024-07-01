@@ -13,10 +13,10 @@ public struct fXDsceneImageScrollview: View {
 	var action_OnTap: (() -> Void)? = nil
 
 
-	public init(displayImage: UIImage?, action_OnTap: (() -> Void)? = nil) {
-		_displayImage = Binding.constant(displayImage)
+	public init(displayImage: Binding<UIImage?>, action_OnTap: (() -> Void)? = nil) {
+		_displayImage = displayImage
 
-		self.displaySize = displayImage?.size
+		displaySize = displayImage.wrappedValue?.size
 
 		self.action_OnTap = action_OnTap
 	}
@@ -25,12 +25,15 @@ public struct fXDsceneImageScrollview: View {
 		ScrollView(displayAxisSet,
 				   showsIndicators: false) {
 			ZStack {
-				Spacer().containerRelativeFrame([.horizontal, .vertical])
-				
+				Spacer()
+					.containerRelativeFrame([.horizontal, .vertical])
+					.ignoresSafeArea()
+
 				if let displayImage {
 					Image(uiImage: displayImage)
 						.resizable()
 						.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
+						.ignoresSafeArea()
 				}
 			}
 		}

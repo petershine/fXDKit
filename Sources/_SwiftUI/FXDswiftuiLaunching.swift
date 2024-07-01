@@ -27,7 +27,7 @@ public struct FXDswiftuiLaunching: View {
 	public var body: some View {
 		ZStack {
 			Color(overlayColor ?? .black)
-				.ignoresSafeArea(.all)
+				.ignoresSafeArea()
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 
 			if backgroundImage != nil {

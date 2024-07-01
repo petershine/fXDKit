@@ -4,19 +4,20 @@ import SwiftUI
 
 
 public struct fXDsceneImageList: View {
-	@State var minDimension: CGFloat
-
-	@Binding var imageURLs: [URL]
 	@Binding var selectedImageURL: URL?
+	@Binding var imageURLs: [URL]
+
+	@State var minDimension: CGFloat
 
 	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
 
 
 	public init(minDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
-		self.minDimension = minDimension ?? (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 100.0)
 
-		_imageURLs = imageURLs
 		_selectedImageURL = selectedImageURL
+		_imageURLs = imageURLs
+
+		self.minDimension = minDimension ?? (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 100.0)
 
 		self.action_LongPress = action_LongPress
 	}
@@ -61,7 +62,8 @@ public struct fXDsceneImageList: View {
 		.listStyle(.plain)
 		.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 		.onAppear(perform: {
-			if let latest = imageURLs.first {
+			if selectedImageURL == nil,
+			   let latest = imageURLs.first {
 				selectedImageURL = latest
 			}
 		})
