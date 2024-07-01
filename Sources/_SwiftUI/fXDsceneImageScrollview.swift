@@ -4,17 +4,21 @@ import SwiftUI
 
 
 public struct fXDsceneImageScrollview: View {
+	@Binding var displayImage: UIImage?
+
 	@State private var displayContentMode: ContentMode = .fit
 	@State private var displaySize: CGSize?
 	@State private var displayAxisSet: Axis.Set = []
 
-	@Binding var displayImage: UIImage?
+	var action_OnTap: (() -> Void)? = nil
 
 
-	public init(displayImage: UIImage?) {
+	public init(displayImage: UIImage?, action_OnTap: (() -> Void)? = nil) {
 		_displayImage = Binding.constant(displayImage)
 
-		displaySize = displayImage?.size
+		self.displaySize = displayImage?.size
+
+		self.action_OnTap = action_OnTap
 	}
 
 	public var body: some View {
@@ -35,6 +39,9 @@ public struct fXDsceneImageScrollview: View {
 		}
 		.ignoresSafeArea()
 		.scrollBounceBehavior(.basedOnSize)
+		.onTapGesture {
+			self.action_OnTap?()
+		}
 		.onTapGesture(count: 2) {
 			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
 		}
