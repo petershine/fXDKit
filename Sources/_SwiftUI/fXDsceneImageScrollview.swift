@@ -3,7 +3,7 @@
 import SwiftUI
 
 
-public struct FXDswiftuiMediaDisplay: View {
+public struct fXDsceneImageScrollview: View {
 	@State private var displayContentMode: ContentMode = .fit
 	@State private var displaySize: CGSize?
 	@State private var displayAxisSet: Axis.Set = []
@@ -57,7 +57,7 @@ public struct FXDswiftuiMediaDisplay: View {
 	}
 }
 
-fileprivate extension FXDswiftuiMediaDisplay {
+fileprivate extension fXDsceneImageScrollview {
 	func updateScrollViewConfiguration(for newContentMode: ContentMode) {
 		guard let displayImage else {
 			return
