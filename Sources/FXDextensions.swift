@@ -200,7 +200,7 @@ extension String {
 				else if let integerValue = Int(value) {
 					jsonDictionary[key] = integerValue
 				}
-				else if let boolValue = Bool(value) {
+				else if let boolValue = Bool(value.lowercased()) {
 					jsonDictionary[key] = boolValue
 				}
 				else {
