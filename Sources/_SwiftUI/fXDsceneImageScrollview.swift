@@ -27,13 +27,11 @@ public struct fXDsceneImageScrollview: View {
 			ZStack {
 				Spacer()
 					.containerRelativeFrame([.horizontal, .vertical])
-					.ignoresSafeArea()
 
 				if let displayImage {
 					Image(uiImage: displayImage)
 						.resizable()
 						.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
-						.ignoresSafeArea()
 				}
 			}
 		}

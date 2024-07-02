@@ -27,18 +27,21 @@ public struct FXDswiftuiLaunching: View {
 	public var body: some View {
 		ZStack {
 			Color(overlayColor ?? .black)
-				.ignoresSafeArea()
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 
 			if backgroundImage != nil {
 				Image(uiImage: backgroundImage!)
-					.resizable().scaledToFill().ignoresSafeArea()
+					.resizable()
+					.scaledToFill()
 			}
 
 			if foregroundImage != nil {
 				if foregroundSize != .zero {
 					Image(uiImage: foregroundImage!)
-						.resizable().frame(width: foregroundSize.width, height: foregroundSize.height, alignment: .center)
+						.resizable().frame(
+							width: foregroundSize.width,
+							height: foregroundSize.height,
+							alignment: .center)
 				}
 				else {
 					Image(uiImage: foregroundImage!)
@@ -51,6 +54,7 @@ public struct FXDswiftuiLaunching: View {
 				ProgressView().controlSize(.large).padding()
 			}
 		}
+		.ignoresSafeArea()
 		.statusBarHidden(shouldHideStatusBar)
 	}
 }
