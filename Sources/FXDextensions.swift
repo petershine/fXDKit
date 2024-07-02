@@ -183,6 +183,34 @@ extension String {
 
 		return decoded
 	}
+
+	public func jsonDictionary() -> Dictionary<String, Any?>? {
+		var jsonDictionary: [String:Any?] = [:]
+		
+		let parameters = self.components(separatedBy: ",")
+		for parameter in parameters {
+			let key_value = parameter.components(separatedBy: ":")
+
+			let key: String = key_value.first?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ?? ""
+			if !key.isEmpty {
+				let value: String = key_value.last?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+				if let doubleValue = Double(value) {
+					jsonDictionary[key] = doubleValue
+				}
+				else if let integerValue = Int(value) {
+					jsonDictionary[key] = integerValue
+				}
+				else if let boolValue = Bool(value) {
+					jsonDictionary[key] = boolValue
+				}
+				else {
+					jsonDictionary[key] = value
+				}
+			}
+		}
+
+		return (jsonDictionary.count == 0) ? nil : jsonDictionary
+	}
 }
 
 extension Bundle {
