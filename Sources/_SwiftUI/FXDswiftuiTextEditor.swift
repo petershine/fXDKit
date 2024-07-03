@@ -79,7 +79,7 @@ public struct FXDswiftuiTextEditor<Content: View>: View {
 					(oldValue, newValue) in
 					editorsVStackHeight = newValue
 				}
-				.animation(.easeInOut(duration: 0.2), value: focusedEditor)
+				.animation(.easeInOut(duration: 0.3), value: focusedEditor)
 			}
 
 			VStack {
