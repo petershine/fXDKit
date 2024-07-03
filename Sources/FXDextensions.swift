@@ -86,6 +86,42 @@ extension Double {
 	}
 }
 
+
+import UniformTypeIdentifiers
+
+extension FileManager {
+	public func fileURLs(contentType: UTType) -> [URL]? {
+		guard  let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+			return nil
+		}
+
+		var fileURLs: [URL]? = nil
+		do {
+			let contents = try FileManager.default.contentsOfDirectory(
+				at: documentDirectory,
+				includingPropertiesForKeys: [.contentModificationDateKey, .contentTypeKey],
+				options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles])
+
+			fileURLs = try contents
+				.filter {
+					let resourceValues: URLResourceValues = try $0.resourceValues(forKeys: [.contentTypeKey])
+					return resourceValues.contentType == contentType
+				}
+				.sorted {
+					let resourceValues_0: URLResourceValues = try $0.resourceValues(forKeys: [.contentModificationDateKey])
+					let resourceValues_1: URLResourceValues = try $1.resourceValues(forKeys: [.contentModificationDateKey])
+					return resourceValues_0.contentModificationDate  ?? Date.now > resourceValues_1.contentModificationDate ?? Date.now
+				}
+		}
+		catch {	fxd_log()
+			fxdPrint(error)
+		}
+
+		return fileURLs
+	}
+}
+
+
 extension IndexPath {
 	public var stringKey: String {
 		return "\(row)_\(section)"
