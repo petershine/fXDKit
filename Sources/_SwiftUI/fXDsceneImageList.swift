@@ -4,20 +4,26 @@ import SwiftUI
 
 
 public struct fXDsceneImageList: View {
-	@Binding var selectedImageURL: URL?
-	@Binding var imageURLs: [URL]
+	@Binding var imageDimension: CGFloat
+	@Binding var imageAlignment: Alignment
 
-	@Binding var imageDimension: CGFloat?
+	@Binding var imageURLs: [URL]
+	@Binding var selectedImageURL: URL?
 
 	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
 
 
-	public init(imageDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
+	public init(imageDimension: Binding<CGFloat>,
+				imageAlignment: Binding<Alignment>,
+				imageURLs: Binding<[URL]>,
+				selectedImageURL: Binding<URL?>,
+				action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
 
-		_imageDimension = Binding.constant((imageDimension != nil) ? imageDimension : UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 100.0)
+		_imageDimension = imageDimension
+		_imageAlignment = imageAlignment
+
 		_imageURLs = imageURLs
 		_selectedImageURL = selectedImageURL
-
 
 		self.action_LongPress = action_LongPress
 	}
@@ -44,7 +50,7 @@ public struct fXDsceneImageList: View {
 				}
 				placeholder: {
 				}
-				.frame(width: imageDimension, height: imageDimension, alignment: .center)
+				.frame(width: imageDimension, height: imageDimension, alignment: imageAlignment)
 				.clipShape(Rectangle())
 				.onTapGesture(perform: {
 					selectedImageURL = imageURL
