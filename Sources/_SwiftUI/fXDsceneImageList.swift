@@ -7,17 +7,17 @@ public struct fXDsceneImageList: View {
 	@Binding var selectedImageURL: URL?
 	@Binding var imageURLs: [URL]
 
-	@State var minDimension: CGFloat
+	@Binding var imageDimension: CGFloat?
 
 	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
 
 
-	public init(minDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
+	public init(imageDimension: CGFloat? = nil, imageURLs: Binding<[URL]>, selectedImageURL: Binding<URL?>, action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
 
-		_selectedImageURL = selectedImageURL
+		_imageDimension = Binding.constant((imageDimension != nil) ? imageDimension : UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 100.0)
 		_imageURLs = imageURLs
+		_selectedImageURL = selectedImageURL
 
-		self.minDimension = minDimension ?? (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 100.0)
 
 		self.action_LongPress = action_LongPress
 	}
@@ -44,7 +44,7 @@ public struct fXDsceneImageList: View {
 				}
 				placeholder: {
 				}
-				.frame(width: minDimension, height: minDimension, alignment: .center)
+				.frame(width: imageDimension, height: imageDimension, alignment: .center)
 				.clipShape(Rectangle())
 				.onTapGesture(perform: {
 					selectedImageURL = imageURL
@@ -56,7 +56,6 @@ public struct fXDsceneImageList: View {
 			.listRowBackground(Color.clear)
 			.listRowSeparator(.hidden)
 		}
-		.frame(width: minDimension)
 		.shadow(color: .black, radius: 10.0)
 		.scrollIndicators(.hidden)
 		.listStyle(.plain)
