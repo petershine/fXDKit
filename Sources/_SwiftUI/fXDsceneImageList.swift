@@ -7,34 +7,31 @@ public struct fXDsceneImageList<Content: View>: View {
 	@Binding var maximizeLibraryScene: Bool
 
 	@Binding var imageDimension: CGFloat
-	@Binding var imageAlignment: Alignment
 
 	@Binding var imageURLs: [URL]
 	@Binding var selectedImageURL: URL?
 
 	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
-	var attachedForMaximized: Content?
+	var attachedForMaximized: ((_ imageURL: URL?) -> Content)
 
 
 	public init(maximizeLibraryScene: Binding<Bool>,
 				imageDimension: Binding<CGFloat>,
-				imageAlignment: Binding<Alignment>,
 				imageURLs: Binding<[URL]>,
 				selectedImageURL: Binding<URL?>,
 				action_LongPress: ((_ imageURL: URL?) -> Void)? = nil,
-				@ViewBuilder attachedForMaximized: () -> Content?) {
+				@ViewBuilder attachedForMaximized: @escaping ((_ imageURL: URL?) -> Content)) {
 
 		_maximizeLibraryScene = maximizeLibraryScene
 
 		_imageDimension = imageDimension
-		_imageAlignment = imageAlignment
 
 		_imageURLs = imageURLs
 		_selectedImageURL = selectedImageURL
 
 		self.action_LongPress = action_LongPress
 		
-		self.attachedForMaximized = attachedForMaximized()
+		self.attachedForMaximized = attachedForMaximized
 	}
 
 
@@ -63,7 +60,7 @@ public struct fXDsceneImageList<Content: View>: View {
 						},
 						placeholder: {
 						})
-					.frame(width: imageDimension, height: imageDimension, alignment: imageAlignment)
+					.frame(width: imageDimension, height: imageDimension, alignment: .center)
 					.clipShape(Rectangle())
 					.onTapGesture(perform: {
 						selectedImageURL = imageURL
@@ -73,7 +70,7 @@ public struct fXDsceneImageList<Content: View>: View {
 					}
 
 					if maximizeLibraryScene {
-						attachedForMaximized
+						attachedForMaximized(imageURL)
 					}
 				}
 			}
