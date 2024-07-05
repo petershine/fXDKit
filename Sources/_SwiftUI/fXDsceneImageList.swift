@@ -4,7 +4,7 @@ import SwiftUI
 
 
 public struct fXDsceneImageList<Content: View>: View {
-	@Binding var maximizeLibraryScene: Bool
+	@Binding var didMaximize: Bool
 
 	@Binding var imageDimension: CGFloat
 
@@ -15,14 +15,14 @@ public struct fXDsceneImageList<Content: View>: View {
 	var attachedForMaximized: ((_ imageURL: URL?) -> Content)
 
 
-	public init(maximizeLibraryScene: Binding<Bool>,
+	public init(didMaximize: Binding<Bool>,
 				imageDimension: Binding<CGFloat>,
 				imageURLs: Binding<[URL]>,
 				selectedImageURL: Binding<URL?>,
 				action_LongPress: ((_ imageURL: URL?) -> Void)? = nil,
 				@ViewBuilder attachedForMaximized: @escaping ((_ imageURL: URL?) -> Content)) {
 
-		_maximizeLibraryScene = maximizeLibraryScene
+		_didMaximize = didMaximize
 
 		_imageDimension = imageDimension
 
@@ -69,7 +69,7 @@ public struct fXDsceneImageList<Content: View>: View {
 						action_LongPress?(imageURL)
 					}
 
-					if maximizeLibraryScene {
+					if didMaximize {
 						attachedForMaximized(imageURL)
 					}
 				}
