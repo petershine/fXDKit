@@ -3,7 +3,9 @@
 import SwiftUI
 
 
-public struct fXDsceneImageList: View {
+public struct fXDsceneImageList<Content: View>: View {
+	@Binding var maximizeLibraryScene: Bool
+
 	@Binding var imageDimension: CGFloat
 	@Binding var imageAlignment: Alignment
 
@@ -11,13 +13,18 @@ public struct fXDsceneImageList: View {
 	@Binding var selectedImageURL: URL?
 
 	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
+	var attachedForMaximized: Content?
 
 
-	public init(imageDimension: Binding<CGFloat>,
+	public init(maximizeLibraryScene: Binding<Bool>,
+				imageDimension: Binding<CGFloat>,
 				imageAlignment: Binding<Alignment>,
 				imageURLs: Binding<[URL]>,
 				selectedImageURL: Binding<URL?>,
-				action_LongPress: ((_ imageURL: URL?) -> Void)? = nil) {
+				action_LongPress: ((_ imageURL: URL?) -> Void)? = nil,
+				@ViewBuilder attachedForMaximized: () -> Content?) {
+
+		_maximizeLibraryScene = maximizeLibraryScene
 
 		_imageDimension = imageDimension
 		_imageAlignment = imageAlignment
@@ -26,6 +33,8 @@ public struct fXDsceneImageList: View {
 		_selectedImageURL = selectedImageURL
 
 		self.action_LongPress = action_LongPress
+		
+		self.attachedForMaximized = attachedForMaximized()
 	}
 
 
@@ -37,26 +46,35 @@ public struct fXDsceneImageList: View {
 			imageURL in
 
 			LazyVStack {
-				AsyncImage(url: imageURL) { pngImage in
-					pngImage
-						.resizable()
-						.aspectRatio(contentMode: .fit)
-						.overlay(content: {
-							if imageURL == selectedImageURL {
-								Rectangle()
-									.stroke(Color.white, lineWidth: 1.0)
-							}
+				HStack {
+					AsyncImage(
+						url: imageURL,
+						content: {
+							pngImage in
+							pngImage
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+								.overlay(content: {
+									if imageURL == selectedImageURL {
+										Rectangle()
+											.stroke(Color.white, lineWidth: 1.0)
+									}
+								})
+						},
+						placeholder: {
 						})
-				}
-				placeholder: {
-				}
-				.frame(width: imageDimension, height: imageDimension, alignment: imageAlignment)
-				.clipShape(Rectangle())
-				.onTapGesture(perform: {
-					selectedImageURL = imageURL
-				})
-				.onLongPressGesture {
-					action_LongPress?(imageURL)
+					.frame(width: imageDimension, height: imageDimension, alignment: imageAlignment)
+					.clipShape(Rectangle())
+					.onTapGesture(perform: {
+						selectedImageURL = imageURL
+					})
+					.onLongPressGesture {
+						action_LongPress?(imageURL)
+					}
+
+					if maximizeLibraryScene {
+						attachedForMaximized
+					}
 				}
 			}
 			.listRowBackground(Color.clear)
