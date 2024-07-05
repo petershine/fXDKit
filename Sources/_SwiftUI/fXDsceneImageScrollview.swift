@@ -8,7 +8,7 @@ public struct fXDsceneImageScrollview: View {
 
 	@State private var displayContentMode: ContentMode = .fit
 	@State private var displaySize: CGSize?
-	@State private var displayAxisSet: Axis.Set = []
+	@State private var restrictedBouncing: Axis.Set = [.horizontal, .vertical]
 
 	var action_OnTap: (() -> Void)? = nil
 
@@ -22,7 +22,7 @@ public struct fXDsceneImageScrollview: View {
 	}
 
 	public var body: some View {
-		ScrollView(displayAxisSet,
+		ScrollView([.horizontal, .vertical],
 				   showsIndicators: false) {
 			ZStack {
 				Spacer()
@@ -39,7 +39,7 @@ public struct fXDsceneImageScrollview: View {
 			Color(.black)
 		}
 		.ignoresSafeArea()
-		.scrollBounceBehavior(.basedOnSize)
+		.scrollBounceBehavior(.basedOnSize, axes: restrictedBouncing)
 		.gesture(
 			TapGesture(count: 2).onEnded {
 				displayContentMode = (displayContentMode == .fit) ? .fill : .fit
@@ -82,13 +82,13 @@ fileprivate extension fXDsceneImageScrollview {
 		if newContentMode == .fit
 			|| (aspectSize.width <= containerSize.width && aspectSize.height <= containerSize.height) {
 
-			displayAxisSet = []
+			restrictedBouncing = [.horizontal, .vertical]
 		}
 		else if aspectSize.width > containerSize.width {
-			displayAxisSet = [.horizontal]
+			restrictedBouncing = [.vertical]
 		}
 		else if aspectSize.height > containerSize.height {
-			displayAxisSet = [.vertical]
+			restrictedBouncing = [.horizontal]
 		}
 	}
 }
