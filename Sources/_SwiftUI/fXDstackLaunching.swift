@@ -3,7 +3,7 @@
 import SwiftUI
 
 
-public struct FXDswiftuiLaunching: View {
+public struct fXDstackLaunching: View {
 	@State var appDisplayedName: String
 	@State var shouldHideStatusBar: Bool
 
@@ -60,12 +60,12 @@ public struct FXDswiftuiLaunching: View {
 }
 
 #Preview {
-	FXDswiftuiLaunching(backgroundImage: nil, foregroundImage: nil)
+	fXDstackLaunching(backgroundImage: nil, foregroundImage: nil)
 }
 
 
 // Usage for hosted
-open class FXDhostedLaunching: UIHostingController<FXDswiftuiLaunching> {
+open class FXDhostedLaunching: UIHostingController<fXDstackLaunching> {
 	 override open var preferredStatusBarStyle: UIStatusBarStyle {
 		 return .default
 	 }

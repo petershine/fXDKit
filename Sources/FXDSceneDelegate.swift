@@ -35,7 +35,7 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 """
 			)
 
-			return AnyView(FXDswiftuiLaunching(backgroundImage: nil, foregroundImage: nil))
+			return AnyView(fXDstackLaunching(backgroundImage: nil, foregroundImage: nil))
 		}
 	}
 
