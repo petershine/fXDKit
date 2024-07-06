@@ -7,8 +7,8 @@ public protocol FXDprotocolOverlay {
 	var shouldDismiss: Bool { get set }
 
 	var overlayColor: UIColor? { get set }
-	var overlayAlpha: CGFloat { get set }
-	var allowUserInteraction: Bool { get set }
+	var overlayAlpha: CGFloat? { get set }
+	var allowUserInteraction: Bool? { get set }
 
 	var overlayTitle: String? { get set }
 	var message_0: String? { get set }
@@ -20,41 +20,49 @@ public protocol FXDprotocolOverlay {
 	var cancellableTask: Task<Void, Error>? { get set }
 }
 
-open class FXDobservableOverlay: FXDprotocolOverlay, ObservableObject {
+open class FXDobservableOverlay: NSObject, FXDprotocolOverlay, ObservableObject {
 	@Published open var shouldDismiss: Bool = false
 
-	@Published open var progressSpinnerAlpha: CGFloat = 1.0
+	@Published open var progressSpinnerAlpha: CGFloat? = 1.0
 
-	@Published open var overlayColor: UIColor? = nil
-	@Published open var overlayAlpha: CGFloat
-	@Published open var allowUserInteraction: Bool = false
+	@Published open var overlayColor: UIColor? = .black
+	@Published open var overlayAlpha: CGFloat? = 0.8
+	@Published open var allowUserInteraction: Bool? = false
 
 	@Published open var overlayTitle: String? = nil
 	@Published open var message_0: String? = nil
 	@Published open var message_1: String? = nil
 
-	@Published open var sliderValue: CGFloat? = nil
-	@Published open var sliderTint: Color? = nil
+	@Published open var sliderValue: CGFloat? = 0.0
+	@Published open var sliderTint: Color? = Color(uiColor: .systemBlue)
 
 	open var cancellableTask: Task<Void, Error>? = nil
 
-	public init(progressSpinnerAlpha: CGFloat? = 1.0,
+	public init(shouldDismiss: Bool = false,
+		 progressSpinnerAlpha: CGFloat? = nil,
+		 overlayColor: UIColor? = nil,
+		 overlayAlpha: CGFloat? = nil,
+		 allowUserInteraction: Bool? = nil,
+		 overlayTitle: String? = nil,
+		 message_0: String? = nil,
+		 message_1: String? = nil,
+		 sliderValue: CGFloat? = nil,
+		 sliderTint: Color? = nil,
+		 cancellableTask: Task<Void, Error>? = nil) {
 
-				overlayColor: UIColor? = nil,
-				overlayAlpha: CGFloat? = nil,
-				allowUserInteraction: Bool? = nil,
+		super.init()
 
-				sliderValue: CGFloat? = nil,
-				sliderTint: Color? = nil) {
-
-		self.progressSpinnerAlpha = progressSpinnerAlpha ?? 1.0
-
+		self.shouldDismiss = shouldDismiss
+		self.progressSpinnerAlpha = progressSpinnerAlpha
 		self.overlayColor = overlayColor
-		self.overlayAlpha = overlayAlpha ?? 0.8
-		self.allowUserInteraction = allowUserInteraction ?? false
-
-		self.sliderValue = sliderValue ?? 0.0
-		self.sliderTint = sliderTint ?? Color(uiColor: .systemBlue)
+		self.overlayAlpha = overlayAlpha
+		self.allowUserInteraction = allowUserInteraction
+		self.overlayTitle = overlayTitle
+		self.message_0 = message_0
+		self.message_1 = message_1
+		self.sliderValue = sliderValue
+		self.sliderTint = sliderTint
+		self.cancellableTask = cancellableTask
 	}
 }
 
@@ -72,7 +80,7 @@ public struct FXDswiftuiOverlay: View {
     public var body: some View {
 		ZStack {
 			Color(observable.overlayColor ?? (colorScheme == .dark ? .black : .white))
-				.opacity(observable.overlayAlpha)
+				.opacity(observable.overlayAlpha ?? 0.8)
 
 			VStack {
 				Text(observable.overlayTitle ?? "")
@@ -84,7 +92,7 @@ public struct FXDswiftuiOverlay: View {
 				ProgressView()
 					.controlSize(.large)
 					.frame(alignment: .center)
-					.opacity(observable.progressSpinnerAlpha)
+					.opacity(observable.progressSpinnerAlpha ?? 1.0)
 
 				FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
 					.tint(observable.sliderTint)
@@ -97,7 +105,7 @@ public struct FXDswiftuiOverlay: View {
 		}
 		.ignoresSafeArea()
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
-		.allowsHitTesting(!observable.allowUserInteraction)
+		.allowsHitTesting(!(observable.allowUserInteraction ?? false))
 		.onTapGesture {
 			observable.shouldDismiss = true
 			observable.cancellableTask?.cancel()
