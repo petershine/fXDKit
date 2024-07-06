@@ -66,7 +66,7 @@ open class FXDobservableOverlay: NSObject, FXDprotocolOverlay, ObservableObject 
 	}
 }
 
-public struct FXDswiftuiOverlay: View {
+public struct fXDstackOverlay: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
 	
@@ -121,7 +121,7 @@ public struct FXDswiftuiOverlay: View {
 
 import Combine
 
-open class FXDhostedOverlay: UIHostingController<FXDswiftuiOverlay> {
+open class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
 	override open func didMove(toParent parent: UIViewController?) {

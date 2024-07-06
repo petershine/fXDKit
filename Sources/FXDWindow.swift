@@ -39,7 +39,7 @@ extension UIWindow {
 		}
 
 
-		let waitingOverlay = FXDhostedOverlay(rootView: FXDswiftuiOverlay(observable: observable))
+		let waitingOverlay = FXDhostedOverlay(rootView: fXDstackOverlay(observable: observable))
 
 		rootViewController?.addChild(waitingOverlay)
 		rootViewController?.view.addSubview(waitingOverlay.view)
