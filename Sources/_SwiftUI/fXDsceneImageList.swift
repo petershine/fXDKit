@@ -44,6 +44,10 @@ public struct fXDsceneImageList<Content: View>: View {
 
 			LazyVStack {
 				HStack {
+					if didMaximize {
+						attachedForMaximized(imageURL)
+					}
+
 					AsyncImage(
 						url: imageURL,
 						content: {
@@ -67,10 +71,6 @@ public struct fXDsceneImageList<Content: View>: View {
 					})
 					.onLongPressGesture {
 						action_LongPress?(imageURL)
-					}
-
-					if didMaximize {
-						attachedForMaximized(imageURL)
 					}
 				}
 			}
