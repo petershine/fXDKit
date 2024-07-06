@@ -24,6 +24,17 @@ public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
 public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(30.0, 30.0) : CGSizeMake(40.0, 40.0))
 
+public let DIMENSION_PREVIEW: CGFloat = {
+	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+
+	var maxDimension = minDimension*0.4
+	if UIDevice.current.userInterfaceIdiom == .phone {
+		maxDimension = minDimension*0.5
+	}
+
+	return maxDimension
+}()
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
