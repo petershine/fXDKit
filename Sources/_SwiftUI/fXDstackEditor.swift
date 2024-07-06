@@ -19,7 +19,7 @@ struct FXDTextEditorModifier: ViewModifier {
 }
 
 
-public struct FXDswiftuiTextEditor<Content: View>: View {
+public struct fXDstackEditor<Content: View>: View {
 	@Binding var shouldPresentTextEditor: Bool
 
 	@State var editedParagraph_0: String
