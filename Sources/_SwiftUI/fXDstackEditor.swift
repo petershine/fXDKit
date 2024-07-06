@@ -88,12 +88,10 @@ public struct fXDstackEditor<Content: View>: View {
 				self.attachedView
 
 				HStack {
-					fXDbuttonSymbol(
-						systemImageName: "checkmark.circle",
-						action: {
-							finishedEditing?(editedParagraph_0, editedParagraph_1)
-							shouldPresentTextEditor = false
-						})
+					fXDbuttonSymbol("checkmark.circle") {
+						finishedEditing?(editedParagraph_0, editedParagraph_1)
+						shouldPresentTextEditor = false
+					}
 				}
 			}
 			.padding()

@@ -27,7 +27,7 @@ struct FXDButtonModifier: ViewModifier {
 
 
 public struct fXDbuttonSymbol: View {
-	var systemImageName: String
+	var systemName: String
 	var touchableSize: CGSize
 	var foregroundStyle: Color
 	var backgroundStyle: Color
@@ -36,7 +36,7 @@ public struct fXDbuttonSymbol: View {
 	var action: () -> Void
 
 	public init(
-		systemImageName: String,
+		_ systemImageName: String,
 		touchableSize: CGSize = SIZE_TOUCHABLE,
 		foregroundStyle: Color = .white,
 		backgroundStyle: Color = .black,
@@ -44,7 +44,7 @@ public struct fXDbuttonSymbol: View {
 		hideShadow: Bool = false,
 		action: @escaping () -> Void) {
 
-			self.systemImageName = systemImageName
+			self.systemName = systemImageName
 			self.touchableSize = touchableSize
 			self.foregroundStyle = foregroundStyle
 			self.backgroundStyle = backgroundStyle
@@ -55,7 +55,7 @@ public struct fXDbuttonSymbol: View {
 	
 	public var body: some View {
 		Button(action: action) {
-			Image(systemName: systemImageName)
+			Image(systemName: systemName)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 		}
@@ -65,5 +65,16 @@ public struct fXDbuttonSymbol: View {
 			backgroundStyle: backgroundStyle,
 			strokeStyle: strokeStyle,
 			hideShadow: hideShadow))
+	}
+}
+
+// for using Button as spacing unit
+public struct fXDbuttonAsSpacer: View {
+	public init() {
+
+	}
+
+	public var body: some View {
+		fXDbuttonSymbol("space", action: {}).hidden()
 	}
 }
