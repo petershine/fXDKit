@@ -1,6 +1,7 @@
 
 
 import Foundation
+import UIKit
 
 
 //MARK: Static constants
@@ -20,6 +21,8 @@ public let LIMIT_CACHED_OBJ: Int = 1000
 public let MAXIMUM_LENGTH_TWEET: Int = 140
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
+
+public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(30.0, 30.0) : CGSizeMake(40.0, 40.0))
 
 
 //MARK: Closures

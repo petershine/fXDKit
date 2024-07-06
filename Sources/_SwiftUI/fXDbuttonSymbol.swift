@@ -37,7 +37,7 @@ public struct fXDbuttonSymbol: View {
 
 	public init(
 		systemImageName: String,
-		touchableSize: CGSize = CGSize(width: 30.0, height: 30.0),
+		touchableSize: CGSize = SIZE_TOUCHABLE,
 		foregroundStyle: Color = .white,
 		backgroundStyle: Color = .black,
 		strokeStyle: Color = .clear,
