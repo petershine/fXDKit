@@ -60,7 +60,7 @@ public struct fXDsceneImageList<Content: View>: View {
 						},
 						placeholder: {
 						})
-					.frame(width: imageDimension, height: imageDimension, alignment: .center)
+					.frame(width: imageDimension, height: imageDimension, alignment: .trailing)
 					.clipShape(Rectangle())
 					.onTapGesture(perform: {
 						selectedImageURL = imageURL
