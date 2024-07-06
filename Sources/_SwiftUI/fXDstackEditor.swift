@@ -88,7 +88,7 @@ public struct fXDstackEditor<Content: View>: View {
 				self.attachedView
 
 				HStack {
-					FXDswiftuiButton(
+					fXDbuttonSymbol(
 						systemImageName: "checkmark.circle",
 						action: {
 							finishedEditing?(editedParagraph_0, editedParagraph_1)

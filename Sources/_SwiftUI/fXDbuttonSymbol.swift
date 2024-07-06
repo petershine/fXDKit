@@ -7,7 +7,7 @@ struct FXDButtonModifier: ViewModifier {
 	var touchableSize: CGSize
 	var foregroundStyle: Color
 	var backgroundStyle: Color
-	var strokeStyle: Color?
+	var strokeStyle: Color
 	var hideShadow: Bool
 	var cornerRadius: CGFloat = 5.0
 
@@ -19,21 +19,19 @@ struct FXDButtonModifier: ViewModifier {
 			.cornerRadius(cornerRadius)
 			.shadow(radius: hideShadow ? 0.0 : 10.0)
 			.overlay {
-				if strokeStyle != nil {
-					RoundedRectangle(cornerRadius: cornerRadius)
-						.stroke(strokeStyle ?? foregroundStyle, lineWidth: (cornerRadius/2.0))
-				}
+				RoundedRectangle(cornerRadius: cornerRadius)
+					.stroke(strokeStyle, lineWidth: (cornerRadius/2.0))
 			}
 	}
 }
 
 
-public struct FXDswiftuiButton: View {
+public struct fXDbuttonSymbol: View {
 	var systemImageName: String
 	var touchableSize: CGSize
 	var foregroundStyle: Color
 	var backgroundStyle: Color
-	var strokeStyle: Color?
+	var strokeStyle: Color
 	var hideShadow: Bool
 	var action: () -> Void
 
@@ -42,7 +40,7 @@ public struct FXDswiftuiButton: View {
 		touchableSize: CGSize = CGSize(width: 30.0, height: 30.0),
 		foregroundStyle: Color = .white,
 		backgroundStyle: Color = .black,
-		strokeStyle: Color? = nil,
+		strokeStyle: Color = .clear,
 		hideShadow: Bool = false,
 		action: @escaping () -> Void) {
 
