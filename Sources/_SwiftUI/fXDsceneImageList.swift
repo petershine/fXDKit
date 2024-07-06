@@ -76,11 +76,11 @@ public struct fXDsceneImageList<Content: View>: View {
 			}
 			.listRowBackground(Color.clear)
 			.listRowSeparator(.hidden)
+			.listRowInsets(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
 		}
 		.shadow(color: .black, radius: 10.0)
 		.scrollIndicators(.hidden)
 		.listStyle(.plain)
-		.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 		.onAppear(perform: {
 			if selectedImageURL == nil,
 			   let latest = imageURLs.first {
