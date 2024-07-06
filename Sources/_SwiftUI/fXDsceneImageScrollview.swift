@@ -10,15 +10,11 @@ public struct fXDsceneImageScrollview: View {
 	@State private var displaySize: CGSize?
 	@State private var restrictedBouncing: Axis.Set = [.horizontal, .vertical]
 
-	var action_OnTap: (() -> Void)? = nil
 
-
-	public init(displayImage: Binding<UIImage?>, action_OnTap: (() -> Void)? = nil) {
+	public init(displayImage: Binding<UIImage?>) {
 		_displayImage = displayImage
-
+		
 		displaySize = displayImage.wrappedValue?.size
-
-		self.action_OnTap = action_OnTap
 	}
 
 	public var body: some View {
@@ -40,13 +36,9 @@ public struct fXDsceneImageScrollview: View {
 		}
 		.ignoresSafeArea()
 		.scrollBounceBehavior(.basedOnSize, axes: restrictedBouncing)
-		.gesture(
-			TapGesture(count: 2).onEnded {
-				displayContentMode = (displayContentMode == .fit) ? .fill : .fit
-			}.exclusively(before: TapGesture(count: 1).onEnded {
-				action_OnTap?()
-			})
-		)
+		.onTapGesture(count: 2, perform: {
+			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
+		})
 		.onChange(of: displayContentMode) {
 			oldValue, newValue in
 
