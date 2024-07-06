@@ -3,7 +3,7 @@
 import SwiftUI
 
 
-public struct fXDsceneImageList<Content: View>: View {
+public struct fXDlistImage<Content: View>: View {
 	@Binding var didMaximize: Bool
 
 	@Binding var imageDimension: CGFloat
