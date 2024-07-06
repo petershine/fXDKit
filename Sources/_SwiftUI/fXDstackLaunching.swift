@@ -44,7 +44,8 @@ public struct fXDstackLaunching: View {
 			if foregroundImage != nil {
 				if foregroundSize != .zero {
 					Image(uiImage: foregroundImage!)
-						.resizable().frame(
+						.resizable()
+						.frame(
 							width: foregroundSize.width,
 							height: foregroundSize.height,
 							alignment: .center)

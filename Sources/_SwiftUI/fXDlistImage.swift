@@ -76,7 +76,7 @@ public struct fXDlistImage<Content: View>: View {
 			}
 			.listRowBackground(Color.clear)
 			.listRowSeparator(.hidden)
-			.listRowInsets(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+			.listRowInsets(EdgeInsets(top: MARGIN_DEFAULT, leading: 0, bottom: MARGIN_DEFAULT, trailing: 0))
 		}
 		.shadow(color: .black, radius: 10.0)
 		.scrollIndicators(.hidden)
