@@ -90,7 +90,6 @@ public struct FXDswiftuiTextEditor<Content: View>: View {
 				HStack {
 					FXDswiftuiButton(
 						systemImageName: "checkmark.circle",
-						foregroundStyle: .white,
 						action: {
 							finishedEditing?(editedParagraph_0, editedParagraph_1)
 							shouldPresentTextEditor = false

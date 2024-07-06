@@ -40,8 +40,8 @@ public struct FXDswiftuiButton: View {
 	public init(
 		systemImageName: String,
 		touchableSize: CGSize = CGSize(width: 30.0, height: 30.0),
-		foregroundStyle: Color = .black,
-		backgroundStyle: Color = .white,
+		foregroundStyle: Color = .white,
+		backgroundStyle: Color = .black,
 		strokeStyle: Color? = nil,
 		hideShadow: Bool = false,
 		action: @escaping () -> Void) {
