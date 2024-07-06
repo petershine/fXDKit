@@ -13,7 +13,13 @@ public struct fXDstackLaunching: View {
 	@State var foregroundImage: UIImage?
 	@State var foregroundSize: CGSize
 
-	public init(appDisplayedName: String? = nil, shouldHideStatusBar: Bool = true, overlayColor: UIColor? = nil, backgroundImage: UIImage?, foregroundImage: UIImage?, foregroundSize: CGSize = .zero) {
+	public init(appDisplayedName: String? = nil, 
+				shouldHideStatusBar: Bool = true,
+				overlayColor: UIColor? = nil,
+				backgroundImage: UIImage?,
+				foregroundImage: UIImage?,
+				foregroundSize: CGSize = .zero) {
+		
 		self.appDisplayedName = appDisplayedName ?? "Hello, world!"
 		self.shouldHideStatusBar = shouldHideStatusBar
 
