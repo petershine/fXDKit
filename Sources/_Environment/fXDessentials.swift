@@ -22,7 +22,7 @@ public let MAXIMUM_LENGTH_TWEET: Int = 140
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
-public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(30.0, 30.0) : CGSizeMake(40.0, 40.0))
+public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(30.0, 30.0) : CGSizeMake(44.0, 44.0))
 
 public let DIMENSION_PREVIEW: CGFloat = {
 	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
