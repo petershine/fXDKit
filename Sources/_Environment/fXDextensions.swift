@@ -263,6 +263,20 @@ extension String {
 
 		return (jsonDictionary.count == 0) ? nil : jsonDictionary
 	}
+
+	//https://stackoverflow.com/a/56706114/259765
+	public func removingAllWhitespaces() -> String? {
+		return removingCharacters(from: .whitespacesAndNewlines)
+	}
+
+	public func removingCharacters(from set: CharacterSet) -> String? {
+		var newString = self
+		newString.removeAll { char -> Bool in
+			guard let scalar = char.unicodeScalars.first else { return false }
+			return set.contains(scalar)
+		}
+		return newString
+	}
 }
 
 extension Bundle {
