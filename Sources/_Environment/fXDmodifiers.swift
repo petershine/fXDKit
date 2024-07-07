@@ -4,17 +4,12 @@ import SwiftUI
 
 
 struct fXDViewModifier: ViewModifier {
-	@Binding var shouldHide: Bool?
+	var shouldHide: Bool
 
 	func body(content: Content) -> some View {
-		if let shouldHide {
-			content
-				.opacity(shouldHide ? 0.0 : 1.0)
-				.allowsHitTesting(shouldHide ? true : false)
-		}
-		else {
-			content
-		}
+		content
+			.opacity(shouldHide ? 0.0 : 1.0)
+			.allowsHitTesting(shouldHide ? true : false)
 	}
 }
 

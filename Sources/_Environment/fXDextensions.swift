@@ -447,7 +447,7 @@ extension UIImage {
 
 
 extension View {
-	public func shouldHide(_ shouldHide: Binding<Bool?>) -> some View {
+	public func shouldHide(_ shouldHide: Bool) -> some View {
 		modifier(fXDViewModifier(shouldHide: shouldHide))
 	}
 }
