@@ -3,22 +3,6 @@
 import SwiftUI
 
 
-struct FXDTextEditorModifier: ViewModifier {
-	func body(content: Content) -> some View {
-		content
-			.scrollContentBackground(.hidden)
-			.backgroundStyle(.black)
-			.foregroundStyle(.white)
-			.cornerRadius(10.0)
-			.overlay {
-				RoundedRectangle(cornerRadius: 10.0)
-					.stroke(.black, lineWidth:4.0)
-			}
-			.padding()
-	}
-}
-
-
 public struct fXDstackEditor<Content: View>: View {
 	@Binding var shouldPresentTextEditor: Bool
 

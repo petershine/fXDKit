@@ -3,29 +3,6 @@
 import SwiftUI
 
 
-struct fXDButtonModifier: ViewModifier {
-	var touchableSize: CGSize
-	var foregroundStyle: Color
-	var backgroundStyle: Color
-	var strokeStyle: Color
-	var hideShadow: Bool
-	var cornerRadius: CGFloat = 5.0
-
-	func body(content: Content) -> some View {
-		content
-			.frame(width: touchableSize.width, height: touchableSize.height)
-			.foregroundStyle(foregroundStyle)
-			.backgroundStyle(backgroundStyle)
-			.cornerRadius(cornerRadius)
-			.shadow(radius: hideShadow ? 0.0 : 10.0)
-			.overlay {
-				RoundedRectangle(cornerRadius: cornerRadius)
-					.stroke(strokeStyle, lineWidth: (cornerRadius/2.0))
-			}
-	}
-}
-
-
 public struct fXDbuttonSymbol: View {
 	var systemName: String
 	var touchableSize: CGSize
