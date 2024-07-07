@@ -10,8 +10,11 @@ struct fXDViewModifier: ViewModifier {
 		if let shouldHide {
 			content
 				.opacity(shouldHide ? 0.0 : 1.0)
+				.allowsHitTesting(shouldHide ? true : false)
 		}
-		content
+		else {
+			content
+		}
 	}
 }
 
