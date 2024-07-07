@@ -88,6 +88,20 @@ extension Double {
 	}
 }
 
+extension Encodable {
+	public func encoded() -> Data? {
+		var encoded: Data? = nil
+		do {
+			encoded = try JSONEncoder().encode(self)
+		}
+		catch {	fxd_log()
+			fxdPrint(error)
+		}
+
+		return encoded
+	}
+}
+
 
 import UniformTypeIdentifiers
 
