@@ -15,13 +15,6 @@ struct fXDViewModifier: ViewModifier {
 	}
 }
 
-extension View {
-	func shouldHide(_ shouldHide: Binding<Bool?>) -> some View {
-		modifier(fXDViewModifier(shouldHide: shouldHide))
-	}
-}
-
-
 
 struct fXDButtonModifier: ViewModifier {
 	var touchableSize: CGSize
@@ -46,7 +39,7 @@ struct fXDButtonModifier: ViewModifier {
 }
 
 
-struct FXDTextEditorModifier: ViewModifier {
+struct fXDTextEditorModifier: ViewModifier {
 	func body(content: Content) -> some View {
 		content
 			.scrollContentBackground(.hidden)

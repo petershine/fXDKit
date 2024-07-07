@@ -3,6 +3,8 @@
 import Foundation
 import UIKit
 
+import SwiftUI
+
 
 extension Data {
 	public func decode<T>(_ type: T.Type) -> T? where T : Decodable {
@@ -389,8 +391,6 @@ extension UIDevice {
 }
 
 
-import SwiftUI
-
 extension UIImage {
 	public func aspectSize(for contentMode: ContentMode, containerSize: CGSize) -> CGSize {
 
@@ -430,3 +430,11 @@ extension UIImage {
 		return aspectSize
 	}
 }
+
+
+extension View {
+	public func shouldHide(_ shouldHide: Binding<Bool?>) -> some View {
+		modifier(fXDViewModifier(shouldHide: shouldHide))
+	}
+}
+

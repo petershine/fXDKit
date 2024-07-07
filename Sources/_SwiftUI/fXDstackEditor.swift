@@ -49,12 +49,12 @@ public struct fXDstackEditor<Content: View>: View {
 					TextEditor(text: $editedParagraph_0)
 						.frame(height: self.height(for: 0))
 						.focused($focusedEditor, equals: 0)
-						.modifier(FXDTextEditorModifier())
+						.modifier(fXDTextEditorModifier())
 
 					TextEditor(text: $editedParagraph_1)
 						.frame(height: self.height(for: 1))
 						.focused($focusedEditor, equals: 1)
-						.modifier(FXDTextEditorModifier())
+						.modifier(fXDTextEditorModifier())
 				}
 				.onAppear {
 					editorsVStackHeight = outerGeometry.size.height
