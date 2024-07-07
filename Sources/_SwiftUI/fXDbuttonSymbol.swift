@@ -3,7 +3,7 @@
 import SwiftUI
 
 
-struct FXDButtonModifier: ViewModifier {
+struct fXDButtonModifier: ViewModifier {
 	var touchableSize: CGSize
 	var foregroundStyle: Color
 	var backgroundStyle: Color
@@ -36,7 +36,7 @@ public struct fXDbuttonSymbol: View {
 	var action: () -> Void
 
 	public init(
-		_ systemImageName: String,
+		_ systemName: String,
 		touchableSize: CGSize = SIZE_TOUCHABLE,
 		foregroundStyle: Color = .white,
 		backgroundStyle: Color = .black,
@@ -44,7 +44,7 @@ public struct fXDbuttonSymbol: View {
 		hideShadow: Bool = false,
 		action: @escaping () -> Void) {
 
-			self.systemName = systemImageName
+			self.systemName = systemName
 			self.touchableSize = touchableSize
 			self.foregroundStyle = foregroundStyle
 			self.backgroundStyle = backgroundStyle
@@ -59,20 +59,21 @@ public struct fXDbuttonSymbol: View {
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 		}
-		.modifier(FXDButtonModifier(
-			touchableSize: touchableSize,
-			foregroundStyle: foregroundStyle,
-			backgroundStyle: backgroundStyle,
-			strokeStyle: strokeStyle,
-			hideShadow: hideShadow))
+		.modifier(
+			fXDButtonModifier(
+				touchableSize: touchableSize,
+				foregroundStyle: foregroundStyle,
+				backgroundStyle: backgroundStyle,
+				strokeStyle: strokeStyle,
+				hideShadow: hideShadow,
+				cornerRadius: 5.0)
+		)
 	}
 }
 
 // for using Button as spacing unit
 public struct fXDbuttonAsSpacer: View {
-	public init() {
-
-	}
+	public init() {}
 
 	public var body: some View {
 		fXDbuttonSymbol("space", action: {}).hidden()
