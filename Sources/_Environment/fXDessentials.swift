@@ -38,7 +38,7 @@ public let DIMENSION_PREVIEW: CGFloat = {
 	return maxDimension
 }()
 
-@ViewBuilder public func SPACED_FIXED(_ maxDimension: CGFloat = max(SIZE_TOUCHABLE.width, SIZE_TOUCHABLE.height)) -> some View {
+@ViewBuilder public func SPACER_FIXED(_ maxDimension: CGFloat = max(SIZE_TOUCHABLE.width, SIZE_TOUCHABLE.height)) -> some View {
 	Spacer().frame(width: maxDimension, height: maxDimension, alignment: .center)
 }
 
