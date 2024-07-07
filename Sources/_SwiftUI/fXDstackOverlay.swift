@@ -39,15 +39,15 @@ open class FXDobservableOverlay: NSObject, FXDprotocolOverlay, ObservableObject 
 	open var cancellableTask: Task<Void, Error>? = nil
 
 	public init(shouldDismiss: Bool = false,
-		 progressSpinnerAlpha: CGFloat? = nil,
-		 overlayColor: UIColor? = nil,
-		 overlayAlpha: CGFloat? = nil,
-		 allowUserInteraction: Bool? = nil,
+		 progressSpinnerAlpha: CGFloat? = 1.0,
+		 overlayColor: UIColor? = .black,
+		 overlayAlpha: CGFloat? = 0.8,
+		 allowUserInteraction: Bool? = false,
 		 overlayTitle: String? = nil,
 		 message_0: String? = nil,
 		 message_1: String? = nil,
-		 sliderValue: CGFloat? = nil,
-		 sliderTint: Color? = nil,
+		 sliderValue: CGFloat? = 0.0,
+		 sliderTint: Color? = Color(uiColor: .systemBlue),
 		 cancellableTask: Task<Void, Error>? = nil) {
 
 		super.init()
@@ -176,7 +176,7 @@ open class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
 extension FXDobservableOverlay {
 	public class func exampleCountingUp() -> FXDobservableOverlay {
 
-		let testingConfiguration = FXDobservableOverlay(sliderValue: 0.0)
+		let testingConfiguration = FXDobservableOverlay()
 
 
 		let taskInterval = 1.0
