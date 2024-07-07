@@ -47,12 +47,3 @@ public struct fXDbuttonSymbol: View {
 		)
 	}
 }
-
-// for using Button as spacing unit
-public struct fXDbuttonAsSpacer: View {
-	public init() {}
-
-	public var body: some View {
-		fXDbuttonSymbol("space", action: {}).hidden()
-	}
-}

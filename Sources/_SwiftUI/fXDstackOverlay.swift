@@ -175,9 +175,7 @@ open class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
 // Example usage
 extension FXDobservableOverlay {
 	public class func exampleCountingUp() -> FXDobservableOverlay {
-
 		let testingConfiguration = FXDobservableOverlay()
-
 
 		let taskInterval = 1.0
 		Task {
