@@ -8,7 +8,7 @@ import SwiftUI
 
 //MARK: Static constants
 public let MARGIN_DEFAULT: CGFloat = 8.0
-public let DIMENSION_TOUCHABLE: CGFloat = 44.0
+public let DIMENSION_TOUCHABLE: CGFloat = 40.0
 public let DURATION_ANIMATION: TimeInterval = 0.3
 public let DURATION_QUICK_ANIMATION: TimeInterval = (DURATION_ANIMATION/2.0)
 public let DURATION_SLOW_ANIMATION: TimeInterval = (DURATION_ANIMATION*2.0)
@@ -24,8 +24,8 @@ public let MAXIMUM_LENGTH_TWEET: Int = 140
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
-public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(30.0, 30.0) : CGSizeMake(40, 40))
-public let SIZE_TOUCHABLE_LARGE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(40.0, 40.0) : CGSizeMake(50.0, 50.0))
+public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE*0.75, DIMENSION_TOUCHABLE*0.75) : CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE))
+public let SIZE_TOUCHABLE_LARGE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE) : CGSizeMake(DIMENSION_TOUCHABLE*1.2, DIMENSION_TOUCHABLE*1.2))
 
 public let DIMENSION_PREVIEW: CGFloat = {
 	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
