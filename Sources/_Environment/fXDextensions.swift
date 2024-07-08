@@ -458,11 +458,3 @@ extension UIImage {
 		return aspectSize
 	}
 }
-
-
-extension View {
-	public func shouldHide(_ shouldHide: Bool) -> some View {
-		modifier(fXDViewModifier(shouldHide: shouldHide))
-	}
-}
-
