@@ -9,7 +9,7 @@ struct fXDViewModifier: ViewModifier {
 	func body(content: Content) -> some View {
 		content
 			.opacity(shouldHide ? 0.0 : 1.0)
-			.allowsHitTesting(shouldHide ? true : false)
+			.allowsHitTesting(shouldHide ? false : true)
 	}
 }
 
