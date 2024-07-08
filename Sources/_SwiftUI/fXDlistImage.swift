@@ -81,12 +81,6 @@ public struct fXDlistImage<Content: View>: View {
 		.shadow(color: .black, radius: 10.0)
 		.scrollIndicators(.hidden)
 		.listStyle(.plain)
-		.onAppear(perform: {
-			if selectedImageURL == nil,
-			   let latest = imageURLs.first {
-				selectedImageURL = latest
-			}
-		})
 		.onChange(of: imageURLs, {
 			oldValue, newValue in
 
@@ -94,5 +88,11 @@ public struct fXDlistImage<Content: View>: View {
 				selectedImageURL = latest
 			}
 		})
+		.task {
+			if selectedImageURL == nil,
+			   let latest = imageURLs.first {
+				selectedImageURL = latest
+			}
+		}
 	}
 }
