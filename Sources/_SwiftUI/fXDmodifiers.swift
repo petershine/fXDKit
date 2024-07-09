@@ -51,6 +51,5 @@ public struct fXDTextEditorModifier: ViewModifier {
 				RoundedRectangle(cornerRadius: 10.0)
 					.stroke(.black, lineWidth:4.0)
 			}
-			.padding()
 	}
 }
