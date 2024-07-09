@@ -89,10 +89,7 @@ public struct fXDstackOverlay: View {
 
 				Text(observable.message_0 ?? "")
 
-				ProgressView()
-					.controlSize(.large)
-					.frame(alignment: .center)
-					.opacity(observable.progressSpinnerAlpha ?? 1.0)
+				SPACER_FIXED()
 
 				FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
 					.tint(observable.sliderTint)
@@ -101,6 +98,19 @@ public struct fXDstackOverlay: View {
 					.padding()
 
 				Text(observable.message_1 ?? "")
+			}
+
+			VStack {
+				Spacer()
+				HStack {
+					Spacer()
+					ProgressView()
+						.controlSize(.large)
+						.frame(alignment: .center)
+						.opacity(observable.progressSpinnerAlpha ?? 1.0)
+					Spacer()
+				}
+				Spacer()
 			}
 		}
 		.ignoresSafeArea()
