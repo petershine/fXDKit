@@ -37,8 +37,11 @@ struct fXDButtonModifier: ViewModifier {
 }
 
 
-struct fXDTextEditorModifier: ViewModifier {
-	func body(content: Content) -> some View {
+public struct fXDTextEditorModifier: ViewModifier {
+	public init() {
+	}
+
+	public func body(content: Content) -> some View {
 		content
 			.scrollContentBackground(.hidden)
 			.backgroundStyle(.black)
