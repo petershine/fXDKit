@@ -20,26 +20,28 @@ public protocol FXDprotocolOverlay {
 	var cancellableTask: Task<Void, Error>? { get set }
 }
 
-open class FXDobservableOverlay: NSObject, FXDprotocolOverlay, ObservableObject {
-	@Published open var shouldDismiss: Bool = false
 
-	@Published open var progressSpinnerAlpha: CGFloat? = 1.0
+@Observable
+public class FXDobservableOverlay: NSObject, FXDprotocolOverlay {
+	public var shouldDismiss: Bool = false
 
-	@Published open var overlayColor: UIColor? = .black
-	@Published open var overlayAlpha: CGFloat? = 0.8
-	@Published open var allowUserInteraction: Bool? = false
+	public var progressSpinnerAlpha: CGFloat? = 1.0
 
-	@Published open var overlayTitle: String? = nil
-	@Published open var message_0: String? = nil
-	@Published open var message_1: String? = nil
+	public var overlayColor: UIColor? = .black
+	public var overlayAlpha: CGFloat? = 0.8
+	public var allowUserInteraction: Bool? = false
 
-	@Published open var sliderValue: CGFloat? = 0.0
-	@Published open var sliderTint: Color? = Color(uiColor: .systemBlue)
+	public var overlayTitle: String? = nil
+	public var message_0: String? = nil
+	public var message_1: String? = nil
 
-	open var cancellableTask: Task<Void, Error>? = nil
+	public var sliderValue: CGFloat? = 0.0
+	public var sliderTint: Color? = Color(uiColor: .systemBlue)
 
-	public init(shouldDismiss: Bool = false,
-		 progressSpinnerAlpha: CGFloat? = 1.0,
+	public var cancellableTask: Task<Void, Error>? = nil
+
+	public init(
+		progressSpinnerAlpha: CGFloat? = 1.0,
 		 overlayColor: UIColor? = .black,
 		 overlayAlpha: CGFloat? = 0.8,
 		 allowUserInteraction: Bool? = false,
@@ -52,7 +54,6 @@ open class FXDobservableOverlay: NSObject, FXDprotocolOverlay, ObservableObject 
 
 		super.init()
 
-		self.shouldDismiss = shouldDismiss
 		self.progressSpinnerAlpha = progressSpinnerAlpha
 		self.overlayColor = overlayColor
 		self.overlayAlpha = overlayAlpha
@@ -70,7 +71,7 @@ public struct fXDstackOverlay: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
 	
-	@ObservedObject var observable: FXDobservableOverlay
+	@Bindable var observable: FXDobservableOverlay
 
 
 	public init(observable: FXDobservableOverlay? = nil) {
@@ -131,10 +132,10 @@ public struct fXDstackOverlay: View {
 
 import Combine
 
-open class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
+public class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
-	override open func didMove(toParent parent: UIViewController?) {
+	override public func didMove(toParent parent: UIViewController?) {
 		super.didMove(toParent: parent)
 
 		guard parent != nil else {
@@ -146,7 +147,7 @@ open class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
 		view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 	}
 
-	override open func viewDidLoad() {
+	override public func viewDidLoad() {
 		super.viewDidLoad()
 
 		let reactToTraitChanges = {
@@ -164,19 +165,6 @@ open class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
 
 			reactToTraitChanges()
 		}
-
-
-		rootView.observable.$shouldDismiss.sink(receiveValue: {
-			[weak self] (shouldDismiss) in
-
-			if shouldDismiss {
-				UIApplication.shared.mainWindow()?.hideOverlay(afterDelay: DURATION_QUARTER)
-			}
-
-			self?.cancellableObservers.forEach({ $0.cancel() })
-			self?.cancellableObservers = []
-		})
-		.store(in: &cancellableObservers)
 	}
 }
 
