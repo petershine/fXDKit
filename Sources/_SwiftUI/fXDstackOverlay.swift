@@ -192,7 +192,7 @@ extension FXDobservableOverlay {
 			for step in 0...10 {
 				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 
-				DispatchQueue.main.async {
+				await MainActor.run {
 					testingConfiguration.overlayAlpha = 1.0 - (CGFloat(step)*0.1)
 					testingConfiguration.sliderValue = CGFloat(step) * 0.1
 				}
@@ -202,7 +202,7 @@ extension FXDobservableOverlay {
 				}
 			}
 
-			DispatchQueue.main.async {
+			await MainActor.run {
 				testingConfiguration.shouldDismiss = true
 			}
 		}
