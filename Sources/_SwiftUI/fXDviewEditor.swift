@@ -3,7 +3,7 @@
 import SwiftUI
 
 
-public struct fXDstackEditor<Content: View>: View {
+public struct fXDviewEditor<Content: View>: View {
 	@Binding var shouldPresentTextEditor: Bool
 
 	@State var editedParagraph_0: String

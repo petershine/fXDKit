@@ -150,7 +150,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 }
 
 
-public struct FXDswiftuiChart: View {
+public struct fXDviewChart: View {
 	@Binding var pricesLineMarks: Dictionary<String, [Price]>
 
 	public init(pricesLineMarks: Binding<Dictionary<String, [Price]>>) {
@@ -179,7 +179,7 @@ public struct FXDswiftuiChart: View {
 	}
 }
 
-extension FXDswiftuiChart {
+extension fXDviewChart {
 	fileprivate func colorForTicker(ticker: String) -> UIColor {
 		var colorForTicker: UIColor? = FXDdataChart.colorsForTickers[ticker]
 		if colorForTicker == nil {

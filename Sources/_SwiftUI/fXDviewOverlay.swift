@@ -67,7 +67,7 @@ public class FXDobservableOverlay: NSObject, FXDprotocolOverlay {
 	}
 }
 
-public struct fXDstackOverlay: View {
+public struct fXDviewOverlay: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
 	
@@ -132,7 +132,7 @@ public struct fXDstackOverlay: View {
 
 import Combine
 
-public class FXDhostedOverlay: UIHostingController<fXDstackOverlay> {
+public class FXDhostedOverlay: UIHostingController<fXDviewOverlay> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
 	override public func didMove(toParent parent: UIViewController?) {
