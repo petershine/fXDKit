@@ -264,6 +264,13 @@ extension String {
 		return (jsonDictionary.count == 0) ? nil : jsonDictionary
 	}
 
+	public func condensed() -> String? {
+		var condensed = self.trimmingCharacters(in: .whitespacesAndNewlines)
+		condensed = condensed.replacingOccurrences(of: " +", with: " ", options: String.CompareOptions.regularExpression, range: nil)
+		condensed = condensed.replacingOccurrences(of: "\n", with: "")
+		return condensed
+	}
+
 	//https://stackoverflow.com/a/56706114/259765
 	public func removingAllWhitespaces() -> String? {
 		return removingCharacters(from: .whitespacesAndNewlines)
