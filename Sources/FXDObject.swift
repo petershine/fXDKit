@@ -1,6 +1,7 @@
 
 
 import Foundation
+import Combine
 
 
 fileprivate var cancellablesKey: UInt8 = 0
@@ -17,7 +18,7 @@ extension NSObject {
 }
 
 
-import Combine
+
 
 extension NSObject {
 	public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil) -> AnyPublisher<String, Error> {

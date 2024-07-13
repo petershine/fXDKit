@@ -1,5 +1,6 @@
 
 
+import Combine
 import SwiftUI
 
 
@@ -130,7 +131,7 @@ public struct fXDviewOverlay: View {
 }
 
 
-import Combine
+
 
 public class FXDhostedOverlay: UIHostingController<fXDviewOverlay> {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
