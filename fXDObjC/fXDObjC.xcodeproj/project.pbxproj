@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D907C1EA2C4460620099CDC0 /* fXDObjC-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D907C1E92C4460620099CDC0 /* fXDObjC-Info.plist */; };
 		D939ED922BE6AD7400267D9C /* FXDImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4B2BE6AD7400267D9C /* FXDImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D939ED932BE6AD7400267D9C /* FXDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED4C2BE6AD7400267D9C /* FXDImageView.m */; };
 		D939ED942BE6AD7400267D9C /* FXDMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4D2BE6AD7400267D9C /* FXDMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -78,6 +79,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D907C1E92C4460620099CDC0 /* fXDObjC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "fXDObjC-Info.plist"; sourceTree = "<group>"; };
 		D939ED3F2BE6AC8600267D9C /* fXDObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = fXDObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D939ED4B2BE6AD7400267D9C /* FXDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDImageView.h; sourceTree = "<group>"; };
 		D939ED4C2BE6AD7400267D9C /* FXDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDImageView.m; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				D9AB7E642BF14D4C008DC691 /* _create-xcframework.sh */,
 				D939EDD52BE6AD8900267D9C /* fXDObjC.h */,
+				D907C1E92C4460620099CDC0 /* fXDObjC-Info.plist */,
 				D939ED612BE6AD7400267D9C /* _interfaces */,
 				D939ED762BE6AD7400267D9C /* _module */,
 				D939ED912BE6AD7400267D9C /* Object */,
@@ -381,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D907C1EA2C4460620099CDC0 /* fXDObjC-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,6 +561,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 63DC79S99Z;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
@@ -567,6 +572,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				GENERATE_MASTER_OBJECT_FILE = YES;
+				INFOPLIST_FILE = "fXDObjC-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -592,6 +598,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 63DC79S99Z;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
@@ -602,6 +609,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				GENERATE_MASTER_OBJECT_FILE = YES;
+				INFOPLIST_FILE = "fXDObjC-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

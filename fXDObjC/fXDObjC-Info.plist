@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSCameraUsageDescription</key>
+	<string>fXDKit may use captured image with generated images</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>fXDKit may use media information with generated images</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>fXDKit may use location with generated images</string>
+</dict>
+</plist>

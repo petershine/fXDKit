@@ -42,6 +42,12 @@
 	<string>16A5202i</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>fXDKit may use media information with generated images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>fXDKit may use captured image with generated images</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>fXDKit may use location with generated images</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>2</integer>
