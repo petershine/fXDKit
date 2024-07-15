@@ -8,7 +8,7 @@ public struct fXDlistImage<Content: View>: View {
 
 	@Binding var imageDimension: CGFloat
 
-	@Binding var imageURLs: [URL]
+	@Binding var imageURLs: [URL]?
 	@Binding var selectedImageURL: URL?
 
 	var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
@@ -17,7 +17,7 @@ public struct fXDlistImage<Content: View>: View {
 
 	public init(didMaximize: Binding<Bool>,
 				imageDimension: Binding<CGFloat>,
-				imageURLs: Binding<[URL]>,
+				imageURLs: Binding<[URL]?>,
 				selectedImageURL: Binding<URL?>,
 				action_LongPress: ((_ imageURL: URL?) -> Void)? = nil,
 				@ViewBuilder attachedForMaximized: @escaping ((_ imageURL: URL?) -> Content)) {
@@ -37,7 +37,7 @@ public struct fXDlistImage<Content: View>: View {
 
 	public var body: some View {
 		List(
-			imageURLs,
+			imageURLs ?? [],
 			id:\.self
 		) {
 			imageURL in
@@ -81,7 +81,7 @@ public struct fXDlistImage<Content: View>: View {
 		.shadow(color: .black, radius: 10.0)
 		.scrollIndicators(.hidden)
 		.listStyle(.plain)
-		.onChange(of: imageURLs, {
+		.onChange(of: imageURLs ?? [], {
 			oldValue, newValue in
 
 			if let latest = newValue.first {
@@ -90,7 +90,7 @@ public struct fXDlistImage<Content: View>: View {
 		})
 		.task {
 			if selectedImageURL == nil,
-			   let latest = imageURLs.first {
+			   let latest = imageURLs?.first {
 				selectedImageURL = latest
 			}
 		}
