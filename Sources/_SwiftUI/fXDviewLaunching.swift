@@ -59,6 +59,7 @@ public struct fXDviewLaunching: View {
 			VStack {
 				Spacer()
 				ProgressView().controlSize(.large).padding()
+                SPACER_FIXED()
 			}
 		}
 		.ignoresSafeArea()
