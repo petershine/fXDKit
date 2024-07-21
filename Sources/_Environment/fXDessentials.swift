@@ -36,6 +36,8 @@ public let DIMENSION_PREVIEW: CGFloat = {
 	return maxDimension
 }()
 
+public let DIMENSION_MINIMUM_IMAGE: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 140.0)
+
 
 //MARK: Closures
 public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void

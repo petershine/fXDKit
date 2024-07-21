@@ -47,7 +47,7 @@ public struct fXDlistImage<Content: View>: View {
                     }
 
                     AsyncImage(
-                        url: imageURL,
+                        url: imageURL.thumbnailURL,
                         content: {
                             pngImage in
                             pngImage

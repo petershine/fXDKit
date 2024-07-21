@@ -465,3 +465,23 @@ extension UIImage {
 		return aspectSize
 	}
 }
+
+
+extension URL {
+    public var jsonURL: URL {
+        return self
+            .deletingPathExtension()
+            .appendingPathExtension(UTType.json.preferredFilenameExtension ?? UTType.json.identifier.components(separatedBy: ".").last ?? "json")
+    }
+
+    public var thumbnailURL: URL {
+        var thumbnail = self.deletingPathExtension()
+        let filenameComponent = thumbnail.lastPathComponent
+        thumbnail.deleteLastPathComponent()
+        thumbnail.append(component: "_thumbnail")
+        thumbnail.append(components: filenameComponent)
+        thumbnail.appendPathExtension(UTType.png.preferredFilenameExtension ?? UTType.png.identifier.components(separatedBy: ".").last ?? "png")
+
+        return thumbnail
+    }
+}
