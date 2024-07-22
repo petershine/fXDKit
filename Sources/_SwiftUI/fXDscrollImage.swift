@@ -7,15 +7,13 @@ public struct fXDscrollImage: View {
 	@Binding var displayImage: UIImage?
 
 	@State private var displayContentMode: ContentMode = .fit
-	@State private var displaySize: CGSize?
+	@State private var displaySize: CGSize? = nil
 	@State private var restrictedBouncing: Axis.Set = [.horizontal, .vertical]
 
 
-	public init(displayImage: Binding<UIImage?>) {
-		_displayImage = displayImage
-		
-		displaySize = displayImage.wrappedValue?.size
-	}
+    public init(displayImage: Binding<UIImage?>) {
+        _displayImage = displayImage
+    }
 
 	public var body: some View {
 		ScrollView([.horizontal, .vertical],
@@ -36,6 +34,9 @@ public struct fXDscrollImage: View {
 		}
 		.ignoresSafeArea()
 		.scrollBounceBehavior(.basedOnSize, axes: restrictedBouncing)
+        .task {
+            displaySize = displayImage?.size
+        }
 		.onTapGesture(count: 2, perform: {
 			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
 		})
