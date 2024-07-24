@@ -143,7 +143,7 @@ extension URLSession {
 			}
 		}
 
-		// using recursive could be considered, however, it's unnecessaril complication.
+		// using recursive could be considered, however, it's unnecessary complication.
 		fxdPrint("[\(#function)] \(reattemptedRequests.count)")
 		for reattempted in reattemptedRequests {
 			do {
