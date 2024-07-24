@@ -317,6 +317,9 @@ extension UIActivityViewController {
 	}
 }
 
+
+import AVKit
+
 extension UIAlertController {
 	@objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
 		guard error != nil else {
@@ -336,6 +339,7 @@ extension UIAlertController {
 
 	@objc public class func simpleAlert(withTitle title: String?, 
 										message: String?,
+                                        soundNumber: Int = 0,
 										fromScene: UIViewController? = nil,
 										destructiveText: String? = nil,
 										cancelText: String? = NSLocalizedString("OK", comment: ""),
@@ -371,6 +375,9 @@ extension UIAlertController {
 		}
 
 		DispatchQueue.main.async {
+            if soundNumber != 0 {
+                AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
+            }
 			presentingScene?.present(alert,
 									 animated: true,
 									 completion: nil)
