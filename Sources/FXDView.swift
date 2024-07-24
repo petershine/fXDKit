@@ -53,7 +53,7 @@ extension UIView {
 		}
 	}
 
-	@objc public func addAsFadeInSubview(_ subview: UIView?, afterAddedBlock: (() -> Swift.Void)? = nil) {
+	@objc public func addAsFadeInSubview(_ subview: UIView?, afterAddedBlock: (() -> Void)? = nil) {
 
 		guard subview != nil else {
 			afterAddedBlock?()
@@ -75,7 +75,7 @@ extension UIView {
 		}
 	}
 
-	@objc public func removeAsFadeOutSubview(_ subview: UIView?, afterRemovedBlock: (() -> Swift.Void)? = nil) {
+	@objc public func removeAsFadeOutSubview(_ subview: UIView?, afterRemovedBlock: (() -> Void)? = nil) {
 
 		guard subview != nil else {
 			afterRemovedBlock?()

@@ -339,8 +339,8 @@ extension UIAlertController {
 										fromScene: UIViewController? = nil,
 										destructiveText: String? = nil,
 										cancelText: String? = NSLocalizedString("OK", comment: ""),
-										destructiveHandler: ((UIAlertAction) -> Swift.Void)? = nil,
-										cancelHandler: ((UIAlertAction) -> Swift.Void)? = nil) {
+										destructiveHandler: ((UIAlertAction) -> Void)? = nil,
+										cancelHandler: ((UIAlertAction) -> Void)? = nil) {
 
 		let alert = UIAlertController(title: title,
 									  message: message,
