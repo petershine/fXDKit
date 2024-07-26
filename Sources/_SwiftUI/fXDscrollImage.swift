@@ -13,6 +13,8 @@ public struct fXDscrollImage: View {
 
     public init(displayImage: Binding<UIImage?>) {
         _displayImage = displayImage
+
+        self.displayContentMode = (UIDevice.current.userInterfaceIdiom == .phone ? .fill : .fit)
     }
 
 	public var body: some View {
