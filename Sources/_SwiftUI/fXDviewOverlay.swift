@@ -177,23 +177,19 @@ extension FXDobservableOverlay {
 		let testingConfiguration = FXDobservableOverlay()
 
 		let taskInterval = 1.0
-		Task {
+        Task {	@MainActor in
 			for step in 0...10 {
 				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 
-				await MainActor.run {
-					testingConfiguration.overlayAlpha = 1.0 - (CGFloat(step)*0.1)
-					testingConfiguration.sliderValue = CGFloat(step) * 0.1
-				}
+                testingConfiguration.overlayAlpha = 1.0 - (CGFloat(step)*0.1)
+                testingConfiguration.sliderValue = CGFloat(step) * 0.1
 
 				do {
 					try await Task.sleep(nanoseconds: UInt64((taskInterval * 1_000_000_000).rounded()))
 				}
 			}
 
-			await MainActor.run {
-				testingConfiguration.shouldDismiss = true
-			}
+            testingConfiguration.shouldDismiss = true
 		}
 
 		return testingConfiguration

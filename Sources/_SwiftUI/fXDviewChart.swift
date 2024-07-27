@@ -39,10 +39,8 @@ open class FXDdataChart: NSObject, ObservableObject {
 		UIApplication.shared.mainWindow()?.showOverlay(afterDelay: 0.0, observable: progressObservable)
 
 
-		progressObservable.cancellableTask = Task {
-			[weak self] in
-
-			let urlRequests = self?.urlRequestsFromTickers(tickers: tickers, timeout: timeout) ?? []
+        progressObservable.cancellableTask = Task {	@MainActor in
+			let urlRequests = self.urlRequestsFromTickers(tickers: tickers, timeout: timeout)
 
 			var safeDataAndResponse: DataAndResponseActor? = nil
 			do {
@@ -56,30 +54,27 @@ open class FXDdataChart: NSObject, ObservableObject {
 				await safeDataAndResponse?.assignError(error)
 			}
 
-			await self?.processDataAndResponseArray(dataAndResponseArray: safeDataAndResponse?.dataAndResponseTuples ?? [])
+			await self.processDataAndResponseArray(dataAndResponseArray: safeDataAndResponse?.dataAndResponseTuples ?? [])
 
 			await fxdPrint("dataAndResponseArray.count: \(safeDataAndResponse?.count() ?? 0)")
 			let didSucceed = await safeDataAndResponse?.count() ?? 0 > 0
 			let caughtError = await safeDataAndResponse?.caughtError
 
-			await MainActor.run {
-				[weak self] in
 
-				if progressObservable.cancellableTask?.isCancelled ?? false {
-					UIAlertController.simpleAlert(withTitle: "CANCELLED", message: nil)
-				}
-				else if !didSucceed {
-					UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self?.urlRequestHOST ?? "")\nTICKERS: \(tickers)")
-				}
-				else if caughtError != nil {
-					let errorTitle = ((caughtError as? URLError)?.errorCode as? String) ?? "(no errorCode)"
-					let errorMessage = caughtError?.localizedDescription ?? "(no localizedDescription)"
-					UIAlertController.simpleAlert(withTitle: errorTitle, message: errorMessage)
-				}
+            if progressObservable.cancellableTask?.isCancelled ?? false {
+                UIAlertController.simpleAlert(withTitle: "CANCELLED", message: nil)
+            }
+            else if !didSucceed {
+                UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self.urlRequestHOST)\nTICKERS: \(tickers)")
+            }
+            else if caughtError != nil {
+                let errorTitle = ((caughtError as? URLError)?.errorCode as? String) ?? "(no errorCode)"
+                let errorMessage = caughtError?.localizedDescription ?? "(no localizedDescription)"
+                UIAlertController.simpleAlert(withTitle: errorTitle, message: errorMessage)
+            }
 
-				UIApplication.shared.mainWindow()?.hideOverlay(afterDelay: DURATION_QUARTER)
-				completion?(didSucceed)
-			}
+            UIApplication.shared.mainWindow()?.hideOverlay(afterDelay: DURATION_QUARTER)
+            completion?(didSucceed)
 		}
 	}
 
