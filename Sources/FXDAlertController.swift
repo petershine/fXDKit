@@ -2,6 +2,7 @@
 
 import AVKit
 
+
 extension UIAlertController {
     @objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
         guard error != nil else {
@@ -29,43 +30,43 @@ extension UIAlertController {
         destructiveHandler: ((UIAlertAction) -> Void)? = nil,
         cancelHandler: ((UIAlertAction) -> Void)? = nil) {
 
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert)
+            let alert = Self(title: title,
+                             message: message,
+                             preferredStyle: .alert)
 
-        let cancelAction = UIAlertAction(title: cancelText,
-                                         style: .cancel,
-                                         handler: cancelHandler)
-        alert.addAction(cancelAction)
-
-
-        if !(destructiveText?.isEmpty ?? true)
-            && destructiveHandler != nil {
-            let destructiveAction = UIAlertAction(title: destructiveText,
-                                             style: .destructive,
-                                             handler: destructiveHandler)
-            alert.addAction(destructiveAction)
-        }
+            let cancelAction = UIAlertAction(title: cancelText,
+                                             style: .cancel,
+                                             handler: cancelHandler)
+            alert.addAction(cancelAction)
 
 
-
-        var presentingScene: UIViewController? = fromScene
-
-        if presentingScene == nil,
-           let mainWindow = UIApplication.shared.mainWindow(),
-           mainWindow.rootViewController != nil {
-            presentingScene = mainWindow.rootViewController
-        }
-
-        DispatchQueue.main.async {
-            if soundNumber != 0 {
-                AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
+            if !(destructiveText?.isEmpty ?? true)
+                && destructiveHandler != nil {
+                let destructiveAction = UIAlertAction(title: destructiveText,
+                                                      style: .destructive,
+                                                      handler: destructiveHandler)
+                alert.addAction(destructiveAction)
             }
-            presentingScene?.present(alert,
-                                     animated: true,
-                                     completion: nil)
+
+
+
+            var presentingScene: UIViewController? = fromScene
+
+            if presentingScene == nil,
+               let mainWindow = UIApplication.shared.mainWindow(),
+               mainWindow.rootViewController != nil {
+                presentingScene = mainWindow.rootViewController
+            }
+
+            DispatchQueue.main.async {
+                if soundNumber != 0 {
+                    AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
+                }
+                presentingScene?.present(alert,
+                                         animated: true,
+                                         completion: nil)
+            }
         }
-    }
 
     public class func asyncAlert<T>(
         withTitle title: String?,
@@ -81,9 +82,9 @@ extension UIAlertController {
         let didProceed = try await withCheckedThrowingContinuation {
             (continuation: CheckedContinuation<T?, any Error>) in
 
-            let alert = UIAlertController(title: title,
-                                          message: message,
-                                          preferredStyle: .alert)
+            let alert = Self(title: title,
+                             message: message,
+                             preferredStyle: .alert)
 
             let cancelAction = UIAlertAction(
                 title: cancelText,
