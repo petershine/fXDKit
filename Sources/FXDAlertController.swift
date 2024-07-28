@@ -121,9 +121,12 @@ extension UIAlertController {
             if soundNumber != 0 {
                 AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
             }
-            presentingScene?.present(alert,
-                                     animated: true,
-                                     completion: nil)
+
+            Task {	@MainActor in
+                presentingScene?.present(alert,
+                                         animated: true,
+                                         completion: nil)
+            }
         }
 
         return didProceed
