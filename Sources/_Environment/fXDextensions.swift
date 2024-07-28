@@ -383,6 +383,68 @@ extension UIAlertController {
 									 completion: nil)
 		}
 	}
+
+    public class func asyncAlert(withTitle title: String?,
+                                 message: String?,
+                                 soundNumber: Int = 0,
+                                 fromScene: UIViewController? = nil,
+                                 destructiveText: String? = nil,
+                                 cancelText: String? = NSLocalizedString("OK", comment: ""),
+                                 destructiveHandler: ((UIAlertAction) -> Bool)? = nil,
+                                 cancelHandler: ((UIAlertAction) -> Bool)? = nil) async throws -> sending Bool {
+
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+
+        let didProceed = try await withCheckedThrowingContinuation {
+            (continuation: CheckedContinuation<Bool, any Error>) in
+
+            let cancelAction = UIAlertAction(
+                title: cancelText,
+                style: .cancel,
+                handler: {
+                    action in
+
+                    continuation.resume(returning: cancelHandler?(action) ?? false)
+                })
+            alert.addAction(cancelAction)
+
+
+            if !(destructiveText?.isEmpty ?? true)
+                && destructiveHandler != nil {
+                let destructiveAction = UIAlertAction(
+                    title: destructiveText,
+                    style: .destructive,
+                    handler: {
+                        action in
+
+                        continuation.resume(returning: destructiveHandler?(action) ?? false)
+                    })
+                alert.addAction(destructiveAction)
+            }
+        }
+
+
+        var presentingScene: UIViewController? = fromScene
+
+        if presentingScene == nil,
+           let mainWindow = UIApplication.shared.mainWindow(),
+           mainWindow.rootViewController != nil {
+            presentingScene = mainWindow.rootViewController
+        }
+
+        DispatchQueue.main.async {
+            if soundNumber != 0 {
+                AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
+            }
+            presentingScene?.present(alert,
+                                     animated: true,
+                                     completion: nil)
+        }
+
+        return didProceed
+    }
 }
 
 
