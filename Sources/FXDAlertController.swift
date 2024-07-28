@@ -70,7 +70,7 @@ extension UIAlertController {
 
     public class func asyncAlert<T>(
         withTitle title: String?,
-        message: String?,
+        message: String? = nil,
         soundNumber: Int = 0,
         fromScene: UIViewController? = nil,
         cancelText: String? = NSLocalizedString("OK", comment: ""),
