@@ -54,9 +54,7 @@ public struct fXDscrollImage: View {
 		}
 		.onReceive(NotificationCenter.default.publisher(
 			for: UIDevice.orientationDidChangeNotification)) { _ in
-				DispatchQueue.main.async {
-					updateScrollViewConfiguration(for: displayContentMode)
-				}
+                updateScrollViewConfiguration(for: displayContentMode)
 			}
 	}
 }
