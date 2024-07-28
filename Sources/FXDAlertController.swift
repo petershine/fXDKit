@@ -22,7 +22,7 @@ extension UIAlertController {
 
     @objc public class func simpleAlert(
         withTitle title: String?,
-        message: String?,
+        message: String? = nil,
         soundNumber: Int = 0,
         fromScene: UIViewController? = nil,
         destructiveText: String? = nil,
@@ -30,41 +30,22 @@ extension UIAlertController {
         destructiveHandler: ((UIAlertAction) -> Void)? = nil,
         cancelHandler: ((UIAlertAction) -> Void)? = nil) {
 
-            let alert = Self(title: title,
-                             message: message,
-                             preferredStyle: .alert)
-
-            let cancelAction = UIAlertAction(title: cancelText,
-                                             style: .cancel,
-                                             handler: cancelHandler)
-            alert.addAction(cancelAction)
-
-
-            if !(destructiveText?.isEmpty ?? true)
-                && destructiveHandler != nil {
-                let destructiveAction = UIAlertAction(title: destructiveText,
-                                                      style: .destructive,
-                                                      handler: destructiveHandler)
-                alert.addAction(destructiveAction)
-            }
-
-
-
-            var presentingScene: UIViewController? = fromScene
-
-            if presentingScene == nil,
-               let mainWindow = UIApplication.shared.mainWindow(),
-               mainWindow.rootViewController != nil {
-                presentingScene = mainWindow.rootViewController
-            }
-
-            DispatchQueue.main.async {
-                if soundNumber != 0 {
-                    AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
-                }
-                presentingScene?.present(alert,
-                                         animated: true,
-                                         completion: nil)
+            Task {	@MainActor in
+                let _: Bool? = try await Self.asyncAlert(
+                    withTitle: title,
+                    message: message,
+                    soundNumber: soundNumber,
+                    fromScene: fromScene,
+                    cancelText: cancelText,
+                    cancelHandler: {
+                        cancelHandler?($0)
+                        return (false, nil)
+                    },
+                    destructiveText: destructiveText,
+                    destructiveHandler: {
+                        destructiveHandler?($0)
+                        return (false, nil)
+                    })
             }
         }
 
