@@ -137,14 +137,12 @@ extension UIAlertController {
                 presentingScene = mainWindow.rootViewController
             }
 
-            DispatchQueue.main.async {
-                if soundNumber != 0 {
-                    AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
-                }
-                presentingScene?.present(alert,
-                                         animated: true,
-                                         completion: nil)
+            if soundNumber != 0 {
+                AudioServicesPlaySystemSound(SystemSoundID(soundNumber))
             }
+            presentingScene?.present(alert,
+                                     animated: true,
+                                     completion: nil)
         }
 
         return didProceed
