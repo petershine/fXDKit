@@ -298,7 +298,7 @@ extension Bundle {
 
 
 extension UIActivityViewController {
-	public class func show(items: [Any]) {
+	@MainActor public class func show(items: [Any]) {
 		guard let rootViewController = UIApplication.shared.mainWindow()?.rootViewController else {
 			return
 		}
