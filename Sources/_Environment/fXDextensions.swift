@@ -390,8 +390,8 @@ extension UIAlertController {
                                  fromScene: UIViewController? = nil,
                                  destructiveText: String? = nil,
                                  cancelText: String? = NSLocalizedString("OK", comment: ""),
-                                 destructiveHandler: ((UIAlertAction) -> Bool)? = nil,
-                                 cancelHandler: ((UIAlertAction) -> Bool)? = nil) async throws -> sending Bool {
+                                 destructiveHandler: ((UIAlertAction) -> (Bool, Error?))? = nil,
+                                 cancelHandler: ((UIAlertAction) -> (Bool, Error?))? = nil) async throws -> sending Bool {
 
         let alert = UIAlertController(title: title,
                                       message: message,
@@ -406,7 +406,13 @@ extension UIAlertController {
                 handler: {
                     action in
 
-                    continuation.resume(returning: cancelHandler?(action) ?? false)
+                    let (result, error) = cancelHandler?(action) ?? (false, nil)
+                    if let error {
+                        continuation.resume(throwing: error)
+                    }
+                    else {
+                        continuation.resume(returning: result)
+                    }
                 })
             alert.addAction(cancelAction)
 
@@ -419,7 +425,13 @@ extension UIAlertController {
                     handler: {
                         action in
 
-                        continuation.resume(returning: destructiveHandler?(action) ?? false)
+                        let (result, error) = destructiveHandler?(action) ?? (false, nil)
+                        if let error {
+                            continuation.resume(throwing: error)
+                        }
+                        else {
+                            continuation.resume(returning: result)
+                        }
                     })
                 alert.addAction(destructiveAction)
             }
