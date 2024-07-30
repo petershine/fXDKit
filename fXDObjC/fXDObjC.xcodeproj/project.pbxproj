@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D907C1EA2C4460620099CDC0 /* fXDObjC-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D907C1E92C4460620099CDC0 /* fXDObjC-Info.plist */; };
 		D939ED922BE6AD7400267D9C /* FXDImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4B2BE6AD7400267D9C /* FXDImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D939ED932BE6AD7400267D9C /* FXDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED4C2BE6AD7400267D9C /* FXDImageView.m */; };
 		D939ED942BE6AD7400267D9C /* FXDMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED4D2BE6AD7400267D9C /* FXDMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -354,7 +353,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					D939ED3E2BE6AC8600267D9C = {
 						CreatedOnToolsVersion = 15.3;
@@ -384,7 +383,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D907C1EA2C4460620099CDC0 /* fXDObjC-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -596,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
