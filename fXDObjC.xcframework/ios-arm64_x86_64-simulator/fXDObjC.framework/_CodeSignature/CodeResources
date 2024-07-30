@@ -150,15 +150,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		lb2UjPm1cqVoLKskpXLfpvmNExk=
+		bNbJr4bUMePv16eJLlJTLk6B4nU=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		tyTXpm5rhhMLeQILFycyoEzTaHw=
-		</data>
-		<key>fXDObjC-Info.plist</key>
-		<data>
-		Y8IL6OtNI4qJxbw7DdfukFjHKZQ=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -568,17 +564,6 @@
 			<key>hash2</key>
 			<data>
 			7mazxnl0ZNslr4ooSinDC1cSYW91skUKVcKszz/IvZw=
-			</data>
-		</dict>
-		<key>fXDObjC-Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Y8IL6OtNI4qJxbw7DdfukFjHKZQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			8nxfGAPWH0reFLGPEWVeTs3l6L+Y/FVdy4TGZOB8Wz0=
 			</data>
 		</dict>
 	</dict>
