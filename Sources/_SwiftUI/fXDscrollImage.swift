@@ -4,7 +4,7 @@ import SwiftUI
 
 
 public struct fXDscrollImage: View {
-	@Binding var displayImage: UIImage?
+	@Binding var uiImage: UIImage?
 
 	@State private var displayContentMode: ContentMode = .fit
 	@State private var displaySize: CGSize? = nil
@@ -12,8 +12,8 @@ public struct fXDscrollImage: View {
 
 
     public init(
-        displayImage: Binding<UIImage?>) {
-            _displayImage = displayImage
+        uiImage: Binding<UIImage?>) {
+            _uiImage = uiImage
         }
 
 	public var body: some View {
@@ -23,8 +23,8 @@ public struct fXDscrollImage: View {
 				Spacer()
 					.containerRelativeFrame([.horizontal, .vertical])
 
-				if let displayImage {
-					Image(uiImage: displayImage)
+				if let uiImage {
+					Image(uiImage: uiImage)
 						.resizable()
 						.frame(width: displaySize?.width, height: displaySize?.height, alignment: .center)
 				}
@@ -36,7 +36,7 @@ public struct fXDscrollImage: View {
 		.ignoresSafeArea()
 		.scrollBounceBehavior(.basedOnSize, axes: restrictedBouncing)
         .task {
-            displaySize = displayImage?.size
+            displaySize = uiImage?.size
             displayContentMode = UIDevice.current.userInterfaceIdiom == .phone ? .fill : .fit
         }
 		.onTapGesture(count: 2, perform: {
@@ -47,7 +47,7 @@ public struct fXDscrollImage: View {
 
 			updateScrollViewConfiguration(for: newValue)
 		}
-		.onChange(of: displayImage) {
+		.onChange(of: uiImage) {
 			oldValue, newValue in
 
 			updateScrollViewConfiguration(for: displayContentMode)
@@ -63,13 +63,13 @@ public struct fXDscrollImage: View {
 
 fileprivate extension fXDscrollImage {
 	func updateScrollViewConfiguration(for newContentMode: ContentMode) {
-		guard let displayImage else {
+		guard let uiImage else {
 			return
 		}
 
 
 		let containerSize = UIScreen.main.bounds.size
-		let aspectSize = displayImage.aspectSize(for: displayContentMode, containerSize: containerSize)
+		let aspectSize = uiImage.aspectSize(for: displayContentMode, containerSize: containerSize)
 		withAnimation {
 			displaySize = aspectSize
 		}
