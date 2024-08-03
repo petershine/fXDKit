@@ -6,6 +6,7 @@ import UIKit
 
 public protocol FXDAppDelegateProtocols: UIApplicationDelegate, ObservableObject {
 	var sceneDelegateClass: AnyClass? { get }
+    var backgroundCompletionHandler: (() -> Void)? { get set }
 }
 
 
@@ -30,7 +31,9 @@ class SubClassedAppDelegate: FXDAppDelegate {
 		}
 	}
 
+    open var backgroundCompletionHandler: (() -> Void)? = nil
 
+    
 	override init() {
 		super.init()
 		fxd_overridable()
