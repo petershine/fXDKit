@@ -406,6 +406,17 @@ extension UIImage {
 
 
 extension URL {
+    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType) -> URL? {
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd_HH_mm_ss"
+
+        let fileName = dateFormatter.string(from: Date.now)
+        let fileURL = documentDirectory?.appendingPathComponent("\(prefix)_\(fileName)\(index != nil ? "_\(index ?? 0)" : "").\(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")")
+        return fileURL
+    }
+
     public var jsonURL: URL {
         return self
             .deletingPathExtension()
