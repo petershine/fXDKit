@@ -434,3 +434,52 @@ extension URL {
         return thumbnail
     }
 }
+
+
+extension UNUserNotificationCenter {
+    public static func attemptLocalNotification(content: UNNotificationContent) {
+
+        let completionHandler: @Sendable (Bool, (any Error)?) -> Void = {
+            (success, error) in
+
+            fxd_log()
+            guard success else {
+                fxdPrint(error)
+                return
+            }
+
+
+            fxdPrint(content)
+
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            fxdPrint(trigger)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            fxdPrint(request)
+
+            Self.current().add(request)
+        }
+
+
+        Task {
+            let center = Self.current()
+            let settings = await center.notificationSettings()
+
+            guard settings.authorizationStatus != .authorized else {
+                completionHandler(true, nil)
+                return
+            }
+
+
+            var authorized: Bool = false
+            var authorizationError: Error? = nil
+            do {
+                authorized = try await center.requestAuthorization(options: [.badge, .sound, .alert])
+            }
+            catch {
+                authorizationError = error
+            }
+
+            completionHandler(authorized, authorizationError)
+        }
+    }
+}
