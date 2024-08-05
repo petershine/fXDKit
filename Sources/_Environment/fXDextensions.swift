@@ -437,6 +437,25 @@ extension URL {
 
 
 extension UNUserNotificationCenter {
+    public static func attemptAuthorization() async -> (UNAuthorizationStatus, Error?) {
+
+        var authorized: Bool = false
+        var authorizationError: Error? = nil
+        do {
+            authorized = try await Self.current().requestAuthorization(options: [.badge, .sound, .alert])
+        }
+        catch {
+            authorizationError = error
+        }
+
+        if authorized {
+            await UIApplication.shared.registerForRemoteNotifications()
+        }
+
+
+        let settings = await Self.current().notificationSettings()
+        return (settings.authorizationStatus, authorizationError)
+    }
     public static func attemptLocalNotification(content: UNNotificationContent) {
 
         let completionHandler: @Sendable (Bool, (any Error)?) -> Void = {
@@ -461,25 +480,8 @@ extension UNUserNotificationCenter {
 
 
         Task {
-            let center = Self.current()
-            let settings = await center.notificationSettings()
-
-            guard settings.authorizationStatus != .authorized else {
-                completionHandler(true, nil)
-                return
-            }
-
-
-            var authorized: Bool = false
-            var authorizationError: Error? = nil
-            do {
-                authorized = try await center.requestAuthorization(options: [.badge, .sound, .alert])
-            }
-            catch {
-                authorizationError = error
-            }
-
-            completionHandler(authorized, authorizationError)
+            let (authorized, authorizationError) = await Self.attemptAuthorization()
+            completionHandler(authorized == .authorized, authorizationError)
         }
     }
 }
