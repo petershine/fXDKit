@@ -417,19 +417,25 @@ extension URL {
         return fileURL
     }
 
+    public func pairedFileURL(inSubPath: String? = nil, contentType: UTType) -> URL {
+        var pairedFile = self.deletingPathExtension()
+        let filenameComponent = pairedFile.lastPathComponent
+        pairedFile.deleteLastPathComponent()
+        if let inSubPath {
+            pairedFile.append(component: inSubPath)
+        }
+        pairedFile.append(components: filenameComponent)
+        pairedFile.appendPathExtension(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")
+
+        return pairedFile
+    }
+
     public var jsonURL: URL {
-        return self
-            .deletingPathExtension()
-            .appendingPathExtension(UTType.json.preferredFilenameExtension ?? UTType.json.identifier.components(separatedBy: ".").last ?? "json")
+        return self.pairedFileURL(inSubPath: nil, contentType: .json)
     }
 
     public var thumbnailURL: URL {
-        var thumbnail = self.deletingPathExtension()
-        let filenameComponent = thumbnail.lastPathComponent
-        thumbnail.deleteLastPathComponent()
-        thumbnail.append(component: "_thumbnail")
-        thumbnail.append(components: filenameComponent)
-        thumbnail.appendPathExtension(UTType.png.preferredFilenameExtension ?? UTType.png.identifier.components(separatedBy: ".").last ?? "png")
+        let thumbnail = self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png)
 
         return thumbnail
     }
