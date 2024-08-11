@@ -7,6 +7,28 @@ extension View {
 	public func shouldHide(_ shouldHide: Bool) -> some View {
 		modifier(fXDViewModifier(shouldHide: shouldHide))
 	}
+
+    public func base64EncodedImage(result: (Result<URL, any Error>)?) async throws -> String? {	fxd_log()
+        fxdPrint("result:", result)
+        guard let imageURL = try result?.get() else {
+            return nil
+        }
+
+        fxdPrint("imageURL", imageURL)
+
+        var base64Encoded: String? = nil
+        if imageURL.startAccessingSecurityScopedResource() {
+            let imageData = try Data(contentsOf: imageURL)
+            imageURL.stopAccessingSecurityScopedResource()
+
+            fxdPrint("imageData: ", imageData)
+            base64Encoded = imageData.base64EncodedString()
+        }
+
+        fxdPrint("base64Encoded?.count:", base64Encoded?.count)
+
+        return base64Encoded
+    }
 }
 
 
