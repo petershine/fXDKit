@@ -8,7 +8,7 @@ extension View {
 		modifier(fXDViewModifier(shouldHide: shouldHide))
 	}
 
-    public func base64EncodedImage(result: (Result<URL, any Error>)?) async throws -> String? {	fxd_log()
+    public func base64EncodedImage(result: (Result<URL, any Error>)?) throws -> String? {	fxd_log()
         fxdPrint("result:", result)
         guard let imageURL = try result?.get() else {
             return nil
