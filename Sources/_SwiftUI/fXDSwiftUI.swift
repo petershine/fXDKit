@@ -14,7 +14,14 @@ extension View {
             return nil
         }
 
-        fxdPrint("imageURL", imageURL)
+        return try base64EncodedImage(imageURL: imageURL)
+    }
+
+    public func base64EncodedImage(imageURL: URL?) throws -> String? {	fxd_log()
+        fxdPrint("imageURL: ", imageURL)
+        guard let imageURL else {
+            return nil
+        }
 
         var base64Encoded: String? = nil
         if imageURL.startAccessingSecurityScopedResource() {
