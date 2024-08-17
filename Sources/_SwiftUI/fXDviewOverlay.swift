@@ -4,7 +4,7 @@ import Combine
 import SwiftUI
 
 
-public protocol FXDprotocolOverlay {
+public protocol FXDprotocolOverlay: Observable {
 	var shouldDismiss: Bool { get set }
 
 	var overlayColor: UIColor? { get set }
@@ -23,7 +23,7 @@ public protocol FXDprotocolOverlay {
 
 
 @Observable
-public class FXDobservableOverlay: NSObject, FXDprotocolOverlay {
+public class FXDobservableOverlay: FXDprotocolOverlay {
 	public var shouldDismiss: Bool = false
 
 	public var progressSpinnerAlpha: CGFloat? = 1.0
@@ -52,8 +52,6 @@ public class FXDobservableOverlay: NSObject, FXDprotocolOverlay {
 		 sliderValue: CGFloat? = 0.0,
 		 sliderTint: Color? = Color(uiColor: .systemBlue),
 		 cancellableTask: Task<Void, Error>? = nil) {
-
-		super.init()
 
 		self.progressSpinnerAlpha = progressSpinnerAlpha
 		self.overlayColor = overlayColor
