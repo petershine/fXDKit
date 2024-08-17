@@ -4,7 +4,7 @@ import Combine
 import SwiftUI
 
 
-public protocol FXDprotocolOverlay: Observable {
+public protocol FXDprotocolOverlay {
 	var shouldDismiss: Bool { get set }
 
 	var overlayColor: UIColor? { get set }
