@@ -5,7 +5,7 @@ import SwiftUI
 
 extension View {
 	public func shouldHide(_ shouldHide: Bool) -> some View {
-		modifier(fXDViewModifier(shouldHide: shouldHide))
+		modifier(fXDViewModifierHide(shouldHide: shouldHide))
 	}
 
     public func onRotate(_ rotateReaction: @escaping (UIDeviceOrientation) -> Void) -> some View {

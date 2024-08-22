@@ -3,7 +3,7 @@
 import SwiftUI
 
 
-struct fXDViewModifier: ViewModifier {
+struct fXDViewModifierHide: ViewModifier {
 	var shouldHide: Bool
 
 	func body(content: Content) -> some View {
