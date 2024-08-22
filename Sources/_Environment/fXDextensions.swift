@@ -444,7 +444,6 @@ extension URL {
 
 extension UNUserNotificationCenter {
     public static func attemptAuthorization() async -> (UNAuthorizationStatus, Error?) {
-
         var authorized: Bool = false
         var authorizationError: Error? = nil
         do {
@@ -455,15 +454,18 @@ extension UNUserNotificationCenter {
         }
 
         if authorized {
-            await UIApplication.shared.registerForRemoteNotifications()
+            await MainActor.run {	fxd_log()
+                fxdPrint("UIApplication.shared.isRegisteredForRemoteNotifications:", UIApplication.shared.isRegisteredForRemoteNotifications)
+                UIApplication.shared.registerForRemoteNotifications()
+            }
         }
 
 
         let settings = await Self.current().notificationSettings()
         return (settings.authorizationStatus, authorizationError)
     }
-    public static func attemptLocalNotification(content: UNNotificationContent) {
 
+    public static func attemptLocalNotification(content: UNNotificationContent) {
         let completionHandler: @Sendable (Bool, (any Error)?) -> Void = {
             (success, error) in
 

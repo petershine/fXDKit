@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 
 
-public protocol FXDAppDelegateProtocols: UIApplicationDelegate, ObservableObject {
+public protocol FXDAppDelegateProtocols: UIApplicationDelegate, UNUserNotificationCenterDelegate, ObservableObject {
 	var sceneDelegateClass: AnyClass? { get }
     var backgroundCompletionHandler: (() -> Void)? { get set }
 }
@@ -42,18 +42,18 @@ class SubClassedAppDelegate: FXDAppDelegate {
 
 	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 		fxd_overridable()
-		fxdPrint("launchOptions: ", launchOptions)
+		fxdPrint("launchOptions:", launchOptions)
 		return true
 	}
 
 	open func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
 		fxd_overridable()
-		fxdPrint("connectingSceneSession: ", connectingSceneSession)
+		fxdPrint("connectingSceneSession:", connectingSceneSession)
 
 
 		let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
 		sceneConfig.delegateClass = self.sceneDelegateClass
-		fxdPrint("sceneConfig.delegateClass: ", sceneConfig.delegateClass)
+		fxdPrint("sceneConfig.delegateClass:", sceneConfig.delegateClass)
 		fxdPrint("sceneConfig: \(sceneConfig)")
 
 		return sceneConfig
@@ -61,6 +61,29 @@ class SubClassedAppDelegate: FXDAppDelegate {
 
 	open func applicationWillTerminate(_ application: UIApplication) {
 		fxd_overridable()
-		fxdPrint("applicationState: ", application.applicationState)
+		fxdPrint("applicationState:", application.applicationState)
 	}
+
+    open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        fxd_overridable()
+        fxdPrint("deviceToken:", deviceToken)
+    }
+
+    open func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
+        fxd_overridable()
+        fxdPrint("error:", error)
+    }
+
+    open func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        fxd_overridable()
+        fxdPrint("identifier:", identifier)
+        fxdPrint("completionHandler:", completionHandler)
+    }
+
+    open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        fxd_overridable()
+        fxdPrint("notification:", notification)
+        fxdPrint("completionHandler:", completionHandler)
+        completionHandler([.badge, .sound, .list, .banner])
+    }
 }
