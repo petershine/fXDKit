@@ -67,6 +67,9 @@ class SubClassedAppDelegate: FXDAppDelegate {
     open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         fxd_overridable()
         fxdPrint("deviceToken:", deviceToken)
+
+        let deviceTokenString = deviceToken.map { String(format: "%02.2hhx", $0)}.joined()
+        fxdPrint("deviceTokenString", deviceTokenString)
     }
 
     open func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
