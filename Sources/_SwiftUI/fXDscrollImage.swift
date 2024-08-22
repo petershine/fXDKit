@@ -52,12 +52,11 @@ public struct fXDscrollImage: View {
 
 			updateScrollViewConfiguration(for: displayContentMode)
 		}
-		.onReceive(NotificationCenter.default.publisher(
-            for: UIDevice.orientationDidChangeNotification)) { _ in
-                Task {	@MainActor in
-                    updateScrollViewConfiguration(for: displayContentMode)
-                }
+        .onRotate{deviceOrientation in
+            Task {	@MainActor in
+                updateScrollViewConfiguration(for: displayContentMode)
             }
+        }
 	}
 }
 

@@ -13,6 +13,21 @@ struct fXDViewModifier: ViewModifier {
 	}
 }
 
+//https://www.hackingwithswift.com/quick-start/swiftui/how-to-detect-device-rotation
+struct fXDViewModifierRotate: ViewModifier {
+    let rotateReaction: (UIDeviceOrientation) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .onReceive(NotificationCenter.default.publisher(
+                for: UIDevice.orientationDidChangeNotification)) {
+                    _ in
+
+                    rotateReaction(UIDevice.current.orientation)
+                }
+    }
+}
+
 
 struct fXDButtonModifier: ViewModifier {
 	var touchableSize: CGSize

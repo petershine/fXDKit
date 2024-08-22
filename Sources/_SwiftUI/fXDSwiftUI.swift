@@ -8,6 +8,10 @@ extension View {
 		modifier(fXDViewModifier(shouldHide: shouldHide))
 	}
 
+    public func onRotate(_ rotateReaction: @escaping (UIDeviceOrientation) -> Void) -> some View {
+        self.modifier(fXDViewModifierRotate(rotateReaction: rotateReaction))
+    }
+
     public func base64EncodedImage(result: (Result<URL, any Error>)?) throws -> String? {	fxd_log()
         fxdPrint("result:", result)
         guard let imageURL = try result?.get() else {
