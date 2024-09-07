@@ -61,10 +61,10 @@ public struct fXDTextEditorModifier: ViewModifier {
 			.scrollContentBackground(.hidden)
 			.backgroundStyle(.black)
 			.foregroundStyle(.white)
-			.cornerRadius(10.0)
+            .cornerRadius(4.0)
 			.overlay {
-				RoundedRectangle(cornerRadius: 10.0)
-					.stroke(.black, lineWidth:4.0)
+				RoundedRectangle(cornerRadius: 4.0)
+                    .stroke(.gray, lineWidth:2.0)
 			}
 	}
 }
