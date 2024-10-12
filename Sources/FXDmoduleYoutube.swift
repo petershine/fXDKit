@@ -14,12 +14,12 @@ public let KEY_VIDEO_TITLE = "title"
 public let KEY_VIDEO_THUMBNAIL = "thumbnail"
 
 
-class FXDmoduleYoutube: NSObject {
+class FXDmoduleYoutube: NSObject, @unchecked Sendable {
 
 	var apikeyGoogleForBrowser: String?
 
 
-	func searchYouTubeUsing(artist: String?, song: String?, album: String?, callback:@escaping FXDcallback) {	fxd_log()
+	func searchYouTubeUsing(artist: String?, song: String?, album: String?, callback:@escaping (@Sendable (Bool, Any?) -> Void)) {	fxd_log()
 
 		fxdPrint(artist as Any)
 		fxdPrint(song as Any)

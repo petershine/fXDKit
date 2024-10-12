@@ -14,7 +14,7 @@ public protocol FXDSceneDelegateProtocols: UIWindowSceneDelegate, ObservableObje
 }
 
 
-open class FXDSceneDelegate: UIResponder, FXDSceneDelegateProtocols {
+open class FXDSceneDelegate: UIResponder, FXDSceneDelegateProtocols, @unchecked Sendable {
 	
 	@Published open var isAppLaunching: Bool = false
 	@Published open var didFinishLaunching: Bool = false

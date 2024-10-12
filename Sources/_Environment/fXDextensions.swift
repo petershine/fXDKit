@@ -355,7 +355,7 @@ extension UIDevice {
 		uname(&systemInfo)
 		let machineNameCode = withUnsafePointer(to: &systemInfo.machine) {
 			$0.withMemoryRebound(to: CChar.self, capacity: 1) {
-				ptr in String.init(validatingUTF8: ptr)
+                ptr in String(validatingCString: ptr)
 			}
 		}
 

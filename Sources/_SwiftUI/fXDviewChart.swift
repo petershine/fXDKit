@@ -25,16 +25,16 @@ public struct Price: Decodable, Identifiable {
 }
 
 
-open class FXDdataChart: NSObject, ObservableObject {
-	public static var colorsForTickers: Dictionary<String, UIColor> = [:]
-	public static var tickers: Array<String> = ["SPY","DIA","QQQ"]
+open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
+    @MainActor public static var colorsForTickers: Dictionary<String, UIColor> = [:]
+    @MainActor public static var tickers: Array<String> = ["SPY","DIA","QQQ"]
 
 
 	@Published open var pricesLineMarks: Dictionary<String, [Price]> = [:]
 	@Published public var didFailToRetrieve: Bool = false
 
 
-	open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
+    @MainActor open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
 		let progressObservable = FXDobservableOverlay(allowUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
 		UIApplication.shared.mainWindow()?.showOverlay(afterDelay: 0.0, observable: progressObservable)
 
@@ -131,7 +131,7 @@ open class FXDdataChart: NSObject, ObservableObject {
 	}
 
 
-	open func evaluateAndAlertIfFailed(dataAndResponseArray: [(Data, URLResponse)], tickers: [String]) -> Bool {
+    @MainActor open func evaluateAndAlertIfFailed(dataAndResponseArray: [(Data, URLResponse)], tickers: [String]) -> Bool {
 		fxdPrint("dataAndResponseArray.count: \(dataAndResponseArray.count)")
 		let didSucceed = (dataAndResponseArray.count > 0)
 		if !didSucceed {
@@ -194,7 +194,7 @@ extension fXDviewChart {
 
 // Example:
 extension FXDdataChart {
-	public func testChartData() {
+    @MainActor public func testChartData() {
 		startRetrievingTask(tickers: Self.tickers, timeout: TIMEOUT_DEFAULT, isCancellable: true) {
 			[weak self] (didSucceed) in
 

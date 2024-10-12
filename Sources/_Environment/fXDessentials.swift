@@ -22,10 +22,10 @@ public let MAXIMUM_LENGTH_TWEET: Int = 140
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
-public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE*0.75, DIMENSION_TOUCHABLE*0.75) : CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE))
-public let SIZE_TOUCHABLE_LARGE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE) : CGSizeMake(DIMENSION_TOUCHABLE*1.2, DIMENSION_TOUCHABLE*1.2))
+@MainActor public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE*0.75, DIMENSION_TOUCHABLE*0.75) : CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE))
+@MainActor public let SIZE_TOUCHABLE_LARGE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE) : CGSizeMake(DIMENSION_TOUCHABLE*1.2, DIMENSION_TOUCHABLE*1.2))
 
-public let DIMENSION_PREVIEW: CGFloat = {
+@MainActor public let DIMENSION_PREVIEW: CGFloat = {
 	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
 
 	var maxDimension = minDimension*0.4
@@ -36,14 +36,15 @@ public let DIMENSION_PREVIEW: CGFloat = {
 	return maxDimension
 }()
 
-public let DIMENSION_MINIMUM_IMAGE: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 140.0)
+@MainActor public let DIMENSION_MINIMUM_IMAGE: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 140.0)
 
 
 //MARK: Closures
-public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
+public typealias FXDcallback = (@Sendable (_ result: Bool, _ object: Any?) -> Void)
 
 
 //MARK: Protocols
+@MainActor
 @objc public protocol FXDobserverApplication {
 	func observedUIApplicationDidEnterBackground(_ notification: NSNotification)
 	func observedUIApplicationDidBecomeActive(_ notification: NSNotification)
@@ -54,6 +55,7 @@ public typealias FXDcallback = (_ result: Bool, _ object: Any?) -> Void
 	func observedUIDeviceOrientationDidChange(_ notification: NSNotification)
 }
 
+@MainActor
 public protocol FXDobserverNSManagedObject {
 	func observedUIDocumentStateChanged(_ notification: Notification?)
 

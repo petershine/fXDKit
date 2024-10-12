@@ -3,8 +3,8 @@
 import MessageUI
 
 
-open class FXDmoduleMessage: NSObject {
-	func presentEmailScene(_ emailScene: MFMailComposeViewController?, forPresentingScene presentingScene: UIViewController?, using image: UIImage?, usingMessage message: String?, withRecipients recipients: [String]?) {	fxd_log()
+open class FXDmoduleMessage: NSObject, @unchecked Sendable {
+    @MainActor func presentEmailScene(_ emailScene: MFMailComposeViewController?, forPresentingScene presentingScene: UIViewController?, using image: UIImage?, usingMessage message: String?, withRecipients recipients: [String]?) {	fxd_log()
 
 		guard MFMailComposeViewController.canSendMail() else {
 			//TODO: alert user
@@ -43,7 +43,7 @@ open class FXDmoduleMessage: NSObject {
 			completion: nil)
 	}
 
-	func emailSceneWithMailBody(withRecipients recipients: [String]?) -> MFMailComposeViewController! {	fxd_log()
+    @MainActor func emailSceneWithMailBody(withRecipients recipients: [String]?) -> MFMailComposeViewController! {	fxd_log()
 #if DEBUG
 		fxdPrint("Bundle.main.infoDictionary: ", Bundle.main.infoDictionary)
 		fxdPrint("recipients: ", recipients)
@@ -74,7 +74,7 @@ open class FXDmoduleMessage: NSObject {
 		return emailScene
 	}
 
-	func emailScene(forSharing image: UIImage?, usingMessage message: String?) -> MFMailComposeViewController? {	fxd_log()
+    @MainActor func emailScene(forSharing image: UIImage?, usingMessage message: String?) -> MFMailComposeViewController? {	fxd_log()
 
 		let displayName = Bundle.bundleDisplayName()
 
@@ -97,8 +97,8 @@ open class FXDmoduleMessage: NSObject {
 }
 
 
-extension FXDmoduleMessage: MFMailComposeViewControllerDelegate {
-	public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {	fxd_log()
+extension FXDmoduleMessage: @preconcurrency MFMailComposeViewControllerDelegate {
+    @MainActor public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {	fxd_log()
 
 		fxdPrint(result)
 		fxdPrint(error)

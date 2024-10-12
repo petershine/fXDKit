@@ -14,7 +14,7 @@ import fXDObjC
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
 
-open class FXDmoduleCoredata: NSObject {
+open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 	private var enumeratingTask: UIBackgroundTaskIdentifier? = nil
 	private var dataSavingTask: UIBackgroundTaskIdentifier? = nil
 
@@ -29,12 +29,12 @@ open class FXDmoduleCoredata: NSObject {
 		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
 	}()
 
-	var appCachesDirectory: URL? = {
+    var appCachesDirectory: URL? = {
 		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
 	}()
 
 
-	lazy var enumeratingOperationQueue: OperationQueue? = {
+	nonisolated lazy var enumeratingOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: #function)
 	}()
 
@@ -54,12 +54,12 @@ open class FXDmoduleCoredata: NSObject {
 		#endif
 	}()
 
-	lazy open var mainEntityName: String? = {	fxd_overridable()
+    nonisolated lazy open var mainEntityName: String? = {	fxd_overridable()
 		//SAMPLE: _mainEntityName = entityname<#DefaultClass#>
 		return nil
 	}()
 
-	lazy open var mainSortDescriptors: [Any]? = {	fxd_overridable()
+	nonisolated lazy open var mainSortDescriptors: [Any]? = {	fxd_overridable()
 		//SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 		return nil
 	}()
@@ -107,10 +107,10 @@ open class FXDmoduleCoredata: NSObject {
 		return storeCopiedItem(fromSqlitePath: oldSqlitePath, toStoredPath: nil)
 	}
 
-	open func upgradeAllAttributesForNewDataModel(finishCallback: FXDcallbackFinish? = nil) {	fxd_overridable()
+	open func upgradeAllAttributesForNewDataModel(finishCallback: FXDcallback? = nil) {	fxd_overridable()
 		//TODO: Learn about NSMigrationPolicy implementation
 
-		finishCallback?(#function, true, nil)
+		finishCallback?(true, nil)
 	}
 
 }
@@ -146,7 +146,7 @@ extension FXDmoduleCoredata {
 		return didCopy
 	}
 
-	public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: FXDManagedDocument?, finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+    @MainActor public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: FXDManagedDocument?, finishCallback: FXDcallback? = nil) {	fxd_log()
 
 		var mainManagedDocument = managedDocument
 		if mainManagedDocument == nil {
@@ -228,25 +228,28 @@ extension FXDmoduleCoredata {
 		fxdPrint("managedObjectModel.versionIdentifiers: ", mainDocument?.managedObjectModel.versionIdentifiers)
 		fxdPrint("managedObjectModel.entities: ", mainDocument?.managedObjectModel.entities)
 
-		upgradeAllAttributesForNewDataModel {
-			(caller, didFinish, responseObj) in
+#if DEBUG
+        if ubiquityContainerURL != nil {
+            fxdPrint("", FileManager.default.infoDictionary(forFolderURL: ubiquityContainerURL))
+            fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.appCachesDirectory))
+            fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.appDocumentDirectory))
+        }
+#endif
 
-			#if DEBUG
-			if ubiquityContainerURL != nil {
-				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: ubiquityContainerURL))
-				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.appCachesDirectory))
-				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.appDocumentDirectory))
-			}
-			#endif
+        let result: Bool = didConfigure
+        upgradeAllAttributesForNewDataModel {
+            (didFinish, responseObj) in
 
-			finishCallback?(#function, didConfigure, nil)
+			finishCallback?((result && didFinish), nil)
 			//MARK: Careful with order of operations
-			
-			self.startObservingCoreDataNotifications()
+
+            DispatchQueue.main.async {
+                self.startObservingCoreDataNotifications()
+            }
 		}
 	}
 
-	func startObservingCoreDataNotifications() {
+    @MainActor func startObservingCoreDataNotifications() {
 		let notificationCenter = NotificationCenter.default
 
 		//FXDobserverApplication
@@ -269,11 +272,11 @@ extension FXDmoduleCoredata {
 		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextDidSave(_:)), name: NSManagedObjectContext.didSaveObjectsNotification, object: observedContext)
 	}
 
-	func deleteAllData(finishCallback: FXDcallbackFinish? = nil) {
+    @MainActor func deleteAllData(finishCallback: FXDcallback? = nil) {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
 		let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { action in
-			finishCallback?(#function, false, nil)
+			finishCallback?(false, nil)
 		}
 
 		let deleteAction = UIAlertAction(title: NSLocalizedString("Delate All", comment: ""), style: .destructive) {
@@ -293,11 +296,13 @@ extension FXDmoduleCoredata {
 					}
 
 				} withFinishCallback: {
-					(caller, didFinish, responseObj) in
+					(didFinish, responseObj) in
 
-					fxdPrint(caller, didFinish, responseObj)
+					fxdPrint(didFinish, responseObj)
 
-					self?.saveMainDocument(finishCallback: finishCallback)
+                    DispatchQueue.main.async {
+                        self?.saveMainDocument(finishCallback: finishCallback)
+                    }
 				}
 		}
 
@@ -309,13 +314,13 @@ extension FXDmoduleCoredata {
 		presentingViewController?.present(alertController, animated: true)
 	}
 
-	func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowOverlay shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: ((NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+    @MainActor func enumerateAllData(withPrivateContext shouldUsePrivateContext: Bool, shouldShowOverlay shouldShowProgressView: Bool, withEnumerationBlock enumerationBlock: (@Sendable (NSManagedObjectContext?, NSManagedObject?, UnsafeMutablePointer<Bool>?) -> Void)?, withFinishCallback finishCallback: FXDcallback? = nil) {	fxd_log()
 
 		fxdPrint("shouldUsePrivateContext: \(shouldUsePrivateContext)")
 		fxdPrint("enumeratingOperationQueue?.operationCount: ", enumeratingOperationQueue?.operationCount)
 
 		guard enumeratingOperationQueue?.operationCount == 0 else {
-			finishCallback?(#function, false, nil)
+			finishCallback?(false, nil)
 			return
 		}
 
@@ -336,12 +341,12 @@ extension FXDmoduleCoredata {
 		}
 
 
-		var shouldBreak: Bool = false
 
-		let managedContext = shouldUsePrivateContext ? mainDocument?.managedObjectContext.parent : mainDocument?.managedObjectContext
-
-		enumeratingOperationQueue?.addOperation {
+        let managedContext = shouldUsePrivateContext ? mainDocument?.managedObjectContext.parent : mainDocument?.managedObjectContext
+        enumeratingOperationQueue?.addOperation(BlockOperation(block: {
 			[weak self] in
+
+            var shouldBreak: Bool = false
 
 			let fetchedObjArray = managedContext?.fetchedObjArray(forEntityName: self?.mainEntityName, withSortDescriptors: self?.mainSortDescriptors, with: nil, withLimit: UInt(limitInfiniteFetch)) as? Array<NSManagedObject>
 
@@ -357,40 +362,45 @@ extension FXDmoduleCoredata {
 						enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
 					}
 					else {
-						DispatchQueue.main.async {
-							enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
-						}
+                        enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
 					}
 				}
 
-				fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
+                DispatchQueue.main.async {
+                    fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
+                }
 			}
 
 
-			OperationQueue.current?.addOperation {
-				[weak self] in
+            let didBreak: Bool = !shouldBreak
 
-				if shouldShowProgressView {
-					let mainWindow = UIApplication.shared.mainWindow()
-					mainWindow?.hideOverlay(afterDelay: DURATION_QUARTER)
-				}
+            OperationQueue.current?.addOperation(BlockOperation(block: {
+                [weak self] in
 
-				fxdPrint("!shouldBreak: \(!shouldBreak)")
+                if shouldShowProgressView {
+                    DispatchQueue.main.async {
+                        let mainWindow = UIApplication.shared.mainWindow()
+                        mainWindow?.hideOverlay(afterDelay: DURATION_QUARTER)
+                    }
+                }
 
-				finishCallback?(#function, !shouldBreak, nil)
+                fxdPrint("didBreak: \(didBreak)")
+                finishCallback?(didBreak, nil)
 
-				fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
-				fxdPrint("self?.enumeratingTask: ", self?.enumeratingTask)
+                DispatchQueue.main.async {
+                    fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
+                    fxdPrint("self?.enumeratingTask: ", self?.enumeratingTask)
 
-				if let validTask = self?.enumeratingTask {
-					UIApplication.shared.endBackgroundTask(validTask)
-					self?.enumeratingTask = .invalid
-				}
-			}
-		}
+                    if let validTask = self?.enumeratingTask {
+                        UIApplication.shared.endBackgroundTask(validTask)
+                        self?.enumeratingTask = .invalid
+                    }
+                }
+            }))
+        }))
 	}
 
-	func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
+    @MainActor func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
 		//TODO: Evaluate if this method is necessary
 		fxdPrint("1. managedContext?.hasChanges: ", managedContext?.hasChanges, "concurrencyType: ", managedContext?.concurrencyType)
 
@@ -442,31 +452,32 @@ extension FXDmoduleCoredata {
 		}
 	}
 
-	public func saveMainDocument(finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
-		fxdPrint("documentState: ", mainDocument?.documentState)
-		fxdPrint("hasUnsavedChanges: ", mainDocument?.hasUnsavedChanges)
-		fxdPrint("fileURL: ", mainDocument?.fileURL)
-
-		guard let fileURL = mainDocument?.fileURL else {
-			DispatchQueue.main.async {
-				finishCallback?(#function, false, nil)
-			}
-			return
-		}
+    public func saveMainDocument(finishCallback: FXDcallback? = nil) {	fxd_log()
+        DispatchQueue.main.async { [weak self] in
+            fxdPrint("documentState: ", self?.mainDocument?.documentState)
+            fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
+            fxdPrint("fileURL: ", self?.mainDocument?.fileURL)
+            
+            guard (self?.mainDocument?.fileURL) != nil else {
+                finishCallback?(false, nil)
+                return
+            }
+        }
 
 
 		Task {	[weak self] in
-			let didSave = await self?.mainDocument?.save(to: fileURL, for: .forOverwriting) ?? false
+            var didSave: Bool = false
+            if let fileURL = await self?.mainDocument?.fileURL {
+                didSave = await self?.mainDocument?.save(to: fileURL, for: .forOverwriting) ?? false
+            }
 
 			fxd_log()
 			fxdPrint("didSave: ", didSave)
 			
-			fxdPrint("documentState: ", await self?.mainDocument?.documentState)
-			fxdPrint("hasUnsavedChanges: ", await self?.mainDocument?.hasUnsavedChanges)
+            await fxdPrint("documentState: ", self?.mainDocument?.documentState)
+            await fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
 
-			DispatchQueue.main.async {
-				finishCallback?(#function, didSave, nil)
-			}
+            finishCallback?(didSave, nil)
 		}
 	}
 }
@@ -496,17 +507,17 @@ extension FXDmoduleCoredata: FXDobserverApplication {
 		fxdPrint("dataSavingTask: ", dataSavingTask)
 
 		saveMainDocument {
-			[weak self] (caller, didFinish, responseObj) in
-			
-			fxdPrint(caller as Any)
-			fxdPrint("backgroundTimeRemaining: \(application.backgroundTimeRemaining)")
+			[weak self] (didFinish, responseObj) in
 
-			fxdPrint("dataSavingTask: ", self?.dataSavingTask)
-
-			if let dataSavingTask = self?.dataSavingTask {
-				application.endBackgroundTask(dataSavingTask)
-				self?.dataSavingTask = .invalid
-			}
+            DispatchQueue.main.async {
+                fxdPrint("backgroundTimeRemaining: \(application.backgroundTimeRemaining)")
+                fxdPrint("dataSavingTask: ", self?.dataSavingTask)
+                
+                if let dataSavingTask = self?.dataSavingTask {
+                    application.endBackgroundTask(dataSavingTask)
+                    self?.dataSavingTask = .invalid
+                }
+            }
 		}
 	}
 	

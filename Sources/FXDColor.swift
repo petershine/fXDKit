@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 
 
-fileprivate var rotatedIndex: Int = 0
+@MainActor fileprivate var rotatedIndex: Int = 0
 
 extension UIColor {
 	class var allPresetColors: [UIColor] {
@@ -44,7 +44,7 @@ extension UIColor {
 		]
 	}
 
-	class func nextColor() -> UIColor {
+    @MainActor class func nextColor() -> UIColor {
 		let nextColor = Self.allPresetColors[rotatedIndex]
 		rotatedIndex += 1
 		rotatedIndex = rotatedIndex % Self.allPresetColors.count

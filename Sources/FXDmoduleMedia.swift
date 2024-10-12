@@ -3,7 +3,7 @@
 import MediaPlayer
 
 
-class FXDmoduleMedia: NSObject {
+class FXDmoduleMedia: NSObject, @unchecked Sendable {
 
     lazy var musicPlayer: MPMusicPlayerController? = {
         return MPMusicPlayerController.systemMusicPlayer

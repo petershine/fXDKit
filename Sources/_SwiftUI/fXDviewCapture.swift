@@ -21,8 +21,8 @@ public struct fXDviewCapture: View, UIViewControllerRepresentable {
 }
 
 
-open class FXDCaptureController: UIViewController {
-	fileprivate lazy var fxdCaptureModule: FXDmoduleCapture? = {
+open class FXDCaptureController: UIViewController, @unchecked Sendable {
+	nonisolated fileprivate lazy var fxdCaptureModule: FXDmoduleCapture? = {
 		return FXDmoduleCapture()
 	}()
 

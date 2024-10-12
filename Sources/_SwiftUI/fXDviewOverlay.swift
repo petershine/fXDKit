@@ -23,7 +23,7 @@ public protocol FXDprotocolOverlay {
 
 
 @Observable
-public class FXDobservableOverlay: FXDprotocolOverlay {
+public class FXDobservableOverlay: FXDprotocolOverlay, @unchecked Sendable {
 	public var shouldDismiss: Bool = false
 
 	public var progressSpinnerAlpha: CGFloat? = 1.0
@@ -131,7 +131,7 @@ public struct fXDviewOverlay: View {
 
 
 
-public class FXDhostedOverlay: UIHostingController<fXDviewOverlay> {
+public class FXDhostedOverlay: UIHostingController<fXDviewOverlay>, @unchecked Sendable {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
 	override public func didMove(toParent parent: UIViewController?) {
@@ -172,7 +172,7 @@ public class FXDhostedOverlay: UIHostingController<fXDviewOverlay> {
 // Example usage
 extension FXDobservableOverlay {
 	public class func exampleCountingUp() -> FXDobservableOverlay {
-		let testingConfiguration = FXDobservableOverlay()
+        let testingConfiguration = FXDobservableOverlay()
 
 		let taskInterval = 1.0
         Task {	@MainActor in

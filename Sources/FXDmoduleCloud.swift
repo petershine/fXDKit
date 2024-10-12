@@ -8,7 +8,7 @@ let userdefaultObjSavedUbiquityIdentityToken = "SavedUbiquityIdentityTokenObjKey
 let userdefaultStringSavedUbiquityContainerURL = "SavedUbiquityContainerURLstringKey"
 
 
-class FXDmoduleCloud : NSObject {
+class FXDmoduleCloud : NSObject, @unchecked Sendable {
 	var statusCallback: FXDcallback? = nil
 
 	var containerIdentifier: String? = nil
@@ -19,7 +19,7 @@ class FXDmoduleCloud : NSObject {
 	}
 
 
-	open func prepareContainerURLwithIdentifier(_ containerIdentifier: String?, withStatusCallback statusCallback: FXDcallback?) {	fxd_log()
+    @MainActor open func prepareContainerURLwithIdentifier(_ containerIdentifier: String?, withStatusCallback statusCallback: FXDcallback?) {	fxd_log()
 		fxdPrint("containerIdentifier: ", containerIdentifier)
 		fxdPrint("statusCallback: ", statusCallback)
 
@@ -36,7 +36,7 @@ class FXDmoduleCloud : NSObject {
 		observedNSUbiquityIdentityDidChange(nil)
 	}
 
-	open func notifyCallback(withContainerURL containerURL: URL?, withAlertBody alertBody: String?) {	fxd_log()
+    @MainActor open func notifyCallback(withContainerURL containerURL: URL?, withAlertBody alertBody: String?) {	fxd_log()
 		if alertBody?.isEmpty ?? false {
 			UIAlertController.simpleAlert(
 				withTitle: alertBody,
@@ -46,7 +46,7 @@ class FXDmoduleCloud : NSObject {
 		statusCallback?((containerURL != nil), containerURL)
 	}
 
-	@objc open func observedNSUbiquityIdentityDidChange(_ notification: Notification?) {	fxd_log()
+    @MainActor @objc open func observedNSUbiquityIdentityDidChange(_ notification: Notification?) {	fxd_log()
 		fxdPrint("notification: ", notification)
 
 		fxdPrint("FileManager.default.ubiquityIdentityToken: ", FileManager.default.ubiquityIdentityToken)

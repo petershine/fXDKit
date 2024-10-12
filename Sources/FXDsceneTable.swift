@@ -1,6 +1,6 @@
 import fXDObjC
 
-open class FXDsceneTable: UIViewController, FXDscrollableCells {
+open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Sendable {
 	deinit {
 		self.cellOperationQueue?.cancelAllOperations()
 		self.cellOperationQueue = nil
@@ -16,10 +16,10 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells {
 	}
 
 	//MARK: FXDscrollableCells
-	public lazy var cellOperationQueue: OperationQueue? = {
+    nonisolated public lazy var cellOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: String(describing: self))
 	}()
-	public lazy var cellOperationDictionary: NSMutableDictionary? = {
+	nonisolated public lazy var cellOperationDictionary: NSMutableDictionary? = {
 		return NSMutableDictionary.init()
 	}()
 

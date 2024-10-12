@@ -58,7 +58,7 @@ extension UIAlertController {
         cancelHandler: ((UIAlertAction) -> (T, Error?))? = nil,
         destructiveText: String? = nil,
         destructiveHandler: ((UIAlertAction) -> (T, Error?))? = nil
-    ) async throws -> sending T? {
+    ) async throws -> T? {
 
         let didProceed = try await withCheckedThrowingContinuation {
             (continuation: CheckedContinuation<T?, any Error>) in

@@ -3,8 +3,8 @@
 import fXDObjC
 
 
-class FXDcoredataBackup: FXDmoduleCoredata {
-	static var shared: FXDcoredataBackup = FXDcoredataBackup()
+class FXDcoredataBackup: FXDmoduleCoredata, @unchecked Sendable {
+    @MainActor static var shared: FXDcoredataBackup = FXDcoredataBackup()
 
 	override var coredataName: String? {
 		get {

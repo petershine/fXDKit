@@ -4,7 +4,7 @@ import CoreLocation
 import MapKit
 
 
-open class FXDmoduleGeo: NSObject {
+open class FXDmoduleGeo: NSObject, @unchecked Sendable {
 	private var monitoringTask: UIBackgroundTaskIdentifier? = nil
 	
 	open var lastLocation: CLLocation? = nil
@@ -73,7 +73,7 @@ open class FXDmoduleGeo: NSObject {
 	}
 
 	
-	open func startMainLocationManager(launchOptions: [AnyHashable : Any]! = [:]) {	fxd_log()
+    open func startMainLocationManager(launchOptions: [AnyHashable : Any]! = [:]) {	fxd_log()
 		fxdPrint(launchOptions ?? [:])
 
 		let authorizationStatus: CLAuthorizationStatus = (mainLocationManager?.authorizationStatus)!
@@ -82,7 +82,7 @@ open class FXDmoduleGeo: NSObject {
 		startMainLocationManager(for: authorizationStatus)
 	}
 
-	func startMainLocationManager(for authorizationStatus: CLAuthorizationStatus) {	fxd_log()
+    func startMainLocationManager(for authorizationStatus: CLAuthorizationStatus) {	fxd_log()
 		fxdPrint(authorizationStatus)
 
 		Task {
@@ -90,12 +90,14 @@ open class FXDmoduleGeo: NSObject {
 			fxdPrint(CLLocationManager.locationServicesEnabled().description)
 		}
 
-		fxdPrint(UIDevice.current.systemVersion)
-		fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
-		fxdPrint(CLLocationManager.isRangingAvailable().description)
-		fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysAndWhenInUseUsageDescription"] ?? "")
-		fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysUsageDescription"] ?? "")
-		fxdPrint(Bundle.main.infoDictionary?["NSLocationWhenInUseUsageDescription"] ?? "")
+        DispatchQueue.main.async {
+            fxdPrint(UIDevice.current.systemVersion)
+            fxdPrint(CLLocationManager.significantLocationChangeMonitoringAvailable().description)
+            fxdPrint(CLLocationManager.isRangingAvailable().description)
+            fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysAndWhenInUseUsageDescription"] ?? "")
+            fxdPrint(Bundle.main.infoDictionary?["NSLocationAlwaysUsageDescription"] ?? "")
+            fxdPrint(Bundle.main.infoDictionary?["NSLocationWhenInUseUsageDescription"] ?? "")
+        }
 
 		guard authorizationStatus == .authorizedAlways
 				|| authorizationStatus == .authorizedWhenInUse
@@ -109,7 +111,7 @@ open class FXDmoduleGeo: NSObject {
 		configureUpdatingForApplicationState()
 	}
 
-	func configureUpdatingForApplicationState() {
+    func configureUpdatingForApplicationState() {
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self,
 									   selector: #selector(observedUIApplicationDidBecomeActive(_:)),
@@ -127,10 +129,12 @@ open class FXDmoduleGeo: NSObject {
 									   object: nil)
 
 
-		if UIApplication.shared.applicationState != .active {
-			minimizeUpdatingForBackgroundState()
-			return
-		}
+        DispatchQueue.main.async {	[weak self] in
+            if UIApplication.shared.applicationState != .active {
+                self?.minimizeUpdatingForBackgroundState()
+                return
+            }
+        }
 
 		maximizeUpdatingForActiveState()
 	}
@@ -150,7 +154,7 @@ open class FXDmoduleGeo: NSObject {
 }
 
 extension FXDmoduleGeo {
-	func notifySignificantChange(withNewLocation newLocation: CLLocation!) {
+    @MainActor func notifySignificantChange(withNewLocation newLocation: CLLocation!) {
 		monitoringTask = UIApplication.shared.beginBackgroundTask(
 			expirationHandler: {
 				[weak self] in
@@ -213,8 +217,8 @@ extension FXDmoduleGeo {
 }
 
 
-extension FXDmoduleGeo: CLLocationManagerDelegate {
-	open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
+extension FXDmoduleGeo: @preconcurrency CLLocationManagerDelegate {
+    @MainActor open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
 		fxdPrint(String(status.rawValue))
 		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
 			pauseMainLocationManager(for: status)

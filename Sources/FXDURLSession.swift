@@ -15,12 +15,17 @@ extension URLSession {
 		}
 
 
-		var retrievedData: Data? = nil
+        actor FXDretrievedActor {
+            nonisolated(unsafe) var data: Data? = nil
+        }
+
+        
+        let retrievedActor = FXDretrievedActor()
 
 		let synchronousRequestSemaphore = DispatchSemaphore(value: 0)
 		self.dataTask(with: urlRequest) {
 			(data, response, error) in
-			retrievedData = data
+            retrievedActor.data = data	//Mutation of captured var 'retrievedData' in concurrently-executing code
 
 			if error != nil {
 				fxdPrint("[\(#function)] error: ", error, "\nresponse: ", response)
@@ -32,9 +37,9 @@ extension URLSession {
 		fxdPrint("[\(#function)] semaphore result : \(result)")
 
 		fxdPrint("[\(#function)] cancelled during transferring: \(asyncOperation?.isCancelled ?? true)")
-		fxdPrint("[\(#function)] retrievedData : ", retrievedData)
+        fxdPrint("[\(#function)] retrievedData : ", retrievedActor.data)
 
-		synchronousDataHandling?(retrievedData)
+        synchronousDataHandling?(retrievedActor.data)
 	}
 
 
@@ -119,9 +124,7 @@ extension URLSession {
 
 			let finishedCount = await safeDataAndResponse.count()
 			let progressValue: CGFloat = CGFloat(Float(finishedCount)/Float(urlRequests.count+reattemptedRequests.count))
-			DispatchQueue.main.async {
-				progressConfiguration?.sliderValue = progressValue
-			}
+            progressConfiguration?.sliderValue = progressValue
 		}
 
 		var reattemptedRequests: [URLRequest] = []

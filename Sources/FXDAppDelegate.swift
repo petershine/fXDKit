@@ -10,7 +10,7 @@ public protocol FXDAppDelegateProtocols: UIApplicationDelegate, UNUserNotificati
 }
 
 
-open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols {
+open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols, @unchecked Sendable {
 	open var sceneDelegateClass: AnyClass? {
 		get {
 			fxd_overridable()
@@ -83,7 +83,7 @@ class SubClassedAppDelegate: FXDAppDelegate {
         fxdPrint("completionHandler:", completionHandler)
     }
 
-    open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    nonisolated open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         fxd_overridable()
         fxdPrint("notification:", notification)
         fxdPrint("completionHandler:", completionHandler)

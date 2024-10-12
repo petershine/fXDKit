@@ -9,6 +9,8 @@ public protocol FXDprotocolGlobal {
 	var mainStoryboard: UIStoryboard? { get }
 }
 
+
+@MainActor
 extension FXDprotocolGlobal {
 	public var mainStoryboard: UIStoryboard? {
 		get {

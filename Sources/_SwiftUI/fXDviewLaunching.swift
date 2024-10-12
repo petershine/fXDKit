@@ -69,7 +69,7 @@ public struct fXDviewLaunching: View {
 
 
 // Usage for hosted
-open class FXDhostedLaunching: UIHostingController<fXDviewLaunching> {
+open class FXDhostedLaunching: UIHostingController<fXDviewLaunching>, @unchecked Sendable {
 	 override open var preferredStatusBarStyle: UIStatusBarStyle {
 		 return .default
 	 }

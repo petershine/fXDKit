@@ -5,13 +5,14 @@ import Combine
 import fXDObjC
 
 
+@MainActor
 public protocol FXDprotocolScrollable {
-	var mainScrollview: UIScrollView? { get }
-	
-	var heightRatioForSceneDismissing: CGFloat { get }
-	var heightOffsetForSceneDismissing: CGFloat { get }
+    var mainScrollview: UIScrollView? { get }
 
-	func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat
+    var heightRatioForSceneDismissing: CGFloat { get }
+    var heightOffsetForSceneDismissing: CGFloat { get }
+
+    func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat
 }
 
 extension FXDprotocolScrollable {

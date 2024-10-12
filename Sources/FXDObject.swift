@@ -4,7 +4,7 @@ import Foundation
 import Combine
 
 
-fileprivate var cancellablesKey: UInt8 = 0
+nonisolated(unsafe) fileprivate var cancellablesKey: UInt8 = 0
 
 extension NSObject {
 	fileprivate var cancellables: [String : AnyCancellable?]? {
@@ -20,18 +20,18 @@ extension NSObject {
 
 
 
-extension NSObject {
-	public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil) -> AnyPublisher<String, Error> {
+extension NSObject: @unchecked @retroactive Sendable {
+    public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (@Sendable () -> Void?)? = nil) -> AnyPublisher<String, Error> {
 		return Future<String, Error> { promise in
-			DispatchQueue.global().asyncAfter(deadline: .now() + afterDelay) {
+//			DispatchQueue.global().asyncAfter(deadline: .now() + afterDelay) {
 				attachedTask?()
-				promise(.success(".success: \(String(describing: self) + String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
-			}
+                promise(.success(".success: \(String(describing: self) + String(describing: identifier)) attachedTask: \(String(describing: attachedTask))"))
+//			}
 		}
 		.eraseToAnyPublisher()
 	}
 
-	public func cancellableForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)? = nil, afterCompletion: (() -> Void?)? = nil) -> AnyCancellable {
+	public func cancellableForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (@Sendable () -> Void?)? = nil, afterCompletion: (() -> Void?)? = nil) -> AnyCancellable {
 
 		let publisher = publisherForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask)
 		let cancellable = publisher
@@ -58,7 +58,7 @@ extension NSObject {
 }
 
 extension NSObject {
-	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (() -> Void?)?) {
+	public func performAsyncTask(identifier: String = #function, afterDelay: TimeInterval = 0.0, attachedTask: (@Sendable () -> Void?)?) {
 		let extendedIdentifier = String(describing: self) + identifier
 
 		let cancellable = cancellableForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask) {

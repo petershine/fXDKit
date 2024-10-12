@@ -14,7 +14,7 @@ public protocol FXDprotocolCovering {
 	func didFinishAnimation()
 }
 
-public class FXDsegueCover: FXDStoryboardSegue {
+public class FXDsegueCover: FXDStoryboardSegue, @unchecked Sendable {
 	override public func perform() {	fxd_log()
 		if let coveringContainer = mainContainer(of: FXDcontainerCovering.classForCoder()) as? FXDcontainerCovering {
 			coveringContainer.cover(segue: self)
@@ -22,7 +22,7 @@ public class FXDsegueCover: FXDStoryboardSegue {
 	}
 }
 
-public class FXDsegueUncover: FXDStoryboardSegue {
+public class FXDsegueUncover: FXDStoryboardSegue, @unchecked Sendable {
 	override public func perform() {	fxd_log()
 		if let coveringContainer = mainContainer(of: FXDcontainerCovering.classForCoder()) as? FXDcontainerCovering {
 			coveringContainer.uncover(segue: self)
@@ -30,7 +30,7 @@ public class FXDsegueUncover: FXDStoryboardSegue {
 	}
 }
 
-open class FXDcontainerCovering: UIViewController {
+open class FXDcontainerCovering: UIViewController, @unchecked Sendable {
 	public var minimumChildCount: Int = 0
 	var shouldFadeOutUncovering: Bool = false
 

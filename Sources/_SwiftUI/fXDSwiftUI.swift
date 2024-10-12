@@ -43,12 +43,12 @@ extension View {
 }
 
 
-@ViewBuilder public func SPACER_FIXED(_ maxDimension: CGFloat = max(SIZE_TOUCHABLE.width, SIZE_TOUCHABLE.height)) -> some View {
+@MainActor @ViewBuilder public func SPACER_FIXED(_ maxDimension: CGFloat = max(SIZE_TOUCHABLE.width, SIZE_TOUCHABLE.height)) -> some View {
 	Spacer().frame(width: maxDimension, height: maxDimension, alignment: .center)
 }
 
 
-@ViewBuilder public func ASYNC_IMAGE(_ imageURL: URL?) -> some View {
+@MainActor @ViewBuilder public func ASYNC_IMAGE(_ imageURL: URL?) -> some View {
 	AsyncImage(
 		url: imageURL,
 		content: {
