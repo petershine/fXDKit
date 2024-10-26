@@ -6,6 +6,15 @@ import UIKit
 import SwiftUI
 
 
+extension CharacterSet {
+    public static var urlQueryValueAllowed: CharacterSet {
+        var queryValueAllowed = Self.urlQueryAllowed
+        queryValueAllowed.remove(charactersIn: ";/?:@&=+$, ")
+        return queryValueAllowed
+    }
+}
+
+
 extension Data {
 	public func decode<T>(_ type: T.Type) -> T? where T : Decodable {
 		var decoded: T? = nil
