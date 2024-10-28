@@ -34,7 +34,7 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 	}()
 
 
-	nonisolated lazy var enumeratingOperationQueue: OperationQueue? = {
+	lazy var enumeratingOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: #function)
 	}()
 
@@ -54,12 +54,12 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 		#endif
 	}()
 
-    nonisolated lazy open var mainEntityName: String? = {	fxd_overridable()
+    lazy open var mainEntityName: String? = {	fxd_overridable()
 		//SAMPLE: _mainEntityName = entityname<#DefaultClass#>
 		return nil
 	}()
 
-	nonisolated lazy open var mainSortDescriptors: [Any]? = {	fxd_overridable()
+	lazy open var mainSortDescriptors: [Any]? = {	fxd_overridable()
 		//SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 		return nil
 	}()
@@ -112,7 +112,6 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 
 		finishCallback?(true, nil)
 	}
-
 }
 
 
