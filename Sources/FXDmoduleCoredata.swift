@@ -18,7 +18,7 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 	private var enumeratingTask: UIBackgroundTaskIdentifier? = nil
 	private var dataSavingTask: UIBackgroundTaskIdentifier? = nil
 
-	public var mainDocument: FXDManagedDocument? = nil
+    public var mainDocument: UIManagedDocument? = nil
 
 
 	public var documentSearchPath: String = {
@@ -146,15 +146,15 @@ extension FXDmoduleCoredata {
 		return didCopy
 	}
 
-    @MainActor public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: FXDManagedDocument?, finishCallback: FXDcallback? = nil) {	fxd_log()
+    @MainActor public func prepare(withUbiquityContainerURL ubiquityContainerURL: URL?, protectionOption: String?, managedDocument: UIManagedDocument?, finishCallback: FXDcallback? = nil) {	fxd_log()
 
 		var mainManagedDocument = managedDocument
 		if mainManagedDocument == nil {
 			fxdPrint("CHECK if bundle has more than 1 momd")
 
 			if let documentURL = appDocumentDirectory?.appending(path: "managedDocument.\(coredataName ?? "")") {
-
-				mainManagedDocument = FXDManagedDocument(fileURL: documentURL)
+                fxdPrint("documentURL:", documentURL)
+                mainManagedDocument = UIManagedDocument(fileURL: documentURL)
 			}
 		}
 		assert(mainManagedDocument != nil, "[SHOULD NOT BE nil] mainManagedDocument: \(String(describing: mainManagedDocument))")
