@@ -56,8 +56,6 @@
 		D939EDC02BE6AD7400267D9C /* FXDFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED7C2BE6AD7400267D9C /* FXDFileManager.m */; };
 		D939EDC12BE6AD7400267D9C /* FXDImage.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED7D2BE6AD7400267D9C /* FXDImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D939EDC22BE6AD7400267D9C /* FXDImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED7E2BE6AD7400267D9C /* FXDImage.m */; };
-		D939EDC32BE6AD7400267D9C /* FXDManagedDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED7F2BE6AD7400267D9C /* FXDManagedDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D939EDC42BE6AD7400267D9C /* FXDManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED802BE6AD7400267D9C /* FXDManagedDocument.m */; };
 		D939EDC52BE6AD7400267D9C /* FXDManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED812BE6AD7400267D9C /* FXDManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D939EDC62BE6AD7400267D9C /* FXDManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D939ED822BE6AD7400267D9C /* FXDManagedObject.m */; };
 		D939EDC72BE6AD7400267D9C /* FXDManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = D939ED832BE6AD7400267D9C /* FXDManagedObjectContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -129,8 +127,6 @@
 		D939ED7C2BE6AD7400267D9C /* FXDFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDFileManager.m; sourceTree = "<group>"; };
 		D939ED7D2BE6AD7400267D9C /* FXDImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDImage.h; sourceTree = "<group>"; };
 		D939ED7E2BE6AD7400267D9C /* FXDImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDImage.m; sourceTree = "<group>"; };
-		D939ED7F2BE6AD7400267D9C /* FXDManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDManagedDocument.h; sourceTree = "<group>"; };
-		D939ED802BE6AD7400267D9C /* FXDManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDManagedDocument.m; sourceTree = "<group>"; };
 		D939ED812BE6AD7400267D9C /* FXDManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDManagedObject.h; sourceTree = "<group>"; };
 		D939ED822BE6AD7400267D9C /* FXDManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXDManagedObject.m; sourceTree = "<group>"; };
 		D939ED832BE6AD7400267D9C /* FXDManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXDManagedObjectContext.h; sourceTree = "<group>"; };
@@ -257,8 +253,6 @@
 				D939ED7C2BE6AD7400267D9C /* FXDFileManager.m */,
 				D939ED7D2BE6AD7400267D9C /* FXDImage.h */,
 				D939ED7E2BE6AD7400267D9C /* FXDImage.m */,
-				D939ED7F2BE6AD7400267D9C /* FXDManagedDocument.h */,
-				D939ED802BE6AD7400267D9C /* FXDManagedDocument.m */,
 				D939ED812BE6AD7400267D9C /* FXDManagedObject.h */,
 				D939ED822BE6AD7400267D9C /* FXDManagedObject.m */,
 				D939ED832BE6AD7400267D9C /* FXDManagedObjectContext.h */,
@@ -297,7 +291,6 @@
 				D939EDB72BE6AD7400267D9C /* FXDmoduleSearch.h in Headers */,
 				D939EDBD2BE6AD7400267D9C /* FXDDate.h in Headers */,
 				D939EDBF2BE6AD7400267D9C /* FXDFileManager.h in Headers */,
-				D939EDC32BE6AD7400267D9C /* FXDManagedDocument.h in Headers */,
 				D939EDBB2BE6AD7400267D9C /* FXDCollectionViewLayout.h in Headers */,
 				D939EDCD2BE6AD7400267D9C /* FXDOperationQueue.h in Headers */,
 				D939ED982BE6AD7400267D9C /* FXDScrollView.h in Headers */,
@@ -414,7 +407,6 @@
 				D939EDB42BE6AD7400267D9C /* FXDmodulePlayback.m in Sources */,
 				D939EDCE2BE6AD7400267D9C /* FXDOperationQueue.m in Sources */,
 				D939EDB62BE6AD7400267D9C /* FXDmoduleQuery.m in Sources */,
-				D939EDC42BE6AD7400267D9C /* FXDManagedDocument.m in Sources */,
 				D939EDC82BE6AD7400267D9C /* FXDManagedObjectContext.m in Sources */,
 				D939EDBC2BE6AD7400267D9C /* FXDCollectionViewLayout.m in Sources */,
 				D939EDD02BE6AD7400267D9C /* FXDStoryboardSegue.m in Sources */,
