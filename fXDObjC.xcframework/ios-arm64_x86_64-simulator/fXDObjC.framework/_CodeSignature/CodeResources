@@ -24,10 +24,6 @@
 		<data>
 		aZ8SstWGGLWDJBFIHkn7q0ceNds=
 		</data>
-		<key>Headers/FXDManagedDocument.h</key>
-		<data>
-		e9M47WFp1ohaevjc0EuekbwhY+0=
-		</data>
 		<key>Headers/FXDManagedObject.h</key>
 		<data>
 		OXmZR9N99WxcyjgAfRvU1FD8TOM=
@@ -146,7 +142,7 @@
 		</data>
 		<key>Headers/fXDObjC.h</key>
 		<data>
-		MKnjPdVjNjhzTX/4m8lcqemTRW4=
+		tq5g+kzA8agTh94SvFZ0HFXgWOM=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -212,17 +208,6 @@
 			<key>hash2</key>
 			<data>
 			w69kcj6vz8cqwIzVB9AylQxCqJXUOrR7ymZe9O0Vr9M=
-			</data>
-		</dict>
-		<key>Headers/FXDManagedDocument.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			e9M47WFp1ohaevjc0EuekbwhY+0=
-			</data>
-			<key>hash2</key>
-			<data>
-			1gUM2tDtb3cfm/jcIVZTG0pR6IL1eNFPb4pZ0/YH550=
 			</data>
 		</dict>
 		<key>Headers/FXDManagedObject.h</key>
@@ -548,11 +533,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MKnjPdVjNjhzTX/4m8lcqemTRW4=
+			tq5g+kzA8agTh94SvFZ0HFXgWOM=
 			</data>
 			<key>hash2</key>
 			<data>
-			m40rpontDfYmT5+1exN0ceNxjFMr2pDsEct/qZi8Zms=
+			5DGxruKi/2CuERfMNHMNvH0V/5vuyX61+7viqNMsiEQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

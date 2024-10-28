@@ -37,7 +37,6 @@ FOUNDATION_EXPORT const unsigned char fXDObjCVersionString[];
 #import <fXDObjC/FXDDate.h>
 #import <fXDObjC/FXDFileManager.h>
 #import <fXDObjC/FXDImage.h>
-#import <fXDObjC/FXDManagedDocument.h>
 #import <fXDObjC/FXDManagedObject.h>
 #import <fXDObjC/FXDManagedObjectContext.h>
 #import <fXDObjC/FXDMetadataQuery.h>
