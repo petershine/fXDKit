@@ -175,7 +175,7 @@ extension FXDobservableOverlay {
         let testingConfiguration = FXDobservableOverlay()
 
 		let taskInterval = 1.0
-        Task {	@MainActor in
+        Task {
 			for step in 0...10 {
 				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 

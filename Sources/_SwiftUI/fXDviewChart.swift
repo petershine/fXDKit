@@ -39,7 +39,7 @@ open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
 		UIApplication.shared.mainWindow()?.showOverlay(afterDelay: 0.0, observable: progressObservable)
 
 
-        progressObservable.cancellableTask = Task {	@MainActor in
+        progressObservable.cancellableTask = Task {
 			let urlRequests = self.urlRequestsFromTickers(tickers: tickers, timeout: timeout)
 
 			var safeDataAndResponse: DataAndResponseActor? = nil

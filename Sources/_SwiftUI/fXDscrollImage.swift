@@ -53,7 +53,7 @@ public struct fXDscrollImage: View {
 			updateScrollViewConfiguration(for: displayContentMode)
 		}
         .onRotate{deviceOrientation in
-            Task {	@MainActor in
+            Task {
                 updateScrollViewConfiguration(for: displayContentMode)
             }
         }
