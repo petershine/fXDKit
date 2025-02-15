@@ -463,10 +463,9 @@ extension UNUserNotificationCenter {
         }
 
         if authorized {
-            await MainActor.run {	fxd_log()
-                fxdPrint("UIApplication.shared.isRegisteredForRemoteNotifications:", UIApplication.shared.isRegisteredForRemoteNotifications)
-                UIApplication.shared.registerForRemoteNotifications()
-            }
+            fxd_log()
+            await fxdPrint("UIApplication.shared.isRegisteredForRemoteNotifications:", UIApplication.shared.isRegisteredForRemoteNotifications)
+            await UIApplication.shared.registerForRemoteNotifications()
         }
 
 
