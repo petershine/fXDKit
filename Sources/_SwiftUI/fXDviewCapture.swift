@@ -22,13 +22,9 @@ public struct fXDviewCapture: View, UIViewControllerRepresentable {
 
 
 open class FXDCaptureController: UIViewController, @unchecked Sendable {
-	nonisolated fileprivate lazy var fxdCaptureModule: FXDmoduleCapture? = {
+	fileprivate lazy var fxdCaptureModule: FXDmoduleCapture? = {
 		return FXDmoduleCapture()
 	}()
-
-	deinit {
-		fxdCaptureModule = nil
-	}
 
 	open override func viewDidLoad() {
 		super.viewDidLoad()

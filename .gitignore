@@ -20,3 +20,4 @@ DerivedData
 *.ipa
 fXDObjC/xcframeworks/fXDObjC.xcarchive
 fXDObjC/xcframeworks/fXDObjC-Simulator.xcarchive
+.swiftpm

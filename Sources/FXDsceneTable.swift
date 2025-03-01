@@ -1,12 +1,6 @@
 import fXDObjC
 
 open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Sendable {
-	deinit {
-		self.cellOperationQueue?.cancelAllOperations()
-		self.cellOperationQueue = nil
-		self.cellOperationDictionary = nil
-	}
-
 	
 	@IBOutlet public weak var mainTableview: UITableView?
 
@@ -16,10 +10,10 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Senda
 	}
 
 	//MARK: FXDscrollableCells
-    nonisolated public lazy var cellOperationQueue: OperationQueue? = {
+    public lazy var cellOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: String(describing: self))
 	}()
-	nonisolated public lazy var cellOperationDictionary: NSMutableDictionary? = {
+	public lazy var cellOperationDictionary: NSMutableDictionary? = {
 		return NSMutableDictionary.init()
 	}()
 
@@ -41,7 +35,9 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Senda
 			[weak self] in
 
 			guard operation.isCancelled == false else {
-				self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
+                Task {    @MainActor in
+                    self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
+                }
 				return
 			}
 

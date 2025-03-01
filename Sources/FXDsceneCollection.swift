@@ -4,12 +4,6 @@ import UIKit
 
 
 open class FXDsceneCollection: UIViewController, FXDscrollableCells, @unchecked Sendable {
-	deinit {
-		self.cellOperationQueue?.cancelAllOperations()
-		self.cellOperationQueue = nil
-		self.cellOperationDictionary = nil
-	}
-
 
 	@IBOutlet public weak var mainCollectionview: UICollectionView?
 
@@ -19,10 +13,10 @@ open class FXDsceneCollection: UIViewController, FXDscrollableCells, @unchecked 
 	}
 
 	//MARK: FXDscrollableCells
-    nonisolated public lazy var cellOperationQueue: OperationQueue? = {
+    public lazy var cellOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: String(describing: self))
 	}()
-    nonisolated public lazy var cellOperationDictionary: NSMutableDictionary? = {
+    public lazy var cellOperationDictionary: NSMutableDictionary? = {
 		return NSMutableDictionary.init()
 	}()
 
@@ -44,7 +38,9 @@ open class FXDsceneCollection: UIViewController, FXDscrollableCells, @unchecked 
 			[weak self] in
 
 			guard operation.isCancelled == false else {
-				self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
+                Task {	@MainActor in
+                    self?.cellOperationQueue?.removeOperation(forKey: indexPath.stringKey, with: self?.cellOperationDictionary)
+                }
 				return
 			}
 
