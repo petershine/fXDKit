@@ -27,19 +27,19 @@
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>24E5206k</string>
+	<string>24E5222d</string>
 	<key>DTPlatformName</key>
 	<string>macosx</string>
 	<key>DTPlatformVersion</key>
 	<string>15.4</string>
 	<key>DTSDKBuild</key>
-	<string>24E5206k</string>
+	<string>24E5222d</string>
 	<key>DTSDKName</key>
 	<string>macosx15.4</string>
 	<key>DTXcode</key>
 	<string>1630</string>
 	<key>DTXcodeBuild</key>
-	<string>16E5104o</string>
+	<string>16E5121h</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>15.0</string>
 	<key>NSAppleMusicUsageDescription</key>
