@@ -54,6 +54,7 @@ struct fXDButtonModifier: ViewModifier {
 
 public struct fXDTextEditorModifier: ViewModifier {
 	public init() {
+        // for external usage of fXDKit as module
 	}
 
 	public func body(content: Content) -> some View {
