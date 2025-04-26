@@ -69,3 +69,16 @@ public struct fXDTextEditorModifier: ViewModifier {
 			}
 	}
 }
+
+public struct fXDTextRangeSelectableModifier: ViewModifier {
+    public init() {
+        // for external usage of fXDKit as module
+    }
+    
+    public func body(content: Content) -> some View {
+        content
+            .scrollContentBackground(.hidden)
+            .textSelection(.enabled)
+            .focusable(false)
+    }
+}
