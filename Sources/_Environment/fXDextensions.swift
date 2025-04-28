@@ -153,6 +153,22 @@ extension IndexPath {
 	}
 }
 
+
+extension KeyedDecodingContainer {
+    public func decodeIfPresent(_ type: Bool.Type, otherType: String.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> Bool? {
+        if let boolValue = try? self.decodeIfPresent(type, forKey: key) {
+            return boolValue
+        }
+
+        if let stringValue = try? self.decodeIfPresent(otherType, forKey: key) {
+            return stringValue.lowercased() == "true"
+        }
+
+        throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: self.codingPath + [key], debugDescription: "Could not decode Bool or String"))
+    }
+}
+
+
 extension String {
 	public func sharableMessageWith(videoId: String?) -> String? {
 		var formatted = self
