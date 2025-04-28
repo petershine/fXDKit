@@ -53,15 +53,19 @@ struct fXDButtonModifier: ViewModifier {
 
 
 public struct fXDTextEditorModifier: ViewModifier {
-	public init() {
-        // for external usage of fXDKit as module
-	}
+    var backgroundStyle: Color
+    var foregroundStyle: Color
+
+    public init(backgroundStyle: Color? = nil, foregroundStyle: Color? = nil) {
+        self.backgroundStyle = backgroundStyle ?? .black
+        self.foregroundStyle = foregroundStyle ?? .white
+    }
 
 	public func body(content: Content) -> some View {
 		content
 			.scrollContentBackground(.hidden)
-			.backgroundStyle(.black)
-			.foregroundStyle(.white)
+			.backgroundStyle(backgroundStyle)
+			.foregroundStyle(foregroundStyle)
             .cornerRadius(4.0)
 			.overlay {
 				RoundedRectangle(cornerRadius: 4.0)
