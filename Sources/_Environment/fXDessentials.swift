@@ -6,7 +6,6 @@ import UIKit
 
 //MARK: Static constants
 public let MARGIN_DEFAULT: CGFloat = 8.0
-public let DIMENSION_TOUCHABLE: CGFloat = 40.0
 public let DURATION_ANIMATION: TimeInterval = 0.3
 public let DURATION_QUICK_ANIMATION: TimeInterval = (DURATION_ANIMATION/2.0)
 public let DURATION_SLOW_ANIMATION: TimeInterval = (DURATION_ANIMATION*2.0)
@@ -22,8 +21,13 @@ public let MAXIMUM_LENGTH_TWEET: Int = 140
 
 public let HOST_SHORT_YOUTUBE: String = "youtu.be/"
 
-@MainActor public let SIZE_TOUCHABLE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE*0.75, DIMENSION_TOUCHABLE*0.75) : CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE))
-@MainActor public let SIZE_TOUCHABLE_LARGE: CGSize = (UIDevice.current.userInterfaceIdiom == .phone ? CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE) : CGSizeMake(DIMENSION_TOUCHABLE*1.2, DIMENSION_TOUCHABLE*1.2))
+public let UNIT_TOUCHABLE: CGFloat = 40.0
+@MainActor public let DIMENSION_TOUCHABLE_SMALL: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? (UNIT_TOUCHABLE*0.6) : UNIT_TOUCHABLE*0.8)
+@MainActor public let DIMENSION_TOUCHABLE: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? (UNIT_TOUCHABLE*0.8) : UNIT_TOUCHABLE)
+@MainActor public let DIMENSION_TOUCHABLE_LARGE: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? UNIT_TOUCHABLE : (UNIT_TOUCHABLE*1.2))
+@MainActor public let SIZE_TOUCHABLE_SMALL: CGSize = CGSizeMake(DIMENSION_TOUCHABLE_SMALL, DIMENSION_TOUCHABLE_SMALL)
+@MainActor public let SIZE_TOUCHABLE: CGSize = CGSizeMake(DIMENSION_TOUCHABLE, DIMENSION_TOUCHABLE)
+@MainActor public let SIZE_TOUCHABLE_LARGE: CGSize = CGSizeMake(DIMENSION_TOUCHABLE_LARGE, DIMENSION_TOUCHABLE_LARGE)
 
 @MainActor public let DIMENSION_PREVIEW: CGFloat = {
 	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
