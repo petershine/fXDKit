@@ -39,6 +39,7 @@ public struct fXDviewLaunching: View {
 				Image(uiImage: backgroundImage!)
 					.resizable()
 					.scaledToFill()
+                    .ignoresSafeArea()
 			}
 
 			if foregroundImage != nil {
@@ -62,7 +63,6 @@ public struct fXDviewLaunching: View {
                 SPACER_FIXED()
 			}
 		}
-		.ignoresSafeArea()
 		.statusBarHidden(shouldHideStatusBar)
 	}
 }
