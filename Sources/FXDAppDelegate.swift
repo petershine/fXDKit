@@ -4,17 +4,17 @@ import Foundation
 import UIKit
 
 
-public protocol FXDAppDelegateProtocols: UIApplicationDelegate, UNUserNotificationCenterDelegate, ObservableObject {
+public protocol FXDAppDelegateProtocols: UIApplicationDelegate, ObservableObject {
 	var sceneDelegateClass: AnyClass? { get }
     var backgroundCompletionHandler: (() -> Void)? { get set }
 }
 
 
 open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols, @unchecked Sendable {
-	open var sceneDelegateClass: AnyClass? {
-		get {
-			fxd_overridable()
-			fxdPrint(
+    open var sceneDelegateClass: AnyClass? {
+        get {
+            fxd_overridable()
+            fxdPrint(
 """
 //MUST: specify what class to be utilized, by overriding \"sceneDelegateClass\", like:
 class SubClassedAppDelegate: FXDAppDelegate {
@@ -25,44 +25,44 @@ class SubClassedAppDelegate: FXDAppDelegate {
  }
 }
 """
-			)
+            )
 
-			return FXDSceneDelegate.self
-		}
-	}
+            return FXDSceneDelegate.self
+        }
+    }
 
     open var backgroundCompletionHandler: (() -> Void)? = nil
 
-    
-	override init() {
-		super.init()
-		fxd_overridable()
-	}
+
+    override init() {
+        super.init()
+        fxd_overridable()
+    }
 
 
-	open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-		fxd_overridable()
-		fxdPrint("launchOptions:", launchOptions)
-		return true
-	}
+    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        fxd_overridable()
+        fxdPrint("launchOptions:", launchOptions)
+        return true
+    }
 
-	open func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-		fxd_overridable()
-		fxdPrint("connectingSceneSession:", connectingSceneSession)
+    open func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        fxd_overridable()
+        fxdPrint("connectingSceneSession:", connectingSceneSession)
 
 
-		let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
-		sceneConfig.delegateClass = self.sceneDelegateClass
-		fxdPrint("sceneConfig.delegateClass:", sceneConfig.delegateClass)
-		fxdPrint("sceneConfig: \(sceneConfig)")
+        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        sceneConfig.delegateClass = self.sceneDelegateClass
+        fxdPrint("sceneConfig.delegateClass:", sceneConfig.delegateClass)
+        fxdPrint("sceneConfig: \(sceneConfig)")
 
-		return sceneConfig
-	}
+        return sceneConfig
+    }
 
-	open func applicationWillTerminate(_ application: UIApplication) {
-		fxd_overridable()
-		fxdPrint("applicationState:", application.applicationState)
-	}
+    open func applicationWillTerminate(_ application: UIApplication) {
+        fxd_overridable()
+        fxdPrint("applicationState:", application.applicationState)
+    }
 
     open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         fxd_overridable()
@@ -82,7 +82,9 @@ class SubClassedAppDelegate: FXDAppDelegate {
         fxdPrint("identifier:", identifier)
         fxdPrint("completionHandler:", completionHandler)
     }
+}
 
+extension FXDAppDelegate: UNUserNotificationCenterDelegate {
     nonisolated open func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         fxd_overridable()
         fxdPrint("notification:", notification)
