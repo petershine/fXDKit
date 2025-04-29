@@ -11,9 +11,9 @@ public struct fXDbuttonSymbol: View {
 	var strokeStyle: Color
 	var hideShadow: Bool
     var shouldAnimate: Bool
+    @State var shadowOpacity: CGFloat
     var action: () -> Void
 
-    @State private var animatingOpacity: CGFloat = 1.0
 
 
 	public init(
@@ -24,6 +24,7 @@ public struct fXDbuttonSymbol: View {
 		strokeStyle: Color = .clear,
 		hideShadow: Bool = false,
         shouldAnimate: Bool = false,
+        shadowOpacity: CGFloat = 0.6,
 		action: @escaping () -> Void) {
 
 			self.systemName = systemName
@@ -33,6 +34,7 @@ public struct fXDbuttonSymbol: View {
 			self.strokeStyle = strokeStyle
 			self.hideShadow = hideShadow
             self.shouldAnimate = shouldAnimate
+            self.shadowOpacity = shadowOpacity
 			self.action = action
 	}
 	
@@ -40,8 +42,8 @@ public struct fXDbuttonSymbol: View {
         ZStack {
             Circle()
                 .fill(backgroundStyle)
-                .opacity(animatingOpacity)
-                .blur(radius: 10.0)
+                .opacity(shadowOpacity)
+                .blur(radius: 24.0)
                 .frame(width: touchableSize.width, height: touchableSize.height)
 
             Button(action: action) {
@@ -62,9 +64,9 @@ public struct fXDbuttonSymbol: View {
         .onAppear {
             if shouldAnimate {
                 withAnimation(
-                    Animation.easeInOut(duration: 0.5)
+                    Animation.easeInOut(duration: 0.3)
                         .repeatForever(autoreverses: true)) {
-                            animatingOpacity = 0.8
+                            shadowOpacity *= 0.5
                         }
             }
         }
