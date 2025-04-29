@@ -59,7 +59,15 @@ public struct fXDviewLaunching: View {
 
 			VStack {
 				Spacer()
-				ProgressView().controlSize(.large).padding()
+                ZStack {
+                    Circle()
+                        .fill(.black)
+                        .opacity(0.6)
+                        .blur(radius: 10.0)
+                        .frame(width: UNIT_TOUCHABLE, height: UNIT_TOUCHABLE)
+
+                    ProgressView().controlSize(.large).padding()
+                }
                 SPACER_FIXED()
 			}
 		}

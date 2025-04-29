@@ -41,7 +41,7 @@ public struct fXDbuttonSymbol: View {
             Circle()
                 .fill(backgroundStyle)
                 .opacity(animatingOpacity)
-                .blur(radius: 8.0)
+                .blur(radius: 10.0)
                 .frame(width: touchableSize.width, height: touchableSize.height)
 
             Button(action: action) {
@@ -62,7 +62,7 @@ public struct fXDbuttonSymbol: View {
         .onAppear {
             if shouldAnimate {
                 withAnimation(
-                    Animation.easeInOut(duration: 1.0)
+                    Animation.easeInOut(duration: 0.5)
                         .repeatForever(autoreverses: true)) {
                             animatingOpacity = 0.8
                         }
