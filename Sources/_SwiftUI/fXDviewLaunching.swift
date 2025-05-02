@@ -32,15 +32,16 @@ public struct fXDviewLaunching: View {
 
 	public var body: some View {
 		ZStack {
-			Color(overlayColor ?? .black)
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
-
-			if backgroundImage != nil {
-				Image(uiImage: backgroundImage!)
-					.resizable()
-					.scaledToFill()
-                    .ignoresSafeArea()
-			}
+            Color(overlayColor ?? .black)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay {
+                    if backgroundImage != nil {
+                        Image(uiImage: backgroundImage!)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                }
+                .ignoresSafeArea()
 
 			if foregroundImage != nil {
 				if foregroundSize != .zero {
