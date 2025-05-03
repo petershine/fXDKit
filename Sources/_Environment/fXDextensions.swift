@@ -442,7 +442,11 @@ extension URL {
         dateFormatter.dateFormat = "yyyy-MM-dd_HH_mm_ss"
 
         let fileName = dateFormatter.string(from: Date.now)
-        let fileURL = documentDirectory?.appendingPathComponent("\(prefix)_\(fileName)\(index != nil ? "_\(index ?? 0)" : "").\(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")")
+        let fileSuffix = "\(index != nil ? "_\(index ?? 0)" : "")"
+        let fileExtension = "\(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")"
+        
+        let filePath = "\(prefix)_\(fileName)\(fileSuffix).\(fileExtension)"
+        let fileURL = documentDirectory?.appendingPathComponent(filePath)
         return fileURL
     }
 
