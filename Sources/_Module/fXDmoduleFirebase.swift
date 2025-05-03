@@ -27,7 +27,7 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
         remoteConfig?.configSettings = RemoteConfigSettings()
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         Messaging.messaging().delegate = self
 
         Task {
@@ -37,7 +37,7 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
         return true
     }
 
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
     }
 }
