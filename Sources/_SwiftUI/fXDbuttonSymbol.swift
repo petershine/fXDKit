@@ -12,8 +12,9 @@ public struct fXDbuttonSymbol: View {
 	var hideShadow: Bool
     var shouldAnimate: Bool
     @State var shadowOpacity: CGFloat
+    var longPressDuration: TimeInterval
+    var longPressAction: () -> Void
     var action: () -> Void
-
 
 
 	public init(
@@ -25,7 +26,9 @@ public struct fXDbuttonSymbol: View {
 		hideShadow: Bool = false,
         shouldAnimate: Bool = false,
         shadowOpacity: CGFloat = 0.6,
-		action: @escaping () -> Void) {
+        longPressDuration: TimeInterval = 2.0,
+        longPressAction: (() -> Void)? = nil,
+        action: @escaping () -> Void) {
 
 			self.systemName = systemName
 			self.touchableSize = touchableSize
@@ -35,6 +38,8 @@ public struct fXDbuttonSymbol: View {
 			self.hideShadow = hideShadow
             self.shouldAnimate = shouldAnimate
             self.shadowOpacity = shadowOpacity
+            self.longPressDuration = longPressDuration
+            self.longPressAction = longPressAction ?? {}
 			self.action = action
 	}
 	
@@ -46,10 +51,16 @@ public struct fXDbuttonSymbol: View {
                 .blur(radius: 24.0)
                 .frame(width: touchableSize.width, height: touchableSize.height)
 
-            Button(action: action) {
+            Button(action: {}) {
                 Image(systemName: systemName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .onTapGesture {
+                        action()
+                    }
+                    .onLongPressGesture(minimumDuration: longPressDuration) {
+                        longPressAction()
+                    }
             }
             .modifier(
                 fXDButtonModifier(
