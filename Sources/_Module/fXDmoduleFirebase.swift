@@ -31,7 +31,7 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
         Messaging.messaging().delegate = self
 
         Task {
-            try await fetchRemoteConfig()
+            try await fetchRemoteConfig(reAttemptLimit: 10)
         }
 
         return true
@@ -43,18 +43,31 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
 }
 
 extension fXDmoduleFirebase {
-    fileprivate func fetchRemoteConfig() async throws {
+    fileprivate func fetchRemoteConfig(reAttemptLimit: Int) async throws {
+        var fetchError: Error? = nil
         do {
             let _ = try await remoteConfig?.fetchAndActivate()
         }
         catch {
-            fxd_log()
-            fxdPrint(error)
-            throw error
+            fetchError = error
         }
 
-        guard process(remoteConfig) else{
-            return try await fetchRemoteConfig()
+        guard fetchError == nil,
+              process(remoteConfig) else{
+            fxd_log()
+            fxdPrint(fetchError)
+            fxdPrint("reAttemptLimit: \(reAttemptLimit)")
+
+            if reAttemptLimit == 0 {
+                await MainActor.run {
+                    didUpdateConfig = true
+                }
+                return
+            }
+
+
+            try await Task.sleep(nanoseconds: UInt64((1.0 * 1_000_000_000).rounded()))
+            return try await fetchRemoteConfig(reAttemptLimit: reAttemptLimit-1)
         }
 
 
