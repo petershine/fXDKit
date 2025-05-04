@@ -481,7 +481,8 @@ extension FXDmoduleCoredata {
 	}
 }
 
-extension FXDmoduleCoredata: FXDobserverApplication {
+@MainActor
+extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
 	public func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {
 	}
 	
@@ -531,7 +532,8 @@ extension FXDmoduleCoredata: FXDobserverApplication {
 }
 
 
-extension FXDmoduleCoredata: FXDobserverNSManagedObject {
+@MainActor
+extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 	@objc public func observedUIDocumentStateChanged(_ notification: Notification?) {	fxd_log()
 		fxdPrint("notification: ", notification)
 		fxdPrint("fileModificationDate: ", mainDocument?.fileModificationDate)
