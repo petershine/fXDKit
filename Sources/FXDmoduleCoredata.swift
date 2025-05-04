@@ -263,12 +263,12 @@ extension FXDmoduleCoredata {
 		notificationCenter.addObserver(self, selector: #selector(observedNSPersistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: nil)
 		 */
 
-		let observedContext = mainDocument?.managedObjectContext.parent
+		let observedContext = mainDocument?.managedObjectContext
 		fxdPrint("observedContext: ", observedContext)
 
 		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextObjectsDidChange(_:)), name: NSManagedObjectContext.didChangeObjectsNotification, object: observedContext)
-//		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextWillSave(_:)), name: NSManagedObjectContext.willSaveObjectsNotification, object: observedContext)
-//		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextDidSave(_:)), name: NSManagedObjectContext.didSaveObjectsNotification, object: observedContext)
+		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextWillSave(_:)), name: NSManagedObjectContext.willSaveObjectsNotification, object: observedContext)
+		notificationCenter.addObserver(self, selector: #selector(observedNSManagedObjectContextDidSave(_:)), name: NSManagedObjectContext.didSaveObjectsNotification, object: observedContext)
 	}
 
     @MainActor func deleteAllData(finishCallback: FXDcallback? = nil) {
@@ -561,9 +561,9 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 		let observedContext = notification?.object as? NSManagedObjectContext
 		fxdPrint("observedContext: ", observedContext)
 
-		guard observedContext?.isEqual(mainDocument?.managedObjectContext.parent) ?? false else {
-			return
-		}
+//		guard observedContext?.isEqual(mainDocument?.managedObjectContext.parent) ?? false else {
+//			return
+//		}
 
 
 		let mainPersistentStore = mainDocument?.managedObjectContext.persistentStoreCoordinator?.persistentStores.first
