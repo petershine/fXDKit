@@ -97,12 +97,14 @@ open class FXDmoduleMessage: NSObject, @unchecked Sendable {
 }
 
 
-extension FXDmoduleMessage: @preconcurrency MFMailComposeViewControllerDelegate {
-    @MainActor public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {	fxd_log()
+extension FXDmoduleMessage: MFMailComposeViewControllerDelegate {
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {	fxd_log()
 
 		fxdPrint(result)
 		fxdPrint(error)
 
-		controller.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            controller.dismiss(animated: true, completion: nil)
+        }
 	}
 }

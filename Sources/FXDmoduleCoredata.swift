@@ -481,7 +481,7 @@ extension FXDmoduleCoredata {
 	}
 }
 
-@MainActor
+
 extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
 	public func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {
 	}
@@ -489,8 +489,7 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
 	public func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {
 	}
 	
-	public func observedUIApplicationWillTerminate(_ notification: NSNotification) {	fxd_log()
-
+    @MainActor public func observedUIApplicationWillTerminate(_ notification: NSNotification) {	fxd_log()
 		let application = UIApplication.shared
 		fxdPrint("backgroundTimeRemaining: \(application.backgroundTimeRemaining)")
 
@@ -532,9 +531,8 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
 }
 
 
-@MainActor
 extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
-	@objc public func observedUIDocumentStateChanged(_ notification: Notification?) {	fxd_log()
+    @MainActor @objc public func observedUIDocumentStateChanged(_ notification: Notification?) {	fxd_log()
 		fxdPrint("notification: ", notification)
 		fxdPrint("fileModificationDate: ", mainDocument?.fileModificationDate)
 		fxdPrint("documentState: ", mainDocument?.documentState)
@@ -555,7 +553,7 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 		fxdPrint("concurrencyType: ", (notification?.object as? NSManagedObjectContext)?.concurrencyType)
 	}
 
-	@objc public func observedNSManagedObjectContextDidSave(_ notification: Notification?) {
+    @MainActor @objc public func observedNSManagedObjectContextDidSave(_ notification: Notification?) {
 		fxd_overridable()
 		fxdPrint("concurrencyType: ", (notification?.object as? NSManagedObjectContext)?.concurrencyType)
 
