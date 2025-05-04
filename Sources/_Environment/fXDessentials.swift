@@ -65,8 +65,8 @@ public protocol FXDobserverNSManagedObject {
 	func observedNSPersistentStoreDidImportUbiquitousContentChanges(_ notification: Notification?)
 
 	func observedNSManagedObjectContextObjectsDidChange(_ notification: Notification?)
-//	func observedNSManagedObjectContextWillSave(_ notification: Notification?)
-//	func observedNSManagedObjectContextDidSave(_ notification: Notification?)
+	func observedNSManagedObjectContextWillSave(_ notification: Notification?)
+	func observedNSManagedObjectContextDidSave(_ notification: Notification?)
 }
 
 
