@@ -48,7 +48,6 @@ public typealias FXDcallback = (@Sendable (_ result: Bool, _ object: Any?) -> Vo
 
 
 //MARK: Protocols
-@MainActor
 @objc public protocol FXDobserverApplication {
 	func observedUIApplicationDidEnterBackground(_ notification: NSNotification)
 	func observedUIApplicationDidBecomeActive(_ notification: NSNotification)
@@ -59,16 +58,17 @@ public typealias FXDcallback = (@Sendable (_ result: Bool, _ object: Any?) -> Vo
 	func observedUIDeviceOrientationDidChange(_ notification: NSNotification)
 }
 
-@MainActor
+
 public protocol FXDobserverNSManagedObject {
 	func observedUIDocumentStateChanged(_ notification: Notification?)
 
 	func observedNSPersistentStoreDidImportUbiquitousContentChanges(_ notification: Notification?)
 
 	func observedNSManagedObjectContextObjectsDidChange(_ notification: Notification?)
-	func observedNSManagedObjectContextWillSave(_ notification: Notification?)
-	func observedNSManagedObjectContextDidSave(_ notification: Notification?)
+//	func observedNSManagedObjectContextWillSave(_ notification: Notification?)
+//	func observedNSManagedObjectContextDidSave(_ notification: Notification?)
 }
+
 
 public protocol FXDprotocolAppConfig {
 	var appStoreID: String { get }

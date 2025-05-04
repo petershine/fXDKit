@@ -217,8 +217,8 @@ extension FXDmoduleGeo {
 }
 
 
-extension FXDmoduleGeo: @preconcurrency CLLocationManagerDelegate {
-    @MainActor open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
+extension FXDmoduleGeo: CLLocationManagerDelegate {
+    open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
 		fxdPrint(String(status.rawValue))
 		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
 			pauseMainLocationManager(for: status)
