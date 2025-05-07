@@ -91,7 +91,7 @@ public struct fXDviewOverlay: View {
 
 				SPACER_FIXED()
 
-				FXDProgressBar(value: Binding.constant(observable.sliderValue ?? 0.0))
+				FXDProgressBar(value: .constant(observable.sliderValue ?? 0.0))
 					.tint(observable.sliderTint)
 					.opacity((observable.sliderValue ?? 0.0) > 0.0 ? 1.0 : 0.0)
 					.allowsHitTesting(false)
