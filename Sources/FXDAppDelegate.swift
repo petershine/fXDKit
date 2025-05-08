@@ -43,6 +43,12 @@ class SubClassedAppDelegate: FXDAppDelegate {
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         fxd_overridable()
         fxdPrint("launchOptions:", launchOptions)
+
+        UNUserNotificationCenter.current().delegate = self
+        Task {
+            let (_, _) = await UNUserNotificationCenter.attemptAuthorization()
+        }
+        
         return true
     }
 
