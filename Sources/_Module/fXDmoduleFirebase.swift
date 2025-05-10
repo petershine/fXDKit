@@ -9,17 +9,13 @@ import FirebasePerformance
 
 @Observable
 open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
-    public static let shared: fXDmoduleFirebase = {
-        fXDmoduleFirebase()
-    }()
-
     public var process: ((RemoteConfig?)-> Bool) = { _ in return true }
     @MainActor public var didUpdateConfig: Bool = false
 
     fileprivate var remoteConfig: RemoteConfig? = nil
 
     
-    override init() {
+    public override init() {
         super.init()
         FirebaseApp.configure()
 

@@ -34,7 +34,7 @@ class SubClassedAppDelegate: FXDAppDelegate {
     open var backgroundCompletionHandler: (() -> Void)? = nil
 
 
-    override init() {
+    public override init() {
         super.init()
         fxd_overridable()
     }
