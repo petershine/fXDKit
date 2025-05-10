@@ -5,10 +5,10 @@ import Foundation
 
 
 public struct FXDProgressBar: View {
-	fileprivate var maxValue: CGFloat = 1.0
-	fileprivate var barHeight: CGFloat = 4.0
+    @Binding var value: CGFloat
 
-	@Binding var value: CGFloat
+    fileprivate var maxValue: CGFloat = 1.0
+    fileprivate var barHeight: CGFloat = 4.0
 
 
 	init(value: Binding<CGFloat>) {
