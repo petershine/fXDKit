@@ -72,3 +72,11 @@ extension fXDmoduleFirebase {
         }
     }
 }
+
+extension Analytics {
+    public class func nonDebugLogEvent(_ name: String, parameters: [String:Any]) {
+#if !DEBUG
+        Self.logEvent(name, parameters: parameters)
+#endif
+    }
+}
