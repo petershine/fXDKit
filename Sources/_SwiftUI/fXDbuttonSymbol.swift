@@ -74,11 +74,10 @@ public struct fXDbuttonSymbol: View {
         }
         .onAppear {
             if shouldAnimate {
-                withAnimation(
-                    Animation.easeInOut(duration: 0.3)
-                        .repeatForever(autoreverses: true)) {
-                            shadowOpacity *= 0.5
-                        }
+                let animation = Animation.easeInOut(duration: 0.3).repeatForever(autoreverses: true)
+                withAnimation(animation) {
+                    shadowOpacity *= 0.5
+                }
             }
         }
     }

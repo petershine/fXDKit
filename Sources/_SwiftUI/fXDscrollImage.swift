@@ -69,20 +69,23 @@ fileprivate extension fXDscrollImage {
 
 		let containerSize = UIScreen.main.bounds.size
 		let aspectSize = uiImage.aspectSize(for: displayContentMode, containerSize: containerSize)
-		withAnimation {
-			displaySize = aspectSize
-		}
+        withAnimation(.easeInOut(duration: 0.2)) {
+            displaySize = aspectSize
+        }
 
+        var newAxisSet = restrictedBouncing
 		if newContentMode == .fit
 			|| (aspectSize.width <= containerSize.width && aspectSize.height <= containerSize.height) {
 
-			restrictedBouncing = [.horizontal, .vertical]
+            newAxisSet = [.horizontal, .vertical]
 		}
 		else if aspectSize.width > containerSize.width {
-			restrictedBouncing = [.vertical]
+            newAxisSet = [.vertical]
 		}
 		else if aspectSize.height > containerSize.height {
-			restrictedBouncing = [.horizontal]
+            newAxisSet = [.horizontal]
 		}
+
+        restrictedBouncing = newAxisSet
 	}
 }
