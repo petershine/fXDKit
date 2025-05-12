@@ -11,10 +11,9 @@ public struct fXDscrollImage: View {
 	@State private var restrictedBouncing: Axis.Set = [.horizontal, .vertical]
 
 
-    public init(
-        uiImage: Binding<UIImage?>) {
-            _uiImage = uiImage
-        }
+    public init(uiImage: Binding<UIImage?>) {
+        _uiImage = uiImage
+    }
 
 	public var body: some View {
 		ScrollView([.horizontal, .vertical],
