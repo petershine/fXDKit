@@ -68,7 +68,7 @@ fileprivate extension fXDscrollImage {
 
 		let containerSize = UIScreen.main.bounds.size
 		let aspectSize = uiImage.aspectSize(for: displayContentMode, containerSize: containerSize)
-        withAnimation(.easeInOut(duration: 0.2)) {
+        withAnimation(.easeInOut(duration: 0.3)) {
             displaySize = aspectSize
         }
 
