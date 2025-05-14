@@ -356,6 +356,25 @@ extension Bundle {
 	}
 }
 
+extension ProcessInfo {
+    public class func basicDescription() {	fxd_log()
+        let processInfo = Self.processInfo
+        fxdPrint("isMacCatalystApp: ", processInfo.isMacCatalystApp)
+        fxdPrint("isiOSAppOnMac: ", processInfo.isiOSAppOnMac)
+
+        fxdPrint(name: "environment", dictionary: processInfo.environment)
+        fxdPrint("arguments", processInfo.arguments)
+        fxdPrint("hostName", processInfo.hostName)
+        fxdPrint("processName:", processInfo.processName)
+        fxdPrint("processIdentifier", processInfo.processIdentifier)
+        fxdPrint("globallyUniqueString", processInfo.globallyUniqueString)
+        fxdPrint("operatingSystemVersionString", processInfo.operatingSystemVersionString)
+        fxdPrint("processorCount", processInfo.processorCount)
+        fxdPrint("activeProcessorCount", processInfo.activeProcessorCount)
+        fxdPrint("physicalMemory", processInfo.physicalMemory)
+        fxdPrint("systemUptime", processInfo.systemUptime)
+    }
+}
 
 extension UIActivityViewController {
 	@MainActor public class func show(items: [Any]) {

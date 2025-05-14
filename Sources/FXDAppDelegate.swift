@@ -37,6 +37,8 @@ class SubClassedAppDelegate: FXDAppDelegate {
     public override init() {
         super.init()
         fxd_overridable()
+
+        ProcessInfo.basicDescription()
     }
 
 
