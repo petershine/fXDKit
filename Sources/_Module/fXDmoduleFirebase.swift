@@ -26,8 +26,23 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         Messaging.messaging().delegate = self
 
+        let mainAttempt = Task {
+            try await fetchRemoteConfig(reAttemptLimit: 5)
+        }
+
         Task {
-            try await fetchRemoteConfig(reAttemptLimit: 10)
+            try await Task.sleep(nanoseconds: UInt64((10.0 * 1_000_000_000).rounded()))
+            await MainActor.run {
+                if !didUpdateConfig {
+                    mainAttempt.cancel()
+
+
+                    let forceProcessing = process(remoteConfig)
+                    fxd_log()
+                    fxdPrint("forceProcessing: \(forceProcessing)")
+                    self.didUpdateConfig = true
+                }
+            }
         }
 
         return true
