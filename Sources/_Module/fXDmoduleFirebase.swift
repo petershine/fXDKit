@@ -53,13 +53,14 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
 
         Task {
             try await Task.sleep(nanoseconds: UInt64((10.0 * 1_000_000_000).rounded()))
-            await MainActor.run {
-                if !didUpdateConfig {
-                    mainAttempt.cancel()
+            if !(await didUpdateConfig) {
+                mainAttempt.cancel()
 
-                    let forceProcessing = process(remoteConfig)
-                    fxd_log()
-                    fxdPrint("forceProcessing: \(forceProcessing)")
+                let forceProcessing = process(remoteConfig)
+                fxd_log()
+                fxdPrint("forceProcessing: \(forceProcessing)")
+                
+                await MainActor.run {
                     self.didUpdateConfig = true
                 }
             }
