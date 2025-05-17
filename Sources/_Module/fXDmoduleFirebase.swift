@@ -21,6 +21,27 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
 
         remoteConfig = RemoteConfig.remoteConfig()
         remoteConfig?.configSettings = RemoteConfigSettings()
+
+        remoteConfig?.addOnConfigUpdateListener {
+            configUpdate, error in
+
+            guard let configUpdate, error == nil else {
+                fxdPrint("Error listening for config updates: \(String(describing: error))")
+                return
+            }
+
+            fxdPrint("Updated keys: \(configUpdate.updatedKeys)")
+            self.remoteConfig?.activate {
+                changed, error in
+
+                if changed,
+                   self.process(self.remoteConfig) {
+                    DispatchQueue.main.async {
+                        self.didUpdateConfig = true
+                    }
+                }
+            }
+        }
     }
 
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -35,7 +56,6 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
             await MainActor.run {
                 if !didUpdateConfig {
                     mainAttempt.cancel()
-
 
                     let forceProcessing = process(remoteConfig)
                     fxd_log()
