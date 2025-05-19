@@ -115,15 +115,15 @@ extension Encodable {
 import UniformTypeIdentifiers
 
 extension FileManager {
-	public func fileURLs(contentType: UTType) -> [URL]? {
-		guard  let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+    public func fileURLs(contentType: UTType, directory: SearchPathDirectory = .documentDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
+		guard  let contentDirectory = FileManager.default.urls(for: directory, in: domainMask).first else {
 			return nil
 		}
 
 		var fileURLs: [URL]? = nil
 		do {
 			let contents = try FileManager.default.contentsOfDirectory(
-				at: documentDirectory,
+				at: contentDirectory,
 				includingPropertiesForKeys: [.contentModificationDateKey, .contentTypeKey],
 				options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles])
 
@@ -145,14 +145,13 @@ extension FileManager {
 		return fileURLs
 	}
 
-    func collectJSONdata(fileName: String, jsonData: Data) {
+    func collectJSONdata(fileName: String, jsonData: Data, directory: SearchPathDirectory = .documentDirectory, domainMask: SearchPathDomainMask = .userDomainMask) {
         guard !fileName.isEmpty else {
             return
         }
 
         do {
-            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-            let collectedDirectory = documentDirectory?.appending(path: "_collected")
+            let collectedDirectory = FileManager.default.urls(for: directory, in: domainMask).first?.appending(path: "_collected")
             if let collectedDirectory {
                 try FileManager.default.createDirectory(at: collectedDirectory, withIntermediateDirectories: true)
             }
@@ -485,8 +484,8 @@ extension UIImage {
 
 
 extension URL {
-    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType) -> URL? {
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory = .documentDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+        let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd_HH_mm_ss"
@@ -496,7 +495,7 @@ extension URL {
         let fileExtension = "\(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")"
         
         let filePath = "\(prefix)_\(fileName)\(fileSuffix).\(fileExtension)"
-        let fileURL = documentDirectory?.appendingPathComponent(filePath)
+        let fileURL = fileDirectory?.appendingPathComponent(filePath)
         return fileURL
     }
 
