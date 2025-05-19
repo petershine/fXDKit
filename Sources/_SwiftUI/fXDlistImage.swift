@@ -46,8 +46,10 @@ public struct fXDlistImage<Content: View>: View {
                         attachedForMaximized?(imageURL)
                     }
 
+                    let thumbnailURL = imageURL.availableThumbnailURL
+
                     AsyncImage(
-                        url: imageURL.thumbnailURL,
+                        url: thumbnailURL,
                         content: {
                             pngImage in
                             pngImage
@@ -97,5 +99,19 @@ public struct fXDlistImage<Content: View>: View {
                 selectedImageURL = latest
             }
         }
+    }
+}
+
+fileprivate extension URL {
+    var availableThumbnailURL: URL? {
+        var availableURL = self.thumbnailURL
+        
+        if let availablePath = availableURL?.path(percentEncoded: false) {
+            if !FileManager.default.fileExists(atPath: availablePath) {
+                availableURL = self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png, directory: .documentDirectory)
+            }
+        }
+        
+        return availableURL
     }
 }
