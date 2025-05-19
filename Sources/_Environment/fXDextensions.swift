@@ -122,15 +122,16 @@ extension Encodable {
 import UniformTypeIdentifiers
 
 extension FileManager {
-    public func fileURLs(contentType: UTType, directory: SearchPathDirectory = .applicationSupportDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
-		guard  let contentDirectory = FileManager.default.urls(for: directory, in: domainMask).first else {
+    public func fileURLs(contentType: UTType, directory: SearchPathDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
+        let directoryURLs = FileManager.default.urls(for: directory, in: domainMask)
+		guard  let fileDirectory = directoryURLs.first else {
 			return nil
 		}
 
 		var fileURLs: [URL]? = nil
 		do {
 			let contents = try FileManager.default.contentsOfDirectory(
-				at: contentDirectory,
+				at: fileDirectory,
 				includingPropertiesForKeys: [.contentModificationDateKey, .contentTypeKey],
 				options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles])
 
@@ -152,7 +153,7 @@ extension FileManager {
 		return fileURLs
 	}
 
-    func collectJSONdata(fileName: String, jsonData: Data, directory: SearchPathDirectory = .applicationSupportDirectory, domainMask: SearchPathDomainMask = .userDomainMask) {
+    func collectJSONdata(fileName: String, jsonData: Data, directory: SearchPathDirectory, domainMask: SearchPathDomainMask = .userDomainMask) {
         guard !fileName.isEmpty else {
             return
         }
@@ -491,7 +492,7 @@ extension UIImage {
 
 
 extension URL {
-    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory = .applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
         let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
 
         let dateFormatter = DateFormatter()
@@ -506,7 +507,7 @@ extension URL {
         return fileURL
     }
 
-    public func pairedFileURL(inSubPath: String, contentType: UTType, directory: FileManager.SearchPathDirectory = .applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+    public func pairedFileURL(inSubPath: String, contentType: UTType, directory: FileManager.SearchPathDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
 
         let filenameComponent = self.deletingPathExtension().lastPathComponent
         let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
@@ -519,11 +520,11 @@ extension URL {
     }
 
     public var jsonURL: URL? {
-        return self.pairedFileURL(inSubPath: "_jsonURL", contentType: .json)
+        return self.pairedFileURL(inSubPath: "_jsonURL", contentType: .json, directory: .applicationSupportDirectory)
     }
 
     public var thumbnailURL: URL? {
-        return self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png)
+        return self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png, directory: .applicationSupportDirectory)
     }
 }
 
