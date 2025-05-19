@@ -47,6 +47,13 @@ extension Data {
 
 		return jsonObject
 	}
+
+    public func writeInsideDirectory(to fileURL: URL) throws {
+        let fileDirectory = fileURL.deletingPathExtension().deletingLastPathComponent()
+        try FileManager.default.createDirectory(at: fileDirectory, withIntermediateDirectories: true)
+
+        try self.write(to: fileURL)
+    }
 }
 
 
@@ -166,7 +173,7 @@ extension FileManager {
             let filePath = fileName+"_"+datePart+"."+fileExtension
             let fileURL = collectedDirectory?.appendingPathComponent(filePath)
             if let fileURL {
-                try jsonData.write(to: fileURL)
+                try jsonData.writeInsideDirectory(to: fileURL)
                 fxdPrint("[JSON COLLECTED]: ", jsonData, fileURL)
             }
         }
