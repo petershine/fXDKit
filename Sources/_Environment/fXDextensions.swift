@@ -115,7 +115,7 @@ extension Encodable {
 import UniformTypeIdentifiers
 
 extension FileManager {
-    public func fileURLs(contentType: UTType, directory: SearchPathDirectory = .documentDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
+    public func fileURLs(contentType: UTType, directory: SearchPathDirectory = .applicationSupportDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
 		guard  let contentDirectory = FileManager.default.urls(for: directory, in: domainMask).first else {
 			return nil
 		}
@@ -145,7 +145,7 @@ extension FileManager {
 		return fileURLs
 	}
 
-    func collectJSONdata(fileName: String, jsonData: Data, directory: SearchPathDirectory = .documentDirectory, domainMask: SearchPathDomainMask = .userDomainMask) {
+    func collectJSONdata(fileName: String, jsonData: Data, directory: SearchPathDirectory = .applicationSupportDirectory, domainMask: SearchPathDomainMask = .userDomainMask) {
         guard !fileName.isEmpty else {
             return
         }
@@ -484,7 +484,7 @@ extension UIImage {
 
 
 extension URL {
-    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory = .documentDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory = .applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
         let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
 
         let dateFormatter = DateFormatter()
