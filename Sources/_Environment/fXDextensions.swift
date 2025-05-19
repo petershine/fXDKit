@@ -506,27 +506,24 @@ extension URL {
         return fileURL
     }
 
-    public func pairedFileURL(inSubPath: String? = nil, contentType: UTType) -> URL {
-        var pairedFile = self.deletingPathExtension()
-        let filenameComponent = pairedFile.lastPathComponent
-        pairedFile.deleteLastPathComponent()
-        if let inSubPath {
-            pairedFile.append(component: inSubPath)
-        }
-        pairedFile.append(components: filenameComponent)
-        pairedFile.appendPathExtension(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")
+    public func pairedFileURL(inSubPath: String, contentType: UTType, directory: FileManager.SearchPathDirectory = .applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+
+        let filenameComponent = self.deletingPathExtension().lastPathComponent
+        let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
+
+        var pairedFile = fileDirectory?.appendingPathComponent(inSubPath)
+        pairedFile?.append(components: filenameComponent)
+        pairedFile?.appendPathExtension(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")
 
         return pairedFile
     }
 
-    public var jsonURL: URL {
-        return self.pairedFileURL(inSubPath: nil, contentType: .json)
+    public var jsonURL: URL? {
+        return self.pairedFileURL(inSubPath: "_jsonURL", contentType: .json)
     }
 
-    public var thumbnailURL: URL {
-        let thumbnail = self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png)
-
-        return thumbnail
+    public var thumbnailURL: URL? {
+        return self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png)
     }
 }
 
