@@ -122,7 +122,7 @@ extension Encodable {
 import UniformTypeIdentifiers
 
 extension FileManager {
-    public func fileURLs(contentType: UTType, directory: SearchPathDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
+    public func fileURLs(contentType: UTType, directory: SearchPathDirectory = .applicationSupportDirectory, domainMask: SearchPathDomainMask = .userDomainMask) -> [URL]? {
         let directoryURLs = FileManager.default.urls(for: directory, in: domainMask)
 		guard  let fileDirectory = directoryURLs.first else {
 			return nil
@@ -492,7 +492,7 @@ extension UIImage {
 
 
 extension URL {
-    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+    public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory = FileManager.SearchPathDirectory.applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = FileManager.SearchPathDomainMask.userDomainMask) -> URL? {
         let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
 
         let dateFormatter = DateFormatter()
@@ -507,7 +507,7 @@ extension URL {
         return fileURL
     }
 
-    public func pairedFileURL(inSubPath: String, contentType: UTType, directory: FileManager.SearchPathDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
+    public func pairedFileURL(inSubPath: String, contentType: UTType, directory: FileManager.SearchPathDirectory = .applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = .userDomainMask) -> URL? {
 
         let filenameComponent = self.deletingPathExtension().lastPathComponent
         let fileDirectory = FileManager.default.urls(for: directory, in: domainMask).first
@@ -520,11 +520,11 @@ extension URL {
     }
 
     public var jsonURL: URL? {
-        return self.pairedFileURL(inSubPath: "_jsonURL", contentType: .json, directory: .applicationSupportDirectory)
+        return self.pairedFileURL(inSubPath: "_jsonURL", contentType: .json)
     }
 
     public var thumbnailURL: URL? {
-        return self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png, directory: .applicationSupportDirectory)
+        return self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png)
     }
 }
 
