@@ -93,12 +93,6 @@ public struct fXDlistImage<Content: View>: View {
 
             action_DidSelect?(newValue)
         })
-        .task {
-            if selectedImageURL == nil,
-               let latest = imageURLs?.first {
-                selectedImageURL = latest
-            }
-        }
     }
 }
 

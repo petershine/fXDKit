@@ -37,6 +37,8 @@ public struct fXDscrollImage: View {
         .task {
             displaySize = uiImage?.size
             displayContentMode = UIDevice.current.userInterfaceIdiom == .phone ? .fill : .fit
+
+            updateScrollViewConfiguration(for: displayContentMode)
         }
 		.onTapGesture(count: 2, perform: {
 			displayContentMode = (displayContentMode == .fit) ? .fill : .fit
