@@ -5,14 +5,16 @@ import SwiftUI
 
 public struct fXDscrollImage: View {
 	@Binding var uiImage: UIImage?
+    @Binding var backgroundColor: Color?
 
 	@State private var displayContentMode: ContentMode = .fit
 	@State private var displaySize: CGSize? = nil
 	@State private var restrictedBouncing: Axis.Set = [.horizontal, .vertical]
 
 
-    public init(uiImage: Binding<UIImage?>) {
+    public init(uiImage: Binding<UIImage?>, backgroundColor: Binding<Color?> = .constant(.clear)) {
         _uiImage = uiImage
+        _backgroundColor = backgroundColor
     }
 
 	public var body: some View {
@@ -30,7 +32,7 @@ public struct fXDscrollImage: View {
 			}
 		}
 		.background {
-			Color(.black)
+            backgroundColor
 		}
 		.ignoresSafeArea()
 		.scrollBounceBehavior(.basedOnSize, axes: restrictedBouncing)

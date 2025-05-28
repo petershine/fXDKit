@@ -22,9 +22,11 @@ public struct fXDviewStepper: View {
         }, onDecrement: {
             stepping = max(minValue, stepping-1.0)
         })
-        .background(.black)
+        .background(Color.black)
         .tint(.white)
         .labelsHidden()
         .fixedSize()
+        .cornerRadius(10.0)
+        .clipped()
     }
 }
