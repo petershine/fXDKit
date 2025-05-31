@@ -32,12 +32,12 @@ public let UNIT_TOUCHABLE: CGFloat = 40.0
 @MainActor public let DIMENSION_PREVIEW: CGFloat = {
 	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
 
-	var maxDimension = minDimension*0.4
+	var previewDimension = minDimension*0.4
 	if UIDevice.current.userInterfaceIdiom == .phone {
-		maxDimension = minDimension*0.5
+		previewDimension = minDimension*0.5
 	}
 
-	return maxDimension
+	return previewDimension
 }()
 
 @MainActor public let DIMENSION_MINIMUM_IMAGE: CGFloat = (UIDevice.current.userInterfaceIdiom == .phone ? 80.0 : 140.0)
