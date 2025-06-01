@@ -15,8 +15,7 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
     fileprivate var remoteConfig: RemoteConfig? = nil
 
     
-    public override init() {
-        super.init()
+    public func configure() {
         FirebaseApp.configure()
 
         remoteConfig = RemoteConfig.remoteConfig()
@@ -45,6 +44,9 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
     }
 
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        self.configure()
+
+        
         Messaging.messaging().delegate = self
 
         let mainAttempt = Task {
