@@ -34,17 +34,13 @@ class SubClassedAppDelegate: FXDAppDelegate {
     open var backgroundCompletionHandler: (() -> Void)? = nil
 
 
-    public override init() {
-        super.init()
-        fxd_overridable()
-
-        ProcessInfo.basicDescription()
-    }
-
-
     open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         fxd_overridable()
         fxdPrint("launchOptions:", launchOptions)
+
+        Task {
+            ProcessInfo.basicDescription()
+        }
 
         UNUserNotificationCenter.current().delegate = self
         Task {
