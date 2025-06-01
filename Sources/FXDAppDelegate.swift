@@ -38,9 +38,7 @@ class SubClassedAppDelegate: FXDAppDelegate {
         fxd_overridable()
         fxdPrint("launchOptions:", launchOptions)
 
-        Task {
-            ProcessInfo.basicDescription()
-        }
+        ProcessInfo.basicDescription()
 
         UNUserNotificationCenter.current().delegate = self
         Task {
