@@ -276,9 +276,6 @@
 - (void)configureGlobalAppearance {	FXDLog_OVERRIDE;
 }
 
-#pragma mark -
-- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*_Nullable)launchOptions {	FXDLog_OVERRIDE;
-}
 
 #pragma mark -
 - (BOOL)shouldUpgradeForNewAppVersion {
