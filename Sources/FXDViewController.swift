@@ -75,26 +75,34 @@ extension UIViewController {
 		}
 	}
 
-	public func dismissFadingOut(duration: TimeInterval? = nil, callback: FXDcallback? = nil) {
-		UIView.animate(
-			withDuration: duration ?? DURATION_ONE_SECOND,
-			delay: 0.0,
-			options: .curveEaseIn,
-			animations: {
-				[weak self] in
-				
-				self?.view.alpha = 0.0
-			}
-		) {
-			[weak self] (finished: Bool) in
-			
-			self?.willMove(toParent: nil)
-			self?.view.removeFromSuperview()
-			self?.removeFromParent()
+    public func dismissFadingOut(duration: TimeInterval? = nil) async -> Bool {
+        var didDismiss: Bool = false
 
-			if callback != nil {
-				callback!(finished, nil)
-			}
-		}
-	}
+        await withCheckedContinuation {
+            [weak self] continuation in
+
+            UIView.animate(
+                withDuration: duration ?? DURATION_ONE_SECOND,
+                delay: 0.0,
+                options: .curveEaseIn,
+                animations: {
+                    [weak self] in
+
+                    self?.view.alpha = 0.0
+                }
+            ) {
+                [weak self] (finished: Bool) in
+
+                self?.willMove(toParent: nil)
+                self?.view.removeFromSuperview()
+                self?.removeFromParent()
+
+                didDismiss = finished
+
+                continuation.resume()
+            }
+        }
+
+        return didDismiss
+    }
 }
