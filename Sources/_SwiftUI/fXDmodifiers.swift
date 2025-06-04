@@ -1,7 +1,4 @@
-
-
 import SwiftUI
-
 
 struct fXDViewModifierHide: ViewModifier {
 	var shouldHide: Bool
@@ -13,7 +10,7 @@ struct fXDViewModifierHide: ViewModifier {
 	}
 }
 
-//https://www.hackingwithswift.com/quick-start/swiftui/how-to-detect-device-rotation
+// https://www.hackingwithswift.com/quick-start/swiftui/how-to-detect-device-rotation
 struct fXDViewModifierRotate: ViewModifier {
     let rotateReaction: (UIDeviceOrientation) -> Void
 
@@ -27,7 +24,6 @@ struct fXDViewModifierRotate: ViewModifier {
                 }
     }
 }
-
 
 struct fXDButtonModifier: ViewModifier {
 	var touchableSize: CGSize
@@ -51,7 +47,6 @@ struct fXDButtonModifier: ViewModifier {
 	}
 }
 
-
 public struct fXDTextEditorModifier: ViewModifier {
     var backgroundStyle: Color
     var foregroundStyle: Color
@@ -69,7 +64,7 @@ public struct fXDTextEditorModifier: ViewModifier {
             .cornerRadius(4.0)
 			.overlay {
 				RoundedRectangle(cornerRadius: 4.0)
-                    .stroke(.gray, lineWidth:2.0)
+                    .stroke(.gray, lineWidth: 2.0)
 			}
 	}
 }
@@ -78,7 +73,7 @@ public struct fXDTextRangeSelectableModifier: ViewModifier {
     public init() {
         // for external usage of fXDKit as module
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .scrollContentBackground(.hidden)

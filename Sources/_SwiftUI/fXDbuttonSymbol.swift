@@ -1,7 +1,4 @@
-
-
 import SwiftUI
-
 
 public struct fXDbuttonSymbol: View {
 	var systemName: String
@@ -15,7 +12,6 @@ public struct fXDbuttonSymbol: View {
     var longPressDuration: TimeInterval
     var longPressAction: () -> Void
     var action: () -> Void
-
 
 	public init(
 		_ systemName: String,
@@ -42,7 +38,7 @@ public struct fXDbuttonSymbol: View {
             self.longPressAction = longPressAction ?? {}
 			self.action = action
 	}
-	
+
     public var body: some View {
         ZStack {
             Circle()

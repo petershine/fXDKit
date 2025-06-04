@@ -1,7 +1,4 @@
-
-
 import SwiftUI
-
 
 extension View {
 	public func shouldHide(_ shouldHide: Bool) -> some View {
@@ -27,7 +24,7 @@ extension View {
             return nil
         }
 
-        var base64Encoded: String? = nil
+        var base64Encoded: String?
         if imageURL.startAccessingSecurityScopedResource() {
             let imageData = try Data(contentsOf: imageURL)
             imageURL.stopAccessingSecurityScopedResource()
@@ -42,11 +39,9 @@ extension View {
     }
 }
 
-
 @MainActor @ViewBuilder public func SPACER_FIXED(_ maxDimension: CGFloat = max(SIZE_TOUCHABLE.width, SIZE_TOUCHABLE.height)) -> some View {
 	Spacer().frame(width: maxDimension, height: maxDimension, alignment: .center)
 }
-
 
 @MainActor @ViewBuilder public func ASYNC_IMAGE(_ imageURL: URL?) -> some View {
 	AsyncImage(

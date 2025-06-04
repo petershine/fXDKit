@@ -1,8 +1,5 @@
-
-
 import Combine
 import SwiftUI
-
 
 public protocol FXDprotocolOverlay {
 	var shouldDismiss: Bool { get set }
@@ -21,7 +18,6 @@ public protocol FXDprotocolOverlay {
 	var cancellableTask: Task<Void, Error>? { get set }
 }
 
-
 @Observable
 public class FXDobservableOverlay: FXDprotocolOverlay, @unchecked Sendable {
 	public var shouldDismiss: Bool = false
@@ -32,14 +28,14 @@ public class FXDobservableOverlay: FXDprotocolOverlay, @unchecked Sendable {
 	public var overlayAlpha: CGFloat? = 0.8
 	public var allowUserInteraction: Bool? = false
 
-	public var overlayTitle: String? = nil
-	public var message_0: String? = nil
-	public var message_1: String? = nil
+	public var overlayTitle: String?
+	public var message_0: String?
+	public var message_1: String?
 
 	public var sliderValue: CGFloat? = 0.0
 	public var sliderTint: Color? = Color(uiColor: .systemBlue)
 
-	public var cancellableTask: Task<Void, Error>? = nil
+	public var cancellableTask: Task<Void, Error>?
 
 	public init(
 		progressSpinnerAlpha: CGFloat? = 1.0,
@@ -69,9 +65,8 @@ public class FXDobservableOverlay: FXDprotocolOverlay, @unchecked Sendable {
 public struct fXDviewOverlay: View {
 	@Environment(\.dismiss) var dismiss
 	@Environment(\.colorScheme) var colorScheme
-	
-	@Bindable var observable: FXDobservableOverlay
 
+	@Bindable var observable: FXDobservableOverlay
 
 	public init(observable: FXDobservableOverlay? = nil) {
 		self.observable = observable ?? FXDobservableOverlay()
@@ -128,9 +123,6 @@ public struct fXDviewOverlay: View {
     }
 }
 
-
-
-
 public class FXDhostedOverlay: UIHostingController<fXDviewOverlay>, @unchecked Sendable {
 	fileprivate var cancellableObservers: Set<AnyCancellable> = []
 
@@ -140,7 +132,6 @@ public class FXDhostedOverlay: UIHostingController<fXDviewOverlay>, @unchecked S
 		guard parent != nil else {
 			return
 		}
-
 
 		view.frame.size = parent!.view.frame.size
 		view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -160,14 +151,12 @@ public class FXDhostedOverlay: UIHostingController<fXDviewOverlay>, @unchecked S
 		reactToTraitChanges()
 
 		registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
-			(self: Self, previousTraitCollection: UITraitCollection) in
+			(_: Self, _: UITraitCollection) in
 
 			reactToTraitChanges()
 		}
 	}
 }
-
-
 
 // Example usage
 extension FXDobservableOverlay {
@@ -177,7 +166,7 @@ extension FXDobservableOverlay {
 		let taskInterval = 1.0
         Task {
 			for step in 0...10 {
-				//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
+				// Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 
                 testingConfiguration.overlayAlpha = 1.0 - (CGFloat(step)*0.1)
                 testingConfiguration.sliderValue = CGFloat(step) * 0.1
@@ -193,4 +182,3 @@ extension FXDobservableOverlay {
 		return testingConfiguration
 	}
 }
-

@@ -1,6 +1,5 @@
 import fXDObjC
 
-
 extension UIButton {
 	public func replaceImageWithResizableImage(withCapInsets capInsets: UIEdgeInsets) {
 

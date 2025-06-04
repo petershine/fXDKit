@@ -1,12 +1,9 @@
-
-
 import Foundation
 import UIKit
 
-
 extension URLSession {
-	public func synchronousURLRequest(urlRequest: URLRequest, asyncOperation: BlockOperation?, synchronousDataHandling:((Data?)->Void)?) {
-		guard (Thread.isMainThread == false || asyncOperation != nil) else {
+	public func synchronousURLRequest(urlRequest: URLRequest, asyncOperation: BlockOperation?, synchronousDataHandling: ((Data?) -> Void)?) {
+		guard Thread.isMainThread == false || asyncOperation != nil else {
 			fxd_log()
 			fxdPrint("while this operation is synchronous, it should be running inside non-mainThread, for data transferring and data transforming, without blocking mainThread")
 			fxdPrint((Thread.isMainThread == false || asyncOperation != nil), "\(#function) : Thread.isMainThread : \(Thread.isMainThread), asyncOperation != nil : \(asyncOperation != nil)")
@@ -14,18 +11,16 @@ extension URLSession {
 			return
 		}
 
-
         actor FXDretrievedActor {
-            nonisolated(unsafe) var data: Data? = nil
+            nonisolated(unsafe) var data: Data?
         }
 
-        
         let retrievedActor = FXDretrievedActor()
 
 		let synchronousRequestSemaphore = DispatchSemaphore(value: 0)
 		self.dataTask(with: urlRequest) {
 			(data, response, error) in
-            retrievedActor.data = data	//Mutation of captured var 'retrievedData' in concurrently-executing code
+            retrievedActor.data = data	// Mutation of captured var 'retrievedData' in concurrently-executing code
 
 			if error != nil {
 				fxdPrint("[\(#function)] error: ", error, "\nresponse: ", response)
@@ -42,9 +37,8 @@ extension URLSession {
         synchronousDataHandling?(retrievedActor.data)
 	}
 
-
 	public func synchronousImageRequest(urlRequest: URLRequest, asyncOperation: BlockOperation?) -> UIImage? {
-		var retrievedImage: UIImage? = nil
+		var retrievedImage: UIImage?
 
 		self.synchronousURLRequest(
 			urlRequest: urlRequest,
@@ -55,14 +49,14 @@ extension URLSession {
 					return
 				}
 
-				guard (asyncOperation == nil || asyncOperation!.isCancelled == false) else {
+				guard asyncOperation == nil || asyncOperation!.isCancelled == false else {
 					return
 				}
 
 				retrievedImage = UIImage(data: imageData!)
 			})
 
-		guard (asyncOperation == nil || asyncOperation!.isCancelled == false) else {
+		guard asyncOperation == nil || asyncOperation!.isCancelled == false else {
 			fxdPrint("[\(#function)] cancelled during transforming : \(asyncOperation?.isCancelled ?? true)")
 			return nil
 		}
@@ -70,7 +64,6 @@ extension URLSession {
 		return retrievedImage
 	}
 }
-
 
 public let TIMEOUT_DEFAULT = 60.0	// ... "The default timeout interval is 60 seconds." ...
 public let TIMEOUT_LONGER = (TIMEOUT_DEFAULT*2.0)
@@ -94,7 +87,7 @@ public actor DataAndResponseActor {
 		return dataAndResponseTuples.count
 	}
 
-	public var caughtError: Error? = nil
+	public var caughtError: Error?
 	func assignError(_ newError: Error?) {
 		caughtError = newError
 	}
@@ -105,7 +98,6 @@ extension URLSession {
 		guard urlRequests.count > 0 else {
 			throw SerializedURLRequestError.noRequests
 		}
-
 
 		let safeDataAndResponse = DataAndResponseActor()
 		func requesting(urlRequest: URLRequest, reattemptedRequests: [URLRequest] = []) async throws {
@@ -119,7 +111,6 @@ extension URLSession {
 				throw SerializedURLRequestError.timeoutExpired
 			}
 
-
 			await safeDataAndResponse.append((data, response))
 
 			let finishedCount = await safeDataAndResponse.count()
@@ -131,14 +122,12 @@ extension URLSession {
 		for urlRequest in urlRequests {
 			do {
 				try await requesting(urlRequest: urlRequest)
-			}
-			catch {
+			} catch {
 				guard let urlError = error as? URLError,
 					  urlError.code.rawValue == NSURLErrorTimedOut else {
 					fxdPrint("[\(#function)] \(error)")
 					throw error
 				}
-
 
 				var modifiedRequest = urlRequest
 				modifiedRequest.timeoutInterval = TIMEOUT_LONGER
@@ -150,9 +139,8 @@ extension URLSession {
 		fxdPrint("[\(#function)] \(reattemptedRequests.count)")
 		for reattempted in reattemptedRequests {
 			do {
-				try await requesting(urlRequest: reattempted, reattemptedRequests:reattemptedRequests)
-			}
-			catch {
+				try await requesting(urlRequest: reattempted, reattemptedRequests: reattemptedRequests)
+			} catch {
 				fxdPrint("[\(#function)] reattempted: \(error)")
 				throw error
 			}

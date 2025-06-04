@@ -1,7 +1,4 @@
-
-
 import SwiftUI
-
 
 public struct fXDviewLaunching: View {
 	@State var appDisplayedName: String
@@ -13,19 +10,19 @@ public struct fXDviewLaunching: View {
 	@State var foregroundImage: UIImage?
 	@State var foregroundSize: CGSize
 
-	public init(appDisplayedName: String? = nil, 
+	public init(appDisplayedName: String? = nil,
 				shouldHideStatusBar: Bool = true,
 				overlayColor: UIColor? = nil,
 				backgroundImage: UIImage?,
 				foregroundImage: UIImage?,
 				foregroundSize: CGSize = .zero) {
-		
+
 		self.appDisplayedName = appDisplayedName ?? "Hello, world!"
 		self.shouldHideStatusBar = shouldHideStatusBar
 
 		self.overlayColor = overlayColor
 		self.backgroundImage = backgroundImage
-		
+
 		self.foregroundImage = foregroundImage
 		self.foregroundSize = foregroundSize
 	}
@@ -51,8 +48,7 @@ public struct fXDviewLaunching: View {
 							width: foregroundSize.width,
 							height: foregroundSize.height,
 							alignment: .center)
-				}
-				else {
+				} else {
 					Image(uiImage: foregroundImage!)
 						.fixedSize()
 				}
@@ -75,7 +71,6 @@ public struct fXDviewLaunching: View {
 		.statusBarHidden(shouldHideStatusBar)
 	}
 }
-
 
 // Usage for hosted
 open class FXDhostedLaunching: UIHostingController<fXDviewLaunching>, @unchecked Sendable {

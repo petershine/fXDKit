@@ -1,7 +1,4 @@
-
-
 import SwiftUI
-
 
 public struct fXDlistImage<Content: View>: View {
     @Binding var didMaximize: Bool
@@ -11,10 +8,9 @@ public struct fXDlistImage<Content: View>: View {
     @Binding var imageURLs: [URL]?
     @State private var selectedImageURL: URL?
 
-    var action_DidSelect: ((_ imageURL: URL?) -> Void)? = nil
-    var action_LongPress: ((_ imageURL: URL?) -> Void)? = nil
-    var attachedForMaximized: ((_ imageURL: URL?) -> Content)? = nil
-
+    var action_DidSelect: ((_ imageURL: URL?) -> Void)?
+    var action_LongPress: ((_ imageURL: URL?) -> Void)?
+    var attachedForMaximized: ((_ imageURL: URL?) -> Content)?
 
     public init(
         didMaximize: Binding<Bool>,
@@ -36,7 +32,7 @@ public struct fXDlistImage<Content: View>: View {
     public var body: some View {
         List(
             imageURLs ?? [],
-            id:\.self
+            id: \.self
         ) {
             imageURL in
 
@@ -82,14 +78,14 @@ public struct fXDlistImage<Content: View>: View {
         .scrollIndicators(.hidden)
         .listStyle(.plain)
         .onChange(of: imageURLs ?? [], {
-            oldValue, newValue in
+            _, newValue in
 
             if let latest = newValue.first {
                 selectedImageURL = latest
             }
         })
         .onChange(of: selectedImageURL, {
-            oldValue, newValue in
+            _, newValue in
 
             action_DidSelect?(newValue)
         })
@@ -99,13 +95,13 @@ public struct fXDlistImage<Content: View>: View {
 fileprivate extension URL {
     var availableThumbnailURL: URL? {
         var availableURL = self.thumbnailURL
-        
+
         if let availablePath = availableURL?.path(percentEncoded: false) {
             if !FileManager.default.fileExists(atPath: availablePath) {
                 availableURL = self.pairedFileURL(inSubPath: "_thumbnail", contentType: .png, directory: .documentDirectory)
             }
         }
-        
+
         return availableURL
     }
 }

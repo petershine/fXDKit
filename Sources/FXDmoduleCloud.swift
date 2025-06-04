@@ -1,23 +1,18 @@
-
-
 import Foundation
 import UIKit
-
 
 let userdefaultObjSavedUbiquityIdentityToken = "SavedUbiquityIdentityTokenObjKey"
 let userdefaultStringSavedUbiquityContainerURL = "SavedUbiquityContainerURLstringKey"
 
+class FXDmoduleCloud: NSObject, @unchecked Sendable {
+	var statusCallback: FXDcallback?
 
-class FXDmoduleCloud : NSObject, @unchecked Sendable {
-	var statusCallback: FXDcallback? = nil
-
-	var containerIdentifier: String? = nil
-	var containerURL: URL? = nil
+	var containerIdentifier: String?
+	var containerURL: URL?
 
 	deinit {
 		statusCallback = nil
 	}
-
 
     @MainActor open func prepareContainerURLwithIdentifier(_ containerIdentifier: String?, withStatusCallback statusCallback: FXDcallback?) {	fxd_log()
 		fxdPrint("containerIdentifier: ", containerIdentifier)
@@ -58,14 +53,12 @@ class FXDmoduleCloud : NSObject, @unchecked Sendable {
 			return
 		}
 
-
 		let savedIdentityTokenData = UserDefaults.standard.object(forKey: userdefaultObjSavedUbiquityIdentityToken) as? Data
 
-		var identityToken: (NSCoding & NSCopying & NSObjectProtocol)? = nil
+		var identityToken: (NSCoding & NSCopying & NSObjectProtocol)?
 		do {
 			identityToken = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSCoding.self, NSCopying.self, NSObjectProtocol.self], from: savedIdentityTokenData!) as? any NSCoding & NSCopying & NSObjectProtocol
-		}
-		catch {
+		} catch {
 			fxdPrint("\(error)")
 		}
 
@@ -73,7 +66,7 @@ class FXDmoduleCloud : NSObject, @unchecked Sendable {
 		fxdPrint("identityToken?.isEqual(fileManager.ubiquityIdentityToken): ", identityToken?.isEqual(FileManager.default.ubiquityIdentityToken))
 
 		if identityToken == nil
-			|| identityToken!.isEqual(FileManager.default.ubiquityIdentityToken) == false  {
+			|| identityToken!.isEqual(FileManager.default.ubiquityIdentityToken) == false {
 
 			do {
 				let defaultIdentityToken: Any = FileManager.default.ubiquityIdentityToken as Any
@@ -81,17 +74,14 @@ class FXDmoduleCloud : NSObject, @unchecked Sendable {
 
 				UserDefaults.standard.setValue(defaultIdentityTokenData, forKey: userdefaultObjSavedUbiquityIdentityToken)
 				UserDefaults.standard.synchronize()
-			}
-			catch {
+			} catch {
 				fxdPrint("\(error)")
 			}
 		}
 
-
 		let savedContainerURL = UserDefaults.standard.object(forKey: userdefaultStringSavedUbiquityContainerURL) as? String
 		containerURL = NSURL.evaluatedURLforPath(savedContainerURL)
 		fxdPrint("containerURL: ", containerURL)
-
 
 		let containerURLupdatingQueue = OperationQueue.newSerialQueue(withName: #function)
 
@@ -111,10 +101,8 @@ class FXDmoduleCloud : NSObject, @unchecked Sendable {
 					return
 				}
 
-
 				UserDefaults.standard.setValue(ubiquityContainerURL?.absoluteString, forKey: userdefaultStringSavedUbiquityContainerURL)
 				UserDefaults.standard.synchronize()
-
 
 				self.containerURL = ubiquityContainerURL
 				fxdPrint("", FileManager.default.infoDictionary(forFolderURL: self.containerURL))

@@ -1,7 +1,4 @@
-
-
 import UIKit
-
 
 extension UIViewController {
 	func sceneOwnedView(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIView? {	fxd_log()
@@ -28,8 +25,7 @@ extension UIViewController {
 			return nil
 		}
 
-
-		var lastChildScene: UIViewController? = nil
+		var lastChildScene: UIViewController?
 
 		for childScene in self.children.reversed() {
 			if childScene.isKind(of: sceneClass!) {
@@ -45,7 +41,6 @@ extension UIViewController {
 		guard let child else {
 			return false
 		}
-
 
 		addChild(child)
 		view.addSubview(child.view)
@@ -68,7 +63,7 @@ extension UIViewController {
     @IBAction func dismissSceneForEventSender(sender: Any) {  fxd_log()
 		fxdPrint(self.parent, self.presentingViewController)
 
-		if (self.parent != nil) {
+		if self.parent != nil {
 			self.parent?.dismiss(animated: true, completion: nil)
 		} else {
 			self.dismiss(animated: true, completion: nil)

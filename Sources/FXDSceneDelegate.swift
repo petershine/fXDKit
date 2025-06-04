@@ -1,8 +1,5 @@
-
-
 import SwiftUI
 import Foundation
-
 
 public protocol FXDSceneDelegateProtocols: UIWindowSceneDelegate, ObservableObject {
 	var isAppLaunching: Bool { get set }
@@ -13,9 +10,8 @@ public protocol FXDSceneDelegateProtocols: UIWindowSceneDelegate, ObservableObje
 	func sceneFirstTimeBecameActiveAtLaunch(_ scene: UIScene)
 }
 
-
 open class FXDSceneDelegate: UIResponder, FXDSceneDelegateProtocols, @unchecked Sendable {
-	
+
 	@Published open var isAppLaunching: Bool = false
 	@Published open var didFinishLaunching: Bool = false
 
@@ -39,7 +35,6 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 		}
 	}
 
-
 	override init() {
 		super.init()
 		fxd_overridable()
@@ -50,12 +45,10 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 			return
 		}
 
-
 		guard didFinishLaunching else {
 			sceneFirstTimeBecameActiveAtLaunch(scene)
 			return
 		}
-
 
 		fxd_overridable()
 		fxdPrint("scene: \(scene)")
@@ -90,10 +83,8 @@ class SubClassedSceneDelegate: FXDSceneDelegate {
 				try await Task.sleep(nanoseconds: UInt64((taskInterval * 1_000_000_000).rounded()))
 			}
 
-
 			didFinishLaunching = true
 			isAppLaunching = false
-
 
 			fxdPrint("ENDED firstTime launched task \(Date.now)")
 			fxdPrint("isAppLaunching: ", isAppLaunching, "didFinishLaunching: ", didFinishLaunching)

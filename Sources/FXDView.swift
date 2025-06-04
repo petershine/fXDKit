@@ -1,7 +1,4 @@
-
-
 import UIKit
-
 
 extension UIView {
 
@@ -22,15 +19,14 @@ extension UIView {
 	}
 }
 
-
 extension UIView {
 	@objc public func fadeInFromHidden() {
-		guard (self.isHidden || self.alpha != 1.0) else {
+		guard self.isHidden || self.alpha != 1.0 else {
 			return
 		}
 
-		self.alpha = 0.0;
-		self.isHidden = false;
+		self.alpha = 0.0
+		self.isHidden = false
 
 		UIView.animate(withDuration: DURATION_ANIMATION) {
 			self.alpha = 1.0
@@ -38,7 +34,7 @@ extension UIView {
 	}
 
 	@objc public func fadeOutThenHidden() {
-		guard (self.isHidden == false) else {
+		guard self.isHidden == false else {
 			return
 		}
 
@@ -47,7 +43,7 @@ extension UIView {
 		UIView.animate(withDuration: DURATION_ANIMATION,
 		               animations: {
 						self.alpha = 0.0
-		}) { (didFinish: Bool) in
+		}) { (_: Bool) in
 			self.isHidden = true
 			self.alpha = previousAlpha
 		}
@@ -70,7 +66,7 @@ extension UIView {
 			animations: {
 				subview?.alpha = 0.0
 
-		}) { (didFinish: Bool) in
+		}) { (_: Bool) in
 			afterAddedBlock?()
 		}
 	}
@@ -87,7 +83,7 @@ extension UIView {
 			animations: {
 			subview?.alpha = 0.0
 
-		}) { (didFinish: Bool) in
+		}) { (_: Bool) in
 			subview?.removeFromSuperview()
 			subview?.alpha = 1.0
 
@@ -114,12 +110,11 @@ extension UIView {
             return nil
         }
 
-		var foundView: UIView? = nil
+		var foundView: UIView?
 
         if String(describing: superview!.classForCoder.self) == className {
             foundView = superview
-        }
-        else {
+        } else {
             // Recursive call
             foundView = superview?.superView(forClassName: className)
         }

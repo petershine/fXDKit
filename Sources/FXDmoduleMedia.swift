@@ -1,7 +1,4 @@
-
-
 import MediaPlayer
-
 
 class FXDmoduleMedia: NSObject, @unchecked Sendable {
 
@@ -11,31 +8,28 @@ class FXDmoduleMedia: NSObject, @unchecked Sendable {
 
     var lastMediaItem: MPMediaItem?
 
-
     deinit {    fxd_log()
         musicPlayer?.endGeneratingPlaybackNotifications()
         MPMediaLibrary.default().endGeneratingLibraryChangeNotifications()
     }
 
-
     func startObservingMediaNotifications() {    fxd_log()
-		//MARK: The app's Info.plist must contain an NSAppleMusicUsageDescription key with a string value explaining to the user how the app uses this data.
+		// MARK: The app's Info.plist must contain an NSAppleMusicUsageDescription key with a string value explaining to the user how the app uses this data.
 
         NotificationCenter.default.addObserver(self,
                          selector: #selector(self.observedMPMusicPlayerControllerPlaybackStateDidChange(_:)),
                          name: .MPMusicPlayerControllerPlaybackStateDidChange,
-                         object:self.musicPlayer)
+                         object: self.musicPlayer)
 
         NotificationCenter.default.addObserver(self,
                          selector: #selector(self.observedMPMusicPlayerControllerNowPlayingItemDidChange(_:)),
                          name: .MPMusicPlayerControllerNowPlayingItemDidChange,
-                         object:self.musicPlayer)
+                         object: self.musicPlayer)
 
         NotificationCenter.default.addObserver(self,
                          selector: #selector(self.observedMPMediaLibraryDidChange(_:)),
                          name: .MPMediaLibraryDidChange,
-                         object:MPMediaLibrary.default())
-
+                         object: MPMediaLibrary.default())
 
         if self.musicPlayer != nil {
             self.musicPlayer!.beginGeneratingPlaybackNotifications()
@@ -60,4 +54,3 @@ extension FXDmoduleMedia {
 		fxdPrint(MPMediaLibrary.default().lastModifiedDate)
 	}
 }
-

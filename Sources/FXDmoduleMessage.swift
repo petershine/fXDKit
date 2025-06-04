@@ -1,39 +1,32 @@
-
-
 import MessageUI
-
 
 open class FXDmoduleMessage: NSObject, @unchecked Sendable {
     @MainActor func presentEmailScene(_ emailScene: MFMailComposeViewController?, forPresentingScene presentingScene: UIViewController?, using image: UIImage?, usingMessage message: String?, withRecipients recipients: [String]?) {	fxd_log()
 
 		guard MFMailComposeViewController.canSendMail() else {
-			//TODO: alert user
+			// TODO: alert user
 			return
 		}
 
-
 		var emailScene = emailScene
 		if emailScene == nil {
-			if (image != nil || message != nil) {
+			if image != nil || message != nil {
 				emailScene = self.emailScene(forSharing: image, usingMessage: message)
-			}
-			else {
+			} else {
 				emailScene = self.emailSceneWithMailBody(withRecipients: recipients)
 			}
 		}
 
 		guard emailScene != nil else {
-			//TODO: alert user
+			// TODO: alert user
 			return
 		}
-
 
 		var presentingScene = presentingScene
 		if presentingScene == nil {
 			presentingScene = UIApplication.shared.mainWindow()?.rootViewController
 			fxdPrint(presentingScene as Any)
 		}
-
 
 		emailScene?.mailComposeDelegate = self
 
@@ -48,11 +41,10 @@ open class FXDmoduleMessage: NSObject, @unchecked Sendable {
 		fxdPrint("Bundle.main.infoDictionary: ", Bundle.main.infoDictionary)
 		fxdPrint("recipients: ", recipients)
 
-		if let currentLanguage = (UserDefaults.standard.object(forKey: "AppleLanguages") as? Array<Any?>)?.first {
+		if let currentLanguage = (UserDefaults.standard.object(forKey: "AppleLanguages") as? [Any?])?.first {
 			fxdPrint("currentLanguage: ", currentLanguage)
 		}
 #endif
-
 
 		let version = Bundle.bundleVersion()
 		let displayName = Bundle.bundleDisplayName()
@@ -64,7 +56,6 @@ open class FXDmoduleMessage: NSObject, @unchecked Sendable {
 		let machineNameLine = "\(machineNameCode ?? "") \(UIDevice.current.systemVersion)"
 		let mailBody = "\n\n\n\n\n\(lineSeparator)\n\(appVersionLine)\n\(machineNameLine)\n"
 		fxdPrint("mailBody: \(mailBody)")
-
 
 		let emailScene = MFMailComposeViewController(navigationBarClass: nil, toolbarClass: nil)
 		emailScene.setSubject(subjectLine)
@@ -80,7 +71,6 @@ open class FXDmoduleMessage: NSObject, @unchecked Sendable {
 
 		let subjectLine = "[\(displayName ?? "")]"
 
-
 		let emailScene = MFMailComposeViewController(navigationBarClass: nil, toolbarClass: nil)
 		emailScene.setSubject(subjectLine)
 
@@ -95,7 +85,6 @@ open class FXDmoduleMessage: NSObject, @unchecked Sendable {
 		return emailScene
 	}
 }
-
 
 extension FXDmoduleMessage: MFMailComposeViewControllerDelegate {
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {	fxd_log()

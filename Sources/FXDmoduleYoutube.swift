@@ -1,7 +1,4 @@
-
-
 import Foundation
-
 
 public let ENDPOINT_YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%@&key=%@"
 
@@ -13,13 +10,11 @@ public let KEY_VIDEO_PUBLISHED_AT = "publishedAt"
 public let KEY_VIDEO_TITLE = "title"
 public let KEY_VIDEO_THUMBNAIL = "thumbnail"
 
-
 class FXDmoduleYoutube: NSObject, @unchecked Sendable {
 
 	var apikeyGoogleForBrowser: String?
 
-
-	func searchYouTubeUsing(artist: String?, song: String?, album: String?, callback:@escaping (@Sendable (Bool, Any?) -> Void)) {	fxd_log()
+	func searchYouTubeUsing(artist: String?, song: String?, album: String?, callback: @escaping (@Sendable (Bool, Any?) -> Void)) {	fxd_log()
 
 		fxdPrint(artist as Any)
 		fxdPrint(song as Any)
@@ -33,12 +28,10 @@ class FXDmoduleYoutube: NSObject, @unchecked Sendable {
 			return
 		}
 
-
 		guard self.apikeyGoogleForBrowser != nil else {
 			callback(false, nil)
 			return
 		}
-
 
 		let percentEscaped = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		fxdPrint(percentEscaped)
@@ -50,21 +43,19 @@ class FXDmoduleYoutube: NSObject, @unchecked Sendable {
 		fxdPrint(request)
 
 		let searchTask = URLSession.shared.dataTask(with: request) {
-			(data:Data?, response:URLResponse?, error:Error?) in
+			(data: Data?, response: URLResponse?, error: Error?) in
 
 			fxdPrint(data)
 			fxdPrint(response)
 			fxdPrint(error)
 
-
-			var results:Array<Any>?
+			var results: [Any]?
 
 			do {
 				let jsonObject = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
 
-				results = (jsonObject as! Dictionary<String, Any>)[NODE_YOUTUBE_ROOT] as? Array<Any>;
-			}
-			catch {
+				results = (jsonObject as! [String: Any])[NODE_YOUTUBE_ROOT] as? [Any]
+			} catch {
 				fxdPrint("\(error)")
 			}
 

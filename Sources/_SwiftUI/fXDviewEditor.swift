@@ -1,7 +1,4 @@
-
-
 import SwiftUI
-
 
 public struct fXDviewEditor<Content: View>: View {
 	@Binding var shouldPresentTextEditor: Bool
@@ -37,7 +34,6 @@ public struct fXDviewEditor<Content: View>: View {
 		self.attachedView = attachedView()
 	}
 
-
 	public var body: some View {
 		ZStack {
 			Color(.black)
@@ -60,7 +56,7 @@ public struct fXDviewEditor<Content: View>: View {
 					editorsVStackHeight = outerGeometry.size.height
 				}
 				.onChange(of: outerGeometry.size.height) {
-					(oldValue, newValue) in
+					(_, newValue) in
 					editorsVStackHeight = newValue
 				}
 				.animation(.easeInOut(duration: 0.3), value: focusedEditor)
@@ -84,7 +80,6 @@ public struct fXDviewEditor<Content: View>: View {
 			focusedEditor = 0
 		}
 	}
-
 
 	private func height(for editorIndex: Int) -> CGFloat {
 		if let focusedEditor = focusedEditor,

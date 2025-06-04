@@ -1,7 +1,4 @@
-
-
 import fXDObjC
-
 
 class FXDcoredataBackup: FXDmoduleCoredata, @unchecked Sendable {
     @MainActor static var shared: FXDcoredataBackup = FXDcoredataBackup()

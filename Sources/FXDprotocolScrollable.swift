@@ -1,9 +1,6 @@
-
-
 import Combine
 
 import fXDObjC
-
 
 @MainActor
 public protocol FXDprotocolScrollable {
@@ -27,10 +24,9 @@ extension FXDprotocolScrollable {
 		var distance: CGFloat = scrollView.contentOffset.y + scrollView.contentInset.top
 		distance += scrollView.safeAreaInsets.top
 
-		if (distance < 0.0) {
+		if distance < 0.0 {
 			distance = 0.0
-		}
-		else if (distance > maximumDistance) {
+		} else if distance > maximumDistance {
 			distance = maximumDistance
 		}
 
@@ -38,13 +34,12 @@ extension FXDprotocolScrollable {
 	}
 }
 
-
 public protocol FXDscrollableCells: FXDprotocolScrollable {
 	var cellOperationQueue: OperationQueue? { get }
 	var cellOperationDictionary: NSMutableDictionary? { get }
 
 	var mainCellIdentifier: String { get }
-	var mainDataSource: Array<Any>? { get set }
+	var mainDataSource: [Any]? { get set }
 
 	func configureCell(_ cell: UIView, for indexPath: IndexPath)
 	func enqueueCellOperation(for cell: UIView, indexPath: IndexPath)

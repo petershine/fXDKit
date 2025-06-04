@@ -1,25 +1,20 @@
-
-
 import fXDObjC
 
-
-//MARK: For subclass to define names or keys
+// MARK: For subclass to define names or keys
 /* SAMPLE:
  #define entityname<#DefaultClass#> @"<#AppPrefix#>entity<#DefaultClass#>"
  #define attribkey<#AttributeName#> @"<#AttributeName#>"
  */
 
-//MARK: Logging options
+// MARK: Logging options
 // -com.apple.CoreData.SQLDebug 1 || 2 || 3
 // -com.apple.CoreData.Ubiquity.LogLevel 1 || 2 || 3
 
-
 open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
-	private var enumeratingTask: UIBackgroundTaskIdentifier? = nil
-	private var dataSavingTask: UIBackgroundTaskIdentifier? = nil
+	private var enumeratingTask: UIBackgroundTaskIdentifier?
+	private var dataSavingTask: UIBackgroundTaskIdentifier?
 
-    public var mainDocument: UIManagedDocument? = nil
-
+    public var mainDocument: UIManagedDocument?
 
 	public var documentSearchPath: String = {
 		return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
@@ -32,7 +27,6 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
     var appCachesDirectory: URL? = {
 		return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last
 	}()
-
 
 	lazy var enumeratingOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: #function)
@@ -55,15 +49,14 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 	}()
 
     lazy open var mainEntityName: String? = {	fxd_overridable()
-		//SAMPLE: _mainEntityName = entityname<#DefaultClass#>
+		// SAMPLE: _mainEntityName = entityname<#DefaultClass#>
 		return nil
 	}()
 
 	lazy open var mainSortDescriptors: [Any]? = {	fxd_overridable()
-		//SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
+		// SAMPLE: _mainSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attribkey<#AttributeName#> ascending:<#NO#>]];
 		return nil
 	}()
-
 
 	public var doesStoredSqliteExist: Bool {	fxd_log()
 		let storedPath = (documentSearchPath as NSString).appendingPathComponent(sqlitePathComponent ?? "")
@@ -75,7 +68,6 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 		return doesExist
 	}
 
-	
 	deinit {
 		enumeratingOperationQueue?.cancelAllOperations()
 	}
@@ -84,7 +76,6 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 		guard doesStoredSqliteExist == false else {
 			return false
 		}
-
 
 		fxd_log()
 		let bundledSqlitePath = Bundle.main.path(forResource: sqliteFile, ofType: "sqlite") ?? ""
@@ -99,7 +90,6 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 			return false
 		}
 
-
 		let pathComponent = "\(oldSqliteFile).sqlite"
 		let oldSqlitePath = (documentSearchPath as NSString).appendingPathComponent(pathComponent)
 		fxdPrint("oldSqlitePath: \(oldSqlitePath)")
@@ -108,12 +98,11 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 	}
 
 	open func upgradeAllAttributesForNewDataModel(finishCallback: FXDcallback? = nil) {	fxd_overridable()
-		//TODO: Learn about NSMigrationPolicy implementation
+		// TODO: Learn about NSMigrationPolicy implementation
 
 		finishCallback?(true, nil)
 	}
 }
-
 
 extension FXDmoduleCoredata {
 	public func storeCopiedItem(fromSqlitePath sqlitePath: String, toStoredPath storedPath: String?) -> Bool {	fxd_log()
@@ -123,19 +112,16 @@ extension FXDmoduleCoredata {
 			return false
 		}
 
-
 		var defaultStoredPath = storedPath
 		if defaultStoredPath == nil {
 			let pathComponent = sqlitePathComponent ?? ""
 			defaultStoredPath = (documentSearchPath as NSString).appendingPathComponent(pathComponent)
 		}
 
-
 		var didCopy: Bool = true
 		do {
 			try FileManager.default.copyItem(atPath: sqlitePath, toPath: defaultStoredPath ?? "")
-		}
-		catch {
+		} catch {
 			fxdPrint("\(error)")
 			didCopy = false
 		}
@@ -158,32 +144,29 @@ extension FXDmoduleCoredata {
 		}
 		assert(mainManagedDocument != nil, "[SHOULD NOT BE nil] mainManagedDocument: \(String(describing: mainManagedDocument))")
 
-
 		fxdPrint("ubiquityContainerURL: ", ubiquityContainerURL)
 		fxdPrint("protectionOption: ", protectionOption)
 		fxdPrint("mainManagedDocument: ", mainManagedDocument)
 
 		mainDocument = mainManagedDocument
 
-
 		let rootURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
 		let storeURL = rootURL?.appending(path: sqlitePathComponent ?? "")
 		fxdPrint("storeURL: ", storeURL)
 
-
-		var storeOptions : Dictionary<String , Any> = [:]
+		var storeOptions: [String: Any] = [:]
 		storeOptions[NSMigratePersistentStoresAutomaticallyOption] = true
 		storeOptions[NSInferMappingModelAutomaticallyOption] = true
 
 		if ubiquityContainerURL != nil {
-			//DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
+			// DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
 			/*
 			storeOptions[NSPersistentStoreUbiquitousContentNameKey] = ubiquitousContentName;
 			storeOptions[NSPersistentStoreUbiquitousContentURLKey] = ubiquityContainerURL;
 			 */
 		}
 
-		//MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
+		// MARK: NSFileProtectionCompleteUntilFirstUserAuthentication is already used as default
 		if protectionOption?.isEmpty == false {
 			storeOptions[NSPersistentStoreFileProtectionKey] = protectionOption
 		}
@@ -194,12 +177,10 @@ extension FXDmoduleCoredata {
 		do {
 			if storeURL != nil {
 				try mainDocument?.configurePersistentStoreCoordinator(for: storeURL!, ofType: NSSQLiteStoreType, modelConfiguration: nil, storeOptions: storeOptions)
-			}
-			else {
+			} else {
 				didConfigure = false
 			}
-		}
-		catch {
+		} catch {
 			fxdPrint("\(error)")
 			didConfigure = false
 		}
@@ -219,7 +200,7 @@ extension FXDmoduleCoredata {
 		assert(Thread.isMainThread)
 		fxdPrint("2. didConfigure: \(didConfigure)")
 
-		//MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
+		// MARK: If iCloud connection is not working, CHECK if cellular transferring is enabled on device"
 
 		fxdPrint("UIManagedDocument.persistentStoreName: \(UIManagedDocument.persistentStoreName)")
 
@@ -237,10 +218,10 @@ extension FXDmoduleCoredata {
 
         let result: Bool = didConfigure
         upgradeAllAttributesForNewDataModel {
-            (didFinish, responseObj) in
+            (didFinish, _) in
 
 			finishCallback?((result && didFinish), nil)
-			//MARK: Careful with order of operations
+			// MARK: Careful with order of operations
 
             DispatchQueue.main.async {
                 self.startObservingCoreDataNotifications()
@@ -251,14 +232,14 @@ extension FXDmoduleCoredata {
     @MainActor func startObservingCoreDataNotifications() {
 		let notificationCenter = NotificationCenter.default
 
-		//FXDobserverApplication
+		// FXDobserverApplication
 		notificationCenter.addObserver(self, selector: #selector(observedUIApplicationWillTerminate(_:) ), name: UIApplication.willTerminateNotification, object: nil)
 
-		//FXDobserverNSManagedObject
+		// FXDobserverNSManagedObject
 		notificationCenter.addObserver(self, selector: #selector(observedUIDocumentStateChanged(_:)), name: UIDocument.stateChangedNotification, object: nil)
 
-		//DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
-		//https://developer.apple.com/documentation/coredata/nspersistentstoredidimportubiquitouscontentchangesnotification
+		// DEPRECATED: API_DEPRECATED("Please see the release notes and Core Data documentation.", macosx(10.7,10.12), ios(5.0,10.0));
+		// https://developer.apple.com/documentation/coredata/nspersistentstoredidimportubiquitouscontentchangesnotification
 		/*
 		notificationCenter.addObserver(self, selector: #selector(observedNSPersistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: nil)
 		 */
@@ -274,12 +255,12 @@ extension FXDmoduleCoredata {
     @MainActor func deleteAllData(finishCallback: FXDcallback? = nil) {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 
-		let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { action in
+		let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
 			finishCallback?(false, nil)
 		}
 
 		let deleteAction = UIAlertAction(title: NSLocalizedString("Delate All", comment: ""), style: .destructive) {
-			[weak self] action in
+			[weak self] _ in
 
 			self?.enumerateAllData(
 				withPrivateContext: false,
@@ -323,7 +304,6 @@ extension FXDmoduleCoredata {
 			return
 		}
 
-
 		enumeratingTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
 			[weak self] in
 
@@ -339,17 +319,15 @@ extension FXDmoduleCoredata {
 			mainWindow?.showOverlay()
 		}
 
-
-
         let managedContext = shouldUsePrivateContext ? mainDocument?.managedObjectContext.parent : mainDocument?.managedObjectContext
         enumeratingOperationQueue?.addOperation(BlockOperation(block: {
 			[weak self] in
 
             var shouldBreak: Bool = false
 
-			let fetchedObjArray = managedContext?.fetchedObjArray(forEntityName: self?.mainEntityName, withSortDescriptors: self?.mainSortDescriptors, with: nil, withLimit: UInt(limitInfiniteFetch)) as? Array<NSManagedObject>
+			let fetchedObjArray = managedContext?.fetchedObjArray(forEntityName: self?.mainEntityName, withSortDescriptors: self?.mainSortDescriptors, with: nil, withLimit: UInt(limitInfiniteFetch)) as? [NSManagedObject]
 
-			for fetchedObj in fetchedObjArray ?? Array<NSManagedObject>() {
+			for fetchedObj in fetchedObjArray ?? [NSManagedObject]() {
 				guard shouldBreak == false else {
 					break
 				}
@@ -359,8 +337,7 @@ extension FXDmoduleCoredata {
 
 					if shouldUsePrivateContext {
 						enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
-					}
-					else {
+					} else {
                         enumerationBlock?(managedContext, mainEntityObj, &shouldBreak)
 					}
 				}
@@ -369,7 +346,6 @@ extension FXDmoduleCoredata {
                     fxdPrint("UIApplication.shared.backgroundTimeRemaining: \(UIApplication.shared.backgroundTimeRemaining)")
                 }
 			}
-
 
             let didBreak: Bool = !shouldBreak
 
@@ -400,7 +376,7 @@ extension FXDmoduleCoredata {
 	}
 
     @MainActor func saveManagedContext(_ managedContext: NSManagedObjectContext?, withFinishCallback finishCallback: FXDcallbackFinish? = nil) {	fxd_log()
-		//TODO: Evaluate if this method is necessary
+		// TODO: Evaluate if this method is necessary
 		fxdPrint("1. managedContext?.hasChanges: ", managedContext?.hasChanges, "concurrencyType: ", managedContext?.concurrencyType)
 
 		var mainManagedContext = managedContext
@@ -417,21 +393,18 @@ extension FXDmoduleCoredata {
 			}
 		}
 
-
 		fxdPrint("4. mainManagedContext: ", mainManagedContext, "managedContext?.hasChanges: ", mainManagedContext?.hasChanges, "concurrencyType: ", mainManagedContext?.concurrencyType)
 
-		guard (mainManagedContext != nil && mainManagedContext!.hasChanges) else {
+		guard mainManagedContext != nil && mainManagedContext!.hasChanges else {
 			finishCallback?(#function, false, nil)
 			return
 		}
-
 
 		let ManagedContextSavingBlock = {
 			var didSave: Bool = true
 			do {
 				try mainManagedContext?.save()
-			}
-			catch {
+			} catch {
 				fxdPrint("\(error)")
 				didSave = false
 			}
@@ -445,8 +418,7 @@ extension FXDmoduleCoredata {
 			mainManagedContext?.performAndWait {
 				ManagedContextSavingBlock()
 			}
-		}
-		else {
+		} else {
 			ManagedContextSavingBlock()
 		}
 	}
@@ -456,13 +428,12 @@ extension FXDmoduleCoredata {
             fxdPrint("documentState: ", self?.mainDocument?.documentState)
             fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
             fxdPrint("fileURL: ", self?.mainDocument?.fileURL)
-            
+
             guard (self?.mainDocument?.fileURL) != nil else {
                 finishCallback?(false, nil)
                 return
             }
         }
-
 
 		Task {	[weak self] in
             var didSave: Bool = false
@@ -472,7 +443,7 @@ extension FXDmoduleCoredata {
 
 			fxd_log()
 			fxdPrint("didSave: ", didSave)
-			
+
             await fxdPrint("documentState: ", self?.mainDocument?.documentState)
             await fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
 
@@ -481,19 +452,18 @@ extension FXDmoduleCoredata {
 	}
 }
 
-
 extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
 	public func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {
 	}
-	
+
 	public func observedUIApplicationDidBecomeActive(_ notification: NSNotification) {
 	}
-	
+
     @MainActor public func observedUIApplicationWillTerminate(_ notification: NSNotification) {	fxd_log()
 		let application = UIApplication.shared
 		fxdPrint("backgroundTimeRemaining: \(application.backgroundTimeRemaining)")
 
-		dataSavingTask = 
+		dataSavingTask =
 		application.beginBackgroundTask(expirationHandler: {
 			[weak self] in
 
@@ -506,12 +476,12 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
 		fxdPrint("dataSavingTask: ", dataSavingTask)
 
 		saveMainDocument {
-			[weak self] (didFinish, responseObj) in
+			[weak self] (_, _) in
 
             DispatchQueue.main.async {
                 fxdPrint("backgroundTimeRemaining: \(application.backgroundTimeRemaining)")
                 fxdPrint("dataSavingTask: ", self?.dataSavingTask)
-                
+
                 if let dataSavingTask = self?.dataSavingTask {
                     application.endBackgroundTask(dataSavingTask)
                     self?.dataSavingTask = .invalid
@@ -519,17 +489,16 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
             }
 		}
 	}
-	
+
 	public func observedUIApplicationDidReceiveMemoryWarning(_ notification: NSNotification) {
 	}
-	
+
 	public func observedUIDeviceBatteryLevelDidChange(_ notification: NSNotification) {
 	}
-	
+
 	public func observedUIDeviceOrientationDidChange(_ notification: NSNotification) {
 	}
 }
-
 
 extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
     @MainActor @objc public func observedUIDocumentStateChanged(_ notification: Notification?) {	fxd_log()
@@ -557,7 +526,7 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 		fxd_overridable()
 		fxdPrint("concurrencyType: ", (notification?.object as? NSManagedObjectContext)?.concurrencyType)
 
-		//MARK: Distinguish notification from main managedObjectContext and private managedObjectContext
+		// MARK: Distinguish notification from main managedObjectContext and private managedObjectContext
 		let observedContext = notification?.object as? NSManagedObjectContext
 		fxdPrint("observedContext: ", observedContext)
 
@@ -565,14 +534,13 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 //			return
 //		}
 
-
 		let mainPersistentStore = mainDocument?.managedObjectContext.persistentStoreCoordinator?.persistentStores.first
 		let observedPersistentStore = observedContext?.persistentStoreCoordinator?.persistentStores.first
 
 		let mainStoreUUID: String = mainPersistentStore?.metadata["NSStoreUUID"] as? String ?? ""
 		let observedStoreUUID: String = observedPersistentStore?.metadata["NSStoreUUID"] as? String ?? ""
 
-		//MARK: Merge only if persistentStore is same
+		// MARK: Merge only if persistentStore is same
 		fxdPrint("mainStoreUUID: \(mainStoreUUID)")
 		fxdPrint("observedStoreUUID: \(observedStoreUUID)")
 		fxdPrint("mainStoreUUID == observedStoreUUID: \(mainStoreUUID == observedStoreUUID)")
@@ -583,12 +551,11 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 			return
 		}
 
-
 		#if DEBUG
-		if let userInfo: [String : Any?] = notification?.userInfo as? [String : Any?] {
-			fxdPrint("inserted.count : ", (userInfo["inserted"] as? Array<Any?>)?.count)
-			fxdPrint("deleted.count : ", (userInfo["deleted"] as? Array<Any?>)?.count)
-			fxdPrint("updated.count : ", (userInfo["updated"] as? Array<Any?>)?.count)
+		if let userInfo: [String: Any?] = notification?.userInfo as? [String: Any?] {
+			fxdPrint("inserted.count : ", (userInfo["inserted"] as? [Any?])?.count)
+			fxdPrint("deleted.count : ", (userInfo["deleted"] as? [Any?])?.count)
+			fxdPrint("updated.count : ", (userInfo["updated"] as? [Any?])?.count)
 		}
 		#endif
 

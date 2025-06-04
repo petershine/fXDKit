@@ -14,11 +14,11 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "fXDKit",
-            targets: ["fXDObjC", "fXDKit"]),
+            targets: ["fXDObjC", "fXDKit"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.13.0")),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.13.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -34,7 +34,7 @@ let package = Package(
                            .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
                            .product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
                            .product(name: "FirebasePerformance", package: "firebase-ios-sdk"),
-                           .product(name: "FirebaseRemoteConfig", package: "firebase-ios-sdk"),
+                           .product(name: "FirebaseRemoteConfig", package: "firebase-ios-sdk")
             ],
             path: "Sources",
             exclude: ["../fXDObjC"]

@@ -1,14 +1,10 @@
-
-
 import Foundation
 import UIKit
-
 
 public protocol FXDAppDelegateProtocols: UIApplicationDelegate, ObservableObject {
 	var sceneDelegateClass: AnyClass? { get }
     var backgroundCompletionHandler: (() -> Void)? { get set }
 }
-
 
 open class FXDAppDelegate: UIResponder, FXDAppDelegateProtocols, @unchecked Sendable {
     open var sceneDelegateClass: AnyClass? {
@@ -31,10 +27,9 @@ class SubClassedAppDelegate: FXDAppDelegate {
         }
     }
 
-    open var backgroundCompletionHandler: (() -> Void)? = nil
+    open var backgroundCompletionHandler: (() -> Void)?
 
-
-    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         fxd_overridable()
         fxdPrint("launchOptions:", launchOptions)
 
@@ -44,14 +39,13 @@ class SubClassedAppDelegate: FXDAppDelegate {
         Task {
             let (_, _) = await UNUserNotificationCenter.attemptAuthorization()
         }
-        
+
         return true
     }
 
     open func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         fxd_overridable()
         fxdPrint("connectingSceneSession:", connectingSceneSession)
-
 
         let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         sceneConfig.delegateClass = self.sceneDelegateClass

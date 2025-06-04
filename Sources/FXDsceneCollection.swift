@@ -1,18 +1,15 @@
-
-
 import UIKit
-
 
 open class FXDsceneCollection: UIViewController, FXDscrollableCells, @unchecked Sendable {
 
 	@IBOutlet public weak var mainCollectionview: UICollectionView?
 
-	//MARK: FXDprotocolScrollable
+	// MARK: FXDprotocolScrollable
 	open weak var mainScrollview: UIScrollView? {
 		return mainCollectionview
 	}
 
-	//MARK: FXDscrollableCells
+	// MARK: FXDscrollableCells
     public lazy var cellOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: String(describing: self))
 	}()
@@ -20,7 +17,7 @@ open class FXDsceneCollection: UIViewController, FXDscrollableCells, @unchecked 
 		return NSMutableDictionary.init()
 	}()
 
-	open var mainDataSource: Array<Any>?
+	open var mainDataSource: [Any]?
 
 	open var mainCellIdentifier: String {
 		fxd_overridable()
@@ -53,7 +50,7 @@ open class FXDsceneCollection: UIViewController, FXDscrollableCells, @unchecked 
 
 extension FXDsceneCollection: UICollectionViewDataSource {
 	open func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 1	//MARK: Assume it's often just one array
+		return 1	// MARK: Assume it's often just one array
 	}
 	open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0

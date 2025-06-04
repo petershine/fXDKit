@@ -1,7 +1,4 @@
-
-
 import UIKit
-
 
 extension UIWindow {
 	public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log()
@@ -10,7 +7,6 @@ extension UIWindow {
 			return newWindow
 		}
 
-		
 		let screenBounds = UIScreen.main.bounds
 		fxdPrint("screenBounds: \(screenBounds)")
 		fxdPrint("UIScreen.main.nativeBounds: \(UIScreen.main.nativeBounds)")
@@ -38,7 +34,6 @@ extension UIWindow {
 			return
 		}
 
-
 		let waitingOverlay = FXDhostedOverlay(rootView: fXDviewOverlay(observable: observable))
 
 		rootViewController?.addChild(waitingOverlay)
@@ -63,7 +58,6 @@ extension UIWindow {
 			return
 		}
 
-
 		activeController?.willMove(toParent: nil)
 
 		UIView
@@ -71,7 +65,7 @@ extension UIWindow {
 					 animations: {
 				activeController!.view.alpha = 0.0
 			}) {
-				(finished) in
+				(_) in
 
 				activeController!.view.removeFromSuperview()
 				activeController?.removeFromParent()

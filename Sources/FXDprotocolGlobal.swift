@@ -1,14 +1,10 @@
-
-
 import Foundation
 import UIKit
-
 
 public protocol FXDprotocolGlobal {
 	var mainStoryboardName: String? { get set }
 	var mainStoryboard: UIStoryboard? { get }
 }
-
 
 @MainActor
 extension FXDprotocolGlobal {

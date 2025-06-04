@@ -1,7 +1,4 @@
-
-
 import AVKit
-
 
 extension UIAlertController {
     @objc public class func errorAlert(error: Error?, title: String? = nil, message: String? = nil) {
@@ -78,17 +75,14 @@ extension UIAlertController {
                         return
                     }
 
-
                     let (result, error) = cancelHandler(action)
                     if let error {
                         continuation.resume(throwing: error)
-                    }
-                    else {
+                    } else {
                         continuation.resume(returning: result)
                     }
                 })
             alert.addAction(cancelAction)
-
 
             if !(destructiveText?.isEmpty ?? true),
                let destructiveHandler {
@@ -101,14 +95,12 @@ extension UIAlertController {
                         let (result, error) = destructiveHandler(action)
                         if let error {
                             continuation.resume(throwing: error)
-                        }
-                        else {
+                        } else {
                             continuation.resume(returning: result)
                         }
                     })
                 alert.addAction(destructiveAction)
             }
-
 
             var presentingScene: UIViewController? = fromScene
 

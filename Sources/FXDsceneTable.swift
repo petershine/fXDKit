@@ -1,15 +1,15 @@
 import fXDObjC
 
 open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Sendable {
-	
+
 	@IBOutlet public weak var mainTableview: UITableView?
 
-	//MARK: FXDprotocolScrollable
+	// MARK: FXDprotocolScrollable
 	open weak var mainScrollview: UIScrollView? {
 		return mainTableview
 	}
 
-	//MARK: FXDscrollableCells
+	// MARK: FXDscrollableCells
     public lazy var cellOperationQueue: OperationQueue? = {
 		return OperationQueue.newSerialQueue(withName: String(describing: self))
 	}()
@@ -17,7 +17,7 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Senda
 		return NSMutableDictionary.init()
 	}()
 
-	open var mainDataSource: Array<Any>?
+	open var mainDataSource: [Any]?
 
 	open var mainCellIdentifier: String {
 		fxd_overridable()
@@ -50,7 +50,7 @@ open class FXDsceneTable: UIViewController, FXDscrollableCells, @unchecked Senda
 
 extension FXDsceneTable: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int {
-		return 1	//MARK: Assume it's often just one array
+		return 1	// MARK: Assume it's often just one array
 	}
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return (mainDataSource != nil) ? (mainDataSource?.count)! : 0

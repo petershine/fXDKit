@@ -1,14 +1,10 @@
-
-
 import SwiftUI
-
 
 public struct fXDviewStepper: View {
     var minValue: Double
     var maxValue: Double
 
     @Binding var stepping: Double
-
 
     public init(minValue: Double, maxValue: Double, stepping: Binding<Double>) {
         self.minValue = minValue

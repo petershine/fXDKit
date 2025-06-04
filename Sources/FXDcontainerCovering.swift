@@ -37,7 +37,7 @@ open class FXDcontainerCovering: UIViewController, @unchecked Sendable {
 	public var isCovering: Bool = false
 	public var isUncovering: Bool = false
 
-	@IBOutlet public weak var mainNavigationbar:  UIView!
+	@IBOutlet public weak var mainNavigationbar: UIView!
 	@IBOutlet public weak var mainToolbar: UIView!
 }
 
@@ -71,7 +71,7 @@ extension FXDcontainerCovering {
 	}
 
 	func cover(segue: FXDsegueCover) {	fxd_log()
-		guard (isCovering == false && isUncovering == false),
+		guard isCovering == false && isUncovering == false,
 			let presentedScene = segue.destination as? (UIViewController & FXDprotocolCovering)
 			else {
 				return
@@ -81,10 +81,8 @@ extension FXDcontainerCovering {
 
 		addChild(presentedScene)
 
-
 		let offset = coveringOffset(directionType: presentedScene.coverDirectionType)
 		let direction = coveringDirection(directionType: presentedScene.coverDirectionType)
-
 
 		var animatedFrame = presentedScene.view.frame
 		animatedFrame.origin.y = 0.0
@@ -99,14 +97,13 @@ extension FXDcontainerCovering {
 		}
 		presentedScene.view.frame = modifiedFrame
 
-
-		var pushedScene: UIViewController? = nil;
+		var pushedScene: UIViewController?
 		var animatedPushedFrame = CGRect.zero
 
-		if (presentedScene.shouldCoverAbove == false
-			&& children.count > minimumChildCount),
+		if presentedScene.shouldCoverAbove == false
+			&& children.count > minimumChildCount,
 			let destinationIndex = children.firstIndex(of: presentedScene) {
-			//MARK: Including newly added child, the count should be bigger than one
+			// MARK: Including newly added child, the count should be bigger than one
 
 			for child in children {
 				let childScene = child as? (UIViewController & FXDprotocolCovering)
@@ -117,16 +114,15 @@ extension FXDcontainerCovering {
 				fxdPrint("\(childScene!), ", childScene?.shouldStayFixed)
 
 				if let childIndex = children.firstIndex(of: childScene!),
-					(childIndex < destinationIndex && childScene?.shouldStayFixed == false) {
+					childIndex < destinationIndex && childScene?.shouldStayFixed == false {
 
-					//MARK: If the childScene is last slid one, which is in previous index
-					if (childIndex == (destinationIndex - 1)) {
+					// MARK: If the childScene is last slid one, which is in previous index
+					if childIndex == (destinationIndex - 1) {
 						pushedScene = childScene
 						animatedPushedFrame = (pushedScene?.view.frame)!
 						animatedPushedFrame.origin.x += offset.x
 						animatedPushedFrame.origin.y += offset.y
-					}
-					else {
+					} else {
 						var modifiedPushedFrame = childScene?.view.frame
 						modifiedPushedFrame?.origin.x += offset.x
 						modifiedPushedFrame?.origin.y += offset.y
@@ -141,7 +137,6 @@ extension FXDcontainerCovering {
 
 		presentedScene.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-
 		view.insertSubview(presentedScene.view, belowSubview: mainNavigationbar)
 		presentedScene.didMove(toParent: self)
 
@@ -150,14 +145,14 @@ extension FXDcontainerCovering {
 					 delay: 0.0,
 					 options: .curveEaseInOut,
 					 animations: {
-						
+
 						presentedScene.view.frame = animatedFrame
 
-						if (pushedScene != nil) {
+						if pushedScene != nil {
 							pushedScene?.view.frame = animatedPushedFrame
 						}
 			}) {
-				[weak self] (didFinish) in	fxd_log()
+				[weak self] (_) in	fxd_log()
 
 				fxdPrint(String(describing: self?.children))
 
@@ -169,7 +164,7 @@ extension FXDcontainerCovering {
 
 	func uncover(segue: FXDsegueUncover) {	fxd_log()
 
-		guard (isCovering == false && isUncovering == false),
+		guard isCovering == false && isUncovering == false,
 			let dismissedScene = segue.source as? (UIViewController & FXDprotocolCovering)
 			else {
 				return
@@ -180,31 +175,27 @@ extension FXDcontainerCovering {
 		let offset = coveringOffset(directionType: dismissedScene.coverDirectionType)
 		let direction = coveringDirection(directionType: dismissedScene.coverDirectionType)
 
-
 		var animatedFrame = dismissedScene.view.frame
 		animatedFrame.origin.x -= (animatedFrame.size.width * direction.x)
 
 		let animatedAlpha = (shouldFadeOutUncovering) ? 0.0:dismissedScene.view.alpha
 
-
 		if let offsetY = dismissedScene.offsetYforUncovering?.floatValue,
-			(offsetY > 0.0) {
+			offsetY > 0.0 {
 			fxdPrint("1.", offsetY)
 			animatedFrame.origin.y -= (CGFloat(offsetY) * direction.y)
-		}
-		else {
+		} else {
 			animatedFrame.origin.y -= (animatedFrame.size.height * direction.y)
 		}
 		fxdPrint("2.CALCULATED offsetY: ", dismissedScene.view.frame.origin.y, " - ", animatedFrame.origin.y, " = ", (dismissedScene.view.frame.origin.y - animatedFrame.origin.y))
 
-
-		var pulledScene: UIViewController? = nil
+		var pulledScene: UIViewController?
 		var animatedPulledFrame = CGRect.zero
 
-		if (dismissedScene.shouldCoverAbove == false
-			&& children.count > minimumChildCount),
+		if dismissedScene.shouldCoverAbove == false
+			&& children.count > minimumChildCount,
 			let sourceIndex = children.firstIndex(of: dismissedScene) {
-			//MARK: Including newly added child, the count should be bigger than one
+			// MARK: Including newly added child, the count should be bigger than one
 
 			for child in children {
 				let childScene = child as? (UIViewController & FXDprotocolCovering)
@@ -215,16 +206,15 @@ extension FXDcontainerCovering {
 				fxdPrint("\(childScene!), ", childScene?.shouldStayFixed)
 
 				if let childIndex = children.firstIndex(of: childScene!),
-					(childIndex < sourceIndex && childScene?.shouldStayFixed == false) {
+					childIndex < sourceIndex && childScene?.shouldStayFixed == false {
 
-					//MARK: If the childController is last slid one, which is in previous index
-					if (childIndex == sourceIndex-1) {
+					// MARK: If the childController is last slid one, which is in previous index
+					if childIndex == sourceIndex-1 {
 						pulledScene = childScene
 						animatedPulledFrame = (pulledScene?.view.frame)!
 						animatedPulledFrame.origin.x -= offset.x
 						animatedPulledFrame.origin.y -= offset.y
-					}
-					else {
+					} else {
 						var modifiedPushedFrame = childScene?.view.frame
 						modifiedPushedFrame?.origin.x -= offset.x
 						modifiedPushedFrame?.origin.y -= offset.y
@@ -248,7 +238,7 @@ extension FXDcontainerCovering {
 						dismissedScene.view.frame = animatedFrame
 						dismissedScene.view.alpha = animatedAlpha
 
-						if (pulledScene != nil) {
+						if pulledScene != nil {
 							pulledScene?.view.frame = animatedPulledFrame
 						}
 			}) {
@@ -266,14 +256,13 @@ extension FXDcontainerCovering {
 	}
 
 	func uncoverAllScenes(callback: @escaping FXDcallback) {
-		//MARK: Assume direction is only vertical
+		// MARK: Assume direction is only vertical
 		guard children.count > 0 else {
 			callback(true, nil)
 			return
 		}
 
-
-		var lateAddedSceneArray = Array<UIViewController>.init()
+		var lateAddedSceneArray = [UIViewController].init()
 
 		for child in children {
 			let childScene = child as? (UIViewController & FXDprotocolCovering)
@@ -288,12 +277,10 @@ extension FXDcontainerCovering {
 			}
 		}
 
-
 		guard lateAddedSceneArray.count > 0 else {
 			callback(true, nil)
 			return
 		}
-
 
 		isUncovering = true
 
@@ -309,8 +296,7 @@ extension FXDcontainerCovering {
 
 		fxdPrint(totalUncoveringOffsetY)
 
-
-		var animatedFrameObjArray = Array<CGRect>.init()
+		var animatedFrameObjArray = [CGRect].init()
 
 		for childScene in lateAddedSceneArray {
 			var animatedFrame = childScene.view.frame
@@ -322,7 +308,6 @@ extension FXDcontainerCovering {
 		}
 
 		fxdPrint(animatedFrameObjArray)
-
 
 		UIView
 		.animate(withDuration: DURATION_ANIMATION,
@@ -336,7 +321,7 @@ extension FXDcontainerCovering {
 						}
 					}
 		}) {
-			[weak self] (didFinish) in	fxd_log()
+			[weak self] (_) in	fxd_log()
 
 			for childScene in lateAddedSceneArray {
 				childScene.view.removeFromSuperview()

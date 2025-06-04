@@ -1,10 +1,7 @@
-
-
 import Foundation
 import UIKit
 
-
-@MainActor fileprivate var rotatedIndex: Int = 0
+@MainActor private var rotatedIndex: Int = 0
 
 extension UIColor {
 	class var allPresetColors: [UIColor] {
@@ -18,7 +15,7 @@ extension UIColor {
 			.systemTeal,
 			.systemIndigo,
 			.systemPurple,
-			
+
 			.red,
 			.blue,
 			.green,

@@ -1,10 +1,7 @@
-
-
 import Foundation
 import UIKit
 
 import SwiftUI
-
 
 extension CharacterSet {
     public static var urlQueryValueAllowed: CharacterSet {
@@ -14,31 +11,28 @@ extension CharacterSet {
     }
 }
 
-
 extension Data {
-	public func decode<T>(_ type: T.Type) -> T? where T : Decodable {
-		var decoded: T? = nil
+	public func decode<T>(_ type: T.Type) -> T? where T: Decodable {
+		var decoded: T?
 		do {
 			decoded = try JSONDecoder().decode(type, from: self)
-		}
-		catch {	fxd_log()
+		} catch {	fxd_log()
 			fxdPrint(error)
 		}
 
 		return decoded
 	}
 
-	public func jsonDictionary(quiet: Bool = false) -> Dictionary<String, Any?>? {
-		let jsonDictionary: Dictionary<String, Any?>? = self.jsonObject(quiet: quiet) as? Dictionary<String, Any?>
+	public func jsonDictionary(quiet: Bool = false) -> [String: Any?]? {
+		let jsonDictionary: [String: Any?]? = self.jsonObject(quiet: quiet) as? [String: Any?]
 		return jsonDictionary
 	}
 
 	public func jsonObject(quiet: Bool = false) -> Any? {
-		var jsonObject: Any? = nil
+		var jsonObject: Any?
 		do {
 			jsonObject = try JSONSerialization.jsonObject(with: self, options: .mutableContainers)
-		}
-		catch {	fxd_log()
+		} catch {	fxd_log()
 			if let stringObject = String(data: self, encoding: .utf8) {
 				fxdPrint(stringObject)
 			}
@@ -56,26 +50,23 @@ extension Data {
     }
 }
 
-
 extension Date {
 	public func formattedAgeText(since: Date = Date.init()) -> String? {
 
 		let age = Int((since.timeIntervalSince1970) - timeIntervalSince1970)
 		let days = Int(age/60/60/24)
 
-		var ageText: String? = nil
+		var ageText: String?
 
 		if days > 7 {
 			ageText = description.components(separatedBy: " ").first
-		}
-		else if days > 0 && days <= 7 {
+		} else if days > 0 && days <= 7 {
 			ageText = "\(days) day"
 
-			if (days > 1) {
+			if days > 1 {
 				ageText = ageText! + "s"
 			}
-		}
-		else {
+		} else {
 			let seconds = age % 60
 			let minutes = (age/60) % 60
 			let hours = (age/60/60) % 24
@@ -89,16 +80,15 @@ extension Date {
 
 extension Double {
 	public func formattedDistanceText(format: String = "%0.1f") -> String? {
-		var distanceText: String? = nil
+		var distanceText: String?
 
 		if self >= 1000.0 {
 			distanceText = String(format: format + " km", self/1000.0)
-		}
-		else {
+		} else {
 			distanceText = String(format: format + " m", self)
 		}
 
-		//TODO: use miles for US users
+		// TODO: use miles for US users
 
 		return distanceText
 	}
@@ -106,18 +96,16 @@ extension Double {
 
 extension Encodable {
 	public func encoded() -> Data? {
-		var encoded: Data? = nil
+		var encoded: Data?
 		do {
 			encoded = try JSONEncoder().encode(self)
-		}
-		catch {	fxd_log()
+		} catch {	fxd_log()
 			fxdPrint(error)
 		}
 
 		return encoded
 	}
 }
-
 
 import UniformTypeIdentifiers
 
@@ -128,7 +116,7 @@ extension FileManager {
 			return nil
 		}
 
-		var fileURLs: [URL]? = nil
+		var fileURLs: [URL]?
 		do {
 			let contents = try FileManager.default.contentsOfDirectory(
 				at: fileDirectory,
@@ -145,8 +133,7 @@ extension FileManager {
 					let resourceValues_1: URLResourceValues = try $1.resourceValues(forKeys: [.contentModificationDateKey])
 					return resourceValues_0.contentModificationDate  ?? Date.now > resourceValues_1.contentModificationDate ?? Date.now
 				}
-		}
-		catch {	fxd_log()
+		} catch {	fxd_log()
 			fxdPrint(error)
 		}
 
@@ -169,7 +156,6 @@ extension FileManager {
 
             let datePart = dateFormatter.string(from: Date.now)
 
-
             let fileExtension = UTType.json.preferredFilenameExtension ?? "json"
             let filePath = fileName+"_"+datePart+"."+fileExtension
             let fileURL = collectedDirectory?.appendingPathComponent(filePath)
@@ -177,20 +163,17 @@ extension FileManager {
                 try jsonData.writeInsideDirectory(to: fileURL)
                 fxdPrint("[JSON COLLECTED]: ", jsonData, fileURL)
             }
-        }
-        catch {	fxd_log()
+        } catch {	fxd_log()
             fxdPrint(error)
         }
     }
 }
-
 
 extension IndexPath {
 	public var stringKey: String {
 		return "\(row)_\(section)"
 	}
 }
-
 
 extension KeyedDecodingContainer {
     public func decodeIfPresent(_ type: Bool.Type, otherType: String.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> Bool? {
@@ -202,14 +185,12 @@ extension KeyedDecodingContainer {
             return stringValue.lowercased() == "true"
         }
 
-        
         let debugDescription = "Could not decode Bool or String"
         let error = DecodingError.Context(codingPath: self.codingPath + [key], debugDescription: debugDescription)
 //        fxdPrint(error)
         throw DecodingError.dataCorrupted(error)
     }
 }
-
 
 extension String {
 	public func sharableMessageWith(videoId: String?) -> String? {
@@ -221,9 +202,8 @@ extension String {
 			return "\(formatted) \(videoPath)".trimmingCharacters(in: .whitespacesAndNewlines)
 		}
 
-
 		var replacingRange = NSRange(swiftrange, in: formatted)
-		replacingRange.length = videoPath.count //MARK: Assume every short url is same length
+		replacingRange.length = videoPath.count // MARK: Assume every short url is same length
 		if let swiftrange = Range(replacingRange, in: formatted) {
 			formatted = formatted.replacingCharacters(in: swiftrange, with: videoPath).trimmingCharacters(in: .whitespacesAndNewlines)
 		}
@@ -242,7 +222,7 @@ extension String {
 			" \(appConfig.shortHomeURL)",
 
 			" via \(appConfig.twitterName)",
-			" \(appConfig.twitterName)",
+			" \(appConfig.twitterName)"
 		]
 
 		for appendedLink in appendedLinkArray {
@@ -303,9 +283,9 @@ extension String {
 		return decoded
 	}
 
-	public func jsonDictionary() -> Dictionary<String, Any?>? {
-		var jsonDictionary: [String:Any?] = [:]
-		
+	public func jsonDictionary() -> [String: Any?]? {
+		var jsonDictionary: [String: Any?] = [:]
+
 		let parameters = self.components(separatedBy: ",")
 		for parameter in parameters {
 			let key_value = parameter.components(separatedBy: ":")
@@ -315,14 +295,11 @@ extension String {
 				let value: String = key_value.last?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 				if let doubleValue = Double(value) {
 					jsonDictionary[key] = doubleValue
-				}
-				else if let integerValue = Int(value) {
+				} else if let integerValue = Int(value) {
 					jsonDictionary[key] = integerValue
-				}
-				else if let boolValue = Bool(value.lowercased()) {
+				} else if let boolValue = Bool(value.lowercased()) {
 					jsonDictionary[key] = boolValue
-				}
-				else {
+				} else {
 					jsonDictionary[key] = value
 				}
 			}
@@ -338,7 +315,7 @@ extension String {
 		return condensed
 	}
 
-	//https://stackoverflow.com/a/56706114/259765
+	// https://stackoverflow.com/a/56706114/259765
 	public func removingAllWhitespaces() -> String? {
 		return removingCharacters(from: .whitespacesAndNewlines)
 	}
@@ -371,7 +348,7 @@ extension ProcessInfo {
             let processInfo = Self.processInfo
             fxdPrint("isMacCatalystApp: ", processInfo.isMacCatalystApp)
             fxdPrint("isiOSAppOnMac: ", processInfo.isiOSAppOnMac)
-            
+
             fxdPrint(name: "environment", dictionary: processInfo.environment)
             fxdPrint("arguments", processInfo.arguments)
             fxdPrint("hostName", processInfo.hostName)
@@ -394,7 +371,6 @@ extension UIActivityViewController {
 			return
 		}
 
-
 		let activityController = Self(activityItems: items, applicationActivities: nil)
 		if let popoverController = activityController.popoverPresentationController {
 			let sourceRectCenter = CGPoint(x: rootViewController.view.bounds.midX, y: rootViewController.view.bounds.midY)
@@ -407,7 +383,6 @@ extension UIActivityViewController {
 		rootViewController.present(activityController, animated: true)
 	}
 }
-
 
 extension UIApplication {
 	@objc public func mainWindow() -> UIWindow? {
@@ -432,7 +407,6 @@ extension UIApplication {
 	}
 }
 
-
 extension UIDevice {
 	@objc public class func machineNameCode() -> String? {
 		/*
@@ -454,7 +428,6 @@ extension UIDevice {
 	}
 }
 
-
 extension UIImage {
 	public func aspectSize(for contentMode: ContentMode, containerSize: CGSize) -> CGSize {
 
@@ -462,7 +435,6 @@ extension UIImage {
 
 		let isVerticalImage = self.size.width < self.size.height
 		let isVerticalContainer = containerSize.width < containerSize.height
-
 
 		var aspectSize: CGSize = self.size
 
@@ -472,20 +444,17 @@ extension UIImage {
 			if (isVerticalImage && isVerticalContainer)
 				|| (!isVerticalImage && isVerticalContainer) {
 				aspectSize = CGSize(width: minDimension, height: minDimension/aspectRatio)
-			}
-			else if (isVerticalImage && !isVerticalContainer)
+			} else if (isVerticalImage && !isVerticalContainer)
 						|| (!isVerticalImage && !isVerticalContainer) {
 				aspectSize = CGSize(width: minDimension*aspectRatio, height: minDimension)
 			}
-		}
-		else {
+		} else {
 			let maxDimension = max(containerSize.width, containerSize.height)
 
 			if (isVerticalImage && isVerticalContainer)
 				|| (!isVerticalImage && isVerticalContainer) {
 				aspectSize = CGSize(width: maxDimension*aspectRatio, height: maxDimension)
-			}
-			else if (isVerticalImage && !isVerticalContainer)
+			} else if (isVerticalImage && !isVerticalContainer)
 						|| (!isVerticalImage && !isVerticalContainer) {
 				aspectSize = CGSize(width: maxDimension, height: maxDimension/aspectRatio)
 			}
@@ -494,7 +463,6 @@ extension UIImage {
 		return aspectSize
 	}
 }
-
 
 extension URL {
     public static func newFileURL(prefix: String, index: Int? = nil, contentType: UTType, directory: FileManager.SearchPathDirectory = FileManager.SearchPathDirectory.applicationSupportDirectory, domainMask: FileManager.SearchPathDomainMask = FileManager.SearchPathDomainMask.userDomainMask) -> URL? {
@@ -506,7 +474,7 @@ extension URL {
         let fileName = dateFormatter.string(from: Date.now)
         let fileSuffix = "\(index != nil ? "_\(index ?? 0)" : "")"
         let fileExtension = "\(contentType.preferredFilenameExtension ?? contentType.identifier.components(separatedBy: ".").last ?? "data")"
-        
+
         let filePath = "\(prefix)_\(fileName)\(fileSuffix).\(fileExtension)"
         let fileURL = fileDirectory?.appendingPathComponent(filePath)
         return fileURL
@@ -533,15 +501,13 @@ extension URL {
     }
 }
 
-
 extension UNUserNotificationCenter {
     public static func attemptAuthorization() async -> (UNAuthorizationStatus, Error?) {
         var authorized: Bool = false
-        var authorizationError: Error? = nil
+        var authorizationError: Error?
         do {
             authorized = try await Self.current().requestAuthorization(options: [.badge, .sound, .alert])
-        }
-        catch {
+        } catch {
             authorizationError = error
         }
 
@@ -550,7 +516,6 @@ extension UNUserNotificationCenter {
             await fxdPrint("UIApplication.shared.isRegisteredForRemoteNotifications:", UIApplication.shared.isRegisteredForRemoteNotifications)
             await UIApplication.shared.registerForRemoteNotifications()
         }
-
 
         let settings = await Self.current().notificationSettings()
         return (settings.authorizationStatus, authorizationError)
@@ -566,7 +531,6 @@ extension UNUserNotificationCenter {
                 return
             }
 
-
             fxdPrint(content)
 
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
@@ -576,7 +540,6 @@ extension UNUserNotificationCenter {
 
             Self.current().add(request)
         }
-
 
         Task {
             let (authorized, authorizationError) = await Self.attemptAuthorization()

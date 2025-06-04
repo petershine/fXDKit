@@ -6,15 +6,13 @@ import FirebaseMessaging
 import FirebaseRemoteConfig
 import FirebasePerformance
 
-
 @Observable
 open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
-    public var process: ((RemoteConfig?)-> Bool) = { _ in return true }
+    public var process: ((RemoteConfig?) -> Bool) = { _ in return true }
     @MainActor public var didUpdateConfig: Bool = false
 
-    fileprivate var remoteConfig: RemoteConfig? = nil
+    fileprivate var remoteConfig: RemoteConfig?
 
-    
     public func configure() {
         FirebaseApp.configure()
 
@@ -31,7 +29,7 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
 
             fxdPrint("Updated keys: \(configUpdate.updatedKeys)")
             self.remoteConfig?.activate {
-                changed, error in
+                changed, _ in
 
                 if changed,
                    self.process(self.remoteConfig) {
@@ -43,10 +41,9 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
         }
     }
 
-    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         self.configure()
 
-        
         Messaging.messaging().delegate = self
 
         let mainAttempt = Task {
@@ -61,7 +58,7 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
                 let forceProcessing = process(remoteConfig)
                 fxd_log()
                 fxdPrint("forceProcessing: \(forceProcessing)")
-                
+
                 await MainActor.run {
                     self.didUpdateConfig = true
                 }
@@ -78,16 +75,15 @@ open class fXDmoduleFirebase: NSObject, MessagingDelegate, @unchecked Sendable {
 
 extension fXDmoduleFirebase {
     fileprivate func fetchRemoteConfig(reAttemptLimit: Int) async throws {
-        var fetchError: Error? = nil
+        var fetchError: Error?
         do {
-            let _ = try await remoteConfig?.fetchAndActivate()
-        }
-        catch {
+            _ = try await remoteConfig?.fetchAndActivate()
+        } catch {
             fetchError = error
         }
 
         guard fetchError == nil,
-              process(remoteConfig) else{
+              process(remoteConfig) else {
             fxd_log()
             fxdPrint(fetchError)
             fxdPrint("reAttemptLimit: \(reAttemptLimit)")
@@ -99,11 +95,9 @@ extension fXDmoduleFirebase {
                 return
             }
 
-
             try await Task.sleep(nanoseconds: UInt64((1.0 * 1_000_000_000).rounded()))
             return try await fetchRemoteConfig(reAttemptLimit: reAttemptLimit-1)
         }
-
 
         await MainActor.run {
             didUpdateConfig = true
@@ -112,7 +106,7 @@ extension fXDmoduleFirebase {
 }
 
 extension Analytics {
-    public class func nonDebugLogEvent(_ name: String, parameters: [String:Any]) {
+    public class func nonDebugLogEvent(_ name: String, parameters: [String: Any]) {
 #if !DEBUG
         Self.logEvent(name, parameters: parameters)
 #endif

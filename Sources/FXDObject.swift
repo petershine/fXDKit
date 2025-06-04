@@ -1,24 +1,18 @@
-
-
 import Foundation
 import Combine
 
-
-nonisolated(unsafe) fileprivate var cancellablesKey: UInt8 = 0
+nonisolated(unsafe) private var cancellablesKey: UInt8 = 0
 
 extension NSObject {
-	fileprivate var cancellables: [String : AnyCancellable?]? {
+	fileprivate var cancellables: [String: AnyCancellable?]? {
 		get {
-			return objc_getAssociatedObject(self, &cancellablesKey) as? [String : AnyCancellable?]
+			return objc_getAssociatedObject(self, &cancellablesKey) as? [String: AnyCancellable?]
 		}
 		set {
 			objc_setAssociatedObject(self, &cancellablesKey, newValue, .OBJC_ASSOCIATION_RETAIN)
 		}
 	}
 }
-
-
-
 
 extension NSObject: @unchecked @retroactive Sendable {
     public func publisherForDelayedAsyncTask(identifier: String? = nil, afterDelay: TimeInterval = 0.0, attachedTask: (@Sendable () -> Void?)? = nil) -> AnyPublisher<String, Error> {
@@ -39,9 +33,8 @@ extension NSObject: @unchecked @retroactive Sendable {
 				(completion) in
 
 				switch completion {
-					case .finished:
+				case .finished:
 						fxdPrint(".finished: ", identifier, quiet: true)
-						break
 
 					case .failure(let error):
 						fxdPrint(".failure: ", identifier, " : ", error, quiet: true)
@@ -64,14 +57,14 @@ extension NSObject {
 		let cancellable = cancellableForDelayedAsyncTask(identifier: identifier, afterDelay: afterDelay, attachedTask: attachedTask) {
 			[weak self] in
 
-			if var modified = self?.cancellables as? [String : AnyCancellable?] {
+			if var modified = self?.cancellables as? [String: AnyCancellable?] {
 				modified[extendedIdentifier] = nil
 				self?.cancellables = modified
 			}
 		}
 
 		if cancellables == nil {
-			cancellables = [String : AnyCancellable?]()
+			cancellables = [String: AnyCancellable?]()
 		}
 
 		cancellables?[extendedIdentifier] = cancellable

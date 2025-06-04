@@ -1,8 +1,5 @@
-
-
 import SwiftUI
 import Charts
-
 
 public struct Price: Decodable, Identifiable {
 	public var id: ObjectIdentifier?
@@ -24,29 +21,24 @@ public struct Price: Decodable, Identifiable {
 	}
 }
 
-
 open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
-    @MainActor public static var colorsForTickers: Dictionary<String, UIColor> = [:]
-    @MainActor public static var tickers: Array<String> = ["SPY","DIA","QQQ"]
+    @MainActor public static var colorsForTickers: [String: UIColor] = [:]
+    @MainActor public static var tickers: [String] = ["SPY", "DIA", "QQQ"]
 
-
-	@Published open var pricesLineMarks: Dictionary<String, [Price]> = [:]
+	@Published open var pricesLineMarks: [String: [Price]] = [:]
 	@Published public var didFailToRetrieve: Bool = false
 
-
-    @MainActor open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool)->Void?)? = nil) {
+    @MainActor open func startRetrievingTask(tickers: [String], timeout: TimeInterval, isCancellable: Bool = false, completion: ((Bool) -> Void?)? = nil) {
 		let progressObservable = FXDobservableOverlay(allowUserInteraction: (timeout <= TIMEOUT_LONGER || !isCancellable))
 		UIApplication.shared.mainWindow()?.showOverlay(afterDelay: 0.0, observable: progressObservable)
-
 
         progressObservable.cancellableTask = Task {
 			let urlRequests = self.urlRequestsFromTickers(tickers: tickers, timeout: timeout)
 
-			var safeDataAndResponse: DataAndResponseActor? = nil
+			var safeDataAndResponse: DataAndResponseActor?
 			do {
 				safeDataAndResponse = try await URLSession.shared.startSerializedURLRequest(urlRequests: urlRequests, progressConfiguration: progressObservable)
-			}
-			catch {
+			} catch {
 				fxdPrint("\(error)")
 				if safeDataAndResponse == nil {
 					safeDataAndResponse = DataAndResponseActor()
@@ -60,14 +52,11 @@ open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
 			let didSucceed = await safeDataAndResponse?.count() ?? 0 > 0
 			let caughtError = await safeDataAndResponse?.caughtError
 
-
             if progressObservable.cancellableTask?.isCancelled ?? false {
                 UIAlertController.simpleAlert(withTitle: "CANCELLED", message: nil)
-            }
-            else if !didSucceed {
+            } else if !didSucceed {
                 UIAlertController.simpleAlert(withTitle: "Failed to retrieve", message: "FROM: \(self.urlRequestHOST)\nTICKERS: \(tickers)")
-            }
-            else if caughtError != nil {
+            } else if caughtError != nil {
                 let errorTitle = ((caughtError as? URLError)?.errorCode as? String) ?? "(no errorCode)"
                 let errorMessage = caughtError?.localizedDescription ?? "(no localizedDescription)"
                 UIAlertController.simpleAlert(withTitle: errorTitle, message: errorMessage)
@@ -77,7 +66,6 @@ open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
             completion?(didSucceed)
 		}
 	}
-
 
 	open var urlRequestHOST: String = ""
 	open func urlRequestsFromTickers(tickers: [String], timeout: TimeInterval) -> [URLRequest] {
@@ -97,13 +85,11 @@ open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
 			fxdPrint("\(response)")
 			do {
 				try processData(jsonData: data)
-			}
-			catch {
+			} catch {
 				fxdPrint("\(error)")
 			}
 		}
 	}
-
 
 	enum ChartDataValidation: Error {
 		case pricesWithoutTicker
@@ -122,14 +108,12 @@ open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
 			throw ChartDataValidation.notDecodable
 		}
 
-
 		let sortedPrices = prices.sorted(by: { $0.timestamp < $1.timestamp })
 		DispatchQueue.main.async {
 			[weak self] in
 			self?.pricesLineMarks[ticker] = sortedPrices
 		}
 	}
-
 
     @MainActor open func evaluateAndAlertIfFailed(dataAndResponseArray: [(Data, URLResponse)], tickers: [String]) -> Bool {
 		fxdPrint("dataAndResponseArray.count: \(dataAndResponseArray.count)")
@@ -144,15 +128,13 @@ open class FXDdataChart: NSObject, ObservableObject, @unchecked Sendable {
 	}
 }
 
-
 public struct fXDviewChart: View {
-	@Binding var pricesLineMarks: Dictionary<String, [Price]>
+	@Binding var pricesLineMarks: [String: [Price]]
 
-	public init(pricesLineMarks: Binding<Dictionary<String, [Price]>>) {
+	public init(pricesLineMarks: Binding<[String: [Price]]>) {
 		_pricesLineMarks = pricesLineMarks
 	}
 
-	
 	public var body: some View {
 		Chart {
 			ForEach(Array(pricesLineMarks.keys), id: \.self) {
@@ -189,8 +171,6 @@ extension fXDviewChart {
 		return colorForTicker!
 	}
 }
-
-
 
 // Example:
 extension FXDdataChart {

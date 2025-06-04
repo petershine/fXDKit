@@ -3,11 +3,10 @@ import fXDObjC
 import CoreLocation
 import MapKit
 
-
 open class FXDmoduleGeo: NSObject, @unchecked Sendable {
-	private var monitoringTask: UIBackgroundTaskIdentifier? = nil
-	
-	open var lastLocation: CLLocation? = nil
+	private var monitoringTask: UIBackgroundTaskIdentifier?
+
+	open var lastLocation: CLLocation?
 	open var didStartSignificantMonitoring: Bool = false
 
 	public var mainLocationManager: CLLocationManager? = {
@@ -54,12 +53,10 @@ open class FXDmoduleGeo: NSObject, @unchecked Sendable {
 				return false
 			}
 
-
 			return true
 		}
 		set { }
 	}
-
 
 	deinit {	fxd_log()
 		NotificationCenter.default.removeObserver(self)
@@ -72,8 +69,7 @@ open class FXDmoduleGeo: NSObject, @unchecked Sendable {
 		mainLocationManager?.delegate = self
 	}
 
-	
-    open func startMainLocationManager(launchOptions: [AnyHashable : Any]! = [:]) {	fxd_log()
+    open func startMainLocationManager(launchOptions: [AnyHashable: Any]! = [:]) {	fxd_log()
 		fxdPrint(launchOptions ?? [:])
 
 		let authorizationStatus: CLAuthorizationStatus = (mainLocationManager?.authorizationStatus)!
@@ -86,7 +82,7 @@ open class FXDmoduleGeo: NSObject, @unchecked Sendable {
 		fxdPrint(authorizationStatus)
 
 		Task {
-			//This method can cause UI unresponsiveness if invoked on the main thread. Instead, consider waiting for the `-locationManagerDidChangeAuthorization:` callback and checking `authorizationStatus` first.
+			// This method can cause UI unresponsiveness if invoked on the main thread. Instead, consider waiting for the `-locationManagerDidChangeAuthorization:` callback and checking `authorizationStatus` first.
 			fxdPrint(CLLocationManager.locationServicesEnabled().description)
 		}
 
@@ -105,7 +101,6 @@ open class FXDmoduleGeo: NSObject, @unchecked Sendable {
 			mainLocationManager?.requestAlwaysAuthorization()
 			return
 		}
-
 
 		mainLocationManager?.startUpdatingLocation()
 		configureUpdatingForApplicationState()
@@ -127,7 +122,6 @@ open class FXDmoduleGeo: NSObject, @unchecked Sendable {
 									   selector: #selector(observedUIApplicationWillTerminate(_:)),
 									   name: UIApplication.willTerminateNotification,
 									   object: nil)
-
 
         DispatchQueue.main.async {	[weak self] in
             if UIApplication.shared.applicationState != .active {
@@ -198,8 +192,7 @@ extension FXDmoduleGeo {
 		userDefaults.setValue(newLocation.coordinate.latitude, forKey: "LastLatitudeObjKey")
 		userDefaults.setValue(newLocation.coordinate.longitude, forKey: "LastLongitudeObjKey")
 
-
-		//MARK: For future need to debug geomodule usage
+		// MARK: For future need to debug geomodule usage
 		/*
 		if (alertBody.length > 0) {
 			UILocalNotification *localNotifcation = [[UILocalNotification alloc] init];
@@ -216,14 +209,12 @@ extension FXDmoduleGeo {
 	}
 }
 
-
 extension FXDmoduleGeo: CLLocationManagerDelegate {
     open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {	fxd_log()
 		fxdPrint(String(status.rawValue))
-		if (status == .authorizedAlways || status == .authorizedWhenInUse) {
+		if status == .authorizedAlways || status == .authorizedWhenInUse {
 			pauseMainLocationManager(for: status)
-		}
-		else {
+		} else {
 			startMainLocationManager(for: status)
 		}
 	}
@@ -242,7 +233,6 @@ extension FXDmoduleGeo: CLLocationManagerDelegate {
 		fxdPrint(error)
 	}
 }
-
 
 extension FXDmoduleGeo: FXDobserverApplication {
 	@objc public func observedUIApplicationDidEnterBackground(_ notification: NSNotification) {	fxd_overridable()
