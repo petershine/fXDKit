@@ -40,7 +40,6 @@
 - (void)configureUserDefaultsInfo;
 - (void)configureGlobalAppearance;
 
-- (void)startUsageAnalyticsWithLaunchOptions:(NSDictionary*_Nullable)launchOptions;
 
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldUpgradeForNewAppVersion;
 - (BOOL)isLastVersionOlderThanVersionInteger:(NSInteger)versionInteger;
