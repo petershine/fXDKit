@@ -24,8 +24,8 @@ extension UIAlertController {
         fromScene: UIViewController? = nil,
         destructiveText: String? = nil,
         cancelText: String? = NSLocalizedString("OK", comment: ""),
-        destructiveHandler: (@Sendable (UIAlertAction) -> Void)? = nil,
-        cancelHandler: (@Sendable (UIAlertAction) -> Void)? = nil) {
+        destructiveHandler: ((UIAlertAction) -> Void)? = nil,
+        cancelHandler: ((UIAlertAction) -> Void)? = nil) {
 
             Task {	@MainActor in
                 let _: Bool? = try await Self.asyncAlert(
@@ -52,9 +52,9 @@ extension UIAlertController {
         soundNumber: Int = 0,
         fromScene: UIViewController? = nil,
         cancelText: String? = NSLocalizedString("OK", comment: ""),
-        cancelHandler: (@Sendable (UIAlertAction) -> (T, Error?))? = nil,
+        cancelHandler: ((UIAlertAction) -> (T, Error?))? = nil,
         destructiveText: String? = nil,
-        destructiveHandler: (@Sendable (UIAlertAction) -> (T, Error?))? = nil
+        destructiveHandler: ((UIAlertAction) -> (T, Error?))? = nil
     ) async throws -> T? {
 
         let didProceed = try await withCheckedThrowingContinuation {
