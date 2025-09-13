@@ -400,28 +400,32 @@ extension FXDmoduleCoredata {
 			return
 		}
 
-		let ManagedContextSavingBlock = {
-			var didSave: Bool = true
-			do {
-				try mainManagedContext?.save()
-			} catch {
-				fxdPrint("\(error)")
-				didSave = false
-			}
 
-			fxd_log()
-			fxdPrint("5. didSave \(didSave) mainManagedContext: ", mainManagedContext, "managedContext?.hasChanges: ", mainManagedContext?.hasChanges, "concurrencyType: ", mainManagedContext?.concurrencyType)
-		}
+        let sendableManagedContext = mainManagedContext
+        let ManagedContextSavingBlock: (@Sendable (NSManagedObjectContext?) -> Void) = {
+            sendableManagedContext in
 
-		fxdPrint("Thread.isMainThread: \(Thread.isMainThread)")
-		if Thread.isMainThread {
-			mainManagedContext?.performAndWait {
-				ManagedContextSavingBlock()
-			}
-		} else {
-			ManagedContextSavingBlock()
-		}
-	}
+            var didSave: Bool = true
+            do {
+                try sendableManagedContext?.save()
+            } catch {
+                fxdPrint("\(error)")
+                didSave = false
+            }
+
+            fxd_log()
+            fxdPrint("5. didSave \(didSave) mainManagedContext: ", sendableManagedContext, "managedContext?.hasChanges: ", sendableManagedContext?.hasChanges, "concurrencyType: ", sendableManagedContext?.concurrencyType)
+        }
+
+        fxdPrint("Thread.isMainThread: \(Thread.isMainThread)")
+        if Thread.isMainThread {
+            mainManagedContext?.performAndWait {
+                ManagedContextSavingBlock(sendableManagedContext)
+            }
+        } else {
+            ManagedContextSavingBlock(sendableManagedContext)
+        }
+    }
 
     public func saveMainDocument(finishCallback: FXDcallback? = nil) {	fxd_log()
         DispatchQueue.main.async { [weak self] in
@@ -559,13 +563,12 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 		}
 		#endif
 
-		mainDocument?.managedObjectContext.perform {
-			fxdPrint(#function)
 
-			if notification != nil {
-				self.mainDocument?.managedObjectContext.mergeChanges(fromContextDidSave: notification!)
-			}
-			fxdPrint("DID MERGE: hasChanges: ", self.mainDocument?.managedObjectContext.hasChanges)
-		}
+        Task {	@MainActor in
+            if notification != nil {
+                mainDocument?.managedObjectContext.mergeChanges(fromContextDidSave: notification!)
+            }
+            fxdPrint("DID MERGE: hasChanges: ", mainDocument?.managedObjectContext.hasChanges)
+        }
 	}
 }
