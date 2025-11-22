@@ -441,15 +441,15 @@ extension FXDmoduleCoredata {
 
 		Task {	[weak self] in
             var didSave: Bool = false
-            if let fileURL = await self?.mainDocument?.fileURL {
+            if let fileURL = self?.mainDocument?.fileURL {
                 didSave = await self?.mainDocument?.save(to: fileURL, for: .forOverwriting) ?? false
             }
 
 			fxd_log()
 			fxdPrint("didSave: ", didSave)
 
-            await fxdPrint("documentState: ", self?.mainDocument?.documentState)
-            await fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
+            fxdPrint("documentState: ", self?.mainDocument?.documentState)
+            fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
 
             finishCallback?(didSave, nil)
 		}
