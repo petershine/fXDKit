@@ -102,6 +102,34 @@ open class FXDmoduleCoredata: NSObject, @unchecked Sendable {
 
 		finishCallback?(true, nil)
 	}
+
+    open func saveMainDocument(finishCallback: FXDcallback? = nil) {    fxd_log()
+        DispatchQueue.main.async { [weak self] in
+            fxdPrint("documentState: ", self?.mainDocument?.documentState)
+            fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
+            fxdPrint("fileURL: ", self?.mainDocument?.fileURL)
+
+            guard (self?.mainDocument?.fileURL) != nil else {
+                finishCallback?(false, nil)
+                return
+            }
+        }
+
+        Task {    [weak self] in
+            var didSave: Bool = false
+            if let fileURL = self?.mainDocument?.fileURL {
+                didSave = await self?.mainDocument?.save(to: fileURL, for: .forOverwriting) ?? false
+            }
+
+            fxd_log()
+            fxdPrint("didSave: ", didSave)
+
+            fxdPrint("documentState: ", self?.mainDocument?.documentState)
+            fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
+
+            finishCallback?(didSave, nil)
+        }
+    }
 }
 
 extension FXDmoduleCoredata {
@@ -426,34 +454,6 @@ extension FXDmoduleCoredata {
             ManagedContextSavingBlock(sendableManagedContext)
         }
     }
-
-    public func saveMainDocument(finishCallback: FXDcallback? = nil) {	fxd_log()
-        DispatchQueue.main.async { [weak self] in
-            fxdPrint("documentState: ", self?.mainDocument?.documentState)
-            fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
-            fxdPrint("fileURL: ", self?.mainDocument?.fileURL)
-
-            guard (self?.mainDocument?.fileURL) != nil else {
-                finishCallback?(false, nil)
-                return
-            }
-        }
-
-		Task {	[weak self] in
-            var didSave: Bool = false
-            if let fileURL = self?.mainDocument?.fileURL {
-                didSave = await self?.mainDocument?.save(to: fileURL, for: .forOverwriting) ?? false
-            }
-
-			fxd_log()
-			fxdPrint("didSave: ", didSave)
-
-            fxdPrint("documentState: ", self?.mainDocument?.documentState)
-            fxdPrint("hasUnsavedChanges: ", self?.mainDocument?.hasUnsavedChanges)
-
-            finishCallback?(didSave, nil)
-		}
-	}
 }
 
 extension FXDmoduleCoredata: @preconcurrency FXDobserverApplication {
