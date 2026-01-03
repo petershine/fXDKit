@@ -35,11 +35,6 @@ class SubClassedAppDelegate: FXDAppDelegate {
 
         ProcessInfo.basicDescription()
 
-        UNUserNotificationCenter.current().delegate = self
-        Task {
-            let (_, _) = await UNUserNotificationCenter.attemptAuthorization()
-        }
-
         return true
     }
 

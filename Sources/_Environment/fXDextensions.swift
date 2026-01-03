@@ -502,11 +502,11 @@ extension URL {
 }
 
 extension UNUserNotificationCenter {
-    public static func attemptAuthorization() async -> (UNAuthorizationStatus, Error?) {
+    public static func attemptAuthorization(options: UNAuthorizationOptions) async -> (UNAuthorizationStatus, Error?) {
         var authorized: Bool = false
         var authorizationError: Error?
         do {
-            authorized = try await Self.current().requestAuthorization(options: [.badge, .sound, .alert])
+            authorized = try await Self.current().requestAuthorization(options: options)
         } catch {
             authorizationError = error
         }
@@ -521,7 +521,7 @@ extension UNUserNotificationCenter {
         return (settings.authorizationStatus, authorizationError)
     }
 
-    public static func attemptLocalNotification(content: UNNotificationContent) {
+    public static func attemptLocalNotification(content: UNNotificationContent, options: UNAuthorizationOptions) {
         let completionHandler: @Sendable (Bool, (any Error)?) -> Void = {
             (success, error) in
 
@@ -542,7 +542,7 @@ extension UNUserNotificationCenter {
         }
 
         Task {
-            let (authorized, authorizationError) = await Self.attemptAuthorization()
+            let (authorized, authorizationError) = await Self.attemptAuthorization(options: options)
             completionHandler(authorized == .authorized, authorizationError)
         }
     }
