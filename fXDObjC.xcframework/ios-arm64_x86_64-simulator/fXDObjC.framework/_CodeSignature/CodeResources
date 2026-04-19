@@ -146,7 +146,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		IisjvtE8OUwaVE7N3UdJ4FBtaYg=
+		ZZC7UcCSvqxdDjZZ+8W5tnIGzK4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -157,10 +157,6 @@
 	<dict>
 		<key>Headers/FXDCollectionViewLayout.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3jACDXQSxjLCfOVA36k9Os4SZ8A=
-			</data>
 			<key>hash2</key>
 			<data>
 			AE74wfyYD2VTuH6WF+gyM8zbUusYB6D2Mu4g9uzWeyM=
@@ -168,10 +164,6 @@
 		</dict>
 		<key>Headers/FXDDate.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Cvnwwh1JgFzjej65dj0BL/Lwlh8=
-			</data>
 			<key>hash2</key>
 			<data>
 			aFhbjLo0YneLEkBhnl3M38Dls96oC28giAtpZ49QZGU=
@@ -179,10 +171,6 @@
 		</dict>
 		<key>Headers/FXDFileManager.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			PpkNiZ6jotwEj9dv1UK2QZTpCw4=
-			</data>
 			<key>hash2</key>
 			<data>
 			/rH+H2+31SjGGEpB0qkpEi4yJfKDMS4/4ZzjaW07i4U=
@@ -190,10 +178,6 @@
 		</dict>
 		<key>Headers/FXDImage.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lqvUrlV3uWw4OIggFQfUYlA15CA=
-			</data>
 			<key>hash2</key>
 			<data>
 			+nDZah4thYwd5Fe6Cigzn5g3fUYmMV6BZZv8rqvp+jY=
@@ -201,10 +185,6 @@
 		</dict>
 		<key>Headers/FXDImageView.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aZ8SstWGGLWDJBFIHkn7q0ceNds=
-			</data>
 			<key>hash2</key>
 			<data>
 			w69kcj6vz8cqwIzVB9AylQxCqJXUOrR7ymZe9O0Vr9M=
@@ -212,10 +192,6 @@
 		</dict>
 		<key>Headers/FXDManagedObject.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OXmZR9N99WxcyjgAfRvU1FD8TOM=
-			</data>
 			<key>hash2</key>
 			<data>
 			fbn6csB7U88hrPALL9GPF/DzRppt4SNgItCoG+YBTmU=
@@ -223,10 +199,6 @@
 		</dict>
 		<key>Headers/FXDManagedObjectContext.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			FzSLaM3tG1sLR99deiioA4SjLvg=
-			</data>
 			<key>hash2</key>
 			<data>
 			kLGFRzrVP3sQcuornFiMPhCCfqCIR/zm2Iku9+BoShE=
@@ -234,10 +206,6 @@
 		</dict>
 		<key>Headers/FXDMapView.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			EbsocpnS/AgoBJABhR3jydZUvgg=
-			</data>
 			<key>hash2</key>
 			<data>
 			mfseXNHxEkiOgrvKzirEl/6JML5PrVV6b6iL7SVKNOw=
@@ -245,10 +213,6 @@
 		</dict>
 		<key>Headers/FXDMetadataQuery.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LZpIGZ3lOK/bdlTpLSrpiJ2TATI=
-			</data>
 			<key>hash2</key>
 			<data>
 			zu0Z9NVn1FvOMNPE2NB6Bsh+iiBVz+Wj1DGILJFOP6g=
@@ -256,10 +220,6 @@
 		</dict>
 		<key>Headers/FXDNumber.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2HcNXjwRtoofED/rjgLu5yZEQ4Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			lOrWgP6zKEoCi9+DaQvNSIOk8SNtjVe3deC9HV77Hkw=
@@ -267,10 +227,6 @@
 		</dict>
 		<key>Headers/FXDOperationQueue.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n7UzM4beSxoFA/jxBLHxV7xZDlg=
-			</data>
 			<key>hash2</key>
 			<data>
 			4KU4rsfQlp74jhAgWxYn/qel0qFsZMY7VmU4f6jipFo=
@@ -278,10 +234,6 @@
 		</dict>
 		<key>Headers/FXDPopoverBackgroundView.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			eohBlcBWGgS8ovLKaPkKY3qsFJY=
-			</data>
 			<key>hash2</key>
 			<data>
 			zpnz8/41d7J7Ut3tB5CdqS6gddaUmn+Mxdwy9y7H818=
@@ -289,10 +241,6 @@
 		</dict>
 		<key>Headers/FXDScrollView.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			S5ZUaCjv8/VNlLroPlYSj59JskY=
-			</data>
 			<key>hash2</key>
 			<data>
 			JTO7hxXG6haU5EGai6Xwm0HZXpMXa7y3BW/CqM2rYho=
@@ -300,10 +248,6 @@
 		</dict>
 		<key>Headers/FXDStoryboardSegue.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ttCZMQWOeyVmrTbj+wTJaR827os=
-			</data>
 			<key>hash2</key>
 			<data>
 			GPuw5Dnm7uz36lbZ1UbKAKUK2obYn1VUbRPv9RczcYo=
@@ -311,10 +255,6 @@
 		</dict>
 		<key>Headers/FXDString.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			H9d5uT7rFDFSL2S18FMNdCt9lY0=
-			</data>
 			<key>hash2</key>
 			<data>
 			lglnwdAWoM0etsKS7fUkAmzBLtp2srlyfJXt5koM/tE=
@@ -322,10 +262,6 @@
 		</dict>
 		<key>Headers/FXDTableViewCell.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Yzcsuay939Qi+t2dEnlV6npRevg=
-			</data>
 			<key>hash2</key>
 			<data>
 			fQJZUVr+tUOfwMzF69QY+ncOSDKJx+mmF7m8gOqOrUo=
@@ -333,10 +269,6 @@
 		</dict>
 		<key>Headers/FXDTextView.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4c89pgHFUTKJeFVSTzDRBtx3JkY=
-			</data>
 			<key>hash2</key>
 			<data>
 			gYi8XjKk8CvFC3WYd3WTETceNmS+CTPQaEaWaamQvhY=
@@ -344,10 +276,6 @@
 		</dict>
 		<key>Headers/FXDURL.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			HdKGOpAXYL6yJc/yQdx6g90lJ1M=
-			</data>
 			<key>hash2</key>
 			<data>
 			0fxvQ1lIDT5Rletup0daPnMRA0TTfrQ0HyrZ8Y4EhWI=
@@ -355,10 +283,6 @@
 		</dict>
 		<key>Headers/FXDView.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UqWw8TvFt6gdDR57nWxWXIg6xTg=
-			</data>
 			<key>hash2</key>
 			<data>
 			bThavqX3nJzWIah/PC8l/oMMs9JLcKdSgyw0/YMovYI=
@@ -366,10 +290,6 @@
 		</dict>
 		<key>Headers/FXDViewController.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			443HobEz2/0TWsjIKTwSdQwAivw=
-			</data>
 			<key>hash2</key>
 			<data>
 			9NIV9GzsR4PgaEWI1D77X3NbT+nGYIgi1CwlCO/juJQ=
@@ -377,10 +297,6 @@
 		</dict>
 		<key>Headers/FXDconfigDeveloper.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			140EwUqNRK9I+PRy8KHwoXELYkA=
-			</data>
 			<key>hash2</key>
 			<data>
 			9dyBYzOFXu9SR+Q/4kArVxdZVAM8dvMebqc6A3gsMTg=
@@ -388,10 +304,6 @@
 		</dict>
 		<key>Headers/FXDimportEssential.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UpuFZHQiGad4Ex/bK86dJvTgGrg=
-			</data>
 			<key>hash2</key>
 			<data>
 			NUQ9FPfSL7vpUZv0HgnKc1h8jFwykmxv/CkP1VLV1y8=
@@ -399,10 +311,6 @@
 		</dict>
 		<key>Headers/FXDmacroFunction.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5six2iC0TU7AHbRItJnYvcmYWzk=
-			</data>
 			<key>hash2</key>
 			<data>
 			kzjdL2l2Cpwgjrmob2brnSAj3U/GpBN/zk5/sLjc+KA=
@@ -410,10 +318,6 @@
 		</dict>
 		<key>Headers/FXDmacroValue.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IHFiECVnpXv8Zt3u/wjyCQq8w60=
-			</data>
 			<key>hash2</key>
 			<data>
 			JQIzRppZBFTk91v5yYJwu+bSY+QORl3ivhM/ePJVhQQ=
@@ -421,10 +325,6 @@
 		</dict>
 		<key>Headers/FXDmoduleCaches.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9PXYXGsLcW9VUKYCEN6NKN5f6So=
-			</data>
 			<key>hash2</key>
 			<data>
 			HbRSXt6+DQkqgBnolfNhC38dSn62g8Yljwqov985dMA=
@@ -432,10 +332,6 @@
 		</dict>
 		<key>Headers/FXDmoduleCapture.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YWSea5IwsuhUEW1+C10INjZjR4k=
-			</data>
 			<key>hash2</key>
 			<data>
 			JypJ5pbrpUO4bFOvyX3saEPQM7f46SqUE/UqjEd/dLw=
@@ -443,10 +339,6 @@
 		</dict>
 		<key>Headers/FXDmoduleDocuments.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9ROfTpAjZVu95sCBpc2dIIf4c6M=
-			</data>
 			<key>hash2</key>
 			<data>
 			CdAVCZ53YCX40qe9/SjPbN3S8D4JoMg4zdVluDN053o=
@@ -454,10 +346,6 @@
 		</dict>
 		<key>Headers/FXDmoduleGlobal.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BB4o9myDqNu6CzUKZ56PgujVXj4=
-			</data>
 			<key>hash2</key>
 			<data>
 			eDtvA9/5ZyqCpUQAeyKGapmXTA6AfGEaFLrzfR7RRQ0=
@@ -465,10 +353,6 @@
 		</dict>
 		<key>Headers/FXDmoduleMusic.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			mPhhFLMMPYhz13y58ALq0fsMJsQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			cOkrPjnDVwEzWjbgJLevdcS3BxEdnO/T8eKKnt584Xg=
@@ -476,10 +360,6 @@
 		</dict>
 		<key>Headers/FXDmoduleNetworking.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			i709+kA5hsBhbFoL5Iiko4Vt/3s=
-			</data>
 			<key>hash2</key>
 			<data>
 			ML0jy+yOWilvaf9ze522XEIAuR7U5c8dbkMFfFUOnt4=
@@ -487,10 +367,6 @@
 		</dict>
 		<key>Headers/FXDmodulePlayback.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ECzme8tss+df9TRoqD3eEP0URv0=
-			</data>
 			<key>hash2</key>
 			<data>
 			vZEuNIJtrNh8XZmlQ/AZKwCQ7Z2A/tkOXAs0fuA70QA=
@@ -498,10 +374,6 @@
 		</dict>
 		<key>Headers/FXDmoduleQuery.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yESxzzlB+qgDdSJYAKy2IfGPIpU=
-			</data>
 			<key>hash2</key>
 			<data>
 			rDd7BBh/eH6ebuv5GVHpUtn885JS4H1cmp/dCdzeNGQ=
@@ -509,10 +381,6 @@
 		</dict>
 		<key>Headers/FXDmoduleSearch.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZYn2LjlQazH4pBykq9OMnS/vFAk=
-			</data>
 			<key>hash2</key>
 			<data>
 			7goDu62Bi5DAZK25fKyWhOXg8RsqvhBqzbjyZBDubYU=
@@ -520,10 +388,6 @@
 		</dict>
 		<key>Headers/FXDmoduleTile.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			DvFbKf3OiwJoLLXIdx1CS/hI+04=
-			</data>
 			<key>hash2</key>
 			<data>
 			meAr9JwY/envAAhL75Er713YoEK+MmO87+Q2Hd5kzvQ=
@@ -531,10 +395,6 @@
 		</dict>
 		<key>Headers/fXDObjC.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tq5g+kzA8agTh94SvFZ0HFXgWOM=
-			</data>
 			<key>hash2</key>
 			<data>
 			5DGxruKi/2CuERfMNHMNvH0V/5vuyX61+7viqNMsiEQ=
@@ -542,10 +402,6 @@
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tyTXpm5rhhMLeQILFycyoEzTaHw=
-			</data>
 			<key>hash2</key>
 			<data>
 			7mazxnl0ZNslr4ooSinDC1cSYW91skUKVcKszz/IvZw=
