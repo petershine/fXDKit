@@ -1,18 +1,18 @@
 import UIKit
 
 extension UIWindow {
-	public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil) -> UIWindow? {	fxd_log()
+    public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil, windowScene: UIWindowScene) -> UIWindow? {	fxd_log()
 		guard nibName == nil else {
 			let newWindow: UIWindow? = Self.view(fromNibName: nibName, owner: owner) as! UIWindow?
 			return newWindow
 		}
 
-		let screenBounds = UIScreen.main.bounds
-		fxdPrint("screenBounds: \(screenBounds)")
-		fxdPrint("UIScreen.main.nativeBounds: \(UIScreen.main.nativeBounds)")
-		fxdPrint("UIScreen.main.nativeScale: \(UIScreen.main.nativeScale)")
 
-		let newWindow: UIWindow? = Self.init(frame: screenBounds)
+        fxdPrint("windowScene.screen.bounds: \(windowScene.screen.bounds)")
+		fxdPrint("windowScene.screen.nativeBounds: \(windowScene.screen.nativeBounds)")
+		fxdPrint("windowScene.screen.nativeScale: \(windowScene.screen.nativeScale)")
+
+		let newWindow: UIWindow? = Self.init(windowScene: windowScene)
 		fxdPrint("newWindow?.autoresizesSubviews: ", newWindow?.autoresizesSubviews)
 
 		return newWindow

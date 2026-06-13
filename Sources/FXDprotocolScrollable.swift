@@ -17,7 +17,8 @@ extension FXDprotocolScrollable {
 		 return 0.275
 	}
 	public var heightOffsetForSceneDismissing: CGFloat {
-		return (0.0 - (UIScreen.main.bounds.size.height*heightRatioForSceneDismissing))
+        let mainWindowScreen = UIApplication.shared.mainWindow()?.screen ?? UIScreen()
+		return (0.0 - (mainWindowScreen.bounds.size.height*heightRatioForSceneDismissing))
 	}
 
 	public func rateAgainst(maximumDistance: CGFloat, scrollView: UIScrollView) -> CGFloat {

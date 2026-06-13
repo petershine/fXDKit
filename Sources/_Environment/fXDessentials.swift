@@ -27,7 +27,8 @@ public let UNIT_TOUCHABLE: CGFloat = 40.0
 @MainActor public let SIZE_TOUCHABLE_LARGE: CGSize = CGSize(width: DIMENSION_TOUCHABLE_LARGE, height: DIMENSION_TOUCHABLE_LARGE)
 
 @MainActor public let DIMENSION_PREVIEW: CGFloat = {
-	let minDimension = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+    let mainWindowScreen = UIApplication.shared.mainWindow()?.screen ?? UIScreen()
+    let minDimension = min(mainWindowScreen.bounds.size.width, mainWindowScreen.bounds.size.height)
 
 	var previewDimension = minDimension*0.4
 	if UIDevice.current.userInterfaceIdiom == .phone {
