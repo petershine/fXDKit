@@ -1,18 +1,30 @@
 import UIKit
 
 extension UIWindow {
-    public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil, windowScene: UIWindowScene) -> UIWindow? {	fxd_log()
+    public class func newWindow(fromNibName nibName: String? = nil, owner: Any? = nil, windowScene: UIWindowScene? = nil, application: UIApplication? = nil) -> UIWindow? {	fxd_log()
 		guard nibName == nil else {
 			let newWindow: UIWindow? = Self.view(fromNibName: nibName, owner: owner) as! UIWindow?
 			return newWindow
 		}
 
-        fxdPrint("windowScene.screen.bounds: \(windowScene.screen.bounds)")
-		fxdPrint("windowScene.screen.nativeBounds: \(windowScene.screen.nativeBounds)")
-		fxdPrint("windowScene.screen.nativeScale: \(windowScene.screen.nativeScale)")
+        var mainWindowScreen: UIScreen = UIScreen()
+        var newWindow: UIWindow? = nil
 
-		let newWindow: UIWindow? = Self.init(windowScene: windowScene)
-		fxdPrint("newWindow?.autoresizesSubviews: ", newWindow?.autoresizesSubviews)
+        if windowScene == nil {
+            let application = application ?? UIApplication.shared
+            mainWindowScreen = application.mainWindow()?.screen ?? UIScreen()
+            newWindow = Self.init(frame: mainWindowScreen.bounds)
+        }
+        else if let windowScene {
+            mainWindowScreen = windowScene.screen
+            newWindow = Self.init(windowScene: windowScene)
+        }
+
+        fxdPrint("windowScene.screen.bounds: \(mainWindowScreen.bounds)")
+        fxdPrint("windowScene.screen.nativeBounds: \(mainWindowScreen.nativeBounds)")
+        fxdPrint("windowScene.screen.nativeScale: \(mainWindowScreen.nativeScale)")
+
+        fxdPrint("newWindow?.autoresizesSubviews: ", newWindow?.autoresizesSubviews)
 
 		return newWindow
 	}
