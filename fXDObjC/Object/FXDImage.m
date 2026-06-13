@@ -15,10 +15,11 @@
 	//MARK: To load from .jpg, use specific scale value for retina
 	NSString *scaledImageName = nil;
 
-	if ([UIScreen mainScreen].scale >= 3.0) {
+    UIScreen *mainWindowScreen = [UIScreen mainWindowScreen];
+	if (mainWindowScreen.scale >= 3.0) {
 		scaledImageName = [imageName stringByAppendingString:@"@3x"];
 	}
-	else if ([UIScreen mainScreen].scale >= 2.0) {
+	else if (mainWindowScreen.scale >= 2.0) {
 		scaledImageName = [imageName stringByAppendingString:@"@2x"];
 	}
 	else {
@@ -162,7 +163,7 @@
 }
 
 - (UIImage*)resizedImageUsingSize:(CGSize)size {
-	UIImage *resizedImage = [self resizedImageUsingSize:size forScale:[UIScreen mainScreen].scale];
+	UIImage *resizedImage = [self resizedImageUsingSize:size forScale:[UIScreen mainWindowScreen].scale];
 
 	return resizedImage;
 }

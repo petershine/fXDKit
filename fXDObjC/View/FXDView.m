@@ -149,7 +149,7 @@
 
 #pragma mark -
 - (UIImage*)renderedImageForScreenScale {
-	return [self renderedImageForScale:[UIScreen mainScreen].scale afterScreenUpdates:YES];
+	return [self renderedImageForScale:[UIScreen mainWindowScreen].scale afterScreenUpdates:YES];
 }
 
 - (UIImage*_Nullable)renderedImageForScale:(CGFloat)scale afterScreenUpdates:(BOOL)afterScreenUpdates {	//FXDLog_DEFAULT

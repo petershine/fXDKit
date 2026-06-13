@@ -194,7 +194,7 @@
 
 		 UIImage *image = [[UIImage alloc]
 						   initWithData:data
-						   scale:[UIScreen mainScreen].scale];
+						   scale:[UIScreen mainWindowScreen].scale];
 
 		 if (finishCallback) {
 			 finishCallback(_cmd, YES, image);

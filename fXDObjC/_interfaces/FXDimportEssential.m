@@ -269,6 +269,18 @@
 
 
 @implementation UIScreen (Essential)
++ (nullable UIScreen*)mainWindowScreen {
+    for (UIWindowScene *scene in UIApplication.sharedApplication.connectedScenes) {
+        for (UIWindow *window in scene.windows) {
+            if (window.isKeyWindow) {
+                return window.screen;
+            }
+        }
+    }
+
+    return nil;
+}
+
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation {
 
 	BOOL isForLandscape = (UIDeviceOrientationIsPortrait(deviceOrientation) == NO);
@@ -279,7 +291,7 @@
 }
 
 + (CGRect)screenBoundsForLandscape:(BOOL)isForLanscape {
-	CGRect screenBounds = [[self class] mainScreen].bounds;
+	CGRect screenBounds = [[self class] mainWindowScreen].bounds;
 
 	CGFloat screenWidth = screenBounds.size.width;
 	CGFloat screenHeight = screenBounds.size.height;
@@ -293,7 +305,7 @@
 }
 
 + (CGFloat)maximumScreenDimension {
-	CGRect screenBounds = [[self class] mainScreen].bounds;
+	CGRect screenBounds = [[self class] mainWindowScreen].bounds;
 
 	CGFloat screenWidth = screenBounds.size.width;
 	CGFloat screenHeight = screenBounds.size.height;
@@ -302,7 +314,7 @@
 }
 
 + (CGFloat)minimumScreenDimension {
-	CGRect screenBounds = [[self class] mainScreen].bounds;
+	CGRect screenBounds = [[self class] mainWindowScreen].bounds;
 	
 	CGFloat screenWidth = screenBounds.size.width;
 	CGFloat screenHeight = screenBounds.size.height;

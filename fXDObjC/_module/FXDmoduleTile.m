@@ -21,11 +21,12 @@
 
 	self.tileMapRect = tileMapRect;
 
+    UIScreen *mainWindowScreen = [UIScreen mainWindowScreen];
 
-	NSInteger multiplier = [UIScreen mainScreen].bounds.size.width/tileCGRect.size.width;
+	NSInteger multiplier = mainWindowScreen.bounds.size.width/tileCGRect.size.width;
 	FXDLogVariable(multiplier);
 
-	Float64 aspectRatio = [UIScreen mainScreen].bounds.size.height/[UIScreen mainScreen].bounds.size.width;
+	Float64 aspectRatio = mainWindowScreen.bounds.size.height/mainWindowScreen.bounds.size.width;
 	FXDLogVariable(aspectRatio);
 
 	self.screenMapRect = MKMapRectMake(0,
@@ -40,18 +41,20 @@
 - (CGRect)tileCGRectForMinimumDimension:(CGFloat)minimumDimension {	FXDLog_DEFAULT
 	Float64 dividedBy = 1.0;
 
-	CGRect tileCGRect = [UIScreen mainScreen].bounds;
+    UIScreen *mainWindowScreen = [UIScreen mainWindowScreen];
+
+	CGRect tileCGRect = mainWindowScreen.bounds;
 	FXDLog(@"%f: %@", dividedBy, _Rect(tileCGRect));
 
 	do {
 		dividedBy += 1.0;
 
-		if ((NSUInteger)[UIScreen mainScreen].bounds.size.width % (NSUInteger)dividedBy != 0) {
+		if ((NSUInteger)mainWindowScreen.bounds.size.width % (NSUInteger)dividedBy != 0) {
 			continue;
 		}
 
 
-		tileCGRect = [UIScreen mainScreen].bounds;
+		tileCGRect = mainWindowScreen.bounds;
 		tileCGRect.size.width /= dividedBy;
 		tileCGRect.size.height /= dividedBy;
 

@@ -94,6 +94,8 @@ typedef void (^FXDcallbackFinish)(SEL caller, BOOL didFinish, id responseObj);
 
 
 @interface UIScreen (Essential)
++ (nullable UIScreen*)mainWindowScreen;
+
 + (CGRect)screenBoundsForOrientation:(UIDeviceOrientation)deviceOrientation;
 + (CGRect)screenBoundsForLandscape:(BOOL)isForLanscape;
 
