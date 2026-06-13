@@ -428,7 +428,6 @@ extension FXDmoduleCoredata {
 			return
 		}
 
-
         let sendableManagedContext = mainManagedContext
         let ManagedContextSavingBlock: (@Sendable (NSManagedObjectContext?) -> Void) = {
             sendableManagedContext in
@@ -562,7 +561,6 @@ extension FXDmoduleCoredata: @preconcurrency FXDobserverNSManagedObject {
 			fxdPrint("updated.count : ", (userInfo["updated"] as? [Any?])?.count)
 		}
 		#endif
-
 
         Task {	@MainActor in
             if notification != nil {

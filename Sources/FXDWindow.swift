@@ -7,7 +7,6 @@ extension UIWindow {
 			return newWindow
 		}
 
-
         fxdPrint("windowScene.screen.bounds: \(windowScene.screen.bounds)")
 		fxdPrint("windowScene.screen.nativeBounds: \(windowScene.screen.nativeBounds)")
 		fxdPrint("windowScene.screen.nativeScale: \(windowScene.screen.nativeScale)")
